@@ -26,6 +26,7 @@ POPP_VFX_RECIPES = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-
 OUTPUT_DIR = LIBRARY / "review/asset-review-portal-v1"
 OUTPUT_JSON = OUTPUT_DIR / "review-queue.json"
 OUTPUT_SCHEMA = OUTPUT_DIR / "review-decision.schema.json"
+OWNER_DECISIONS = OUTPUT_DIR / "owner-decisions.json"
 OUTPUT_HTML = ROOT / "apps/client/public/asset-review-portal.html"
 AUDIO_SUFFIXES = {".wav", ".ogg", ".mp3", ".flac", ".m4a"}
 
@@ -74,6 +75,66 @@ def git_file(path: Path, expected: dict[str, Any] | None = None) -> dict[str, An
 
 def preview_file(candidate_id: str, index: int, record: dict[str, Any]) -> dict[str, Any]:
     return {"mediaId": f"{candidate_id}:preview-{index + 1}", **record}
+
+
+def apply_owner_decisions(contract: dict[str, Any], receipt: dict[str, Any]) -> None:
+    """Apply a fingerprint-pinned owner receipt without changing runtime state."""
+    if receipt.get("schema") != "ggd.asset-review-decisions@1":
+        raise ValueError("unexpected asset-review owner-decision schema")
+    if receipt.get("sourceFingerprint") != contract["sourceFingerprint"]:
+        raise ValueError("asset-review owner-decision fingerprint is stale")
+    if receipt.get("reviewer") != "owner" or not receipt.get("reviewedAt"):
+        raise ValueError("asset-review owner-decision reviewer evidence is incomplete")
+    if receipt.get("runtimeMutationAllowed") is not False:
+        raise ValueError("owner approval receipt must not authorize unchecked runtime mutation")
+
+    rows = contract["audioCandidates"] + contract["motionCandidates"] + contract["visualCandidates"]
+    by_id = {row["candidateId"]: row for row in rows}
+    decisions = receipt.get("decisions")
+    if not isinstance(decisions, list) or len(decisions) != len(rows):
+        raise ValueError("asset-review owner-decision receipt does not cover the full queue")
+    decision_by_id = {row.get("candidateId"): row for row in decisions}
+    if len(decision_by_id) != len(decisions) or set(decision_by_id) != set(by_id):
+        raise ValueError("asset-review owner-decision candidate set is incomplete or duplicated")
+
+    needs_binding = {"event-binding-proposal", "generic-event-suggestion", "motion-event-suggestion"}
+    counts = {"pending": 0, "approve": 0, "reject": 0}
+    for candidate_id, decision in decision_by_id.items():
+        candidate = by_id[candidate_id]
+        value = decision.get("decision")
+        if value not in counts:
+            raise ValueError(f"invalid owner decision for {candidate_id}: {value}")
+        approved_bindings = decision.get("approvedBindings")
+        if not isinstance(approved_bindings, list) or len(approved_bindings) != len(set(approved_bindings)):
+            raise ValueError(f"invalid approvedBindings for {candidate_id}")
+        if any(binding not in candidate.get("eventCandidates", []) for binding in approved_bindings):
+            raise ValueError(f"owner decision names an unavailable binding for {candidate_id}")
+        if value == "approve" and candidate["approvalScope"] in needs_binding and not approved_bindings:
+            raise ValueError(f"approved binding proposal has no selected binding: {candidate_id}")
+        if (value != "approve" or candidate["approvalScope"] not in needs_binding) and approved_bindings:
+            raise ValueError(f"owner decision carries bindings outside its approval scope: {candidate_id}")
+        if decision.get("runtimeBindingAuthorized") is not False:
+            raise ValueError(f"owner decision overclaims runtime authority: {candidate_id}")
+        if not isinstance(decision.get("note"), str):
+            raise ValueError(f"owner decision note is missing: {candidate_id}")
+        candidate["decision"] = value
+        candidate["approvedBindings"] = approved_bindings
+        candidate["ownerApprovalStatus"] = (
+            "approved-awaiting-technical-integration" if value == "approve" else value
+        )
+        if "ownerDecision" in candidate:
+            candidate["ownerDecision"] = value
+        counts[value] += 1
+
+    summary = contract["summary"]
+    summary["pendingDecisionCount"] = counts["pending"]
+    summary["approvedDecisionCount"] = counts["approve"]
+    summary["rejectedDecisionCount"] = counts["reject"]
+    summary["runtimeSelectableCandidateCount"] = sum(bool(row["runtimeSelectable"]) for row in rows)
+    summary["approvedPendingTechnicalCount"] = sum(
+        row["decision"] == "approve" and not row["runtimeSelectable"] for row in rows
+    )
+    contract["ownerDecisionReceipt"] = git_evidence(OWNER_DECISIONS)
 
 
 def first_group_sample(directory: Path) -> Path:
@@ -653,14 +714,16 @@ def build_contract() -> dict[str, Any]:
         "visual": [(row["candidateId"], [item["sha256"] for item in row["previewFiles"]]) for row in visuals],
         "blocked": [row["candidateId"] for row in blocked],
     }).encode()).hexdigest()
-    return {
+    contract = {
         "schema": "ggd.asset-review-portal@1",
         "sourceFingerprint": fingerprint,
         "sourceInputs": source_inputs,
         "policy": {
             "ownerApprovalRequiredBeforeRuntimeBinding": True,
             "defaultDecision": "pending",
+            "currentOwnerDecision": "approve",
             "runtimeMutationAllowed": False,
+            "ownerApprovalDoesNotBypassTechnicalGates": True,
             "jumpForceGroupSampleApprovalDoesNotAuthorizeEventBinding": True,
             "borrowedAndDeathSubstitutionMotionsRequirePerCandidateApproval": True,
             "visualApprovalDoesNotAuthorizeSkillOrRuntimeBinding": True,
@@ -694,6 +757,10 @@ def build_contract() -> dict[str, Any]:
         "visualCandidates": visuals,
         "blockedMotionLeads": blocked,
     }
+    if not OWNER_DECISIONS.is_file():
+        raise ValueError("asset-review owner-decision receipt is missing")
+    apply_owner_decisions(contract, read_json(OWNER_DECISIONS))
+    return contract
 
 
 def decision_schema(contract: dict[str, Any]) -> dict[str, Any]:
@@ -702,7 +769,7 @@ def decision_schema(contract: dict[str, Any]) -> dict[str, Any]:
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://ggd.local/schema/asset-review-decisions-v1.json",
-        "title": "GGD pending asset review decisions",
+        "title": "GGD asset review decisions",
         "type": "object",
         "additionalProperties": False,
         "required": ["schema", "sourceFingerprint", "reviewer", "reviewedAt", "runtimeMutationAllowed", "decisions"],
@@ -747,10 +814,10 @@ def build_html(contract: dict[str, Any]) -> str:
 <style>
 :root{{--bg:#071019;--card:#111d2a;--line:#294158;--fg:#eef6ff;--dim:#a9b8c6;--accent:#66d9ef;--warn:#ffc66d;--ok:#8bd49c;--bad:#ff8b8b}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}}header{{position:sticky;top:0;z-index:6;padding:12px 18px;background:#08131ef2;border-bottom:1px solid var(--line)}}main{{max-width:1440px;margin:auto;padding:18px}}h1{{font-size:20px;margin:0}}h2{{margin:28px 0 8px}}.dim{{color:var(--dim)}}.warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}.toolbar{{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}}input,select,textarea,button,.button-link{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 9px;border-radius:7px}}input[type=search]{{min-width:300px}}button,.button-link{{cursor:pointer;text-decoration:none}}button:hover,.button-link:hover{{border-color:var(--accent)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}}.card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px;min-width:0}}.card.approve{{border-color:var(--ok)}}.card.reject{{border-color:var(--bad)}}.card.pending{{border-color:#6f7f91}}audio{{width:100%}}code{{font-size:11px;word-break:break-all}}.tags{{display:flex;gap:5px;flex-wrap:wrap}}.tag{{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px}}dl{{display:grid;grid-template-columns:105px 1fr;gap:3px 8px}}dt{{color:var(--dim)}}dd{{margin:0;min-width:0;word-break:break-word}}textarea{{width:100%;min-height:55px}}.buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}}.viewer{{position:relative;height:430px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#05080c}}iframe{{width:100%;height:100%;border:0}}.viewer-status{{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#071019e8;color:var(--dim)}}.viewer-status.error{{color:var(--bad);background:#210d10ee}}.viewer-status[hidden]{{display:none}}.visual-gallery{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin:8px 0}}.visual-gallery a{{display:block;background:#071019;border:1px solid var(--line);border-radius:7px;padding:4px}}.visual-gallery img{{display:block;width:100%;height:180px;object-fit:contain}}details{{margin-top:8px}}li{{margin:4px 0}}.hidden{{display:none!important}}.count{{font-variant-numeric:tabular-nums}}
-</style></head><body><header><h1>GGD 素材逐項審查中心</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · 所有項目預設 pending · 匯出決定不會修改 runtime</div></header>
-<main><div class="warn">音效／語音、動作與視覺素材候選必須逐項核准。KOF EFF、達伊支援元件、達伊六組靜態程序化組合預覽與波普靜態重建圖的核准只記錄視覺裁決，不授權技能事件或 runtime 綁定。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
+</style></head><body><header><h1>GGD 素材逐項審查中心</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · owner 決策由固定收據載入 · 核准不會跳過技術 gate 或自動修改 runtime</div></header>
+<main><div class="warn">owner 已於 2026-09-15 核准本頁全部素材。KOF EFF、達伊支援元件、達伊六組靜態程序化組合預覽與波普靜態重建圖的核准只記錄視覺裁決；JUMP FORCE 抽樣核准只確認群組分類。全部項目仍須分別通過轉換、格式、效能、角色／事件綁定與 runtime 驗收，通過後才可切換；目前未證實正式站部署。</div>
 <div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp-event-audio">波普音訊</option><option value="palworld-creature-cry">帕魯叫聲</option><option value="palworld-native-motion-semantic">帕魯動作</option><option value="jumpforce-group-identity-sample">JUMP FORCE</option><option value="borrowed-or-death-substitution-motion">借用／死亡替代</option><option value="kofxiv-converted-effect-texture">KOF XIV 特效貼圖</option><option value="kofxiv-native-eff-group">KOF XIV EFF 群組</option><option value="infinity-strash-dai-vfx-texture-component">達伊特效貼圖</option><option value="infinity-strash-dai-vfx-mesh-component">達伊特效 mesh</option><option value="infinity-strash-dai-vfx-composite-review">達伊組合預覽</option><option value="infinity-strash-popp-vfx-runtime-candidate">波普 VFX 候選</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
-<h2>一、尚未核准音效／語音 <span id="audioCount" class="dim count"></span></h2><div id="audio" class="grid"></div>
+<h2>一、音效／語音 <span id="audioCount" class="dim count"></span></h2><div id="audio" class="grid"></div>
 <h2>二、原生／借用／死亡替代動作 <span id="motionCount" class="dim count"></span></h2><div id="motion" class="grid"></div>
 <h2>三、特效貼圖／EFF／支援元件 <span id="visualCount" class="dim count"></span></h2><div id="visual" class="grid"></div>
 <h2>四、尚不可播放的動作線索</h2><div id="blocked" class="grid"></div>
@@ -758,7 +825,7 @@ def build_html(contract: dict[str, Any]) -> str:
 <script id="contract" type="application/json">{data}</script><script>
 const D=JSON.parse(document.getElementById('contract').textContent);const storageKey='ggd.asset-review-portal:'+D.sourceFingerprint;let draft=JSON.parse(localStorage.getItem(storageKey)||'{{"decisions":{{}}}}');draft.decisions??={{}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));const all=[...D.audioCandidates,...D.motionCandidates,...D.visualCandidates];
-const state=id=>draft.decisions[id]??{{decision:'pending',approvedBindings:[],note:''}};function persist(){{localStorage.setItem(storageKey,JSON.stringify(draft));applyFilters();renderStatus()}}
+const byId=Object.fromEntries(all.map(c=>[c.candidateId,c]));const state=id=>draft.decisions[id]??{{decision:byId[id]?.decision||'pending',approvedBindings:byId[id]?.approvedBindings||[],note:''}};function persist(){{localStorage.setItem(storageKey,JSON.stringify(draft));applyFilters();renderStatus()}}
 function controls(c){{const s=state(c.candidateId),bindings=c.eventCandidates||[];return `<div class="buttons"><select data-decision="${{esc(c.candidateId)}}"><option value="pending" ${{s.decision==='pending'?'selected':''}}>pending</option><option value="approve" ${{s.decision==='approve'?'selected':''}}>approve</option><option value="reject" ${{s.decision==='reject'?'selected':''}}>reject</option></select></div><div class="buttons">${{bindings.map(b=>`<label><input type="checkbox" data-binding="${{esc(c.candidateId)}}" value="${{esc(b)}}" ${{s.approvedBindings.includes(b)?'checked':''}}> ${{esc(b)}}</label>`).join('')||'<span class="dim">沒有事件綁定候選</span>'}}</div><textarea data-note="${{esc(c.candidateId)}}" placeholder="此項備註">${{esc(s.note)}}</textarea>`}}
 function evidence(c){{return `<dl><dt>來源</dt><dd>${{esc(c.sourceId)}}</dd><dt>作品／角色</dt><dd>${{esc(c.workZh)}} · ${{esc(c.characterNameZh)}} · ${{esc(c.heroId||'尚未對應 hero ID')}}</dd><dt>原生 ID</dt><dd>${{esc(c.nativeCharacterId||'待確認')}}</dd>${{c.file?`<dt>本機</dt><dd><code>${{esc(c.file.absolutePath)}}</code></dd><dt>SHA-256</dt><dd><code>${{esc(c.file.sha256)}}</code></dd>`:''}}</dl><details><summary>缺口與來源細節</summary><ul>${{(c.gaps||[]).map(x=>`<li>${{esc(x)}}</li>`).join('')}}</ul><pre><code>${{esc(JSON.stringify(c.sourceEvidence||c.validationEvidence||{{}},null,2))}}</code></pre></details>`}}
 const audio=document.getElementById('audio');for(const c of D.audioCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.kind=c.sourceKind;card.dataset.search=JSON.stringify(c).toLowerCase();card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · ${{esc(c.sourceLabel)}}</h3><div class="tags"><span class="tag">${{esc(c.sourceKind)}}</span><span class="tag">語言 ${{esc(c.languageConfidence)}}</span><span class="tag">說話者 ${{esc(c.speakerConfidence)}}</span><span class="tag">事件 ${{esc(c.eventMeaningConfidence)}}</span></div><audio controls preload="none" src="http://127.0.0.1:8767/media/${{encodeURIComponent(c.candidateId)}}"></audio>${{evidence(c)}}${{controls(c)}}`;audio.append(card)}}

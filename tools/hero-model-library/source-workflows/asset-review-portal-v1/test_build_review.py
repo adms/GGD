@@ -35,17 +35,20 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(summary["visualCandidateCount"], 170)
         self.assertGreaterEqual(summary["blockedMotionLeadCount"], 2)
         self.assertEqual(summary["runtimeBindingsChanged"], 0)
-        self.assertEqual(summary["approvedDecisionCount"], 0)
+        self.assertEqual(summary["approvedDecisionCount"], 331)
         rows = self.contract["audioCandidates"] + self.contract["motionCandidates"] + self.contract["visualCandidates"]
-        self.assertEqual(summary["pendingDecisionCount"], len(rows))
-        self.assertTrue(all(row["decision"] == "pending" for row in rows))
+        self.assertEqual(summary["pendingDecisionCount"], 0)
+        self.assertEqual(summary["runtimeSelectableCandidateCount"], 0)
+        self.assertEqual(summary["approvedPendingTechnicalCount"], len(rows))
+        self.assertTrue(all(row["decision"] == "approve" for row in rows))
+        self.assertTrue(all(row["ownerApprovalStatus"] == "approved-awaiting-technical-integration" for row in rows))
         self.assertTrue(all(row["runtimeSelectable"] is False for row in rows))
         self.assertTrue(all(row["runtimeBindingChanged"] is False for row in rows))
 
-    def test_visual_candidates_are_sha_pinned_owner_pending_and_runtime_inert(self):
+    def test_visual_candidates_are_sha_pinned_owner_approved_and_runtime_inert(self):
         rows = self.contract["visualCandidates"]
         self.assertEqual(len(rows), 170)
-        self.assertTrue(all(row["ownerDecision"] == "pending" for row in rows))
+        self.assertTrue(all(row["ownerDecision"] == "approve" for row in rows))
         self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
         self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
         self.assertTrue(all(row["approvalScope"].endswith("-only") for row in rows))
@@ -69,13 +72,13 @@ class AssetReviewBuilderTest(unittest.TestCase):
             return result
 
         digest = hashlib.sha256(MODULE.canonical_json(normalize_git_root(original)).encode()).hexdigest()
-        self.assertEqual(digest, "5863ff4fe1bce2368ef40be648ca003d83eea5271a0cf5a7d9c89667a7156790")
+        self.assertEqual(digest, "78c95961bcf7c263b41ce807e79b56de0adec1935c32c043a2ef8363436ad61e")
         self.assertTrue(all(row["sourceKind"] == "infinity-strash-dai-vfx-composite-review" for row in rows[325:]))
 
     def test_dai_composites_are_visual_only_sha_pinned_and_unbound(self):
         rows = [row for row in self.contract["visualCandidates"] if row["sourceKind"] == "infinity-strash-dai-vfx-composite-review"]
         self.assertEqual(len(rows), 6)
-        self.assertTrue(all(row["ownerDecision"] == "pending" for row in rows))
+        self.assertTrue(all(row["ownerDecision"] == "approve" for row in rows))
         self.assertTrue(all(row["approvedBindings"] == [] for row in rows))
         self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
         self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
@@ -113,7 +116,7 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(rows, [])
         page = MODULE.build_html(self.contract)
         self.assertNotIn("popp-native-hurt-ascend-fade-v1", page)
-        self.assertIn("不會重新排入 pending", page)
+        self.assertIn("owner 已於 2026-09-15 核准本頁全部素材", page)
         self.assertIn("__settled", page)
         self.assertIn("畫面上沒有可見三角形", page)
         self.assertIn("runtimeBindingAuthorized:false", page)
@@ -122,7 +125,9 @@ class AssetReviewBuilderTest(unittest.TestCase):
         schema = MODULE.decision_schema(self.contract)
         props = schema["properties"]
         self.assertEqual(props["runtimeMutationAllowed"]["const"], False)
-        self.assertEqual(props["decisions"]["minItems"], self.contract["summary"]["pendingDecisionCount"])
+        rows = self.contract["audioCandidates"] + self.contract["motionCandidates"] + self.contract["visualCandidates"]
+        self.assertEqual(props["decisions"]["minItems"], len(rows))
+        self.assertEqual(props["decisions"]["maxItems"], len(rows))
         decision_props = props["decisions"]["items"]["properties"]
         self.assertEqual(decision_props["runtimeBindingAuthorized"]["const"], False)
         self.assertEqual(decision_props["decision"]["enum"], ["pending", "approve", "reject"])
@@ -132,6 +137,16 @@ class AssetReviewBuilderTest(unittest.TestCase):
             self.contract["summary"]["visualCandidateCount"],
         )
         self.assertEqual(visual_rule["then"]["properties"]["approvedBindings"]["maxItems"], 0)
+
+    def test_owner_receipt_covers_the_exact_queue_and_cannot_mutate_runtime(self):
+        receipt = json.loads(MODULE.OWNER_DECISIONS.read_text(encoding="utf-8"))
+        rows = self.contract["audioCandidates"] + self.contract["motionCandidates"] + self.contract["visualCandidates"]
+        self.assertEqual(receipt["sourceFingerprint"], self.contract["sourceFingerprint"])
+        self.assertEqual(len(receipt["decisions"]), len(rows))
+        self.assertEqual({row["candidateId"] for row in receipt["decisions"]}, {row["candidateId"] for row in rows})
+        self.assertTrue(all(row["decision"] == "approve" for row in receipt["decisions"]))
+        self.assertTrue(all(row["runtimeBindingAuthorized"] is False for row in receipt["decisions"]))
+        self.assertIs(receipt["runtimeMutationAllowed"], False)
 
 
 if __name__ == "__main__":

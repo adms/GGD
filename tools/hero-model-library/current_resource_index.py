@@ -296,15 +296,17 @@ def build(git_link_root=ROOT):
             raise ValueError('JUMP FORCE current-resource pointer is stale: '+str(path))
     asset_review_queue_path=base/'review/asset-review-portal-v1/review-queue.json'
     asset_review_schema_path=base/'review/asset-review-portal-v1/review-decision.schema.json'
+    asset_review_owner_decisions_path=base/'review/asset-review-portal-v1/owner-decisions.json'
     asset_review_page_path=ROOT/'apps/client/public/asset-review-portal.html'
     asset_review_queue=read(asset_review_queue_path)
+    asset_review_owner_decisions=read(asset_review_owner_decisions_path)
+    asset_review_total=(asset_review_queue.get('summary',{}).get('audioCandidateCount',0)
+        + asset_review_queue.get('summary',{}).get('motionCandidateCount',0)
+        + asset_review_queue.get('summary',{}).get('visualCandidateCount',0))
     if (asset_review_queue.get('schema')!='ggd.asset-review-portal@1'
         or asset_review_queue.get('summary',{}).get('audioCandidateCount',0)<=0
         or asset_review_queue.get('summary',{}).get('motionCandidateCount',0)<=0
-        or asset_review_queue.get('summary',{}).get('pendingDecisionCount')!=(
-            asset_review_queue.get('summary',{}).get('audioCandidateCount',0)
-            + asset_review_queue.get('summary',{}).get('motionCandidateCount',0)
-            + asset_review_queue.get('summary',{}).get('visualCandidateCount',0))
+        or asset_review_queue.get('summary',{}).get('pendingDecisionCount')!=0
         or asset_review_queue.get('summary',{}).get('visualCandidateCount')!=170
         or asset_review_queue.get('summary',{}).get('kofXivTextureCandidateCount')!=55
         or asset_review_queue.get('summary',{}).get('kofXivEffGroupCandidateCount')!=71
@@ -312,16 +314,34 @@ def build(git_link_root=ROOT):
         or asset_review_queue.get('summary',{}).get('daiVfxMeshComponentCount')!=8
         or asset_review_queue.get('summary',{}).get('poppVfxCandidateCount')!=12
         or asset_review_queue.get('summary',{}).get('daiVfxCompositeCandidateCount')!=6
-        or any(row.get('ownerDecision')!='pending' for row in asset_review_queue.get('visualCandidates',[]))
+        or any(row.get('ownerDecision')!='approve' for row in asset_review_queue.get('visualCandidates',[]))
         or any(row.get('runtimeMutationAllowed') is not False for row in asset_review_queue.get('visualCandidates',[]))
         or any(row.get('approvedBindings')!=[] for row in asset_review_queue.get('visualCandidates',[])
                if row.get('sourceKind')=='infinity-strash-dai-vfx-composite-review')
         or any(row.get('eventCandidates')!=[] for row in asset_review_queue.get('visualCandidates',[])
                if row.get('sourceKind')=='infinity-strash-dai-vfx-composite-review')
-        or asset_review_queue.get('summary',{}).get('approvedDecisionCount')!=0
+        or any(row.get('decision')!='approve' for row in (
+            asset_review_queue.get('audioCandidates',[])
+            + asset_review_queue.get('motionCandidates',[])
+            + asset_review_queue.get('visualCandidates',[])))
+        or any(row.get('runtimeSelectable') is not False for row in (
+            asset_review_queue.get('audioCandidates',[])
+            + asset_review_queue.get('motionCandidates',[])
+            + asset_review_queue.get('visualCandidates',[])))
+        or asset_review_queue.get('summary',{}).get('approvedDecisionCount')!=asset_review_total
+        or asset_review_queue.get('summary',{}).get('approvedPendingTechnicalCount')!=asset_review_total
+        or asset_review_queue.get('summary',{}).get('runtimeSelectableCandidateCount')!=0
         or asset_review_queue.get('summary',{}).get('runtimeBindingsChanged')!=0
+        or asset_review_queue.get('summary',{}).get('productionDeployedAssets')!=0
+        or asset_review_owner_decisions.get('schema')!='ggd.asset-review-decisions@1'
+        or asset_review_owner_decisions.get('sourceFingerprint')!=asset_review_queue.get('sourceFingerprint')
+        or asset_review_owner_decisions.get('runtimeMutationAllowed') is not False
+        or len(asset_review_owner_decisions.get('decisions',[]))!=asset_review_total
+        or any(row.get('decision')!='approve' or row.get('runtimeBindingAuthorized') is not False
+               for row in asset_review_owner_decisions.get('decisions',[]))
+        or asset_review_queue.get('ownerDecisionReceipt',{}).get('sha256')!=hashlib.sha256(asset_review_owner_decisions_path.read_bytes()).hexdigest()
         or asset_review_queue.get('policy',{}).get('runtimeMutationAllowed') is not False):
-        raise ValueError('Unified asset review portal is absent, stale or overclaims approval/runtime binding')
+        raise ValueError('Unified asset review portal is absent, stale or overclaims runtime/deployment state')
     infinity_strash_weapon_review_path=base/'infinity-strash/weapon-review.json'
     infinity_strash_weapon_review_page=ROOT/'apps/client/public/infinity-strash-weapon-review.html'
     infinity_strash_weapon_review=read(infinity_strash_weapon_review_path)
@@ -848,10 +868,13 @@ def build(git_link_root=ROOT):
             queueSha256=hashlib.sha256(asset_review_queue_path.read_bytes()).hexdigest(),
             decisionSchemaGitPath=str(asset_review_schema_path.relative_to(ROOT)),
             decisionSchemaSha256=hashlib.sha256(asset_review_schema_path.read_bytes()).hexdigest(),
+            ownerDecisionReceiptGitPath=str(asset_review_owner_decisions_path.relative_to(ROOT)),
+            ownerDecisionReceiptSha256=hashlib.sha256(asset_review_owner_decisions_path.read_bytes()).hexdigest(),
             reviewPageGitPath=str(asset_review_page_path.relative_to(ROOT)),
             reviewPageSha256=hashlib.sha256(asset_review_page_path.read_bytes()).hexdigest(),
             summary=asset_review_queue['summary'],
             defaultDecision='pending',
+            currentOwnerDecision='approve',
             runtimeMutationAllowed=False,
             productionDeploymentVerified=False),
         infinityStrashWeaponReview=dict(

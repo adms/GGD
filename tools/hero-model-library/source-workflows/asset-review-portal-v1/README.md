@@ -14,7 +14,9 @@
 
 JUMP FORCE 目前只有 89 個群組級審查項目。產生器會從每組選出字典序第一個可播放檔案，重新核對該抽樣的 SHA-256，供角色群分類聽審。這不是逐檔說話者、語言或技能事件證據，所以該類核准不會產生事件綁定權限。
 
-所有進入這個頁面的候選固定以 `pending` 開始，頁面可逐項記錄 `approve`、`reject` 或 `pending`，並匯出 `ggd.asset-review-decisions@1`。視覺候選另固定 `ownerDecision=pending`，其 `approvedBindings` 在 schema 中限定為空陣列；視覺核准只記錄素材觀感，不能當成技能事件或 runtime 綁定授權。已有 owner 決定與 runtime 收據的候選不會重新排入頁面；完成項保留在其來源契約及收據。匯出檔的 `runtimeMutationAllowed` 與每列 `runtimeBindingAuthorized` 都固定為 `false`；後續整合流程仍需驗證使用者裁決、來源指紋與實際 runtime 實作。
+候選最初以 `pending` 建立，頁面可逐項記錄 `approve`、`reject` 或 `pending`，並匯出 `ggd.asset-review-decisions@1`。Owner 已於 2026-09-15 明確核准本頁全部 331 項；固定來源收據為 `materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json`，以 `sourceFingerprint` 及完整 candidate ID 集合防止收據套到不同佇列。視覺核准只記錄素材觀感；JUMP FORCE 群組抽樣核准只確認群組分類。這些核准不等於格式、效能、動畫、角色／技能事件綁定或正式站部署通過。
+
+產生器會把 331 項列為 `approve`，同時維持 `runtimeSelectable=false`、`runtimeBindingChanged=false`、`runtimeMutationAllowed=false` 及 `productionDeployedAssets=0`。因此目前狀態是「owner 已核准，等待逐項技術整合」，只有日後另有技術 gate 與 runtime 收據的項目才能列為可切換。事件或動作提案的 owner 選擇保存在 `approvedBindings`，但每列 `runtimeBindingAuthorized` 仍固定為 `false`，不能直接當成已上架證據。
 
 重建及驗證：
 
