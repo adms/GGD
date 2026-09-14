@@ -7,6 +7,7 @@ import argparse
 import collections
 import hashlib
 import json
+import os
 import struct
 import sys
 from pathlib import Path
@@ -20,17 +21,15 @@ DEFAULT_OUTPUT = (
     / "materials/hero-model-library/priority-evidence"
     / "infinity-strash-dai-vearn-release-audit-v1/report.json"
 )
-ASSET_LIBRARY = DEFAULT_REPO.parent / "GGD-Asset-Library"
-RAW_EXTRACTION_INDEX = (
-    ASSET_LIBRARY
-    / "intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json"
+RAW_INDEX_RELATIVE = Path(
+    "intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json"
 )
-AUDIO_ROOT = (
-    ASSET_LIBRARY
-    / "intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1"
+AUDIO_ROOT_RELATIVE = Path(
+    "intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1"
 )
-AUDIO_SOURCE_MANIFEST = AUDIO_ROOT / "source-manifest.json"
-AUDIO_FILE_INDEX = AUDIO_ROOT / "audio-file-index.json"
+RAW_EXTRACTION_SUMMARY_RELATIVE = Path(
+    "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/extraction-summary.json"
+)
 
 TARGETS = (
     {
@@ -85,6 +84,54 @@ def external_source(path: Path) -> dict[str, Any]:
     }
 
 
+def asset_library_from_indexed_path(path: Path) -> Path | None:
+    """Return the preserved asset-library root which owns an indexed path."""
+    for parent in (path.parent, *path.parents):
+        if parent.name == "GGD-Asset-Library":
+            return parent
+    return None
+
+
+def resolve_asset_library(repo: Path, workspace: Path | None = None) -> Path:
+    """Find the shared local asset library without assuming a checkout layout.
+
+    A normal checkout may be a sibling of ``GGD-Asset-Library``.  Isolated
+    worktrees are often elsewhere, so the versioned raw-extraction receipt is
+    also an authority for its preserved absolute index location.  ``--workspace``
+    remains available when the archive has moved to another machine.
+    """
+    candidates: list[Path] = []
+    if workspace is not None:
+        candidates.append(workspace.resolve() / "GGD-Asset-Library")
+    env_workspace = os.environ.get("GGD_ASSET_LIBRARY")
+    if env_workspace:
+        candidates.append(Path(env_workspace).expanduser().resolve())
+    candidates.extend(parent / "GGD-Asset-Library" for parent in (repo.parent, *repo.parents))
+
+    summary_path = repo / RAW_EXTRACTION_SUMMARY_RELATIVE
+    if summary_path.is_file():
+        summary = read_json(summary_path)
+        absolute_index = summary.get("extractionIndex", {}).get("absolutePath")
+        if isinstance(absolute_index, str):
+            resolved = asset_library_from_indexed_path(Path(absolute_index))
+            if resolved is not None:
+                candidates.append(resolved)
+
+    checked: list[str] = []
+    for candidate in candidates:
+        candidate = candidate.resolve()
+        if str(candidate) in checked:
+            continue
+        checked.append(str(candidate))
+        if (candidate / RAW_INDEX_RELATIVE).is_file() and (candidate / AUDIO_ROOT_RELATIVE).is_dir():
+            return candidate
+    raise FileNotFoundError(
+        "Infinity Strash asset library was not found. Supply --workspace <ABxVFX_EDIT> "
+        "or set GGD_ASSET_LIBRARY to the preserved GGD-Asset-Library path. Checked: "
+        + ", ".join(checked)
+    )
+
+
 def verify_external_file(path: Path, row: dict[str, Any]) -> int:
     if not path.is_file():
         raise ValueError(f"missing indexed source file: {path}")
@@ -93,8 +140,12 @@ def verify_external_file(path: Path, row: dict[str, Any]) -> int:
     return row["bytes"]
 
 
-def build_source_material_audit() -> dict[str, Any]:
-    raw = read_json(RAW_EXTRACTION_INDEX)
+def build_source_material_audit(asset_library: Path) -> dict[str, Any]:
+    raw_extraction_index = asset_library / RAW_INDEX_RELATIVE
+    audio_root = asset_library / AUDIO_ROOT_RELATIVE
+    audio_source_manifest = audio_root / "source-manifest.json"
+    audio_file_index = audio_root / "audio-file-index.json"
+    raw = read_json(raw_extraction_index)
     if raw["selection"]["selectedEntries"] != len(raw["files"]):
         raise ValueError("Infinity Strash raw extraction count drifted")
 
@@ -112,15 +163,15 @@ def build_source_material_audit() -> dict[str, Any]:
             "allLocalFileSha256VerifiedThisRun": True,
         }
 
-    audio_manifest = read_json(AUDIO_SOURCE_MANIFEST)
-    audio_index = read_json(AUDIO_FILE_INDEX)
+    audio_manifest = read_json(audio_source_manifest)
+    audio_index = read_json(audio_file_index)
     audio_rows: dict[str, dict[str, Any]] = {}
     verified_audio_files = 0
     verified_audio_bytes = 0
     for identity in ("PN010", "EN801"):
         rows = [row for row in audio_index["files"] if identity in row.get("nativeIds", [])]
         for row in rows:
-            decoded = AUDIO_ROOT / row["path"]
+            decoded = audio_root / row["path"]
             verified_audio_bytes += verify_external_file(decoded, row)
             verified_audio_files += 1
             source_path = Path(row["sourcePath"])
@@ -148,7 +199,7 @@ def build_source_material_audit() -> dict[str, Any]:
 
     return {
         "rawPackages": {
-            "index": external_source(RAW_EXTRACTION_INDEX),
+            "index": external_source(raw_extraction_index),
             "sourcePak": raw["sourcePak"],
             "selectedFiles": len(raw["files"]),
             "selectedBytes": raw["totalBytes"],
@@ -171,8 +222,8 @@ def build_source_material_audit() -> dict[str, Any]:
             "note": "Raw Niagara/material/texture package membership is acquisition evidence only; no Dai/Vearn GGD VFX or skill binding is claimed.",
         },
         "audio": {
-            "sourceManifest": external_source(AUDIO_SOURCE_MANIFEST),
-            "fileIndex": external_source(AUDIO_FILE_INDEX),
+            "sourceManifest": external_source(audio_source_manifest),
+            "fileIndex": external_source(audio_file_index),
             "identities": audio_rows,
             "verifiedSourceAndDecodedFilesThisRun": verified_audio_files,
             "verifiedSourceAndDecodedBytesThisRun": verified_audio_bytes,
@@ -338,7 +389,7 @@ def record_target(
     }
 
 
-def build(repo: Path) -> dict[str, Any]:
+def build(repo: Path, workspace: Path | None = None) -> dict[str, Any]:
     resources_path = repo / "materials/asset-library/current-resources.json"
     budget_path = repo / "content/assets/model-budget/report.json"
     validation_path = (
@@ -450,7 +501,7 @@ def build(repo: Path) -> dict[str, Any]:
             "liveSmbMountAvailableAtAuditTime": False,
             "note": "This report verifies the checked-in candidates and preserved local evidence. It does not claim a fresh SMB read or production deployment.",
         },
-        "sourceMaterials": build_source_material_audit(),
+        "sourceMaterials": build_source_material_audit(resolve_asset_library(repo, workspace)),
     }
 
 
@@ -510,6 +561,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=DEFAULT_REPO)
+    parser.add_argument("--workspace", type=Path, help="ABxVFX_EDIT root containing GGD-Asset-Library")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--write", action="store_true")
@@ -518,7 +570,7 @@ def main() -> int:
 
     repo = args.repo.resolve()
     output = args.output if args.output.is_absolute() else repo / args.output
-    report = build(repo)
+    report = build(repo, args.workspace)
     encoded = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     markdown = render_markdown(report)
     markdown_path = output.with_name("README.md")

@@ -11,6 +11,12 @@ SPEC.loader.exec_module(MODULE)
 
 
 class StrashReleaseAuditTest(unittest.TestCase):
+    def test_isolated_checkout_finds_receipt_pinned_asset_library(self):
+        asset_library = MODULE.resolve_asset_library(MODULE.DEFAULT_REPO)
+        self.assertEqual(asset_library.name, "GGD-Asset-Library")
+        self.assertTrue((asset_library / MODULE.RAW_INDEX_RELATIVE).is_file())
+        self.assertTrue((asset_library / MODULE.AUDIO_ROOT_RELATIVE).is_dir())
+
     def test_current_checkout_has_three_byte_backed_candidates(self):
         report = MODULE.build(MODULE.DEFAULT_REPO)
         self.assertEqual(report["summary"]["acceptedAndDropdownRegistered"], 3)
