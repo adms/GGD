@@ -15,8 +15,8 @@
       "bytes": 1472329
     },
     "materials": {
-      "files": 82,
-      "bytes": 55452611
+      "files": 107,
+      "bytes": 87028224
     }
   },
   "bigBlobs": [
@@ -59,6 +59,16 @@
       "path": "materials/hero-model-library/已取得模型待設計英雄.json",
       "bytes": 11237910,
       "why": "素材庫固定待設計英雄索引；保存未綁定原生角色 ID、來源版本與缺口狀態"
+    },
+    {
+      "path": "materials/hero-model-library/priority-81-handoff.json",
+      "bytes": 7816018,
+      "why": "優先 81 名英雄的模型／動作／語音交接總表（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/main-81-handoff/current-branch-audio/overlay.json",
+      "bytes": 6313764,
+      "why": "優先 81 名的分支語音疊加稽核（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
     }
   ],
   "legacyPerFileBytes": 1048576,
