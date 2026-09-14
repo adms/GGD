@@ -74,10 +74,26 @@ from pathlib import Path
 
 sys.path.insert(0, "scripts")
 import ledger_table as LT
+import claude_project_dir as CPD
 
 TZ = datetime.timezone(datetime.timedelta(hours=8))          # owner 的本地時區
-PROJ = Path(os.environ.get(                                    # 測試用;出貨一律讀真的 transcript
-    "GGD_TRANSCRIPT_DIR", os.path.expanduser("~/.claude/projects/-Users-Takuro-GGD")))
+
+
+def _transcript_dir() -> Path:
+    """`GGD_TRANSCRIPT_DIR`（測試用）＞ 主工作樹 slug（GH#1254，⛔ 不寫死一台機器的路徑）。
+
+    推不出來（不是 git 樹）⇒ 說出來，回一個不存在的路徑 ⇒ 走已版控存檔那條來源（本來就是 CI 的路）。
+    """
+    if os.environ.get("GGD_TRANSCRIPT_DIR"):
+        return Path(os.environ["GGD_TRANSCRIPT_DIR"])
+    try:
+        return CPD.project_dir(Path.cwd())
+    except LookupError as e:
+        print(f"⚠️ 推不出 transcript 目錄（{e}）—— 只能讀已版控的存檔", file=sys.stderr)
+        return Path("/nonexistent-claude-project-dir")
+
+
+PROJ = _transcript_dir()
 MAXLEN = int(os.environ.get("GGD_LEDGER_MAXLEN", "300"))
 WINDOW = 24                                                   # 判定「已經有列」的比對窗
 
