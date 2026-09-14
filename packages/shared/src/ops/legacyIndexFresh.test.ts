@@ -63,12 +63,19 @@ describe("legacy 記憶索引（owner 2026-08-13「以免真的需要的時候�
   });
 
   it("⭐ 退休英雄卡的狀態欄從來源推導 —— 對**真的 import** 的名單逐張比（C13 / GH#1227）", () => {
-    // owner 2026-09-15 02:44（docs/_daily/2026-09-15.md:13）：
-    //   「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態 => 你解說阿 是不是應該修一個段落 BMPNDD」
+    // owner 2026-09-15 02:44（docs/_daily/2026-09-15.md:13，逐字）：「你解說阿 是不是應該修一個段落 BMPNDD」
+    //   ⚠️ 那一則 `=>` 前的「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態」是貼回來的 **Claude 條目**，
+    //   ⛔ 不是 owner 的話（更正 ef326ac70：那一版把整句標成 owner 的）。
     // ⭐ 產生器用 regex 讀 TS；這一條用 import 讀同一份陣列 ⇒ regex 讀漏、或有人把名單
     //    抄死在產生器裡，只要 COMMUNITY_ACQUIRED_LEGACY 一動，這裡就紅。
-    // 突變紀錄（2026-09-15）：在 COMMUNITY_ACQUIRED_LEGACY 加一筆 godie-e00v、不重跑產生器
-    //   ⇒ 紅（e00v 期望「待重上架」，索引寫「從未開放」）；重跑產生器 ⇒ 那一列的狀態跟著變。
+    // 突變紀錄（2026-09-15 審查後續重跑，⭐ 排版逐字寫出來 —— 兩種排版結果**不同**）：
+    //   Ⓐ 陣列尾端加**單行** `  { ...({} as CommunityHeroExample), id: "godie-e00v" },`、不重跑產生器
+    //     ⇒ 產生器 `--check` **回 0**（它的 regex `^\s*id:` 要 id 在行首 ⇒ 靜默少讀這一筆），
+    //       只有**這一條**紅（e00v 期望「待重上架」，索引寫「從未開放」）⇒ ⭐ 這一條補的正是 --check 的盲區。
+    //   Ⓑ 改成**多行** `  {` / `    ...({} as CommunityHeroExample),` / `    id: "godie-e00v",` / `  },`、不重跑
+    //     ⇒ 2 條紅（`--check` 過期 ＋ 這一條）；重跑產生器 ⇒ e00v 變「待重上架（#1205）」、張數 8/33 → 9/32。
+    //   ⚠️ 更正 ef326ac70 的回報：它寫的突變是Ⓐ的單行排版卻報了Ⓑ的「2 條紅」—— 實跑Ⓐ只會紅 1 條。
+    //   兩者都以 Edit 改回、重產，`--check` 回 0。
     const retired = new Set<string>(
       JSON.parse(readFileSync(join(REPO, "content/config/roster.json"), "utf8")).retiredChampions,
     );
@@ -87,7 +94,9 @@ describe("legacy 記憶索引（owner 2026-08-13「以免真的需要的時候�
       expect(row, `${f} 在索引的 champions 表裡沒有列`).toBeDefined();
       expect(
         row,
-        `${f} 的狀態應該是「${want}」—— ⛔ 不要改這條測試，跑 python3 tools/legacy-index/build_index.py`,
+        `${f} 的狀態應該是「${want}」—— ⛔ 不要改這條測試，先跑 python3 tools/legacy-index/build_index.py。\n` +
+          `⚠️ 重產之後**仍然紅** ⇒ 不是索引過期，是產生器的三條規則（legacy_champion_status）與這條測試的規則不一致：` +
+          `對照兩邊，改錯的那一邊（⛔ 不要只為了變綠改這裡）`,
       ).toContain(want);
     }
   });

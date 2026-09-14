@@ -225,6 +225,22 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
     "⇒ ⭐ 沒有產物就沒有「過期」這回事,接進 `skills:sync` 只是把同一個分析跑第二次。" +
     "⚠️ 它守的是**平衡公式自洽**（每一格倍率 ×0.5／×2 重算,兩邊一起動而佔血條不動 = 回音迴圈）," +
     "⛔ 不是某份文件的新鮮度。反駁法:如果哪天它開始寫檔,這一列就要刪掉。",
+  // ⭐ 2026-09-15（GH#1227 C13 審查後續）—— 從 EXEMPT 搬過來（舊理由為什麼是假的，見 EXEMPT 那一格的註解）。
+  //    突變（實跑）：把 `pnpm legacyindex:check && ` 從 `skills:check` 拿掉 ⇒ 本檔 3 條紅，三條都指名它
+  //    （「沒被 skills:check 跑到也沒豁免」· 「第三個方向」的 sentinel：這一列指向不在 check 鏈上的步驟 ·
+  //     「產物那一端」：`tools/legacy-index/` 不在視野裡）；Edit 改回。
+  "legacyindex:check":
+    "⭐ 它**會寫產物**（`docs/legacy-index.md`），⛔ 而它的四組輸入**沒有一組是 `skills:sync` 寫的**：" +
+    "`docs/legacy/**`（`_overwrites/` 刻意跳過，GH#947）· `content/_legacy/**` · `content/config/roster.json` 的 `retiredChampions` · " +
+    "`packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY`。" +
+    "2026-09-15 對 `tools/parallel-gates/sync-io.json` 68 步的 writes 逐一比對：唯一落在這四組底下的是 " +
+    "`board:build` → `docs/legacy/_overwrites/_ledger.tsv`，正好在產生器跳過的那個目錄。" +
+    "⇒ 聚合重生成**不會**讓它過期，也**修不好**它：它紅只可能是有人在 sync 之外動了這四組輸入（搬進／搬出／改 legacy 檔、改那兩份名單），" +
+    "修法是它自己的 `--check` 訊息指名的那一行（`pnpm legacyindex:build`）。" +
+    "⛔ 刻意不現在接進 `skills:sync`：改那條鏈＝改 `sync-io.json` 的身分（`sync.mjs` 閘①逐字比對 chain），" +
+    "要重跑 3-pass trace（GH#710），全域只能一條工作流跑。" +
+    "反駁法：sync-io 任一步的 writes 開始落在上面四組輸入裡（`_overwrites/` 除外）⇒ 這一列當場作廢，" +
+    "要把 `legacyindex:build` 接在那一步之後。",
 };
 
 const EXEMPT: Record<string, string> = {
@@ -270,9 +286,12 @@ const EXEMPT: Record<string, string> = {
     "技能／特效／級距／卡面說明一個位元組都不會進來。⛔ 它也不是新鮮度閘（欄位缺了才紅，不是過期才紅）",
   "docs:status:test": "這是那支產生器**自己的單元測試**，不是新鮮度閘",
   "iconstyle:check": "圖示的**美術指導**快照 —— 讀 icon-gen 的提示詞常數，不讀 abilities/vfx/級距",
-  "legacyindex:check":
-    "掃 `docs/legacy/` 與 `content/_legacy/` 底下**有哪些檔**（簡介取自那個檔自己的第一段）—— " +
-    "⛔ **不讀**出貨中的 `content/abilities|vfx|config`：⭐ 只有把檔案搬進／搬出 legacy 才會動它的產物",
+  // ⭐ 2026-09-15（GH#1227 C13 審查後續）—— `legacyindex:check` 這一列**刪掉了**，它改成接進 `skills:check`。
+  //    ⚠️ 舊理由逐字是「⛔ **不讀**出貨中的 `content/abilities|vfx|config`：⭐ 只有把檔案搬進／搬出 legacy
+  //    才會動它的產物」—— ⛔ ef326ac70 讓產生器去讀 `content/config/roster.json` 的 `retiredChampions`
+  //    與 `communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` 之後，**兩半都是假的**
+  //    （第三守則：一句被散文守著的理由活過了它的保存期限，而這張表不會紅）。
+  //    ⇒ 它的「build 不在 skills:sync 上」那一半改住 {@link CHECK_STEP_NO_SYNC}，理由逐列寫明。
   "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
   "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
   "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",

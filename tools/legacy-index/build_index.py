@@ -149,8 +149,10 @@ CONTENT_LEGACY_NOTE = (
 # ---------------------------------------------------------------------------
 # ⭐ 退休英雄卡的「狀態」欄（C13 / GH#1227）—— 從**兩個既有住處**推導
 # ---------------------------------------------------------------------------
-# owner 2026-09-15 02:44（`docs/_daily/2026-09-15.md:13`，逐字）：
-#   「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態 => 你解說阿 是不是應該修一個段落 BMPNDD」
+# owner 2026-09-15 02:44（`docs/_daily/2026-09-15.md:13`，逐字）：「你解說阿 是不是應該修一個段落 BMPNDD」
+#   ⚠️ 他那一則的 `=>` 前面是**貼回來的 Claude 條目**「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態」
+#   （出處是 Claude 寫的 valhalla 稽核頁），⛔ 不是 owner 的話；「約 35」也是 Claude 少扣了變身態的數字（實為 48 張、三群）。
+#   ⭐ 更正 ef326ac70：那一版把整句連 `=>` 前面一起標成 owner 逐字。
 #
 # 在此之前 `describe_content_doc()` 對每一張卡都算出同一句「下架，不再出貨」，
 # 而 `render()` 在 `content/_legacy` 那一段連那一句都沒印 ⇒ 待重上架的黑化Saber 與
@@ -164,6 +166,9 @@ CONTENT_LEGACY_NOTE = (
 # ⛔ 這裡**不抄任何 id**（CONTENT_LEGACY_NOTE 自己說過：硬編名單是第四個住處）。
 # ⚠️ ② 的住處是 TS，所以這裡用 regex 讀 —— ⭐ 而 `legacyIndexFresh.test.ts` 用**真的 import**
 #    對同一份陣列比對索引的每一列，regex 讀漏一筆就紅（⛔ 不是只信 regex）。
+# ⚠️ 這支自己的 fail-loud **只管「一筆都讀不到」**：regex 要 `id:` 在行首，所以一筆寫成單行
+#    `{ ...x, id: "…" }` 的條目會被**靜默少讀**，而 `--check` 照樣回 0（2026-09-15 突變實跑）。
+#    ⇒ 那一筆只有上面那條 import 守衛會紅；⛔ 不要以為 `--check` 綠就代表名單讀全了。
 ROSTER_SRC = "content/config/roster.json"
 REOPEN_SRC = "packages/shared/src/content/heroForge/communityAcquiredLegacy.ts"
 REOPEN_EXPORT = "COMMUNITY_ACQUIRED_LEGACY"
@@ -225,11 +230,13 @@ def render_legacy_champions(rows: list[tuple[str, str, str]]) -> list[str]:
         f"| 2 | 它或本體在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}` | {STATUS_REOPEN} | {count[STATUS_REOPEN]} |",
         f"| 3 | 其他 | {STATUS_NEVER} | {count[STATUS_NEVER]} |",
         "",
-        "「回收桶」的出處 —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：",
+        "「沒開放的英雄搬進退休區」的**裁決** —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：",
         "「你可不可以把沒開放的英雄資料包含技能都放到一個 leagcy 區 預設不要再被讀取到了 不然我已經重複講了好幾次"
-        " 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」；"
-        "owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）："
-        "「⋯留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」。",
+        " 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」。",
+        "",
+        "「回收桶」這個**詞**取自 owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）："
+        "「你應該知道我們有個 leagcy 資料夾可以運用 但留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」"
+        " —— ⚠️ 帳本那一列標的是**純討論**（legacy 索引概念），⛔ 不是裁決。",
         "",
     ]
     missing = sorted(i for i in reopen if i not in seen)
