@@ -1,7 +1,12 @@
 import { zModelDoc } from "../schema/model";
 import { MODEL_VERSION_PREFIX } from "../schema/championModelVersions";
 
-/** One selection rule for the Editor catalog and Main's trusted importer. */
+/**
+ * One selection rule for the Editor catalog and Main's trusted importer.
+ *
+ * ⚠️ GH#1188「待認領」⛔ 不在這裡算 —— 判準住 `./modelClaims.ts`（要讀 `_legacy`／skins／heroForge TS／下載清單，
+ * 匯入器不該為了一個顯示用的分組載入那些）。2026-09-15 更正 991b02ed6 把它併進這一支、而且只看 `champions/` 的做法。
+ */
 export function heroBodyModelIds(documents: Iterable<readonly [string, unknown]>): string[] {
   const bound = new Set<string>();
   const models: Array<{ id: string; heroBody?: boolean }> = [];

@@ -44,6 +44,27 @@ import { canonicalizeJcs } from "@ggd/shared/content/import/jcs";
 export const OPERATION_SCHEMA = "ggd-content-import-operation@1" as const;
 export const ACTIVE_SCHEMA = "ggd-content-import-active@1" as const;
 
+/**
+ * ⭐ `putWorkVersion` 在一次呼叫裡驗幾輪位元組（GH#1178 補的回頭開關；只有作者／維運會轉 ⇒ 環境變數，⛔ 不進後台）。
+ *
+ * - `once`（預設）：新寫的檔寫完讀回驗一次；沿用前一版的檔已經在同一次呼叫的 `getWorkVersion(prior)` 逐檔驗過 ⇒ ⛔ 不再讀；
+ *   提交後只重驗紀錄（身分／雜湊／路徑）。讀取端（`readWorkFiles`／`readWorkFile`）照舊每次逐檔驗。
+ * - `full`：回到 0da79d14a 之前 —— 沿用的檔在提交前再讀一次、提交後再整份 `getWorkVersion` 一次。
+ *
+ * ⚠️ 為什麼預設 ⛔ 不補回提交後重驗（2026-09-15 評估，審查者要求寫明）：量到只改一份文件的英雄目錄存檔 8.8 → 6.6 秒，
+ *   其中這一段 5.1 → 3.2 秒 ⇒ 補回等於每次存檔多 ≈ 2 秒（約三成），而 #1178 的「<5 秒」還沒達到。
+ *   多出來那兩輪能多抓到的只有「同一次呼叫的幾秒內，不可變物件庫被別人改掉／rename 把位元組弄壞」——
+ *   而讀的那一刻本來就會逐檔驗、壞了會丟錯（⛔ 不是靜默拿到壞位元組）。
+ *   ⇒ 懷疑物件庫所在的磁碟或另一個行程在動它時，切 `full` 排查。⛔ 打錯字不靜默退回預設。
+ */
+export const WORK_VERSION_VERIFY_ENV = "GGD_WORK_VERSION_VERIFY";
+export function workVersionVerifyMode(env: Record<string, string | undefined> = process.env): "once" | "full" {
+  const raw = env[WORK_VERSION_VERIFY_ENV]?.trim();
+  if (!raw || raw === "once") return "once";
+  if (raw === "full") return "full";
+  throw new Error(`${WORK_VERSION_VERIFY_ENV} 只接受 once／full，收到「${raw}」。`);
+}
+
 /** ⭐ 狀態機。⛔ 終態（`activated`/`rejected`/`rolled-back`）**不可再變**。 */
 export type OperationStatus =
   | "received"
@@ -543,8 +564,14 @@ export class ImportStore {
     try {
       mkdirSync(tempDir, { recursive: true });
       for (const fact of facts) if (!storageRefs[fact.path]) writeDurable(join(tempDir, fact.path), files.get(fact.path)!);
+      // ⭐ GH#1178：每份位元組在這一次呼叫裡**驗一次**就夠 —— 沿用的檔剛剛才在 `getWorkVersion(prior)`
+      //   逐檔讀回比對過（`storageRefs` 只收雜湊與大小都相同的），⛔ 不再讀第二次；新寫的照舊讀回。
+      //   （量到：英雄目錄 349 MiB、只改一份文件的保存，這裡與下面的收尾各多讀一整份。）
+      //   回頭：`GGD_WORK_VERSION_VERIFY=full`（理由與代價寫在 `workVersionVerifyMode`）。
+      const fullVerify = workVersionVerifyMode() === "full";
       for (const fact of facts) {
         const origin = storageRefs[fact.path];
+        if (origin && !fullVerify) continue;
         const bytes = readFileSync(join(origin ? this.workVersionPath(identity.workId, origin) : tempDir, fact.path));
         if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品物件讀回失敗：${fact.path}`);
       }
@@ -557,7 +584,8 @@ export class ImportStore {
         return { record: raced, stored: false };
       }
       fsyncDir(dirname(finalDir));
-      return { record: this.getWorkVersion(identity.workId, versionId)!, stored: true };
+      // 提交之後只重驗紀錄本身（身分／雜湊／路徑）；檔案內容上面已經逐份驗過。讀取端（readWorkFiles）仍逐檔驗。
+      return { record: (fullVerify ? this.getWorkVersion(identity.workId, versionId) : this.readWorkVersionRecord(identity.workId, versionId))!, stored: true };
     } finally { rmSync(tempDir, { recursive: true, force: true }); }
   }
 

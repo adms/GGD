@@ -1,7 +1,8 @@
 import { extname } from "node:path";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
-import { HERO_REF_COLLECTIONS, projectCatalogHero, type CatalogFiles } from "./catalogHero";
+import { catalogAddressedAssets, HERO_REF_COLLECTIONS, projectCatalogHero, type CatalogFiles } from "./catalogHero";
+import type { AddressedAssetFact } from "./catalogAddressedAssets";
 
 const OWNED = new Set(["champions", "abilities", "models", "projectiles", "status-effects", "vfx", "vfx-scripts", "vfx-subtypes", "ability-templates"]);
 const REF_FIELDS = new Set(["id", "ref", "preset", ...Object.keys(HERO_REF_COLLECTIONS)]);
@@ -37,6 +38,10 @@ export function instantiateCatalogHero(current: CatalogFiles, historical: Catalo
   };
   docs.forEach(({doc}) => inspectSounds(doc));
   for (const [path, bytes] of source.files) if (path.startsWith("assets/")) assetPaths.set(path, `assets/hero-instances/${sha256Bytes(bytes)}${extname(path)}`);
+  for (const [path, fact] of source.addressed) assetPaths.set(path, `assets/hero-instances/${fact.sha256.slice(7)}${extname(path)}`);
+  // GH#1178：兩邊都可能「只記雜湊」⇒ 比對一律用雜湊，⛔ 不假設手上有位元組。
+  const currentAddressed = catalogAddressedAssets(current);
+  const currentSha = (path: string) => { const bytes = current.get(path); return bytes ? "sha256:" + sha256Bytes(bytes) : currentAddressed.get(path)?.sha256 ?? null; };
   const rewrite = (value: unknown, key = ""): unknown => {
     if (TEXT_FIELDS.has(key)) return value;
     if (typeof value === "string") {
@@ -50,9 +55,11 @@ export function instantiateCatalogHero(current: CatalogFiles, historical: Catalo
     return value;
   };
   const files = new Map<string, Uint8Array>();
+  /** 目標路徑 → 只記雜湊的素材；`path` 是歷史版本裡的原路徑（回復時從工作樹換回位元組）。 */
+  const addressed = new Map<string, AddressedAssetFact>();
   const addImmutable = (path: string, bytes: Uint8Array) => {
-    const present = current.get(path);
-    if (present && !Buffer.from(present).equals(Buffer.from(bytes))) throw new Error(`獨立版本身分已有不同資料，未覆寫：${path}`);
+    const present = current.get(path), hashed = present ? undefined : currentAddressed.get(path);
+    if ((present && !Buffer.from(present).equals(Buffer.from(bytes))) || (hashed && hashed.sha256 !== "sha256:" + sha256Bytes(bytes))) throw new Error(`獨立版本身分已有不同資料，未覆寫：${path}`);
     files.set(path, bytes);
   };
   const templateVersions = new Map(docs.filter(({collection}) => collection === "ability-templates").map(({doc}) => {
@@ -94,11 +101,19 @@ export function instantiateCatalogHero(current: CatalogFiles, historical: Catalo
     }
     files.set(audioPath, Buffer.from(JSON.stringify(now, null, 2) + "\n"));
   }
-  for (const [path, target] of assetPaths) if (usedAssets.has(target)) addImmutable(target, source.files.get(path)!);
-  const facts = [...files].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, bytes]) => ({path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes)}));
+  for (const [path, target] of assetPaths) {
+    if (!usedAssets.has(target)) continue;
+    const hashed = source.addressed.get(path);
+    if (!hashed) { addImmutable(target, source.files.get(path)!); continue; }
+    const present = currentSha(target);
+    if (present && present !== hashed.sha256) throw new Error(`獨立版本身分已有不同資料，未覆寫：${target}`);
+    addressed.set(target, hashed);
+  }
+  const facts = [...[...files].map(([path, bytes]) => ({path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes)})), ...[...addressed].map(([path, {bytes, sha256}]) => ({path, bytes, sha256}))]
+    .sort((a, b) => a.path.localeCompare(b.path, "en"));
   const changes = facts.flatMap((fact) => {
-    const before = current.get(fact.path), beforeSha256 = before ? "sha256:" + sha256Bytes(before) : null;
-    return beforeSha256 === fact.sha256 ? [] : [{...fact, beforeSha256, kind: before ? "changed" as const : "added" as const}];
+    const beforeSha256 = currentSha(fact.path);
+    return beforeSha256 === fact.sha256 ? [] : [{...fact, beforeSha256, kind: beforeSha256 ? "changed" as const : "added" as const}];
   });
-  return { target: {...source, files, facts}, changes, affected: [source.hero] };
+  return { target: {...source, files, addressed, facts}, changes, affected: [source.hero] };
 }

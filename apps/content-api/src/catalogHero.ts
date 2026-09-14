@@ -7,6 +7,7 @@ import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
 import type { CatalogSourceArchive } from "./catalogGeneratorSources";
+import type { AddressedAssetFact } from "./catalogAddressedAssets";
 
 export const HERO_REF_COLLECTIONS: Record<string, string> = {
   modelKey: "models", sourceModelKey: "models", abilityId: "abilities", passiveAbility: "abilities", exAbility: "abilities",
@@ -21,6 +22,12 @@ export function catalogHeroes(files: CatalogFiles): CatalogHero[] {
   const manifest = files.get("catalog-version.json");
   return manifest ? JSON.parse(Buffer.from(manifest).toString()).heroes : [];
 }
+/** GH#1178：版本清單記著、但位元組不在 `files` 裡的素材（見 `catalogAddressedAssets.ts`）。 */
+export function catalogAddressedAssets(files: CatalogFiles): Map<string, AddressedAssetFact> {
+  const manifest = files.get("catalog-version.json");
+  const list = manifest ? (JSON.parse(Buffer.from(manifest).toString()).contentAddressedAssets ?? []) as AddressedAssetFact[] : [];
+  return new Map(list.map((fact) => [fact.path, fact]));
+}
 
 /** The closure retains authoring bytes; parsing is used only to discover edges.
  * No hero conversion, ID inference from names, or prose rewriting occurs here. */
@@ -28,13 +35,17 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
   const hero = catalogHeroes(files).find((entry) => entry.path === heroPath);
   if (!hero) throw Object.assign(new Error("此版本沒有指定英雄。"), { statusCode: 404 });
   const selected = new Map<string, Uint8Array>(), issues = new Set<string>();
+  // ⭐ 只記雜湊的素材也是閉包的一員：事實（路徑／大小／雜湊）與全量模式逐位元相同，只是沒有位元組。
+  const addressed = catalogAddressedAssets(files), selectedAddressed = new Map<string, AddressedAssetFact>();
   const prefix = hero.catalog === "legacy" ? "catalog/_legacy/" : hero.catalog === "overlay" ? "overlay/" : "catalog/";
   const find = (collection: string, id: string) => [prefix, "catalog/"].map((p) => `${p}${collection}/${id}.json`).find((p) => files.has(p));
   const visit = (path: string) => {
-    if (selected.has(path)) return;
-    const bytes = files.get(path); if (!bytes) { issues.add(`缺少 ${path}`); return; }
+    if (selected.has(path) || selectedAddressed.has(path)) return;
+    const bytes = files.get(path), hashed = bytes ? undefined : addressed.get(path);
+    if (hashed) { selectedAddressed.set(path, hashed); return; }
+    if (!bytes) { issues.add(`缺少 ${path}`); return; }
     selected.set(path, bytes);
-    if (selected.size > 10000) throw new Error("英雄版本引用超過上限。");
+    if (selected.size + selectedAddressed.size > 10000) throw new Error("英雄版本引用超過上限。");
     if (!path.endsWith(".json") || path.startsWith("assets/")) return;
     const doc = JSON.parse(Buffer.from(bytes).toString()) as Record<string, unknown>;
     const collection = path.split("/").at(-2)!;
@@ -77,11 +88,11 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
   visit(heroPath);
   // Global rules are retained for comparison, but their unrelated heroes/VFX
   // are not this hero's authoring dependencies and must never be instantiated.
-  const heroFiles = new Set(selected.keys());
+  const heroFiles = new Set([...selected.keys(), ...selectedAddressed.keys()]);
   for (const id of [...HERO_RESOLVER_CONFIG_IDS, ...HERO_RENDER_CONFIG_IDS]) {
     const path = find("config", id); if (path) visit(path);
   }
-  for (const path of Object.values(BUILTIN_VFX_TEXTURES)) if (files.has(path)) visit(path);
+  for (const path of Object.values(BUILTIN_VFX_TEXTURES)) if (files.has(path) || addressed.has(path)) visit(path);
   const archive = JSON.parse(Buffer.from(files.get("catalog-version.json")!).toString()).generatorSources as CatalogSourceArchive | undefined;
   const generatorSources = (archive?.bindings ?? []).filter((binding) => selected.has(binding.productPath));
   for (const binding of generatorSources) {
@@ -94,6 +105,7 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
       selected.set(fact.path, bytes);
     }
   }
-  const facts = [...selected].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes) }));
-  return { hero, heroFiles, files: selected, facts, digest: contentSha256(facts), issues: [...issues].sort(), generatorSources: generatorSources.map((binding) => ({...binding, source: binding.sourcePath && files.has(binding.sourcePath) ? Buffer.from(files.get(binding.sourcePath)!).toString() : null})) };
+  const facts = [...[...selected].map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes) })), ...[...selectedAddressed.values()].map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 }))]
+    .sort((a, b) => a.path.localeCompare(b.path, "en"));
+  return { hero, heroFiles, files: selected, addressed: selectedAddressed, facts, digest: contentSha256(facts), issues: [...issues].sort(), generatorSources: generatorSources.map((binding) => ({...binding, source: binding.sourcePath && files.has(binding.sourcePath) ? Buffer.from(files.get(binding.sourcePath)!).toString() : null})) };
 }

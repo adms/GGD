@@ -5,7 +5,8 @@ import { OverlayContentSource, type OverlayBundle } from "@ggd/shared/content/ov
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { assetMediaType } from "@ggd/shared/content/assetReferences";
 import { ImportStore } from "./importStore";
-import { catalogHeroes, type CatalogFiles, type CatalogHero } from "./catalogHero";
+import { catalogAddressedAssets, catalogHeroes, type CatalogFiles, type CatalogHero } from "./catalogHero";
+import { readAddressedAsset } from "./catalogAddressedAssets";
 import { instantiateCatalogHero } from "./catalogHeroInstance";
 import { HERO_CATALOG_WORK_ID, readHeroCatalog } from "./catalogVersions";
 import { CATALOG_INSTANCE_WORK_ID, readCatalogInstanceAsset } from "./catalogAssets";
@@ -88,6 +89,9 @@ export class CatalogOverlayService {
     if(action==="preview") return preview;
     if(plan.command.expectedCurrentVersion!==plan.current.versionId || plan.command.planDigest!==plan.planDigest) return fail("內容已更新，請重新比較後再回復。");
     if(issues.length) return fail(issues.join("；"),422);
+    // GH#1178：實例素材要真的有位元組（平台會來取）⇒ 只記雜湊的在這裡換回；換不回就在任何保存之前指名失敗。
+    const files=new Map(target.files), currentAddressed=[...catalogAddressedAssets(plan.current.files).values()];
+    for(const [path,fact] of target.addressed) files.set(path,readAddressedAsset(this.root,fact,currentAddressed));
     const docs: Record<string,unknown>={...overlay.docs};
     const deleted={...overlay.deleted};
     const writes=changes.filter(x=>x.path.startsWith("catalog/")).map(x=>({key:x.path.slice(8,-5),doc:JSON.parse(Buffer.from(target.files.get(x.path)!).toString())}));
@@ -100,7 +104,7 @@ export class CatalogOverlayService {
     const previous=this.retain(plan.current).record;
     const assets=target.facts.filter(x=>x.path.startsWith("assets/")).map(x=>({...x,contentType:assetMediaType(x.path)}));
     const identity={heroPath:plan.command.heroPath,sourceVersion:plan.command.versionId,currentVersion:plan.current.versionId,planDigest:plan.planDigest,contentVersion:loaded.manifest.contentVersion,writes,assets};
-    const versionId=contentSha256(identity), files=new Map(target.files);
+    const versionId=contentSha256(identity);
     files.set("catalog-instance.json",Buffer.from(JSON.stringify(identity)));
     const stored=this.store.putWorkVersion({workId:CATALOG_INSTANCE_WORK_ID,projectId:CATALOG_INSTANCE_WORK_ID,packageDigest:versionId},files);
     return {...identity,schema:"ggd-catalog-overlay-plan@1",versionId:stored.record.versionId,workId:CATALOG_INSTANCE_WORK_ID,previousVersion:previous.versionId,expectedGeneration:overlay.generation,heroId:target.hero.id,heroName:target.hero.name};

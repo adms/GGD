@@ -32,11 +32,41 @@ export class HeroWorkerUnavailable extends Error { readonly statusCode = 503; }
  * 真正在編譯送來的包只有約 1 秒。⇒ 負載一高（`ship:check` 全包並行）準備段就把 20 秒吃完，
  * 合法英雄回 503「英雄編譯／SimWorld 超過 20 秒」—— ⛔ 那句話在那一刻是假的。
  *
- * `setupMs` 的出處：`heroImportServer.ts` 的 `requestTimeout: 90000` − `compileMs` 20 秒 − 10 秒回應餘裕
- * ⇒ 60 秒；兩段加起來仍在私有匯入通道的請求逾時之內，逾時時回的是結構化 503。
+ * `setupMs` 的出處：私有匯入通道 90 秒 − `compileMs` 20 秒 − 10 秒回應餘裕 ⇒ 60 秒。
  * ⚠️ 準備段的上限只防**卡死**（它不讀送來的位元組），⛔ 不是在限制送來的包。
+ *
+ * ⛔ 2026-09-15 更正（GH#1249）：這裡原本寫「兩段加起來仍在 `requestTimeout: 90000` 之內」——
+ * ⭐ 量到 `requestTimeout` 只管「**收完請求**」，⛔ 不管處理多久；真正會在 worker 算到一半切斷連線的是
+ * `connectionTimeout`（socket 閒置上限，當時 10 秒）。⇒ 通道的閒置上限改由 {@link heroImportSocketIdleMs}
+ * 從**這個預算**推導，⛔ 不再是第二個字面值。
  */
 export const HERO_WORKER_BUDGET = Object.freeze({ setupMs: 60_000, compileMs: 20_000 });
+
+/**
+ * worker 交出結果之後，把 ZIP／結構化錯誤寫回 socket 的餘裕。
+ * 出處：2ac612f97（「英雄 worker 的 20 秒只算『送來的包』那一段」）推導 `setupMs` 時用的 10 秒回應餘裕。
+ * ⚠️ 2026-09-15 更正 f64f3c2ea 的 commit 訊息：那裡兩處寫成 `c3e0326ff` —— 那是 lane/red-contentapi 上**同標題**的 commit，
+ *   ⛔ 不是本分支的祖先（`git merge-base --is-ancestor c3e0326ff 6cfbc4104` 回 1）；本分支上對應的是 2ac612f97。
+ */
+export const HERO_IMPORT_RESPONSE_MARGIN_MS = 10_000;
+
+/**
+ * ⭐ GH#1249：私有匯入通道的 socket 閒置上限 ＝ worker 兩段預算 ＋ 回應餘裕。
+ *
+ * ⚠️ 量到的（2026-09-15，固定 artifact `d101d524…`）：預設 10,000 ms 在 10,062 ms 斷線（`UND_ERR_SOCKET`），
+ * 只把閒置上限調成 30,000 ms 就 27,922 ms 完成往返 ⇒ 是配對錯誤，⛔ 不是資料錯誤。
+ * 本機探針：handler 靜默 1.5 秒時，`connectionTimeout: 500` ⇒ 587 ms 斷線；`requestTimeout: 500` ⇒ 照樣 200。
+ *
+ * 回頭開關（只有維運會轉 ⇒ 環境變數，⛔ 不進後台）：`GGD_HERO_IMPORT_SOCKET_IDLE_MS`。
+ * ⛔ 小於等於 worker 預算的值直接擋下 —— 那正是這張票修掉的缺陷，⛔ 不靜默接受。
+ */
+export function heroImportSocketIdleMs(budget: Pick<HeroWorkerBudget, "setupMs" | "compileMs"> = HERO_WORKER_BUDGET, env: Record<string, string | undefined> = process.env): number {
+  const worker = budget.setupMs + budget.compileMs, raw = env.GGD_HERO_IMPORT_SOCKET_IDLE_MS?.trim();
+  if (!raw) return worker + HERO_IMPORT_RESPONSE_MARGIN_MS;
+  const ms = Number(raw);
+  if (!Number.isSafeInteger(ms) || ms <= worker) throw new Error(`GGD_HERO_IMPORT_SOCKET_IDLE_MS 必須是大於 worker 預算（${worker} ms）的整數，收到「${raw}」。`);
+  return ms;
+}
 
 /**
  * ⭐ 回頭開關（只有作者／CI 會轉 ⇒ 環境變數，⛔ 不進後台）：
