@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T05:38:52+08:00",
-  "inputsSha256": "89c243b9af1f32b347de5c2d9726775faf7cf636777101a0e210f143d0df803e",
+  "generatedAt": "2026-09-15T05:46:26+08:00",
+  "inputsSha256": "3923c8f4beb1aa16357c46b99536cd0e956288615a32a2434414fdf316196f53",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -66434,16 +66434,21 @@
             }
           ],
           "sourceLicense": "CC0 selected on SFMLab; site warns license unverified and fan-art rights may apply",
-          "publicationStatus": "local-only-not-uploaded",
+          "publicationStatus": "s3-readback-verified",
           "backendIntegration": {
             "required": true,
             "state": "pending-standardization",
             "selectionVerified": false
           },
-          "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。",
+          "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "backup": {
-            "status": "not-uploaded",
-            "readbackVerified": false
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-sfmlab-lordscrub-v1/efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6.zip",
+            "bytes": 181996414,
+            "sha256": "efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
           },
           "audioFileIndex": null
         },
@@ -174138,16 +174143,21 @@
           }
         ],
         "sourceLicense": "CC0 selected on SFMLab; site warns license unverified and fan-art rights may apply",
-        "publicationStatus": "local-only-not-uploaded",
+        "publicationStatus": "s3-readback-verified",
         "backendIntegration": {
           "required": true,
           "state": "pending-standardization",
           "selectionVerified": false
         },
-        "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。",
+        "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "backup": {
-          "status": "not-uploaded",
-          "readbackVerified": false
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-sfmlab-lordscrub-v1/efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6.zip",
+          "bytes": 181996414,
+          "sha256": "efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         },
         "audioFileIndex": null
       },
