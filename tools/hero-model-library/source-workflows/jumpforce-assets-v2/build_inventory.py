@@ -54,7 +54,9 @@ def group_key(source_id: str, group: dict) -> str:
 
 
 def render_md(data: dict) -> str:
-    s, decimation = data["summary"], data["dai"]["formalDecimationCandidate"]
+    s = data["summary"]
+    decimation = data["dai"]["formalDecimationCandidate"]
+    rejected = data["dai"]["rejectedV1Candidate"]
     lines = [
         "# JUMP FORCE 已取得素材、角色群與抽取狀態",
         "",
@@ -73,7 +75,7 @@ def render_md(data: dict) -> str:
         "| 範圍 | 模型／貼圖／骨架 | 動作 | VFX | 狀態 |",
         "| --- | --- | --- | --- | --- |",
         f"| Steam 六個 PAK | 索引有 {data['steamPak']['selectedPathCounts']['character-package']:,} 個現行 character paths | animation-package 索引 {data['steamPak']['selectedPathCounts']['animation-package']}；未解析角色動作 | 索引有 {data['steamPak']['selectedPathCounts']['vfx-package']:,} 個現行 VFX paths | 共享卷未掛載；只沿用固定容器 SHA 與完整路徑索引 |",
-        f"| 達伊 `chr0430` | 已抽出 {data['dai']['nativePackages']:,} 個原生套件、{data['dai']['modelComponents']} 個蒙皮元件、{data['dai']['texturePng']} PNG、{data['dai']['joints']} joints；正式候選 {decimation['after']['triangles']:,} 面／{decimation['after']['maxTextureEdge']}px | 原生 clips {data['dai']['nativeAnimations']} | 套件已抽出，未解析／未轉 GGD | 固定鏡頭 A/B 通過；仍有 {decimation['after']['drawPrimitives']} draw > {decimation['drawCallLimit']}，未完成 intake／註冊 |",
+        f"| 達伊 `chr0430` | 已抽出 {data['dai']['nativePackages']:,} 個原生套件、{data['dai']['modelComponents']} 個蒙皮元件、{data['dai']['texturePng']} PNG、{data['dai']['joints']} joints；v1 {rejected['triangles']:,} 面已被 owner 拒絕；v2 {decimation['after']['triangles']:,} 面／{decimation['after']['maxTextureEdge']}px | 原生 clips {data['dai']['nativeAnimations']} | 套件已抽出，未解析／未轉 GGD | v2 結構驗證通過、owner 新畫面待審；{decimation['after']['drawPrimitives']} draw > {decimation['drawCallLimit']}，未註冊 |",
         "| Asta `chr0420`／Kenshiro `chr0230` | PAK 路徑已索引 | 路徑已索引，未抽出 | 路徑已索引，未抽出 | 本機及 S3 沒有這兩名的已凍結 payload，待共享卷再次掛載 |",
         "",
         "## 可直接核對的角色群",
@@ -87,10 +89,12 @@ def render_md(data: dict) -> str:
         "",
         "## 明確缺口",
         "",
+        f"- `chr0430` 原始 review GLB 獨立保留：{data['dai']['originalReviewGlb']['bytes']:,} bytes，SHA-256 `{data['dai']['originalReviewGlb']['sha256']}`。完整抽出樹共 {data['dai']['frozenTreeFiles']:,} files／{data['dai']['frozenTreeBytes']:,} bytes（native packages {data['dai']['nativePackages']:,}、model components {data['dai']['modelComponents']}、textures {data['dai']['texturePng']}）；v1 與 v2 也各自保存，沒有覆蓋原件。",
         "- `/Volumes/common` 與 `/Volumes/game` 本批均未掛載，沒有重新讀取六個 PAK，也沒有從 metadata 假裝取得 payload。",
         "- 六個 PAK 的既有目錄索引由已授權流程建立；本批不保存、不輸出、不重新要求 AES 金鑰。",
-        f"- 達伊正式減面候選已從 {decimation['before']['triangles']:,} 降至 {decimation['after']['triangles']:,} 面、貼圖 {decimation['before']['maxTextureEdge']}px 降至 {decimation['after']['maxTextureEdge']}px；159 joints、蒙皮與材質槽保留，Khronos 0 error，固定鏡頭亮像素 XOR 最高 {decimation['visualMaxLitXorPct']:.6f}%（門檻 5%）。",
-        f"- 候選仍有 {decimation['after']['drawPrimitives']} draw；現有安全 atlas 只適用 {decimation['atlasEligiblePrimitives']}/20 primitives，精確材質語意至少 {decimation['exactSemanticMaterialGroups']} 組，無法達到 hard limit {decimation['drawCallLimit']}。它維持未使用、不可註冊、不可切換。",
+        f"- v1（{rejected['triangles']:,} 面／{rejected['maxTextureEdge']}px）原收據的人工 accepted 已被 owner 於 {rejected['reviewedAt']} 明確拒絕；原因是臉部貼圖及眼睛不正常。v1 不再算有效視覺驗收。",
+        f"- v2 已從 {decimation['before']['triangles']:,} 降至 {decimation['after']['triangles']:,} 面、貼圖 {decimation['before']['maxTextureEdge']}px 降至 {decimation['after']['maxTextureEdge']}px；雙重建置 SHA 相同、159 joints／蒙皮／材質槽保留、Khronos 0 error，眼部透明層技術修復通過。owner 已授權資源發布，但新 v2 畫面仍待視覺品質審查。",
+        f"- v2 仍有 {decimation['after']['drawPrimitives']} draw；現有安全 atlas 只適用 {decimation['atlasEligiblePrimitives']}/20 primitives，精確材質語意至少 {decimation['exactSemanticMaterialGroups']} 組，無法達到 hard limit {decimation['drawCallLimit']}。原生 animations 為 {decimation['after']['animations']}；未註冊、不可切換、未部署。",
         "- 達伊目前沒有任何原生 gameplay clip；即使 draw call 後續修正，也不能直接登記成完整六態後台模型。",
         "- 達伊 VFX／PAK 音訊套件尚未解析。另有的 261 OGG 公開包及 Steam Streaming 音訊是獨立來源，不能冒充 PAK 事件綁定完成。",
         "- 公開 58 包中 `_Common Sounds` 是共用音效包，不是第 58 名角色。",
@@ -120,14 +124,17 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     streaming_evidence_path = BASE / "priority-evidence/jumpforce-steam-streaming-audio/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035/central-verification.json"
     map_path = ROOT / "tools/hero-model-library/source-workflows/jumpforce-steam-streaming-audio-v1/character-map.json"
     policy_path = OUT / "dai-current-policy.json"
-    decimation_dir = BASE / "priority-evidence/jump-force-dai-decimation-v1"
-    decimation_paths = [decimation_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "visual-comparison.json", "ab-contact-sheet.png", "worst-difference-overview.png", "s3-backup-receipt.json")]
-    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *decimation_paths]
+    v1_dir = BASE / "priority-evidence/jump-force-dai-decimation-v1"
+    v1_paths = [v1_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "visual-comparison.json", "owner-review.json", "ab-contact-sheet.png", "worst-difference-overview.png", "s3-backup-receipt.json")]
+    v2_dir = BASE / "priority-evidence/jump-force-dai-decimation-v2"
+    v2_paths = [v2_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "guard.json", "visual-review.json", "owner-review.json", "front.png", "back.png", "isometric.png", "face-source.png", "face-v1-rejected.png", "face-v2.png")]
+    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *v1_paths, *v2_paths]
     downloads, public_files, voice = read(downloads_path), read(public_files_path), read(voice_path)
     reconciliation, pak, dai, visual = read(reconciliation_path), read(pak_path), read(dai_manifest_path), read(dai_visual_path)
     dai_config, streaming, character_map, policy = read(dai_config_path), read(streaming_evidence_path), read(map_path), read(policy_path)
-    decimation, decimation_validation, draw_audit, visual_comparison = [read(path) for path in decimation_paths[:4]]
-    decimation_backup = read(decimation_paths[-1])
+    v1_conversion, v1_validation, v1_draw, v1_visual, v1_owner = [read(path) for path in v1_paths[:5]]
+    v1_backup = read(v1_paths[-1])
+    decimation, decimation_validation, draw_audit, guard, visual_comparison, owner_review = [read(path) for path in v2_paths[:6]]
     sources = {row["id"]: row for row in downloads["publicSources"]}
     manifests = {row["id"]: row for row in public_files["sources"]}
     voice_groups = {row["id"]: row for row in voice["groups"]}
@@ -139,23 +146,35 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
         raise ValueError("Steam Streaming S3 archive is not fully verified")
     if policy["glb"]["sha256"] != visual["glb"]["sha256"]:
         raise ValueError("Dai policy and visual evidence refer to different GLBs")
+    if (v1_owner.get("decision") != "rejected"
+            or v1_owner.get("candidateSha256") != v1_conversion.get("output", {}).get("sha256")
+            or v1_owner.get("supersedes", {}).get("priorValue") != "accepted"):
+        raise ValueError("Dai v1 owner rejection is absent or inconsistent")
     if (decimation.get("sourceId") != STEAM_ASSET_ID
             or decimation_validation.get("candidateId") != decimation.get("candidateId")
             or decimation_validation.get("candidate", {}).get("sha256") != decimation.get("output", {}).get("sha256")
             or draw_audit.get("candidate", {}).get("sha256") != decimation.get("output", {}).get("sha256")
-            or visual_comparison.get("candidate", {}).get("sha256") != decimation.get("output", {}).get("sha256")):
+            or visual_comparison.get("candidateSha256") != decimation.get("output", {}).get("sha256")
+            or owner_review.get("candidateSha256") != decimation.get("output", {}).get("sha256")):
         raise ValueError("Dai formal decimation evidence is inconsistent")
     if (not decimation.get("byteIdenticalRebuild")
             or decimation_validation.get("khronos", {}).get("errors") != 0
             or not decimation_validation.get("finiteFloatAccessors", {}).get("passed")
-            or not visual_comparison.get("litPixelContractPassed")
+            or decimation_validation.get("metrics") != {"triangles": 7930, "draws": 20, "textureEdge": 256, "skins": 1, "joints": 159, "textures": 24, "animations": 0}
+            or visual_comparison.get("technicalInspection", {}).get("result") != "passed-bounded-visual-inspection"
+            or visual_comparison.get("ownerVisualQualityReview") != "pending-new-v2-render-review"
+            or owner_review.get("decision") != "publication-authorized-when-technical-gates-pass"
+            or owner_review.get("technicalGatesStillApply") is not True
+            or guard.get("results", [{}])[0].get("adoption", {}).get("status") != "eligible"
+            or guard.get("results", [{}])[0].get("adoption", {}).get("targetTrianglesMax") != 8000
+            or {row.get("key"): row.get("verdict") for row in guard.get("results", [{}])[0].get("axes", [])}.get("drawCalls") != "over"
             or draw_audit.get("decision", {}).get("safeCurrentAutomationCanReachSix") is not False):
         raise ValueError("Dai formal decimation evidence lost its bounded pass/block decision")
-    if (decimation_backup.get("schema") != "ggd-intake-backup-receipt@1"
-            or not decimation_backup.get("fullGetVerified")
-            or not decimation_backup.get("allMemberSha256Verified")
-            or "assumed-role/vibe-coding-s3-role/" not in decimation_backup.get("callerArn", "")):
-        raise ValueError("Dai formal decimation S3 backup is absent or invalid")
+    if (v1_backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or not v1_backup.get("fullGetVerified")
+            or not v1_backup.get("allMemberSha256Verified")
+            or "assumed-role/vibe-coding-s3-role/" not in v1_backup.get("callerArn", "")):
+        raise ValueError("Dai v1 S3 backup is absent or invalid")
 
     package_rows = []
     package_groups = {}
@@ -312,7 +331,7 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     }
     inventory = {
         "schema": "ggd.jumpforce-acquired-asset-inventory@2",
-        "checkedAt": "2026-09-14",
+        "checkedAt": "2026-09-15",
         "sourceGame": "JUMP FORCE",
         "platforms": ["Windows (Steam)", "public audio pack platform unverified"],
         "mountSnapshot": {"common": Path("/Volumes/common").exists(), "game": Path("/Volumes/game").exists(), "pakPayloadReadThisRun": False},
@@ -350,27 +369,65 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
             "texturePng": dai["counts"]["texturePng"],
             "joints": dai["modelEvidence"]["jointCounts"][0],
             "nativeAnimations": dai["modelEvidence"]["totalAnimationCount"],
+            "frozenTreeFiles": dai["counts"]["allFrozenFiles"],
+            "frozenTreeBytes": dai["bytes"]["allFrozenFiles"],
+            "originalReviewGlb": {
+                "absolutePath": decimation["input"]["absolutePath"],
+                "bytes": decimation["input"]["bytes"],
+                "sha256": decimation["input"]["sha256"],
+            },
             "gameConfigSelectedPaths": dai_config["counts"]["selectedPaths"],
             "gameConfigExtractedPaths": dai_config["counts"]["selectedPaths"] - dai_config["counts"]["selectedPathsPendingExtraction"],
             "candidate": policy["glb"],
             "candidateMetrics": policy["metrics"],
             "currentPolicyVerdict": policy["currentChampionPolicy"]["verdict"],
             "currentPolicyBlockingAxes": policy["currentChampionPolicy"]["blockingAxes"],
+            "rejectedV1Candidate": {
+                "candidateId": v1_conversion["candidateId"],
+                "sha256": v1_conversion["output"]["sha256"],
+                "triangles": v1_validation["metrics"]["after"]["triangles"],
+                "maxTextureEdge": v1_validation["metrics"]["after"]["maxTextureEdge"],
+                "drawPrimitives": v1_validation["metrics"]["after"]["drawPrimitives"],
+                "reviewedAt": v1_owner["reviewedAt"],
+                "ownerDecision": "rejected",
+                "ownerFinding": v1_owner["ownerFinding"],
+                "priorAutomatedReceiptSuperseded": True,
+                "runtimeRegistered": False,
+                "runtimeSelectable": False,
+                "productionDeployed": False,
+                "s3Backup": {
+                    "s3Uri": v1_backup["s3Uri"],
+                    "manifestUri": v1_backup["manifestUri"],
+                    "archiveSha256": v1_backup["archiveSha256"],
+                    "fullGetVerified": True,
+                    "allMemberSha256Verified": True,
+                },
+                "evidence": [pin(path) for path in v1_paths],
+            },
             "formalDecimationCandidate": {
                 "candidateId": decimation["candidateId"],
                 "absolutePath": decimation["output"]["absolutePath"],
                 "bytes": decimation["output"]["bytes"],
                 "sha256": decimation["output"]["sha256"],
                 "sourceSha256": decimation["input"]["sha256"],
-                "before": decimation_validation["metrics"]["before"],
-                "after": decimation_validation["metrics"]["after"],
+                "before": v1_validation["metrics"]["before"],
+                "after": {
+                    "triangles": decimation_validation["metrics"]["triangles"],
+                    "drawPrimitives": decimation_validation["metrics"]["draws"],
+                    "maxTextureEdge": decimation_validation["metrics"]["textureEdge"],
+                    "skins": decimation_validation["metrics"]["skins"],
+                    "joints": decimation_validation["metrics"]["joints"],
+                    "textures": decimation_validation["metrics"]["textures"],
+                    "animations": decimation_validation["metrics"]["animations"],
+                },
                 "byteIdenticalRebuild": decimation["byteIdenticalRebuild"],
                 "khronosErrors": decimation_validation["khronos"]["errors"],
                 "khronosWarnings": decimation_validation["khronos"]["warnings"],
                 "finiteFloatAccessorsPassed": decimation_validation["finiteFloatAccessors"]["passed"],
-                "rigPreserved": decimation_validation["preservation"]["rig"]["ok"],
-                "visualMaxLitXorPct": visual_comparison["maxLitClassificationXorPctAtLuma128"],
-                "visualContractPassed": visual_comparison["litPixelContractPassed"],
+                "rigPreserved": decimation_validation["preservation"]["jointNamesAndHierarchyEquivalent"] and decimation_validation["preservation"]["allPrimitivesSkinned"],
+                "technicalVisualInspectionPassed": True,
+                "ownerVisualQualityReview": visual_comparison["ownerVisualQualityReview"],
+                "ownerPublicationAuthorized": owner_review["states"]["backendRegistrationAuthorized"],
                 "drawCallLimit": draw_audit["currentChampionDrawCallPolicy"]["limit"],
                 "exactSemanticMaterialGroups": draw_audit["observed"]["exactSemanticMaterialGroups"],
                 "atlasEligiblePrimitives": draw_audit["observed"]["atlasEligiblePrimitives"],
@@ -382,15 +439,12 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
                 "productionDeployed": False,
                 "readiness": decimation_validation["readiness"],
                 "s3Backup": {
-                    "s3Uri": decimation_backup["s3Uri"],
-                    "manifestUri": decimation_backup["manifestUri"],
-                    "archiveSha256": decimation_backup["archiveSha256"],
-                    "archiveBytes": decimation_backup["archiveBytes"],
-                    "fileCount": decimation_backup["fileCount"],
-                    "fullGetVerified": decimation_backup["fullGetVerified"],
-                    "allMemberSha256Verified": decimation_backup["allMemberSha256Verified"],
+                    "state": "pending-v2-upload-and-readback",
+                    "s3Uri": None,
+                    "fullGetVerified": False,
+                    "allMemberSha256Verified": False,
                 },
-                "evidence": [pin(path) for path in decimation_paths],
+                "evidence": [pin(path) for path in v2_paths],
             },
             "genericPbrVisualReviewAccepted": visual["review"]["genericPbrMaterialBindingAccepted"],
             "sourceGameShaderParity": visual["review"]["sourceGameShaderParity"],
@@ -423,6 +477,20 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
         "listeningReviewQueueGitPath": (OUT / "listening-review-groups.json").relative_to(ROOT).as_posix(),
         "sourceIds": PUBLIC_BATCH_IDS + [STEAM_AUDIO_ID, STEAM_ASSET_ID],
         "summary": summary,
+        "daiCandidateStatus": {
+            "candidateId": decimation["candidateId"],
+            "sha256": decimation["output"]["sha256"],
+            "triangles": decimation_validation["metrics"]["triangles"],
+            "maxTextureEdge": decimation_validation["metrics"]["textureEdge"],
+            "drawPrimitives": decimation_validation["metrics"]["draws"],
+            "animations": decimation_validation["metrics"]["animations"],
+            "ownerPublicationAuthorized": True,
+            "ownerVisualQualityReview": "pending-new-v2-render-review",
+            "runtimeRegistered": False,
+            "runtimeSelectable": False,
+            "productionDeployed": False,
+            "evidence": [pin(path) for path in v2_paths],
+        },
         "registered": False,
         "runtimeSelectable": False,
         "productionDeploymentVerified": False,

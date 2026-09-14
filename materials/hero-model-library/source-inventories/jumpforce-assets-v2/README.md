@@ -15,7 +15,7 @@
 | 範圍 | 模型／貼圖／骨架 | 動作 | VFX | 狀態 |
 | --- | --- | --- | --- | --- |
 | Steam 六個 PAK | 索引有 13,437 個現行 character paths | animation-package 索引 1；未解析角色動作 | 索引有 57,870 個現行 VFX paths | 共享卷未掛載；只沿用固定容器 SHA 與完整路徑索引 |
-| 達伊 `chr0430` | 已抽出 1,942 個原生套件、11 個蒙皮元件、36 PNG、159 joints；正式候選 7,947 面／256px | 原生 clips 0 | 套件已抽出，未解析／未轉 GGD | 固定鏡頭 A/B 通過；仍有 20 draw > 6，未完成 intake／註冊 |
+| 達伊 `chr0430` | 已抽出 1,942 個原生套件、11 個蒙皮元件、36 PNG、159 joints；v1 7,947 面已被 owner 拒絕；v2 7,930 面／256px | 原生 clips 0 | 套件已抽出，未解析／未轉 GGD | v2 結構驗證通過、owner 新畫面待審；20 draw > 6，未註冊 |
 | Asta `chr0420`／Kenshiro `chr0230` | PAK 路徑已索引 | 路徑已索引，未抽出 | 路徑已索引，未抽出 | 本機及 S3 沒有這兩名的已凍結 payload，待共享卷再次掛載 |
 
 ## 可直接核對的角色群
@@ -57,10 +57,12 @@
 
 ## 明確缺口
 
+- `chr0430` 原始 review GLB 獨立保留：76,796,608 bytes，SHA-256 `53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810`。完整抽出樹共 2,000 files／299,020,729 bytes（native packages 1,942、model components 11、textures 36）；v1 與 v2 也各自保存，沒有覆蓋原件。
 - `/Volumes/common` 與 `/Volumes/game` 本批均未掛載，沒有重新讀取六個 PAK，也沒有從 metadata 假裝取得 payload。
 - 六個 PAK 的既有目錄索引由已授權流程建立；本批不保存、不輸出、不重新要求 AES 金鑰。
-- 達伊正式減面候選已從 59,768 降至 7,947 面、貼圖 2048px 降至 256px；159 joints、蒙皮與材質槽保留，Khronos 0 error，固定鏡頭亮像素 XOR 最高 1.016250%（門檻 5%）。
-- 候選仍有 20 draw；現有安全 atlas 只適用 2/20 primitives，精確材質語意至少 11 組，無法達到 hard limit 6。它維持未使用、不可註冊、不可切換。
+- v1（7,947 面／256px）原收據的人工 accepted 已被 owner 於 2026-09-15 明確拒絕；原因是臉部貼圖及眼睛不正常。v1 不再算有效視覺驗收。
+- v2 已從 59,768 降至 7,930 面、貼圖 2048px 降至 256px；雙重建置 SHA 相同、159 joints／蒙皮／材質槽保留、Khronos 0 error，眼部透明層技術修復通過。owner 已授權資源發布，但新 v2 畫面仍待視覺品質審查。
+- v2 仍有 20 draw；現有安全 atlas 只適用 2/20 primitives，精確材質語意至少 11 組，無法達到 hard limit 6。原生 animations 為 0；未註冊、不可切換、未部署。
 - 達伊目前沒有任何原生 gameplay clip；即使 draw call 後續修正，也不能直接登記成完整六態後台模型。
 - 達伊 VFX／PAK 音訊套件尚未解析。另有的 261 OGG 公開包及 Steam Streaming 音訊是獨立來源，不能冒充 PAK 事件綁定完成。
 - 公開 58 包中 `_Common Sounds` 是共用音效包，不是第 58 名角色。

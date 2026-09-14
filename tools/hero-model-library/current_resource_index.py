@@ -289,7 +289,16 @@ def build(git_link_root=ROOT):
         or jumpforce.get('summary',{}).get('automaticSpeakerBindings')!=0
         or jumpforce.get('summary',{}).get('runtimeSelectableAssets')!=0
         or jumpforce_review.get('schema')!='ggd.jumpforce-audio-listening-review-groups@1'
-        or jumpforce_review.get('counts',{}).get('approvedForRuntimeBinding')!=0):
+        or jumpforce_review.get('counts',{}).get('approvedForRuntimeBinding')!=0
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('sha256')!='2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('triangles')!=7930
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('drawPrimitives')!=20
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('animations')!=0
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerPublicationAuthorized') is not True
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerVisualQualityReview')!='pending-new-v2-render-review'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeRegistered') is not False
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeSelectable') is not False
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('productionDeployed') is not False):
         raise ValueError('JUMP FORCE acquired asset inventory is absent, stale or overclaims readiness')
     for path,key in ((jumpforce_path,'sha256'),(jumpforce_document_path,'documentSha256'),(jumpforce_review_path,'listeningReviewQueueSha256')):
         if jumpforce_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
@@ -1302,6 +1311,7 @@ def main():
                     'gitPath': result['jumpForceAssetInventory']['entryGitPath'],
                     'sha256': result['jumpForceAssetInventory']['entrySha256'],
                 },
+                *result['jumpForceAssetInventory']['daiCandidateStatus']['evidence'],
                 {
                     'gitPath': result['assetReviewPortal']['queueGitPath'],
                     'sha256': result['assetReviewPortal']['queueSha256'],

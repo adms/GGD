@@ -34,10 +34,85 @@
     "runtimeSelectableAssets": 0,
     "productionDeployedAssets": 0
   },
+  "daiCandidateStatus": {
+    "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-256-v2",
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba",
+    "triangles": 7930,
+    "maxTextureEdge": 256,
+    "drawPrimitives": 20,
+    "animations": 0,
+    "ownerPublicationAuthorized": true,
+    "ownerVisualQualityReview": "pending-new-v2-render-review",
+    "runtimeRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false,
+    "evidence": [
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/conversion.json",
+        "bytes": 7360,
+        "sha256": "de4f135ccaf0e958ed379351dfffd74861926bcab7ea1585b3f73571b4e2912e"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/validation.json",
+        "bytes": 3484,
+        "sha256": "676f8397b8647e3de711fb7f624f90ce4aa2035597023f8d63333b9d7672dcb7"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/draw-call-audit.json",
+        "bytes": 8903,
+        "sha256": "a1f88c2e751b51ac42b07a9a8a774f394be06e68a1c9d1f4a8f343a8bd5201a5"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/guard.json",
+        "bytes": 1483,
+        "sha256": "7745b73057632d29bec84c7db572bb5b816fb0aa78b92b263bfedfa7c5ab73ed"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/visual-review.json",
+        "bytes": 2315,
+        "sha256": "722736322b8b4636087484961f95c66a394f8dbf5d55b9cacb16505f5e9f8f6f"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/owner-review.json",
+        "bytes": 795,
+        "sha256": "5701f692907e7bf7daf9716b97f88cfdec2b70b64014e488de2a472cfd9e4114"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/front.png",
+        "bytes": 269166,
+        "sha256": "016854430836e9194ba91110bb7e2e69c8db1e8bd2f6957792de1bf066c966af"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/back.png",
+        "bytes": 262534,
+        "sha256": "b3b62a9a94314023c05297a9c76a9b59ec351e973c81d02d2a4c752b14484b9e"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/isometric.png",
+        "bytes": 260923,
+        "sha256": "27f01de5552e2d8d1d468a38c60a30391470cda78871d3ab2238e006ca0b339b"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-source.png",
+        "bytes": 522346,
+        "sha256": "d73823e531b8e2290615a0958207876005853ce76d68418099a564c545ded956"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v1-rejected.png",
+        "bytes": 498725,
+        "sha256": "97b9c8ee959405997bb5522f0a83ae307b650c78b8e147e75f392bfbeb35b583"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v2.png",
+        "bytes": 531753,
+        "sha256": "a78cd73461550f2e0206164b3d7e5cfd1e66a3054b2091ca2debdd2a9de9d561"
+      }
+    ]
+  },
   "registered": false,
   "runtimeSelectable": false,
   "productionDeploymentVerified": false,
-  "sha256": "c51e540fa27aefc49215568d476f955a29608f5122b83719976576a0948a4c5f",
-  "documentSha256": "732372739e4945643d21e8af18046cbd544c6b6c800eaea84edc7f1113dcec4a",
+  "sha256": "8f97cc74849ffde097cd4daf168ff65fedcf211f9f82d3cf84d79b66077d75e3",
+  "documentSha256": "8754230df2ce49faed96a2441297b7e219cd269ca11eb6f622597008b6aebd25",
   "listeningReviewQueueSha256": "92095d0a181ca0395f34764f1bda6f257d2ef1af854052ca4786ebb0778249d4"
 }
