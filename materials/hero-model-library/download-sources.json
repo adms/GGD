@@ -44101,7 +44101,7 @@
       "assetKinds": [
         "audio"
       ],
-      "publicationStatus": "local-only-not-uploaded",
+      "publicationStatus": "s3-readback-verified",
       "files": [],
       "packages": [
         {
@@ -44160,13 +44160,22 @@
       ],
       "reportedLanguage": null,
       "languageEvidence": "The source post does not explicitly label KOF XV language. Individual clip language unreviewed.",
-      "verification": "Complete source archive, all extracted OGG and all Float32 WAV SHA checked. Every WAV payload, frame count, sample rate and channel count checked; per-clip language and speaker pending review.",
+      "verification": "Complete source archive, all extracted OGG and all Float32 WAV SHA checked. Every WAV payload, frame count, sample rate and channel count checked; per-clip language and speaker pending review. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "mappingEvidence": "Author archive XV_Iori mapped to Iori Yagami; not per-clip speaker confirmation.",
       "originalDownload": {
         "page": "https://www.mediafire.com/file/e14t1r4hvycl6g8/XV_Iori.7z/file",
         "url": "https://download1478.mediafire.com/h1qc4urdle5gb5HxI_DcHxABpodvsBLJaBf2Zl-81zYherkF76Bx-DyrnnVu5JDA8f029Da2VOqGeKq7rMrIMLhS7sgfbGXdBid6y8GPVYaCj1jg5N1HECJCbkqA2x749VudGchyfa-6QSNH_vg3PSlr3Zmf7BTirfH8xa9pTupr1w/e14t1r4hvycl6g8/XV_Iori.7z",
         "bytes": 2259630,
         "sha256": "3e4ef12dc8d150acb2e9759fdd46b46b1231f72ca462b5eda6180195daa60149"
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-iori-audio-float32-v1/5da01378e60d7c165ca41dcb76cebf6b3dd75fa8403a883ab2b6900c89e2466f.zip",
+        "bytes": 28678162,
+        "sha256": "5da01378e60d7c165ca41dcb76cebf6b3dd75fa8403a883ab2b6900c89e2466f",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
       }
     },
     {
