@@ -38,6 +38,8 @@ CANDIDATES = [
         "sourceAnalysis": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/source-analysis.json",
         "motionImport": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/import-receipt.json",
         "motionValidation": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+        "motionVisualReview": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+        "motionRegistration": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/model-option-registration.json",
     },
     {
         "heroId": "acquired-mewtwo", "nameZh": "Mewtwo／超夢", "fighterId": "mewtwo", "formId": "c00",
@@ -137,6 +139,82 @@ def source_files(analysis: dict[str, Any]) -> list[dict[str, Any]]:
     return records
 
 
+def verify_motion_review(spec: dict[str, Any]) -> dict[str, Any]:
+    """Verify the already-rendered target-side playback evidence, when present.
+
+    The screenshots intentionally remain local conversion evidence.  Git keeps
+    the compact visual-review receipt and every screenshot SHA instead of
+    duplicating all PNG bytes.
+    """
+    if "motionVisualReview" not in spec:
+        return {
+            "ready": False,
+            "scope": "none-no-target-motion",
+            "reviewedClipCount": 0,
+            "reviewedImageCount": 0,
+            "localImages": [],
+            "receipt": None,
+        }
+    visual_path = REPO / spec["motionVisualReview"]
+    visual = read_json(visual_path)
+    validation = read_json(spec["motionValidation"])
+    registration = read_json(spec["motionRegistration"])
+    require(visual["accepted"] is True, "Mario independent motion visual review is not accepted")
+    require(validation["completeGameplayActionSet"] is False, "Mario validation must not claim a complete action set")
+    local = registration["validation"]["localVisualEvidence"]
+    require(len(local) == len(visual["reviewedSamples"]) == 15, "Mario visual sample count changed")
+    verified = [pin(Path(row["absolutePath"]), row["bytes"], row["sha256"]) for row in local]
+    require({row["sha256"] for row in verified} == {row["sha256"] for row in visual["screenshots"]},
+            "Mario local review images differ from the compact Git receipt")
+    return {
+        "ready": True,
+        "scope": "independent-five-motion-component-only",
+        "reviewedClipCount": 5,
+        "reviewedImageCount": len(verified),
+        "localImages": verified,
+        "receipt": {
+            "gitPath": spec["motionVisualReview"],
+            "bytes": visual_path.stat().st_size,
+            "sha256": sha256(visual_path),
+        },
+        "semanticMappingApproved": False,
+        "runtimeBindingAllowed": False,
+    }
+
+
+def exact_motion_source_search(spec: dict[str, Any], analysis: dict[str, Any], fighter: dict[str, Any],
+                               native_root: Path, motion_files: list[dict[str, Any]]) -> dict[str, Any]:
+    costume = spec["formId"].split("-")[-1]
+    fighter_root = native_root / "fighter" / spec["fighterId"]
+    expected_body_dir = fighter_root / "motion" / "body" / costume
+    files = sorted(path for path in expected_body_dir.glob("*.nuanmb") if path.is_file()) if expected_body_dir.is_dir() else []
+    verified = [pin(path) for path in files]
+    return {
+        "fighterToken": spec["fighterId"],
+        "costumeToken": costume,
+        "worldblenderBody": {
+            "absolutePath": str(Path(analysis["source"]).resolve()),
+            "embeddedSourceActionCount": len(analysis["actions"]),
+            "embeddedSourceActions": analysis["actions"],
+        },
+        "ultimate14ExpectedFighterRoot": str(fighter_root.resolve()),
+        "ultimate14ExpectedBodyMotionDirectory": str(expected_body_dir.resolve()),
+        "ultimate14FighterRootExists": fighter_root.is_dir(),
+        "ultimate14BodyMotionDirectoryExists": expected_body_dir.is_dir(),
+        "ultimate14BodyMotionFilesAtExactPath": verified,
+        "ultimate14IndexedAliasCount": fighter["ultimate14"]["motionAliasCount"],
+        "ultimate14IndexedBodyAliasCount": fighter["ultimate14"]["bodyMotionAliasCount"],
+        "ultimate14IndexedUniqueBodyPayloadCount": fighter["ultimate14"]["uniqueBodyMotionPayloadCount"],
+        "convertedNativeMotionFiles": motion_files,
+        "result": "verified-native-motion-candidate" if motion_files else "no-motion-payload-in-acquired-sources",
+        "preciseGap": None if motion_files else (
+            f"No fighter/{spec['fighterId']}/motion/body/{costume} NUANMB directory or payload exists in the "
+            "fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 "
+            "containers remain metadata-only with zero payload bytes read."
+        ),
+    }
+
+
 def build() -> dict[str, Any]:
     resources = read_json("materials/asset-library/current-resources.json")
     components = {row["id"]: row for row in resources["modelComponents"]}
@@ -148,6 +226,9 @@ def build() -> dict[str, Any]:
     public_sources = {row["id"]: row for row in source_catalog["publicSources"]}
     model_source = public_sources["gitlab-ssbu-models"]
     motion_source = public_sources["parallel-ns-ultimate14"]
+    native_inventory = read_json("materials/hero-model-library/source-inventories/ultimate14-native-motions.json")
+    native_root = Path(native_inventory["source"]["sourceRoot"])
+    require(native_root.is_dir(), f"missing Ultimate14 extracted root: {native_root}")
     nsandns2 = roster["nsandns2"]
     nsandns2_counts = reconciliation["sourceStageCounts"]["nsandns2GameContainers"]
     require(nsandns2["currentMacShareMounted"] is False, "NSandNS2 share state changed; rebuild the central roster first")
@@ -184,6 +265,8 @@ def build() -> dict[str, Any]:
             require(native_names == [row["nativeClipName"] for row in motion_files], "Mario GLB clip names differ from NUANMB inputs")
         else:
             require(native_names == [], f"static model unexpectedly contains animations: {spec['componentId']}")
+        motion_review = verify_motion_review(spec)
+        source_search = exact_motion_source_search(spec, analysis, fighter, native_root, motion_files)
         formal = component_policy["formalHeroAdoption"]
         blocker = "six-state-actions-and-owner-semantic-review"
         if formal["requiresDecimatedCandidate"]:
@@ -219,6 +302,8 @@ def build() -> dict[str, Any]:
                 "fighterPresent": fighter["ultimate14"]["motionAliasCount"] > 0,
                 "provenance": "community-mod-native-not-verified-original-game" if motion_files else "none-in-acquired-ultimate14-source",
             },
+            "motionSourceSearch": source_search,
+            "reviewEvidence": motion_review,
             "semanticClipMap": {}, "missingRequiredStates": REQUIRED_STATES,
             "modelComponentAccepted": True, "sixStateComplete": False,
             "modelOptionRegistered": False, "defaultPreserved": defaults[spec["heroId"]],
@@ -263,10 +348,14 @@ def build() -> dict[str, Any]:
             "acceptedModelComponents": len(rows), "sourceFilesFreshlyHashed": len(unique_sources),
             "nativeMotionComponents": sum(bool(row["nativeClipNames"]) for row in rows),
             "nativeClipCount": sum(len(row["nativeClipNames"]) for row in rows),
+            "independentMotionReviewReadyVariants": sum(row["reviewEvidence"]["ready"] for row in rows),
+            "independentMotionReviewImageCount": sum(row["reviewEvidence"]["reviewedImageCount"] for row in rows),
             "formalGeometryEligibleVariants": sum(row["formalHeroAdoption"]["eligible"] for row in rows),
             "formalDecimationRequiredVariants": sum(row["formalHeroAdoption"]["requiresDecimatedCandidate"] for row in rows),
             "s3VerifiedVariants": sum(row["s3"]["status"] == "s3-full-readback-verified" for row in rows),
-            "sixStateCompleteVariants": 0, "newRuntimeDropdownOptions": 0, "reviewMediaReady": 0,
+            "sixStateCompleteVariants": 0, "newRuntimeDropdownOptions": 0,
+            "reviewMediaReady": sum(row["reviewEvidence"]["ready"] for row in rows),
+            "deathSubstitutionReviewMediaReady": 0,
             "productionDeployed": 0,
         },
         "nsandns2PayloadBoundary": {
@@ -280,9 +369,19 @@ def build() -> dict[str, Any]:
             "reason": "metadata-only; zero payload bytes read, so no fighter identity, model, texture, skeleton or motion can be attributed to these containers",
         },
         "currentManualDefaults": defaults, "candidates": rows, "deathSubstitutionReview": review,
+        "motionSourceSearchBoundary": {
+            "rootsChecked": [
+                str(native_root.resolve()),
+                str((WORKSPACE / "GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository").resolve()),
+            ],
+            "formatsChecked": ["blend embedded actions", "NUANMB body motions", "accepted GLB animations"],
+            "nsandns2ContainerInspection": "not-available-metadata-only",
+            "networkOrPermissionBypassAttempted": False,
+        },
         "decisions": [
             "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
             "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
+            "Mario 已有 15 張本機 Babylon WebGL 目標骨架播放圖與緊湊 Git SHA 收據；這只證明 5 段獨立元件的視覺播放，不是六態映射核准。",
             "NSandNS2 三個容器目前只有 Windows 清單中檔名與大小；本次未掛載 /Volumes/game，payload bytes read 仍為 0，不能用來增加任何角色或動作完成數。",
             "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
             "Pokémon Trainer 男／女的新減面階段已由同一份 46 檔封存包覆蓋，S3 完整讀回與逐檔 SHA-256 均通過。",
@@ -298,7 +397,7 @@ def report_block(audit: dict[str, Any]) -> str:
         by_hero.setdefault(row["heroId"], []).append(row)
     lines = [
         START, "", "### SSBU 四組模型／動作缺口實檔複核", "",
-        f"固定本機來源重讀後共有 **{audit['summary']['acceptedModelComponents']} 個已驗收模型變體**，逐檔新算 {audit['summary']['sourceFilesFreshlyHashed']} 個來源 SHA-256。只有 Mario 有 5 段 Ultimate14 社群 MOD 原生特殊動作；目前 **0 個六態完整候選、0 個新增後台選項、0 個正式站部署**。", "",
+        f"固定本機來源重讀後共有 **{audit['summary']['acceptedModelComponents']} 個已驗收模型變體**，逐檔新算 {audit['summary']['sourceFilesFreshlyHashed']} 個來源 SHA-256。只有 Mario 有 5 段 Ultimate14 社群 MOD 原生特殊動作，已驗證 {audit['summary']['independentMotionReviewImageCount']} 張本機 Babylon WebGL 播放圖；目前 **0 個六態完整候選、0 個新增後台選項、0 個正式站部署**。", "",
         "| 角色 | 已驗收模型 | 原生動作 | 正式採用幾何 | 六態／下拉狀態 |", "|---|---:|---:|---|---|",
     ]
     for hero_id in ("acquired-mario", "acquired-mewtwo", "acquired-pokemon-trainer", "acquired-minecraft"):
@@ -309,10 +408,11 @@ def report_block(audit: dict[str, Any]) -> str:
         lines.append(f"| {display}（`{hero_id}`） | {len(rows)} | {clips} | {formal} | 六態缺；未新增 model@1／下拉 |")
     lines += [
         "", "Pokémon Trainer 男／女已分別從 10,698／11,086 面降到 7,896／7,892 面；逐位元重建、Khronos 0 error／0 warning、GGD hard policy、材質／貼圖／骨架保存與 Babylon front/back/isometric A/B 均通過。最大 changed-pixel 差異為 0.300156%／0.224531%（契約上限 5%）。46 檔減面階段已完成 S3 完整讀回與逐檔 SHA-256 驗證。", "",
-        "Mario 的原生 clip 保留 `d01specialairsdash`、`d01specialairsend`、`d01specialairsjump`、`d01specialsdash`、`d01specialsend`，沒有把特殊招式硬標為六態。其餘三組固定來源原生 body motion 都是 0。", "",
+        "Mario 的原生 clip 保留 `d01specialairsdash`、`d01specialairsend`、`d01specialairsjump`、`d01specialsdash`、`d01specialsend`，沒有把特殊招式硬標為六態。15 張本機 WebGL 抽幀的路徑、大小與 SHA-256 由同一產生器重驗；收據範圍只是獨立 5 動作元件。", "",
+        "Mewtwo 缺 `fighter/mewtwo/motion/body/c00`；Trainer 男／女缺 `fighter/ptrainer/motion/body/c00|c01`；Steve／Alex 缺 `fighter/pickel/motion/body/c00|c01`。這些 fighter 目錄本身也不存在於已取得 Ultimate14 解包樹，而 Worldblender `.blend` 的內嵌 action 數都是 0。", "",
         "NSandNS2 的 1 個 NSP 與 2 個 ZIP 仍是 metadata-only：本次 `/Volumes/game` 未掛載、payload bytes read 0、可辨識模型／動作 0。現有模型來自固定 Worldblender snapshot；Mario 的 5 段動作來自 Ultimate14 社群 MOD，兩者都沒有冒稱為已讀取 NS 遊戲容器。", "",
         "四組的「hurt/down＋向上淡出」死亡替代均為待 owner 審查提案；目前沒有目標骨架 hurt/down 動作與可播放審查媒體，所以不可自動綁定。既有 `imported.linkstik`、`imported.herobuu`、`imported.heropikachu`、`champ.thorne` 預設保持不變。", "",
-        "來源：`tools/hero-model-library/source-workflows/ssbu-missing-four-v1/build_audit.py`；收據：`materials/hero-model-library/priority-evidence/ssbu-missing-four-v1/audit.json`。", "", END,
+        "來源：`tools/hero-model-library/source-workflows/ssbu-missing-four-v1/build_audit.py`；收據：`materials/hero-model-library/priority-evidence/ssbu-missing-four-v1/audit.json`；播放審查：`apps/client/public/ssbu-missing-four-motion-review.html`。", "", END,
     ]
     return "\n".join(lines)
 

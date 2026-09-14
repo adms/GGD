@@ -8,6 +8,10 @@ SPEC = importlib.util.spec_from_file_location("ssbu_missing_four", HERE / "build
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader
 SPEC.loader.exec_module(MODULE)
+REVIEW_SPEC = importlib.util.spec_from_file_location("ssbu_missing_four_review", HERE / "build_review_page.py")
+REVIEW_MODULE = importlib.util.module_from_spec(REVIEW_SPEC)
+assert REVIEW_SPEC.loader
+REVIEW_SPEC.loader.exec_module(REVIEW_MODULE)
 
 
 class AuditTest(unittest.TestCase):
@@ -27,8 +31,24 @@ class AuditTest(unittest.TestCase):
         mario = next(row for row in self.audit["candidates"] if row["heroId"] == "acquired-mario")
         self.assertEqual(5, len(mario["nativeClipNames"]))
         self.assertEqual(MODULE.REQUIRED_STATES, mario["missingRequiredStates"])
+        self.assertTrue(mario["reviewEvidence"]["ready"])
+        self.assertEqual(15, mario["reviewEvidence"]["reviewedImageCount"])
+        self.assertFalse(mario["reviewEvidence"]["semanticMappingApproved"])
+        self.assertFalse(mario["reviewEvidence"]["runtimeBindingAllowed"])
         others = [row for row in self.audit["candidates"] if row["heroId"] != "acquired-mario"]
         self.assertTrue(all(row["nativeClipNames"] == [] for row in others))
+        self.assertTrue(all(not row["reviewEvidence"]["ready"] for row in others))
+
+    def test_exact_source_path_gaps_are_machine_readable(self):
+        mario = next(row for row in self.audit["candidates"] if row["fighterId"] == "mario")
+        self.assertTrue(mario["motionSourceSearch"]["ultimate14FighterRootExists"])
+        self.assertEqual(5, mario["motionSourceSearch"]["ultimate14IndexedUniqueBodyPayloadCount"])
+        self.assertEqual("verified-native-motion-candidate", mario["motionSourceSearch"]["result"])
+        others = [row for row in self.audit["candidates"] if row["fighterId"] != "mario"]
+        self.assertTrue(all(not row["motionSourceSearch"]["ultimate14FighterRootExists"] for row in others))
+        self.assertTrue(all(row["motionSourceSearch"]["ultimate14IndexedBodyAliasCount"] == 0 for row in others))
+        self.assertTrue(all(row["motionSourceSearch"]["preciseGap"] for row in others))
+        self.assertFalse(self.audit["motionSourceSearchBoundary"]["networkOrPermissionBypassAttempted"])
 
     def test_no_unapproved_runtime_registration(self):
         self.assertEqual(0, self.audit["summary"]["sixStateCompleteVariants"])
@@ -69,6 +89,17 @@ class AuditTest(unittest.TestCase):
         self.assertEqual(0, boundary["stageCounts"]["modelFilesIdentified"])
         self.assertEqual(0, boundary["stageCounts"]["motionFilesIdentified"])
         self.assertFalse(boundary["usableForTheseCandidates"])
+
+    def test_review_page_contract_cannot_authorize_runtime(self):
+        review = REVIEW_MODULE.contract()
+        self.assertEqual(5, review["summary"]["playableClips"])
+        self.assertEqual(3, review["summary"]["blockedFighterGroups"])
+        self.assertFalse(review["policy"]["semanticMappingAllowed"])
+        self.assertFalse(review["policy"]["runtimeBindingAllowed"])
+        self.assertFalse(review["policy"]["defaultChangeAllowed"])
+        html = REVIEW_MODULE.render(review).decode()
+        self.assertIn("ssbu-missing-four-motion-review-decision.json", html)
+        self.assertIn(review["model"]["sha256"], html)
 
 
 if __name__ == "__main__":

@@ -15,12 +15,15 @@
     "sourceFilesFreshlyHashed": 33,
     "nativeMotionComponents": 1,
     "nativeClipCount": 5,
+    "independentMotionReviewReadyVariants": 1,
+    "independentMotionReviewImageCount": 15,
     "formalGeometryEligibleVariants": 6,
     "formalDecimationRequiredVariants": 0,
     "s3VerifiedVariants": 6,
     "sixStateCompleteVariants": 0,
     "newRuntimeDropdownOptions": 0,
-    "reviewMediaReady": 0,
+    "reviewMediaReady": 1,
+    "deathSubstitutionReviewMediaReady": 0,
     "productionDeployed": 0
   },
   "nsandns2PayloadBoundary": {
@@ -230,6 +233,173 @@
         "fighterPresent": true,
         "provenance": "community-mod-native-not-verified-original-game"
       },
+      "motionSourceSearch": {
+        "fighterToken": "mario",
+        "costumeToken": "c00",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00",
+        "ultimate14FighterRootExists": true,
+        "ultimate14BodyMotionDirectoryExists": true,
+        "ultimate14BodyMotionFilesAtExactPath": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsdash.nuanmb",
+            "bytes": 72833,
+            "sha256": "2247d9422dcbe9d4b0a5bec4461783b0b8d8587281f8490aaa9c313f322ae8c7"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsend.nuanmb",
+            "bytes": 53388,
+            "sha256": "63d49bc1470daf9a268c664556168295b6d495d720bed7a3b428f73203f073b1"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsjump.nuanmb",
+            "bytes": 46756,
+            "sha256": "343b2b2ea5294c97496c34204117c047c2f59aee7f592a82d7273d3d46ecc927"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsdash.nuanmb",
+            "bytes": 89477,
+            "sha256": "7b7d0071d8074b0cc6c4ae5a2561fac0a936c4dbe3c4f940ee83a7a05295a49e"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsend.nuanmb",
+            "bytes": 52569,
+            "sha256": "c27e9d9566b5d99625af7cca1010fa722b8b81f840f41762d5e04d2ab2d1e5b5"
+          }
+        ],
+        "ultimate14IndexedAliasCount": 64,
+        "ultimate14IndexedBodyAliasCount": 40,
+        "ultimate14IndexedUniqueBodyPayloadCount": 5,
+        "convertedNativeMotionFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsdash.nuanmb",
+            "bytes": 72833,
+            "sha256": "2247d9422dcbe9d4b0a5bec4461783b0b8d8587281f8490aaa9c313f322ae8c7",
+            "nativeClipName": "d01specialairsdash"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsend.nuanmb",
+            "bytes": 53388,
+            "sha256": "63d49bc1470daf9a268c664556168295b6d495d720bed7a3b428f73203f073b1",
+            "nativeClipName": "d01specialairsend"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsjump.nuanmb",
+            "bytes": 46756,
+            "sha256": "343b2b2ea5294c97496c34204117c047c2f59aee7f592a82d7273d3d46ecc927",
+            "nativeClipName": "d01specialairsjump"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsdash.nuanmb",
+            "bytes": 89477,
+            "sha256": "7b7d0071d8074b0cc6c4ae5a2561fac0a936c4dbe3c4f940ee83a7a05295a49e",
+            "nativeClipName": "d01specialsdash"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsend.nuanmb",
+            "bytes": 52569,
+            "sha256": "c27e9d9566b5d99625af7cca1010fa722b8b81f840f41762d5e04d2ab2d1e5b5",
+            "nativeClipName": "d01specialsend"
+          }
+        ],
+        "result": "verified-native-motion-candidate",
+        "preciseGap": null
+      },
+      "reviewEvidence": {
+        "ready": true,
+        "scope": "independent-five-motion-component-only",
+        "reviewedClipCount": 5,
+        "reviewedImageCount": 15,
+        "localImages": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsdash-end.png",
+            "bytes": 218057,
+            "sha256": "2435ff0a62574441130a10080ec8ff1c9e4f460b7c94e2d5f3afd28ffc9849bd"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsdash-middle.png",
+            "bytes": 94635,
+            "sha256": "388d0bca1c2b7a1583a2f55d12adf8eb7400e5ffbed0d9f0f0f9f31142b68fdd"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsdash-start.png",
+            "bytes": 210968,
+            "sha256": "3879edd82788d4326e3c61a56ae6df8bb7087e4d8d3a872571d8c845a9d87648"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsend-end.png",
+            "bytes": 211185,
+            "sha256": "32d157241d39b5da419acebbd7e9dc973dc8328ae92fd38e48cb9bd909bc0670"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsend-middle.png",
+            "bytes": 225728,
+            "sha256": "9676eb74aac95cdf5fd474c9ec2eedcdcdc7388cfc70b66109fa2457ca55712d"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsend-start.png",
+            "bytes": 137394,
+            "sha256": "4bb7c268cb53f2fbabbf5f44783bdd3b163236ca3bb023ed4622f2f02843e883"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsjump-end.png",
+            "bytes": 207615,
+            "sha256": "e5558b8777efc5c593de4ea39faa0e32d9042ba9fab291e233f27206a0d4317d"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsjump-middle.png",
+            "bytes": 130435,
+            "sha256": "aca8491ad122815e8e63227b4e2181ff68201cb3bfa8b8f2a3af8c04488d020d"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialairsjump-start.png",
+            "bytes": 204697,
+            "sha256": "0a933ad36329ed28291420a6e373b6300d8be96032a8c212324af25152b8200a"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsdash-end.png",
+            "bytes": 159644,
+            "sha256": "fffeece80de2fd7f7c1f5a013e6de71efdc8c610e3b0015ef38a9b23164a9c77"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsdash-middle.png",
+            "bytes": 241838,
+            "sha256": "2c27eb88aff0d75f42caf0bdff2452e0dfc6180ab4cbe3ac9cb655b7c702ea9b"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsdash-start.png",
+            "bytes": 234902,
+            "sha256": "74c045f24e30e7760a27c1c3937a040177ed546f58f87ec77c2a0c9c86b74d53"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsend-end.png",
+            "bytes": 165891,
+            "sha256": "d3af69df65a9a7d6a41c9cb458119bf335e48dfbbcc4b134c9f2a1ce5de7db78"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsend-middle.png",
+            "bytes": 266945,
+            "sha256": "7a3c01a9fa252e64a978a543200c6a0159c44055da710853fda3859ae56ba06b"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/visual-07/d01specialsend-start.png",
+            "bytes": 137820,
+            "sha256": "63b1ae22dc376405653b2c21a58aa0aebc2bd687babf5859f579033296c36729"
+          }
+        ],
+        "receipt": {
+          "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+          "bytes": 7592,
+          "sha256": "57a9bdebf5c54ab02917235b2e486e6f4af61b1fa0eea077f45c53ba605a3ef0"
+        },
+        "semanticMappingApproved": false,
+        "runtimeBindingAllowed": false
+      },
       "semanticClipMap": {},
       "missingRequiredStates": [
         "idle",
@@ -362,6 +532,34 @@
         "uniqueBodyPayloadCount": 0,
         "fighterPresent": false,
         "provenance": "none-in-acquired-ultimate14-source"
+      },
+      "motionSourceSearch": {
+        "fighterToken": "mewtwo",
+        "costumeToken": "c00",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mewtwo",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mewtwo/motion/body/c00",
+        "ultimate14FighterRootExists": false,
+        "ultimate14BodyMotionDirectoryExists": false,
+        "ultimate14BodyMotionFilesAtExactPath": [],
+        "ultimate14IndexedAliasCount": 0,
+        "ultimate14IndexedBodyAliasCount": 0,
+        "ultimate14IndexedUniqueBodyPayloadCount": 0,
+        "convertedNativeMotionFiles": [],
+        "result": "no-motion-payload-in-acquired-sources",
+        "preciseGap": "No fighter/mewtwo/motion/body/c00 NUANMB directory or payload exists in the fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 containers remain metadata-only with zero payload bytes read."
+      },
+      "reviewEvidence": {
+        "ready": false,
+        "scope": "none-no-target-motion",
+        "reviewedClipCount": 0,
+        "reviewedImageCount": 0,
+        "localImages": [],
+        "receipt": null
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -505,6 +703,34 @@
         "uniqueBodyPayloadCount": 0,
         "fighterPresent": false,
         "provenance": "none-in-acquired-ultimate14-source"
+      },
+      "motionSourceSearch": {
+        "fighterToken": "ptrainer",
+        "costumeToken": "c00",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/ptrainer-c00.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/ptrainer",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/ptrainer/motion/body/c00",
+        "ultimate14FighterRootExists": false,
+        "ultimate14BodyMotionDirectoryExists": false,
+        "ultimate14BodyMotionFilesAtExactPath": [],
+        "ultimate14IndexedAliasCount": 0,
+        "ultimate14IndexedBodyAliasCount": 0,
+        "ultimate14IndexedUniqueBodyPayloadCount": 0,
+        "convertedNativeMotionFiles": [],
+        "result": "no-motion-payload-in-acquired-sources",
+        "preciseGap": "No fighter/ptrainer/motion/body/c00 NUANMB directory or payload exists in the fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 containers remain metadata-only with zero payload bytes read."
+      },
+      "reviewEvidence": {
+        "ready": false,
+        "scope": "none-no-target-motion",
+        "reviewedClipCount": 0,
+        "reviewedImageCount": 0,
+        "localImages": [],
+        "receipt": null
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -654,6 +880,34 @@
         "fighterPresent": false,
         "provenance": "none-in-acquired-ultimate14-source"
       },
+      "motionSourceSearch": {
+        "fighterToken": "ptrainer",
+        "costumeToken": "c01",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/ptrainer",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/ptrainer/motion/body/c01",
+        "ultimate14FighterRootExists": false,
+        "ultimate14BodyMotionDirectoryExists": false,
+        "ultimate14BodyMotionFilesAtExactPath": [],
+        "ultimate14IndexedAliasCount": 0,
+        "ultimate14IndexedBodyAliasCount": 0,
+        "ultimate14IndexedUniqueBodyPayloadCount": 0,
+        "convertedNativeMotionFiles": [],
+        "result": "no-motion-payload-in-acquired-sources",
+        "preciseGap": "No fighter/ptrainer/motion/body/c01 NUANMB directory or payload exists in the fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 containers remain metadata-only with zero payload bytes read."
+      },
+      "reviewEvidence": {
+        "ready": false,
+        "scope": "none-no-target-motion",
+        "reviewedClipCount": 0,
+        "reviewedImageCount": 0,
+        "localImages": [],
+        "receipt": null
+      },
       "semanticClipMap": {},
       "missingRequiredStates": [
         "idle",
@@ -776,6 +1030,34 @@
         "uniqueBodyPayloadCount": 0,
         "fighterPresent": false,
         "provenance": "none-in-acquired-ultimate14-source"
+      },
+      "motionSourceSearch": {
+        "fighterToken": "pickel",
+        "costumeToken": "c00",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/pickel",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/pickel/motion/body/c00",
+        "ultimate14FighterRootExists": false,
+        "ultimate14BodyMotionDirectoryExists": false,
+        "ultimate14BodyMotionFilesAtExactPath": [],
+        "ultimate14IndexedAliasCount": 0,
+        "ultimate14IndexedBodyAliasCount": 0,
+        "ultimate14IndexedUniqueBodyPayloadCount": 0,
+        "convertedNativeMotionFiles": [],
+        "result": "no-motion-payload-in-acquired-sources",
+        "preciseGap": "No fighter/pickel/motion/body/c00 NUANMB directory or payload exists in the fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 containers remain metadata-only with zero payload bytes read."
+      },
+      "reviewEvidence": {
+        "ready": false,
+        "scope": "none-no-target-motion",
+        "reviewedClipCount": 0,
+        "reviewedImageCount": 0,
+        "localImages": [],
+        "receipt": null
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -900,6 +1182,34 @@
         "fighterPresent": false,
         "provenance": "none-in-acquired-ultimate14-source"
       },
+      "motionSourceSearch": {
+        "fighterToken": "pickel",
+        "costumeToken": "c01",
+        "worldblenderBody": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/pickel-alex-c01.blend",
+          "embeddedSourceActionCount": 0,
+          "embeddedSourceActions": []
+        },
+        "ultimate14ExpectedFighterRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/pickel",
+        "ultimate14ExpectedBodyMotionDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/pickel/motion/body/c01",
+        "ultimate14FighterRootExists": false,
+        "ultimate14BodyMotionDirectoryExists": false,
+        "ultimate14BodyMotionFilesAtExactPath": [],
+        "ultimate14IndexedAliasCount": 0,
+        "ultimate14IndexedBodyAliasCount": 0,
+        "ultimate14IndexedUniqueBodyPayloadCount": 0,
+        "convertedNativeMotionFiles": [],
+        "result": "no-motion-payload-in-acquired-sources",
+        "preciseGap": "No fighter/pickel/motion/body/c01 NUANMB directory or payload exists in the fixed Ultimate14 extraction; the Worldblender body has zero embedded actions, and the NSandNS2 containers remain metadata-only with zero payload bytes read."
+      },
+      "reviewEvidence": {
+        "ready": false,
+        "scope": "none-no-target-motion",
+        "reviewedClipCount": 0,
+        "reviewedImageCount": 0,
+        "localImages": [],
+        "receipt": null
+      },
       "semanticClipMap": {},
       "missingRequiredStates": [
         "idle",
@@ -990,9 +1300,23 @@
       "automaticBindingAllowed": false
     }
   ],
+  "motionSourceSearchBoundary": {
+    "rootsChecked": [
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository"
+    ],
+    "formatsChecked": [
+      "blend embedded actions",
+      "NUANMB body motions",
+      "accepted GLB animations"
+    ],
+    "nsandns2ContainerInspection": "not-available-metadata-only",
+    "networkOrPermissionBypassAttempted": false
+  },
   "decisions": [
     "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
     "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
+    "Mario 已有 15 張本機 Babylon WebGL 目標骨架播放圖與緊湊 Git SHA 收據；這只證明 5 段獨立元件的視覺播放，不是六態映射核准。",
     "NSandNS2 三個容器目前只有 Windows 清單中檔名與大小；本次未掛載 /Volumes/game，payload bytes read 仍為 0，不能用來增加任何角色或動作完成數。",
     "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
     "Pokémon Trainer 男／女的新減面階段已由同一份 46 檔封存包覆蓋，S3 完整讀回與逐檔 SHA-256 均通過。",
