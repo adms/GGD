@@ -19,7 +19,7 @@ class PoppReportTest(unittest.TestCase):
         self.assertIn("GGD VFX 候選 12 個", rendered)
         self.assertIn("7 個已依來源名稱整理成 Q/W/R 審查提案", rendered)
         self.assertIn("5 個保留未配對", rendered)
-        self.assertIn("逐項聽審 0", rendered)
+        self.assertIn("逐項聽審 36", rendered)
         self.assertIn("新增 runtime 綁定 0", rendered)
         self.assertIn("Kagayaki", rendered)
         self.assertIn("modelSelectionMode=manual", rendered)
