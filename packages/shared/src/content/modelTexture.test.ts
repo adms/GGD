@@ -38,7 +38,7 @@ interface Img {
   width: number;
   height: number;
   bytes: number;
-  /** 內嵌 PNG 位元組的 sha256 —— 只給 {@link ORIGINAL_TINY_TEXTURE} 逐位元組比對用 */
+  /** 內嵌 PNG 位元組的 sha256 —— 只給 {@link INTENTIONAL_TINY_TEXTURE}／{@link BODY_TINY_OK} 逐位元組比對用 */
   sha256: string;
 }
 interface Glb {
@@ -183,6 +183,17 @@ const INTENTIONAL_TINY_TEXTURE: Readonly<Record<string, string>> = {
     "同一支英雄較新的 a8ced1f9／1649f8ff（d54eacf8….glb）是同一張調色盤放大成 16×8。",
 };
 
+/**
+ * ⭐ **身體主材質**可以是極小貼圖的，⛔ 只有調色盤圖集那一張（整顆替身只有這一張貼圖，UV 指格子取色）。
+ * 髮色底色（49b3c802）與 white.blp（47c0b232）只該出現在**次要**材質上 —— 拿去當身體主材質
+ * 就是「整顆退回佔位」的形狀 ⇒ 照樣紅。
+ * ⚠️ GH#1242 審查：f4f2601ec 把 body 那條放寬成「整張 INTENTIONAL_TINY_TEXTURE 都放行」，而重掃 521 顆，
+ *   身體主材質真的需要豁免的只有 1 顆（community-review-14 後台版本 b5d66346，殺老師 4×2 調色盤）⇒ 收窄回這一列。
+ */
+const BODY_TINY_OK: ReadonlySet<string> = new Set([
+  "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+]);
+
 /** 量尺：≤ 8×8 而**不是**名單上那幾張刻意的位元組 */
 const greyImages = (glb: Glb): Img[] =>
   glb.images.filter((im) => !isReal(im) && !(im.sha256 in INTENTIONAL_TINY_TEXTURE));
@@ -234,7 +245,7 @@ describe("no champion ships untextured (model-body-texture)", () => {
       expect(mat, `${modelKey} body primitive has no material`).not.toBeNull();
       const img = glb.materialImages[mat!] ?? null;
       expect(
-        isReal(img) || (img !== null && img.sha256 in INTENTIONAL_TINY_TEXTURE),
+        isReal(img) || (img !== null && BODY_TINY_OK.has(img.sha256) && img.sha256 in INTENTIONAL_TINY_TEXTURE),
         `${modelKey} body material paints with the ${PLACEHOLDER_MAX}x${PLACEHOLDER_MAX} ` +
           `grey placeholder (unresolved .blp — see w3xlib/models.py STOCK_MPQS)`,
       ).toBe(true);
