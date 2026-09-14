@@ -1,0 +1,599 @@
+{
+  "schema": "ggd.jump-force-dai-six-draw-validation@1",
+  "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-six-draw-v3",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "candidate": {
+    "gitPath": "content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+    "bytes": 3087152,
+    "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c"
+  },
+  "deterministicRebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-b/dai-chr0430-six-draw.glb",
+    "bytes": 3087152,
+    "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c",
+    "byteIdentical": true
+  },
+  "metrics": {
+    "triangles": 7930,
+    "drawPrimitives": 6,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "animations": 0
+  },
+  "preservation": {
+    "nonUvVertexAttributesByteEquivalentAsMultiset": true,
+    "preservedAttributes": [
+      "POSITION",
+      "NORMAL",
+      "JOINTS_0",
+      "WEIGHTS_0"
+    ],
+    "triangleCountUnchangedFromV2": true,
+    "allOutputPrimitivesSkinned": true,
+    "skinAndJointCountPreserved": true,
+    "transparentEyeHairLayersKeptSeparate": true,
+    "opaqueBodyMaterialsMergedWithSourceSpecificBaseNormalOrmAtlas": true
+  },
+  "khronos": {
+    "validator": "gltf-validator@2.0.0-dev.3.10",
+    "errors": 0,
+    "warnings": 31,
+    "infos": 119,
+    "hints": 0,
+    "truncated": false,
+    "issueCodeCounts": {
+      "IMAGE_FEATURES_UNSUPPORTED": 22,
+      "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE": 3,
+      "NODE_EMPTY": 14,
+      "NODE_SKINNED_MESH_NON_ROOT": 6,
+      "UNUSED_OBJECT": 105
+    }
+  },
+  "policy": {
+    "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-a/dai-chr0430-six-draw.glb",
+    "role": "champion",
+    "roleSource": "flag",
+    "worst": "warn",
+    "adoption": {
+      "status": "eligible",
+      "triggerTrianglesAbove": 10000,
+      "targetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5
+    },
+    "metrics": {
+      "triangles": 7930,
+      "meshes": 6,
+      "maxTextureEdge": 256,
+      "channelsPerFrame": 0,
+      "vramBytes": 9437175
+    },
+    "axes": [
+      {
+        "key": "triangles",
+        "label": "每實例三角面",
+        "value": 7930,
+        "warn": 16000,
+        "limit": 28000,
+        "verdict": "ok"
+      },
+      {
+        "key": "drawCalls",
+        "label": "每模型 mesh / draw call",
+        "value": 6,
+        "warn": 3,
+        "limit": 6,
+        "verdict": "warn"
+      },
+      {
+        "key": "maxTextureEdge",
+        "label": "貼圖最長邊 (px)",
+        "value": 256,
+        "warn": 256,
+        "limit": 256,
+        "verdict": "ok"
+      },
+      {
+        "key": "animChannels",
+        "label": "每幀動畫通道",
+        "value": 0,
+        "warn": 300,
+        "limit": 500,
+        "verdict": "ok"
+      }
+    ]
+  },
+  "webgl": {
+    "complete": true,
+    "rendererBundleSha256": "c61a4840cbe01dcbf1ca66289535bd68405b10598687f850784c638efee15823",
+    "views": 3,
+    "proof": {
+      "schema": "ggd.ssbu-static-webgl@1",
+      "babylonVersion": "7.54.3",
+      "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5331799387931824,
+          -0.002149025211110711,
+          -0.21897973120212555
+        ],
+        "max": [
+          0.5331800580024719,
+          1.5594509840011597,
+          0.23257462680339813
+        ],
+        "extent": [
+          1.0663599967956543,
+          1.5616000092122704,
+          0.4515543580055237
+        ]
+      },
+      "geometry": [
+        {
+          "name": "chr0430_form0.001__MI_chr0430_eyeshadow",
+          "vertices": 129,
+          "indices": 600,
+          "worldBounds": {
+            "min": [
+              -0.07348288595676422,
+              1.2748727798461914,
+              0.04358323663473129
+            ],
+            "max": [
+              0.07348288595676422,
+              1.322021722793579,
+              0.0737321749329567
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "chr0430_form0.001__MI_chr0430_glass",
+          "vertices": 34,
+          "indices": 120,
+          "worldBounds": {
+            "min": [
+              -0.006286785006523132,
+              0.890251874923706,
+              0.09315253794193268
+            ],
+            "max": [
+              0.013849761337041855,
+              1.0758031606674194,
+              0.1004389300942421
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "chr0430_form0.001__MI_chr0430_lens",
+          "vertices": 129,
+          "indices": 600,
+          "worldBounds": {
+            "min": [
+              -0.07361376285552979,
+              1.2747936248779297,
+              0.04371435195207596
+            ],
+            "max": [
+              0.07361376285552979,
+              1.3220276832580566,
+              0.07391878217458725
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "chr0430_body_atlas",
+          "vertices": 4192,
+          "indices": 15468,
+          "worldBounds": {
+            "min": [
+              -0.5331799387931824,
+              -0.002149025211110711,
+              -0.17638415098190308
+            ],
+            "max": [
+              0.5331800580024719,
+              1.4343490600585938,
+              0.23257462680339813
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "Dai_chr0430_part1_chr0430_form0_head__MI_chr0430_eye",
+          "vertices": 580,
+          "indices": 3102,
+          "worldBounds": {
+            "min": [
+              -0.0730576366186142,
+              1.2751295566558838,
+              0.04315723106265068
+            ],
+            "max": [
+              0.0730576291680336,
+              1.3220021724700928,
+              0.07312582433223724
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "Dai_chr0430_part1_chr0430_form0_head__MI_chr0430_hair",
+          "vertices": 1151,
+          "indices": 3900,
+          "worldBounds": {
+            "min": [
+              -0.1973959505558014,
+              1.1602370738983154,
+              -0.21897973120212555
+            ],
+            "max": [
+              0.19687765836715698,
+              1.5594509840011597,
+              0.18552236258983612
+            ]
+          },
+          "skeleton": "chr0430_form0",
+          "bones": 159,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "animationGroups": 0,
+      "skeletons": 1,
+      "materials": [
+        {
+          "name": "MI_chr0430_eyeshadow",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.800000011920929,
+          "albedoTexture": {
+            "name": "MI_chr0430_eyeshadow (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "MI_chr0430_glass",
+          "alpha": 1,
+          "transparencyMode": 1,
+          "backFaceCulling": false,
+          "metallic": 1,
+          "roughness": 1,
+          "albedoTexture": {
+            "name": "MI_chr0430_glass (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": {
+            "name": "MI_chr0430_glass (Normal)",
+            "ready": true,
+            "gammaSpace": true,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          }
+        },
+        {
+          "name": "MI_chr0430_lens",
+          "alpha": 1,
+          "transparencyMode": 1,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.800000011920929,
+          "albedoTexture": {
+            "name": "MI_chr0430_lens (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "MI_chr0430_body_atlas",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": true,
+          "metallic": 1,
+          "roughness": 1,
+          "albedoTexture": {
+            "name": "MI_chr0430_body_atlas (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": {
+            "name": "MI_chr0430_body_atlas (Normal)",
+            "ready": true,
+            "gammaSpace": true,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          }
+        },
+        {
+          "name": "MI_chr0430_eye",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": true,
+          "metallic": 0,
+          "roughness": 0.800000011920929,
+          "albedoTexture": {
+            "name": "MI_chr0430_eye (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "MI_chr0430_hair",
+          "alpha": 1,
+          "transparencyMode": 1,
+          "backFaceCulling": false,
+          "metallic": 1,
+          "roughness": 1,
+          "albedoTexture": {
+            "name": "MI_chr0430_hair (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": {
+            "name": "MI_chr0430_hair (Normal)",
+            "ready": true,
+            "gammaSpace": true,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "data:EnvironmentBRDFTexture0",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 640,
+            "height": 1
+          }
+        },
+        {
+          "name": "MI_chr0430_eyeshadow (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_glass (Normal)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_glass (Occlusion)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_glass (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_glass (Metallic Roughness)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_lens (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_body_atlas (Normal)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_body_atlas (Occlusion)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_body_atlas (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_body_atlas (Metallic Roughness)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_eye (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_hair (Normal)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_hair (Occlusion)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_hair (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "MI_chr0430_hair (Metallic Roughness)",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        }
+      ],
+      "shots": [
+        {
+          "name": "front",
+          "alpha": 1.5707963267948966,
+          "beta": 1.5707963267948966
+        },
+        {
+          "name": "back",
+          "alpha": -1.5707963267948966,
+          "beta": 1.5707963267948966
+        },
+        {
+          "name": "isometric",
+          "alpha": 0.7853981633974483,
+          "beta": 1.1635528346628863
+        }
+      ],
+      "sourceGameShaderParity": false,
+      "gameplayAcceptance": false
+    },
+    "technicalInspection": "whole body, face, eyes, hair, clothing and weapon visible without the rejected v1 UV breakup",
+    "ownerVisualQualityReview": "pending-new-six-draw-render-review"
+  },
+  "states": {
+    "ownerPublicationAuthorized": true,
+    "geometryTargetPassed": true,
+    "drawCallLimitPassed": true,
+    "textureEdgePassed": true,
+    "visualReview": "pending-owner-review",
+    "motionReview": "blocked-no-reviewed-motion-binding",
+    "gitProductFrozen": true,
+    "backendOptionRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "remaining": [
+    "The new six-draw render needs owner visual approval.",
+    "The JUMP FORCE source contains no converted native clip; borrowed or same-work motion needs a separate playback review before binding.",
+    "S3 backup/readback for this conversion stage is pending."
+  ]
+}

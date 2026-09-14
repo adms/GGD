@@ -45,7 +45,20 @@ class JumpForceInventoryTest(unittest.TestCase):
         self.assertFalse(candidate["productionDeployed"])
         self.assertFalse(candidate["s3Backup"]["fullGetVerified"])
         self.assertEqual(len(candidate["evidence"]), 12)
-        self.assertEqual(current_ref["daiCandidateStatus"]["sha256"], candidate["sha256"])
+        six_draw = inventory["dai"]["sixDrawCandidate"]
+        self.assertEqual(six_draw["after"]["triangles"], 7930)
+        self.assertEqual(six_draw["after"]["drawPrimitives"], 6)
+        self.assertEqual(six_draw["after"]["maxTextureEdge"], 256)
+        self.assertTrue(six_draw["byteIdenticalRebuild"])
+        self.assertTrue(six_draw["nonUvVertexAttributesPreserved"])
+        self.assertTrue(six_draw["transparentEyeHairLayersKeptSeparate"])
+        self.assertTrue(six_draw["drawCallPassed"])
+        self.assertTrue(six_draw["gitProductFrozen"])
+        self.assertFalse(six_draw["runtimeRegistered"])
+        self.assertFalse(six_draw["runtimeSelectable"])
+        self.assertFalse(six_draw["productionDeployed"])
+        self.assertEqual(len(six_draw["evidence"]), 10)
+        self.assertEqual(current_ref["daiCandidateStatus"]["sha256"], six_draw["sha256"])
         self.assertFalse(current_ref["daiCandidateStatus"]["runtimeSelectable"])
 
 

@@ -4563,6 +4563,40 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+   "path": "assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 3587,
+   "vertices": 2838,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 33,
+   "clips": 6,
+   "animChannels": 108,
+   "textureCount": 1,
+   "textureBytes": 31036,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 31036,
+     "digest": "552eb6bd52b3aef8"
+    }
+   ],
+   "fileBytes": 800640,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
    "path": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
    "group": "community",
@@ -5645,6 +5679,40 @@
     }
    ],
    "fileBytes": 1264104,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+   "path": "assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 168,
+   "vertices": 132,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 7,
+   "clips": 6,
+   "animChannels": 24,
+   "textureCount": 1,
+   "textureBytes": 14326,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 14326,
+     "digest": "44fa6b6284354a0d"
+    }
+   ],
+   "fileBytes": 145472,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -7598,6 +7666,40 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+   "path": "assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 2787,
+   "vertices": 2403,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 26,
+   "clips": 6,
+   "animChannels": 87,
+   "textureCount": 1,
+   "textureBytes": 26144,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26144,
+     "digest": "0340f3c63bb0fcb6"
+    }
+   ],
+   "fileBytes": 618276,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
    "path": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
    "group": "community",
@@ -7803,6 +7905,40 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+   "path": "assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 3239,
+   "vertices": 2633,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 25,
+   "clips": 6,
+   "animChannels": 81,
+   "textureCount": 1,
+   "textureBytes": 29245,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 29245,
+     "digest": "3a2f897ed2ba74e4"
+    }
+   ],
+   "fileBytes": 626792,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
    "path": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
    "group": "community",
@@ -7979,6 +8115,40 @@
    "maxTextureEdge": 0,
    "textures": [],
    "fileBytes": 129044,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+   "path": "assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 4192,
+   "vertices": 3991,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 38,
+   "clips": 6,
+   "animChannels": 117,
+   "textureCount": 1,
+   "textureBytes": 37616,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37616,
+     "digest": "a0f6cc2220f74724"
+    }
+   ],
+   "fileBytes": 911004,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8329,6 +8499,222 @@
     }
    ],
    "fileBytes": 958364,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+   "path": "assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7930,
+   "vertices": 6215,
+   "drawCalls": 6,
+   "materials": 6,
+   "skins": 1,
+   "joints": 159,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 27,
+   "textureBytes": 2379229,
+   "vramBytes": 9437175,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 334,
+     "digest": "aebc86755d7beb8b"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 34652,
+     "digest": "58de10e7157d4a0e"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 61538,
+     "digest": "599f888b8d0438b1"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 62113,
+     "digest": "a0ff2adfbadd7475"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 334,
+     "digest": "aebc86755d7beb8b"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 109186,
+     "digest": "25c3fe1f70bc31c4"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 78407,
+     "digest": "2b12544d96438b8e"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 172295,
+     "digest": "0c09ec5a75553cd4"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 102383,
+     "digest": "b26ffa4ee1e74026"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 127016,
+     "digest": "34685644f0ec0509"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 141601,
+     "digest": "59d5dfd295ba4cd9"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 45141,
+     "digest": "24fab1f28e735b35"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 85837,
+     "digest": "23d4fcf795bbc2ac"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 89147,
+     "digest": "4b6f800e785d3aff"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 102464,
+     "digest": "eac2a26d4d7cf64a"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 78280,
+     "digest": "d65d58415301571a"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 45139,
+     "digest": "d450701f6e998ab9"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 45980,
+     "digest": "e77fedd771b67f23"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 105794,
+     "digest": "3cbd14e6555881ba"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 105376,
+     "digest": "0b9676998113bbd8"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 180420,
+     "digest": "94523a20487b6974"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 75191,
+     "digest": "5cc5671a15c57ffb"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 67758,
+     "digest": "89e3e84ff5d2e172"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 142554,
+     "digest": "8c90ab00730e1a7d"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 118596,
+     "digest": "6105a5de54c0baa4"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 102320,
+     "digest": "eb92fc3d9af3204f"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 99373,
+     "digest": "ce86a0fa9b5aa119"
+    }
+   ],
+   "fileBytes": 3087152,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8967,6 +9353,40 @@
     }
    ],
    "fileBytes": 2367208,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+   "path": "assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 4412,
+   "vertices": 4470,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 26,
+   "clips": 6,
+   "animChannels": 81,
+   "textureCount": 1,
+   "textureBytes": 29519,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 29519,
+     "digest": "aadf1ea81f31ec02"
+    }
+   ],
+   "fileBytes": 707692,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -10209,6 +10629,40 @@
     }
    ],
    "fileBytes": 414708,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+   "path": "assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 3365,
+   "vertices": 2805,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 32,
+   "clips": 6,
+   "animChannels": 99,
+   "textureCount": 1,
+   "textureBytes": 28170,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 28170,
+     "digest": "b5f886cc6b7062af"
+    }
+   ],
+   "fileBytes": 750360,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -12382,6 +12836,40 @@
     }
    ],
    "fileBytes": 916264,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+   "path": "assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 3180,
+   "vertices": 2403,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 34,
+   "clips": 6,
+   "animChannels": 105,
+   "textureCount": 1,
+   "textureBytes": 26003,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26003,
+     "digest": "ee07cdaf364188ae"
+    }
+   ],
+   "fileBytes": 642648,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -48086,14 +48574,14 @@
   }
  },
  "totals": {
-  "files": 959,
-  "shipping": 959,
-  "triangles": 5889329,
-  "shippingTriangles": 5889329,
-  "textureBytes": 307437751,
-  "vramBytes": 2087745918,
+  "files": 968,
+  "shipping": 968,
+  "triangles": 5922189,
+  "shippingTriangles": 5922189,
+  "textureBytes": 310039039,
+  "vramBytes": 2099979293,
   "zeroGeometry": 1,
   "nearZero": 44,
-  "unused": 740
+  "unused": 749
  }
 }

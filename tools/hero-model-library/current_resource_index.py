@@ -329,12 +329,13 @@ def build(git_link_root=ROOT):
         or jumpforce.get('summary',{}).get('runtimeSelectableAssets')!=0
         or jumpforce_review.get('schema')!='ggd.jumpforce-audio-listening-review-groups@1'
         or jumpforce_review.get('counts',{}).get('approvedForRuntimeBinding')!=0
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('sha256')!='2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('sha256')!='8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('gitPath')!='content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb'
         or jumpforce_entry.get('daiCandidateStatus',{}).get('triangles')!=7930
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('drawPrimitives')!=20
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('drawPrimitives')!=6
         or jumpforce_entry.get('daiCandidateStatus',{}).get('animations')!=0
         or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerPublicationAuthorized') is not True
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerVisualQualityReview')!='pending-new-v2-render-review'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerVisualQualityReview')!='pending-new-six-draw-render-review'
         or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeRegistered') is not False
         or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeSelectable') is not False
         or jumpforce_entry.get('daiCandidateStatus',{}).get('productionDeployed') is not False):
@@ -1453,6 +1454,10 @@ def main():
                     'sha256': result['jumpForceAssetInventory']['entrySha256'],
                 },
                 *result['jumpForceAssetInventory']['daiCandidateStatus']['evidence'],
+                {
+                    'gitPath': result['jumpForceAssetInventory']['daiCandidateStatus']['gitPath'],
+                    'sha256': result['jumpForceAssetInventory']['daiCandidateStatus']['sha256'],
+                },
                 {
                     'gitPath': result['assetReviewPortal']['queueGitPath'],
                     'sha256': result['assetReviewPortal']['queueSha256'],

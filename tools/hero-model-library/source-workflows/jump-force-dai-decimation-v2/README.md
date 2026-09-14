@@ -9,7 +9,9 @@
 - run-a／run-b 位元組相同：SHA-256 `2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba`。
 - Khronos：0 errors；所有 float accessor 為有限值；joint 名稱、階層及材質／貼圖槽 multiset 保留。
 - 現行採用規則：超過 10,000 面才觸發減面，正式候選須不超過 8,000 面；v2 通過這兩項及 256px 貼圖限制。
-- 執行期仍被 20 draw primitives（上限 6）阻擋，且沒有六態動作，因此尚不可在後台切換，也未部署。
+- v2 保守版仍有 20 draw primitives；後續的 v3 來源專用 base/normal/ORM atlas 將 15 個不透明 body primitives 合併成 1 個，眼影、鏡片、lens、頭髮與眼球維持獨立，最終為 7,930 面／6 draw／256px。
+- v3 已經 Khronos 0 error、GGD model guard 通過，兩次輸出位元組相同；非 UV 頂點屬性與 v2 以 byte multiset 對照一致。成品 GLB 已收進 Git 候選庫。
+- v3 新畫面仍待 owner 最終視覺審查，且原生動作為 0；沒有通過播放審查的借用動作，因此仍未註冊、不可切換、未部署。
 
 owner 於 2026-09-15 授權所有資源可登記／上架；這項授權不會放寬技術閘。v2 新畫面的視覺品質核准仍獨立標為待審。
 
@@ -46,6 +48,28 @@ python3 tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/v
   --repo .
 
 python3 -m unittest tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/test_workflow.py
+```
+
+## 六 draw 候選
+
+`build_six_draw_candidate.py` 直接處理 GLB 二進位 accessor，不依賴人工 Blender 操作。它會產生兩次獨立輸出並要求位元組相同；`freeze_six_draw.py` 再重驗頂點、骨架、Khronos、GGD guard 及三面 WebGL 收據，才把成品與收據收進 Git。
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/build_six_draw_candidate.py \
+  --repo . \
+  --asset-root ../GGD-Asset-Library \
+  --output-root ../GGD-Asset-Library/conversions/jump-force-dai-six-draw-<new-stage> \
+  --write
+
+python3 tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/render_review.py \
+  ../GGD-Asset-Library/conversions/jump-force-dai-six-draw-<new-stage>/run-a/dai-chr0430-six-draw.glb \
+  ../GGD-Asset-Library/conversions/jump-force-dai-six-draw-<new-stage>/render \
+  --prebuilt-bundle ../GGD-Asset-Library/converted/jump-force-steam-dai-v1/webgl-review-v6/bundle.js
+
+python3 tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/freeze_six_draw.py \
+  --repo . \
+  --conversion-root ../GGD-Asset-Library/conversions/jump-force-dai-six-draw-<new-stage> \
+  --write
 ```
 
 Git 保存工作流、JSON 收據及固定畫面；原始 GLB、兩次建置、中間 GLB、完整 log 與 renderer bundle 保留在本機素材庫。這批尚未建立 S3 v2 讀回收據，不能沿用 v1 的 S3 收據宣稱 v2 已備份。
