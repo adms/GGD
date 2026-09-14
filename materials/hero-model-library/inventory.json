@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T06:28:09+08:00",
-  "inputsSha256": "d95820335b600a51790aebc6fa120f43a0925f0fdb2d982d938f9103fc6afe2a",
+  "generatedAt": "2026-09-15T06:41:56+08:00",
+  "inputsSha256": "a0314eaf5548e3ea2b185a24caeb51a331afa064c08a71b178e72bce29325de3",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -142931,6 +142931,30 @@
             "receiptSha256": "62605db2ac8eb6d248ee51c314f7e9f32c7876d0158eb593e23731a86f3293fd",
             "manifestSha256": "ca0edd2893aceeb88a33d6e3fe2eed9b41d0d0b31211cb6b738ab7b700cedbb8",
             "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "ssbu-ryu-c00-static-decimation-v2-backup",
+            "sourceId": "gitlab-ssbu-models",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/30feb4abe00abf1d5a87d98412b2b3e6900b5e4d03f2576795a23414cf95c2c7/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/30feb4abe00abf1d5a87d98412b2b3e6900b5e4d03f2576795a23414cf95c2c7/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.files.json",
+            "bytes": 14494116,
+            "sha256": "06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9",
+            "fileCount": 48,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "snapshotScope": "manifest-listed-files-only; symlinks materialized only from explicitly listed in-root render directories",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/latest-receipt.json",
+            "receiptSha256": "9ccb5e21bc86f763bd3276caafb8a9fa439a2f5f9046d68a13e258bc327bfb9d",
+            "s3Use": "backup-only-not-runtime-entry"
           }
         ],
         "conversionAttempts": [
@@ -143366,6 +143390,28 @@
             "formalHeroAdoptionEligible": true,
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
             "s3ArchiveMember": "female-c01/candidate.glb"
+          },
+          {
+            "id": "ssbu-ryu-c00-static-decimation-v1",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/validation-v3.json",
+            "reportSha256": "4fcef82fa4829bdecf04a3a0715ff293ae1e7bce37a8184e2a01e05655863656",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+            "outputSha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+            "nativeAnimationCount": 0,
+            "componentId": "ssbu-ryu-c00-static-decimated-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "accepted": true,
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+            "s3ArchiveMember": "candidate-v3.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/latest-receipt.json",
+            "backupReceiptSha256": "9ccb5e21bc86f763bd3276caafb8a9fa439a2f5f9046d68a13e258bc327bfb9d",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.files.json",
+            "fileCount": 48,
+            "fullReadbackVerified": true
           }
         ],
         "sourceClass": "original-game-extraction-community-repackage",
@@ -146904,6 +146950,113 @@
               "status": "s3-full-readback-verified",
               "scope": "source conversion only; does not include this new decimation stage"
             }
+          },
+          {
+            "id": "ssbu-ryu-c00-static-decimated-v1",
+            "conversionCandidateId": "ssbu-ryu-c00-static-decimation-v1",
+            "revisionOfComponentId": "ssbu-ryu-c00-static-skinned-v1",
+            "sourceId": "gitlab-ssbu-models",
+            "sourceClass": "original-game-extraction-community-repackage",
+            "selectionClass": "canonical-game",
+            "nameZh": "隆／Ryu",
+            "originalName": "Ryu",
+            "workZh": "任天堂明星大亂鬥 特別版（原作：Street Fighter）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch",
+            "nativeId": "fighter/ryu/body/c00",
+            "variant": "c00",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+            "bytes": 952632,
+            "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+            "gitPath": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-ryu"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 7979,
+            "drawPrimitives": 5,
+            "skinCount": 1,
+            "jointCount": 154,
+            "textureCount": 5,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "limitations": [
+              "Source Blender contains zero actions; idle, run, attack, cast, hurt and death remain missing.",
+              "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+              "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+              "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/delivery.json",
+              "bytes": 3720,
+              "sha256": "94900e9bcd15944c8203b3b17367a9981ab1f7f4283d80ee710522f53cbc631c"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/acceptance.json",
+              "bytes": 812,
+              "sha256": "e296f6c6ac016f4be288bfee73e01866a653519099aacdec9c0a2f79f5e1a381"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/validation.json",
+              "bytes": 6219,
+              "sha256": "4fcef82fa4829bdecf04a3a0715ff293ae1e7bce37a8184e2a01e05655863656"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/visual-review.json",
+              "bytes": 1238,
+              "sha256": "10e12231eed0792237e194507a97147fb533e8c1d4f8838ae0fdc8181bb2b1fa"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/webgl-candidate.json",
+              "bytes": 6642,
+              "sha256": "2a7b258520b80d03f5347247133f7b54f233c8555e14f8b2145e79151a2aa0f2"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/source-rebuild.json",
+              "bytes": 1299,
+              "sha256": "b9ebe3106648f69da7533b0ba9eedf65970722f475b306413ce184ae7e022532"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+                "s3ArchiveMember": "candidate-v3.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/latest-receipt.json",
+                "backupReceiptSha256": "9ccb5e21bc86f763bd3276caafb8a9fa439a2f5f9046d68a13e258bc327bfb9d",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.files.json",
+                "fileCount": 48,
+                "fullReadbackVerified": true
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+            "s3ArchiveMember": "candidate-v3.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/latest-receipt.json",
+            "backupReceiptSha256": "9ccb5e21bc86f763bd3276caafb8a9fa439a2f5f9046d68a13e258bc327bfb9d",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.files.json",
+            "fileCount": 48,
+            "fullReadbackVerified": true
           }
         ]
       },

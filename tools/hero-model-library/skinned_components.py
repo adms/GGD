@@ -106,6 +106,32 @@ def validate_component(candidate, repo):
         require(rebuild.get('sourceConversionByteIdentical') is True and
                 rebuild.get('normalizedGlbByteIdentical') is True and
                 rebuild.get('outputSha256') == candidate['sha256'], 'Re:Zero deterministic rebuild proof failed')
+    elif schema == 'ggd-ssbu-static-decimation-validation@1':
+        require(validation.get('componentId') == candidate['id'], 'SSBU decimation component mismatch')
+        require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'SSBU decimation candidate mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'SSBU decimation output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')],
+                'Unexpected SSBU decimation skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'),
+                'Every SSBU decimated primitive must remain skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0, 'Static SSBU decimated component cannot contain clips')
+        require(inspection.get('budget',{}).get('errors') == [], 'SSBU decimated component exceeds current hard budget')
+        require(validation.get('policy',{}).get('satisfiesFormalDecimationTarget') is True and candidate.get('triangles',0) <= 8000,
+                'SSBU decimated component misses formal <=8000 target')
+        issues=validation.get('khronosIssues',{})
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
+                'Direct SSBU decimation Khronos validation failed')
+        require(validation.get('structuralValidationPassed') is True and validation.get('finiteFloatAccessors',{}).get('passed') is True,
+                'SSBU decimation structural or finite-accessor validation failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
+                'SSBU decimation validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.ssbu-ryu-static-decimation-rebuild@1' and rebuild.get('componentId') == candidate['id'],
+                'Unexpected SSBU Ryu decimation rebuild proof')
+        require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('firstBuild',{}).get('sha256') == candidate['sha256'],
+                'SSBU Ryu decimation deterministic rebuild proof failed')
     elif schema == 'ggd.infinity-strash-en653-static-component-validation@1':
         require(validation.get('componentId') == candidate['id'], 'Infinity Strash EN653 component mismatch')
         glb=validation.get('glb',{})

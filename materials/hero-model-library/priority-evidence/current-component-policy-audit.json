@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3376974,
-      "sha256": "66fcfe2abf33c44726848d873630b954bc0cbb9a1476b4e6c80bd4bb471f3eef"
+      "bytes": 3387352,
+      "sha256": "65e4ffccd5b4165d41d2e969cf8b7a00a50e484c1682c853c80ab766038e4cf8"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 50,
-    "runtimeBudgetPass": 50,
+    "audited": 51,
+    "runtimeBudgetPass": 51,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 29,
+    "heroAdoptionEligible": 30,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -2124,6 +2124,55 @@
         "decimatedCandidateTargetMax": 8000,
         "requiresDecimatedCandidate": true,
         "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ryu-c00-static-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
+      "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+      "bytes": 952632,
+      "metrics": {
+        "triangles": 7979,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 154,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
       },
       "catalogSemantics": {
         "componentReady": true,

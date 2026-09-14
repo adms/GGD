@@ -1,0 +1,84 @@
+{
+  "schema": "ggd.ssbu-ryu-static-decimation-delivery@1",
+  "componentId": "ssbu-ryu-c00-static-decimated-v1",
+  "candidateId": "ssbu-ryu-c00-static-decimation-v1",
+  "character": {
+    "nameZh": "隆／Ryu",
+    "originalName": "Ryu",
+    "nativeId": "fighter/ryu/body/c00",
+    "sourceGame": "Super Smash Bros. Ultimate",
+    "platform": "Nintendo Switch"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+    "bytes": 1005688,
+    "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+    "bytes": 952632,
+    "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3-rebuild.glb",
+    "bytes": 952632,
+    "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d"
+  },
+  "byteIdenticalRebuild": true,
+  "metrics": {
+    "triangles": 7979,
+    "drawPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 154,
+    "textureCount": 5,
+    "nativeAnimationCount": 0
+  },
+  "policy": {
+    "triggerTriangles": 10000,
+    "targetTrianglesExclusive": 8000,
+    "resultTriangles": 7979,
+    "satisfiesFormalDecimationTarget": true
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "finiteFloatValuesChecked": 117948,
+    "ggdBudgetErrors": 0,
+    "webglViews": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "maxLitXorPct": 0.411563
+  },
+  "visualAcceptance": "owner-authorized-resource-intake; bounded visual comparison passed",
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+    "s3ArchiveMember": "candidate-v3.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-static-decimation-v2/latest-receipt.json",
+    "backupReceiptSha256": "9ccb5e21bc86f763bd3276caafb8a9fa439a2f5f9046d68a13e258bc327bfb9d",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.files.json",
+    "fileCount": 48,
+    "fullReadbackVerified": true
+  },
+  "partialV1Disclosure": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v1/9940e841477f9e7dbfc260b7820605dc7b99bb3a7257138df5774991e44e052d.tar.gz",
+    "status": "partial-symlink-preflight-archive-do-not-use-for-full-stage-coverage"
+  },
+  "gaps": [
+    "Source Blender contains zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+    "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+    "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed."
+  ]
+}
