@@ -45,8 +45,10 @@ export const DIFF_READABLE_DATA_MAX_BYTES = 256 * 1024;
  * ⭐ 壓縮檔**與它的分段**。PR #1112 的形狀是 `payload.tar.gz.part000…033`（`aa24208cc`）。
  * 分段常見三種名字：`.part000`／`.part-01`（自訂）· `.001`（7z／zip 分卷）· `.tar.gz.aa`（`split` 預設）。
  * ⚠️ 切得比大檔上限小（例：220 段 × 4.9 MiB）時大檔檢查量不到 ⇒ 靠 archives 這一類的**檔數**棘輪攔。
+ * ⚠️ 這條正則**只認得長得像壓縮檔的名字**；改名成 `.bin`／`.dat`、放在四類以外的分段它看不到 ⇒ 見 segmentSeriesViolations。
+ * GH#1160 審查補：`split -a 3` 的三個字母尾碼（`.tar.gz.aaa`）也算（2026-09-15 真樹命中集合仍是 21 個路徑，不變）。
  */
-const ARCHIVE_OR_SEGMENT = /\.(tar|tgz|gz|zip|7z|rar|part[-_]?\d*|\d{3})$|\.(tar|tgz|gz|zip|7z|rar)\.([a-z]{2}|\d{2,})$/;
+const ARCHIVE_OR_SEGMENT = /\.(tar|tgz|gz|zip|7z|rar|part[-_]?\d*|\d{3})$|\.(tar|tgz|gz|zip|7z|rar)\.([a-z]{2,3}|\d{2,})$/;
 
 /**
  * 素材庫的固定中央索引。這些檔案是後台與其他工作流的正式查詢入口，
@@ -142,6 +144,46 @@ export function bigBlobViolations(blobs: TreeBlob[], base: Pick<HygieneBaseline,
     .map((b) => `${mb(b.bytes)}  ${b.path} —— ⛔ 沒列在 tools/git-hygiene/baseline.json 的 bigBlobs（要留就寫理由；否則走 S3）`);
 }
 
+/**
+ * ⭐ GH#1160 審查補的洞 —— **切到上限以下、改名、放在四類以外**的分段。
+ * 審查者實測（2026-09-15）：230 段 × (bigBlobBytes−1)、合計 1,150 MB，檔名 `tools/cache/payload-N.bin`、
+ * `content/assets/models/payload-N.bin`、`docs/_reports/blob/pN.dat` ⇒ bigBlobViolations 0 條、categoryGrowth `[]`，
+ * ⛔ 沒有任何東西變紅（改之前一樣抓不到，不是 e1e4515e4 造成的回歸）。
+ *
+ * 判準：**同一個目錄**裡、檔名只差**數字**（或 `split` 的字母尾碼 `.aa`／`.aaa`）的一組 blob，
+ * ⭐ 合計 ≥ bigBlobBytes ⇒ 逐組指名。只看「不是 diff 可讀來源、不在四類（那些已有棘輪）、沒列在 bigBlobs、
+ * 不是具體出貨媒體副檔名（`.bin` 不算媒體）」的 blob。
+ * 2026-09-15 量真樹（git ls-tree HEAD）：同骨架且 ≥2 個的組，最大一組 0.29 MB（tools/w3x-import/out/…/jass-spells 的
+ * `unit-E#.j`，4 個）⇒ 離 5 MiB 門檻 17 倍，今天 0 組紅。
+ *
+ * ⚠️ **管不到**（誠實揭露 —— ⛔ 不是「#1112 的形狀全部抓得到」）：
+ *   ① 分段改名成具體媒體副檔名（`pN.glb`／`.png`／`.mp3`…）—— 要讀檔頭魔數，刻意不做
+ *   ② 檔名沒有共同骨架（例：拿內容雜湊當檔名 `3f2a9c….bin`，數字與字母混在一起）
+ *   ③ 分散在不同目錄（每個目錄只放 1 段）
+ *   ④ 只有 1 段（它本身 < 上限，本來就不到 bigBlobBytes）
+ * 要留一組真的屬於 git 的同骨架大檔 ⇒ 逐檔列進 baseline.bigBlobs 並寫理由（列了就不算這一組）。
+ */
+export function segmentSeriesViolations(blobs: TreeBlob[], base: Pick<HygieneBaseline, "bigBlobBytes" | "bigBlobs">): string[] {
+  const listed = new Set(base.bigBlobs.map((b) => b.path));
+  const groups = new Map<string, TreeBlob[]>();
+  for (const b of blobs) {
+    if (isDiffReadableSource(b.path, b.bytes) || categoryOf(b.path, b.bytes) || listed.has(b.path)) continue;
+    const type = assetMediaType(b.path);
+    if (type !== undefined && type !== "application/octet-stream") continue;
+    const cut = b.path.lastIndexOf("/") + 1;
+    const stem = b.path.slice(cut).replace(/\d+/g, "#").replace(/^(.+\.[\w#]+)\.[a-z]{2,3}$/, "$1.@");
+    const key = b.path.slice(0, cut) + stem;
+    const g = groups.get(key);
+    if (g) g.push(b); else groups.set(key, [b]);
+  }
+  return [...groups].flatMap(([key, g]) => {
+    const sum = g.reduce((s, b) => s + b.bytes, 0);
+    return g.length >= 2 && sum >= base.bigBlobBytes
+      ? [`${mb(sum)}  ${g.length} 段  ${key}（例：${g[0]?.path}）—— ⛔ 同骨架檔名一組合計 ≥ 大檔上限，是切段的形狀 ⇒ 走 S3；真要留就逐檔列進 bigBlobs 並寫理由`]
+      : [];
+  });
+}
+
 /** ⭐ 豁免列的 why 不可以是佔位字（GH#1160 AC：「每一列有理由，⛔ 沒有『還沒收』」）。 */
 const PLACEHOLDER_WHY = /還沒收|待補|TODO|要寫得出/;
 export function rowsWithoutReason(base: Pick<HygieneBaseline, "bigBlobs" | "legacyOverFiles">): string[] {
@@ -151,8 +193,16 @@ export function rowsWithoutReason(base: Pick<HygieneBaseline, "bigBlobs" | "lega
 }
 
 /**
- * ⭐ rollback 開關（GH#1160 AC④ 爭議）：「只能靠雜湊驗」的位元組總量。只有設了 `GGD_HYGIENE_TOTAL_CAP_BYTES`
- * 才會被當成閘（原票 AC④ 的總量棘輪）；預設不設 ⇒ 照 owner 2026-09-10「成品一律上傳至git」⛔ 不擋總量。
+ * ⭐ rollback 開關（GH#1160 AC④ 爭議）：「非 diff 可讀」的位元組總量。只有設了 `GGD_HYGIENE_TOTAL_CAP_BYTES`
+ * 才會被當成閘；預設不設 ⇒ 照 owner 2026-09-10「成品一律上傳至git」⛔ 不擋總量。
+ *
+ * ⚠️ **分母與原票 AC④ 不同**（GH#1160 審查，⛔ 設了它 ≠「回到原票 AC④」）：
+ *   原票 AC④ ＝「git 追蹤的**二進位**總位元組」（基準線 519.4 MB）；
+ *   這裡 ＝ `isDiffReadableSource` 的**反集合** —— 那支判準原本是 materials/ 專用的，
+ *   `DIFF_READABLE_SOURCE` 不含 `.go`／`.html`／`.css`／`.j`，而 > 256 KB 的 `.json` 也算進來。
+ *   2026-09-15 量（git ls-tree 95efbe5ee）：總量 2,142,392,669 bytes，其中 `.json` 191.4 MB、`.html` 128.4 MB、
+ *   `.j` 14.4 MB、`.go` 4.5 MB（審查者在 lane 分支量的文字類合計約 343 MB／1,414 檔）。
+ *   ⇒ 它是「**近似** AC④：以『非 diff 可讀』為分母的總量上限」，名字裡的「只能靠雜湊驗」把 Go 原始碼與 HTML 報告也算了進去。
  */
 export function hashOnlyBytes(blobs: TreeBlob[]): number {
   return blobs.reduce((sum, b) => sum + (isDiffReadableSource(b.path, b.bytes) ? 0 : b.bytes), 0);
