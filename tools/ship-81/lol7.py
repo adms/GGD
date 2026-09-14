@@ -65,6 +65,28 @@ def attach_champion_icon(champion: dict, placeholders: list[dict]) -> None:
                                     f"與 {ICON_CH.relative_to(REPO)}/{hid}.webp）"})
 
 
+def ship_script(script: dict) -> dict:
+    """⭐ 出貨的 script 一定要**寫出** `yields`（GH#1000 AC1）—— ⛔ 省略只給 forge 草稿用。
+
+    `vfx-script@1.yields` 的 schema 註解逐字：「省略 ⇒ 同 `[]`（forge 草稿相容）；
+    ⚠️ 出貨的 script 要**寫出來**」，守衛 `apps/client/src/vfx/VfxSystem.castFxYield.test.ts`。
+    ⇒ 這支是「草稿 → 出貨內容」的那一步，所以決定在這裡被寫下來：
+    作者稿沒說的，照 schema 的省略語意寫成 `[]`（兩條都跑）—— ⭐ 執行期逐位元不變
+    （`VfxSystem` 讀到省略與 `[]` 是同一條路），只是把「沒說」變成「說了」。
+    作者稿自己寫了（例如 `["caster.castFx"]`）⇒ 原封不動。
+    鍵順序與既有出貨 script 一致（`… abilityId, notes, yields, segments`）。
+    """
+    if "yields" in script:
+        return script
+    out: dict = {}
+    for key, value in script.items():
+        if key == "segments":
+            out["yields"] = []
+        out[key] = value
+    out.setdefault("yields", [])
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--inventory", type=Path, required=True, help="全角色模型盤點.md（owner 的表）")
@@ -136,7 +158,7 @@ def main() -> None:
                     json.dumps(a, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             for s in pack["vfxScripts"]:
                 (OUT_VFX / f"{s['id']}.json").write_text(
-                    json.dumps(s, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                    json.dumps(ship_script(s), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             # ⛔⛔ 少了這一段 ＝ 「模板展開失敗，已個別降級」而 `content:build` 仍然 exit 0
             #   —— 實測 16 支技能降級、其中 7 支**完全沒有效果**（GH#1165 同一個形狀）。
             OUT_TPL.mkdir(parents=True, exist_ok=True)

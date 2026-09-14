@@ -2,6 +2,7 @@
   "id": "lol-karthus.ex",
   "schema": "vfx-script@1",
   "abilityId": "lol-karthus.ex",
+  "yields": [],
   "segments": [
     {
       "kind": "anim",
