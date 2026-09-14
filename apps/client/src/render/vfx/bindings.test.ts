@@ -36,7 +36,7 @@
  * ability the operator enabled) instead of assuming every whitelisted id is a
  * five-slot hero.
  */
-import { describe, it, expect } from "vitest";
+import { beforeAll, describe, it, expect } from "vitest";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
 import "./shippedAbilityArt.testkit";
 import { existsSync, readFileSync } from "node:fs";
@@ -44,6 +44,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { isAlternateForm, zVfxDoc } from "@ggd/shared/content";
+import { ContentLoader } from "@ggd/shared/content/loader";
+import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+import { registerAll } from "@ggd/shared/content/registries";
+import { Abilities } from "@ggd/shared/sim/content/registry";
+import type { AbilityId } from "@ggd/shared/ids";
 import { rosterBindings, abilityVfxKeys, curatedDocs, vfxKeyFor } from "./bindings";
 import { abilityArtRows } from "./abilityArtContent";
 
@@ -114,7 +119,8 @@ const ROSTER_SIZE = readStarterRoster(REPO).length;
  *   · 表裡**有任何一列**（prim／family／owner／promoted）⇒ 五格都要有 `prim` 列
  *     （`w3xAbilityArt.primitiveFallbackFor` 的第 3 階只讀這一格 —— 那一位的家族美術
  *     解不出來時，就靠它不畫空白）。⭐ 這一半與改動前逐字相同。
- *   · 表裡**一列都沒有** ⇒ 五格技能文件都要**自己**帶 `vfxKey`、⛔ 不是火焰佔位、
+ *   · 表裡**一列都沒有** ⇒ 五格註冊完的技能都要帶 `vfxKey`（技能文件自己寫的，或載入時由
+ *     `communityCueFallback.ts` 照社群施法提示規則解析的 —— ⭐ 量的是 `Abilities.tryGet`）、⛔ 不是火焰佔位、
  *     而且指向一份**真的畫得出東西**的 vfx 文件 —— ⭐ 與本檔 operator 稽核同一把尺
  *     （`abilityArtProblem`），⛔ 不是「文件存在就算」。
  */
@@ -151,11 +157,22 @@ function vfxKeyProblem(vfxKey: string | undefined): string | null {
   return null;
 }
 
-/** 一支技能（出貨的 `content/abilities/<id>.json`）自己綁的特效畫得出東西嗎？ */
+/**
+ * ⭐ 讀的是 `VfxSystem` 讀的那一份 —— 出貨載入器註冊完的 `Abilities.tryGet(id)`
+ * （`VfxSystem.ts` 的 `case "abilityCast"` → `this.doc(def?.vfxKey)`），⛔ 不是磁碟上的 JSON。
+ * 載入時才解析的欄位（`@ggd/shared/content/communityCueFallback`：作者沒挑施法特效的社群技能）
+ * 只在註冊表看得到；拿磁碟那一份量 ＝ 被測的不是出貨的那個（失敗形態⑤）。
+ */
+beforeAll(async () => {
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+}, 120_000);
+
+/** 一支技能（出貨的 `content/abilities/<id>.json`，經出貨載入器註冊）綁的特效畫得出東西嗎？ */
 function abilityArtProblem(abilityId: string): string | null {
   const abilityPath = join(CONTENT, "abilities", `${abilityId}.json`);
   if (!existsSync(abilityPath)) return "has no content doc";
-  const ability = JSON.parse(readFileSync(abilityPath, "utf8")) as { vfxKey?: string };
+  const ability = Abilities.tryGet(abilityId as AbilityId) as { vfxKey?: string } | undefined;
+  if (!ability) return "has a content doc but the shipped loader did not register it";
   const problem = vfxKeyProblem(ability.vfxKey);
   if (!problem || ability.vfxKey) return problem;
   // ⭐ 說清楚它**還剩什麼**：有 vfx-script 的話，列出那份 script 的段落種類 ——
@@ -196,7 +213,7 @@ describe("roster bindings cover every whitelisted champion (ability-vfx-bindings
     );
     expect(
       unbound,
-      "⛔ 這些上架技能在分類表裡沒有列，⛔ 自己的技能文件也沒有綁到畫得出東西的特效：\n  " +
+      "⛔ 這些上架技能在分類表裡沒有列，⛔ 註冊完的技能（技能文件＋載入時解析）也沒有綁到畫得出東西的特效：\n  " +
         unbound.join("\n  "),
     ).toEqual([]);
     // The table COVERS the roster; anything beyond it must be a 變身 form. Task
