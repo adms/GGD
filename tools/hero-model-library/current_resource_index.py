@@ -413,8 +413,14 @@ def build(git_link_root=ROOT):
     popp_review_page_path=ROOT/'apps/client/public/popp-integration-review.html'
     popp_gap_definitions_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json'
     popp_vfx_proposals_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json'
+    popp_audio_receipt_path=base/'priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json'
+    popp_audio_event_table_path=base/'priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json'
+    popp_audio_blockers_path=base/'priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json'
     popp_gap_ledger=read(popp_gap_ledger_path)
     popp_review_contract=read(popp_review_contract_path)
+    popp_audio_receipt=read(popp_audio_receipt_path)
+    popp_audio_event_table=read(popp_audio_event_table_path)
+    popp_audio_blockers=read(popp_audio_blockers_path)
     popp_gap_summary=popp_gap_ledger.get('summary',{})
     popp_gap_rows=popp_gap_ledger.get('gaps',[])
     if (popp_gap_ledger.get('schema')!='ggd.popp-integration-gap-ledger@1'
@@ -425,6 +431,10 @@ def build(git_link_root=ROOT):
         or popp_gap_summary.get('vfxBindingProposals')!=7
         or popp_gap_summary.get('vfxReserveCandidates')!=5
         or popp_gap_summary.get('runtimeBindingsAddedByThisWorkflow')!=7
+        or popp_gap_summary.get('eventAudioGameFormatFiles')!=35
+        or popp_gap_summary.get('eventAudioCandidateRelationshipsConverted')!=36
+        or popp_gap_summary.get('eventAudioNativeEventRows')!=8
+        or popp_gap_summary.get('eventAudioRuntimeBlockers')!=36
         or len(popp_gap_rows)!=5
         or sum(bool(row.get('closed')) for row in popp_gap_rows)!=1
         or any(not row.get('closureCriteria') for row in popp_gap_rows)
@@ -432,6 +442,21 @@ def build(git_link_root=ROOT):
         or popp_gap_ledger.get('weaponDecision',{}).get('selectionMode')!='manual'
         or popp_gap_ledger.get('weaponDecision',{}).get('candidateCount')!=3):
         raise ValueError('Popp five-gap ledger is absent, stale or overclaims closure/runtime readiness')
+    if (popp_audio_receipt.get('schema')!='ggd.infinity-strash-popp-approved-audio-receipt@1'
+        or popp_audio_receipt.get('summary',{}).get('gameAudioFiles')!=35
+        or popp_audio_receipt.get('summary',{}).get('gameAudioCandidateRelationships')!=36
+        or popp_audio_receipt.get('summary',{}).get('runtimeBindings')!=0
+        or popp_audio_receipt.get('runtimeMutationPerformed') is not False
+        or popp_audio_event_table.get('schema')!='ggd.infinity-strash-popp-native-event-audio-table@1'
+        or len(popp_audio_event_table.get('events',[]))!=8
+        or popp_audio_event_table.get('runtimeBindingAuthorized') is not False
+        or popp_audio_blockers.get('summary')!={'candidates':36,'runtimeBindable':0,'blocked':36}):
+        raise ValueError('Popp approved audio conversion is absent, stale or overclaims runtime readiness')
+    for row in popp_audio_receipt.get('files',[]):
+        path=ROOT/row['gitPath']
+        if (not path.is_file() or path.stat().st_size!=row['bytes']
+            or hashlib.sha256(path.read_bytes()).hexdigest()!=row['sha256']):
+            raise ValueError('Popp approved audio Git product differs from receipt: '+row['gitPath'])
     for item,path in (
         (popp_gap_ledger.get('definitionSource',{}),popp_gap_definitions_path),
         (popp_gap_ledger.get('reviewContract',{}),popp_review_contract_path),
@@ -1089,6 +1114,16 @@ def build(git_link_root=ROOT):
             weaponDecision=popp_gap_ledger['weaponDecision'],
             summary=popp_gap_summary,
             ownerReview=popp_review_contract['portalOwnerReview'],
+            approvedAudioTechnicalIntegration=dict(
+                receiptGitPath=str(popp_audio_receipt_path.relative_to(ROOT)),
+                receiptSha256=hashlib.sha256(popp_audio_receipt_path.read_bytes()).hexdigest(),
+                nativeEventTableGitPath=str(popp_audio_event_table_path.relative_to(ROOT)),
+                nativeEventTableSha256=hashlib.sha256(popp_audio_event_table_path.read_bytes()).hexdigest(),
+                candidateBlockersGitPath=str(popp_audio_blockers_path.relative_to(ROOT)),
+                candidateBlockersSha256=hashlib.sha256(popp_audio_blockers_path.read_bytes()).hexdigest(),
+                summary=popp_audio_receipt['summary'],
+                runtimeBindingAuthorized=False,
+                runtimeSelectable=False),
             gaps=popp_gap_rows,
             vfxBindingReviewProposals=popp_vfx_proposals,
             runtimeMutationAllowed=False,

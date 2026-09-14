@@ -32819,6 +32819,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-io-explosive-00",
         "fx.strash.popp.nps-io-explosive-00.candidate"
       ]
     },
@@ -32830,6 +32831,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-raidein-charge-core",
         "fx.strash.popp.nps-raidein-charge-core.candidate"
       ]
     },
@@ -32841,6 +32843,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-iora-explosive-00",
         "fx.strash.popp.nps-iora-explosive-00.candidate"
       ]
     },
@@ -32852,6 +32855,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-merami-landing-2",
         "fx.strash.popp.nps-merami-landing-2.candidate"
       ]
     },
@@ -32863,7 +32867,9 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-merami-core",
         "fx.strash.popp.nps-merami-core.candidate",
+        "fx.strash.popp.nps-merami-muzzle",
         "fx.strash.popp.nps-merami-muzzle.candidate"
       ]
     },
@@ -32875,6 +32881,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-ionazun-explosive-00",
         "fx.strash.popp.nps-ionazun-explosive-00.candidate"
       ]
     },
@@ -32886,7 +32893,9 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-hyadaruko-core",
         "fx.strash.popp.nps-hyadaruko-core.candidate",
+        "fx.strash.popp.nps-hyadaruko-hit",
         "fx.strash.popp.nps-hyadaruko-hit.candidate"
       ]
     },
@@ -32898,6 +32907,7 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-io-bullet-00",
         "fx.strash.popp.nps-io-bullet-00.candidate"
       ]
     },
@@ -32909,7 +32919,9 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.strash.popp.nps-mera-firetrail-00",
         "fx.strash.popp.nps-mera-firetrail-00.candidate",
+        "fx.strash.popp.nps-merami-firetrail-00",
         "fx.strash.popp.nps-merami-firetrail-00.candidate"
       ]
     },

@@ -24,6 +24,9 @@ GAP_DEFINITIONS = Path(__file__).resolve().with_name("gap-definitions.json")
 VFX_BINDING_PROPOSALS = Path(__file__).resolve().with_name("vfx-binding-proposals.json")
 PORTAL_OWNER_DECISIONS = LIBRARY / "review/asset-review-portal-v1/owner-decisions.json"
 VFX_RUNTIME_RELEASE = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json"
+APPROVED_AUDIO_RECEIPT = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json"
+APPROVED_AUDIO_EVENT_TABLE = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json"
+APPROVED_AUDIO_BLOCKERS = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -242,6 +245,33 @@ def build_contract() -> dict:
     assert portal_owner_review["audio"]["approvedCount"] == 36
     assert portal_owner_review["vfx"]["visuallyApprovedCount"] == 12
     assert portal_owner_review["runtimeMutationAuthorizedForAll"] is False
+    approved_audio = read_json(APPROVED_AUDIO_RECEIPT)
+    approved_audio_events = read_json(APPROVED_AUDIO_EVENT_TABLE)
+    approved_audio_blockers = read_json(APPROVED_AUDIO_BLOCKERS)
+    assert approved_audio["schema"] == "ggd.infinity-strash-popp-approved-audio-receipt@1"
+    assert approved_audio["sourceId"] == "steam-infinity-strash-popp-priority-audio-build-local-20240328"
+    assert approved_audio["summary"] == {
+        "reviewCandidates": 36,
+        "ownerApproved": 36,
+        "sourceWavFiles": 35,
+        "uniqueSourcePayloads": 35,
+        "gameAudioFiles": 35,
+        "gameAudioCandidateRelationships": 36,
+        "nativeEventRows": 8,
+        "soundEffectCandidates": 12,
+        "voiceCandidates": 24,
+        "reportedJapaneseCandidates": 12,
+        "reportedEnglishCandidates": 12,
+        "reportedNonlocalizedCandidates": 12,
+        "runtimeBindings": 0,
+        "runtimeConsumers": 0,
+        "candidateBlockers": 36,
+        "productionDeployed": 0,
+    }
+    assert approved_audio["runtimeMutationPerformed"] is False
+    assert approved_audio_events["runtimeBindingAuthorized"] is False
+    assert len(approved_audio_events["events"]) == 8
+    assert approved_audio_blockers["summary"] == {"candidates": 36, "runtimeBindable": 0, "blocked": 36}
     vfx_binding_proposals = read_json(VFX_BINDING_PROPOSALS)
     assert vfx_binding_proposals["schema"] == "ggd.popp-vfx-binding-proposals@1"
     assert vfx_binding_proposals["heroId"] == HERO_ID
@@ -328,8 +358,8 @@ def build_contract() -> dict:
         },
         {
             "id": "animation-events-and-sfx-binding",
-            "status": "owner-listening-approved-awaiting-identity-and-runtime-integration",
-            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. All {portal_owner_review['audio']['approvedCount']} review candidates are owner-approved for their listed source event, while the source queue still marks speaker/event identity unverified and the portal authorizes zero runtime mutations; no event audio is bound yet.",
+            "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. All {portal_owner_review['audio']['approvedCount']} reviewed relationships are converted to {approved_audio['summary']['gameAudioFiles']} content-addressed game MP3 files and grouped into {approved_audio['summary']['nativeEventRows']} approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
         },
         {
             "id": "skill-timing-and-full-combat-binding",
@@ -375,6 +405,7 @@ def build_contract() -> dict:
         "gapDefinitionsSha256": sha256(GAP_DEFINITIONS),
         "vfxBindingProposalsSha256": sha256(VFX_BINDING_PROPOSALS),
         "portalOwnerDecisionsSha256": sha256(PORTAL_OWNER_DECISIONS),
+        "approvedAudioReceiptSha256": sha256(APPROVED_AUDIO_RECEIPT),
     }
     fingerprint = hashlib.sha256(
         json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -396,6 +427,9 @@ def build_contract() -> dict:
             file_evidence(VFX_BINDING_PROPOSALS),
             file_evidence(PORTAL_OWNER_DECISIONS),
             file_evidence(VFX_RUNTIME_RELEASE),
+            file_evidence(APPROVED_AUDIO_RECEIPT),
+            file_evidence(APPROVED_AUDIO_EVENT_TABLE),
+            file_evidence(APPROVED_AUDIO_BLOCKERS),
         ],
         "currentSelection": {
             "modelKey": champion["modelKey"],
@@ -434,6 +468,15 @@ def build_contract() -> dict:
             "reviewPage": vfx_runtime["review"]["page"],
         },
         "portalOwnerReview": portal_owner_review,
+        "approvedAudioTechnicalIntegration": {
+            "receipt": file_evidence(APPROVED_AUDIO_RECEIPT),
+            "nativeEventTable": file_evidence(APPROVED_AUDIO_EVENT_TABLE),
+            "candidateBlockers": file_evidence(APPROVED_AUDIO_BLOCKERS),
+            "summary": approved_audio["summary"],
+            "runtimeBindingAuthorized": False,
+            "runtimeSelectable": False,
+            "productionDeployed": False,
+        },
         "vfxBindingReviewProposals": {
             "source": file_evidence(VFX_BINDING_PROPOSALS),
             **vfx_binding_proposals,
@@ -484,6 +527,10 @@ def build_gap_ledger(contract: dict) -> dict:
             "remaining": contract["remainingOpenIntegrationGapCount"],
             "eventAudioCandidates": contract["eventAudioReviewGate"]["candidateCount"],
             "eventAudioReviewed": contract["eventAudioReviewGate"]["reviewedCount"],
+            "eventAudioGameFormatFiles": contract["approvedAudioTechnicalIntegration"]["summary"]["gameAudioFiles"],
+            "eventAudioCandidateRelationshipsConverted": contract["approvedAudioTechnicalIntegration"]["summary"]["gameAudioCandidateRelationships"],
+            "eventAudioNativeEventRows": contract["approvedAudioTechnicalIntegration"]["summary"]["nativeEventRows"],
+            "eventAudioRuntimeBlockers": contract["approvedAudioTechnicalIntegration"]["summary"]["candidateBlockers"],
             "ggdVfxCandidates": contract["vfxRuntimeCandidates"]["summary"]["ggdVfxDocumentsBuilt"],
             "vfxVisuallyAccepted": contract["vfxRuntimeCandidates"]["summary"]["visuallyAccepted"],
             "vfxBindingProposals": contract["vfxBindingReviewProposals"]["proposedCandidateCount"],

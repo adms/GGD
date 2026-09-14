@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "dc001aa46db6767347ab5233ef869d208e200c1069f41c6fad5f8165338a0e2c",
+  "sourceFingerprint": "b10884a40f279fd59d7c02e4374780cd6b6cf3b79970edd811b636a5bfcf0d24",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -46,6 +46,21 @@
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
       "bytes": 20049,
       "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+      "bytes": 11431,
+      "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+      "bytes": 10007,
+      "sha256": "0f66b19b2c47ac27e4708229b23fbb4fba0e6eb5bbf04e140da3219625c0eced"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+      "bytes": 27339,
+      "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
     }
   ],
   "currentSelection": {
@@ -253,7 +268,7 @@
   },
   "audioReviewEvidence": {
     "sourceGitPath": "materials/hero-model-library/voice-index.json",
-    "selectedGroupsSha256": "56abf8534926135cdb4daae0fdf11aab55ebe2a83919ef28f12cd9b2f5c59a2f",
+    "selectedGroupsSha256": "d01caccfc6563162b17e0aae754db887dfd97c7fcf50f2d9871f173051124e33",
     "fileCount": 311,
     "knownDurationSeconds": 407.1451041666668,
     "allListeningReviewComplete": false,
@@ -379,6 +394,44 @@
     },
     "runtimeMutationAllowed": false,
     "runtimeMutationAuthorizedForAll": false
+  },
+  "approvedAudioTechnicalIntegration": {
+    "receipt": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+      "bytes": 11431,
+      "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+    },
+    "nativeEventTable": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+      "bytes": 10007,
+      "sha256": "0f66b19b2c47ac27e4708229b23fbb4fba0e6eb5bbf04e140da3219625c0eced"
+    },
+    "candidateBlockers": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+      "bytes": 27339,
+      "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+    },
+    "summary": {
+      "reviewCandidates": 36,
+      "ownerApproved": 36,
+      "sourceWavFiles": 35,
+      "uniqueSourcePayloads": 35,
+      "gameAudioFiles": 35,
+      "gameAudioCandidateRelationships": 36,
+      "nativeEventRows": 8,
+      "soundEffectCandidates": 12,
+      "voiceCandidates": 24,
+      "reportedJapaneseCandidates": 12,
+      "reportedEnglishCandidates": 12,
+      "reportedNonlocalizedCandidates": 12,
+      "runtimeBindings": 0,
+      "runtimeConsumers": 0,
+      "candidateBlockers": 36,
+      "productionDeployed": 0
+    },
+    "runtimeBindingAuthorized": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
   },
   "vfxBindingReviewProposals": {
     "source": {
@@ -622,8 +675,8 @@
         "只將核准配對寫入 runtime，並通過音訊與事件檢查"
       ],
       "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。",
-      "status": "owner-listening-approved-awaiting-identity-and-runtime-integration",
-      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 review candidates are owner-approved for their listed source event, while the source queue still marks speaker/event identity unverified and the portal authorizes zero runtime mutations; no event audio is bound yet.",
+      "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 reviewed relationships are converted to 35 content-addressed game MP3 files and grouped into 8 approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
       "closed": false,
       "remaining": true,
       "ownerReviewRequiredBeforeRuntimeMutation": true

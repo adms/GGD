@@ -2,7 +2,7 @@
   "schema": "ggd.popp-integration-gap-ledger@1",
   "heroId": "b2-popp",
   "nativeCharacterId": "PN020",
-  "sourceFingerprint": "dc001aa46db6767347ab5233ef869d208e200c1069f41c6fad5f8165338a0e2c",
+  "sourceFingerprint": "b10884a40f279fd59d7c02e4374780cd6b6cf3b79970edd811b636a5bfcf0d24",
   "definitionSource": {
     "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json",
     "bytes": 3067,
@@ -10,8 +10,8 @@
   },
   "reviewContract": {
     "gitPath": "materials/hero-model-library/infinity-strash/popp-integration-review.json",
-    "bytes": 30431,
-    "sha256": "2a57b0533bad4ea693881d52bc8b3578772b57488a286837ab72579fec6c22da"
+    "bytes": 32699,
+    "sha256": "8332a00f721a9190e5bde863db0e743f498a2ccd468700d71e142eee6f3d5993"
   },
   "weaponDecision": {
     "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
@@ -25,6 +25,10 @@
     "remaining": 4,
     "eventAudioCandidates": 36,
     "eventAudioReviewed": 36,
+    "eventAudioGameFormatFiles": 35,
+    "eventAudioCandidateRelationshipsConverted": 36,
+    "eventAudioNativeEventRows": 8,
+    "eventAudioRuntimeBlockers": 36,
     "ggdVfxCandidates": 12,
     "vfxVisuallyAccepted": 12,
     "vfxBindingProposals": 7,
@@ -128,8 +132,8 @@
         "只將核准配對寫入 runtime，並通過音訊與事件檢查"
       ],
       "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。",
-      "status": "owner-listening-approved-awaiting-identity-and-runtime-integration",
-      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 review candidates are owner-approved for their listed source event, while the source queue still marks speaker/event identity unverified and the portal authorizes zero runtime mutations; no event audio is bound yet.",
+      "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 reviewed relationships are converted to 35 content-addressed game MP3 files and grouped into 8 approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
       "closed": false,
       "remaining": true,
       "ownerReviewRequiredBeforeRuntimeMutation": true

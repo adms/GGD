@@ -5,7 +5,7 @@ No AWS access, binary conversion, playback, speaker inference or synthesis occur
 The compact per-file SHA index is a Git control manifest; audio remains in S3/local.
 """
 import argparse
-from collections import Counter
+from collections import Counter, defaultdict
 import gzip
 import hashlib
 import json
@@ -244,6 +244,8 @@ def apply_listening_review(row, review, registration=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
+    parser.add_argument('--no-workspace-copies', action='store_true',
+                        help='write only the Git index files when running in an isolated worktree')
     args = parser.parse_args()
     ws = args.workspace.resolve()
     native = ws/'outputs/game-asset-library-20260907'
@@ -293,6 +295,9 @@ def main():
     review_queue = read(OUT/'lol-project-seven/listening-review-queue.json')
     review_decisions = read(OUT/'lol-project-seven/listening-review-decisions.json')
     runtime_registration = read(OUT/'lol-project-seven/runtime-registration.json')
+    popp_audio_receipt = read(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json')
+    popp_audio_event_table = read(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json')
+    popp_audio_blockers = read(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json')
     assert review_queue['schema'] == 'ggd-lol-listening-review-queue@1'
     assert review_queue['sourceId'] == 'lol-project-seven-ja-jp-16.18.8159717'
     assert review_queue['summary']['uniqueWavFiles'] == 754
@@ -307,6 +312,16 @@ def main():
     assert runtime_manifest.is_file() and sha(runtime_manifest) == runtime_registration['runtimeManifest']['sha256']
     runtime_registrations = {row['reviewKey']: row for row in runtime_registration['records']}
     assert len(runtime_registrations) == runtime_registration['summary']['runtimeRegistered']
+    assert popp_audio_receipt['schema'] == 'ggd.infinity-strash-popp-approved-audio-receipt@1'
+    assert popp_audio_receipt['summary']['gameAudioCandidateRelationships'] == 36
+    assert popp_audio_receipt['summary']['gameAudioFiles'] == 35
+    assert popp_audio_receipt['summary']['runtimeBindings'] == 0
+    assert popp_audio_event_table['runtimeBindingAuthorized'] is False
+    assert len(popp_audio_event_table['events']) == 8
+    assert popp_audio_blockers['summary'] == {'candidates': 36, 'runtimeBindable': 0, 'blocked': 36}
+    for product in popp_audio_receipt['files']:
+        product_path = REPO/product['gitPath']
+        assert product_path.is_file() and product_path.stat().st_size == product['bytes'] and sha(product_path) == product['sha256']
     listening_reviews = {}
     for review in review_queue['records']:
         evidence = event_bindings[review['path']]
@@ -613,6 +628,44 @@ def main():
         if review['runtimeApproved']:
             approved_review_groups[row['groupId']] += 1
 
+    popp_by_source = defaultdict(list)
+    for candidate in read(REPO/'content/assets/audio/original/strash/popp/MANIFEST.json')['candidates']:
+        source_path = Path(candidate['source']['absolutePath']).resolve()
+        assert source_path.is_relative_to(ws)
+        assert candidate['runtimeBindingAuthorized'] is False and candidate['runtimeSelectable'] is False
+        popp_by_source[source_path.relative_to(ws).as_posix()].append(candidate)
+    popp_annotated_paths = set()
+    popp_candidate_relationships = 0
+    popp_groups = Counter()
+    for row in files:
+        candidates = popp_by_source.get(row['path'])
+        if not candidates:
+            continue
+        assert row['sha256'] == candidates[0]['source']['sha256']
+        assert all(candidate['source']['sha256'] == row['sha256'] for candidate in candidates)
+        row['poppOwnerReviewed'] = True
+        row['poppApprovedCandidateIds'] = [candidate['candidateId'] for candidate in candidates]
+        row['poppApprovedNativeEvents'] = sorted({candidate['nativeEvent'] for candidate in candidates})
+        row['gameAudioCandidates'] = [{
+            'gitPath': candidate['runtimeCandidate']['gitPath'],
+            'sha256': candidate['runtimeCandidate']['sha256'],
+            'bytes': candidate['runtimeCandidate']['bytes'],
+            'codec': candidate['runtimeCandidate']['codec'],
+            'channels': candidate['runtimeCandidate']['channels'],
+            'sampleRate': candidate['runtimeCandidate']['sampleRate'],
+            'nativeEvent': candidate['nativeEvent'],
+        } for candidate in candidates]
+        row['ggdRuntimeBindingAuthorized'] = False
+        row['ggdRuntimeBindingStatus'] = 'blocked-no-owner-approved-unique-ggd-runtime-target'
+        row['runtimeSelectable'] = False
+        row['speakerVerified'] = False
+        row['synthesisReady'] = False
+        popp_annotated_paths.add(row['path'])
+        popp_candidate_relationships += len(candidates)
+        popp_groups[row['groupId']] += len(candidates)
+    assert popp_annotated_paths == set(popp_by_source)
+    assert len(popp_annotated_paths) == 35 and popp_candidate_relationships == 36
+
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
     for g in groups.values():
@@ -625,6 +678,11 @@ def main():
             g['listeningReviewApprovedFiles']=approved_review_groups[g['id']]
             g['listeningReviewQueue']='materials/hero-model-library/lol-project-seven/listening-review-queue.json'
             g['listeningReviewPage']='materials/hero-model-library/lol-project-seven/listening-review.html'
+        if popp_groups[g['id']]:
+            g['poppOwnerReviewedCandidateRelationships']=popp_groups[g['id']]
+            g['poppGameFormatConverted']=True
+            g['poppGgdRuntimeBindings']=0
+            g['poppRuntimeBindingStatus']='blocked-no-owner-approved-unique-ggd-runtime-target'
     categories={key:Counter() for key in groups}
     for f in files:categories[f['groupId']][f['category']]+=1
     for key,g in groups.items():g['categoryCounts']=dict(categories[key])
@@ -650,6 +708,13 @@ def main():
             runtimeRegistered=runtime_registration['summary']['runtimeRegistered'],
             runtimeConfigChanged=True,
             productionDeployed=False),
+        poppApprovedAudio=dict(
+            receiptPath='materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json',
+            receiptSha256=sha(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json'),
+            eventTablePath='materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json',
+            blockersPath='materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json',
+            ownerApprovedCandidates=36,uniqueSourceWavFiles=35,gameAudioFiles=35,nativeEventRows=8,
+            runtimeBindings=0,runtimeSelectable=False,productionDeployed=False),
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -666,6 +731,10 @@ def main():
             nativeTargetCandidateFiles=review_queue['summary']['nativeTargetCandidates'],
             battleReviewCandidateFiles=review_queue['summary']['battleReviewCandidates'],
             listeningReviewApprovedFiles=review_queue['summary']['runtimeApproved']))
+    summary['summary']['poppOwnerApprovedCandidates']=36
+    summary['summary']['poppGameAudioFiles']=35
+    summary['summary']['poppNativeEventRows']=8
+    summary['summary']['poppRuntimeBindings']=0
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
     compressed=gzip.compress(manifest.encode(),mtime=0)
@@ -687,6 +756,9 @@ def main():
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
         f'LoL 七名逐項聽審入口為 `materials/hero-model-library/lol-project-seven/listening-review.html`：{review_queue["summary"]["uniqueWavFiles"]} 個事件關聯 WAV 中，{review_queue["summary"]["battleReviewCandidates"]} 個戰鬥候選已逐項核准，並有 {runtime_registration["summary"]["runtimeRegistered"]} 個完成 runtime 註冊；其餘片段仍未核准。此處的核准與註冊不代表 production 已部署。', '',
+        '<!-- generated:popp-approved-audio-v1:start -->',
+        '波普 PN020 已核准 36 筆原生事件音訊關係，轉為 35 份不同 MP3 並建立 8 個原生事件列。核准收據沒有指定唯一 GGD 技能／狀態目標，故 runtime 綁定仍為 0；逐候選 blocker 見 `priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json`。',
+        '<!-- generated:popp-approved-audio-v1:end -->', '',
         *event_binding_lines, *([''] if event_binding_lines else []),
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{counts["sourceFileRelationshipRows"]:,} 筆來源與檔案關係、{counts["uniqueLocalPaths"]:,} 個不同本機檔案路徑、{counts["uniqueSha256Payloads"]:,} 份不同 SHA-256 內容**。不同本機路徑的檔案大小合計 {counts["uniqueLocalPathBytes"]:,} bytes。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；以上均**不是已確認角色語音數**。同一路徑可保留原來源及指定角色子集的多筆關係，不能把新增來源關係當成新增音檔。', '',
         '相容欄位 `summary.audioFiles` 與 `summary.bytes` 仍依逐列來源關係加總；去重取檔請使用 `uniqueLocalPaths`／`uniqueLocalPathBytes`，內容去重數見 `uniqueSha256Payloads`。這些數字只涵蓋主要可播放音訊清單，原始容器、舊備份及診斷 PCM16 仍另外保留。', '',
@@ -751,8 +823,9 @@ def main():
     from priority_voice import insert_priority_voice
     report=insert_priority_voice(report)
     (OUT/'角色語音索引.md').write_text(report)
-    for target in [ws/'角色語音索引.md',ws/'GGD-Asset-Library/角色語音索引.md']:
-        target.write_text(report)
+    if not args.no_workspace_copies:
+        for target in [ws/'角色語音索引.md',ws/'GGD-Asset-Library/角色語音索引.md']:
+            target.write_text(report)
     print(json.dumps(summary['summary'],ensure_ascii=False))
 
 

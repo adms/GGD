@@ -44,7 +44,7 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(self.contract["closedIntegrationGapCount"], 1)
         self.assertTrue(all(row["remaining"] for row in gaps if row is not death))
         events = next(row for row in gaps if row["id"] == "animation-events-and-sfx-binding")
-        self.assertEqual(events["status"], "owner-listening-approved-awaiting-identity-and-runtime-integration")
+        self.assertEqual(events["status"], "owner-listening-approved-game-format-converted-awaiting-ggd-targets")
         audio = self.contract["audioReviewEvidence"]
         self.assertEqual(audio["fileCount"], 311)
         self.assertFalse(audio["allListeningReviewComplete"])
@@ -79,6 +79,12 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(owner["audio"]["runtimeBindingAuthorizedCount"], 0)
         self.assertEqual(owner["vfx"]["runtimeBindingAuthorizedCount"], 0)
         self.assertFalse(owner["runtimeMutationAllowed"])
+        audio_integration = self.contract["approvedAudioTechnicalIntegration"]
+        self.assertEqual(audio_integration["summary"]["gameAudioFiles"], 35)
+        self.assertEqual(audio_integration["summary"]["gameAudioCandidateRelationships"], 36)
+        self.assertEqual(audio_integration["summary"]["nativeEventRows"], 8)
+        self.assertEqual(audio_integration["summary"]["candidateBlockers"], 36)
+        self.assertFalse(audio_integration["runtimeSelectable"])
 
     def test_gap_ledger_keeps_owner_gates_and_single_manual_weapon_default(self):
         ledger = MODULE.build_gap_ledger(self.contract)
@@ -88,6 +94,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(ledger["summary"]["remaining"], 4)
         self.assertEqual(ledger["summary"]["eventAudioCandidates"], 36)
         self.assertEqual(ledger["summary"]["eventAudioReviewed"], 36)
+        self.assertEqual(ledger["summary"]["eventAudioGameFormatFiles"], 35)
+        self.assertEqual(ledger["summary"]["eventAudioCandidateRelationshipsConverted"], 36)
+        self.assertEqual(ledger["summary"]["eventAudioNativeEventRows"], 8)
+        self.assertEqual(ledger["summary"]["eventAudioRuntimeBlockers"], 36)
         self.assertEqual(ledger["summary"]["ggdVfxCandidates"], 12)
         self.assertEqual(ledger["summary"]["vfxVisuallyAccepted"], 12)
         self.assertEqual(ledger["summary"]["vfxBindingProposals"], 7)

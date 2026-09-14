@@ -44290,7 +44290,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "voice-source-label-unreviewed": 125
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-english_us-voice",
@@ -44461,7 +44465,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "voice-source-label-unreviewed": 123
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-japanese-voice",
@@ -44804,7 +44812,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "sound-effect": 60
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-en801-nonlocalized-sound-effect",
@@ -46124,6 +46136,22 @@
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
       "sha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+      "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+      "sha256": "0f66b19b2c47ac27e4708229b23fbb4fba0e6eb5bbf04e140da3219625c0eced"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+      "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+    },
+    {
+      "path": "content/assets/audio/original/strash/popp/MANIFEST.json",
+      "sha256": "7e7511adc82707ddf4be521fb43450ff5df44c3a1b3cf05272b83caf3eda5627"
     }
   ],
   "audioSourceLeads": [
@@ -96880,8 +96908,25 @@
     "listeningReviewUniqueFiles": 754,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 311
+    "listeningReviewApprovedFiles": 311,
+    "poppOwnerApprovedCandidates": 36,
+    "poppGameAudioFiles": 35,
+    "poppNativeEventRows": 8,
+    "poppRuntimeBindings": 0
   },
-  "sourceFileManifestSha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469",
-  "uncompressedFileManifestSha256": "cff2d35e1ea68e0a333f798a047e289258e8657f1d8ea2cf094da1c8b01f73eb"
+  "sourceFileManifestSha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0",
+  "uncompressedFileManifestSha256": "25e57d5ab087d1695f09465ada46283a1f5c555e6f1e97af321ccc13f6349163",
+  "poppApprovedAudio": {
+    "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+    "receiptSha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51",
+    "eventTablePath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+    "blockersPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+    "ownerApprovedCandidates": 36,
+    "uniqueSourceWavFiles": 35,
+    "gameAudioFiles": 35,
+    "nativeEventRows": 8,
+    "runtimeBindings": 0,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
 }
