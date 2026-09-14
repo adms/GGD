@@ -560,6 +560,11 @@ def build(git_link_root=ROOT):
     kof_terry_path_index_path=base/'source-inventories/kof-xiv-terry-path-index-v1/inventory.json'
     kof_terry_path_files_path=base/'source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz'
     kof_terry_path_document_path=base/'source-inventories/kof-xiv-terry-path-index-v1/README.md'
+    kof_local_pipeline_entry_path=base/'source-inventories/kof-local-pipeline-v1/current-resource-entry.json'
+    kof_local_pipeline_receipt_path=base/'source-inventories/kof-local-pipeline-v1/receipt.json'
+    kof_local_pipeline_document_path=base/'source-inventories/kof-local-pipeline-v1/README.md'
+    kof_local_pipeline_manifest_path=ROOT/'tools/hero-model-library/source-workflows/kof-local-pipeline-v1/pipeline.json'
+    kof_local_pipeline_runner_path=ROOT/'tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py'
     kof_terry_path_index=read(kof_terry_path_index_path)
     if (kof_terry_path_index.get('schema')!='ggd.kofxiv-terry-path-index@1'
         or kof_terry_path_index.get('character',{}).get('nativeCharacterId')!='TRY'
@@ -571,6 +576,24 @@ def build(git_link_root=ROOT):
         or kof_terry_path_index.get('summary',{}).get('productionDeployments')!=0
         or kof_terry_path_index.get('filesIndex',{}).get('sha256')!=hashlib.sha256(kof_terry_path_files_path.read_bytes()).hexdigest()):
         raise ValueError('KOF XIV Terry path index is absent, stale or overclaims readiness')
+    kof_local_pipeline_entry=read(kof_local_pipeline_entry_path)
+    kof_local_pipeline_receipt=read(kof_local_pipeline_receipt_path)
+    if (kof_local_pipeline_entry.get('schema')!='ggd.kof-local-pipeline-current-resource@1'
+        or kof_local_pipeline_receipt.get('schema')!='ggd.kof-local-pipeline-receipt@1'
+        or kof_local_pipeline_entry.get('pipelineId')!='kof-local-pipeline-v1'
+        or kof_local_pipeline_receipt.get('pipelineId')!='kof-local-pipeline-v1'
+        or len(kof_local_pipeline_receipt.get('stages',[]))!=11
+        or kof_local_pipeline_receipt.get('summary',{}).get('verifiedPayloadFiles')!=1088
+        or kof_local_pipeline_receipt.get('summary',{}).get('decodedAudioFiles')!=474
+        or kof_local_pipeline_receipt.get('summary',{}).get('ownerApprovedVfxTextureCandidates')!=55
+        or kof_local_pipeline_receipt.get('summary',{}).get('ownerApprovedNativeEffectGroups')!=71
+        or kof_local_pipeline_receipt.get('claims',{}).get('convertedRuntimeModels')!=0
+        or kof_local_pipeline_receipt.get('claims',{}).get('convertedNativeMotionClips')!=0
+        or kof_local_pipeline_receipt.get('claims',{}).get('convertedRuntimeVfx')!=0
+        or kof_local_pipeline_receipt.get('claims',{}).get('backendSelectableModels')!=0
+        or kof_local_pipeline_receipt.get('claims',{}).get('productionDeploymentVerified') is not False
+        or kof_local_pipeline_entry.get('manifestSha256')!=hashlib.sha256(kof_local_pipeline_manifest_path.read_bytes()).hexdigest()):
+        raise ValueError('KOF local pipeline receipt is absent, stale or overclaims readiness')
     kof_jump_coverage_path=base/'source-inventories/kof-jump-container-coverage-v1/inventory.json'
     kof_jump_coverage_doc_path=base/'source-inventories/kof-jump-container-coverage-v1/README.md'
     jumpforce_identity_path=base/'source-inventories/kof-jump-container-coverage-v1/identity-map.json'
@@ -854,6 +877,16 @@ def build(git_link_root=ROOT):
             ashGuardResult=kof3d_inventory['kofXv']['hardPolicyProbe']['result'],
             runtimeSelectable=False,
             productionDeploymentVerified=False),
+        kofLocalPipeline=dict(
+            **kof_local_pipeline_entry,
+            entryGitPath=str(kof_local_pipeline_entry_path.relative_to(ROOT)),
+            entrySha256=hashlib.sha256(kof_local_pipeline_entry_path.read_bytes()).hexdigest(),
+            receiptSha256=hashlib.sha256(kof_local_pipeline_receipt_path.read_bytes()).hexdigest(),
+            documentSha256=hashlib.sha256(kof_local_pipeline_document_path.read_bytes()).hexdigest(),
+            runnerGitPath=str(kof_local_pipeline_runner_path.relative_to(ROOT)),
+            runnerSha256=hashlib.sha256(kof_local_pipeline_runner_path.read_bytes()).hexdigest(),
+            summary=kof_local_pipeline_receipt['summary'],
+            blockers=kof_local_pipeline_receipt['blockers']),
         kofXivTerryPathIndex=dict(
             gitPath=str(kof_terry_path_index_path.relative_to(ROOT)),
             sha256=hashlib.sha256(kof_terry_path_index_path.read_bytes()).hexdigest(),
@@ -1321,6 +1354,26 @@ def main():
                 },
                 result['ultimate14NativeMotionIndex'],
                 result['kof3dSourceInventory'],
+                {
+                    'gitPath': result['kofLocalPipeline']['entryGitPath'],
+                    'sha256': result['kofLocalPipeline']['entrySha256'],
+                },
+                {
+                    'gitPath': result['kofLocalPipeline']['receiptGitPath'],
+                    'sha256': result['kofLocalPipeline']['receiptSha256'],
+                },
+                {
+                    'gitPath': result['kofLocalPipeline']['documentGitPath'],
+                    'sha256': result['kofLocalPipeline']['documentSha256'],
+                },
+                {
+                    'gitPath': result['kofLocalPipeline']['manifestGitPath'],
+                    'sha256': result['kofLocalPipeline']['manifestSha256'],
+                },
+                {
+                    'gitPath': result['kofLocalPipeline']['runnerGitPath'],
+                    'sha256': result['kofLocalPipeline']['runnerSha256'],
+                },
                 {
                     'gitPath': result['kofXivTerryPathIndex']['gitPath'],
                     'sha256': result['kofXivTerryPathIndex']['sha256'],

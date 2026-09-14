@@ -6466,7 +6466,7 @@
   },
   "kof3dSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
-    "sha256": "6883322086e8dd1cb7aef8d0b74f721ab56c8c1cbc1b8a0e0db8d77d8538f8f9",
+    "sha256": "de1bd409ebe4f8c92c1eee4cbb7f90e0d6b2c897b90935c97e28599109621869",
     "sourceId": "kof-3d-source-audit-20260914-v1",
     "kofXivCharacters": [
       "IOR",
@@ -6492,9 +6492,65 @@
     "runtimeSelectable": false,
     "productionDeploymentVerified": false
   },
+  "kofLocalPipeline": {
+    "schema": "ggd.kof-local-pipeline-current-resource@1",
+    "pipelineId": "kof-local-pipeline-v1",
+    "scope": {
+      "sourceIds": [
+        "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+        "steam-kofxiv-terry-path-index-v1"
+      ],
+      "nativeCharacterIdsWithPayload": [
+        "MAI",
+        "IOR",
+        "KYO"
+      ],
+      "nativeCharacterIdsPathIndexedOnly": [
+        "TRY"
+      ],
+      "remoteLibraryReadAllowed": false
+    },
+    "status": "MAI/IOR/KYO local payload verified and candidates processed; proprietary model/motion/VFX conversion blocked; TRY path-indexed only",
+    "manifestGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/pipeline.json",
+    "manifestSha256": "19bb753a3c3d59e2d362be7b1e68d5fddbd25e48a84997b94f3117d4679c409a",
+    "receiptGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json",
+    "documentGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/README.md",
+    "runtimeSelectableModels": 0,
+    "runtimeMotionBindings": 0,
+    "runtimeVfxBindings": 0,
+    "productionDeploymentVerified": false,
+    "entryGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json",
+    "entrySha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
+    "receiptSha256": "56249fde7d0fe5b93dcd35824419077a3fa194595cfc7660a40e700bfad78e9e",
+    "documentSha256": "878516c59006c1e7de6c987a58672d0b603fc84d0f19b3a0a597cc071cb5a031",
+    "runnerGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
+    "runnerSha256": "dfe466c59de95feb47b0abd203db7305958f9494b5a1f976dee1c7715df12942",
+    "summary": {
+      "payloadCharacters": 3,
+      "pathIndexedOnlyCharacters": 1,
+      "verifiedPayloadFiles": 1088,
+      "decodedAudioFiles": 474,
+      "baseTextureCandidates": 14,
+      "vfxTextureCandidates": 55,
+      "ownerApprovedVfxTextureCandidates": 55,
+      "ownerApprovedNativeEffectGroups": 71,
+      "nativeFormatProbeFiles": 18,
+      "nativeFormatReaderAcceptedFiles": 0,
+      "runtimeSelectableModels": 0,
+      "runtimeMotionBindings": 0,
+      "runtimeVfxBindings": 0,
+      "productionDeployments": 0
+    },
+    "blockers": [
+      "MAI/IOR/KYO 的 OBAC/OMIR/OSEC 尚無經稽核 reader，模型與骨架不能宣稱已轉換。",
+      "MAI/IOR/KYO 的 OTRA 尚無經稽核 reader，原生動作不能宣稱已轉換。",
+      "71 個 EFF 群組與 55 張 VFX 貼圖已核准，但混合、時序、掛點與技能事件尚未重建，不能建立 runtime VFX 綁定。",
+      "TRY 只有 375 筆 WAD 路徑索引，payload 仍是 0。"
+    ]
+  },
   "kofXivTerryPathIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
-    "sha256": "11b85e10046c22a284a00abe142971a628e9b3952eb05ea566061b9145a02d20",
+    "sha256": "7f16a47a0e88c48299f7a57915139ad68309f8c92f69890cb636e206d17e4942",
     "filesGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
     "filesSha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
     "documentGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/README.md",

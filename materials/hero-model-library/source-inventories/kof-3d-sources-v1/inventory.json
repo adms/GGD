@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3071301,
-      "sha256": "082f58e332f43d578563000a7e56979b92d5b82d5fd90d09bf4fac70bdedcda4"
+      "bytes": 3336844,
+      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -3372,6 +3372,37 @@
           "state": "pending-conversion-validation-and-binding",
           "selectionVerified": false
         }
+      },
+      {
+        "sourceId": "steam-kofxiv-terry-path-index-v1",
+        "target": "KOF XIV／Terry Bogard（泰利·柏格）／TRY 路徑級原作素材候選",
+        "sourceGame": "THE KING OF FIGHTERS XIV",
+        "platform": "Windows (Steam, Release 1.26 authority from parent extraction)",
+        "sourceUrl": "https://store.steampowered.com/app/571260/",
+        "selectionClass": "canonical-game",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation",
+          "vfx",
+          "sound-effect",
+          "voice",
+          "audio-metadata",
+          "configuration"
+        ],
+        "acquisitionStatus": "source-container-verified-prior-run-path-indexed-only",
+        "readiness": "path-indexed-awaiting-source-remount-extraction-hashing-conversion-and-review",
+        "publicationStatus": "git-path-index-only; raw listing remains local; S3 backup pending",
+        "absoluteLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1",
+        "existsLocal": true,
+        "modelArtifacts": [],
+        "backup": null,
+        "backendIntegration": {
+          "required": true,
+          "state": "blocked-until-payload-extraction-conversion-validation-and-hero-design",
+          "selectionVerified": false
+        }
       }
     ],
     "conversionProbe": {
@@ -5878,7 +5909,7 @@
     "allClaimedModelArtifactsSha256Verified": true,
     "kofXivSelectedExtractionAllFilesSha256Verified": true,
     "sourceCountByScope": {
-      "xiv": 2,
+      "xiv": 3,
       "xv": 11,
       "separate2d": 1
     },
