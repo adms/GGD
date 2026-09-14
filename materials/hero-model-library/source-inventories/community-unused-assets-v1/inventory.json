@@ -3,8 +3,8 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3339978,
-      "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2"
+      "bytes": 3340131,
+      "sha256": "671eebfa9b46e3e9d7228273398e5d98f33b766c4c8126c06f18bfa11b058a19"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -196,7 +196,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "6f903172e00136eb4b265bf1eb3f5bc50cb1e052ec2a7946718f3c95292174e0"
+    "sha256": "cfb8c550f18a014c073a992dd49695067b976ff3425e9315b2b39eedb89e5c4a"
   },
   "sources": [
     {
@@ -1905,7 +1905,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
+        "sha256": "671eebfa9b46e3e9d7228273398e5d98f33b766c4c8126c06f18bfa11b058a19",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1971,7 +1971,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
+        "sha256": "671eebfa9b46e3e9d7228273398e5d98f33b766c4c8126c06f18bfa11b058a19",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -3567,7 +3567,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
+        "sha256": "671eebfa9b46e3e9d7228273398e5d98f33b766c4c8126c06f18bfa11b058a19",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [

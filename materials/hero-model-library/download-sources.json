@@ -3550,7 +3550,13 @@
         "usage": "legacy; human permission required; not runtime-ready"
       },
       "backendIntegration": {
+        "required": true,
         "state": "pending-standardization",
+        "heroIds": [
+          "community-review-22-20260907"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
         "selectionVerified": false,
         "productionDeploymentVerified": false
       },

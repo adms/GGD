@@ -195,7 +195,20 @@ def build(write: bool) -> dict:
     write_or_check(EVIDENCE / "receipt.json", encode(receipt), write)
     record["validationEvidence"] = pin(EVIDENCE / "receipt.json")
     source_row["componentCandidates"] = [item for item in source_row.get("componentCandidates", []) if item.get("id") != CANDIDATE_ID] + [record]
-    source_row["backendIntegration"] = {"state": "pending-standardization", "selectionVerified": False, "productionDeploymentVerified": False}
+    # Keep the source-level integration contract complete even though this
+    # decimated Rem candidate is deliberately not a runtime option yet.  The
+    # library generator rejects acquired sources without this tracking, and
+    # inheriting the source hero IDs preserves the existing Subaru mapping
+    # without inventing an identity for Rem.
+    source_row["backendIntegration"] = {
+        "required": True,
+        "state": "pending-standardization",
+        "heroIds": list(source_row.get("heroIds", [])),
+        "ownerEntryIds": list(source_row.get("ownerEntryIds", [])),
+        "release": None,
+        "selectionVerified": False,
+        "productionDeploymentVerified": False,
+    }
 
     write_or_check(DOWNLOADS, encode(downloads), write)
     return {"sourceTriangles": source_metrics["triangles"], "candidateTriangles": candidate_metrics["triangles"], "candidateSha256": candidate_metrics["sha256"], "runtimeSelectable": False}
