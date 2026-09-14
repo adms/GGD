@@ -190,9 +190,9 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 1,
+      "castTimeSec": 0.3,
       "cooldownTier": "中",
-      "castTimeTier": "極大"
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-ogrh.r",
@@ -209,9 +209,9 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -269,7 +269,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "template": {
         "ref": "tpl-line-strike",
         "params": {

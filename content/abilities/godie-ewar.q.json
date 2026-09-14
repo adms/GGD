@@ -46,8 +46,8 @@
   "icon": "assets/icons/abilities/godie-ewar.q.webp",
   "vfxKey": "fx.prim.ki.nova",
   "cooldownTier": "極小",
-  "manaCostTier": "極小",
   "castTimeTier": "中",
   "rangeTier": "小",
+  "manaCostTier": "極小",
   "castTimeSec": 0.3
 }

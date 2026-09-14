@@ -19,6 +19,7 @@
   ],
   "range": 0.0,
   "radiusTier": "中",
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -73,6 +74,5 @@
   },
   "cooldownTier": "中",
   "manaCostTier": "中",
-  "castTimeTier": "極大",
   "castTimeSec": 1
 }

@@ -871,10 +871,24 @@ def tierize(doc, grids=None, log=None):
             #    「傷害跟耗魔是一起變動的」被弄反的樣子。
             # ⚠️ 而且它有一道硬閘在守：`abilityAffordableAtUnlock.test.ts`
             #    （「首階 MP 超過持有者當時的魔力池 = 那顆鈕永遠按不下去」）。
+            #
+            # ⭐⭐ GH#1260（2026-09-15）—— **級別贏**：文件已經寫了 `manaCostTier`，
+            #    ⇒ 值從表查（級別 → 值），⛔ 不再從原始值重新歸級（值 → 級別）。
+            #    只有**還沒有級別**的文件才走「最近一格」。
+            #
+            # ⛔ 在此之前這裡**每次**都從 `manaCost[0]` 重新歸級，而原始值會跟著表一起被改寫 ⇒
+            #    表連續動兩次，中間值就決定了級別：`ac0aa0658` 把「小」寫成 112（那張表後來撤掉），
+            #    `1bb6c3fea` 換成 75/150 時 112 離 75 差 37、離 150 差 38 ⇒ **293 支掉一格**
+            #    （218 支 小→極小、60 支 大→中、15 支 中→小），⛔ 沒有人決定過、沒有東西紅。
+            #    owner 核准的是**表**（「all ok」，transcript 9fdde660 2026-09-11T18:40:35Z），
+            #    ⛔ 不是那 293 支減半。
+            # ⚠️ 產生器擁有的 90 支不受影響：`common.py::SPEC_OWNED` 收了 `manaCostTier`，
+            #    舊級別不會被 A-6 救回來 ⇒ 它們照舊從**規格的** mp 歸級（同 GH#433 的 rangeTier）。
             grid = grids.mana_row()
-            mi = nearest_index(float(mp[0]), grid)
+            authored = doc.get("manaCostTier")
+            mi = TIER_NAMES.index(authored) if authored in TIER_NAMES else nearest_index(float(mp[0]), grid)
             v = grid[mi]
-            if doc.get("manaCostTier") != TIER_NAMES[mi] or mp != [v] * len(mp):
+            if authored != TIER_NAMES[mi] or mp != [v] * len(mp):
                 log.append(("mana", list(mp), v, f"收進耗魔級距 {TIER_NAMES[mi]}（首階參照）"))
             doc["manaCostTier"] = TIER_NAMES[mi]
             doc["manaCost"] = [v] * len(mp)

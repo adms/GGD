@@ -151,11 +151,11 @@
       ],
       "id": "b2-bojji.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "笑穴變成原地罰站",
       "radius": 3,
@@ -239,12 +239,12 @@
       ],
       "id": "b2-bojji.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "王室搔癢暫停握刀",
       "range": 6,

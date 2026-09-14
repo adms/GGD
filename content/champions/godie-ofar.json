@@ -344,17 +344,17 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.lightning.explosion-lg",
-      "castTimeSec": 1,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-transform",
         "params": {
           "to": "alternate",
           "durationSec": 6,
-          "castTimeSec": 1
+          "castTimeSec": 0.5
         }
       },
-      "castTimeTier": "極大"
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

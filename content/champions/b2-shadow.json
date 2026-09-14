@@ -165,11 +165,11 @@
       ],
       "id": "b2-shadow.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "I AM 加班到 ATOMIC",
       "range": 6,
@@ -242,12 +242,12 @@
       ],
       "id": "b2-shadow.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "掌聲先等零點七秒",
       "radius": 3,

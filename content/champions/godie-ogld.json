@@ -203,9 +203,9 @@
         90.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0,
       "effects": [],
@@ -234,7 +234,7 @@
         }
       },
       "cooldownTier": "大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "radiusTier": "極小",
       "castTimeTier": "極大"
     }

@@ -391,6 +391,7 @@
         300.0
       ],
       "range": 12.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -501,9 +502,8 @@
         }
       ],
       "cooldownTier": "極大",
-      "manaCostTier": "中",
-      "castTimeTier": "極大",
       "rangeTier": "極大",
+      "manaCostTier": "中",
       "castTimeSec": 1
     },
     "R": {
@@ -624,8 +624,8 @@
       "icon": "assets/icons/abilities/godie-e002.r.webp",
       "vfxKey": "fx.prim.holy.nova-lg",
       "cooldownTier": "極大",
-      "manaCostTier": "小",
       "castTimeTier": "大",
+      "manaCostTier": "小",
       "castTimeSec": 0.5
     }
   },

@@ -29,12 +29,12 @@
       ],
       "id": "b2-goblin.e",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "工具箱灰塵遮眼",
       "range": 6,
@@ -106,12 +106,12 @@
       ],
       "id": "b2-goblin.q",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "工地開工三次點名",
       "radius": 3,
@@ -199,11 +199,11 @@
       ],
       "id": "b2-goblin.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "盲目亂闖請走緊急出口",
       "radius": 3,

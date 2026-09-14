@@ -175,8 +175,11 @@ def finalize_content():
     # 明寫 GGD_CONTENT_DIR：讓「寫進哪棵樹」與「重建哪棵樹」是同一次宣告，
     # 而不是兩邊各自推導出來、只是碰巧相等（配對式後置條件）。
     env = dict(os.environ, GGD_CONTENT_DIR=os.path.join(ROOT, "content"))
-    # ⭐ castTimeSec 的唯一來源是 castTimeFormula.deriveCastTime()（RETIRED 那張表
-    #    說明了為什麼舊值不可以抄回來）。這一步就是那個「後處理」。
+    # ⭐ castTimeSec 是 `castTimeTier` 的物化值：`deriveCastTimes.ts` 查 cast-time-tiers.json 寫回
+    #    （RETIRED 那張表說明了為什麼舊值不可以抄回來）。這一步就是那個「後處理」。
+    #    ⚠️ 2026-09-15（GH#1243）：下面兩段註解提到的 20 階公式 `castTimeFormula.ts` 已搬到
+    #    docs/legacy/code/ —— 它們是**歷史**，⛔ 不是今天的行為。吟唱屬於誰的唯一住處：
+    #    docs/legacy/_cast-time-20-step-ladder.md 的「吟唱屬於誰」一節。
     # ⭐⭐ 2026-08-27（GH#835）——**順序**是承重的，⛔ 不是風格問題。
     #   `deriveCastTime()` 要讀 `config.cast-time@1`（`castTimeMaxSec` 的夾子），
     #   而它走的是**載入器**，也就是 `_index.json` / `bundle.json`。
@@ -252,9 +255,9 @@ def finalize_content():
     else:
         sys.exit(
             f"✖ castTimeSec 跑了 {MAX_CAST_PASSES} 趟仍然沒有收斂 —— ⛔ 不要 commit。\n"
-            "  ⭐ 這代表公式的輸入裡有一格是它自己的輸出（`{{cast}}` 渲染進 description，\n"
-            "     `authoredCastSec()` 又把它讀回去），而這一次不是 2-循環而是更長的循環。\n"
-            "  ⇒ 去看 packages/shared/src/content/castTimeFormula.ts::authoredCastSec()。"
+            "  ⭐ 這代表 castTimeSec 的某一個住處（頂層／template.params／cards／英雄卡內嵌）\n"
+            "     和級別查出來的值來回打架。\n"
+            "  ⇒ 去看 packages/shared/scripts/deriveCastTimes.ts 的寫入段與 common.py 的 template 同步。"
         )
     # 2026-08-02 事故的另一半：content:build 讀的是**工作區**，看得到未追蹤的來源檔，
     # 於是「產物進了 git、來源檔沒進」的組合會被 push 出去（deploy 走 git pull）。

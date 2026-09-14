@@ -14,6 +14,7 @@
     300.0
   ],
   "range": 6.0,
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -71,8 +72,7 @@
   "icon": "assets/icons/abilities/godie-hapm.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
   "cooldownTier": "極大",
-  "manaCostTier": "中",
-  "castTimeTier": "極大",
   "rangeTier": "中",
+  "manaCostTier": "中",
   "castTimeSec": 1
 }

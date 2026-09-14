@@ -30,12 +30,12 @@
       ],
       "id": "b2-zenitsu.e",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "鼾聲大到握不住武器",
       "range": 6,
@@ -204,11 +204,11 @@
       ],
       "id": "b2-zenitsu.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "霹靂三閃・已讀亂回",
       "radius": 3,
@@ -320,12 +320,12 @@
       ],
       "id": "b2-zenitsu.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "雷之呼吸・補眠卡核銷",
       "radius": 3,

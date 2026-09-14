@@ -167,10 +167,10 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -198,7 +198,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "template": {
         "ref": "tpl-projectile-strike",
         "params": {
@@ -227,9 +227,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [
         {
@@ -315,7 +315,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "cooldownShape": "單體",
       "castTimeTier": "極大"
     }

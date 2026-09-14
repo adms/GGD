@@ -192,9 +192,9 @@
         45.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.wind.tornado-lg",
@@ -203,7 +203,7 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "template": {
         "ref": "tpl-single-strike",
         "params": {

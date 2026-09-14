@@ -20,6 +20,7 @@
     0.0
   ],
   "range": 12.0,
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -38,7 +39,6 @@
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.gruntyesattack1",
   "cooldownTier": "中",
-  "castTimeTier": "中",
   "rangeTier": "極大",
-  "castTimeSec": 0.3
+  "castTimeSec": 1
 }

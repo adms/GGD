@@ -15,12 +15,12 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
-  "manaCostTier": "極小",
+  "manaCostTier": "小",
   "effects": [
     {
       "kind": "damage",
@@ -39,8 +39,8 @@
   "vfxKey": "fx.prim.ki.pulse",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1,
+  "castTimeSec": 0.3,
   "rangeTier": "極大",
   "range": 12,
-  "castTimeTier": "極大"
+  "castTimeTier": "中"
 }

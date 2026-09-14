@@ -158,10 +158,10 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
@@ -188,7 +188,7 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "radiusTier": "大",
       "castTimeTier": "極大"
     },
@@ -207,9 +207,9 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0,
       "effects": [
@@ -241,7 +241,7 @@
       "radius": 6,
       "castTimeSec": 0.5,
       "cooldownTier": "中",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "radiusTier": "中",
       "castTimeTier": "大"
     }

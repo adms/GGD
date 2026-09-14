@@ -15,12 +15,12 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
-  "manaCostTier": "極小",
+  "manaCostTier": "小",
   "range": 0,
   "effects": [],
   "template": {
