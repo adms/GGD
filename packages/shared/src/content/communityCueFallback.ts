@@ -62,6 +62,9 @@ export function communityCueFallbackFor(
   slot: unknown = doc["slot"],
 ): CommunityCuePick | null {
   if (!CAST_SLOTS.has(String(slot)) || hasAuthoredVfx(doc)) return null;
+  // ⭐ 只補「編輯器產生」的技能（社群／鑄造那一層）。owner-spec／JASS／w3x 那幾層漏綁 vfxKey
+  //   要讓 bindings.test 的「no vfxKey」照樣紅 —— 第一·四守則要先問「原作有沒有這顆」，⛔ 不可以被紫色 pulse 靜默蓋掉。
+  if (doc["provenance"] !== "editor-json") return null;
   if (doc["template"] === undefined || doc["template"] === null) return null;
   let cards;
   try {

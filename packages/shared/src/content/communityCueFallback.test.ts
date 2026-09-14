@@ -59,4 +59,13 @@ describe("community cue fallback — 作者沒挑施法特效的社群技能（�
     expect(filled.length, "規則一支都沒補 —— 母體或接縫壞了（量尺自證）").toBeGreaterThan(0);
     expect(unreadable, "⛔ 這些施法技沒有作者特效，而社群施法提示規則讀不懂它們（多卡／被動家族／命中時才播）").toEqual([]);
   }, 120_000);
+  it("只補編輯器產生的技能 —— 其他層（owner-spec／JASS／w3x）漏綁照樣交給 bindings.test 紅", async () => {
+    const { store } = await new ContentLoader(new FsContentSource(CONTENT)).load();
+    const templates = new Map(store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t]));
+    const sample = store.all<Record<string, unknown>>("abilities").find((a) => a["id"] === "lol-karthus.e")!;
+    expect(communityCueFallbackFor(sample, templates)).not.toBeNull();
+    for (const provenance of ["owner-spec", "jass-verified", "w3x-tooltip", "w3x-import", undefined]) {
+      expect(communityCueFallbackFor({ ...sample, provenance }, templates)).toBeNull();
+    }
+  });
 });
