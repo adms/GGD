@@ -233,13 +233,9 @@ def evaluate(day: str, tx: dict):
     def has_row(t: str, m: str) -> bool:
         """這一則在帳本裡有沒有一列。
 
-        ⭐ 逐字的 `HH:MM` 先問（既有行為）；⛔ 對不上時**再問一次 `ledger_table` 的「同一則」判準** ——
-        ⚠️ 2026-09-11 量到的死路：owner 同一句話出現在 17:45／17:47／17:56 三個時間，
-        而 `ledger_table.py`（追加那一支）把 15 分鐘內同一句**併成一列**（`_same_message`，
-        它是為了 `ok`／`ok` 那次資料毀損才寫的），於是這道閘要的那兩個時間**產不出來**：
-        追加 → 被併掉 → 閘照樣說「漏了」→ 再追加 …
-        ⇒ ⭐ 兩支工具必須問**同一個問題**（第〇·四守則：判準只有一個住處），
+        ⭐ 兩支工具必須問**同一個問題**（第〇·四守則：判準只有一個住處）——
         ⛔ 否則這道閘要求的是一個工具拒絕產生的東西（同 genguard 那次「改產物被擋／改來源沒有來源」）。
+        ⭐ `ledger_table._same_entry` 的鍵含**逐字的 `HH:MM`** ⇒ 這裡問的就是那一格。
         """
         # ⭐⭐ 【逐字的 `HH:MM` 就是答案】（GH#1238）
         #
@@ -248,7 +244,8 @@ def evaluate(day: str, tx: dict):
         #   建置器把 15 分鐘內同一句併成一列 ⇒ 閘要的時間產不出來
         #   ⇒ 追加 → 被併掉 → 閘照樣說「漏了」→ 再追加…
         #
-        # ⭐ 而那個死結的**根因已經修掉了**：`_find_row(exact_time=True)` 讓建置器
+        # ⭐ 而那個死結的**根因已經修掉了**：`ledger_table._find_row` 只認**同一分鐘**
+        # （`_same_entry`；owner 2026-09-12「詳實記錄不會合併」）⇒ 建置器
         # 對 transcript 來的訊息**逐分鐘各留一列** ⇒ 閘要的時間現在真的產得出來
         # ⇒ ⛔ 這條 fallback 不但不再需要，⭐ 它還會**遮住真的漏列**：
         #   owner 17:45 講過一次、17:56 又講一次而帳本只有前者時，
@@ -292,11 +289,16 @@ def tickets_in(text: str) -> str:
 # 否則同一句話兩個寫入端各插一列,一列對了票、一列永遠 ⏸ 未對票(2026-09-06 量到三對)。
 # ⭐ 解析 transcript 的程式只有 `from_transcript()` **這一份**;這裡只是把它端出去,
 #   ⛔ 不在 ruling.sh 裡再長一份會漂掉的解析器。
-#   bash scripts/message-ledger.sh --find-time "<逐字原話>" [--date <日>]
+#   bash scripts/message-ledger.sh --find-time "<逐字原話>" [--date <日>] [--with-text]
 #   ⇒ stdout 印 `YYYY-MM-DD HH:MM`(找到)或空(找不到,呼叫端退回執行時間);永遠 exit 0。
+#   ⭐ `--with-text`:第二行起印**那一則在 transcript 裡的逐字原話**。
+#     帳本 owner 2026-09-12 起「詳實記錄不會合併」⇒ 列的鍵是**同一分鐘 ＋ 同一段文字**
+#     (`ledger_table._same_entry`)⇒ `ruling.sh` 只對齊時間而文字仍是**我記的版本**(掉字、接了我的註),
+#     建置器補列時就對不上 ⇒ 同一則兩列、一列永遠 ⏸ 未對票(`rulingScript.test.ts` 量到)。
+#     ⇒ 鍵的**兩半**都從 transcript 來,⛔ 不是只有時間。
 #   ⚠️ 原話走**參數**⛔ 不是 stdin —— 這支 python 自己就是從 stdin(heredoc)餵進來的。
 def find_message_time(text: str, days):
-    """這句原話在 transcript 裡的 `(日期, HH:MM)`;找不到回 None。
+    """這句原話在 transcript 裡的 `(日期, HH:MM, 那一則的逐字原話)`;找不到回 None。
 
     ⭐ 鑰匙是**文字**(第〇·六守則:時間正是今天漂掉的那把):原話的任一段 24 字窗出現在某則
     訊息裡(與 `covered()` 同一套 `norm`)、或整句互為子字串。`X => Y` 這種「我的問句 => 他的答」
@@ -323,8 +325,8 @@ def find_message_time(text: str, days):
                     w = min(WINDOW, len(n))
                     hit = n in hm or (len(hm) >= 4 and hm in n) or \
                         any(n[i:i + w] in hm for i in range(len(n) - w + 1))
-                    if hit and (best is None or (day, t) > best):
-                        best = (day, t)
+                    if hit and (best is None or (day, t) > best[:2]):
+                        best = (day, t, m)
                         break
         if best:
             return best
@@ -337,6 +339,8 @@ if "--find-time" in argv:
     _hit = find_message_time(_text, {DAY, yesterday(DAY)}) if _text.strip() else None
     if _hit:
         print(f"{_hit[0]} {_hit[1]}")
+        if "--with-text" in argv[_i + 2:]:
+            print(_hit[2])
     sys.exit(0)
 
 
@@ -416,10 +420,10 @@ if FROM_TX:
         + "\n\n".join(f"## {t}\n\n{m}" for t, m in msgs) + "\n",
         encoding="utf-8")
 
-# ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 併進 `ruling.sh` 已插的列時,
-#   owner 的原話贏過我的改述(GH#1028;`_same_message` 的第三條路就是為這個開的)。
+# ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 逐字命中 `ruling.sh` 已插的**同一則**時,
+#   owner 的原話贏過任何改述。⛔ 不命中就新增一列(owner 2026-09-12「詳實記錄不會合併」)。
 added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing],
-                  prefer_incoming_text=True, authoritative_rows=msgs)
+                  prefer_incoming_text=True)
 print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列（其餘已經有列）")
 if added:
     print(f"⚠️ 新列的票號是**推出來**的;推不出來的是 `{LT.UNMAPPED}` —— 去填掉,"

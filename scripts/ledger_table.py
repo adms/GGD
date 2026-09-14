@@ -159,11 +159,6 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", "", text).replace(r"\|", "|").rstrip("…")
 
 
-def _minutes(hhmm: str) -> int:
-    h, m = hhmm.split(":")
-    return int(h) * 60 + int(m)
-
-
 #: 文字鑰匙的視窗 —— 與 `message-ledger.sh` 判「這則有沒有列」的 `WINDOW`（24）**同一個數字**，
 #: ⛔ 不是另一個會各自漂的分母。
 PREFIX_WINDOW = 24
@@ -183,9 +178,8 @@ def _same_text(a: str, b: str) -> bool:
 
     · 太短的（「ok」）要求**全等**；
     · 截斷過的那一份是另一份的**前綴**（建置器 300 字截斷 vs `ruling.sh` 全文）；
-    · ⭐ **前 24 字相同**：2026-09-06 的 `04:03`／`04:07` —— 同一則裁決，`ruling.sh` 那一份在
-      「滿足」之後接的是**我的改述** ⇒ 前綴相容失敗、兩列並存、一列永遠 ⏸ 未對票。
-      ⚠️ 這條**還要過時間窗**（`_same_message`），⛔ 單獨拿 24 字去併會回到「ok/ok」那一次的毀損。
+    · ⭐ **前 24 字相同**：同一則訊息，一份在後面多接了字（截斷位置不同）。
+      ⚠️ 這條**只在同一分鐘裡**成立（`_same_entry`）—— ⛔ 單獨拿 24 字去併會回到「ok/ok」那一次的毀損。
     """
     x, y = _norm(a), _norm(b)
     if len(x) < 12 or len(y) < 12:
@@ -204,45 +198,31 @@ def _lead(text: str) -> str:
     return _norm(seg).rstrip("（(：:，,、")
 
 
-def _contains(a: str, b: str) -> bool:
-    """**同一分鐘**裡，一份的第一段（≥12 字）**逐字出現**在另一份裡 ⇒ 同一則。
+def _same_entry(a_when: str, a_text: str, b_when: str, b_text: str) -> bool:
+    """⭐ 「這一列已經存在」的**唯一判準** —— `_find_row`（追加）與 `dedupe`（清理）都問這一支（第〇·四守則）。
 
-    量到的形狀（2026-09-06 `12:28`）：owner 說「好吧 先開票 血量倍率4x, M=15 K=1000」，
-    我記的是「血量倍率4x, M=15 K=1000 （⇒ #1029 …）」—— 掉了他開頭三個字、接了我的註
-    ⇒ 前綴與 24 字窗都對不上 ⇒ 兩列。
-    ⚠️ ⛔ 只在 gap ≤ 3 用：`13:00` 與 `13:09` 那一對（後者逐字是前者的一段）是**兩則**訊息。
+    ⭐⭐ **只有逐字同一則**：**同一分鐘** ＋ **同一段文字**（`_same_text`）。⛔ 沒有時間窗、⛔ 沒有子字串。
+
+    owner 2026-09-12（逐字）：
+    > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的
+    >  **請你要查證我說的話出處**」
+
+    ⛔ 在此之前這裡住著 `_same_message`（文字相同 ＋ 15 分鐘窗）與 `_contains`（3 分鐘內子字串）——
+    兩者來自 `9396c38d1`（GH#1028，⛔ **我自己開的票**），`asked-before.sh` 掃不到一則 owner 原話支持合併；
+    2026-09-11 它把 owner 同一句話講的三次（17:45／17:47／17:56）併成一列（GH#1238）。
+    `00e70d518` 拿掉了它們的**呼叫點**而函式、`exact_time` 旗標與 `authoritative_rows` 候選迴圈都還留著
+    ⇒ ⛔ 一段宣稱有作用而其實沒有的程式（第三守則），這裡連同本體一起拿掉（歷史在 git 裡）。
+
+    ⭐ 兩個寫入端記同一則時，**鍵要由寫入端自己對齊**，⛔ 不是靠這裡猜：
+    `ruling.sh` 在 transcript 找到那一則 ⇒ 列鍵＝**訊息時間**、文字＝**transcript 的逐字原話**
+    ⇒ 建置器補列時逐字命中，只併票號。找不到 ⇒ 各留一列（多一列無害，⭐ 少一列是把他的話弄丟）。
     """
-    na, nb, la, lb = _norm(a), _norm(b), _lead(a), _lead(b)
-    return (len(la) >= 12 and la in nb) or (len(lb) >= 12 and lb in na)
+    return a_when == b_when and _same_text(a_text, b_text)
 
 
-def _same_message(a_text: str, a_when: str, b_text: str, b_when: str) -> bool:
-    """⭐ 「同一則訊息」＝ **文字相同 且 時間相近**，⛔ 不是文字相同就算。
-
-    ⚠️ 2026-09-06 第一版只比文字，`--dedupe` 當場把 09-05 的 `01:25 ok` 與 `01:49 ok` 併成一列 ——
-    owner 說了兩次「ok」是**兩則**訊息。⛔ 那正是第〇·六守則的形狀：拿一把會漂的鑰匙去同步，
-    同步器把單點錯誤放大成資料毀損（`skills:check` 在 commit 前抓到：「漏了 01:49」）。
-    ⭐ 時間那一半的來源：`ruling.sh` 記的是執行時間、建置器記的是訊息時間，兩者相差幾分鐘 ——
-    長句給 15 分鐘窗、短句（更容易重複出現）只給 3 分鐘。窗外 ⇒ 寧可留兩列，⛔ 不併。
-    ⭐ 第三條路（`_contains`）只給 **3 分鐘**（與短句同一個窗）：`ruling.sh` 拿得到訊息時間時 gap 是 0；
-    transcript 找不到而退回執行時間時差一兩分鐘（2026-09-06 的 12:28／12:29 就是）。
-    ⛔ 不給 15 —— 那會把 13:00／13:09 那種「owner 把其中一段再講一次」併掉。
-    """
-    try:
-        gap = abs(_minutes(a_when) - _minutes(b_when))
-    except ValueError:
-        return False
-    if _same_text(a_text, b_text):
-        short = min(len(_norm(a_text)), len(_norm(b_text))) < 12
-        return gap <= (3 if short else 15)
-    return gap <= 3 and _contains(a_text, b_text)
-
-
-def _pick_text(a_text: str, a_when: str, b_text: str, b_when: str) -> str:
-    """併兩列時**留哪一份文字**：時間早的那一份（訊息時間 ≤ 執行時間 ⇒ 它比較可能是逐字的）；
-    同一分鐘 ⇒ **包含對方第一段**的那一份（owner 的全句包著我引用的片段）；再不然取長的（截斷少）。"""
-    if a_when != b_when:
-        return a_text if a_when < b_when else b_text
+def _pick_text(a_text: str, b_text: str) -> str:
+    """同一則（`_same_entry`）的兩份文字留哪一份：**包含對方第一段**的那一份
+    （owner 的全句包著我引用的片段）；再不然取長的（截斷少）。"""
     if len(_lead(b_text)) >= 12 and _lead(b_text) in _norm(a_text):
         return a_text
     if len(_lead(a_text)) >= 12 and _lead(a_text) in _norm(b_text):
@@ -275,47 +255,21 @@ def _set_cell(ln: str, idx: int, value: str) -> str:
     return ln[:lo + 1] + f" {value} " + ln[hi:]
 
 
-def _find_row(
-    lines: list[str],
-    text: str,
-    when: str,
-    authoritative_rows: list[tuple[str, str]] | None = None,
-    exact_time: bool = False,
-) -> int | None:
-    """找已存在的同一則訊息；transcript 明示為兩則時保留兩個時間。
+def _find_row(lines: list[str], text: str, when: str) -> int | None:
+    """找**逐字同一則**（`_same_entry`：同一分鐘 ＋ 同一段文字）已經在表裡的那一列；沒有回 None。
 
-    `ruling.sh` 的執行時間可能比訊息時間晚幾分鐘，所以一般插入仍用模糊時間窗。
-    但 message-ledger 同時握有當天完整 transcript：若候選列的時間本身也對應
-    另一則 transcript 訊息，就不能把本次訊息併進去。先找精確時間，也避免較早的
-    模糊候選遮住後面的精確列。
+    ⛔⛔ 【⛔ 不要合併 —— owner 2026-09-12 逐字】
+    > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的」
+    ⇒ 其餘一律各留一列。判準住 `_same_entry` 一處（見那裡的來由）。
     """
-    candidates: list[tuple[int, list[str]]] = []
     for i, ln in enumerate(lines):
         if not ln.startswith("|"):
             continue
         c = cells(ln)
         if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
             continue
-        if c[0] == when and _same_text(c[1], text):
+        if _same_entry(c[0], c[1], when, text):
             return i
-        # ⛔⛔ 【⛔ 不要合併 —— owner 2026-09-12 逐字】
-        #
-        # > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的」
-        #
-        # ⭐ 他是對的，⭐ 而我查證過了：15 分鐘窗來自 `9396c38d1 帳本去重（#1028）`
-        # —— ⛔ **#1028 是我自己開的票**，`asked-before.sh` 掃遍他的原話零則支持合併。
-        # ⇒ ⭐ 這正是 CLAUDE.md「我的推測會變成他的需求」那一條的第四個載體。
-        #
-        # ⇒ ⭐ **只有逐字同一則**（同一分鐘 ＋ 同一段文字）才算已存在；
-        #   ⛔ 其餘一律各留一列。多一列無害，⭐ 少一列是把他的話弄丟。
-        continue
-    for i, c in candidates:
-        if authoritative_rows and any(
-            c[0] == row_when and _same_text(c[1], row_text)
-            for row_when, row_text in authoritative_rows
-        ):
-            continue
-        return i
     return None
 
 
@@ -329,29 +283,26 @@ def insert(
     path: Path,
     rows: list[tuple[str, str, str]],
     prefer_incoming_text: bool = False,
-    authoritative_rows: list[tuple[str, str]] | None = None,
 ) -> int:
     """把 rows 插進正規表格**最後一列之後**。回傳實際**新增**的列數。
 
-    ⭐ GH#1028：同一句話已經在表裡 ⇒ ⛔ 不新增第二列，只把票號**併**進既有那一列
-    （時間取兩者較早的 —— 建置器記的是訊息時間，ruling.sh 記的是執行時間，前者一定不晚於後者）。
-    在此之前 `ruling.sh`（執行時間）與 `message-ledger.sh`（訊息時間）各插一列，
-    每一則裁決都變成「一列對了票、一列永遠未對票」。
+    ⭐ **逐字同一則**（`_same_entry`：同一分鐘 ＋ 同一段文字）已經在表裡 ⇒ ⛔ 不新增第二列，
+    只把票號**併**進既有那一列（兩個寫入端記的是**同一則**：`ruling.sh` 找得到訊息時間時，
+    它寫的鍵與建置器逐字相同）。⛔ 其餘一律新增一列 —— owner 2026-09-12「詳實記錄不會合併」。
     ⭐ 文字那一格：`prefer_incoming_text=True`（建置器 —— 它的字**逐字**來自 transcript）⇒ 來的贏；
-    否則照 `_pick_text()`（時間早的／包著對方第一段的／長的）。⛔ 併列不可以把 owner 的原話換成我的改述。
+    否則照 `_pick_text()`（包著對方第一段的／長的）。⛔ 不可以把 owner 的原話換成我的改述。
     """
     if not rows:
         return 0
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when, authoritative_rows, exact_time=prefer_incoming_text)
+        hit = _find_row(lines, text, when)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
-            keep = text if prefer_incoming_text else _pick_text(_raw_cell(ln, 1), c[0], text, when)
-            ln = _set_cell(ln, 1, keep)
-            lines[hit] = _set_cell(ln, 0, min(c[0], when))
+            keep = text if prefer_incoming_text else _pick_text(_raw_cell(ln, 1), text)
+            lines[hit] = _set_cell(ln, 1, keep)
             continue
         at = _table_end(lines)
         assert at is not None  # ensure() 保證有表格
@@ -385,20 +336,16 @@ def dedupe(path: Path) -> int:
             # ⇒ ⭐ 「他重講了三遍」這個事實**當場消失**，而那本身就是重要資訊
             #   （代表我沒聽懂）。
             #
-            # ⭐ 判準是**來源**，⛔ 不是時間：
-            #   · `find_row`（追加那條路，上面 ~300 行）**保留**時間窗 ——
-            #     `ruling.sh` 記執行時間、建置器記訊息時間，兩者差幾分鐘，
-            #     ⭐ 那裡的窗是為了**不要寫出重複列**。
-            #   · ⭐ 這裡（`--dedupe`）是**刪列**，⇒ ⛔ 只准併逐字同一則：
-            #     同一分鐘 ＋ 同一段文字。窗外一律留兩列。
+            # ⭐ 追加（`_find_row`）與這裡（`--dedupe`）問的是**同一個**判準 `_same_entry`：
+            #   同一分鐘 ＋ 同一段文字。⛔ 在此之前這裡的註解寫「`find_row` 保留時間窗」——
+            #   `00e70d518` 之後那句話就是假的（owner 2026-09-12「詳實記錄不會合併」）。
             #
             # ⚠️ ⭐ 而「寧可留兩列」是**安全的方向**：帳本是從 session transcript
             # **重建**的（`message-ledger.sh` 檔頭：「唯一可靠的來源是 session
-            # transcript(它不會忘)」）⇒ ⭐ 多一列可以再併，⛔ 少一列要靠重建才回得來。
-            if kc[0] == c[0] and _same_text(kc[1], c[1]):
+            # transcript(它不會忘)」）⇒ ⭐ 多一列無害，⛔ 少一列要靠重建才回得來。
+            if _same_entry(kc[0], kc[1], c[0], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
-                merged = _set_cell(merged, 1, _pick_text(_raw_cell(lines[k], 1), kc[0], _raw_cell(ln, 1), c[0]))
-                lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))
+                lines[k] = _set_cell(merged, 1, _pick_text(_raw_cell(lines[k], 1), _raw_cell(ln, 1)))
                 drop.append(i)
                 break
         else:
