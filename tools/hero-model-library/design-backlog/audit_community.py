@@ -134,7 +134,9 @@ for s in sources:
   role=c.get('resourceRole',c.get('assetKind',''))
   if role in ['stage','weapon-accessory','accessory','character-texture-variant','copy-ability-accessory-part-only']:
    excluded.append({'sourceId':s['id'],'candidateId':c.get('candidateId'),'reason':'non-character-body: '+role});continue
-  label=c.get('nativeCharacter') or c.get('character') or c.get('label') or c.get('candidateId') or c.get('id')
+  label=c.get('nativeCharacter') or c.get('character') or c.get('label') or c.get('candidateId') or c.get('id') or c.get('name')
+  if not label:
+   excluded.append({'sourceId':s['id'],'candidateId':None,'reason':'model candidate has no stable identity label'});continue
   if s['id']=='github-flemmli97-fateubw-07e9d79b' and '/servant/' not in c.get('sourceModel',''):
    excluded.append({'sourceId':s['id'],'candidateId':c['candidateId'],'reason':'non-servant summon/prop: '+label});continue
   if s['id'] in palworld_source_identities:

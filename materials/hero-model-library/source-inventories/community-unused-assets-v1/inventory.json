@@ -3,8 +3,8 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3246860,
-      "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed"
+      "bytes": 3253728,
+      "sha256": "891928263c3f69827e6a4b75f7770b8aa91977f8b32efdab30399c6a4c87e7e6"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -126,9 +126,9 @@
   "summary": {
     "sourceRecords": 59,
     "componentRecords": 41,
-    "excludedPublicSourceRecords": 59,
+    "excludedPublicSourceRecords": 60,
     "excludedReasons": {
-      "not-acquired": 1,
+      "not-acquired": 2,
       "outside-four-kind-community-scope": 58
     },
     "sourcesByAssetKind": {
@@ -194,7 +194,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "dafa71bcbeff90ec081813b4d43a55cff4ef2960487403a0b7c61de28db4434e"
+    "sha256": "9b7dd9f9c767b56040dae78f785b60174bb1d5976b881e22a1066495c73e92cb"
   },
   "sources": [
     {
@@ -1903,7 +1903,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed",
+        "sha256": "891928263c3f69827e6a4b75f7770b8aa91977f8b32efdab30399c6a4c87e7e6",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1969,7 +1969,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed",
+        "sha256": "891928263c3f69827e6a4b75f7770b8aa91977f8b32efdab30399c6a4c87e7e6",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -3565,7 +3565,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed",
+        "sha256": "891928263c3f69827e6a4b75f7770b8aa91977f8b32efdab30399c6a4c87e7e6",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [

@@ -62728,6 +62728,159 @@
         "localUnchanged": true,
         "s3Use": "backup-only-not-runtime-entry"
       }
+    },
+    {
+      "id": "steam-kofxiv-terry-path-index-v1",
+      "target": "KOF XIV／Terry Bogard（泰利·柏格）／TRY 路徑級原作素材候選",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://store.steampowered.com/app/571260/",
+      "uploader": "User-owned local Steam install; cached QuickBMS listing from prior read-only SMB access",
+      "format": "AGAR WAD 1.1 path index; expected OBAC/OMIR/OSEC/OTRA/DDS/PNG/EFF/OGG payloads are not present in this batch",
+      "accessStatus": "cached-path-index-source-container-not-mounted",
+      "acquisitionStatus": "source-container-verified-prior-run-path-indexed-only",
+      "readiness": "path-indexed-awaiting-source-remount-extraction-hashing-conversion-and-review",
+      "purchaseDecision": "no-purchase-user-owned-install",
+      "defaultEligible": false,
+      "resourceRole": "canonical-game-path-index-reserve",
+      "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1",
+      "sourceGame": "THE KING OF FIGHTERS XIV",
+      "platform": "Windows (Steam, Release 1.26 authority from parent extraction)",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-readonly-smb-cached-listing",
+      "assetKinds": [
+        "model",
+        "texture",
+        "skeleton",
+        "animation",
+        "vfx",
+        "sound-effect",
+        "voice",
+        "audio-metadata",
+        "configuration"
+      ],
+      "publicationStatus": "git-path-index-only; raw listing remains local; S3 backup pending",
+      "identity": {
+        "nameZh": "泰利·柏格",
+        "originalName": "Terry Bogard",
+        "nativeCharacterId": "TRY",
+        "heroIds": [],
+        "identityState": "high-confidence-native-token-crosswalk-pending-payload-visual-review",
+        "identityEvidence": {
+          "nativeToken": "TRY",
+          "nativeRootBodyPath": "Chara/TRY/TRY.obac",
+          "nativeVoiceFilenameToken": "v_006_try_",
+          "existingCrossSourceBacklogId": "ssbu-dolly",
+          "existingCrossSourceName": "Terry Bogard",
+          "existingCrossSourceDisplayName": "泰利·柏格（Terry Bogard）",
+          "authorityGitPath": "materials/hero-model-library/已取得模型待設計英雄.json",
+          "authoritySha256": "f9ecff949a06557a76bca1a8791e81af0705cf632795b1c71297041c58b66d9b",
+          "caveat": "The token/name crosswalk is strong path evidence; KOF XIV body payload and visual identity are not re-opened in this run."
+        }
+      },
+      "pathIndex": {
+        "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+        "bytes": 21843,
+        "sha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
+        "rowCount": 375,
+        "listedPayloadBytes": 239511922,
+        "payloadSha256Available": false
+      },
+      "gitEvidence": [
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
+          "bytes": 10102,
+          "sha256": "11b85e10046c22a284a00abe142971a628e9b3952eb05ea566061b9145a02d20"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+          "bytes": 21843,
+          "sha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/README.md",
+          "bytes": 1287,
+          "sha256": "3a0b83586a2dbcdb4a7be1e053a2c52de41244cf2a6f8a5fb152d954f161a842"
+        }
+      ],
+      "pathIndexedCandidates": {
+        "model": [
+          "Chara/TRY/P01_CAP.obac",
+          "Chara/TRY/TRY.obac"
+        ],
+        "skeleton": [
+          "Chara/TRY/P01_CAP.omir",
+          "Chara/TRY/TRY.omir",
+          "Chara/TRY/TRY.osec"
+        ],
+        "animation": [
+          "Chara/TRY/CMN.otra",
+          "Chara/TRY/TRY.otra",
+          "Chara/TRY/TRY_FCE.otra"
+        ],
+        "textures": {
+          "pathCount": 92,
+          "state": "path-indexed-awaiting-source-remount-and-extraction"
+        },
+        "vfx": {
+          "pathCount": 87,
+          "state": "path-indexed-awaiting-extraction-conversion-and-owner-review",
+          "effectReviewCandidateCount": 25,
+          "detailGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
+        },
+        "audio": {
+          "voicePathCount": 122,
+          "soundEffectPathCount": 37,
+          "metadataPathCount": 7,
+          "state": "path-indexed-awaiting-extraction-decode-and-listening-review"
+        }
+      },
+      "counts": {
+        "pathIndexedFiles": 375,
+        "pathIndexedBytes": 239511922,
+        "assetKindCounts": {
+          "animation": 3,
+          "audio-metadata": 7,
+          "configuration": 22,
+          "model": 2,
+          "skeleton": 3,
+          "sound-effect": 37,
+          "texture": 92,
+          "vfx": 87,
+          "voice": 122
+        },
+        "characterBodyContainers": 1,
+        "accessoryModelContainers": 1,
+        "nativeAnimationContainers": 3,
+        "nativeEffectReviewLabels": 25,
+        "audioPathsPendingListeningReview": 159,
+        "payloadFilesReadThisRun": 0,
+        "payloadFilesSha256Verified": 0,
+        "convertedFiles": 0,
+        "runtimeBindings": 0,
+        "backendOptions": 0,
+        "productionDeployments": 0
+      },
+      "pendingBackup": {
+        "localRoot": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1",
+        "state": "not-uploaded-by-this-workflow",
+        "requiredArtifacts": [
+          "quickbms-list.log"
+        ]
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "blocked-until-payload-extraction-conversion-validation-and-hero-design",
+        "selectionVerified": false
+      },
+      "verification": "The cached 3,073,359-byte listing has exact SHA-256 and 375 safe Chara/TRY paths. Every row has offset, listed byte count and a metadata-only evidence digest. Payload read, per-file payload SHA-256, extraction, conversion, user review, binding, backend selection and deployment are all zero.",
+      "limitations": [
+        "The current Mac has the complete cached WAD listing but not the mounted KOF XIV assets.wad payload.",
+        "Per-row indexEvidenceSha256 hashes offset, listed byte count and path; it is not a payload SHA-256.",
+        "No OBAC, OMIR, OSEC, OTRA, texture, EFF or OGG payload is extracted by this workflow yet.",
+        "VFX labels and Sound/voice versus Sound/se directories are candidates only; no event, speaker, language, action semantic or runtime binding is approved.",
+        "Terry has no verified GGD hero definition, so no hero ID or backend option is invented."
+      ]
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

@@ -1,0 +1,290 @@
+{
+  "schema": "ggd.kofxiv-terry-path-index@1",
+  "sourceId": "steam-kofxiv-terry-path-index-v1",
+  "sourceGame": "THE KING OF FIGHTERS XIV",
+  "platform": "Windows (Steam, Release 1.26 authority from the parent source record)",
+  "character": {
+    "nameZh": "泰利·柏格",
+    "originalName": "Terry Bogard",
+    "nativeCharacterId": "TRY",
+    "heroIds": [],
+    "identityState": "high-confidence-native-token-crosswalk-pending-payload-visual-review",
+    "identityEvidence": {
+      "nativeToken": "TRY",
+      "nativeRootBodyPath": "Chara/TRY/TRY.obac",
+      "nativeVoiceFilenameToken": "v_006_try_",
+      "existingCrossSourceBacklogId": "ssbu-dolly",
+      "existingCrossSourceName": "Terry Bogard",
+      "existingCrossSourceDisplayName": "泰利·柏格（Terry Bogard）",
+      "authorityGitPath": "materials/hero-model-library/已取得模型待設計英雄.json",
+      "authoritySha256": "f9ecff949a06557a76bca1a8791e81af0705cf632795b1c71297041c58b66d9b",
+      "caveat": "The token/name crosswalk is strong path evidence; KOF XIV body payload and visual identity are not re-opened in this run."
+    }
+  },
+  "listing": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1/quickbms-list.log",
+    "bytes": 3073359,
+    "sha256": "193ee8cb49ca7f7bea7ecafa9c6bca531c220725dcb2ac40f9671ff0b632ed97",
+    "rowCount": 375,
+    "listedPayloadBytes": 239511922
+  },
+  "summary": {
+    "pathIndexedFiles": 375,
+    "pathIndexedBytes": 239511922,
+    "assetKindCounts": {
+      "animation": 3,
+      "audio-metadata": 7,
+      "configuration": 22,
+      "model": 2,
+      "skeleton": 3,
+      "sound-effect": 37,
+      "texture": 92,
+      "vfx": 87,
+      "voice": 122
+    },
+    "characterBodyContainers": 1,
+    "accessoryModelContainers": 1,
+    "nativeAnimationContainers": 3,
+    "nativeEffectReviewLabels": 25,
+    "audioPathsPendingListeningReview": 159,
+    "payloadFilesReadThisRun": 0,
+    "payloadFilesSha256Verified": 0,
+    "convertedFiles": 0,
+    "runtimeBindings": 0,
+    "backendOptions": 0,
+    "productionDeployments": 0
+  },
+  "conversionCandidates": {
+    "model": [
+      "Chara/TRY/P01_CAP.obac",
+      "Chara/TRY/TRY.obac"
+    ],
+    "skeleton": [
+      "Chara/TRY/P01_CAP.omir",
+      "Chara/TRY/TRY.omir",
+      "Chara/TRY/TRY.osec"
+    ],
+    "animation": [
+      "Chara/TRY/CMN.otra",
+      "Chara/TRY/TRY.otra",
+      "Chara/TRY/TRY_FCE.otra"
+    ],
+    "textures": {
+      "pathCount": 92,
+      "state": "path-indexed-awaiting-source-remount-and-extraction"
+    },
+    "vfx": {
+      "pathCount": 87,
+      "effectReviewCandidates": [
+        {
+          "path": "Chara/TRY/Effect/0600_Aura_Hand.eff",
+          "sourceLabel": "0600_Aura_Hand",
+          "listedBytes": 4012,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0601_Hit.eff",
+          "sourceLabel": "0601_Hit",
+          "listedBytes": 7020,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0700_Wave_Shell.eff",
+          "sourceLabel": "0700_Wave_Shell",
+          "listedBytes": 18348,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0701_Wave_Impact.eff",
+          "sourceLabel": "0701_Wave_Impact",
+          "listedBytes": 12452,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0702_Wave_Shell_EX.eff",
+          "sourceLabel": "0702_Wave_Shell_EX",
+          "listedBytes": 18240,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0703_Wave_Impact_EX.eff",
+          "sourceLabel": "0703_Wave_Impact_EX",
+          "listedBytes": 10852,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0710_Burn.eff",
+          "sourceLabel": "0710_Burn",
+          "listedBytes": 9176,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0711_Burn_Aura.eff",
+          "sourceLabel": "0711_Burn_Aura",
+          "listedBytes": 7072,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0720_Crack1.eff",
+          "sourceLabel": "0720_Crack1",
+          "listedBytes": 1800,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0721_Crack2.eff",
+          "sourceLabel": "0721_Crack2",
+          "listedBytes": 1800,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0722_Crack_Blur.eff",
+          "sourceLabel": "0722_Crack_Blur",
+          "listedBytes": 1976,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0723_Crack3.eff",
+          "sourceLabel": "0723_Crack3",
+          "listedBytes": 1800,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0800_Geyser_Shell.eff",
+          "sourceLabel": "0800_Geyser_Shell",
+          "listedBytes": 16844,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0801_Geyser_Shell_MAX.eff",
+          "sourceLabel": "0801_Geyser_Shell_MAX",
+          "listedBytes": 21056,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0810_Buster_Punch.eff",
+          "sourceLabel": "0810_Buster_Punch",
+          "listedBytes": 7404,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0811_Buster_Aura.eff",
+          "sourceLabel": "0811_Buster_Aura",
+          "listedBytes": 5252,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0812_Buster_Hit.eff",
+          "sourceLabel": "0812_Buster_Hit",
+          "listedBytes": 18272,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0813_Buster_HitLoop.eff",
+          "sourceLabel": "0813_Buster_HitLoop",
+          "listedBytes": 7228,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0814_Buster_Finish.eff",
+          "sourceLabel": "0814_Buster_Finish",
+          "listedBytes": 18412,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0815_Buster_Blast.eff",
+          "sourceLabel": "0815_Buster_Blast",
+          "listedBytes": 5588,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0900_StarDunk_Star.eff",
+          "sourceLabel": "0900_StarDunk_Star",
+          "listedBytes": 18140,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0901_StarDunk_Volcano.eff",
+          "sourceLabel": "0901_StarDunk_Volcano",
+          "listedBytes": 28864,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0902_StarDunk_Hit.eff",
+          "sourceLabel": "0902_StarDunk_Hit",
+          "listedBytes": 7132,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0903_StarDunk_Dunk.eff",
+          "sourceLabel": "0903_StarDunk_Dunk",
+          "listedBytes": 9332,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        },
+        {
+          "path": "Chara/TRY/Effect/0999_Shadow.eff",
+          "sourceLabel": "0999_Shadow",
+          "listedBytes": 1600,
+          "ownerDecision": "pending",
+          "runtimeBindingAllowed": false
+        }
+      ],
+      "state": "path-indexed-awaiting-extraction-conversion-and-owner-review"
+    },
+    "audio": {
+      "voicePathCount": 122,
+      "soundEffectPathCount": 37,
+      "metadataPathCount": 7,
+      "state": "path-indexed-awaiting-extraction-decode-and-listening-review"
+    }
+  },
+  "states": {
+    "sourceListingFound": true,
+    "sourceContainerMountedNow": false,
+    "payloadAcquired": false,
+    "extracted": false,
+    "payloadHashed": false,
+    "converted": false,
+    "visuallyAccepted": false,
+    "registeredAsBackendOption": false,
+    "backendSelectable": false,
+    "deployed": false
+  },
+  "limitations": [
+    "The current Mac has the complete cached WAD listing but not the mounted KOF XIV assets.wad payload.",
+    "Per-row indexEvidenceSha256 hashes offset, listed byte count and path; it is not a payload SHA-256.",
+    "No OBAC, OMIR, OSEC, OTRA, texture, EFF or OGG payload is extracted by this workflow yet.",
+    "VFX labels and Sound/voice versus Sound/se directories are candidates only; no event, speaker, language, action semantic or runtime binding is approved.",
+    "Terry has no verified GGD hero definition, so no hero ID or backend option is invented."
+  ],
+  "filesIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+    "bytes": 21843,
+    "sha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
+    "rowCount": 375,
+    "hashSemantics": "gzip contains listing metadata hashes only; no extracted payload SHA-256"
+  }
+}

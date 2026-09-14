@@ -430,6 +430,20 @@ def build(git_link_root=ROOT):
         or not kof3d_inventory.get('kofXiv',{}).get('selectedExtraction',{}).get('verification',{}).get('allFilesSha256Verified')
         or kof3d_inventory.get('kofXv',{}).get('hardPolicyProbe',{}).get('result')!='hard-policy-failed-draw-calls'):
         raise ValueError('KOF 3D source/conversion inventory is absent, stale or overclaims readiness')
+    kof_terry_path_index_path=base/'source-inventories/kof-xiv-terry-path-index-v1/inventory.json'
+    kof_terry_path_files_path=base/'source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz'
+    kof_terry_path_document_path=base/'source-inventories/kof-xiv-terry-path-index-v1/README.md'
+    kof_terry_path_index=read(kof_terry_path_index_path)
+    if (kof_terry_path_index.get('schema')!='ggd.kofxiv-terry-path-index@1'
+        or kof_terry_path_index.get('character',{}).get('nativeCharacterId')!='TRY'
+        or kof_terry_path_index.get('summary',{}).get('pathIndexedFiles')!=375
+        or kof_terry_path_index.get('summary',{}).get('payloadFilesReadThisRun')!=0
+        or kof_terry_path_index.get('summary',{}).get('convertedFiles')!=0
+        or kof_terry_path_index.get('summary',{}).get('runtimeBindings')!=0
+        or kof_terry_path_index.get('summary',{}).get('backendOptions')!=0
+        or kof_terry_path_index.get('summary',{}).get('productionDeployments')!=0
+        or kof_terry_path_index.get('filesIndex',{}).get('sha256')!=hashlib.sha256(kof_terry_path_files_path.read_bytes()).hexdigest()):
+        raise ValueError('KOF XIV Terry path index is absent, stale or overclaims readiness')
     kof_jump_coverage_path=base/'source-inventories/kof-jump-container-coverage-v1/inventory.json'
     kof_jump_coverage_doc_path=base/'source-inventories/kof-jump-container-coverage-v1/README.md'
     jumpforce_identity_path=base/'source-inventories/kof-jump-container-coverage-v1/identity-map.json'
@@ -648,6 +662,20 @@ def build(git_link_root=ROOT):
             textureCandidates=kof3d_inventory['kofXiv']['textureCandidates']['summary'],
             textureBackup=kof3d_inventory['kofXiv']['textureCandidates']['backup'],
             ashGuardResult=kof3d_inventory['kofXv']['hardPolicyProbe']['result'],
+            runtimeSelectable=False,
+            productionDeploymentVerified=False),
+        kofXivTerryPathIndex=dict(
+            gitPath=str(kof_terry_path_index_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(kof_terry_path_index_path.read_bytes()).hexdigest(),
+            filesGitPath=str(kof_terry_path_files_path.relative_to(ROOT)),
+            filesSha256=hashlib.sha256(kof_terry_path_files_path.read_bytes()).hexdigest(),
+            documentGitPath=str(kof_terry_path_document_path.relative_to(ROOT)),
+            documentSha256=hashlib.sha256(kof_terry_path_document_path.read_bytes()).hexdigest(),
+            sourceId=kof_terry_path_index['sourceId'],
+            nativeCharacterId='TRY',
+            characterName=kof_terry_path_index['character']['originalName'],
+            status='path-indexed; payload unavailable; extraction/conversion/review/binding/backend/deployment all pending',
+            summary=kof_terry_path_index['summary'],
             runtimeSelectable=False,
             productionDeploymentVerified=False),
         kofJumpContainerCoverage=dict(
@@ -1044,6 +1072,18 @@ def main():
                 },
                 result['ultimate14NativeMotionIndex'],
                 result['kof3dSourceInventory'],
+                {
+                    'gitPath': result['kofXivTerryPathIndex']['gitPath'],
+                    'sha256': result['kofXivTerryPathIndex']['sha256'],
+                },
+                {
+                    'gitPath': result['kofXivTerryPathIndex']['filesGitPath'],
+                    'sha256': result['kofXivTerryPathIndex']['filesSha256'],
+                },
+                {
+                    'gitPath': result['kofXivTerryPathIndex']['documentGitPath'],
+                    'sha256': result['kofXivTerryPathIndex']['documentSha256'],
+                },
                 {
                     'gitPath': result['kofJumpContainerCoverage']['gitPath'],
                     'sha256': result['kofJumpContainerCoverage']['sha256'],
