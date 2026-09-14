@@ -79,9 +79,26 @@ def build_jump(path: Path, authority_path: Path, mounted_root: Path, identity_pa
     }
     if identity_path is not None:
         identity_data = json.loads(identity_path.read_text(encoding="utf-8"))
-        if identity_data.get("schema") != "ggd.jumpforce.native-character-map.v1":
+        if identity_data.get("schema") == "ggd.jumpforce.native-character-map.v1":
+            identities.update(identity_data["characters"])
+        elif identity_data.get("schema") == "ggd.jumpforce.identity-map@1":
+            identities.update({
+                row["nativeCharacterIdToken"].removeprefix("chr"): {
+                    "name": row["characterName"],
+                    "heroIds": row.get("heroIds", []),
+                    "existingGroupId": (row.get("existingAudioGroupIds") or [None])[0],
+                    "existingAudioGroupIds": row.get("existingAudioGroupIds", []),
+                    "identityState": row["identityState"],
+                    "identityConfidence": row["identityConfidence"],
+                    "identityScope": row.get("identityScope"),
+                    "identityEvidence": row.get("identityEvidence", {}),
+                    "assetClassCandidates": row.get("assetClassCandidates", {}),
+                    "unresolvedReason": row.get("unresolvedReason"),
+                }
+                for row in identity_data["tokens"]
+            })
+        else:
             raise ValueError("unexpected JUMP FORCE identity map schema")
-        identities.update(identity_data["characters"])
     character_tokens = []
     for native_id in sorted(tokens):
         kinds = tokens[native_id]
@@ -89,10 +106,16 @@ def build_jump(path: Path, authority_path: Path, mounted_root: Path, identity_pa
         identity = identities.get(native_id.removeprefix("chr"))
         row = {
             "nativeCharacterIdToken": native_id,
-            "identityState": "existing-source-group-crosswalk" if identity else "path-token-only-unmapped",
+            "identityState": identity.get("identityState", "existing-source-group-crosswalk") if identity else "path-token-only-unmapped",
+            "identityConfidence": identity.get("identityConfidence", "high") if identity else "unresolved",
             "characterName": identity["name"] if identity else None,
             "heroIds": identity.get("heroIds", []) if identity else [],
             "existingAudioGroupId": identity.get("existingGroupId") if identity else None,
+            "existingAudioGroupIds": identity.get("existingAudioGroupIds", []) if identity else [],
+            "identityScope": identity.get("identityScope") if identity else None,
+            "identityEvidence": identity.get("identityEvidence", {}) if identity else {},
+            "assetClassCandidates": identity.get("assetClassCandidates", {}) if identity else {},
+            "unresolvedReason": identity.get("unresolvedReason") if identity else "No accepted identity evidence was supplied for this path token.",
             "relationCount": sum(kinds.values()),
             "selectedPathRelationCount": sum(selected_kinds.values()),
             "sourceKindRelationCounts": compact_counts(kinds),
@@ -121,8 +144,8 @@ def build_jump(path: Path, authority_path: Path, mounted_root: Path, identity_pa
         "sourceKindRelationCounts": authority["sourceKindRelationCounts"],
         "sourceKindSelectedPathCounts": authority["sourceKindSelectedPathCounts"],
         "inferredNativeCharacterIdTokens": len(character_tokens),
-        "knownIdentityCrosswalks": sum(row["identityState"] == "existing-source-group-crosswalk" for row in character_tokens),
-        "unmappedNativeCharacterIdTokens": sum(row["identityState"] == "path-token-only-unmapped" for row in character_tokens),
+        "knownIdentityCrosswalks": sum(row["identityConfidence"] == "high" for row in character_tokens),
+        "unmappedNativeCharacterIdTokens": sum(row["identityConfidence"] == "unresolved" for row in character_tokens),
         "characterPathTokens": character_tokens,
         "containers": authority["containers"],
         "identityCaveat": "chrNNNN tokens include playable characters, forms, avatars, NPCs and other internal groups; a token is not a confirmed character identity.",
@@ -240,7 +263,7 @@ def render_markdown(inventory: dict[str, object]) -> str:
         lines.append(f"| `{key}` | {value:,} | {jump['sourceKindSelectedPathCounts'].get(key, 0):,} |")
     lines += [
         "",
-        "完整 224 個路徑 token 與逐種類計數在 `inventory.json → jumpForce.characterPathTokens`。只有既有身份交叉表能把 token 對應到角色；其餘維持待確認。",
+        "完整 224 個路徑 token 與逐種類計數在 `inventory.json → jumpForce.characterPathTokens`。身份只接受明名中央來源路徑或固定 authority；其餘維持待確認。",
         "",
         "## KOF XIV 目錄 token",
         "",
@@ -292,7 +315,7 @@ def main() -> None:
             workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz",
             repo / "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
             Path("/Volumes/common/JUMP FORCE"),
-            repo / "tools/hero-model-library/source-workflows/jumpforce-steam-streaming-audio-v1/character-map.json",
+            repo / "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
         ),
         "kofXiv": build_kof(
             workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1/quickbms-list.log",

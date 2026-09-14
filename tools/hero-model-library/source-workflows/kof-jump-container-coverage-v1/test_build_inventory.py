@@ -48,6 +48,23 @@ class CoverageInventoryTest(unittest.TestCase):
             self.assertEqual(joined["unmappedNativeCharacterIdTokens"], 1)
             self.assertEqual(joined["characterPathTokens"][0]["characterName"], "Known")
 
+            generated_identity = root / "generated-identity.json"
+            generated_identity.write_text(json.dumps({
+                "schema": "ggd.jumpforce.identity-map@1",
+                "tokens": [{
+                    "nativeCharacterIdToken": "chr0001", "characterName": "Known",
+                    "identityState": "exact-named-audio-source-crosswalk", "identityConfidence": "high",
+                    "heroIds": ["hero-known"], "existingAudioGroupIds": ["named-audio"],
+                    "identityScope": "character-family", "identityEvidence": {"matchingRows": 2},
+                    "assetClassCandidates": {"model": {"selectedUassetPathCount": 1}},
+                }],
+            }))
+            generated_join = build_jump(index, authority, root / "absent", generated_identity)
+            first = generated_join["characterPathTokens"][0]
+            self.assertEqual(first["identityConfidence"], "high")
+            self.assertEqual(first["existingAudioGroupIds"], ["named-audio"])
+            self.assertEqual(first["assetClassCandidates"]["model"]["selectedUassetPathCount"], 1)
+
     def test_kof_separates_listing_only_from_extracted(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

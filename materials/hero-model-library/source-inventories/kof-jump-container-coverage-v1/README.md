@@ -4,7 +4,7 @@
 
 ## 本批增量結論
 
-- JUMP FORCE：6 個 PAK 的固定索引共 256,619 筆關係、221,877 個目前路徑；從完整路徑發現 224 個 `chrNNNN` token，其中 34 個已有現行來源群對應、190 個維持待確認。
+- JUMP FORCE：6 個 PAK 的固定索引共 256,619 筆關係、221,877 個目前路徑；從完整路徑發現 224 個 `chrNNNN` token，其中 63 個已有現行來源群對應、161 個維持待確認。
 - KOF XIV：完整 WAD listing 共 39,889 筆，含 80 個 `Chara/<ID>` 目錄 token；只有 MAI、IOR、KYO 的選定 payload 已抽出並逐檔驗證。
 - 本次 `/Volumes/common` 未掛載，沒有重新讀取 Steam 容器 payload；固定索引與既有抽出檔仍可重建盤點。
 - 音訊只列來源與數量，不做說話者或技能事件自動綁定。
@@ -21,7 +21,7 @@
 | `skill-config-package` | 2,644 | 1,240 |
 | `vfx-package` | 78,333 | 57,870 |
 
-完整 224 個路徑 token 與逐種類計數在 `inventory.json → jumpForce.characterPathTokens`。只有既有身份交叉表能把 token 對應到角色；其餘維持待確認。
+完整 224 個路徑 token 與逐種類計數在 `inventory.json → jumpForce.characterPathTokens`。身份只接受明名中央來源路徑或固定 authority；其餘維持待確認。
 
 ## KOF XIV 目錄 token
 
