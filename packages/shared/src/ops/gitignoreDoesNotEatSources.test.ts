@@ -33,7 +33,10 @@ const EXEMPT: { where: RegExp; why: string }[] = [
   { where: /^scratchpad\//, why: "agent 誤寫到 repo 根的暫存（真的暫存在 session dir）" },
   { where: /(^|\/)(\.backup[^/]*|backup-[^/]*)\//, why: "整樹快照（vitest.config.ts）—— 每一份都是某個 commit 的副本" },
   { where: /^docs\/legacy\/_overwrites\/.*\/\.claude\/worktrees\//, why: "覆蓋前留底裡夾帶的 worktree 副本 —— 本體在各自的分支上" },
+  { where: /(^|\/)vite\.config\.[^/]*\.timestamp-[^/]*\.mjs$/, why: "Vite 載入設定檔時寫在旁邊、載完就刪的暫存 bundle（與 .gitignore 的 vite.config.*.timestamp-*.mjs 同一個樣式）—— 併行的 vitest 正在載 apps/editor 的設定時被反方向掃描撞見（GH#1211 H，CI run 34867941830）" },
 ];
+/** CI 上真的撞見過的那一顆 —— 暫存檔一閃即逝，⛔ 反方向那條無法穩定重現它，所以在這裡釘住。 */
+const VITE_TEMP = "apps/editor/vite.config.ts.timestamp-1789403554233-caed338cfbfdb.mjs";
 
 /** `git check-ignore -q`：離開碼 0 = 被吃、1 = 沒被吃；其他 ⇒ 擲出（⛔ 不要讓錯誤長得像「沒被吃」）。 */
 function ignored(p: string): boolean {
@@ -47,6 +50,14 @@ describe("`.gitignore` 不可以吃掉原始碼（GH#1038）", () => {
       expect(ignored(p), `${p} 被 .gitignore 吃掉了 —— 那是原始碼（本機綠、CI 紅的形狀）`).toBe(false);
     for (const p of ["build/x.js", "apps/client/build/x.js", "apps/client/dist/x.js", "tools/bgm-gen/build/x.wav"])
       expect(ignored(p), `${p} 沒被吃 —— 放行過寬，產物會進 git`).toBe(true);
+  });
+
+  it("豁免表認得 Vite 設定的暫存 bundle，⛔ 不認得設定檔本身（GH#1211 H）", () => {
+    const exempt = (p: string): boolean => EXEMPT.some((e) => e.where.test(p));
+    expect(ignored(VITE_TEMP), `${VITE_TEMP} 沒被 .gitignore 吃 —— 那條規則被改掉了`).toBe(true);
+    expect(exempt(VITE_TEMP), "Vite 暫存 bundle 不在豁免表 ⇒ 併行跑測試時反方向那條會隨機紅").toBe(true);
+    for (const p of ["apps/editor/vite.config.ts", "apps/client/src/timestamp-x.mjs"])
+      expect(exempt(p), `${p} 是原始碼 —— 豁免表放行過寬`).toBe(false);
   });
 
   it("反方向：從實體走 —— 被 ignore 的原始碼檔 ⇒ 0 個，或在帶理由的豁免表", () => {
