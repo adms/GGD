@@ -15026,7 +15026,7 @@
   "historicalModelOptionRegistration": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
     "bytes": 7190,
-    "sha256": "cd0683ec7a5803e5d5a20b490c061c8771cbb6f2880d9fc3bff3c4d6ae256953",
+    "sha256": "5fe966de3ab7dd3763606662078e05c78c60501e3fc1de1d5a976e2e77b9976d",
     "registeredHeroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -15039,7 +15039,7 @@
   "historicalModelLineageAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json",
     "bytes": 17948,
-    "sha256": "7ebc3d7660c24b1555492193b272750643733d0b69f9762bd0fc47701ae410c8",
+    "sha256": "452f46492484b8e8ef6f642f1a3995eff73896aa0e37f00f6f26f06e601bf9ed",
     "exactHistoricalGlbsByteIdentical": 4,
     "standardizedLineageOptionsRegistered": 4,
     "defaultsChanged": 0,

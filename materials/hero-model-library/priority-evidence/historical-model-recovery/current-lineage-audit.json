@@ -33,13 +33,13 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3253728,
-      "sha256": "891928263c3f69827e6a4b75f7770b8aa91977f8b32efdab30399c6a4c87e7e6"
+      "bytes": 3336844,
+      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
       "bytes": 7190,
-      "sha256": "cd0683ec7a5803e5d5a20b490c061c8771cbb6f2880d9fc3bff3c4d6ae256953"
+      "sha256": "5fe966de3ab7dd3763606662078e05c78c60501e3fc1de1d5a976e2e77b9976d"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
