@@ -16,7 +16,7 @@ def main() -> None:
     assert index["schema"] == "ggd.300-mba-unused-assets-index@1"
     assert index["newDownloads"] is False
     assert index["paymentPerformed"] is False
-    assert index["conversionPerformed"] is False
+    assert index["conversionPerformed"] is True
     assert index["runtimeRegistrationPerformed"] is False
     assert index["approvedProcessedCopyAuthorizationsChanged"] is False
     summary = index["summary"]
@@ -30,6 +30,8 @@ def main() -> None:
     assert summary["contentObjectsBySha256"] == 68_669
     assert summary["duplicateHashGroups"] == 3_651
     assert summary["duplicatePathRows"] == 5_183
+    assert summary["standardizedSixStateCandidateProducts"] == 3
+    assert summary["standardizedNativeMotionProducts"] == 18
     assert summary["pipelineStageCounts"] == {
         "acquired": 73_852,
         "extracted": 73_852,
@@ -46,6 +48,9 @@ def main() -> None:
         "300heroes:390", "300heroes:391", "300heroes:392",
     }
     assert all(not row["ggdHeroIdInvented"] and not row["designBacklogIncluded"] for row in catalog_only.values())
+    standardized = index["standardizedCandidateProducts"]
+    assert {row["sourceCharacterId"] for row in standardized} == {"mba:Chara08", "mba:Chara10", "mba:Chara11"}
+    assert all(row["runtimeSelectable"] is False and row["fullHeroModel"] is False and row["finalGlbByteIdenticalRebuild"] for row in standardized)
     assert {source_id for source_id, row in catalog_only.items() if row["classification"].startswith("acquired-prop")} == {
         "300heroes:390", "300heroes:391", "300heroes:392",
     }

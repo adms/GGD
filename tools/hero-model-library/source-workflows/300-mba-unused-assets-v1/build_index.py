@@ -23,6 +23,7 @@ MATERIALS = REPO / "materials/hero-model-library"
 OUT = MATERIALS / "priority-evidence/300-mba-unused-assets-v1"
 SNAPSHOT = "20260908T075704221576Z"
 GROUPS = ("300heroes-raw", "300heroes-models", "magical-battle-arena")
+STANDARDIZED_BATCH_RECEIPT = MATERIALS / "priority-evidence/mba-unused-native-batch-v2/receipt.json"
 
 
 def read_json(path: Path) -> Any:
@@ -135,12 +136,39 @@ def source_metadata(source_root: Path, asset_root: Path) -> dict[str, dict[str, 
     }
 
 
+def standardized_native_candidates() -> dict[str, Any]:
+    """Load the re-verified, deliberately unbound MBA six-state products."""
+    receipt = read_json(STANDARDIZED_BATCH_RECEIPT)
+    if receipt.get("schema") != "ggd.mba-unused-native-batch@1":
+        raise ValueError("Unexpected MBA standardized-candidate receipt schema")
+    candidates = receipt.get("candidates")
+    if not isinstance(candidates, list) or {row.get("sourceCharacterId") for row in candidates} != {"mba:Chara08", "mba:Chara10", "mba:Chara11"}:
+        raise ValueError("MBA standardized candidate identities changed")
+    for row in candidates:
+        for name in ("source", "firstBuild", "secondBuild"):
+            value = row.get(name, {})
+            path = Path(value.get("absolutePath", ""))
+            if not path.is_file() or path.stat().st_size != value.get("bytes") or sha256(path) != value.get("sha256"):
+                raise ValueError(f"MBA standardized candidate file changed: {name}")
+        validation = row.get("validation", {})
+        if (row["firstBuild"]["sha256"] != row["secondBuild"]["sha256"] or not row.get("finalGlbByteIdenticalRebuild")
+                or validation.get("schema") != "ggd.mba-unused-native-six-state-validation@1"
+                or validation.get("khronosIssues", {}).get("numErrors") != 0
+                or validation.get("ggdInspection", {}).get("budget", {}).get("errors") != []
+                or validation.get("structuralValidationPassed") is not True):
+            raise ValueError("MBA standardized candidate validation is incomplete")
+        if row.get("runtimeSelectable") or row.get("productionDeploymentVerified") or row.get("fullHeroModel"):
+            raise ValueError("Unbound MBA candidate overclaims release readiness")
+    return receipt
+
+
 def build() -> tuple[dict[str, Any], bytes, bytes, str]:
     asset_root = WORKSPACE / "GGD-Asset-Library"
     source_root = WORKSPACE / "outputs/game-asset-library-20260907"
     registry_root = WORKSPACE / "outputs/asset-library-registry-20260907"
     backup_files, backup = load_backup_manifest(asset_root)
     metadata = source_metadata(source_root, asset_root)
+    standardized_candidates = standardized_native_candidates()
     current = read_json(REPO / "materials/asset-library/current-resources.json")
     backlog = read_json(MATERIALS / "已取得模型待設計英雄.json")
     characters_raw = read_json(registry_root / "characters.json")
@@ -511,6 +539,8 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
         "sourceDefinitionsCatalog": len(character_definitions),
         "sourceDefinitionsExcludedFromHeroBacklog": len(catalog_only),
         "missingDeclaredBodyPaths": len(missing_declared_paths),
+        "standardizedSixStateCandidateProducts": len(standardized_candidates["candidates"]),
+        "standardizedNativeMotionProducts": standardized_candidates["summary"]["nativeMotionCandidates"],
         "pipelineStageCounts": {
             "acquired": len(output_rows),
             "extracted": len(output_rows),
@@ -555,6 +585,7 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
         "characters": characters,
         "catalogOnlySourceDefinitions": catalog_only,
         "missingDeclaredBodyPaths": missing_declared_paths,
+        "standardizedCandidateProducts": standardized_candidates["candidates"],
         "backupEvidence": backup,
         "inputFingerprints": [
             {"path": str(registry_root / "catalog.sqlite"), "bytes": (registry_root / "catalog.sqlite").stat().st_size, "sha256": sha256(registry_root / "catalog.sqlite")},
@@ -569,6 +600,7 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
                     for row in current["models"]
                 ), separators=(",", ":")).encode()).hexdigest(),
             },
+            {"gitPath": str(STANDARDIZED_BATCH_RECEIPT.relative_to(REPO)), "bytes": STANDARDIZED_BATCH_RECEIPT.stat().st_size, "sha256": sha256(STANDARDIZED_BATCH_RECEIPT)},
         ],
         "statusSemantics": {
             "runtime-source-used": "該精確來源 asset ID 已被目前 Git 成品使用；仍不表示此列原始檔可直接在後台切換。",
@@ -584,10 +616,11 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "MBA 本機只取得 Complete Form 1.60+；1.70 內容尚未取得。",
             "SHA-256 contentObjectId 只用來避免重複處理同一位元組；每個來源、版本、路徑、角色關係與 S3 member 仍保留獨立列。",
             "技能道具模型及未取得角色本體的名冊定義不會被寫成 GGD 英雄，也不會擴大 11 組已核准加工副本。",
+            "白蛇娜卡、八神疾風、薇塔的六態候選已標準化並留在本機；尚未經視覺審查或對應 GGD hero ID，不能視為下拉選項或已部署英雄。",
         ],
         "newDownloads": False,
         "paymentPerformed": False,
-        "conversionPerformed": False,
+        "conversionPerformed": True,
         "runtimeRegistrationPerformed": False,
         "approvedProcessedCopyAuthorizationsChanged": False,
         "productionDeploymentVerified": False,
@@ -609,6 +642,7 @@ def render_markdown(index: dict[str, Any]) -> str:
         f"- 已建索 `{summary['physicalFiles']:,}` 個不同實體檔，共 `{summary['physicalBytes']:,}` bytes；其中 `{summary['unusedPhysicalFiles']:,}` 個精確檔尚未被目前 runtime 成品引用。",
         f"- 以 SHA-256 去重後為 `{summary['contentObjectsBySha256']:,}` 個位元組對象；`{summary['duplicateHashGroups']:,}` 組有重複路徑，共包含 `{summary['duplicatePathRows']:,}` 個額外路徑列。每列來源、版本、角色關係與 S3 member 仍保留。",
         f"- 動作邏輯紀錄 `{summary['animationClipRecords']:,}` 筆；300 原生 VFX 紀錄 `{summary['native300VfxRecords']:,}` 筆。",
+        f"- 另有 `{summary['standardizedSixStateCandidateProducts']}` 個 MBA 六態標準化候選，包含 `{summary['standardizedNativeMotionProducts']}` 段明確選取的原生動作；候選尚未通過視覺審查或登記下拉。",
         f"- 角色目錄定義 `{summary['sourceDefinitionsCatalog']:,}` 筆；中央待設計索引 `{summary['sourceCharactersIndexed']:,}` 筆，另 `{summary['sourceDefinitionsExcludedFromHeroBacklog']:,}` 筆因缺角色本體或實為技能道具而不杜撰 GGD 英雄 ID。重新 SHA-256 核對 `{summary['freshLiveSha256VerifiedCharacterBodies']:,}` 個已存在的來源宣告 body。",
         f"- 備份快照已讀回驗證；逐檔 SHA 來自 `{index['snapshot']}` 清單，本批另對每個索引檔做存在與 bytes 核對。",
         "",
@@ -619,6 +653,19 @@ def render_markdown(index: dict[str, Any]) -> str:
         f"| {summary['pipelineStageCounts']['acquired']:,} | {summary['pipelineStageCounts']['extracted']:,} | {summary['pipelineStageCounts']['convertedCandidate']:,} | {summary['pipelineStageCounts']['ggdAccepted']:,} | {summary['pipelineStageCounts']['runtimeRegisteredAsSourceFile']:,} | {summary['pipelineStageCounts']['runtimeSelectableAsSourceFile']:,} | {summary['pipelineStageCounts']['productionDeployed']:,} | {summary['pipelineStageCounts']['referencedByRuntimeDerivedOption']:,} |",
         "",
         "`runtime 衍生選項引用` 表示這個來源 asset ID 已被 Git 成品使用；原始檔本身仍不是後台可切換選項。",
+        "",
+        "## 已標準化、仍待設計的 MBA 六態候選",
+        "",
+        "| 角色 | 三角面 | draw | joints | 貼圖 | 原生六態 | 狀態 |",
+        "|---|---:|---:|---:|---:|---|---|",
+    ]
+    for candidate in index["standardizedCandidateProducts"]:
+        metrics = candidate["validation"]["ggdInspection"]
+        lines.append(
+            f"| {candidate['nameZh']} | {metrics['triangles']:,} | {metrics['drawPrimitives']} | {metrics['jointCount']} | {metrics['textureCount']} | "
+            f"`{', '.join(candidate['selectedNativeClips'].values())}` | 已標準化候選；待視覺審查、待英雄設計 |"
+        )
+    lines += [
         "",
         "## 來源與使用狀態",
         "",

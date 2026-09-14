@@ -3,18 +3,18 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3287470,
-      "sha256": "494b485c3e2d4f292a247238711b2c10741097775cd80a2f2b71eb2879f97140"
+      "bytes": 3336844,
+      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "bytes": 35318370,
-      "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea"
+      "bytes": 35320062,
+      "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64"
     },
     "unused300MbaIndex": {
       "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
-      "bytes": 455807,
-      "sha256": "74491ea536cfdf1e2ab279ef0a6bbc2adb59a0463fd229b58df4f43d52209d54"
+      "bytes": 487157,
+      "sha256": "d9f6d2f82feff67307c7cde3fb47e60660d04b002c946531a44074ad820723de"
     }
   },
   "scope": {
@@ -42,10 +42,10 @@
   "externalAuthorities": {
     "unused300Mba": {
       "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
-      "bytes": 455807,
-      "sha256": "74491ea536cfdf1e2ab279ef0a6bbc2adb59a0463fd229b58df4f43d52209d54",
+      "bytes": 487157,
+      "sha256": "d9f6d2f82feff67307c7cde3fb47e60660d04b002c946531a44074ad820723de",
       "documentGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md",
-      "documentSha256": "36f08e1b07bb9e6eb5fae04834d0822fe8343f72474c6ed3e79b6006c399c9cb",
+      "documentSha256": "36432e1b9c068f0da52159d4050bffb30e89f59dfc79f575b3d123111b7587a2",
       "filesGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
       "filesSha256": "c3fc6883512a5e3fd6ee45c2bacc4bbe07a58f6f7e3b52cc7203a37021f132d6",
       "animationClipsGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
@@ -66,6 +66,8 @@
         "sourceDefinitionsCatalog": 297,
         "sourceDefinitionsExcludedFromHeroBacklog": 6,
         "missingDeclaredBodyPaths": 5,
+        "standardizedSixStateCandidateProducts": 3,
+        "standardizedNativeMotionProducts": 18,
         "pipelineStageCounts": {
           "acquired": 73852,
           "extracted": 73852,
@@ -194,7 +196,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "866f63b3003539126111d40cb37c85b546f304dbbf157f6952df38861e5eb785"
+    "sha256": "c15d9c16983b71a3ee85662acc5925ac933b100e4e16e81d50aac90701743b8d"
   },
   "sources": [
     {
@@ -229,7 +231,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 48391204,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "bowlroll-sabakan359-vearn-mmd-v087",
         "sourceRecordIndexes": [
@@ -299,7 +301,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 6279504,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-fuc-dark-sakura-492607",
         "sourceRecordIndexes": [
@@ -364,7 +366,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 43051345,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-fuc-kotomine-kirei-291438",
         "sourceRecordIndexes": [
@@ -429,7 +431,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 7095292,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-fuc-rin-474593",
         "sourceRecordIndexes": [
@@ -494,7 +496,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 6386819,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-fuc-shirou-473819",
         "sourceRecordIndexes": [
@@ -561,7 +563,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 256352696,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-shadow",
         "sourceRecordIndexes": [
@@ -627,7 +629,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 4837992,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gamebanana-zero-lancer-493444",
         "sourceRecordIndexes": [
@@ -697,7 +699,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 56805522,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "ggd-historical-model-recovery-7bc2fa3f8",
         "sourceRecordIndexes": [
@@ -769,7 +771,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 8310820,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "github-chiikawa",
         "sourceRecordIndexes": [
@@ -841,7 +843,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 5676441,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "github-flemmli97-fateubw-07e9d79b",
         "sourceRecordIndexes": [
@@ -908,7 +910,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 105542116,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "github-neztypezero-psp-gmo-loader-f346daec",
         "sourceRecordIndexes": [
@@ -978,7 +980,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 21829956886,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gitlab-ssbu-models",
         "sourceRecordIndexes": [
@@ -1065,7 +1067,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 7292577,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gta5mod-shinchan-kstamil",
         "sourceRecordIndexes": [
@@ -1130,7 +1132,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 2605389,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gta5mod-shinchan-sd2",
         "sourceRecordIndexes": [
@@ -1195,7 +1197,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 53925473,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gtainside-anime-pack",
         "sourceRecordIndexes": [
@@ -1258,7 +1260,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 47757260,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gtainside-kenshin",
         "sourceRecordIndexes": [
@@ -1323,7 +1325,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 35837850,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gtainside-light-yagami-kw",
         "sourceRecordIndexes": [
@@ -1388,7 +1390,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 14680392,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gtainside-lubu",
         "sourceRecordIndexes": [
@@ -1453,7 +1455,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 32304048,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "gtainside-naofumi",
         "sourceRecordIndexes": [
@@ -1519,7 +1521,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 30179354,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "hive-anime-team-survival",
         "sourceRecordIndexes": [
@@ -1584,7 +1586,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 2197006,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "hive-megaman-x",
         "sourceRecordIndexes": [
@@ -1649,7 +1651,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 960194,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "hive-sephiroth",
         "sourceRecordIndexes": [
@@ -1714,7 +1716,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 4604393,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "itch-kmiliz-doraemon",
         "sourceRecordIndexes": [
@@ -1777,7 +1779,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 273652382,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv",
         "sourceRecordIndexes": [
@@ -1840,7 +1842,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 405896533,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-repair-v2",
         "sourceRecordIndexes": [
@@ -1903,7 +1905,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "494b485c3e2d4f292a247238711b2c10741097775cd80a2f2b71eb2879f97140",
+        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1969,7 +1971,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "494b485c3e2d4f292a247238711b2c10741097775cd80a2f2b71eb2879f97140",
+        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -2034,7 +2036,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 45526910,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "mai-doa6-gtasa-gtav06-motion",
         "sourceRecordIndexes": [
@@ -2097,7 +2099,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 17483708,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-adult-gon-multiversus",
         "sourceRecordIndexes": [
@@ -2163,7 +2165,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 54180328,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-goblin-slayer-ssbu",
         "sourceRecordIndexes": [
@@ -2231,7 +2233,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 36997354,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-lina-rays-300-retarget",
         "sourceRecordIndexes": [
@@ -2300,7 +2302,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 51929258,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-lina-rays-300-retarget-footloop-v2",
         "sourceRecordIndexes": [
@@ -2367,7 +2369,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 180082693,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-lina-ssbu-ceruleancast",
         "sourceRecordIndexes": [
@@ -2433,7 +2435,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 41759293,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-slayers-lina-hand-review",
         "sourceRecordIndexes": [
@@ -2499,7 +2501,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 681063841,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-community-slayers-tales-of-rays",
         "sourceRecordIndexes": [
@@ -2564,7 +2566,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 29581311,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-infinity-strash-sorcerer-popp",
         "sourceRecordIndexes": [
@@ -2637,7 +2639,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 240825865,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-ns-alucard-ssbu",
         "sourceRecordIndexes": [
@@ -2702,7 +2704,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 18058180,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-ns-bowser-big-blast",
         "sourceRecordIndexes": [
@@ -2770,7 +2772,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 135977390,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "parallel-ns-ultimate14",
         "sourceRecordIndexes": [
@@ -2842,7 +2844,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 36583616,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "patreon-shinteo-dai-daz-v2",
         "sourceRecordIndexes": [
@@ -2910,7 +2912,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 11469908,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "psp-cloud-native-motion-batch4",
         "sourceRecordIndexes": [
@@ -2979,7 +2981,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 3209663,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "steam-billy-herrington",
         "sourceRecordIndexes": [
@@ -3044,7 +3046,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 6223613,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "steam-korosensei",
         "sourceRecordIndexes": [
@@ -3109,7 +3111,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 25385954,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-eva01",
         "sourceRecordIndexes": [
@@ -3174,7 +3176,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 222538850,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-goku",
         "sourceRecordIndexes": [
@@ -3240,7 +3242,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 6471024,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-gon",
         "sourceRecordIndexes": [
@@ -3305,7 +3307,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 32693043,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-guts",
         "sourceRecordIndexes": [
@@ -3370,7 +3372,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 71831966,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-hisoka",
         "sourceRecordIndexes": [
@@ -3435,7 +3437,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 137994828,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-hokuto-lr",
         "sourceRecordIndexes": [
@@ -3500,7 +3502,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 14075331,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-holo",
         "sourceRecordIndexes": [
@@ -3565,7 +3567,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "494b485c3e2d4f292a247238711b2c10741097775cd80a2f2b71eb2879f97140",
+        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [
@@ -3631,7 +3633,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 16718395,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-iori",
         "sourceRecordIndexes": [
@@ -3697,7 +3699,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 66921123,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-kenshiro",
         "sourceRecordIndexes": [
@@ -3762,7 +3764,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 671133460,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-maomao",
         "sourceRecordIndexes": [
@@ -3827,7 +3829,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 9259463,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-pikachu-frankzin",
         "sourceRecordIndexes": [
@@ -3892,7 +3894,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 3798734,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-pikachu-tiny",
         "sourceRecordIndexes": [
@@ -3958,7 +3960,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 70161054,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-rezero",
         "sourceRecordIndexes": [
@@ -4029,7 +4031,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 112306276,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-rimuru-ror2",
         "sourceRecordIndexes": [
@@ -4093,7 +4095,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/public-source-files.json",
         "bytes": 45046074,
-        "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea",
+        "sha256": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64",
         "authorityKind": "public-source-files-source-row",
         "sourceRecordId": "thunderstore-sadako",
         "sourceRecordIndexes": [

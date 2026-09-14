@@ -228,7 +228,7 @@ def build(git_link_root=ROOT):
     unused_300_mba=read(unused_300_mba_path)
     if (unused_300_mba.get('schema')!='ggd.300-mba-unused-assets-index@1'
         or unused_300_mba.get('newDownloads') is not False
-        or unused_300_mba.get('conversionPerformed') is not False
+        or unused_300_mba.get('conversionPerformed') is not True
         or unused_300_mba.get('runtimeRegistrationPerformed') is not False
         or unused_300_mba.get('approvedProcessedCopyAuthorizationsChanged') is not False
         or unused_300_mba.get('summary',{}).get('contentObjectsBySha256')!=68669
@@ -240,6 +240,12 @@ def build(git_link_root=ROOT):
         or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('runtimeSelectableAsSourceFile')!=0
         or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('productionDeployed')!=0):
         raise ValueError('300/MBA unused asset inventory is absent or overclaims readiness')
+    if (unused_300_mba.get('summary',{}).get('standardizedSixStateCandidateProducts')!=3
+        or unused_300_mba.get('summary',{}).get('standardizedNativeMotionProducts')!=18
+        or len(unused_300_mba.get('standardizedCandidateProducts',[]))!=3
+        or any(row.get('runtimeSelectable') or row.get('fullHeroModel')
+               for row in unused_300_mba.get('standardizedCandidateProducts',[]))):
+        raise ValueError('300/MBA standardized candidate status is absent or overclaims readiness')
     for key in ('files','animationClips'):
         entry=unused_300_mba[key]
         if hashlib.sha256((ROOT/entry['gitPath']).read_bytes()).hexdigest()!=entry['sha256']:
@@ -1022,7 +1028,11 @@ def build(git_link_root=ROOT):
             filesSha256=unused_300_mba['files']['sha256'],
             animationClipsGitPath=unused_300_mba['animationClips']['gitPath'],
             animationClipsSha256=unused_300_mba['animationClips']['sha256'],
-            status='existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration',
+            standardizedCandidateReceiptGitPath='materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json',
+            standardizedCandidateReceiptSha256=next(
+                row['sha256'] for row in unused_300_mba['inputFingerprints']
+                if row.get('gitPath') == 'materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json'),
+            status='existing-local-sources-indexed; three six-state candidates standardized but pending visual acceptance/hero design/registration',
             summary=unused_300_mba['summary'],
             newDownloads=False,
             runtimeSelectable=False,
@@ -1539,6 +1549,10 @@ def main():
                 {
                     'gitPath': result['unused300MbaAssetIndex']['animationClipsGitPath'],
                     'sha256': result['unused300MbaAssetIndex']['animationClipsSha256'],
+                },
+                {
+                    'gitPath': result['unused300MbaAssetIndex']['standardizedCandidateReceiptGitPath'],
+                    'sha256': result['unused300MbaAssetIndex']['standardizedCandidateReceiptSha256'],
                 },
                 {
                     'gitPath': result['mbaUnusedModelPilot']['gitPath'],
