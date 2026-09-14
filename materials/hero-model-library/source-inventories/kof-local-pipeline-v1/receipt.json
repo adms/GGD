@@ -204,8 +204,8 @@
       ],
       "outputs": [
         {
-          "bytes": 200893,
-          "sha256": "de1bd409ebe4f8c92c1eee4cbb7f90e0d6b2c897b90935c97e28599109621869",
+          "bytes": 202465,
+          "sha256": "d17048f47c3d4613f53e9eab15fdaba62f6cfb38bb7b1561f85e0d9a02849f3c",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         }
       ],
@@ -250,14 +250,14 @@
         },
         {
           "bytes": 10102,
-          "sha256": "344f0d0f819b0c8eeaa26b95d8fff42308da39ed26028a502508ea879f981c50",
+          "sha256": "ebd025d139000b03be32ea78dfcd9233b77e62927ef4587afd739490bfc59e6f",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],
       "outputs": [
         {
-          "bytes": 3336844,
-          "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+          "bytes": 3371658,
+          "sha256": "024c1d0a505c7cad3d5babd7b4c16b63b4c8dd41773038d37489acb185ee3fff",
           "gitPath": "materials/hero-model-library/download-sources.json"
         }
       ],
@@ -272,13 +272,13 @@
       "status": "entry-generated",
       "inputs": [
         {
-          "bytes": 200893,
-          "sha256": "de1bd409ebe4f8c92c1eee4cbb7f90e0d6b2c897b90935c97e28599109621869",
+          "bytes": 202465,
+          "sha256": "d17048f47c3d4613f53e9eab15fdaba62f6cfb38bb7b1561f85e0d9a02849f3c",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         },
         {
           "bytes": 10102,
-          "sha256": "344f0d0f819b0c8eeaa26b95d8fff42308da39ed26028a502508ea879f981c50",
+          "sha256": "ebd025d139000b03be32ea78dfcd9233b77e62927ef4587afd739490bfc59e6f",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],

@@ -145,7 +145,7 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         ledger = {'summary': {
             'eventAudioCandidates': 36, 'eventAudioReviewed': 36,
             'ggdVfxCandidates': 12, 'vfxVisuallyAccepted': 12,
-            'runtimeBindingsAddedByThisWorkflow': 0,
+            'runtimeBindingsAddedByThisWorkflow': 7,
         }}
         contract = {
             'schema': 'ggd.popp-integration-review@1',
@@ -161,17 +161,22 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
             },
             'vfxRuntimeCandidates': {'summary': {
                 'ggdVfxDocumentsBuilt': 12, 'visuallyAccepted': 12,
-                'sourceManifestVisuallyAccepted': 0, 'skillBindingsCreated': 0,
-                'runtimeSelectable': 0, 'productionDeployed': 0,
+                'sourceManifestVisuallyAccepted': 0, 'skillBindingsCreated': 7,
+                'sourceManifestSkillBindingsCreated': 0, 'releasedDocuments': 12,
+                'releaseDocumentsRuntimeResolvable': 12, 'runtimeSelectable': 0,
+                'productionDeployed': 0,
             }},
         }
-        proposals = {'runtimeBindingsCreated': 0, 'policy': {'runtimeMutationAllowed': False}}
+        proposals = {
+            'runtimeBindingsCreated': 7, 'runtimeAbilityBindingsCreated': 3,
+            'policy': {'runtimeMutationAllowed': True, 'nativeNiagaraTimingClaim': False},
+        }
         verify_popp_approval_boundary(ledger, contract, proposals)
         ledger['summary']['eventAudioReviewed'] = 0
         with self.assertRaisesRegex(ValueError, 'Popp owner approvals are stale'):
             verify_popp_approval_boundary(ledger, contract, proposals)
         ledger['summary']['eventAudioReviewed'] = 36
-        proposals['runtimeBindingsCreated'] = 1
+        proposals['runtimeBindingsCreated'] = 8
         with self.assertRaisesRegex(ValueError, 'overclaim runtime binding'):
             verify_popp_approval_boundary(ledger, contract, proposals)
 

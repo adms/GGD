@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T05:30:33+08:00",
-  "inputsSha256": "f28aa20df3219df67ceb343f94300d81676145678f3b9aad6da49a9affac86d2",
+  "generatedAt": "2026-09-15T05:38:52+08:00",
+  "inputsSha256": "89c243b9af1f32b347de5c2d9726775faf7cf636777101a0e210f143d0df803e",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -49301,7 +49301,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
+          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-owner-reviewed-runtime-targets-pending-vfx-owner-approved-feature-branch-native-parity-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -50797,8 +50797,8 @@
               "fileCount": 2280,
               "modelState": "converted-webgl-accepted",
               "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
-              "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "audioState": "decoded-pending-listening-review",
+              "vfxState": "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound-native-niagara-timing-root-mesh-and-parity-pending",
+              "audioState": "owner-listening-approved-game-format-converted-native-events-indexed-runtime-targets-and-playback-pending",
               "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
               "defaultEligible": true,
               "backendSelectable": true,
@@ -50840,6 +50840,33 @@
                   "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
                   "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
                 }
+              },
+              "approvedAudioEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                  "bytes": 11431,
+                  "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+                },
+                "ownerApprovedCandidateRelationships": 36,
+                "gameAudioFiles": 35,
+                "nativeEventRows": 8,
+                "runtimeBindingAuthorized": false,
+                "runtimeBindings": 0,
+                "productionDeployed": false
+              },
+              "publishedVfxEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                  "bytes": 20049,
+                  "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+                },
+                "ownerApprovedVfxDocuments": 12,
+                "abilityBindings": 3,
+                "candidateRelationshipsBound": 7,
+                "reserveCandidatesUnbound": 5,
+                "nativeNiagaraTimingRecovered": false,
+                "rootSpecificMeshLayersBound": false,
+                "productionDeployed": false
               }
             }
           ],
@@ -50852,8 +50879,9 @@
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+            "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+            "Twelve owner-visual-approved GGD VFX documents are on the feature branch; seven reviewed source-name relationships are bound across Q/W/R and five remain unbound reserves. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
             "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
             "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
@@ -50962,6 +50990,33 @@
               "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
               "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
             }
+          },
+          "publishedVfxEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            "ownerApprovedVfxDocuments": 12,
+            "abilityBindings": 3,
+            "candidateRelationshipsBound": 7,
+            "reserveCandidatesUnbound": 5,
+            "nativeNiagaraTimingRecovered": false,
+            "rootSpecificMeshLayersBound": false,
+            "productionDeployed": false
+          },
+          "approvedAudioEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            "ownerApprovedCandidateRelationships": 36,
+            "gameAudioFiles": 35,
+            "nativeEventRows": 8,
+            "runtimeBindingAuthorized": false,
+            "runtimeBindings": 0,
+            "productionDeployed": false
           }
         },
         {
@@ -54271,7 +54326,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
+          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-owner-reviewed-runtime-targets-pending-vfx-owner-approved-feature-branch-native-parity-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -55767,8 +55822,8 @@
               "fileCount": 2280,
               "modelState": "converted-webgl-accepted",
               "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
-              "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "audioState": "decoded-pending-listening-review",
+              "vfxState": "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound-native-niagara-timing-root-mesh-and-parity-pending",
+              "audioState": "owner-listening-approved-game-format-converted-native-events-indexed-runtime-targets-and-playback-pending",
               "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
               "defaultEligible": true,
               "backendSelectable": true,
@@ -55810,6 +55865,33 @@
                   "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
                   "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
                 }
+              },
+              "approvedAudioEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                  "bytes": 11431,
+                  "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+                },
+                "ownerApprovedCandidateRelationships": 36,
+                "gameAudioFiles": 35,
+                "nativeEventRows": 8,
+                "runtimeBindingAuthorized": false,
+                "runtimeBindings": 0,
+                "productionDeployed": false
+              },
+              "publishedVfxEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                  "bytes": 20049,
+                  "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+                },
+                "ownerApprovedVfxDocuments": 12,
+                "abilityBindings": 3,
+                "candidateRelationshipsBound": 7,
+                "reserveCandidatesUnbound": 5,
+                "nativeNiagaraTimingRecovered": false,
+                "rootSpecificMeshLayersBound": false,
+                "productionDeployed": false
               }
             }
           ],
@@ -55822,8 +55904,9 @@
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+            "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+            "Twelve owner-visual-approved GGD VFX documents are on the feature branch; seven reviewed source-name relationships are bound across Q/W/R and five remain unbound reserves. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
             "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
             "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
@@ -55932,6 +56015,33 @@
               "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
               "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
             }
+          },
+          "publishedVfxEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            "ownerApprovedVfxDocuments": 12,
+            "abilityBindings": 3,
+            "candidateRelationshipsBound": 7,
+            "reserveCandidatesUnbound": 5,
+            "nativeNiagaraTimingRecovered": false,
+            "rootSpecificMeshLayersBound": false,
+            "productionDeployed": false
+          },
+          "approvedAudioEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            "ownerApprovedCandidateRelationships": 36,
+            "gameAudioFiles": 35,
+            "nativeEventRows": 8,
+            "runtimeBindingAuthorized": false,
+            "runtimeBindings": 0,
+            "productionDeployed": false
           }
         },
         {
@@ -61555,7 +61665,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
+          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-owner-reviewed-runtime-targets-pending-vfx-owner-approved-feature-branch-native-parity-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -63051,8 +63161,8 @@
               "fileCount": 2280,
               "modelState": "converted-webgl-accepted",
               "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
-              "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "audioState": "decoded-pending-listening-review",
+              "vfxState": "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound-native-niagara-timing-root-mesh-and-parity-pending",
+              "audioState": "owner-listening-approved-game-format-converted-native-events-indexed-runtime-targets-and-playback-pending",
               "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
               "defaultEligible": true,
               "backendSelectable": true,
@@ -63094,6 +63204,33 @@
                   "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
                   "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
                 }
+              },
+              "approvedAudioEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                  "bytes": 11431,
+                  "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+                },
+                "ownerApprovedCandidateRelationships": 36,
+                "gameAudioFiles": 35,
+                "nativeEventRows": 8,
+                "runtimeBindingAuthorized": false,
+                "runtimeBindings": 0,
+                "productionDeployed": false
+              },
+              "publishedVfxEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                  "bytes": 20049,
+                  "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+                },
+                "ownerApprovedVfxDocuments": 12,
+                "abilityBindings": 3,
+                "candidateRelationshipsBound": 7,
+                "reserveCandidatesUnbound": 5,
+                "nativeNiagaraTimingRecovered": false,
+                "rootSpecificMeshLayersBound": false,
+                "productionDeployed": false
               }
             }
           ],
@@ -63106,8 +63243,9 @@
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+            "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+            "Twelve owner-visual-approved GGD VFX documents are on the feature branch; seven reviewed source-name relationships are bound across Q/W/R and five remain unbound reserves. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
             "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
             "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
@@ -63216,6 +63354,33 @@
               "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
               "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
             }
+          },
+          "publishedVfxEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            "ownerApprovedVfxDocuments": 12,
+            "abilityBindings": 3,
+            "candidateRelationshipsBound": 7,
+            "reserveCandidatesUnbound": 5,
+            "nativeNiagaraTimingRecovered": false,
+            "rootSpecificMeshLayersBound": false,
+            "productionDeployed": false
+          },
+          "approvedAudioEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            "ownerApprovedCandidateRelationships": 36,
+            "gameAudioFiles": 35,
+            "nativeEventRows": 8,
+            "runtimeBindingAuthorized": false,
+            "runtimeBindings": 0,
+            "productionDeployed": false
           }
         },
         {
@@ -82848,7 +83013,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
+          "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-owner-reviewed-runtime-targets-pending-vfx-owner-approved-feature-branch-native-parity-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -84344,8 +84509,8 @@
               "fileCount": 2280,
               "modelState": "converted-webgl-accepted",
               "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
-              "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "audioState": "decoded-pending-listening-review",
+              "vfxState": "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound-native-niagara-timing-root-mesh-and-parity-pending",
+              "audioState": "owner-listening-approved-game-format-converted-native-events-indexed-runtime-targets-and-playback-pending",
               "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
               "defaultEligible": true,
               "backendSelectable": true,
@@ -84387,6 +84552,33 @@
                   "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
                   "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
                 }
+              },
+              "approvedAudioEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                  "bytes": 11431,
+                  "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+                },
+                "ownerApprovedCandidateRelationships": 36,
+                "gameAudioFiles": 35,
+                "nativeEventRows": 8,
+                "runtimeBindingAuthorized": false,
+                "runtimeBindings": 0,
+                "productionDeployed": false
+              },
+              "publishedVfxEvidence": {
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                  "bytes": 20049,
+                  "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+                },
+                "ownerApprovedVfxDocuments": 12,
+                "abilityBindings": 3,
+                "candidateRelationshipsBound": 7,
+                "reserveCandidatesUnbound": 5,
+                "nativeNiagaraTimingRecovered": false,
+                "rootSpecificMeshLayersBound": false,
+                "productionDeployed": false
               }
             }
           ],
@@ -84399,8 +84591,9 @@
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+            "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+            "Twelve owner-visual-approved GGD VFX documents are on the feature branch; seven reviewed source-name relationships are bound across Q/W/R and five remain unbound reserves. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
             "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
             "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
@@ -84509,6 +84702,33 @@
               "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
               "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
             }
+          },
+          "publishedVfxEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            "ownerApprovedVfxDocuments": 12,
+            "abilityBindings": 3,
+            "candidateRelationshipsBound": 7,
+            "reserveCandidatesUnbound": 5,
+            "nativeNiagaraTimingRecovered": false,
+            "rootSpecificMeshLayersBound": false,
+            "productionDeployed": false
+          },
+          "approvedAudioEvidence": {
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            "ownerApprovedCandidateRelationships": 36,
+            "gameAudioFiles": 35,
+            "nativeEventRows": 8,
+            "runtimeBindingAuthorized": false,
+            "runtimeBindings": 0,
+            "productionDeployed": false
           }
         }
       ],
@@ -189318,7 +189538,7 @@
         "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
+        "readiness": "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-owner-reviewed-runtime-targets-pending-vfx-owner-approved-feature-branch-native-parity-pending",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": false,
         "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -190814,8 +191034,8 @@
             "fileCount": 2280,
             "modelState": "converted-webgl-accepted",
             "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
-            "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-            "audioState": "decoded-pending-listening-review",
+            "vfxState": "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound-native-niagara-timing-root-mesh-and-parity-pending",
+            "audioState": "owner-listening-approved-game-format-converted-native-events-indexed-runtime-targets-and-playback-pending",
             "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
             "defaultEligible": true,
             "backendSelectable": true,
@@ -190857,6 +191077,33 @@
                 "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
                 "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
               }
+            },
+            "approvedAudioEvidence": {
+              "receipt": {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              },
+              "ownerApprovedCandidateRelationships": 36,
+              "gameAudioFiles": 35,
+              "nativeEventRows": 8,
+              "runtimeBindingAuthorized": false,
+              "runtimeBindings": 0,
+              "productionDeployed": false
+            },
+            "publishedVfxEvidence": {
+              "receipt": {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              },
+              "ownerApprovedVfxDocuments": 12,
+              "abilityBindings": 3,
+              "candidateRelationshipsBound": 7,
+              "reserveCandidatesUnbound": 5,
+              "nativeNiagaraTimingRecovered": false,
+              "rootSpecificMeshLayersBound": false,
+              "productionDeployed": false
             }
           }
         ],
@@ -190869,8 +191116,9 @@
         "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
           "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-          "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-          "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+          "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+          "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+          "Twelve owner-visual-approved GGD VFX documents are on the feature branch; seven reviewed source-name relationships are bound across Q/W/R and five remain unbound reserves. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
           "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
           "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
         ],
@@ -190979,6 +191227,33 @@
             "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/s3-conversion-receipt.json",
             "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
           }
+        },
+        "publishedVfxEvidence": {
+          "receipt": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+            "bytes": 20049,
+            "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+          },
+          "ownerApprovedVfxDocuments": 12,
+          "abilityBindings": 3,
+          "candidateRelationshipsBound": 7,
+          "reserveCandidatesUnbound": 5,
+          "nativeNiagaraTimingRecovered": false,
+          "rootSpecificMeshLayersBound": false,
+          "productionDeployed": false
+        },
+        "approvedAudioEvidence": {
+          "receipt": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+            "bytes": 11431,
+            "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+          },
+          "ownerApprovedCandidateRelationships": 36,
+          "gameAudioFiles": 35,
+          "nativeEventRows": 8,
+          "runtimeBindingAuthorized": false,
+          "runtimeBindings": 0,
+          "productionDeployed": false
         }
       },
       {

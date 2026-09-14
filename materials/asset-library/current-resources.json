@@ -6466,7 +6466,7 @@
   },
   "kof3dSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
-    "sha256": "5adbdee7a662ad9c69268cea49153c8abea0874a53b9141079d160c9b8a9908b",
+    "sha256": "d17048f47c3d4613f53e9eab15fdaba62f6cfb38bb7b1561f85e0d9a02849f3c",
     "sourceId": "kof-3d-source-audit-20260914-v1",
     "kofXivCharacters": [
       "IOR",
@@ -6521,7 +6521,7 @@
     "productionDeploymentVerified": false,
     "entryGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json",
     "entrySha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
-    "receiptSha256": "b38ad05eabeaa87ab256648e209e6b9d771efe7bfc0b44c34cdc611f86f4e426",
+    "receiptSha256": "95f95d78771926d08d0e1cfb20b234ca8f41ff8760ec43c6dc4efab06f98f823",
     "documentSha256": "878516c59006c1e7de6c987a58672d0b603fc84d0f19b3a0a597cc071cb5a031",
     "runnerGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
     "runnerSha256": "dfe466c59de95feb47b0abd203db7305958f9494b5a1f976dee1c7715df12942",
@@ -6550,7 +6550,7 @@
   },
   "kofXivTerryPathIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
-    "sha256": "344f0d0f819b0c8eeaa26b95d8fff42308da39ed26028a502508ea879f981c50",
+    "sha256": "ebd025d139000b03be32ea78dfcd9233b77e62927ef4587afd739490bfc59e6f",
     "filesGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
     "filesSha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
     "documentGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/README.md",
@@ -6594,7 +6594,7 @@
     "documentGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/README.md",
     "documentSha256": "03514624a7f55bb025b3611960f481eb21cb9341b952047525c3950aefb0d910",
     "identityMapGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
-    "identityMapSha256": "ab666efbd48529970a210289dfaf9104ada5a7dda661d4cda5494f7dc9b0b3f7",
+    "identityMapSha256": "5d044e79e1336d48603ce83e8ca01e97399ee77509be802616ce4a8c6640884a",
     "identityDocumentGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.md",
     "identityDocumentSha256": "c15922214e02c576c5c647d8c3122ac1d3022d1dcecf08745eb6d7b835d4a786",
     "vfxTextureCandidateGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json",
@@ -10086,7 +10086,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "dai-shinteo-v2-sword-handheld-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -10182,7 +10182,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "dai-shinteo-v2-sword-back-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -10311,7 +10311,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10440,7 +10440,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10574,7 +10574,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -10706,7 +10706,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10839,7 +10839,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10971,7 +10971,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11102,7 +11102,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-zero-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11257,7 +11257,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-mario-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11402,7 +11402,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-mewtwo-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11547,7 +11547,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ryu-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11730,7 +11730,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-pickel-steve-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11912,7 +11912,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-pickel-alex-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12121,7 +12121,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12330,7 +12330,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12447,7 +12447,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-kirby-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12617,7 +12617,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-mario-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12793,7 +12793,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-link-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12911,7 +12911,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-sonic-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13106,7 +13106,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-chrom-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13301,7 +13301,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ganondorf-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13497,7 +13497,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-lucina-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13693,7 +13693,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-daisy-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13893,7 +13893,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-peach-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14095,7 +14095,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-toonlink-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14255,7 +14255,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-sonic-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14444,7 +14444,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14633,7 +14633,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14758,7 +14758,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "zero-lancer-p1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14883,7 +14883,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "zero-lancer-p2-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15005,7 +15005,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15133,7 +15133,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-mario-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15258,7 +15258,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-sonic-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15385,7 +15385,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-chrom-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15516,7 +15516,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-lucina-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15657,7 +15657,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "ssbu-ryu-c00-procedural-six-state-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15791,7 +15791,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "historical-astralym-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15956,7 +15956,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "historical-astralym-decimated-c45f111d",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16086,7 +16086,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "historical-jetragon-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16241,7 +16241,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "historical-kita-kita-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16396,7 +16396,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
-        "sha256": "83b11905a73ab59f3f548158f44f1f8e984b8fa5fba15e24c7e14f5a3f686759",
+        "sha256": "c7dcea1cbe434136cd42d1f35735cfd3ae15341779a464e9c511d84aad9ec17a",
         "recordId": "historical-lord-nightmares-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16557,7 +16557,7 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "0d7353058488865d753355cfb2a95173a20b5a9d6035ec6facac4d5e34523fc9"
+    "sha256": "3c246dca167cdca47f166dc3bd5c07d62f16c894f7330eac848be8e136d463ef"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -16572,7 +16572,7 @@
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "024c1d0a505c7cad3d5babd7b4c16b63b4c8dd41773038d37489acb185ee3fff"
+    "sha256": "c53221c3773f83cd822887fca3dfb881c701d5d26b4d1cc82b6d87c387aca670"
   },
   "approvedDerivativeAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/audit.json",

@@ -19,13 +19,13 @@
     },
     "voiceFiles": {
       "gitPath": "materials/hero-model-library/voice-files.jsonl.gz",
-      "bytes": 27882183,
-      "sha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469",
+      "bytes": 27888115,
+      "sha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0",
       "matchingNamedRows": 13392
     },
     "existingSourceRegistry": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
+      "sha256": "024c1d0a505c7cad3d5babd7b4c16b63b4c8dd41773038d37489acb185ee3fff"
     }
   },
   "summary": {
