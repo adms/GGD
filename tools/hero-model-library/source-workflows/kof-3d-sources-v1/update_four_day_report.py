@@ -10,12 +10,14 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[4]
 REPORT = REPO / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 INDEX = REPO / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+ASH_AUDIO_RECEIPT = REPO / "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json"
 START = "- KOF 3D 來源批次："
 ANCHOR = "\n- SSBU c00 第二批黑底修復版："
 
 
 def render() -> str:
     data = json.loads(INDEX.read_text(encoding="utf-8"))
+    ash_audio = json.loads(ASH_AUDIO_RECEIPT.read_text(encoding="utf-8"))
     xiv = data["kofXiv"]
     left, right = data["kofXv"]["newBudgetCandidates"]["candidates"]
     textures = xiv["textureCandidates"]["summary"]
@@ -31,6 +33,10 @@ def render() -> str:
         f"{left['metrics']['triangles']:,}／{right['metrics']['triangles']:,} 面、{left['metrics']['maxSkinJoints']} joints、"
         f"最大 {left['metrics']['maxTextureDimension']}px；現行 hard policy 實跑均因 {left['metrics']['drawCalls']} draw "
         "超過 6 而失敗，且 0 原生 gameplay clips，未進 runtime Git、後台選項或部署。"
+        f"另有 Ash {ash_audio['summary']['convertedReviewMp3Files']} 段 Float32 WAV 已轉為本機 MP3 聽審候選，"
+        "每段均已完整解碼與固定來源／輸出 SHA-256；逐段語言、說話者、類別與事件仍為待確認，"
+        f"runtime 綁定 {ash_audio['summary']['runtimeBindingsCreated']}、後台選項 {ash_audio['summary']['backendSelectableAssets']}、"
+        f"正式部署 {ash_audio['summary']['productionDeployments']}。"
     )
 
 
