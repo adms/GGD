@@ -41,7 +41,7 @@ import {
 export interface SummonComp {
   /** the entity that summoned it (kill credit, aggro, ownership caps) */
   ownerId: EntityId;
-  /** ABSOLUTE tick it despawns; `Number.POSITIVE_INFINITY` = permanent */
+  /** ABSOLUTE tick it despawns; `Number.POSITIVE_INFINITY` = no deadline (⛔ not match-long: `endCombatSummons` still collects it at 回合結算, GH#1241) */
   expiresAtTick: number;
   /** ABSOLUTE tick it entered the world — the eviction order for `onCap` */
   spawnTick?: number;
@@ -141,7 +141,8 @@ export const summonEffect: EffectKindSpec<"summon"> = {
     const onCap = e.onCap ?? "skip";
     const { teamId, seatId } = summonTeam(world, ctx.caster, e.team ?? "owner");
 
-    // 存活時間 — an ABSOLUTE tick, computed ONCE here. Absent = permanent.
+    // 存活時間 — an ABSOLUTE tick, computed ONCE here. Absent = no deadline (+Infinity);
+    // the round-end sweep `endCombatSummons` still collects it at 回合結算 (GH#1241).
     const expiresAtTick =
       e.durationSec === undefined
         ? Number.POSITIVE_INFINITY

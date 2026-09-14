@@ -814,7 +814,8 @@ function effectLines(
             `召喚 ${e.count}× ${body}，位於${at}` +
             ` · ${e.formation ?? "ring"} 陣型` +
             `${e.spread !== undefined ? `，間距/半徑 ${e.spread}` : ""}` +
-            `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}` +
+            // GH#1241：缺席 ＝ 沒有倒數，⛔ 但不是整場永久 —— 回合結算時全部召喚物都被收走。
+            `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 無時限（回合結算時收走）"}` +
             `${e.maxAlive !== undefined ? ` · 同時上限 ${e.maxAlive}` : ""}` +
             `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : ""}`,
         });

@@ -93,7 +93,7 @@ export interface SummonSpawnSpec {
   pos: Vec2;
   teamId: TeamId;
   seatId: SeatId;
-  /** ABSOLUTE despawn tick; `Number.POSITIVE_INFINITY` = permanent */
+  /** ABSOLUTE despawn tick; `Number.POSITIVE_INFINITY` = no deadline (⛔ not match-long: {@link endCombatSummons} collects it at 回合結算) */
   expiresAtTick: number;
   /** cap-group key (see {@link SummonComp.capKey}) */
   capKey: string;
@@ -401,7 +401,8 @@ export function summonSystem(world: SimWorld): void {
 
     // 2) DEADLINE. ABSOLUTE tick, so a save/replay resumes on the same tick
     //    (a decrementing counter drifts — see CLAUDE.md's 硬性技術約束).
-    //    A permanent summon stores +Infinity and never trips this.
+    //    A no-deadline summon stores +Infinity and never trips this — it is
+    //    collected at 回合結算 by `endCombatSummons` instead (GH#1241).
     if (world.tick >= sm.expiresAtTick) {
       despawn(id, sm, "expired");
       continue;

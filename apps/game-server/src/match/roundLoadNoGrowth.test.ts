@@ -14,7 +14,9 @@
  * **有一池只進不出**。兩條不變式就把那個形狀關起來，而且**一個出貨數字都沒有**：
  *   ① 每一回合開打時，四條「排在未來 tick 的工作」佇列都是空的
  *      （`delayed` / `randomArea` / `chainLightning` / `dashOnEnd`）
- *   ② 每一回合開打時的實體數不比**第一回合**多（殭屍／投射體／召喚物沒有漏掉 despawn）
+ *   ② 每一回合開打時的實體數不比**第一回合**多（殭屍／投射體沒有漏掉 despawn）
+ *      ⚠️ ② 對**召喚物**是空的：自然對戰裡的召喚物都在中場那 5 秒多到期，開打那一刻本來就是 0
+ *      ⇒ 召喚物由第二條 it 自己放出貨的 `summon` 來考（見下）。
  *
  * ── 突變紀錄（一批一條，挑承重的那一行）──────────────────────────────────
  *  · ⭐ `effects/delayed.ts::delayedSystem` 結尾的整段 compaction
@@ -22,7 +24,19 @@
  *    ＝ 付完的班永遠留在佇列裡，每一次施法都讓 `delayedSystem` 的迴圈更長一點 ——
  *      **逐字就是 owner 描述的那個症狀**。
  *      → ① 紅：「第 2 回合開打時還帶著上一回合的排程: expected 8 to be 0」
- *  · ⭐ GH#1241（那顆種子的 bot 不放召喚物 ⇒ ② 對它是空的，第二條自己放出貨的 `summon`）：拿掉 `concludeCombat` 的 `endCombatSummons` → 紅「第 1 回合結算後召喚物還在場上: expected 2 to be +0」
+ *  · ⭐ GH#1241：拿掉 `concludeCombat` 的 `endCombatSummons`
+ *      → 第二條紅「第 1 回合結算後召喚物還在場上: expected 2 to be +0」
+ *
+ * ── ⛔ 更正 e70288274 的 commit 訊息（2026-09-15，⛔ 不改寫歷史，更正寫在這裡）────────
+ * 那則訊息寫「種子 4242 的 bot **一具召喚物都沒放**」—— ⛔ 不成立。
+ * 同一場（開打 tick 1817/2285/3139… 逐點相同）**整場最多同時 6 具**；第 1、5、9 回合
+ * 結算時場上各有 2／2／1 具（例：id17/18 spawnTick 1831、expiresAtTick 2131，結算 tick 2120，
+ * 下一回合開打 tick 2285）。當時的探針只在**每回合開打那一刻**量，而這些召喚物都在中場到期
+ * ⇒ 開打時量到 0。⭐「開打時是 0」推不出「整場沒人放」。
+ * ⭐ 票上的「16 > 14」量得到：手動放出貨最長的 `godie-n00b.w`（20 秒），沒有 `endCombatSummons`
+ * 時第 4、6、7、8、9 回合開打是 summon 1–2、transform 15–16（審查者探針 probe_mut.txt）；
+ * 有修時按 expiresAtTick 算會活過下一回合開打的，第 3、5、6、7、8 回合各 1 具，結算那一 tick 全部收走。
+ * 出處：GH#1241 審查（2026-09-15）＋ 本次獨立重跑的探針（fixups/probe1241_fix.txt，⛔ 不在 repo）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
@@ -73,19 +87,34 @@ describe("每回合的負載不隨回合數成長（sim）", () => {
     expect(peakMobs, "整場一隻殭屍都沒生 —— ② 沒被壓到").toBeGreaterThan(0);
   }, 300_000);
 
-  it("★ 召喚物不跨回合：出貨內容裡 durationSec 最長的 summon 走出貨的 runEffects，結算那一 tick 收乾淨", () => {
+  it("★ 召喚物不跨回合：出貨內容裡 durationSec 最長的 summon 走出貨的 runEffects，結算那一 tick 與下一回合開打時都是 0", () => {
     const shipped: { e: EffectDef & { durationSec?: number }; origin: string }[] = [];
-    for (const a of Abilities.all()) JSON.stringify(a.effects, (_k, v) => { if (v?.kind === "summon") shipped.push({ e: v, origin: `ability:${a.id}` }); return v; });
-    const { e, origin } = shipped.reduce((b, s) => ((s.e.durationSec ?? Infinity) > (b.e.durationSec ?? Infinity) ? s : b));
+    for (const a of Abilities.all()) {
+      JSON.stringify(a.effects, (_k, v) => {
+        if (v?.kind === "summon") shipped.push({ e: v, origin: `ability:${a.id}` });
+        return v;
+      });
+    }
+    const life = (s: (typeof shipped)[number]): number => s.e.durationSec ?? Infinity;
+    const { e, origin } = shipped.reduce((b, s) => (life(s) > life(b) ? s : b));
     const ctl = new MatchController("summon-4242", 4242, allBots(), undefined, undefined, resolveArenaRules());
     const w = ctl.world;
     let carried = 0;
     for (let n = 0; n < 400_000 && ctl.phase.phase !== "matchEnd"; n++) {
       const { round, phase } = ctl.phase;
-      const caster = [...w.champion.keys()].find((id) => w.health.get(id)?.alive && !w.settledZones.has(w.transform.get(id)!.zone));
-      if (phase === "combat" && w.summon.size === 0 && caster !== undefined) runEffects([e], { world: w, caster, rank: 1, targets: [], point: w.transform.get(caster)!.pos, origin, rng: w.rng });
+      const caster = [...w.champion.keys()].find(
+        (id) => w.health.get(id)?.alive && !w.settledZones.has(w.transform.get(id)!.zone),
+      );
+      if (phase === "combat" && w.summon.size === 0 && caster !== undefined) {
+        const point = w.transform.get(caster)!.pos;
+        runEffects([e], { world: w, caster, rank: 1, targets: [], point, origin, rng: w.rng });
+      }
       const before = w.summon.size;
       ctl.tick();
+      // ⭐ 結算那一 tick ⛔ 抓不到「結算之後、下一回合開打之前才生出來」的 ⇒ 開打那一 tick 再問一次（兩者不互為超集）。
+      if (phase !== "combat" && ctl.phase.phase === "combat") {
+        expect(w.summon.size, `第 ${ctl.phase.round} 回合開打時召喚物還在場上`).toBe(0);
+      }
       if (phase !== "combat" || ctl.phase.phase === "combat") continue;
       carried += before > 0 ? 1 : 0;
       expect(w.summon.size, `第 ${round} 回合結算後召喚物還在場上`).toBe(0);

@@ -33,7 +33,10 @@ export const zSummon = z
     championId: zRef("champions", { soft: true }).optional(),
     /** bodies per cast. The ceiling is an anti-typo guard, not balance. */
     count: z.number().int().min(1).max(20),
-    /** seconds before despawn; ABSENT = permanent (WC3's 0-duration form) */
+    /**
+     * seconds before despawn. ABSENT = no deadline within the round (WC3's 0-duration form),
+     * ⛔ but NOT match-long: every summon is collected when the round is settled (回合結算收走, GH#1241).
+     */
     durationSec: z.number().positive().max(600).optional(),
     level: z.number().int().min(1).max(30).optional(),
     /* ── 決策點 (owner 2026-07-30 「尤其是決策點」) ────────────────────────
