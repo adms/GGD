@@ -22,6 +22,7 @@ VFX_RUNTIME_MANIFEST = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-eve
 EVENT_AUDIO_QUEUE = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json"
 GAP_DEFINITIONS = Path(__file__).resolve().with_name("gap-definitions.json")
 VFX_BINDING_PROPOSALS = Path(__file__).resolve().with_name("vfx-binding-proposals.json")
+PORTAL_OWNER_DECISIONS = LIBRARY / "review/asset-review-portal-v1/owner-decisions.json"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -56,6 +57,58 @@ def file_evidence(path: Path) -> dict:
         "gitPath": path.relative_to(ROOT).as_posix(),
         "bytes": path.stat().st_size,
         "sha256": sha256(path),
+    }
+
+
+def read_portal_owner_review(event_audio_queue: dict, vfx_runtime: dict) -> dict:
+    """Join the owner portal receipt without promoting approval to runtime readiness."""
+    receipt = read_json(PORTAL_OWNER_DECISIONS)
+    assert receipt["schema"] == "ggd.asset-review-decisions@1"
+    assert receipt["reviewer"] == "owner"
+    decisions = {row["candidateId"]: row for row in receipt["decisions"]}
+
+    audio_rows = []
+    for source in event_audio_queue["candidates"]:
+        portal_id = f"popp:{source['candidateId']}"
+        decision = decisions[portal_id]
+        assert decision["decision"] == "approve"
+        assert decision["approvedBindings"] == [source["sourceEventReference"]]
+        audio_rows.append(decision)
+
+    vfx_rows = []
+    for source in vfx_runtime["candidates"]:
+        portal_id = f"popp-vfx:{source['candidateId']}"
+        decision = decisions[portal_id]
+        assert decision["decision"] == "approve"
+        assert decision["approvedBindings"] == []
+        vfx_rows.append(decision)
+
+    # The portal intentionally recorded playback/visual approval separately
+    # from permission to mutate runtime bindings. Preserve that boundary.
+    runtime_authorized = bool(receipt["runtimeMutationAllowed"]) and all(
+        row.get("runtimeBindingAuthorized") is True for row in audio_rows + vfx_rows
+    )
+    return {
+        "source": file_evidence(PORTAL_OWNER_DECISIONS),
+        "reviewedAt": receipt["reviewedAt"],
+        "reviewer": receipt["reviewer"],
+        "audio": {
+            "candidateCount": len(audio_rows),
+            "approvedCount": sum(row["decision"] == "approve" for row in audio_rows),
+            "runtimeBindingAuthorizedCount": sum(
+                row.get("runtimeBindingAuthorized") is True for row in audio_rows
+            ),
+        },
+        "vfx": {
+            "candidateCount": len(vfx_rows),
+            "visuallyApprovedCount": sum(row["decision"] == "approve" for row in vfx_rows),
+            "bindingApprovedCount": sum(bool(row["approvedBindings"]) for row in vfx_rows),
+            "runtimeBindingAuthorizedCount": sum(
+                row.get("runtimeBindingAuthorized") is True for row in vfx_rows
+            ),
+        },
+        "runtimeMutationAllowed": bool(receipt["runtimeMutationAllowed"]),
+        "runtimeMutationAuthorizedForAll": runtime_authorized,
     }
 
 
@@ -184,6 +237,10 @@ def build_contract() -> dict:
     assert event_audio_queue["runtimeSelectable"] is False
     assert len(event_audio_queue["candidates"]) == 36
     assert all(row["reviewDecision"] is None for row in event_audio_queue["candidates"])
+    portal_owner_review = read_portal_owner_review(event_audio_queue, vfx_runtime)
+    assert portal_owner_review["audio"]["approvedCount"] == 36
+    assert portal_owner_review["vfx"]["visuallyApprovedCount"] == 12
+    assert portal_owner_review["runtimeMutationAuthorizedForAll"] is False
     vfx_binding_proposals = read_json(VFX_BINDING_PROPOSALS)
     assert vfx_binding_proposals["schema"] == "ggd.popp-vfx-binding-proposals@1"
     assert vfx_binding_proposals["heroId"] == HERO_ID
@@ -250,13 +307,13 @@ def build_contract() -> dict:
         },
         {
             "id": "original-vfx-conversion",
-            "status": "source-texture-ggd-candidates-ready-review",
-            "evidence": f"{len(vfx_references)} VFX package references are retained. Twelve recognised Niagara roots now have unbound vfx@1 reconstruction candidates using nine byte-verified source textures; two PN030 roots were excluded from PN020. Niagara timing, mesh layers, visual acceptance and skill binding remain open.",
+            "status": "owner-visual-approved-awaiting-niagara-mesh-and-skill-binding",
+            "evidence": f"{len(vfx_references)} VFX package references are retained. All {portal_owner_review['vfx']['visuallyApprovedCount']} reconstructed previews are owner-approved, while Niagara timing and mesh layers remain unrecovered; no skill binding was approved or created.",
         },
         {
             "id": "animation-events-and-sfx-binding",
-            "status": "pending-user-listening-review",
-            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. The dedicated 36-item queue has zero decisions and automaticBindingAllowed=false, so no event audio is bound before listening approval.",
+            "status": "owner-listening-approved-awaiting-identity-and-runtime-integration",
+            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. All {portal_owner_review['audio']['approvedCount']} review candidates are owner-approved for their listed source event, while the source queue still marks speaker/event identity unverified and the portal authorizes zero runtime mutations; no event audio is bound yet.",
         },
         {
             "id": "skill-timing-and-full-combat-binding",
@@ -300,6 +357,7 @@ def build_contract() -> dict:
         "eventAudioQueueSha256": sha256(EVENT_AUDIO_QUEUE),
         "gapDefinitionsSha256": sha256(GAP_DEFINITIONS),
         "vfxBindingProposalsSha256": sha256(VFX_BINDING_PROPOSALS),
+        "portalOwnerDecisionsSha256": sha256(PORTAL_OWNER_DECISIONS),
     }
     fingerprint = hashlib.sha256(
         json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -319,6 +377,7 @@ def build_contract() -> dict:
             file_evidence(EVENT_AUDIO_QUEUE),
             file_evidence(GAP_DEFINITIONS),
             file_evidence(VFX_BINDING_PROPOSALS),
+            file_evidence(PORTAL_OWNER_DECISIONS),
         ],
         "currentSelection": {
             "modelKey": champion["modelKey"],
@@ -337,16 +396,22 @@ def build_contract() -> dict:
         "eventAudioReviewGate": {
             "source": file_evidence(EVENT_AUDIO_QUEUE),
             "candidateCount": len(event_audio_queue["candidates"]),
-            "reviewedCount": sum(row["reviewDecision"] is not None for row in event_audio_queue["candidates"]),
+            "reviewedCount": portal_owner_review["audio"]["approvedCount"],
+            "sourceQueueReviewedCount": sum(row["reviewDecision"] is not None for row in event_audio_queue["candidates"]),
             "automaticBindingAllowed": event_audio_queue["automaticBindingAllowed"],
             "runtimeSelectable": event_audio_queue["runtimeSelectable"],
         },
         "vfxRuntimeCandidates": {
             "source": file_evidence(VFX_RUNTIME_MANIFEST),
-            "summary": vfx_runtime["summary"],
+            "summary": {
+                **vfx_runtime["summary"],
+                "visuallyAccepted": portal_owner_review["vfx"]["visuallyApprovedCount"],
+                "sourceManifestVisuallyAccepted": vfx_runtime["summary"]["visuallyAccepted"],
+            },
             "conversionBoundary": vfx_runtime["conversionBoundary"],
             "reviewPage": vfx_runtime["review"]["page"],
         },
+        "portalOwnerReview": portal_owner_review,
         "vfxBindingReviewProposals": {
             "source": file_evidence(VFX_BINDING_PROPOSALS),
             **vfx_binding_proposals,
@@ -429,8 +494,8 @@ textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1
 <div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1" {'checked disabled' if contract['weaponReview']['selectedCandidateId'] else ''}> 已核准 down＋升天淡出</label></div>
 <h2>三、五項權威整合狀態（已關閉 {contract['closedIntegrationGapCount']}，剩餘 {contract['remainingOpenIntegrationGapCount']}）</h2><ol id="gaps"></ol>
-<p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選；來源關係保存在 <code>materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html</code>，請用 <a href="/asset-review.html">VFX 現場播放頁</a>逐項審查。音效請到 <a href="/asset-review-portal.html">統一播放審查頁</a>選「波普音訊」；{contract['eventAudioReviewGate']['candidateCount']} 項目前已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項。未核准前不綁技能。</p>
-<h2>四、VFX 語意配對候選（只供審查）</h2><div id="vfxProposals" class="grid"></div><p class="note">這些配對只依來源法術名稱與 phase 縮小審查範圍，沒有視覺核准，也沒有修改 runtime。</p>
+<p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選；來源關係保存在 <code>materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html</code>，中央收據可由 <a href="/asset-review-portal.html">統一審查中心</a> 查看。音訊 {contract['eventAudioReviewGate']['candidateCount']} 項已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項；中央收據明確禁止直接 runtime mutation，因此要等人物／事件身分、Niagara 時序、mesh layer 與技能時點完成才能綁定。</p>
+<h2>四、VFX 語意配對候選（技術整合中）</h2><div id="vfxProposals" class="grid"></div><p class="note">12 個重建預覽已有 owner 視覺核准；這些技能配對只依來源法術名稱與 phase，尚未核准技能綁定，也沒有修改 runtime。</p>
 <h2>五、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
 <textarea id="reviewNote" placeholder="選擇理由、要修的顏色或動作問題"></textarea><div class="buttons"><button id="export">下載裁決 JSON</button></div></main>
 <script id="contract" type="application/json">{encoded}</script><script>
@@ -443,7 +508,7 @@ function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
 const clearWeapon=document.getElementById('clearWeapon');if(clearWeapon)clearWeapon.onclick=()=>{{state.weaponCandidateId=null;save()}};
 document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.nameZh}}</b> <code>${{g.id}}</code> · <span class="status">${{g.closed?'closed':'remaining'}}／${{g.status}}</span><br><span class="note">${{g.evidence}}</span><br><span class="note">關閉條件：${{g.closureCriteria.join('；')}}</span><br><span class="note">審查規則：${{g.ownerReviewPolicy}}</span></li>`).join('');
-document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">medium-unverified／未核准／runtime 0</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
+document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">medium-unverified／預覽已核准／技能綁定 0</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
 const death=document.getElementById('deathFrame'), selected=D.weaponReview.candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)||D.weaponReview.candidates[0],base=selected.validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();
 document.getElementById('export').onclick=()=>{{save();const out={{schema:'ggd.popp-integration-review-decision@1',sourceFingerprint:D.sourceFingerprint,heroId:D.heroId,weaponCandidateId:state.weaponCandidateId,deathCandidateId:state.deathCandidateId,note:state.note}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\\n'],{{type:'application/json'}}));a.download='popp-integration-review-decision.json';a.click();URL.revokeObjectURL(a.href)}};

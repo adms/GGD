@@ -20,9 +20,12 @@ and the compact `popp-integration-gaps.json` ledger. Do not hand-edit either
 generated output.
 
 `vfx-binding-proposals.json` maps all twelve generated VFX candidates into
-seven source-name proposals for Q/W/R plus five unassigned reserves. These are
-review hints only: confidence remains `medium-unverified`, visual approval is
-false and runtime mutation is forbidden until the owner reviews playback.
+seven source-name proposals for Q/W/R plus five unassigned reserves. The
+generator joins the central review portal's owner receipt: all 12 VFX previews
+and all 36 event-audio candidates are approved as of 2026-09-15. That receipt
+sets `runtimeMutationAllowed=false`; Niagara timing, mesh reconstruction,
+speaker/event identity and skill timing still block binding. The generated
+contract therefore reports the approvals without changing runtime.
 
 Apply an exported owner decision through the checked workflow; do not edit the champion default by hand:
 

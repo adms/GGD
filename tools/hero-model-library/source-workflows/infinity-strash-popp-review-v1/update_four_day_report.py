@@ -50,10 +50,11 @@ def render(payload: dict) -> str:
         )
     lines.extend([
         "",
-        f"可用但未核准的材料：GGD VFX 候選 {summary['ggdVfxCandidates']} 個，視覺核准 "
+        f"審查與技術狀態：GGD VFX 候選 {summary['ggdVfxCandidates']} 個，視覺核准 "
         f"{summary['vfxVisuallyAccepted']}；其中 {summary['vfxBindingProposals']} 個已依來源名稱整理成 Q/W/R 審查提案，"
         f"另 {summary['vfxReserveCandidates']} 個保留未配對。事件音訊候選 {summary['eventAudioCandidates']} 個，逐項聽審 "
-        f"{summary['eventAudioReviewed']}。本流程新增 runtime 綁定 {summary['runtimeBindingsAddedByThisWorkflow']}。",
+        f"{summary['eventAudioReviewed']}。預覽／聽審核准不等於技術綁定；本流程新增 runtime 綁定 "
+        f"{summary['runtimeBindingsAddedByThisWorkflow']}。",
         "Kagayaki 維持 `modelSelectionMode=manual` 的單一作用中選擇，Magikaru、Mahouno 仍是獨立後台候選；"
         "此狀態只證明功能分支資料，正式站部署尚未驗證。",
         "",

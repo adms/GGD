@@ -2,7 +2,7 @@
   "schema": "ggd.popp-integration-gap-ledger@1",
   "heroId": "b2-popp",
   "nativeCharacterId": "PN020",
-  "sourceFingerprint": "659e7f5c14fc5ccf1fa27a4900bc3356d63024eec810a098cf4a2e8e97224007",
+  "sourceFingerprint": "e56052ca17bfed90ea17bba0243107d8653f660a72b1b116ec43ec7135262ab8",
   "definitionSource": {
     "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json",
     "bytes": 3067,
@@ -10,8 +10,8 @@
   },
   "reviewContract": {
     "gitPath": "materials/hero-model-library/infinity-strash/popp-integration-review.json",
-    "bytes": 28215,
-    "sha256": "e8e705908320b81d687b98bc4542392ab366468fbba8843a0fa362535a9d297f"
+    "bytes": 29251,
+    "sha256": "e84033bb0375204ec51e8b416c94dcbc9ca473222dd0698c5eda15d0237b95f6"
   },
   "weaponDecision": {
     "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
@@ -24,9 +24,9 @@
     "closed": 1,
     "remaining": 4,
     "eventAudioCandidates": 36,
-    "eventAudioReviewed": 0,
+    "eventAudioReviewed": 36,
     "ggdVfxCandidates": 12,
-    "vfxVisuallyAccepted": 0,
+    "vfxVisuallyAccepted": 12,
     "vfxBindingProposals": 7,
     "vfxReserveCandidates": 5,
     "runtimeBindingsAddedByThisWorkflow": 0,
@@ -108,8 +108,8 @@
         "綁定通過 VFX 與技能檢查"
       ],
       "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-      "status": "source-texture-ggd-candidates-ready-review",
-      "evidence": "17 VFX package references are retained. Twelve recognised Niagara roots now have unbound vfx@1 reconstruction candidates using nine byte-verified source textures; two PN030 roots were excluded from PN020. Niagara timing, mesh layers, visual acceptance and skill binding remain open.",
+      "status": "owner-visual-approved-awaiting-niagara-mesh-and-skill-binding",
+      "evidence": "17 VFX package references are retained. All 12 reconstructed previews are owner-approved, while Niagara timing and mesh layers remain unrecovered; no skill binding was approved or created.",
       "closed": false,
       "remaining": true,
       "ownerReviewRequiredBeforeRuntimeMutation": true
@@ -128,8 +128,8 @@
         "只將核准配對寫入 runtime，並通過音訊與事件檢查"
       ],
       "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。",
-      "status": "pending-user-listening-review",
-      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. The dedicated 36-item queue has zero decisions and automaticBindingAllowed=false, so no event audio is bound before listening approval.",
+      "status": "owner-listening-approved-awaiting-identity-and-runtime-integration",
+      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 review candidates are owner-approved for their listed source event, while the source queue still marks speaker/event identity unverified and the portal authorizes zero runtime mutations; no event audio is bound yet.",
       "closed": false,
       "remaining": true,
       "ownerReviewRequiredBeforeRuntimeMutation": true
