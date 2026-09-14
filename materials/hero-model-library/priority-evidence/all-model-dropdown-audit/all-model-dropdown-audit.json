@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "dbba335fea27b7d3916b5b74ea9afed2452fd57c2a4eb6426349fb2c0625a162"
+      "sha256": "19889997892bed10e61a43d7544fd7bc91b4fc170e5323beb979d8869b58b57c"
     }
   },
   "summary": {
@@ -42,8 +42,8 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 36,
-    "readyUnregisteredCharacterOrMotionComponents": 34,
+    "readyUnregisteredIndependentComponents": 38,
+    "readyUnregisteredCharacterOrMotionComponents": 36,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
@@ -906,6 +906,32 @@
       ]
     },
     {
+      "id": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+      "character": "寶可夢訓練家（女）",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+        "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "Main merge and production deployment are not verified."
+      ]
+    },
+    {
       "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
       "character": "寶可夢訓練家（女）",
       "resourceRole": "independent-static-skinned-model-component",
@@ -930,6 +956,32 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    },
+    {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "character": "寶可夢訓練家（男）",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+        "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "Main merge and production deployment are not verified."
       ]
     },
     {
