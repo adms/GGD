@@ -116,10 +116,12 @@ export function HeroPage() {
         }}>
           {!catalog.modelIds.includes(project.presentation.modelKey) ? <option value={project.presentation.modelKey} disabled>{project.presentation.modelKey}（原值，目前目錄未支援）</option> : null}
           {[false, true].map((unclaimed) => {
-            // GH#1188：下載好了、還沒有任何英雄卡認領的模型照樣可選，但另起一組標成「待認領」。
+            // GH#1188：下載好了、英雄根本沒設計過（上架／未上架／legacy／社群 TS／下載清單都查過）的模型照樣可選，另起一組標成「待認領」。
+            // ⛔ 2026-09-15 更正 991b02ed6 的標籤「還沒有英雄卡」：那一版只看 champions/，對四成是錯的。答案只從 content-api 來（離線不分組）。
             const ids = catalog.modelIds.filter((id) => (catalog.unclaimedModelIds ?? []).includes(id) === unclaimed);
             const options = ids.map((id) => <option key={id} value={id}>{project.presentation.uploadedModel && id === project.presentation.modelKey ? "已上傳的英雄模型" : unclaimed ? `${id}（待認領）` : id}</option>);
-            return !unclaimed ? options : ids.length ? <optgroup key="unclaimed" label={`待認領：已下載、還沒有英雄卡（${ids.length}）`}>{options}</optgroup> : null;
+            const partial = catalog.unclaimedMissingEvidence?.length ? `；⚠️ 讀不到 ${catalog.unclaimedMissingEvidence.join("、")}，可能多標` : "";
+            return !unclaimed ? options : ids.length ? <optgroup key="unclaimed" label={`待認領：已下載、英雄還沒設計過（${ids.length}${partial}）`}>{options}</optgroup> : null;
           })}</select></label>{lockButton("presentation", "presentation.modelKey")}
         {project.presentation.modelProvenance ? <aside className="hero-model-source" aria-label="模型實際來源">
           <strong>{{ exact: "同角色素材", alternate: "同角色版本互通", "style-proxy": "近似風格替代" }[project.presentation.modelProvenance.relationship]}</strong>

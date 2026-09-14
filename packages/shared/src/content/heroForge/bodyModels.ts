@@ -1,32 +1,18 @@
 import { zModelDoc } from "../schema/model";
 import { MODEL_VERSION_PREFIX } from "../schema/championModelVersions";
 
-/** One selection rule for the Editor catalog and Main's trusted importer. */
-export function heroBodyModelIds(documents: Iterable<readonly [string, unknown]>): string[] {
-  return heroBodyModels(documents).ids;
-}
-
 /**
- * ⭐ GH#1188：同一次掃描同時回答「哪些可以挑」（`ids`）與「哪些**還沒有任何英雄卡**認領」（`unclaimed`）。
+ * One selection rule for the Editor catalog and Main's trusted importer.
  *
- * > owner 2026-09-11（逐字，`apps/editor/src/hero/catalog.test.ts` 引用）：「如果你遇到該角色**還沒有實作**
- * > 卻下載了模型 你**還是要放在後台跟編輯器的模型庫列表** **等待認領實作**」
- *
- * ⚠️ 認領看英雄卡的**整條身體鏈**：`modelKey` ＋ `modelVersions[].modelKey／sourceModelKey`。
- * ⛔ 只看 `modelKey` 會把「英雄已換上凍結版本（`version.body.*`）」的來源模型誤標成待認領
- * —— 量到（2026-09-15，出貨樹）：可挑 194 顆裡，只看 `modelKey` 算出 159 顆，看整條鏈是 112 顆。
- * ⚠️ `unclaimed ⊆ ids`：選不到的模型（FX／道具／停用）⛔ 不會被標成待認領。
+ * ⚠️ GH#1188「待認領」⛔ 不在這裡算 —— 判準住 `./modelClaims.ts`（要讀 `_legacy`／skins／heroForge TS／下載清單，
+ * 匯入器不該為了一個顯示用的分組載入那些）。2026-09-15 更正 991b02ed6 把它併進這一支、而且只看 `champions/` 的做法。
  */
-export function heroBodyModels(documents: Iterable<readonly [string, unknown]>): { ids: string[]; unclaimed: string[] } {
-  const bound = new Set<string>(), claimed = new Set<string>();
+export function heroBodyModelIds(documents: Iterable<readonly [string, unknown]>): string[] {
+  const bound = new Set<string>();
   const models: Array<{ id: string; heroBody?: boolean }> = [];
   for (const [key, raw] of documents) {
-    if (key.startsWith("champions/") && raw && typeof raw === "object") {
-      const card = raw as { modelKey?: unknown; modelVersions?: unknown };
-      if (typeof card.modelKey === "string") { bound.add(card.modelKey); claimed.add(card.modelKey); }
-      if (Array.isArray(card.modelVersions)) for (const version of card.modelVersions as Array<Record<string, unknown> | null>) {
-        for (const ref of [version?.modelKey, version?.sourceModelKey]) if (typeof ref === "string") claimed.add(ref);
-      }
+    if (key.startsWith("champions/") && raw && typeof raw === "object" && "modelKey" in raw && typeof raw.modelKey === "string") {
+      bound.add(raw.modelKey);
     } else if (key.startsWith("models/")) {
       const parsed = zModelDoc.safeParse(raw);
       if (parsed.success && key === `models/${parsed.data.id}`) models.push(parsed.data);
@@ -47,9 +33,8 @@ export function heroBodyModels(documents: Iterable<readonly [string, unknown]>):
   //   而後台下拉早就濾掉了（`apps/admin/src/contentApi.ts` 的
   //   `!entry.id.startsWith("version.body.")`）⇒ ⛔ **兩個面對同一個問題答案不同**。
   //   這一行讓它們一致。
-  const ids = [...new Set(models
+  return [...new Set(models
     .filter((model) => !model.id.startsWith(MODEL_VERSION_PREFIX))
     .filter((model) => model.heroBody === true || (model.heroBody !== false && bound.has(model.id)))
     .map((model) => model.id))].sort();
-  return { ids, unclaimed: ids.filter((id) => !claimed.has(id)) };
 }

@@ -530,7 +530,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   });
 
   // ---------- reads ----------
-  registerHeroBodyModelRoutes(app, root); // GH#1188：可挑的英雄身體 ＋ 待認領
+  registerHeroBodyModelRoutes(app, root, repoRoot); // GH#1188：可挑的英雄身體 ＋ 待認領（repoRoot：owner 下載清單住 materials/）
   app.get("/content-api/manifest", async (_req, reply) => {
     const p = join(root, "manifest.json");
     if (!existsSync(p)) return err(reply, 404, "manifest.json not found — run content:build");

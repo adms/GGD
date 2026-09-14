@@ -3,7 +3,8 @@ import { ContentLoader, HttpContentSource, HERO_SIMULATION_COLLECTIONS, type Tem
 import { zTemplateDoc } from "@ggd/shared/content/schema/template";
 import type { VfxSubtypeDoc } from "@ggd/shared/content/schema/vfxSubtype";
 import { pickableTemplateIds } from "../forge/typeCatalog";
-import { heroBodyModels } from "@ggd/shared/content/heroForge/bodyModels";
+import { heroBodyModelIds } from "@ggd/shared/content/heroForge/bodyModels";
+import type { HeroBodyModelClaims } from "@ggd/shared/content/heroForge/modelClaims";
 import type { HeroPackageCatalog } from "@ggd/shared/content/import/heroPackage";
 
 // Shipped catalog is available even before this device has a network session.
@@ -17,18 +18,22 @@ export interface HeroCatalog {
   projectiles: ProjectileDoc[];
   vfxSubtypes?: VfxSubtypeDoc[];
   modelIds: string[];
-  /** `modelIds` 裡還沒有任何英雄卡認領的（GH#1188；判準在 `heroBodyModels`）。 */
+  /**
+   * `modelIds` 裡「英雄根本沒設計過」的（GH#1188；判準在 `@ggd/shared/content/heroForge/modelClaims`，答案由 content-api 給）。
+   * ⚠️ 離線 bundle 沒有這一格：它看不到 `_legacy`／skins／下載清單 ⇒ ⛔ 自己算會把設計過的英雄標成待認領（2026-09-15 更正 991b02ed6）。
+   */
   unclaimedModelIds?: string[];
+  /** 算待認領時讀不到的證據（非空 ⇒ 選單要說「可能多標」）。 */
+  unclaimedMissingEvidence?: string[];
   simulationDocuments: Array<[string, Record<string, unknown>]>;
   source: "local-api" | "bundled";
   validatedUploadedModel?: HeroPackageCatalog["validatedUploadedModel"];
 }
-export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDocuments"], models: readonly Record<string, unknown>[], source: HeroCatalog["source"]): HeroCatalog {
+export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDocuments"], models: readonly Record<string, unknown>[], source: HeroCatalog["source"], claims?: Pick<HeroBodyModelClaims, "unclaimed" | "evidence"> | null): HeroCatalog {
   const docs = (collection: string) => simulationDocuments.filter(([key]) => key.startsWith(`${collection}/`)).map(([, document]) => document);
   // A new catalog-approved body does not require a fake official champion.
   // Unmarked FX/props remain unavailable, matching Main's import rule.
-  // GH#1188：同一次掃描帶出「還沒有任何英雄卡認領」的那一桶，選單標成待認領。
-  const bodies = heroBodyModels([...simulationDocuments, ...models.map((model) => [`models/${model.id}`, model] as const)]);
+  const modelIds = heroBodyModelIds([...simulationDocuments, ...models.map((model) => [`models/${model.id}`, model] as const)]);
   return { simulationDocuments, source, configs: docs("config"),
     ...(import.meta.env.VITE_HERO_GENERATOR_VERSION ? { generatorVersion: String(import.meta.env.VITE_HERO_GENERATOR_VERSION) } : {}),
     templates: docs("ability-templates").flatMap((value) => {
@@ -37,8 +42,13 @@ export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDo
     }),
     projectiles: docs("projectiles") as unknown as ProjectileDoc[],
     vfxSubtypes: docs("vfx-subtypes") as unknown as VfxSubtypeDoc[],
-    modelIds: bodies.ids, unclaimedModelIds: bodies.unclaimed,
+    modelIds,
+    ...(claims ? { unclaimedModelIds: claims.unclaimed.filter((id) => modelIds.includes(id)), unclaimedMissingEvidence: claims.evidence.missing } : {}),
   };
+}
+/** GH#1188：待認領只問 content-api（判準的唯一呼叫點）；問不到 ⇒ null ⇒ 選單不分組，⛔ 不自己猜。 */
+async function fetchModelClaims(): Promise<HeroBodyModelClaims | null> {
+  try { const response = await globalThis.fetch("/content-api/hero-body-models"); return response.ok ? await response.json() as HeroBodyModelClaims : null; } catch { return null; }
 }
 const simulationDocuments: HeroCatalog["simulationDocuments"] = Object.entries(simulationFiles).flatMap(([path, raw]) => {
   const document = raw as Record<string, unknown>;
@@ -51,8 +61,8 @@ export function useHeroCatalog() {
     queryKey: ["hero-catalog"], initialData: bundledHeroCatalog, initialDataUpdatedAt: 0,
     queryFn: async (): Promise<HeroCatalog> => {
       try {
-        const { store } = await new ContentLoader(new HttpContentSource({ baseUrl: "/content-api", mode: "api", fetchFn: (input, init) => globalThis.fetch(input, init) })).load({ policy: "fail-closed" });
-        return createHeroCatalog([...HERO_SIMULATION_COLLECTIONS, "vfx-subtypes" as const].flatMap((collection) => store.all<Record<string, unknown>>(collection).map((document) => [`${collection}/${document.id}`, document] as [string, Record<string, unknown>])), store.all<Record<string, unknown>>("models"), "local-api");
+        const [{ store }, claims] = await Promise.all([new ContentLoader(new HttpContentSource({ baseUrl: "/content-api", mode: "api", fetchFn: (input, init) => globalThis.fetch(input, init) })).load({ policy: "fail-closed" }), fetchModelClaims()]);
+        return createHeroCatalog([...HERO_SIMULATION_COLLECTIONS, "vfx-subtypes" as const].flatMap((collection) => store.all<Record<string, unknown>>(collection).map((document) => [`${collection}/${document.id}`, document] as [string, Record<string, unknown>])), store.all<Record<string, unknown>>("models"), "local-api", claims);
       } catch { return bundledHeroCatalog; }
     },
     staleTime: 30_000,

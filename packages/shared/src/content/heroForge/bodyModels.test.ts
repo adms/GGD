@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
-import { heroBodyModelIds, heroBodyModels } from "./bodyModels";
+import { heroBodyModelIds } from "./bodyModels";
+// GH#1188 待認領的守衛搬到 `apps/content-api/src/modelClaims.test.ts`（判準改住 `./modelClaims.ts`，涵蓋凍結版本來源鏈在內的每一種證據）。
 
 const model = (id: string, extra: Record<string, unknown> = {}) => ({
   id, schema: "model@1", glbPath: "assets/models/body.glb", scale: 1, collisionRadius: 0.5,
@@ -22,17 +23,6 @@ it("withdraws a marked body even when an existing champion still references it",
     ["champions/existing", { modelKey: "withdrawn" }],
     ["champions/missing", { modelKey: "absent" }],
   ])).toEqual([]);
-});
-
-it("⭐ GH#1188 待認領：沒有任何英雄卡的身體鏈指到它才算；換上凍結版本的來源模型仍是已認領", () => {
-  expect(heroBodyModels([
-    ["models/loose", model("loose", { heroBody: true })],
-    ["models/source", model("source", { heroBody: true })],
-    ["models/worn", model("worn", { heroBody: true })],
-    ["models/effect-only", model("effect-only")],
-    ["champions/versioned", { modelKey: "version.body.abc", modelVersions: [{ modelKey: "version.body.abc", sourceModelKey: "source" }] }],
-    ["champions/plain", { modelKey: "worn" }],
-  ])).toEqual({ ids: ["loose", "source", "worn"], unclaimed: ["loose"] });
 });
 
 it("does not accept malformed approval, incomplete animation metadata or mismatched document identity", () => {
