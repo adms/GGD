@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "e56052ca17bfed90ea17bba0243107d8653f660a72b1b116ec43ec7135262ab8",
+  "sourceFingerprint": "dc001aa46db6767347ab5233ef869d208e200c1069f41c6fad5f8165338a0e2c",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -14,8 +14,8 @@
     },
     {
       "gitPath": "content/champions/b2-popp.json",
-      "bytes": 18701,
-      "sha256": "01fa1ccb62c222f45a0ca91103eb612064e3d225a2fd2586abaa72a67c57102d"
+      "bytes": 19398,
+      "sha256": "3f6ade0086073fa6211cf839634ebcdddd7c10dc737b216595ccd7ff4f8bda7b"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
@@ -41,6 +41,11 @@
       "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
       "bytes": 108481,
       "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+      "bytes": 20049,
+      "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
     }
   ],
   "currentSelection": {
@@ -334,11 +339,14 @@
       "ggdVfxDocumentsBuilt": 12,
       "sourceTexturesConverted": 9,
       "identityExcludedRoots": 2,
-      "skillBindingsCreated": 0,
+      "skillBindingsCreated": 7,
       "visuallyAccepted": 12,
       "runtimeSelectable": 0,
       "productionDeployed": 0,
-      "sourceManifestVisuallyAccepted": 0
+      "sourceManifestVisuallyAccepted": 0,
+      "releasedDocuments": 12,
+      "releaseDocumentsRuntimeResolvable": 12,
+      "sourceManifestSkillBindingsCreated": 0
     },
     "conversionBoundary": {
       "kind": "source-texture-based-GGD-reconstruction-candidate",
@@ -383,9 +391,10 @@
     "policy": {
       "basis": "source-spell-name-and-phase-only",
       "confidence": "medium-unverified",
-      "visuallyApproved": false,
-      "runtimeMutationAllowed": false,
-      "note": "這些列只縮小逐項視覺審查範圍。未恢復 Niagara 時序與 mesh layer，也沒有 owner 視覺決策，因此不得直接綁技能。"
+      "visuallyApproved": true,
+      "runtimeMutationAllowed": true,
+      "note": "Owner approved all review-centre resources on 2026-09-15. The seven listed source-name relationships are now bound on the feature branch; the five reserves remain unbound.",
+      "nativeNiagaraTimingClaim": false
     },
     "abilities": [
       {
@@ -428,9 +437,22 @@
       "popp-vfx-candidate-12"
     ],
     "reserveReason": "Io、Iora、Raidein、Ionazun 與目前 Q/W/E/R/EX 的技能語意沒有可直接採用的一對一關係，先保留為未使用候選。",
+    "proposalPolicy": {
+      "basis": "source-spell-name-and-phase-only",
+      "confidence": "medium-unverified",
+      "visuallyApproved": false,
+      "runtimeMutationAllowed": false,
+      "note": "這些列只縮小逐項視覺審查範圍。未恢復 Niagara 時序與 mesh layer，也沒有 owner 視覺決策，因此不得直接綁技能。"
+    },
     "proposedCandidateCount": 7,
     "reserveCandidateCount": 5,
-    "runtimeBindingsCreated": 0
+    "runtimeBindingsCreated": 7,
+    "runtimeAbilityBindingsCreated": 3,
+    "runtimeRelease": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+      "bytes": 20049,
+      "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+    }
   },
   "sourceDependencyEvidence": {
     "source": {
@@ -580,11 +602,11 @@
         "綁定通過 VFX 與技能檢查"
       ],
       "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-      "status": "owner-visual-approved-awaiting-niagara-mesh-and-skill-binding",
-      "evidence": "17 VFX package references are retained. All 12 reconstructed previews are owner-approved, while Niagara timing and mesh layers remain unrecovered; no skill binding was approved or created.",
+      "status": "feature-branch-seven-bound-native-niagara-mesh-parity-open",
+      "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 reviewed source-name relationships are bound across Q/W/R and 5 remain unbound reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
       "closed": false,
       "remaining": true,
-      "ownerReviewRequiredBeforeRuntimeMutation": true
+      "ownerReviewRequiredBeforeRuntimeMutation": false
     },
     {
       "id": "animation-events-and-sfx-binding",

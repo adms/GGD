@@ -54,15 +54,19 @@ class PoppReviewTest(unittest.TestCase):
         vfx = self.contract["vfxRuntimeCandidates"]
         self.assertEqual(vfx["summary"]["ggdVfxDocumentsBuilt"], 12)
         self.assertEqual(vfx["summary"]["identityExcludedRoots"], 2)
-        self.assertEqual(vfx["summary"]["skillBindingsCreated"], 0)
+        self.assertEqual(vfx["summary"]["skillBindingsCreated"], 7)
+        self.assertEqual(vfx["summary"]["sourceManifestSkillBindingsCreated"], 0)
+        self.assertEqual(vfx["summary"]["releasedDocuments"], 12)
         self.assertEqual(vfx["summary"]["visuallyAccepted"], 12)
         self.assertEqual(vfx["summary"]["sourceManifestVisuallyAccepted"], 0)
         proposals = self.contract["vfxBindingReviewProposals"]
         self.assertEqual(proposals["proposedCandidateCount"], 7)
         self.assertEqual(proposals["reserveCandidateCount"], 5)
-        self.assertFalse(proposals["policy"]["visuallyApproved"])
-        self.assertFalse(proposals["policy"]["runtimeMutationAllowed"])
-        self.assertEqual(proposals["runtimeBindingsCreated"], 0)
+        self.assertTrue(proposals["policy"]["visuallyApproved"])
+        self.assertTrue(proposals["policy"]["runtimeMutationAllowed"])
+        self.assertFalse(proposals["policy"]["nativeNiagaraTimingClaim"])
+        self.assertEqual(proposals["runtimeBindingsCreated"], 7)
+        self.assertEqual(proposals["runtimeAbilityBindingsCreated"], 3)
         gate = self.contract["eventAudioReviewGate"]
         self.assertEqual(gate["candidateCount"], 36)
         self.assertEqual(gate["reviewedCount"], 36)
@@ -88,7 +92,7 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(ledger["summary"]["vfxVisuallyAccepted"], 12)
         self.assertEqual(ledger["summary"]["vfxBindingProposals"], 7)
         self.assertEqual(ledger["summary"]["vfxReserveCandidates"], 5)
-        self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 0)
+        self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 7)
         self.assertEqual(ledger["weaponDecision"]["candidateCount"], 3)
         self.assertEqual(
             ledger["weaponDecision"]["selectedCandidateId"],
@@ -96,7 +100,8 @@ class PoppReviewTest(unittest.TestCase):
         )
         self.assertEqual(ledger["weaponDecision"]["selectionMode"], "manual")
         by_id = {row["id"]: row for row in ledger["gaps"]}
-        self.assertTrue(by_id["original-vfx-conversion"]["ownerReviewRequiredBeforeRuntimeMutation"])
+        self.assertFalse(by_id["original-vfx-conversion"]["ownerReviewRequiredBeforeRuntimeMutation"])
+        self.assertEqual(by_id["original-vfx-conversion"]["status"], "feature-branch-seven-bound-native-niagara-mesh-parity-open")
         self.assertTrue(by_id["animation-events-and-sfx-binding"]["ownerReviewRequiredBeforeRuntimeMutation"])
 
     def test_html_has_visible_state_controls_and_applied_owner_receipt(self):
@@ -110,8 +115,8 @@ class PoppReviewTest(unittest.TestCase):
         self.assertIn("已核准並鎖定", page)
         self.assertIn("五項權威整合狀態", page)
         self.assertIn("asset-review-portal.html", page)
-        self.assertIn("VFX 語意配對候選", page)
-        self.assertIn("medium-unverified／預覽已核准／技能綁定 0", page)
+        self.assertIn("VFX 語意配對（功能分支已綁定）", page)
+        self.assertIn("預覽已核准／功能分支已綁定", page)
         self.assertIn("candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)", page)
         self.assertNotIn("id=\"clearWeapon\"", page)
 

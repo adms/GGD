@@ -55,7 +55,7 @@ def verify_component_git_contents(components, repo=ROOT):
 
 
 def verify_popp_approval_boundary(gap_ledger, review_contract, vfx_proposals):
-    """Require current owner approvals without promoting them to runtime binding."""
+    """Require owner approvals plus the separately-receipted seven VFX bindings."""
     summary=gap_ledger.get('summary',{})
     owner=review_contract.get('portalOwnerReview',{})
     audio=owner.get('audio',{})
@@ -66,7 +66,7 @@ def verify_popp_approval_boundary(gap_ledger, review_contract, vfx_proposals):
         or summary.get('eventAudioReviewed')!=36
         or summary.get('ggdVfxCandidates')!=12
         or summary.get('vfxVisuallyAccepted')!=12
-        or summary.get('runtimeBindingsAddedByThisWorkflow')!=0
+        or summary.get('runtimeBindingsAddedByThisWorkflow')!=7
         or review_contract.get('schema')!='ggd.popp-integration-review@1'
         or audio.get('candidateCount')!=36
         or audio.get('approvedCount')!=36
@@ -85,11 +85,16 @@ def verify_popp_approval_boundary(gap_ledger, review_contract, vfx_proposals):
         or vfx_runtime.get('ggdVfxDocumentsBuilt')!=12
         or vfx_runtime.get('visuallyAccepted')!=12
         or vfx_runtime.get('sourceManifestVisuallyAccepted')!=0
-        or vfx_runtime.get('skillBindingsCreated')!=0
+        or vfx_runtime.get('skillBindingsCreated')!=7
+        or vfx_runtime.get('sourceManifestSkillBindingsCreated')!=0
+        or vfx_runtime.get('releasedDocuments')!=12
+        or vfx_runtime.get('releaseDocumentsRuntimeResolvable')!=12
         or vfx_runtime.get('runtimeSelectable')!=0
         or vfx_runtime.get('productionDeployed')!=0
-        or vfx_proposals.get('runtimeBindingsCreated')!=0
-        or vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not False):
+        or vfx_proposals.get('runtimeBindingsCreated')!=7
+        or vfx_proposals.get('runtimeAbilityBindingsCreated')!=3
+        or vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not True
+        or vfx_proposals.get('policy',{}).get('nativeNiagaraTimingClaim') is not False):
         raise ValueError('Popp owner approvals are stale or overclaim runtime binding/readiness')
 
 
@@ -419,7 +424,7 @@ def build(git_link_root=ROOT):
         or popp_gap_summary.get('remaining')!=4
         or popp_gap_summary.get('vfxBindingProposals')!=7
         or popp_gap_summary.get('vfxReserveCandidates')!=5
-        or popp_gap_summary.get('runtimeBindingsAddedByThisWorkflow')!=0
+        or popp_gap_summary.get('runtimeBindingsAddedByThisWorkflow')!=7
         or len(popp_gap_rows)!=5
         or sum(bool(row.get('closed')) for row in popp_gap_rows)!=1
         or any(not row.get('closureCriteria') for row in popp_gap_rows)
@@ -439,8 +444,9 @@ def build(git_link_root=ROOT):
     if (popp_vfx_proposals.get('source',{}).get('sha256')!=hashlib.sha256(popp_vfx_proposals_path.read_bytes()).hexdigest()
         or popp_vfx_proposals.get('proposedCandidateCount')!=7
         or popp_vfx_proposals.get('reserveCandidateCount')!=5
-        or popp_vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not False
-        or popp_vfx_proposals.get('runtimeBindingsCreated')!=0):
+        or popp_vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not True
+        or popp_vfx_proposals.get('runtimeBindingsCreated')!=7
+        or popp_vfx_proposals.get('runtimeAbilityBindingsCreated')!=3):
         raise ValueError('Popp VFX review proposals are stale or overclaim approval/runtime binding')
     infinity_strash_av_summary_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json'
     infinity_strash_av_audio_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.json'
@@ -715,6 +721,8 @@ def build(git_link_root=ROOT):
     popp_vfx_reconstruction_receipt=read(popp_vfx_reconstruction_receipt_path)
     popp_vfx_runtime_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json'
     popp_vfx_runtime=read(popp_vfx_runtime_path)
+    popp_vfx_release_path=base/'priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json'
+    popp_vfx_release=read(popp_vfx_release_path)
     if (popp_vfx_receipt.get('schema')!='ggd.infinity-strash-popp-vfx-events@1'
         or popp_vfx_receipt.get('summary',{}).get('vfxDependencySupportFilesExported',0)<=0
         or popp_vfx_receipt.get('summary',{}).get('vfxConverted')!=0):
@@ -742,6 +750,15 @@ def build(git_link_root=ROOT):
         or popp_vfx_runtime.get('summary',{}).get('skillBindingsCreated')!=0
         or popp_vfx_runtime.get('summary',{}).get('visuallyAccepted')!=0):
         raise ValueError('Popp GGD VFX candidates are absent, stale or overclaim acceptance/binding')
+    if (popp_vfx_release.get('schema')!='ggd.popp-vfx-runtime-release@1'
+        or popp_vfx_release.get('summary',{}).get('ownerApprovedVfxReleased')!=12
+        or popp_vfx_release.get('summary',{}).get('abilityBindingsCreated')!=3
+        or popp_vfx_release.get('summary',{}).get('candidateRelationshipsBound')!=7
+        or popp_vfx_release.get('summary',{}).get('reserveCandidatesReleasedUnbound')!=5
+        or popp_vfx_release.get('states',{}).get('featureBranchSkillBindingsCreated') is not True
+        or popp_vfx_release.get('states',{}).get('nativeNiagaraTimingRecovered') is not False
+        or popp_vfx_release.get('states',{}).get('rootSpecificMeshLayersBound') is not False):
+        raise ValueError('Popp VFX runtime release is absent, stale or overclaims source parity')
     dai_vfx_candidates_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json'
     dai_vfx_policy_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/policy-check.json'
     dai_vfx_receipt_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/receipt.json'
@@ -1156,7 +1173,7 @@ def build(git_link_root=ROOT):
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
-            status='12 source-texture GGD VFX candidates built; Niagara timing/mesh layers/visual acceptance and skill binding pending',
+            status='12 owner-approved GGD VFX release documents present; 7 reviewed relationships bound to Q/W/R; exact native Niagara timing and root-specific mesh attribution remain open',
             receiptGitPath=str(popp_vfx_receipt_path.relative_to(ROOT)),
             receiptSha256=hashlib.sha256(popp_vfx_receipt_path.read_bytes()).hexdigest(),
             backupReceiptGitPath=str(popp_vfx_export_backup_path.relative_to(ROOT)),
@@ -1177,6 +1194,16 @@ def build(git_link_root=ROOT):
                 candidates=popp_vfx_runtime['candidates'],
                 excluded=popp_vfx_runtime['excluded'],
                 reviewPage=popp_vfx_runtime['review']['page']),
+            runtimeRelease=dict(
+                gitPath=str(popp_vfx_release_path.relative_to(ROOT)),
+                sha256=hashlib.sha256(popp_vfx_release_path.read_bytes()).hexdigest(),
+                summary=popp_vfx_release['summary'],
+                releasedVfx=popp_vfx_release['releasedVfx'],
+                abilityBindings=popp_vfx_release['abilityBindings'],
+                reserveCandidateIds=popp_vfx_release['reserveCandidateIds'],
+                championMirror=popp_vfx_release['championMirror'],
+                states=popp_vfx_release['states'],
+                meshLayerBoundary=popp_vfx_release['meshLayerBoundary']),
             localRoot=popp_vfx_export_backup['source'],
             s3Uri=popp_vfx_export_backup['s3Uri'],
             manifestUri=popp_vfx_export_backup['manifestUri'],
@@ -1691,11 +1718,24 @@ def main():
                     'gitPath': result['poppVfxDependencySupport']['runtimeCandidates']['gitPath'],
                     'sha256': result['poppVfxDependencySupport']['runtimeCandidates']['sha256'],
                 },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['runtimeRelease']['gitPath'],
+                    'sha256': result['poppVfxDependencySupport']['runtimeRelease']['sha256'],
+                },
                 *[
                     evidence
                     for candidate in result['poppVfxDependencySupport']['runtimeCandidates']['candidates']
                     for evidence in (candidate['runtimeTexture'], candidate['vfxDocument'])
                 ],
+                *[
+                    candidate['releaseDocument']
+                    for candidate in result['poppVfxDependencySupport']['runtimeRelease']['releasedVfx']
+                ],
+                *[
+                    binding['abilityDocument']
+                    for binding in result['poppVfxDependencySupport']['runtimeRelease']['abilityBindings']
+                ],
+                result['poppVfxDependencySupport']['runtimeRelease']['championMirror'],
                 result['historicalModelRestorationReceipt'],
                 result['historicalModelOptionRegistration'],
                 result['historicalModelLineageAudit'],

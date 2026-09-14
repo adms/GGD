@@ -24,8 +24,8 @@ def read_ledger() -> dict:
     summary = payload.get("summary", {})
     if (summary.get("defined"), summary.get("closed"), summary.get("remaining")) != (5, 1, 4):
         raise ValueError("Popp gap ledger does not preserve the verified 1 closed / 4 remaining boundary")
-    if summary.get("runtimeBindingsAddedByThisWorkflow") != 0:
-        raise ValueError("Popp gap ledger overclaims a runtime mutation")
+    if summary.get("runtimeBindingsAddedByThisWorkflow") != 7:
+        raise ValueError("Popp gap ledger must pin the seven approved VFX candidate relationships")
     return payload
 
 
@@ -53,8 +53,8 @@ def render(payload: dict) -> str:
         f"審查與技術狀態：GGD VFX 候選 {summary['ggdVfxCandidates']} 個，視覺核准 "
         f"{summary['vfxVisuallyAccepted']}；其中 {summary['vfxBindingProposals']} 個已依來源名稱整理成 Q/W/R 審查提案，"
         f"另 {summary['vfxReserveCandidates']} 個保留未配對。事件音訊候選 {summary['eventAudioCandidates']} 個，逐項聽審 "
-        f"{summary['eventAudioReviewed']}。預覽／聽審核准不等於技術綁定；本流程新增 runtime 綁定 "
-        f"{summary['runtimeBindingsAddedByThisWorkflow']}。",
+        f"{summary['eventAudioReviewed']}。本流程已將核准清單中的 {summary['runtimeBindingsAddedByThisWorkflow']} 個 VFX 候選關係綁到 Q/W/R；"
+        "精確原生 Niagara 時序與 root-specific mesh layer 仍明列缺口。",
         "Kagayaki 維持 `modelSelectionMode=manual` 的單一作用中選擇，Magikaru、Mahouno 仍是獨立後台候選；"
         "此狀態只證明功能分支資料，正式站部署尚未驗證。",
         "",

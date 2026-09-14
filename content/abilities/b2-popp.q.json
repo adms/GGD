@@ -56,11 +56,12 @@
     },
     "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
   },
-  "vfxKey": "fx.prim.arcane.slash",
+  "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
   "vfxLayers": [
     {
-      "attachTo": "caster",
-      "vfxKey": "fx.prim.arcane.slash"
+      "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+      "attachTo": "point",
+      "delayMs": 0
     }
   ],
   "icon": "assets/icons/abilities/b2-popp.q.webp",

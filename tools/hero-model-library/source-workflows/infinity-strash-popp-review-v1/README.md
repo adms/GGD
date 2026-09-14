@@ -21,11 +21,31 @@ generated output.
 
 `vfx-binding-proposals.json` maps all twelve generated VFX candidates into
 seven source-name proposals for Q/W/R plus five unassigned reserves. The
-generator joins the central review portal's owner receipt: all 12 VFX previews
-and all 36 event-audio candidates are approved as of 2026-09-15. That receipt
-sets `runtimeMutationAllowed=false`; Niagara timing, mesh reconstruction,
-speaker/event identity and skill timing still block binding. The generated
-contract therefore reports the approvals without changing runtime.
+central review portal records visual approval for all 12 VFX previews. The
+newer 2026-09-15 owner instruction allows the reviewed resources to enter the
+feature branch, so `runtime-bindings.json` now authorizes the seven existing
+proposal relationships and preserves the five reserves without guessing.
+
+`publish_vfx_runtime.py` is the sole writer for the 12 release VFX documents,
+the Q/W/R `vfxKey` and `vfxLayers` fields, the champion mirror, and the runtime
+release receipt. Directed phases add aim-relative orientation; every delay is
+bounded by the authored ability `castTimeSec`. The receipt explicitly keeps
+`nativeNiagaraTimingRecovered=false` and `rootSpecificMeshLayersBound=false`:
+all 33 recovered StaticMesh GLBs remain indexed support assets because the
+source evidence does not identify which root owns which mesh.
+
+Run the complete checked pipeline instead of editing generated files:
+
+```sh
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/run_vfx_runtime_release.py --write
+# verification-only rerun
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/run_vfx_runtime_release.py
+```
+
+The pipeline publishes VFX and ability documents, rebuilds the official
+content indexes/bundle, regenerates the review contract, gap ledger, fixed
+five-day report section and current-resource index, then runs content/VFX and
+workflow checks. Audio identity and audio runtime binding remain separate.
 
 Apply an exported owner decision through the checked workflow; do not edit the champion default by hand:
 

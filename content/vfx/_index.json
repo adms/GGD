@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "b5b312448f47",
+  "hash": "b8f430d12052",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -1461,10 +1461,22 @@
       "size": 680
     },
     {
+      "id": "fx.strash.popp.nps-hyadaruko-core",
+      "path": "vfx/fx.strash.popp.nps-hyadaruko-core.json",
+      "hash": "4af48add4980",
+      "size": 1192
+    },
+    {
       "id": "fx.strash.popp.nps-hyadaruko-core.candidate",
       "path": "vfx/fx.strash.popp.nps-hyadaruko-core.candidate.json",
       "hash": "0737eec41ad4",
       "size": 1202
+    },
+    {
+      "id": "fx.strash.popp.nps-hyadaruko-hit",
+      "path": "vfx/fx.strash.popp.nps-hyadaruko-hit.json",
+      "hash": "58a62102c094",
+      "size": 1190
     },
     {
       "id": "fx.strash.popp.nps-hyadaruko-hit.candidate",
@@ -1473,10 +1485,22 @@
       "size": 1200
     },
     {
+      "id": "fx.strash.popp.nps-io-bullet-00",
+      "path": "vfx/fx.strash.popp.nps-io-bullet-00.json",
+      "hash": "705268b74c30",
+      "size": 1307
+    },
+    {
       "id": "fx.strash.popp.nps-io-bullet-00.candidate",
       "path": "vfx/fx.strash.popp.nps-io-bullet-00.candidate.json",
       "hash": "293121a56844",
       "size": 1258
+    },
+    {
+      "id": "fx.strash.popp.nps-io-explosive-00",
+      "path": "vfx/fx.strash.popp.nps-io-explosive-00.json",
+      "hash": "7883737ead7a",
+      "size": 1192
     },
     {
       "id": "fx.strash.popp.nps-io-explosive-00.candidate",
@@ -1485,10 +1509,22 @@
       "size": 1202
     },
     {
+      "id": "fx.strash.popp.nps-ionazun-explosive-00",
+      "path": "vfx/fx.strash.popp.nps-ionazun-explosive-00.json",
+      "hash": "934f1251f5ec",
+      "size": 1197
+    },
+    {
       "id": "fx.strash.popp.nps-ionazun-explosive-00.candidate",
       "path": "vfx/fx.strash.popp.nps-ionazun-explosive-00.candidate.json",
       "hash": "0a9ef5147b1b",
       "size": 1207
+    },
+    {
+      "id": "fx.strash.popp.nps-iora-explosive-00",
+      "path": "vfx/fx.strash.popp.nps-iora-explosive-00.json",
+      "hash": "e143c9b6af9e",
+      "size": 1194
     },
     {
       "id": "fx.strash.popp.nps-iora-explosive-00.candidate",
@@ -1497,10 +1533,22 @@
       "size": 1204
     },
     {
+      "id": "fx.strash.popp.nps-mera-firetrail-00",
+      "path": "vfx/fx.strash.popp.nps-mera-firetrail-00.json",
+      "hash": "5ca5aebb004d",
+      "size": 1315
+    },
+    {
       "id": "fx.strash.popp.nps-mera-firetrail-00.candidate",
       "path": "vfx/fx.strash.popp.nps-mera-firetrail-00.candidate.json",
       "hash": "c85d088c4a40",
       "size": 1266
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-core",
+      "path": "vfx/fx.strash.popp.nps-merami-core.json",
+      "hash": "8875a3a793ae",
+      "size": 1192
     },
     {
       "id": "fx.strash.popp.nps-merami-core.candidate",
@@ -1509,10 +1557,22 @@
       "size": 1202
     },
     {
+      "id": "fx.strash.popp.nps-merami-firetrail-00",
+      "path": "vfx/fx.strash.popp.nps-merami-firetrail-00.json",
+      "hash": "f7c4d38b061d",
+      "size": 1317
+    },
+    {
       "id": "fx.strash.popp.nps-merami-firetrail-00.candidate",
       "path": "vfx/fx.strash.popp.nps-merami-firetrail-00.candidate.json",
       "hash": "b31f7da367c0",
       "size": 1268
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-landing-2",
+      "path": "vfx/fx.strash.popp.nps-merami-landing-2.json",
+      "hash": "9104360735d9",
+      "size": 1237
     },
     {
       "id": "fx.strash.popp.nps-merami-landing-2.candidate",
@@ -1521,10 +1581,22 @@
       "size": 1247
     },
     {
+      "id": "fx.strash.popp.nps-merami-muzzle",
+      "path": "vfx/fx.strash.popp.nps-merami-muzzle.json",
+      "hash": "885f8143be6c",
+      "size": 1311
+    },
+    {
       "id": "fx.strash.popp.nps-merami-muzzle.candidate",
       "path": "vfx/fx.strash.popp.nps-merami-muzzle.candidate.json",
       "hash": "fadfedabd132",
       "size": 1262
+    },
+    {
+      "id": "fx.strash.popp.nps-raidein-charge-core",
+      "path": "vfx/fx.strash.popp.nps-raidein-charge-core.json",
+      "hash": "b5a9ef52005e",
+      "size": 1188
     },
     {
       "id": "fx.strash.popp.nps-raidein-charge-core.candidate",
