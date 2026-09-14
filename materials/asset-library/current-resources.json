@@ -7380,7 +7380,7 @@
     "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
     "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
     "gitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json",
-    "sha256": "b932a6fcb35f5a713824cc0ad3a7fc7928a21c77300d4529e6de6392f80470ca",
+    "sha256": "ddc585a26e7fc5c8f88cacbc3ffef24bcfe9b4c0142441a368a6fb4ec6ca63f0",
     "documentGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md",
     "documentSha256": "257c5a08b004a01f8099d6dd3e7319491c1859a28992e20ee3a1d5b47eeb60e9",
     "unusedAssetIndexGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/unused-assets.json",
@@ -7404,9 +7404,9 @@
     "runtimeBinding": false,
     "productionDeploymentVerified": false,
     "preservedSourceAuditGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/preserved-source-audit.json",
-    "preservedSourceAuditSha256": "47228b7d73e2db3cb3aab4dcb00880af4348f2dcb279a69aeec2c2b17cd59596",
+    "preservedSourceAuditSha256": "254918349213bc945470f19dcdbd5de7aa29aee9662d5114e527481f902ac005",
     "entryGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/current-resource-entry.json",
-    "entrySha256": "d31605893ea29368a0601c6c66fb673f3bf0647cc78767193a5ccc517301dc6d"
+    "entrySha256": "739fcad67df8d65115a62acb005f93a8bff0abe56a93c54159e7a097b2ab502b"
   },
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
@@ -14489,7 +14489,7 @@
   "historicalModelOptionRegistration": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
     "bytes": 7190,
-    "sha256": "1efb7aec73b2c6a198cc8b99582818d1bd4cf92eed130e687e3f29b76d3d51b7",
+    "sha256": "cd0683ec7a5803e5d5a20b490c061c8771cbb6f2880d9fc3bff3c4d6ae256953",
     "registeredHeroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -14502,7 +14502,7 @@
   "historicalModelLineageAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json",
     "bytes": 17948,
-    "sha256": "de41f8fac6e05d9340185c68dd6e5eb09359965d11b0686e3bd0ecbd047f68f9",
+    "sha256": "7ebc3d7660c24b1555492193b272750643733d0b69f9762bd0fc47701ae410c8",
     "exactHistoricalGlbsByteIdentical": 4,
     "standardizedLineageOptionsRegistered": 4,
     "defaultsChanged": 0,
