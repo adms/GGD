@@ -136,6 +136,42 @@ describe("skills:sync 按改動裁剪", () => {
     expect(miss, `改了產生器 import 的模組,import 端卻被裁掉:\n  ${miss.join("\n  ")}`).toEqual([]);
   });
 
+  /**
+   * ⭐ GH#1166 審查補的 —— ⑦ 只看 JS/TS 的 `from "./x"`,⛔ 看不到 python 的
+   * `sys.path.insert(0, str(REPO / "tools" / "engine-vocab"))`(gen_contract_numbers.py:55)。
+   * 而那正是 codeRefs 存在的理由:遞迴接上而這一支沒接 ⇒ 改 engine_vocab.py 會漏跑 contract:numbers。
+   * ⚠️ 審查者的突變:把 codeRefs 的 `tools/<dir>` 迴圈換成空迭代器 ⇒ ⑦ 照樣 7/7 綠。
+   * 期望值從**產生器目錄裡的 sys.path 行**推導(把那一行的字串字面值接起來找 `tools/<dir>`),
+   * ⛔ 不抄名單、⛔ 不重用 codeRefs 的正則。
+   */
+  it("⑧ 程式參照(python)—— sys.path 吃進別的 tools/<dir>,改那個目錄 ⇒ 吃它的那一支一定在計畫裡", () => {
+    const scripts = readScripts(REPO);
+    const t = inputTable(REPO, io, scripts) as { chainSteps: string[] };
+    const tools = execFileSync("git", ["ls-files", "tools"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n").filter(Boolean);
+    const miss: string[] = [];
+    const seen = new Set<string>();
+    for (const n of new Set(t.chainSteps)) {
+      for (const entry of entryFiles(scripts, n)) {
+        if (!entry.startsWith("tools/")) continue;
+        const home = entry.split("/").slice(0, 2).join("/");
+        for (const f of tools.filter((x) => x.startsWith(`${home}/`) && x.endsWith(".py") && !x.includes("/out/"))) {
+          for (const line of readFileSync(join(REPO, f), "utf8").split("\n")) {
+            if (!line.includes("sys.path.insert(") || /^\s*#/.test(line)) continue;
+            const joined = [...line.matchAll(/["']([^"']+)["']/g)].map((m) => m[1]).join("/");
+            const d = /(?:^|\/)tools\/([\w.-]+)/.exec(joined)?.[1];
+            const dep = d && `tools/${d}` !== home ? tools.find((x) => x.startsWith(`tools/${d}/`) && /\/(?!test_)[^/]+\.py$/.test(x)) : undefined;
+            if (!dep) continue;
+            seen.add(`${n} ← ${dep}`);
+            const p = planFor({ io, ...t, paths: [dep], chainStale: false });
+            if (!p.full && !p.steps.includes(n)) miss.push(`${dep} ⇒ 少了 ${n}(${f} 的 sys.path 吃它)`);
+          }
+        }
+      }
+    }
+    expect([...seen].some((s) => s.startsWith("contract:numbers ← tools/engine-vocab/")), `儀器:連 GH#1166 點名的那一條都沒量到:\n  ${[...seen].join("\n  ")}`).toBe(true);
+    expect(miss, `產生器用 sys.path 吃進別的 tools/<dir>,改那裡卻被裁掉:\n  ${miss.join("\n  ")}`).toEqual([]);
+  });
+
   it("⑤ 產生器碰不到的 root(apps/**)⇒ 只跑真的掃原始碼的那幾支", () => {
     const p = planFromPaths(["apps/client/src/GameApp.ts"], REPO);
     expect(p.full).toBe(false);

@@ -50,6 +50,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { cpus, tmpdir } from "node:os";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
+import { emptyGateNote } from "./shipEmptyGate.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
 const HERE = new URL(".", import.meta.url).pathname;
@@ -595,16 +596,17 @@ console.log(
     `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 tools/deploy-timing 同一份）`,
 );
 
-// ⭐ GH#1166：一張「幾乎什麼都沒跑」的綠燈，限定詞要寫在**結論旁邊**（⛔ 不是只在開頭那行 why 裡）。
-//   0 個改動路徑 vs base ⇒ vitest 裁到 0 包、產生器裁到 0 支 ⇒ 綠燈只證明「自 base 起沒有改動」，
-//   ⛔ 不證明 base 本身被全跑驗過（例：合併進 main 而從沒全跑過的東西）。
-const emptyGate = [
-  ...(!onlySync && wantSuites.length === 0 ? [`本次沒有跑任何 vitest 包（0/${ALL_SUITES.length}；只剩 tools/deploy-timing 那一格）`] : []),
-  ...(!noSync && syncTrim.steps?.length === 0 ? ["本次沒有跑任何 skills:sync 產生器（只跑了 content:build）"] : []),
-];
-const emptyNote = emptyGate.length
-  ? `\n⚠️ ${emptyGate.join("、")} —— base ${syncBase.label ?? "(無)"} · ${syncPaths?.length ?? "?"} 個改動路徑 ⇒ 這張綠燈⛔ 不證明 base 本身被全跑驗過（要驗它：換一個更早的 --sync-base）`
-  : "";
+// ⭐ GH#1166：一張「幾乎什麼都沒跑」的綠燈，限定詞要寫在**結論旁邊**（見 shipEmptyGate.mjs；
+//   守衛 shipGateScript.test.ts 驗兩個方向＋這一行真的接到 ✅ 那一行）。
+const emptyNote = emptyGateNote({
+  onlySync,
+  noSync,
+  suites: wantSuites.length,
+  allSuites: ALL_SUITES.length,
+  syncSteps: syncTrim.steps?.length,
+  baseLabel: syncBase.label,
+  pathCount: syncPaths?.length,
+});
 if (failed.length === 0) {
   console.log(`\n✅ 四閘全綠。${emptyNote}`);
   process.exit(0);
