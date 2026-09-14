@@ -16,6 +16,9 @@ import re
 REPO = Path(__file__).resolve().parents[4]
 SOURCE_ID = "steam-kofxiv-terry-path-index-v1"
 NATIVE_ID = "TRY"
+CROSS_SOURCE_BACKLOG_ID = "ssbu-dolly"
+CROSS_SOURCE_NAME = "Terry Bogard"
+CROSS_SOURCE_DISPLAY_NAME = "泰利·柏格（Terry Bogard）"
 EXPECTED_LISTING_BYTES = 3_073_359
 EXPECTED_LISTING_SHA256 = "193ee8cb49ca7f7bea7ecafa9c6bca531c220725dcb2ac40f9671ff0b632ed97"
 EXPECTED_ROWS = 375
@@ -104,18 +107,12 @@ def write_jsonl_gzip(path: Path, rows: list[dict[str, object]]) -> None:
                     text.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
 
-def build(listing_path: Path, terry_backlog_path: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
+def build(listing_path: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
     if listing_path.stat().st_size != EXPECTED_LISTING_BYTES or sha256(listing_path) != EXPECTED_LISTING_SHA256:
         raise ValueError("KOF XIV cached WAD listing differs from pinned evidence")
     rows = parse_listing(listing_path.read_text(encoding="utf-8", errors="strict"))
     if len(rows) != EXPECTED_ROWS or sum(int(row["listedBytes"]) for row in rows) != EXPECTED_LISTED_BYTES:
         raise ValueError("KOF XIV TRY listing scope changed")
-
-    backlog = json.loads(terry_backlog_path.read_text(encoding="utf-8"))
-    matches = [row for row in backlog.get("characters", []) if row.get("id") == "ssbu-dolly"]
-    if len(matches) != 1 or matches[0].get("name") != "Terry Bogard":
-        raise ValueError("existing Terry identity authority is absent or ambiguous")
-    terry = matches[0]
 
     counts = Counter(str(row["assetKind"]) for row in rows)
     expected_counts = {
@@ -158,11 +155,12 @@ def build(listing_path: Path, terry_backlog_path: Path) -> tuple[dict[str, objec
                 "nativeToken": "TRY",
                 "nativeRootBodyPath": "Chara/TRY/TRY.obac",
                 "nativeVoiceFilenameToken": "v_006_try_",
-                "existingCrossSourceBacklogId": "ssbu-dolly",
-                "existingCrossSourceName": terry["name"],
-                "existingCrossSourceDisplayName": terry.get("displayName"),
-                "authorityGitPath": str(terry_backlog_path.relative_to(REPO)),
-                "authoritySha256": sha256(terry_backlog_path),
+                "existingCrossSourceBacklogId": CROSS_SOURCE_BACKLOG_ID,
+                "existingCrossSourceName": CROSS_SOURCE_NAME,
+                "existingCrossSourceDisplayName": CROSS_SOURCE_DISPLAY_NAME,
+                "authority": "frozen-generator-constant-crosswalk",
+                "authorityGitPath": str(Path(__file__).resolve().relative_to(REPO)),
+                "authoritySha256": sha256(Path(__file__).resolve()),
                 "caveat": "The token/name crosswalk is strong path evidence; KOF XIV body payload and visual identity are not re-opened in this run.",
             },
         },
@@ -275,9 +273,8 @@ def main() -> None:
     repo = args.repo.resolve()
     workspace = args.workspace.resolve()
     listing = workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1/quickbms-list.log"
-    backlog = repo / "materials/hero-model-library/已取得模型待設計英雄.json"
     output = repo / "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1"
-    inventory, rows = build(listing, backlog)
+    inventory, rows = build(listing)
 
     files_path = output / "files.jsonl.gz"
     inventory_path = output / "inventory.json"

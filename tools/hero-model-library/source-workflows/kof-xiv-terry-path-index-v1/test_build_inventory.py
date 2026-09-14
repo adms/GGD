@@ -16,6 +16,12 @@ EXTRACT_SPEC.loader.exec_module(EXTRACT)
 
 
 class TerryPathInventoryTest(unittest.TestCase):
+    def test_cross_source_identity_is_a_fixed_generator_authority(self):
+        self.assertEqual(MODULE.NATIVE_ID, "TRY")
+        self.assertEqual(MODULE.CROSS_SOURCE_BACKLOG_ID, "ssbu-dolly")
+        self.assertEqual(MODULE.CROSS_SOURCE_NAME, "Terry Bogard")
+        self.assertEqual(MODULE.CROSS_SOURCE_DISPLAY_NAME, "泰利·柏格（Terry Bogard）")
+
     def test_asset_classification_keeps_runtime_semantics_pending(self):
         cases = {
             "Chara/TRY/TRY.obac": ("model", "character-body-container"),

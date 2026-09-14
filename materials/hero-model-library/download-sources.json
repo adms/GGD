@@ -64112,8 +64112,9 @@
           "existingCrossSourceBacklogId": "ssbu-dolly",
           "existingCrossSourceName": "Terry Bogard",
           "existingCrossSourceDisplayName": "泰利·柏格（Terry Bogard）",
-          "authorityGitPath": "materials/hero-model-library/已取得模型待設計英雄.json",
-          "authoritySha256": "f9ecff949a06557a76bca1a8791e81af0705cf632795b1c71297041c58b66d9b",
+          "authority": "frozen-generator-constant-crosswalk",
+          "authorityGitPath": "tools/hero-model-library/source-workflows/kof-xiv-terry-path-index-v1/build_inventory.py",
+          "authoritySha256": "9522ab1c1d448da8044c42248eb30c8284d87d0d09cd8a0f2a53c1e64b21b089",
           "caveat": "The token/name crosswalk is strong path evidence; KOF XIV body payload and visual identity are not re-opened in this run."
         }
       },
@@ -64128,8 +64129,8 @@
       "gitEvidence": [
         {
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
-          "bytes": 10102,
-          "sha256": "11b85e10046c22a284a00abe142971a628e9b3952eb05ea566061b9145a02d20"
+          "bytes": 10184,
+          "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",

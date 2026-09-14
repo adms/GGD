@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T07:04:59+08:00",
-  "inputsSha256": "31d957b336ed3930922a50c36d6ea9a628e9c4a6507fb2640f632d2bf0781006",
+  "generatedAt": "2026-09-15T07:53:13+08:00",
+  "inputsSha256": "cb5af844800799f104d96815099f32e99cf42a169c3d7301aeefe27a385fc290",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -192547,7 +192547,259 @@
           "fullReadbackVerified": true,
           "allMemberSha256Verified": true,
           "usage": "manual-only legacy conversion backup; not runtime-ready"
-        }
+        },
+        "componentCandidates": [
+          {
+            "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+            "conversionCandidateId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+            "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+            "sourceClass": "mod-community-port-derived-budget-candidate",
+            "selectionClass": "community-mod",
+            "nameZh": "阿修・克里姆森",
+            "originalName": "Ash Crimson",
+            "workZh": "拳皇 XV",
+            "sourceGame": "THE KING OF FIGHTERS XV",
+            "sourceGameReleasedAt": "2022-02-17",
+            "platform": "unknown-original-platform; derived offline on macOS",
+            "nativeId": "ASH_LEFT_HAIR",
+            "sourceVersion": "universal-atlas-v1",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+            "bytes": 1486160,
+            "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+            "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": false,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ash-crimson",
+              "left-hair"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 7869,
+            "drawPrimitives": 5,
+            "skinCount": 1,
+            "jointCount": 258,
+            "jointCounts": [
+              258
+            ],
+            "textureCount": 12,
+            "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+            "limitations": [
+              "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+              "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+              "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+              "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+              "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/delivery.json",
+              "bytes": 2533,
+              "sha256": "c50a4d698dc7934d0db47e20a3946b292a7ff78838a8dd4a9b4e466407cdabdb"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/acceptance.json",
+              "bytes": 835,
+              "sha256": "6a7383a6f36a7e69c2bbc8d625b01867fc61b3be0b321b96baa3a7d7a717feb2"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-validation.json",
+              "bytes": 12558,
+              "sha256": "83d82c05836fe34e3b041a77dc97ae6288ef78aa8e93dd3614cfed5b245d5a79"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-visual-review.json",
+              "bytes": 1582,
+              "sha256": "d5ec5e536d6b5f38ccb4589372a3495d38e111632945bb4873e315085a7edf2e"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-fidelity.json",
+              "bytes": 1039,
+              "sha256": "9172ec1956f6d3a450bc668faec071786cfc5d01762ffb92a8e507fb5caefe0f"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-rebuild.json",
+              "bytes": 1103,
+              "sha256": "065d056303cc608d2ac25afd7bc5c9a389b67167682b73319031b89e8a4319ac"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "schema": "ggd-intake-backup-receipt@1",
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.files.json",
+                "archiveSha256": "7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5",
+                "archiveBytes": 3407058,
+                "fileCount": 18,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1",
+                "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/source.tar.gz",
+                "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/readback.tar.gz",
+                "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/manifest.json",
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789427862"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+            "conversionCandidateId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+            "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+            "sourceClass": "mod-community-port-derived-budget-candidate",
+            "selectionClass": "community-mod",
+            "nameZh": "阿修・克里姆森",
+            "originalName": "Ash Crimson",
+            "workZh": "拳皇 XV",
+            "sourceGame": "THE KING OF FIGHTERS XV",
+            "sourceGameReleasedAt": "2022-02-17",
+            "platform": "unknown-original-platform; derived offline on macOS",
+            "nativeId": "ASH_RIGHT_HAIR",
+            "sourceVersion": "universal-atlas-v1",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+            "bytes": 1486476,
+            "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+            "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": false,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ash-crimson",
+              "right-hair"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 7868,
+            "drawPrimitives": 5,
+            "skinCount": 1,
+            "jointCount": 258,
+            "jointCounts": [
+              258
+            ],
+            "textureCount": 12,
+            "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+            "limitations": [
+              "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+              "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+              "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+              "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+              "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/delivery.json",
+              "bytes": 2533,
+              "sha256": "c50a4d698dc7934d0db47e20a3946b292a7ff78838a8dd4a9b4e466407cdabdb"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/acceptance.json",
+              "bytes": 835,
+              "sha256": "6a7383a6f36a7e69c2bbc8d625b01867fc61b3be0b321b96baa3a7d7a717feb2"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-validation.json",
+              "bytes": 12561,
+              "sha256": "a372c9bea56cb8dbb36ee8d1d3becda0be0173ffeafe05bbc534336027360cf9"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-visual-review.json",
+              "bytes": 1583,
+              "sha256": "d6285cf5e32ea8ebd99cdd1332a9f5db7bb3f33889d03066cfc4c60694425ae2"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-fidelity.json",
+              "bytes": 1042,
+              "sha256": "9b58030c0358b37d71af75f8392620e7626caf7b5a30b87d707eb64c5c911141"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-rebuild.json",
+              "bytes": 1106,
+              "sha256": "3f05e9ddfed0e61624c9c6de905b78ccc5f01e408288bcf6f6e0900d5f45c826"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "schema": "ggd-intake-backup-receipt@1",
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.files.json",
+                "archiveSha256": "7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5",
+                "archiveBytes": 3407058,
+                "fileCount": 18,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1",
+                "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/source.tar.gz",
+                "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/readback.tar.gz",
+                "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/4c1a7048f2275e212a94df11058291ab4a2ccba55ef1910c5dfdc60d17d623b4/manifest.json",
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789427862"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+            "s3Use": "backup-only-not-runtime-entry"
+          }
+        ],
+        "conversionAttempts": [
+          {
+            "id": "kof-xv-ash-universal-atlas-v1",
+            "status": "two-static-components-structural-pass-final-visual-rerender-pending",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1",
+            "componentIds": [
+              "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+              "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1"
+            ],
+            "backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.files.json",
+              "archiveSha256": "7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5",
+              "archiveBytes": 3407058,
+              "fileCount": 18,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true
+            },
+            "runtimeReady": false,
+            "runtimeSelectable": false
+          }
+        ],
+        "sourceClass": "mod-community-port-derived-budget-candidate"
       },
       {
         "id": "zenhax-jstars-pak-stpk-comparison-v1",
@@ -194486,8 +194738,9 @@
             "existingCrossSourceBacklogId": "ssbu-dolly",
             "existingCrossSourceName": "Terry Bogard",
             "existingCrossSourceDisplayName": "泰利·柏格（Terry Bogard）",
-            "authorityGitPath": "materials/hero-model-library/已取得模型待設計英雄.json",
-            "authoritySha256": "f9ecff949a06557a76bca1a8791e81af0705cf632795b1c71297041c58b66d9b",
+            "authority": "frozen-generator-constant-crosswalk",
+            "authorityGitPath": "tools/hero-model-library/source-workflows/kof-xiv-terry-path-index-v1/build_inventory.py",
+            "authoritySha256": "9522ab1c1d448da8044c42248eb30c8284d87d0d09cd8a0f2a53c1e64b21b089",
             "caveat": "The token/name crosswalk is strong path evidence; KOF XIV body payload and visual identity are not re-opened in this run."
           }
         },
@@ -194502,8 +194755,8 @@
         "gitEvidence": [
           {
             "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
-            "bytes": 10102,
-            "sha256": "11b85e10046c22a284a00abe142971a628e9b3952eb05ea566061b9145a02d20"
+            "bytes": 10184,
+            "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca"
           },
           {
             "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
