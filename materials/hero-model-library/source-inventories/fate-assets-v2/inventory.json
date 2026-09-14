@@ -10,8 +10,8 @@
   "generatedFrom": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3105536,
-      "sha256": "13bb2ff8f730b43e880d3dd6dc00215525c8b880a74177f0444edb4135e5cfd8"
+      "bytes": 3246860,
+      "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/mapping.json",
@@ -50,8 +50,13 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
-      "bytes": 17021,
-      "sha256": "e121923137789389486878e91106383158eaddaac8de1ee5a7f10026978e0c11"
+      "bytes": 25656,
+      "sha256": "d0bedf2c7b8131f520cbe0554e34b509bb401bc9d475a76f7aea9e85ba1cd7d7"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json",
+      "bytes": 40840,
+      "sha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379"
     },
     {
       "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-policy.json",
@@ -60,8 +65,8 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/fate-assets-v2/build_inventory.py",
-      "bytes": 18334,
-      "sha256": "1606424430d051cb8e06b3b4bcdc7abd7b9c537237b2f4f03755961d151593ff"
+      "bytes": 20661,
+      "sha256": "9528107568b0e8245707a2ffdd06fce3a9eb32d81468665c7767bed26724090e"
     }
   ],
   "summary": {
@@ -84,7 +89,17 @@
     "pspPayloadBytesRead": 0,
     "pspPayloadsExtracted": 0,
     "supplementalSources": 10,
-    "ps2AudioFiles": 653
+    "ps2AudioFiles": 653,
+    "fucSourceFilesShaVerified": 2440,
+    "fucSourceBytesShaVerified": 789487979,
+    "fucStandardGlbCandidates": 13,
+    "fucSkeletonCandidates": 13,
+    "fucCommunityMotionEntries": 349,
+    "fucNativeMotionEntries": 0,
+    "fucNativeVfxEntries": 0,
+    "fucPspReplacementTextures": 103,
+    "fucUnknownPlatformCharacterAudio": 56,
+    "fucMusicFiles": 60
   },
   "minecraftCommunity": {
     "sourceId": "github-flemmli97-fateubw-07e9d79b",
@@ -2331,6 +2346,52 @@
         "payloadBytesRead": 0,
         "payloadSha256": null,
         "contentInspected": false,
+        "nativeCharacterIds": [],
+        "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+        "assetReadiness": {
+          "model": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "texture": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "skeleton": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "motion": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "vfx": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "sfx": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "voice": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          }
+        },
         "acquisitionStatus": "inventory-metadata-only",
         "extractionStatus": "not-started",
         "conversionStatus": "not-started",
@@ -2355,6 +2416,52 @@
         "payloadBytesRead": 0,
         "payloadSha256": null,
         "contentInspected": false,
+        "nativeCharacterIds": [],
+        "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+        "assetReadiness": {
+          "model": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "texture": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "skeleton": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "motion": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "vfx": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "sfx": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          },
+          "voice": {
+            "acquisitionStatus": "inventory-metadata-only",
+            "extractionStatus": "not-started",
+            "conversionStatus": "not-started",
+            "validationStatus": "not-started"
+          }
+        },
         "acquisitionStatus": "inventory-metadata-only",
         "extractionStatus": "not-started",
         "conversionStatus": "not-started",
@@ -2387,6 +2494,12 @@
             "bytes": 38696,
             "sha256": "c81042c51f53287239dd3c12b03d7066a575703249a2a80313e9ff9944324b08"
           },
+          "fileManifestVerification": {
+            "manifestFileCount": 186,
+            "manifestBytes": 69246564,
+            "audioManifestFileCount": 180,
+            "allMemberSha256Verified": true
+          },
           "acquisitionStatus": "acquired-local-files-indexed",
           "extractionStatus": "extracted-and-decoded",
           "conversionStatus": "pcm-audio-produced",
@@ -2416,6 +2529,12 @@
             "bytes": 47647,
             "sha256": "163ad87d626932fbbaa7ccd5d741f8a5c195aa1dad5cdf86eb17bb43b5794c3c"
           },
+          "fileManifestVerification": {
+            "manifestFileCount": 229,
+            "manifestBytes": 91927257,
+            "audioManifestFileCount": 222,
+            "allMemberSha256Verified": true
+          },
           "acquisitionStatus": "acquired-local-files-indexed",
           "extractionStatus": "extracted-and-decoded",
           "conversionStatus": "pcm-audio-produced",
@@ -2444,6 +2563,12 @@
             "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/files.sha256.json",
             "bytes": 53475,
             "sha256": "e6a36af7f3c1d4948b7e685a7c41f632d4a061077cc29d8c422ad59ed8cc77a2"
+          },
+          "fileManifestVerification": {
+            "manifestFileCount": 258,
+            "manifestBytes": 84224299,
+            "audioManifestFileCount": 251,
+            "allMemberSha256Verified": true
           },
           "acquisitionStatus": "acquired-local-files-indexed",
           "extractionStatus": "extracted-and-decoded",
@@ -2616,6 +2741,40 @@
         "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
       }
     ],
+    "localAssetAudit": {
+      "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json",
+      "sha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379",
+      "summary": {
+        "originalPspInventoryRows": 2,
+        "originalPspPayloadsPresent": 0,
+        "originalPspPayloadBytesRead": 0,
+        "originalPspPayloadsExtracted": 0,
+        "originalPspNativeModelsConverted": 0,
+        "originalPspNativeAnimationsConverted": 0,
+        "originalPspNativeVfxConverted": 0,
+        "originalPspNativeAudioConverted": 0,
+        "centralFucSources": 10,
+        "confirmedPspSupplementalSources": 1,
+        "confirmedPs2SupplementalSources": 3,
+        "unknownPlatformSources": 6,
+        "pspCommunityReplacementTextures": 103,
+        "standardGlbCandidates": 13,
+        "standardGlbCandidatesVerified": 13,
+        "skeletonCandidates": 13,
+        "communityMotionEntries": 349,
+        "nativeFucMotionEntries": 0,
+        "nativeFucVfxEntries": 0,
+        "nativeFucPackages": 0,
+        "ps2AudioFiles": 653,
+        "unknownPlatformCharacterAudioFiles": 56,
+        "musicFiles": 60,
+        "sourceFilesShaVerified": 2440,
+        "sourceBytesShaVerified": 789487979,
+        "s3ReadbackVerifiedSources": 10,
+        "runtimeSelectableSources": 0,
+        "productionDeployedSources": 0
+      }
+    },
     "boundary": "PSP inventory rows, PS2 public audio, community MOD ports, and FateUBW Minecraft assets are independent source classes."
   }
 }

@@ -37,6 +37,8 @@ def block() -> str:
         "",
         f"FUC PSP 仍只有 {s['pspInventoryRows']} 筆 Windows 遠端檔名／大小盤點，payload 讀取 {s['pspPayloadBytesRead']} bytes、解包 {s['pspPayloadsExtracted']}；PS2 另行保存 {s['ps2AudioFiles']} 個公開音訊檔，不冒稱 PSP 原生資產。",
         "",
+        f"本機 FUC 補充來源已逐檔重驗 {s['fucSourceFilesShaVerified']} 檔／{s['fucSourceBytesShaVerified']} bytes：平台未核社群 MOD 有 {s['fucStandardGlbCandidates']} 顆標準 GLB、{s['fucSkeletonCandidates']} 個骨架候選與 {s['fucCommunityMotionEntries']} 個 MOD 動作項；PSP 平台已核來源只有 {s['fucPspReplacementTextures']} 張 PPSSPP 替換貼圖。原作 PSP FPK/GMO、原生動作與 VFX 仍為 0；另有平台未核角色音訊 {s['fucUnknownPlatformCharacterAudio']} 檔及音樂 {s['fucMusicFiles']} 檔，未經聽審不綁定。",
+        "",
         END,
         "",
     ])

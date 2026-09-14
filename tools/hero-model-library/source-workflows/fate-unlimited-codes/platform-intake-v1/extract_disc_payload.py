@@ -6,7 +6,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
+import stat
 import subprocess
 import tempfile
 import zipfile
@@ -15,7 +17,10 @@ from typing import Any
 
 
 MAX_MEMBERS = 200_000
+MAX_EXTRACTED_BYTES = 64 * 1024 * 1024 * 1024
 RESOURCE_KINDS = {
+    ".zip": "nested-archive-candidate",
+    ".iso": "disc-image-candidate",
     ".fpk": "fuc-container-candidate",
     ".gmo": "psp-model-animation-candidate",
     ".gim": "psp-texture-candidate",
@@ -27,6 +32,22 @@ RESOURCE_KINDS = {
     ".wav": "decoded-audio-candidate",
     ".ogg": "decoded-audio-candidate",
     ".pmf": "psp-video-candidate",
+}
+
+POSSIBLE_ASSET_KINDS = {
+    ".zip": ["container"],
+    ".iso": ["container"],
+    ".fpk": ["container", "model", "texture", "skeleton", "motion", "vfx", "audio", "voice"],
+    ".gmo": ["model", "skeleton", "motion", "texture"],
+    ".gim": ["texture"],
+    ".at3": ["audio", "voice-pending-listening"],
+    ".adx": ["audio", "voice-pending-listening"],
+    ".aix": ["audio", "voice-pending-listening"],
+    ".afs": ["audio-container", "voice-pending-listening"],
+    ".awb": ["audio-container", "voice-pending-listening"],
+    ".wav": ["audio", "voice-pending-listening"],
+    ".ogg": ["audio", "voice-pending-listening"],
+    ".pmf": ["video", "audio"],
 }
 
 
@@ -53,6 +74,7 @@ def zip_members(source: Path) -> list[dict[str, Any]]:
         if len(infos) > MAX_MEMBERS:
             raise ValueError("Archive member limit exceeded")
         seen: set[str] = set()
+        total_bytes = 0
         for info in infos:
             name = safe_name(info.filename)
             folded = name.casefold()
@@ -61,6 +83,9 @@ def zip_members(source: Path) -> list[dict[str, Any]]:
             seen.add(folded)
             if info.flag_bits & 1:
                 raise ValueError("Encrypted ZIP member is not accepted: " + name)
+            total_bytes += info.file_size
+            if total_bytes > MAX_EXTRACTED_BYTES:
+                raise ValueError("Archive expanded byte limit exceeded")
             rows.append({
                 "path": name,
                 "bytes": info.file_size,
@@ -106,10 +131,24 @@ def inventory(source: Path) -> dict[str, Any]:
     else:
         raise ValueError("Only .zip and .iso inputs are accepted")
     candidates = []
+    extension_counts: dict[str, int] = {}
     for row in members:
-        kind = RESOURCE_KINDS.get(Path(row["path"]).suffix.casefold())
+        extension = Path(row["path"]).suffix.casefold()
+        if extension:
+            extension_counts[extension] = extension_counts.get(extension, 0) + 1
+        kind = RESOURCE_KINDS.get(extension)
         if kind:
-            candidates.append({"path": row["path"], "kind": kind})
+            candidates.append({
+                "path": row["path"],
+                "bytes": row.get("bytes"),
+                "extension": extension,
+                "kind": kind,
+                "possibleAssetKinds": POSSIBLE_ASSET_KINDS[extension],
+                "identityStatus": "pending-format-and-character-inspection",
+            })
+    candidate_counts: dict[str, int] = {}
+    for row in candidates:
+        candidate_counts[row["kind"]] = candidate_counts.get(row["kind"], 0) + 1
     return {
         "schema": "ggd-fuc-disc-payload-inventory@1",
         "source": str(source.resolve()),
@@ -119,6 +158,22 @@ def inventory(source: Path) -> dict[str, Any]:
         "memberCount": len(members),
         "members": members,
         "resourceCandidates": candidates,
+        "extensionCounts": dict(sorted(extension_counts.items())),
+        "resourceCandidateCounts": dict(sorted(candidate_counts.items())),
+        "assetReadiness": {
+            kind: {
+                "candidateCount": sum(kind in row["possibleAssetKinds"] for row in candidates),
+                "identityStatus": "pending-format-and-character-inspection",
+                "conversionStatus": "not-started",
+                "validationStatus": "not-started",
+            }
+            for kind in ("model", "texture", "skeleton", "motion", "vfx", "audio")
+        },
+        "voiceReadiness": {
+            "candidateCount": sum("voice-pending-listening" in row["possibleAssetKinds"] for row in candidates),
+            "speakerLanguageEventStatus": "pending-listening-review",
+            "conversionStatus": "not-started",
+        },
         "contentIdentityStatus": "container-inventoried-resource-identity-pending",
         "conversionStatus": "not-started",
     }
@@ -126,13 +181,27 @@ def inventory(source: Path) -> dict[str, Any]:
 
 def hash_tree(root: Path) -> list[dict[str, Any]]:
     rows = []
-    for path in sorted((p for p in root.rglob("*") if p.is_file()), key=lambda p: p.relative_to(root).as_posix()):
-        rows.append({
-            "path": path.relative_to(root).as_posix(),
-            "bytes": path.stat().st_size,
-            "sha256": sha256(path),
-            "kind": RESOURCE_KINDS.get(path.suffix.casefold(), "unclassified"),
-        })
+    total_bytes = 0
+    for current, directories, files in os.walk(root, topdown=True, followlinks=False):
+        for name in directories:
+            if (Path(current) / name).is_symlink():
+                raise ValueError("Extracted symbolic-link directory is not accepted: " + name)
+        for name in files:
+            path = Path(current) / name
+            mode = path.lstat().st_mode
+            if not stat.S_ISREG(mode):
+                raise ValueError("Extracted non-regular file is not accepted: " + str(path))
+            relative = path.relative_to(root).as_posix()
+            total_bytes += path.stat().st_size
+            if total_bytes > MAX_EXTRACTED_BYTES:
+                raise ValueError("Extracted byte limit exceeded")
+            rows.append({
+                "path": relative,
+                "bytes": path.stat().st_size,
+                "sha256": sha256(path),
+                "kind": RESOURCE_KINDS.get(path.suffix.casefold(), "unclassified"),
+            })
+    rows.sort(key=lambda row: row["path"])
     return rows
 
 

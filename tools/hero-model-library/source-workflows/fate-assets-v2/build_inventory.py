@@ -77,6 +77,7 @@ def render_md(data: dict) -> str:
         f"- 標準化模型：{s['standardizedGlbsVerified']} 顆本機 GLB 通過逐檔 SHA；現行 hard policy {s['hardPolicyPass']}/{s['minecraftServants']}，但授權核准 {s['rightsApproved']}、事件映射完成 {s['eventMapComplete']}、後台可切換 {s['runtimeSelectable']}。",
         f"- 原生來源動作：{s['sourceClips']} 段，已轉 {s['convertedNativeClips']}，另 {s['retainedNoDurationClips']} 段無來源時長；只保留語意候選，沒有自動綁定。",
         f"- FUC PSP：{s['pspInventoryRows']} 筆遠端盤點，實際讀取 {s['pspPayloadBytesRead']} bytes、解包 {s['pspPayloadsExtracted']}；維持 metadata-only。",
+        f"- FUC 補充素材：10 組本機來源逐檔 SHA 通過 {s['fucSourceFilesShaVerified']} 檔；平台未核社群 MOD 有 {s['fucStandardGlbCandidates']} 顆標準 GLB／{s['fucCommunityMotionEntries']} 個 MOD 動作項，PSP 已核來源只有 {s['fucPspReplacementTextures']} 張替換貼圖。原生 FUC 包／動作／VFX 都是 0。",
         f"- FUC 其他平台／社群補充來源：{s['supplementalSources']} 筆；PS2 公開音訊 {s['ps2AudioFiles']} 檔，與 PSP 原遊戲 payload 分列。",
         "",
         "## FateUBW 14 名逐角狀態",
@@ -128,10 +129,11 @@ def build(workspace: Path) -> tuple[dict, str, dict]:
     derivative_path = BASE / "priority-evidence/fateubw-community/static-pose-derivatives-v1/evidence-receipt.json"
     derivative_backup_path = BASE / "priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
     platform_path = BASE / "priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json"
+    psp_audit_path = BASE / "priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json"
     policy_path = OUT / "current-policy.json"
-    inputs = [downloads_path, mapping_path, reserve_path, completion_path, source_backup_path, native_backup_path, derivative_path, derivative_backup_path, platform_path, policy_path]
+    inputs = [downloads_path, mapping_path, reserve_path, completion_path, source_backup_path, native_backup_path, derivative_path, derivative_backup_path, platform_path, psp_audit_path, policy_path]
     downloads, mapping, reserve, completion = map(read, inputs[:4])
-    source_backup, native_backup, derivative, derivative_backup, platform, policy = map(read, inputs[4:])
+    source_backup, native_backup, derivative, derivative_backup, platform, psp_audit, policy = map(read, inputs[4:])
     source = next(row for row in downloads["publicSources"] if row["id"] == SOURCE_ID)
     if source["sourceGame"] != "Fate/Unlimited Block Works" or source["platform"] != "Minecraft Java 1.21.1" or source["nativeFucPsp"] is not False:
         raise ValueError("Minecraft/PSP source boundary drift")
@@ -139,6 +141,10 @@ def build(workspace: Path) -> tuple[dict, str, dict]:
         raise ValueError("FateUBW rights boundary drift")
     if platform["summary"]["originalGamePayloadBytesRead"] != 0:
         raise ValueError("PSP inventory can no longer be called metadata-only")
+    if (psp_audit.get("schema") != "ggd-fuc-psp-asset-audit@1"
+            or psp_audit.get("summary", {}).get("originalPspPayloadBytesRead") != 0
+            or psp_audit.get("summary", {}).get("nativeFucPackages") != 0):
+        raise ValueError("FUC PSP asset audit is absent or overclaims native payload access")
     if not all(source_backup.get(key) is True for key in ("verified", "identityMatchesExpectedRole", "localOriginalsPreserved")):
         raise ValueError("source S3 backup receipt is incomplete")
     if not all(native_backup.get(key) is True for key in ("fullGetVerified", "allMemberSha256Verified", "localUnchanged")):
@@ -212,6 +218,16 @@ def build(workspace: Path) -> tuple[dict, str, dict]:
         "existingHeroIdentityMappings": sum(bool(row["heroIds"]) for row in servants), "unmappedServants": sum(not row["heroIds"] for row in servants),
         "pspInventoryRows": platform["summary"]["originalGameInventoryRows"], "pspPayloadBytesRead": platform["summary"]["originalGamePayloadBytesRead"],
         "pspPayloadsExtracted": platform["summary"]["originalGamePayloadsExtracted"], "supplementalSources": platform["summary"]["supplementalPublicSources"], "ps2AudioFiles": ps2_files,
+        "fucSourceFilesShaVerified": psp_audit["summary"]["sourceFilesShaVerified"],
+        "fucSourceBytesShaVerified": psp_audit["summary"]["sourceBytesShaVerified"],
+        "fucStandardGlbCandidates": psp_audit["summary"]["standardGlbCandidates"],
+        "fucSkeletonCandidates": psp_audit["summary"]["skeletonCandidates"],
+        "fucCommunityMotionEntries": psp_audit["summary"]["communityMotionEntries"],
+        "fucNativeMotionEntries": psp_audit["summary"]["nativeFucMotionEntries"],
+        "fucNativeVfxEntries": psp_audit["summary"]["nativeFucVfxEntries"],
+        "fucPspReplacementTextures": psp_audit["summary"]["pspCommunityReplacementTextures"],
+        "fucUnknownPlatformCharacterAudio": psp_audit["summary"]["unknownPlatformCharacterAudioFiles"],
+        "fucMusicFiles": psp_audit["summary"]["musicFiles"],
     }
     inventory = {
         "schema": "ggd.fate-platform-separated-asset-inventory@1",
@@ -228,6 +244,11 @@ def build(workspace: Path) -> tuple[dict, str, dict]:
             "originalPsp": platform["originalGamePlatformVersions"],
             "otherOriginalPlatforms": platform["otherPlatformSources"],
             "supplementalPublicSources": platform["supplementalPublicSources"],
+            "localAssetAudit": {
+                "gitPath": psp_audit_path.relative_to(ROOT).as_posix(),
+                "sha256": digest(psp_audit_path),
+                "summary": psp_audit["summary"],
+            },
             "boundary": "PSP inventory rows, PS2 public audio, community MOD ports, and FateUBW Minecraft assets are independent source classes.",
         },
     }
@@ -236,6 +257,8 @@ def build(workspace: Path) -> tuple[dict, str, dict]:
         "gitPath": (OUT / "inventory.json").relative_to(ROOT).as_posix(),
         "documentGitPath": (OUT / "README.md").relative_to(ROOT).as_posix(),
         "policyAuditGitPath": policy_path.relative_to(ROOT).as_posix(),
+        "fucPspAssetAuditGitPath": psp_audit_path.relative_to(ROOT).as_posix(),
+        "fucPspAssetAuditDocumentGitPath": (psp_audit_path.with_suffix(".md")).relative_to(ROOT).as_posix(),
         "sourceId": SOURCE_ID,
         "status": "14 Minecraft candidates policy-pass but rights/semantics/backend blocked; PSP original remains metadata-only",
         "summary": summary,
@@ -266,6 +289,8 @@ def main():
     entry["documentSha256"] = hashlib.sha256(document.encode()).hexdigest()
     policy_path = OUT / "current-policy.json"
     entry["policyAuditSha256"] = digest(policy_path)
+    entry["fucPspAssetAuditSha256"] = digest(OUT.parent.parent / "priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json")
+    entry["fucPspAssetAuditDocumentSha256"] = digest(OUT.parent.parent / "priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.md")
     write_or_check(OUT / "inventory.json", inventory_text, args.check)
     write_or_check(OUT / "README.md", document, args.check)
     write_or_check(OUT / "current-resource-entry.json", json.dumps(entry, ensure_ascii=False, indent=2) + "\n", args.check)

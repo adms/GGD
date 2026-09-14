@@ -3,6 +3,8 @@
   "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/inventory.json",
   "documentGitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/README.md",
   "policyAuditGitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-policy.json",
+  "fucPspAssetAuditGitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json",
+  "fucPspAssetAuditDocumentGitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.md",
   "sourceId": "github-flemmli97-fateubw-07e9d79b",
   "status": "14 Minecraft candidates policy-pass but rights/semantics/backend blocked; PSP original remains metadata-only",
   "summary": {
@@ -25,11 +27,23 @@
     "pspPayloadBytesRead": 0,
     "pspPayloadsExtracted": 0,
     "supplementalSources": 10,
-    "ps2AudioFiles": 653
+    "ps2AudioFiles": 653,
+    "fucSourceFilesShaVerified": 2440,
+    "fucSourceBytesShaVerified": 789487979,
+    "fucStandardGlbCandidates": 13,
+    "fucSkeletonCandidates": 13,
+    "fucCommunityMotionEntries": 349,
+    "fucNativeMotionEntries": 0,
+    "fucNativeVfxEntries": 0,
+    "fucPspReplacementTextures": 103,
+    "fucUnknownPlatformCharacterAudio": 56,
+    "fucMusicFiles": 60
   },
   "runtimeSelectable": false,
   "productionDeploymentVerified": false,
-  "sha256": "cc986e147de65b478af775625209e7ce35e8da970ef8b83049da638201b8adf1",
-  "documentSha256": "7875b3fad1b5441d75ff98e4c88d47a3728d38f387aaac42acd7172a53b8c951",
-  "policyAuditSha256": "cfa9e40f6d9bc1685df0eadf728c13c8935116871c3ffaa77de1ebf29aed9d0a"
+  "sha256": "ac186fb9086fe33618e28f966b19ad2ab965a3fd48540cab7ea1943f1b1ef9e2",
+  "documentSha256": "0e5719a49bc42d355cbb77bfdeb5495fc9771a38c1a4153dcdc1df2845979de1",
+  "policyAuditSha256": "cfa9e40f6d9bc1685df0eadf728c13c8935116871c3ffaa77de1ebf29aed9d0a",
+  "fucPspAssetAuditSha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379",
+  "fucPspAssetAuditDocumentSha256": "d0efb018478b862d1fc8b82dd9dec499ed469bf957a92f2d6a3c6be6fcbb8446"
 }

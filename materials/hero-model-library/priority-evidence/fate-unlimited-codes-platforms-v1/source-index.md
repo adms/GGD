@@ -9,7 +9,7 @@
 | `lv99-fuc-psp-japan-portable-zip` | Sony PSP／Japan | ZIP | 509977835 | inventory-metadata-only | not-started／not-started／not-registered |
 | `lv99-fuc-psp-usa-portable-iso` | Sony PSP／USA | ISO | 738394112 | inventory-metadata-only | not-started／not-started／not-registered |
 
-兩筆目前都只是 LV99 Windows 清單 metadata：掃描讀取 payload 為 0 bytes，沒有內容 SHA-256。
+兩筆目前都只是 LV99 Windows 清單 metadata：另以唯讀掃描器巡覽 2 個本機根目錄／810200 個檔案，精確檔名＋大小匹配 0，權限錯誤 0；payload 讀取仍為 0 bytes，沒有內容 SHA-256。
 
 ## 其他平台與社群來源
 

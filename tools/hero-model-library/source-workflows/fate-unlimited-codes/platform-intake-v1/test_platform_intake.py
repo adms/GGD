@@ -22,6 +22,7 @@ def load_module(name: str, filename: str):
 
 builder = load_module("fuc_source_index", "build_source_index.py")
 extractor = load_module("fuc_disc_extract", "extract_disc_payload.py")
+scanner = load_module("fuc_local_scanner", "scan_local_payloads.py")
 
 
 class PlatformSourceIndexTests(unittest.TestCase):
@@ -39,6 +40,10 @@ class PlatformSourceIndexTests(unittest.TestCase):
             for row in versions
         ))
         self.assertEqual(0, report["summary"]["originalGamePayloadBytesRead"])
+        self.assertEqual(2, report["summary"]["localSearchRootsRead"])
+        self.assertGreater(report["summary"]["localSearchFilesVisited"], 0)
+        self.assertEqual(0, report["summary"]["localSearchPermissionErrors"])
+        self.assertEqual(0, report["summary"]["localSearchExactPayloadMatches"])
         self.assertEqual(0, report["summary"]["originalGameModelPolicyCandidates"])
         self.assertEqual(3, report["summary"]["ps2PublicAudioSourcesAcquired"])
         self.assertEqual(653, report["summary"]["ps2PublicAudioFiles"])
@@ -69,6 +74,10 @@ class PlatformSourceIndexTests(unittest.TestCase):
             self.assertEqual(2, report["memberCount"])
             self.assertEqual({"psp-model-animation-candidate", "fuc-container-candidate"},
                              {row["kind"] for row in report["resourceCandidates"]})
+            by_kind = {row["kind"]: row for row in report["resourceCandidates"]}
+            self.assertEqual(["model", "skeleton", "motion", "texture"],
+                             by_kind["psp-model-animation-candidate"]["possibleAssetKinds"])
+            self.assertEqual(2, report["assetReadiness"]["model"]["candidateCount"])
             destination = root / "extracted"
             extracted = extractor.extract(source, destination)
             self.assertEqual(2, extracted["extractedFileCount"])
@@ -83,6 +92,33 @@ class PlatformSourceIndexTests(unittest.TestCase):
                 archive.writestr("../escape.gmo", b"bad")
             with self.assertRaisesRegex(ValueError, "Unsafe archive member"):
                 extractor.inventory(source)
+
+    def test_multiroot_scanner_hashes_only_exact_name_and_size_matches(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            first, second = root / "disk-a", root / "disk-b"
+            first.mkdir()
+            second.mkdir()
+            exact = second / "Fate Portable.iso"
+            exact.write_bytes(b"verified-payload")
+            (first / "Fate Portable.iso").write_bytes(b"wrong-size")
+            expected = [{
+                "sourceId": "fixture-fuc-psp",
+                "inventoryId": "fixture:1",
+                "releasePlatform": "Sony PSP",
+                "region": "Japan",
+                "container": "ISO",
+                "expectedBasename": "Fate Portable.iso",
+                "expectedBytes": len(b"verified-payload"),
+                "windowsSourcePath": r"E:\\fixture\\Fate Portable.iso",
+            }]
+            report = scanner.scan_roots([first, second, root / "missing"], expected)
+            self.assertEqual(3, report["summary"]["rootsRequested"])
+            self.assertEqual(2, report["summary"]["rootsReadable"])
+            self.assertEqual(1, report["summary"]["exactPayloadMatches"])
+            self.assertEqual(1, report["summary"]["nameSizeMismatches"])
+            self.assertEqual(scanner.sha256(exact), report["candidates"][0]["matches"][0]["sha256"])
+            self.assertFalse(report["scope"]["contentInspectionPerformed"])
 
 
 if __name__ == "__main__":

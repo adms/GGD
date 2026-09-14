@@ -5,10 +5,21 @@
 ```bash
 python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_source_index.py
 python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_source_index.py --check
+python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py
+python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py --check
 python3 -m unittest tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/test_platform_intake.py
+python3 -m unittest tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/test_psp_asset_audit.py
 ```
 
 目前 LV99 清單中的日版 ZIP 與美版 ISO 都是 `inventory-metadata-only`：掃描只記檔名、路徑與大小，沒有讀映像內容，也沒有內容 SHA-256。取得唯讀實檔後，兩個版本須各用獨立的新目錄處理：
+
+多顆硬碟或 SMB share 可重複傳入 `--root`。掃描器只巡覽檔名；只有檔名與 Windows 清單記錄大小都吻合時才讀檔計算 SHA-256，不會複製、解包或寫入來源：
+
+```bash
+python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/scan_local_payloads.py \
+  --root '/Volumes/game' --root '/Volumes/另一顆遊戲碟' \
+  --output materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/local-payload-scan.json
+```
 
 ```bash
 python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/extract_disc_payload.py '/read-only/Fate-Unlimited Codes Portable (Japan).zip'

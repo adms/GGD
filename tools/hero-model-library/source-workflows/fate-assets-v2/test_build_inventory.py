@@ -18,6 +18,11 @@ class FateInventoryTest(unittest.TestCase):
         self.assertEqual(summary["hardPolicyPass"], 14)
         self.assertEqual(summary["runtimeSelectable"], 0)
         self.assertEqual(summary["pspPayloadBytesRead"], 0)
+        self.assertEqual(summary["fucStandardGlbCandidates"], 13)
+        self.assertEqual(summary["fucPspReplacementTextures"], 103)
+        self.assertEqual(summary["fucCommunityMotionEntries"], 349)
+        self.assertEqual(summary["fucNativeMotionEntries"], 0)
+        self.assertEqual(summary["fucNativeVfxEntries"], 0)
         self.assertTrue(all(not row["source"]["nativeFucPsp"] for row in inventory["minecraftCommunity"]["servants"]))
         self.assertTrue(all(not row["registration"]["eligible"] for row in inventory["minecraftCommunity"]["servants"]))
 

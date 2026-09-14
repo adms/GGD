@@ -7,6 +7,11 @@
       "bytes": 1631,
       "sha256": "6ae3dee982076e98019bfdb9fb7a53816067b63bb289d1f175dd67b7d428d21f"
     },
+    "localPayloadScan": {
+      "path": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/local-payload-scan.json",
+      "bytes": 2145,
+      "sha256": "bb46440b3c8a5de1daf3632a5f5f93a79f1dfbeca45de20a2dcddb90f44dc87c"
+    },
     "windowsInventory": {
       "path": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
       "bytes": 65693,
@@ -19,8 +24,8 @@
     },
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3052967,
-      "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
+      "bytes": 3246860,
+      "sha256": "d79f02e23333e655f68866b947a594738feb638b278f2e1bf5a226261de757ed"
     },
     "fateUbwNativeMotion": {
       "path": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
@@ -31,6 +36,78 @@
   "statusSemantics": {
     "inventory-metadata-only": "A remote file name and recorded size exist; no payload byte was read and no content hash is available.",
     "acquired-local-files-indexed": "Local files and indexes exist; this does not imply runtime registration or production deployment."
+  },
+  "localPayloadSearch": {
+    "schema": "ggd-fuc-local-payload-scan@1",
+    "scope": {
+      "readOnly": true,
+      "copiesCreated": 0,
+      "filesExtracted": 0,
+      "contentInspectionPerformed": false,
+      "matchRequiresBasenameAndRecordedSize": true
+    },
+    "roots": [
+      {
+        "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library",
+        "exists": true,
+        "filesVisited": 810184,
+        "directoriesVisited": 39522,
+        "permissionErrors": 0
+      },
+      {
+        "root": "/Volumes/R",
+        "exists": true,
+        "filesVisited": 16,
+        "directoriesVisited": 3,
+        "permissionErrors": 0
+      }
+    ],
+    "candidates": [
+      {
+        "sourceId": "lv99-fuc-psp-japan-portable-zip",
+        "inventoryId": "windows-rom-scan:0607",
+        "releasePlatform": "Sony PSP",
+        "region": "Japan",
+        "container": "ZIP",
+        "expectedBasename": "Fate-Unlimited Codes Portable (Japan).zip",
+        "expectedBytes": 509977835,
+        "windowsSourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
+        "matches": [],
+        "matchCount": 0,
+        "payloadLocated": false,
+        "payloadBytesRead": 0,
+        "acquisitionStatus": "inventory-metadata-only"
+      },
+      {
+        "sourceId": "lv99-fuc-psp-usa-portable-iso",
+        "inventoryId": "windows-rom-scan:0608",
+        "releasePlatform": "Sony PSP",
+        "region": "USA",
+        "container": "ISO",
+        "expectedBasename": "Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+        "expectedBytes": 738394112,
+        "windowsSourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+        "matches": [],
+        "matchCount": 0,
+        "payloadLocated": false,
+        "payloadBytesRead": 0,
+        "acquisitionStatus": "inventory-metadata-only"
+      }
+    ],
+    "nameSizeMismatches": [],
+    "summary": {
+      "rootsRequested": 2,
+      "rootsReadable": 2,
+      "filesVisited": 810200,
+      "directoriesVisited": 39525,
+      "permissionErrors": 0,
+      "expectedPayloads": 2,
+      "exactPayloadMatches": 0,
+      "nameSizeMismatches": 0,
+      "payloadBytesRead": 0,
+      "filesExtracted": 0,
+      "filesConverted": 0
+    }
   },
   "originalGamePlatformVersions": [
     {
@@ -538,6 +615,10 @@
   "summary": {
     "originalGameInventoryRows": 2,
     "originalGamePayloadsPresentLocal": 0,
+    "localSearchRootsRead": 2,
+    "localSearchFilesVisited": 810200,
+    "localSearchPermissionErrors": 0,
+    "localSearchExactPayloadMatches": 0,
     "originalGamePayloadBytesRead": 0,
     "originalGamePayloadsExtracted": 0,
     "originalGameNativeModelsConverted": 0,

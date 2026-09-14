@@ -96,8 +96,14 @@ def all_public_sources(download_sources: dict[str, Any]) -> list[dict[str, Any]]
 
 def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str, Any]:
     config_path = repo / "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/platform-config.json"
+    local_scan_path = repo / "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/local-payload-scan.json"
     config = read_json(config_path)
+    local_scan = read_json(local_scan_path)
     require(config.get("schema") == "ggd-fuc-platform-intake-config@1", "Unexpected platform config schema")
+    require(local_scan.get("schema") == "ggd-fuc-local-payload-scan@1", "Unexpected local payload scan schema")
+    require(local_scan.get("scope", {}).get("readOnly") is True, "Local payload scan must remain read-only")
+    require(local_scan.get("summary", {}).get("expectedPayloads") == len(config["inventoryCandidates"]),
+            "Local payload scan candidate count changed")
 
     inventory_path = repo / "materials/hero-model-library/source-inventories/windows-game-library.json.gz"
     inventory = read_json(inventory_path)
@@ -294,6 +300,7 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
         "game": config["game"],
         "generatedFrom": {
             "config": file_evidence(config_path, repo),
+            "localPayloadScan": file_evidence(local_scan_path, repo),
             "windowsInventory": file_evidence(inventory_path, repo),
             "windowsInventoryZip": file_evidence(scan_zip_path, repo.parent),
             "downloadSources": file_evidence(download_sources_path, repo),
@@ -303,6 +310,7 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
             "inventory-metadata-only": "A remote file name and recorded size exist; no payload byte was read and no content hash is available.",
             "acquired-local-files-indexed": "Local files and indexes exist; this does not imply runtime registration or production deployment.",
         },
+        "localPayloadSearch": local_scan,
         "originalGamePlatformVersions": platform_versions,
         "otherPlatformSources": {
             "ps2PublicAudio": ps2_audio_sources,
@@ -315,6 +323,10 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
         "summary": {
             "originalGameInventoryRows": len(platform_versions),
             "originalGamePayloadsPresentLocal": sum(row["payloadExistsLocal"] for row in platform_versions),
+            "localSearchRootsRead": local_scan["summary"]["rootsReadable"],
+            "localSearchFilesVisited": local_scan["summary"]["filesVisited"],
+            "localSearchPermissionErrors": local_scan["summary"]["permissionErrors"],
+            "localSearchExactPayloadMatches": local_scan["summary"]["exactPayloadMatches"],
             "originalGamePayloadBytesRead": sum(row["payloadBytesRead"] for row in platform_versions),
             "originalGamePayloadsExtracted": 0,
             "originalGameNativeModelsConverted": 0,
@@ -359,7 +371,7 @@ def render_markdown(index: dict[str, Any]) -> str:
         )
     lines += [
         "",
-        "兩筆目前都只是 LV99 Windows 清單 metadata：掃描讀取 payload 為 0 bytes，沒有內容 SHA-256。",
+        f"兩筆目前都只是 LV99 Windows 清單 metadata：另以唯讀掃描器巡覽 {index['summary']['localSearchRootsRead']} 個本機根目錄／{index['summary']['localSearchFilesVisited']} 個檔案，精確檔名＋大小匹配 {index['summary']['localSearchExactPayloadMatches']}，權限錯誤 {index['summary']['localSearchPermissionErrors']}；payload 讀取仍為 0 bytes，沒有內容 SHA-256。",
         "",
         "## 其他平台與社群來源",
         "",

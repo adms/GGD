@@ -379,8 +379,11 @@ def build(git_link_root=ROOT):
     fate_asset_document_path=base/'source-inventories/fate-assets-v2/README.md'
     fate_asset_policy_path=base/'source-inventories/fate-assets-v2/current-policy.json'
     fate_asset_entry_path=base/'source-inventories/fate-assets-v2/current-resource-entry.json'
+    fate_psp_asset_audit_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json'
+    fate_psp_asset_audit_document_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.md'
     fate_asset=read(fate_asset_path)
     fate_asset_entry=read(fate_asset_entry_path)
+    fate_psp_asset_audit=read(fate_psp_asset_audit_path)
     if (fate_asset.get('schema')!='ggd.fate-platform-separated-asset-inventory@1'
         or fate_asset.get('summary',{}).get('minecraftServants')!=14
         or fate_asset.get('summary',{}).get('hardPolicyPass')!=14
@@ -388,7 +391,19 @@ def build(git_link_root=ROOT):
         or fate_asset.get('summary',{}).get('runtimeSelectable')!=0
         or fate_asset.get('scope',{}).get('minecraftCommunitySeparateFromFucOriginal') is not True):
         raise ValueError('Fate platform-separated inventory is absent, stale or overclaims readiness')
-    for path,key in ((fate_asset_path,'sha256'),(fate_asset_document_path,'documentSha256'),(fate_asset_policy_path,'policyAuditSha256')):
+    if (fate_psp_asset_audit.get('schema')!='ggd-fuc-psp-asset-audit@1'
+        or fate_psp_asset_audit.get('summary',{}).get('originalPspPayloadBytesRead')!=0
+        or fate_psp_asset_audit.get('summary',{}).get('standardGlbCandidates')!=13
+        or fate_psp_asset_audit.get('summary',{}).get('nativeFucMotionEntries')!=0
+        or fate_psp_asset_audit.get('summary',{}).get('nativeFucVfxEntries')!=0):
+        raise ValueError('Fate PSP asset audit is absent, stale or overclaims native asset readiness')
+    for path,key in (
+        (fate_asset_path,'sha256'),
+        (fate_asset_document_path,'documentSha256'),
+        (fate_asset_policy_path,'policyAuditSha256'),
+        (fate_psp_asset_audit_path,'fucPspAssetAuditSha256'),
+        (fate_psp_asset_audit_document_path,'fucPspAssetAuditDocumentSha256'),
+    ):
         if fate_asset_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('Fate current-resource pointer is stale: '+str(path))
     palworld_av_path=base/'source-inventories/palworld-vfx-sfx-v1/inventory.json'
@@ -1190,6 +1205,14 @@ def main():
                 {
                     'gitPath': result['fateAssetInventory']['entryGitPath'],
                     'sha256': result['fateAssetInventory']['entrySha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['fucPspAssetAuditGitPath'],
+                    'sha256': result['fateAssetInventory']['fucPspAssetAuditSha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['fucPspAssetAuditDocumentGitPath'],
+                    'sha256': result['fateAssetInventory']['fucPspAssetAuditDocumentSha256'],
                 },
                 {
                     'gitPath': result['palworldVfxSfxInventory']['gitPath'],
