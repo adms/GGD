@@ -15,6 +15,7 @@ class PoppReportTest(unittest.TestCase):
         payload = MODULE.read_ledger()
         rendered = MODULE.render(payload)
         self.assertIn("已關閉 1／剩餘 4", rendered)
+        self.assertIn("機器 gate 共 20 項：已驗證 9，阻擋 11", rendered)
         self.assertIn("事件音訊候選 36 個", rendered)
         self.assertIn("GGD VFX 候選 12 個", rendered)
         self.assertIn("7 個已依來源名稱整理成 Q/W/R 審查提案", rendered)

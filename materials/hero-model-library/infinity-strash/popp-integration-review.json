@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "b10884a40f279fd59d7c02e4374780cd6b6cf3b79970edd811b636a5bfcf0d24",
+  "sourceFingerprint": "c823b41b3b9868497287369044790a7eb835450f0f4e3ef86aff3e28242e3337",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -46,6 +46,11 @@
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
       "bytes": 20049,
       "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
+      "bytes": 123031,
+      "sha256": "c3e6d37f788ab8519372e1fdbf5cb643a16053028491ace3d12e00349ff9549a"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
@@ -616,8 +621,62 @@
           "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
         }
       },
+      "closureGates": [
+        {
+          "id": "native-down-source",
+          "nameZh": "PN020 原生 down 動作已固定",
+          "state": "verified",
+          "verified": true,
+          "detail": "選定 Kagayaki 模型的 hurt/death 都指向 GGD_native_down；來源為 PN020 原生 down loop。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+              "bytes": 3123,
+              "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+              "bytes": 28522,
+              "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+            }
+          ]
+        },
+        {
+          "id": "owner-death-decision",
+          "nameZh": "死亡替代演出已逐項核准",
+          "state": "verified",
+          "verified": true,
+          "detail": "owner 裁決固定為 native down 加既有升天淡出，且選定法杖已套用。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+              "bytes": 3123,
+              "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+            }
+          ]
+        },
+        {
+          "id": "existing-runtime-presentation",
+          "nameZh": "既有 runtime 死亡演出已接通",
+          "state": "verified",
+          "verified": true,
+          "detail": "決策收據記錄既有 ChampionView 倒地、升高與淡出流程；本 workflow 未另造未驗證的死亡動作。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+              "bytes": 3123,
+              "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+            }
+          ]
+        }
+      ],
       "closed": true,
       "remaining": false,
+      "closureGateSummary": {
+        "total": 3,
+        "verified": 3,
+        "blocked": 0
+      },
       "ownerReviewRequiredBeforeRuntimeMutation": false
     },
     {
@@ -634,10 +693,83 @@
         "三支法杖版本都有可重現視覺驗收證據"
       ],
       "ownerReviewPolicy": "材質轉換可先完成；聲稱原作外觀一致前仍需視覺驗收。",
-      "status": "pending-source-shader-reconstruction",
+      "status": "blocked-missing-source-shader-parameter-recovery-and-parity-review",
       "evidence": "The source hair base is an 8x8 shader-parameter texture. Current candidates are accepted simplified PBR previews, without exact source toon and hair-colour parity.",
+      "closureGates": [
+        {
+          "id": "source-material-inputs-retained",
+          "nameZh": "三支法杖的來源材質輸入已保留",
+          "state": "verified",
+          "verified": true,
+          "detail": "三個原作 PN020 候選皆有已驗證的模型、貼圖與 18 張 WebGL 狀態抽查；其限制欄明確記錄 toon／髮色尚未還原。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+              "bytes": 28522,
+              "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+            }
+          ]
+        },
+        {
+          "id": "source-shader-parameters-recovered",
+          "nameZh": "來源 shader 參數已恢復",
+          "state": "blocked",
+          "verified": false,
+          "detail": "目前只有依遊戲 shader 參數運作的 8×8 hair base 與材質檔；沒有可重現的 shader 參數匯出或等價運算證據。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+              "bytes": 28522,
+              "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+            }
+          ]
+        },
+        {
+          "id": "ggd-toon-material-built",
+          "nameZh": "GGD toon／遮罩／陰影材質已重建",
+          "state": "blocked",
+          "verified": false,
+          "detail": "三個執行候選目前明確使用簡化 PBR；沒有已驗證的 GGD toon 材質產物可供替換。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+              "bytes": 28522,
+              "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+            }
+          ]
+        },
+        {
+          "id": "three-staff-parity-review",
+          "nameZh": "三支法杖的外觀一致性已驗收",
+          "state": "blocked",
+          "verified": false,
+          "detail": "現有 WebGL 驗收只證明可見性、完整身體與動作抽查；收據明載並非精確 toon／髮色一致性驗收。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
+              "bytes": 7162,
+              "sha256": "45fceada138dbd02ecb611f1606986f15e1766e7aa02e4daf5c69b0ef2adb2d3"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/acceptance-summary.json",
+              "bytes": 7019,
+              "sha256": "6ec38407febffdcb26f08704a092a468293316167f97ef71f5a455fe73d0fda3"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/acceptance-summary.json",
+              "bytes": 7031,
+              "sha256": "c6cb9f5d52771d14223ab433313be9b0ee83606ae2a3b0d1cda0caf1c8f82e21"
+            }
+          ]
+        }
+      ],
       "closed": false,
       "remaining": true,
+      "closureGateSummary": {
+        "total": 4,
+        "verified": 1,
+        "blocked": 3
+      },
       "ownerReviewRequiredBeforeRuntimeMutation": false
     },
     {
@@ -655,10 +787,92 @@
         "綁定通過 VFX 與技能檢查"
       ],
       "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-      "status": "feature-branch-seven-bound-native-niagara-mesh-parity-open",
+      "status": "feature-branch-seven-bound-blocked-native-niagara-timing-and-root-mesh-attribution",
       "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 reviewed source-name relationships are bound across Q/W/R and 5 remain unbound reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+      "closureGates": [
+        {
+          "id": "reviewed-vfx-documents-released",
+          "nameZh": "12 個核准 VFX 文件已發布到功能分支",
+          "state": "verified",
+          "verified": true,
+          "detail": "12 個 owner 視覺核准的重建候選都有可解析 VFX 文件。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        },
+        {
+          "id": "reviewed-qwr-relationships-bound",
+          "nameZh": "7 組 Q/W/R 候選關係已綁定",
+          "state": "verified",
+          "verified": true,
+          "detail": "Q/W/R 的 7 組來源名稱關係已寫入功能分支；5 個語意未對應候選仍保留未綁定。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        },
+        {
+          "id": "native-niagara-timing-recovered",
+          "nameZh": "原生 Niagara 時序已恢復",
+          "state": "blocked",
+          "verified": false,
+          "detail": "runtime 收據明確為 nativeNiagaraTimingRecovered=false；目前 delay 只是 GGD castTimeSec 範圍內的確定性播放值。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        },
+        {
+          "id": "root-specific-mesh-attribution",
+          "nameZh": "root 對應的 mesh layer 已確認",
+          "state": "blocked",
+          "verified": false,
+          "detail": "33 個 static-mesh support GLB 已轉換，但 rootSpecificAttributions=0，不能猜測掛入技能。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
+              "bytes": 123031,
+              "sha256": "c3e6d37f788ab8519372e1fdbf5cb643a16053028491ace3d12e00349ff9549a"
+            }
+          ]
+        },
+        {
+          "id": "native-vfx-parity-playback",
+          "nameZh": "原作特效完整時序與畫面已驗收",
+          "state": "blocked",
+          "verified": false,
+          "detail": "目前沒有原生 Niagara 播放或完整原作對照驗收；feature-branch 綁定不可升格為原作完整重建。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        }
+      ],
       "closed": false,
       "remaining": true,
+      "closureGateSummary": {
+        "total": 5,
+        "verified": 2,
+        "blocked": 3
+      },
       "ownerReviewRequiredBeforeRuntimeMutation": false
     },
     {
@@ -675,10 +889,88 @@
         "只將核准配對寫入 runtime，並通過音訊與事件檢查"
       ],
       "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。",
-      "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+      "status": "blocked-missing-owner-approved-unique-ggd-targets-and-runtime-playback",
       "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 reviewed relationships are converted to 35 content-addressed game MP3 files and grouped into 8 approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
+      "closureGates": [
+        {
+          "id": "approved-native-event-relationships",
+          "nameZh": "36 筆原生事件關係已逐項聽審",
+          "state": "verified",
+          "verified": true,
+          "detail": "36 筆 Popp／PN020 關係均有 owner approve，且每筆只核准其一個原生 Wwise 事件。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
+              "bytes": 108481,
+              "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            }
+          ]
+        },
+        {
+          "id": "game-format-audio-converted",
+          "nameZh": "35 份遊戲用 MP3 已產生並驗證",
+          "state": "verified",
+          "verified": true,
+          "detail": "35 個去重內容檔覆蓋 36 筆候選關係，固定為 48 kHz mono MP3。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            }
+          ]
+        },
+        {
+          "id": "owner-approved-ggd-runtime-targets",
+          "nameZh": "唯一 GGD 技能／狀態目標已逐項核准",
+          "state": "blocked",
+          "verified": false,
+          "detail": "所有 36 筆 owner 決策 runtimeBindingAuthorized=false；每筆 blocker 均缺唯一 GGD target。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+              "bytes": 27339,
+              "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+            }
+          ]
+        },
+        {
+          "id": "runtime-audio-playback-and-regression",
+          "nameZh": "runtime 播放與回歸收據已完成",
+          "state": "blocked",
+          "verified": false,
+          "detail": "音訊收據 runtimeBindings=0、runtimeConsumers=0；沒有可驗證的角色 runtime 播放或回歸結果。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+              "bytes": 27339,
+              "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+            }
+          ]
+        }
+      ],
       "closed": false,
       "remaining": true,
+      "closureGateSummary": {
+        "total": 4,
+        "verified": 2,
+        "blocked": 2
+      },
       "ownerReviewRequiredBeforeRuntimeMutation": true
     },
     {
@@ -696,10 +988,78 @@
         "完整戰鬥播放與回歸檢查通過"
       ],
       "ownerReviewPolicy": "既有內容與自動測試可先完成；未核准的音訊、借用動作或 VFX 不得藉由整體戰鬥驗證繞過逐項審查。",
-      "status": "pending-gameplay-validation",
+      "status": "blocked-missing-source-timing-mapping-and-full-combat-playback",
       "evidence": "GGD ability definitions exist, while native Special01/Special02 remain unreferenced and original animation timing, hit timing and complete combat playback are not accepted.",
+      "closureGates": [
+        {
+          "id": "native-motion-set-retained",
+          "nameZh": "已取得的原生動作集合已固定",
+          "state": "verified",
+          "verified": true,
+          "detail": "三支 PN020 執行候選各保留 5 段獨立原生動作；Special01／Special02 儲備不等於已核對施放時序。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+              "bytes": 28522,
+              "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+            }
+          ]
+        },
+        {
+          "id": "source-cast-hit-end-timing-recovered",
+          "nameZh": "Q/W/E/R/EX 的原作施放、命中與結束時序已量測",
+          "state": "blocked",
+          "verified": false,
+          "detail": "現有 VFX runtime 收據明確不主張原生 Niagara timing；沒有一份收據量測完整原作動作／命中／結束時點。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        },
+        {
+          "id": "approved-motion-vfx-audio-timeline",
+          "nameZh": "核准動作、VFX、音訊已合成同一條時序",
+          "state": "blocked",
+          "verified": false,
+          "detail": "VFX 只有 Q/W/R feature-branch 關係，音訊沒有 GGD target；不能把兩份部分完成資料當作完整戰鬥時序。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+              "bytes": 11431,
+              "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+            }
+          ]
+        },
+        {
+          "id": "full-combat-playback-and-regression",
+          "nameZh": "完整戰鬥播放與回歸已通過",
+          "state": "blocked",
+          "verified": false,
+          "detail": "runtime 收據為 fullCombatPlaybackVerified=false，且 productionDeploymentVerified=false。",
+          "evidence": [
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+              "bytes": 20049,
+              "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+            }
+          ]
+        }
+      ],
       "closed": false,
       "remaining": true,
+      "closureGateSummary": {
+        "total": 4,
+        "verified": 1,
+        "blocked": 3
+      },
       "ownerReviewRequiredBeforeRuntimeMutation": false
     }
   ],

@@ -19,6 +19,14 @@ generates both `materials/hero-model-library/infinity-strash/popp-integration-re
 and the compact `popp-integration-gaps.json` ledger. Do not hand-edit either
 generated output.
 
+Each gap now contains `closureGates[]`: a machine-derived list of the exact
+conditions that are `verified` or `blocked`, with pinned evidence paths. This
+separates completed conversion work from the remaining missing input. A
+blocked gate is not permission to infer a GGD audio target, original Niagara
+timing, root mesh assignment, toon-shader parameter, or combat timeline.
+The generated browser page presents the same gates so the review summary and
+the queryable JSON cannot disagree.
+
 `vfx-binding-proposals.json` maps all twelve generated VFX candidates into
 seven source-name proposals for Q/W/R plus five unassigned reserves. The
 central review portal records visual approval for all 12 VFX previews. The

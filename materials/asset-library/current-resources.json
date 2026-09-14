@@ -7269,17 +7269,17 @@
   },
   "poppIntegrationGapLedger": {
     "schema": "ggd.popp-integration-gap-ledger@1",
-    "sourceFingerprint": "b10884a40f279fd59d7c02e4374780cd6b6cf3b79970edd811b636a5bfcf0d24",
+    "sourceFingerprint": "c823b41b3b9868497287369044790a7eb835450f0f4e3ef86aff3e28242e3337",
     "gapLedgerGitPath": "materials/hero-model-library/infinity-strash/popp-integration-gaps.json",
-    "gapLedgerSha256": "b5ab1bc12d5b9583160331c12e09a585dc26f6eadacb5ceb5a9b6d1ea3751f5d",
+    "gapLedgerSha256": "11d7269b9ba99447ab7a5282e4639187aa1ae62b6b91b59fcd38efc0931684b2",
     "definitionSourceGitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json",
     "definitionSourceSha256": "158eb8bfd41c618396ff899646b2cb459f37cbc466c1b6bfacac78088c9fcb31",
     "vfxBindingProposalGitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json",
     "vfxBindingProposalSha256": "2aba04b0263dfdad60955f0753562c88c055127504a6aae866188411982c5e0e",
     "reviewContractGitPath": "materials/hero-model-library/infinity-strash/popp-integration-review.json",
-    "reviewContractSha256": "8332a00f721a9190e5bde863db0e743f498a2ccd468700d71e142eee6f3d5993",
+    "reviewContractSha256": "9431e1f0a988d9ca036786496f2b6535cf320806be95889aac0574a048666bc6",
     "reviewPageGitPath": "apps/client/public/popp-integration-review.html",
-    "reviewPageSha256": "71a1e24f09885cdf21228cda841823203cc7a87fb48b82a6d00620ed510c7375",
+    "reviewPageSha256": "591a29da4e5678b938134d1bdd00e6e9ab7dbe6615c8f306a0aeaf002690e12a",
     "weaponDecision": {
       "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
       "selectionMode": "manual",
@@ -7301,6 +7301,9 @@
       "vfxBindingProposals": 7,
       "vfxReserveCandidates": 5,
       "runtimeBindingsAddedByThisWorkflow": 7,
+      "closureGates": 20,
+      "closureGatesVerified": 9,
+      "closureGatesBlocked": 11,
       "productionDeploymentVerified": false
     },
     "ownerReview": {
@@ -7390,8 +7393,62 @@
             "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
           }
         },
+        "closureGates": [
+          {
+            "id": "native-down-source",
+            "nameZh": "PN020 原生 down 動作已固定",
+            "state": "verified",
+            "verified": true,
+            "detail": "選定 Kagayaki 模型的 hurt/death 都指向 GGD_native_down；來源為 PN020 原生 down loop。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+                "bytes": 3123,
+                "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+                "bytes": 28522,
+                "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+              }
+            ]
+          },
+          {
+            "id": "owner-death-decision",
+            "nameZh": "死亡替代演出已逐項核准",
+            "state": "verified",
+            "verified": true,
+            "detail": "owner 裁決固定為 native down 加既有升天淡出，且選定法杖已套用。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+                "bytes": 3123,
+                "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+              }
+            ]
+          },
+          {
+            "id": "existing-runtime-presentation",
+            "nameZh": "既有 runtime 死亡演出已接通",
+            "state": "verified",
+            "verified": true,
+            "detail": "決策收據記錄既有 ChampionView 倒地、升高與淡出流程；本 workflow 未另造未驗證的死亡動作。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+                "bytes": 3123,
+                "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+              }
+            ]
+          }
+        ],
         "closed": true,
         "remaining": false,
+        "closureGateSummary": {
+          "total": 3,
+          "verified": 3,
+          "blocked": 0
+        },
         "ownerReviewRequiredBeforeRuntimeMutation": false
       },
       {
@@ -7408,10 +7465,83 @@
           "三支法杖版本都有可重現視覺驗收證據"
         ],
         "ownerReviewPolicy": "材質轉換可先完成；聲稱原作外觀一致前仍需視覺驗收。",
-        "status": "pending-source-shader-reconstruction",
+        "status": "blocked-missing-source-shader-parameter-recovery-and-parity-review",
         "evidence": "The source hair base is an 8x8 shader-parameter texture. Current candidates are accepted simplified PBR previews, without exact source toon and hair-colour parity.",
+        "closureGates": [
+          {
+            "id": "source-material-inputs-retained",
+            "nameZh": "三支法杖的來源材質輸入已保留",
+            "state": "verified",
+            "verified": true,
+            "detail": "三個原作 PN020 候選皆有已驗證的模型、貼圖與 18 張 WebGL 狀態抽查；其限制欄明確記錄 toon／髮色尚未還原。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+                "bytes": 28522,
+                "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+              }
+            ]
+          },
+          {
+            "id": "source-shader-parameters-recovered",
+            "nameZh": "來源 shader 參數已恢復",
+            "state": "blocked",
+            "verified": false,
+            "detail": "目前只有依遊戲 shader 參數運作的 8×8 hair base 與材質檔；沒有可重現的 shader 參數匯出或等價運算證據。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+                "bytes": 28522,
+                "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+              }
+            ]
+          },
+          {
+            "id": "ggd-toon-material-built",
+            "nameZh": "GGD toon／遮罩／陰影材質已重建",
+            "state": "blocked",
+            "verified": false,
+            "detail": "三個執行候選目前明確使用簡化 PBR；沒有已驗證的 GGD toon 材質產物可供替換。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+                "bytes": 28522,
+                "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+              }
+            ]
+          },
+          {
+            "id": "three-staff-parity-review",
+            "nameZh": "三支法杖的外觀一致性已驗收",
+            "state": "blocked",
+            "verified": false,
+            "detail": "現有 WebGL 驗收只證明可見性、完整身體與動作抽查；收據明載並非精確 toon／髮色一致性驗收。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
+                "bytes": 7162,
+                "sha256": "45fceada138dbd02ecb611f1606986f15e1766e7aa02e4daf5c69b0ef2adb2d3"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/acceptance-summary.json",
+                "bytes": 7019,
+                "sha256": "6ec38407febffdcb26f08704a092a468293316167f97ef71f5a455fe73d0fda3"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/acceptance-summary.json",
+                "bytes": 7031,
+                "sha256": "c6cb9f5d52771d14223ab433313be9b0ee83606ae2a3b0d1cda0caf1c8f82e21"
+              }
+            ]
+          }
+        ],
         "closed": false,
         "remaining": true,
+        "closureGateSummary": {
+          "total": 4,
+          "verified": 1,
+          "blocked": 3
+        },
         "ownerReviewRequiredBeforeRuntimeMutation": false
       },
       {
@@ -7429,10 +7559,92 @@
           "綁定通過 VFX 與技能檢查"
         ],
         "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-        "status": "feature-branch-seven-bound-native-niagara-mesh-parity-open",
+        "status": "feature-branch-seven-bound-blocked-native-niagara-timing-and-root-mesh-attribution",
         "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 reviewed source-name relationships are bound across Q/W/R and 5 remain unbound reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+        "closureGates": [
+          {
+            "id": "reviewed-vfx-documents-released",
+            "nameZh": "12 個核准 VFX 文件已發布到功能分支",
+            "state": "verified",
+            "verified": true,
+            "detail": "12 個 owner 視覺核准的重建候選都有可解析 VFX 文件。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          },
+          {
+            "id": "reviewed-qwr-relationships-bound",
+            "nameZh": "7 組 Q/W/R 候選關係已綁定",
+            "state": "verified",
+            "verified": true,
+            "detail": "Q/W/R 的 7 組來源名稱關係已寫入功能分支；5 個語意未對應候選仍保留未綁定。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          },
+          {
+            "id": "native-niagara-timing-recovered",
+            "nameZh": "原生 Niagara 時序已恢復",
+            "state": "blocked",
+            "verified": false,
+            "detail": "runtime 收據明確為 nativeNiagaraTimingRecovered=false；目前 delay 只是 GGD castTimeSec 範圍內的確定性播放值。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          },
+          {
+            "id": "root-specific-mesh-attribution",
+            "nameZh": "root 對應的 mesh layer 已確認",
+            "state": "blocked",
+            "verified": false,
+            "detail": "33 個 static-mesh support GLB 已轉換，但 rootSpecificAttributions=0，不能猜測掛入技能。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
+                "bytes": 123031,
+                "sha256": "c3e6d37f788ab8519372e1fdbf5cb643a16053028491ace3d12e00349ff9549a"
+              }
+            ]
+          },
+          {
+            "id": "native-vfx-parity-playback",
+            "nameZh": "原作特效完整時序與畫面已驗收",
+            "state": "blocked",
+            "verified": false,
+            "detail": "目前沒有原生 Niagara 播放或完整原作對照驗收；feature-branch 綁定不可升格為原作完整重建。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          }
+        ],
         "closed": false,
         "remaining": true,
+        "closureGateSummary": {
+          "total": 5,
+          "verified": 2,
+          "blocked": 3
+        },
         "ownerReviewRequiredBeforeRuntimeMutation": false
       },
       {
@@ -7449,10 +7661,88 @@
           "只將核准配對寫入 runtime，並通過音訊與事件檢查"
         ],
         "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。",
-        "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+        "status": "blocked-missing-owner-approved-unique-ggd-targets-and-runtime-playback",
         "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. All 36 reviewed relationships are converted to 35 content-addressed game MP3 files and grouped into 8 approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
+        "closureGates": [
+          {
+            "id": "approved-native-event-relationships",
+            "nameZh": "36 筆原生事件關係已逐項聽審",
+            "state": "verified",
+            "verified": true,
+            "detail": "36 筆 Popp／PN020 關係均有 owner approve，且每筆只核准其一個原生 Wwise 事件。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
+                "bytes": 108481,
+                "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              }
+            ]
+          },
+          {
+            "id": "game-format-audio-converted",
+            "nameZh": "35 份遊戲用 MP3 已產生並驗證",
+            "state": "verified",
+            "verified": true,
+            "detail": "35 個去重內容檔覆蓋 36 筆候選關係，固定為 48 kHz mono MP3。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              }
+            ]
+          },
+          {
+            "id": "owner-approved-ggd-runtime-targets",
+            "nameZh": "唯一 GGD 技能／狀態目標已逐項核准",
+            "state": "blocked",
+            "verified": false,
+            "detail": "所有 36 筆 owner 決策 runtimeBindingAuthorized=false；每筆 blocker 均缺唯一 GGD target。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+                "bytes": 27339,
+                "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+              }
+            ]
+          },
+          {
+            "id": "runtime-audio-playback-and-regression",
+            "nameZh": "runtime 播放與回歸收據已完成",
+            "state": "blocked",
+            "verified": false,
+            "detail": "音訊收據 runtimeBindings=0、runtimeConsumers=0；沒有可驗證的角色 runtime 播放或回歸結果。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+                "bytes": 27339,
+                "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+              }
+            ]
+          }
+        ],
         "closed": false,
         "remaining": true,
+        "closureGateSummary": {
+          "total": 4,
+          "verified": 2,
+          "blocked": 2
+        },
         "ownerReviewRequiredBeforeRuntimeMutation": true
       },
       {
@@ -7470,10 +7760,78 @@
           "完整戰鬥播放與回歸檢查通過"
         ],
         "ownerReviewPolicy": "既有內容與自動測試可先完成；未核准的音訊、借用動作或 VFX 不得藉由整體戰鬥驗證繞過逐項審查。",
-        "status": "pending-gameplay-validation",
+        "status": "blocked-missing-source-timing-mapping-and-full-combat-playback",
         "evidence": "GGD ability definitions exist, while native Special01/Special02 remain unreferenced and original animation timing, hit timing and complete combat playback are not accepted.",
+        "closureGates": [
+          {
+            "id": "native-motion-set-retained",
+            "nameZh": "已取得的原生動作集合已固定",
+            "state": "verified",
+            "verified": true,
+            "detail": "三支 PN020 執行候選各保留 5 段獨立原生動作；Special01／Special02 儲備不等於已核對施放時序。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
+                "bytes": 28522,
+                "sha256": "9622bb5d47ab06cca02599cd1d18e75f38a5432ff1ff2ff02237c6bf04114ec0"
+              }
+            ]
+          },
+          {
+            "id": "source-cast-hit-end-timing-recovered",
+            "nameZh": "Q/W/E/R/EX 的原作施放、命中與結束時序已量測",
+            "state": "blocked",
+            "verified": false,
+            "detail": "現有 VFX runtime 收據明確不主張原生 Niagara timing；沒有一份收據量測完整原作動作／命中／結束時點。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          },
+          {
+            "id": "approved-motion-vfx-audio-timeline",
+            "nameZh": "核准動作、VFX、音訊已合成同一條時序",
+            "state": "blocked",
+            "verified": false,
+            "detail": "VFX 只有 Q/W/R feature-branch 關係，音訊沒有 GGD target；不能把兩份部分完成資料當作完整戰鬥時序。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              },
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+                "bytes": 11431,
+                "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+              }
+            ]
+          },
+          {
+            "id": "full-combat-playback-and-regression",
+            "nameZh": "完整戰鬥播放與回歸已通過",
+            "state": "blocked",
+            "verified": false,
+            "detail": "runtime 收據為 fullCombatPlaybackVerified=false，且 productionDeploymentVerified=false。",
+            "evidence": [
+              {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+                "bytes": 20049,
+                "sha256": "ad63b267e37ee92758d1771c79954b545a41d40bc86a12b344c241cd5f799d4e"
+              }
+            ]
+          }
+        ],
         "closed": false,
         "remaining": true,
+        "closureGateSummary": {
+          "total": 4,
+          "verified": 1,
+          "blocked": 3
+        },
         "ownerReviewRequiredBeforeRuntimeMutation": false
       }
     ],
@@ -9298,7 +9656,7 @@
       "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-jetragon"
@@ -9483,7 +9841,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
       "ggdHeroImplemented": true,
       "registrationEvidence": {
         "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -9541,7 +9899,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     },
@@ -9626,7 +9984,7 @@
       "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-cattiva"
@@ -9724,7 +10082,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
       "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -9820,7 +10178,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
       "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -9949,7 +10307,7 @@
       "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10078,7 +10436,7 @@
       "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10212,7 +10570,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10344,7 +10702,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10477,7 +10835,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10609,7 +10967,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10740,7 +11098,7 @@
         "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
       },
       "auditEvidence": "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions.",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -10895,7 +11253,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11040,7 +11398,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11185,7 +11543,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11368,7 +11726,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-steve-c00-blender4513-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "7d1fe25b0bb63461a71797cd232bc6ed2f139600e3c6cd5dcc11a419fe5225f3",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11550,7 +11908,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-alex-c01-blender4513-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "4f6eee04184442587bb9a3a2cb5ad9fbeb8c47c5d8578d8a0b955422b26cc131",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11759,7 +12117,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -11968,7 +12326,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12085,7 +12443,7 @@
         "fullGetVerified": true,
         "allMemberSha256Verified": true
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12202,7 +12560,7 @@
         "bytes": 11477,
         "sha256": "e9af7058b7b0c8cb6f7be19b5d5ee1d3faae52f0c3b67c2f1cfecbfa2663eaad"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12325,7 +12683,7 @@
         "bytes": 649,
         "sha256": "906f625085ea7467e76684f676692c7843780a3e1e0e80bae446df8eecbef091"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12443,7 +12801,7 @@
         "bytes": 14195,
         "sha256": "956796b480cd2eb2068c99416e33fafc5e19a98630e390aa048e3f982f0a7773"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12585,7 +12943,7 @@
         "bytes": 11790,
         "sha256": "105e779c1a556fd281b97c1f4deb3a7060f02229522bb565a3b8758d700e070e"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12727,7 +13085,7 @@
         "bytes": 12790,
         "sha256": "5f7c72c0f3a86fdda7a08ab81e1389891fef33ea2375310f012d9575cade5903"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -12870,7 +13228,7 @@
         "bytes": 15742,
         "sha256": "f676610c8a9a8bef483f60f9b2905401e3c689eaa09af3399dad7b0b5012ef3e"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13013,7 +13371,7 @@
         "bytes": 15037,
         "sha256": "7bbd6aff356e5e21897e41cd1b08c7414b93cbafd539b967897d85e148bcdace"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13160,7 +13518,7 @@
         "bytes": 1734,
         "sha256": "5b2f52554ac50db668ea9360d97b41e82763cb8ac009043327bc06a8b966401d"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13309,7 +13667,7 @@
         "bytes": 1744,
         "sha256": "fba142ee1a2e251f73a946998b120b74cff390ca85c11afb3ae91fbc8f09d8f3"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13416,7 +13774,7 @@
         "bytes": 1483,
         "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13605,7 +13963,7 @@
         "status": "s3-full-readback-verified",
         "scope": "source conversion only; does not include this new decimation stage"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13794,7 +14152,7 @@
         "status": "s3-full-readback-verified",
         "scope": "source conversion only; does not include this new decimation stage"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -13919,7 +14277,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14044,7 +14402,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14166,7 +14524,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
       "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14294,7 +14652,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
       "backupReceiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14419,7 +14777,7 @@
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/receipt.json",
       "backupReceiptSha256": "d4dd56a6a67525b06c9581dfa513e9b389835d32fc20127c2962afd613f3f33c",
       "backupStatus": "s3-full-readback-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14546,7 +14904,7 @@
         "sha256": "40f08fd3a6145f3d12fddf670d2a7cb6e84dc5dbeb9dd84f7100af364c647913"
       },
       "backupStatus": "full-get-and-all-member-sha256-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14677,7 +15035,7 @@
         "sha256": "6fc42ec9d895a7c720e0786440a744177da36c69da0f4af77c715469b5b2a9fd"
       },
       "backupStatus": "full-get-and-all-member-sha256-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14818,7 +15176,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -14952,7 +15310,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
       "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -15117,7 +15475,7 @@
         "allMemberSha256Verified": true,
         "localUnchanged": true
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -15247,7 +15605,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
       "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -15402,7 +15760,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -15557,7 +15915,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 81391,
@@ -15602,7 +15960,7 @@
       "bytes": 373464,
       "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
       "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
       "recoveredFromGitCommit": "7bc2fa3f8",
       "normalizedReplacementSha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
       "normalizedReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
@@ -15648,7 +16006,7 @@
       "bytes": 695600,
       "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
       "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-popp-gap-integration/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
       "recoveredFromGitCommit": "7bc2fa3f8",
       "normalizedReplacementSha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
       "normalizedReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",

@@ -27,6 +27,7 @@ VFX_RUNTIME_RELEASE = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-runt
 APPROVED_AUDIO_RECEIPT = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json"
 APPROVED_AUDIO_EVENT_TABLE = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json"
 APPROVED_AUDIO_BLOCKERS = LIBRARY / "priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json"
+VFX_STATIC_MESH_RECOVERY = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -61,6 +62,30 @@ def file_evidence(path: Path) -> dict:
         "gitPath": path.relative_to(ROOT).as_posix(),
         "bytes": path.stat().st_size,
         "sha256": sha256(path),
+    }
+
+
+def closure_gate(
+    gate_id: str,
+    name_zh: str,
+    verified: bool,
+    detail: str,
+    evidence: list[dict],
+) -> dict:
+    """Represent a checkable closure condition without promoting a missing input.
+
+    A gap may contain useful converted material while it remains open.  Keeping
+    every condition as its own gate makes that distinction queryable by other
+    workflows and prevents a broad `pending` label from hiding the next
+    required input.
+    """
+    return {
+        "id": gate_id,
+        "nameZh": name_zh,
+        "state": "verified" if verified else "blocked",
+        "verified": verified,
+        "detail": detail,
+        "evidence": evidence,
     }
 
 
@@ -303,6 +328,11 @@ def build_contract() -> dict:
     assert vfx_runtime_release["states"]["featureBranchSkillBindingsCreated"] is True
     assert vfx_runtime_release["states"]["nativeNiagaraTimingRecovered"] is False
     assert vfx_runtime_release["states"]["rootSpecificMeshLayersBound"] is False
+    assert vfx_runtime_release["states"]["fullCombatPlaybackVerified"] is False
+    static_mesh_recovery = read_json(VFX_STATIC_MESH_RECOVERY)
+    assert static_mesh_recovery["states"]["staticMeshSupportConverted"] == 33
+    assert static_mesh_recovery["states"]["niagaraSystemsConverted"] == 0
+    assert static_mesh_recovery["states"]["runtimeBound"] is False
     dependencies = dependency_index["externalPackageDependencies"]
     vfx_references = [path for path in dependencies if "/VFX/" in path]
     pn020_event_references = [
@@ -317,6 +347,141 @@ def build_contract() -> dict:
         "pn020EventReferenceCount": len(pn020_event_references),
         "pn020EventReferences": pn020_event_references,
     }
+
+    # The three model acceptance summaries establish visibility and native-clip
+    # sampling, not source-shader equivalence.  Read their limits from the
+    # canonical priority-runtime input rather than repeating a hand-maintained
+    # list in the ledger.
+    staff_runtime_rows = [entries[candidate_id] for _, candidate_id in STAFFS]
+    assert all(row["nativeAnimationCount"] == 5 for row in staff_runtime_rows)
+    assert all(
+        any("toon" in limitation.lower() or "髮色" in limitation for limitation in row["limitations"])
+        for row in staff_runtime_rows
+    )
+    runtime_inputs_evidence = file_evidence(runtime_inputs_path)
+    vfx_release_evidence = file_evidence(VFX_RUNTIME_RELEASE)
+    static_mesh_evidence = file_evidence(VFX_STATIC_MESH_RECOVERY)
+    audio_receipt_evidence = file_evidence(APPROVED_AUDIO_RECEIPT)
+    audio_blocker_evidence = file_evidence(APPROVED_AUDIO_BLOCKERS)
+
+    # The gates deliberately test the exact distinction required to close each
+    # gap.  A verified gate means this checkout has the evidence; a blocked
+    # gate means the evidence itself says that a needed input has not been
+    # recovered or accepted.  It is not a request to infer a binding.
+    death_gates = [
+        closure_gate(
+            "native-down-source", "PN020 原生 down 動作已固定", True,
+            "選定 Kagayaki 模型的 hurt/death 都指向 GGD_native_down；來源為 PN020 原生 down loop。",
+            [file_evidence(DECISION_RECEIPT), runtime_inputs_evidence],
+        ),
+        closure_gate(
+            "owner-death-decision", "死亡替代演出已逐項核准", bool(applied_decision),
+            "owner 裁決固定為 native down 加既有升天淡出，且選定法杖已套用。",
+            [file_evidence(DECISION_RECEIPT)] if applied_decision else [],
+        ),
+        closure_gate(
+            "existing-runtime-presentation", "既有 runtime 死亡演出已接通", bool(applied_decision),
+            "決策收據記錄既有 ChampionView 倒地、升高與淡出流程；本 workflow 未另造未驗證的死亡動作。",
+            [file_evidence(DECISION_RECEIPT)] if applied_decision else [],
+        ),
+    ]
+    toon_gates = [
+        closure_gate(
+            "source-material-inputs-retained", "三支法杖的來源材質輸入已保留", True,
+            "三個原作 PN020 候選皆有已驗證的模型、貼圖與 18 張 WebGL 狀態抽查；其限制欄明確記錄 toon／髮色尚未還原。",
+            [runtime_inputs_evidence],
+        ),
+        closure_gate(
+            "source-shader-parameters-recovered", "來源 shader 參數已恢復", False,
+            "目前只有依遊戲 shader 參數運作的 8×8 hair base 與材質檔；沒有可重現的 shader 參數匯出或等價運算證據。",
+            [runtime_inputs_evidence],
+        ),
+        closure_gate(
+            "ggd-toon-material-built", "GGD toon／遮罩／陰影材質已重建", False,
+            "三個執行候選目前明確使用簡化 PBR；沒有已驗證的 GGD toon 材質產物可供替換。",
+            [runtime_inputs_evidence],
+        ),
+        closure_gate(
+            "three-staff-parity-review", "三支法杖的外觀一致性已驗收", False,
+            "現有 WebGL 驗收只證明可見性、完整身體與動作抽查；收據明載並非精確 toon／髮色一致性驗收。",
+            [
+                file_evidence(ACCEPTANCE["Magikaru"]),
+                file_evidence(ACCEPTANCE["Mahouno"]),
+                file_evidence(ACCEPTANCE["Kagayaki"]),
+            ],
+        ),
+    ]
+    vfx_gates = [
+        closure_gate(
+            "reviewed-vfx-documents-released", "12 個核准 VFX 文件已發布到功能分支", True,
+            "12 個 owner 視覺核准的重建候選都有可解析 VFX 文件。",
+            [vfx_release_evidence],
+        ),
+        closure_gate(
+            "reviewed-qwr-relationships-bound", "7 組 Q/W/R 候選關係已綁定", True,
+            "Q/W/R 的 7 組來源名稱關係已寫入功能分支；5 個語意未對應候選仍保留未綁定。",
+            [vfx_release_evidence],
+        ),
+        closure_gate(
+            "native-niagara-timing-recovered", "原生 Niagara 時序已恢復", False,
+            "runtime 收據明確為 nativeNiagaraTimingRecovered=false；目前 delay 只是 GGD castTimeSec 範圍內的確定性播放值。",
+            [vfx_release_evidence],
+        ),
+        closure_gate(
+            "root-specific-mesh-attribution", "root 對應的 mesh layer 已確認", False,
+            "33 個 static-mesh support GLB 已轉換，但 rootSpecificAttributions=0，不能猜測掛入技能。",
+            [vfx_release_evidence, static_mesh_evidence],
+        ),
+        closure_gate(
+            "native-vfx-parity-playback", "原作特效完整時序與畫面已驗收", False,
+            "目前沒有原生 Niagara 播放或完整原作對照驗收；feature-branch 綁定不可升格為原作完整重建。",
+            [vfx_release_evidence],
+        ),
+    ]
+    audio_gates = [
+        closure_gate(
+            "approved-native-event-relationships", "36 筆原生事件關係已逐項聽審", True,
+            "36 筆 Popp／PN020 關係均有 owner approve，且每筆只核准其一個原生 Wwise 事件。",
+            [file_evidence(PORTAL_OWNER_DECISIONS), audio_receipt_evidence],
+        ),
+        closure_gate(
+            "game-format-audio-converted", "35 份遊戲用 MP3 已產生並驗證", True,
+            "35 個去重內容檔覆蓋 36 筆候選關係，固定為 48 kHz mono MP3。",
+            [audio_receipt_evidence],
+        ),
+        closure_gate(
+            "owner-approved-ggd-runtime-targets", "唯一 GGD 技能／狀態目標已逐項核准", False,
+            "所有 36 筆 owner 決策 runtimeBindingAuthorized=false；每筆 blocker 均缺唯一 GGD target。",
+            [audio_receipt_evidence, audio_blocker_evidence],
+        ),
+        closure_gate(
+            "runtime-audio-playback-and-regression", "runtime 播放與回歸收據已完成", False,
+            "音訊收據 runtimeBindings=0、runtimeConsumers=0；沒有可驗證的角色 runtime 播放或回歸結果。",
+            [audio_receipt_evidence, audio_blocker_evidence],
+        ),
+    ]
+    combat_gates = [
+        closure_gate(
+            "native-motion-set-retained", "已取得的原生動作集合已固定", True,
+            "三支 PN020 執行候選各保留 5 段獨立原生動作；Special01／Special02 儲備不等於已核對施放時序。",
+            [runtime_inputs_evidence],
+        ),
+        closure_gate(
+            "source-cast-hit-end-timing-recovered", "Q/W/E/R/EX 的原作施放、命中與結束時序已量測", False,
+            "現有 VFX runtime 收據明確不主張原生 Niagara timing；沒有一份收據量測完整原作動作／命中／結束時點。",
+            [vfx_release_evidence],
+        ),
+        closure_gate(
+            "approved-motion-vfx-audio-timeline", "核准動作、VFX、音訊已合成同一條時序", False,
+            "VFX 只有 Q/W/R feature-branch 關係，音訊沒有 GGD target；不能把兩份部分完成資料當作完整戰鬥時序。",
+            [vfx_release_evidence, audio_receipt_evidence],
+        ),
+        closure_gate(
+            "full-combat-playback-and-regression", "完整戰鬥播放與回歸已通過", False,
+            "runtime 收據為 fullCombatPlaybackVerified=false，且 productionDeploymentVerified=false。",
+            [vfx_release_evidence],
+        ),
+    ]
 
     gap_states = [
         {
@@ -345,26 +510,31 @@ def build_contract() -> dict:
                 "runtimeImplemented": bool(applied_decision),
                 "decisionReceipt": file_evidence(DECISION_RECEIPT) if applied_decision else None,
             },
+            "closureGates": death_gates,
         },
         {
             "id": "source-toon-and-hair-colour-parity",
-            "status": "pending-source-shader-reconstruction",
+            "status": "blocked-missing-source-shader-parameter-recovery-and-parity-review",
             "evidence": "The source hair base is an 8x8 shader-parameter texture. Current candidates are accepted simplified PBR previews, without exact source toon and hair-colour parity.",
+            "closureGates": toon_gates,
         },
         {
             "id": "original-vfx-conversion",
-            "status": "feature-branch-seven-bound-native-niagara-mesh-parity-open",
+            "status": "feature-branch-seven-bound-blocked-native-niagara-timing-and-root-mesh-attribution",
             "evidence": f"{len(vfx_references)} VFX package references are retained. All {vfx_runtime_release['summary']['ownerApprovedVfxReleased']} owner-approved reconstructions now have release VFX IDs; {vfx_runtime_release['summary']['candidateRelationshipsBound']} reviewed source-name relationships are bound across Q/W/R and {vfx_runtime_release['summary']['reserveCandidatesReleasedUnbound']} remain unbound reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+            "closureGates": vfx_gates,
         },
         {
             "id": "animation-events-and-sfx-binding",
-            "status": "owner-listening-approved-game-format-converted-awaiting-ggd-targets",
+            "status": "blocked-missing-owner-approved-unique-ggd-targets-and-runtime-playback",
             "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. All {portal_owner_review['audio']['approvedCount']} reviewed relationships are converted to {approved_audio['summary']['gameAudioFiles']} content-addressed game MP3 files and grouped into {approved_audio['summary']['nativeEventRows']} approved native events. The receipt authorizes no GGD target or runtime mutation, so all 36 candidate relationships remain individually blocked from skill/state binding.",
+            "closureGates": audio_gates,
         },
         {
             "id": "skill-timing-and-full-combat-binding",
-            "status": "pending-gameplay-validation",
+            "status": "blocked-missing-source-timing-mapping-and-full-combat-playback",
             "evidence": "GGD ability definitions exist, while native Special01/Special02 remain unreferenced and original animation timing, hit timing and complete combat playback are not accepted.",
+            "closureGates": combat_gates,
         },
     ]
     definitions = read_json(GAP_DEFINITIONS)
@@ -377,12 +547,17 @@ def build_contract() -> dict:
     gaps = []
     for state in gap_states:
         definition = definition_by_id[state["id"]]
-        closed = state["status"] == "owner-approved-existing-runtime-bound"
+        closed = all(gate["verified"] for gate in state["closureGates"])
         gaps.append({
             **definition,
             **state,
             "closed": closed,
             "remaining": not closed,
+            "closureGateSummary": {
+                "total": len(state["closureGates"]),
+                "verified": sum(gate["verified"] for gate in state["closureGates"]),
+                "blocked": sum(not gate["verified"] for gate in state["closureGates"]),
+            },
             "ownerReviewRequiredBeforeRuntimeMutation": (
                 state["id"] == "animation-events-and-sfx-binding"
             ),
@@ -397,6 +572,10 @@ def build_contract() -> dict:
             for row in candidates
         ],
         "gapStates": [(row["id"], row["status"]) for row in gaps],
+        "gapClosureGates": [
+            (row["id"], [(gate["id"], gate["verified"]) for gate in row["closureGates"]])
+            for row in gaps
+        ],
         "poppAudioGroupsSha256": audio_evidence["selectedGroupsSha256"],
         "dependencyIndexSha256": dependency_evidence["source"]["sha256"],
         "vfxRuntimeManifestSha256": sha256(VFX_RUNTIME_MANIFEST),
@@ -427,6 +606,7 @@ def build_contract() -> dict:
             file_evidence(VFX_BINDING_PROPOSALS),
             file_evidence(PORTAL_OWNER_DECISIONS),
             file_evidence(VFX_RUNTIME_RELEASE),
+            file_evidence(VFX_STATIC_MESH_RECOVERY),
             file_evidence(APPROVED_AUDIO_RECEIPT),
             file_evidence(APPROVED_AUDIO_EVENT_TABLE),
             file_evidence(APPROVED_AUDIO_BLOCKERS),
@@ -536,6 +716,15 @@ def build_gap_ledger(contract: dict) -> dict:
             "vfxBindingProposals": contract["vfxBindingReviewProposals"]["proposedCandidateCount"],
             "vfxReserveCandidates": contract["vfxBindingReviewProposals"]["reserveCandidateCount"],
             "runtimeBindingsAddedByThisWorkflow": contract["vfxBindingReviewProposals"]["runtimeBindingsCreated"],
+            "closureGates": sum(len(row["closureGates"]) for row in contract["fiveOpenIntegrationGaps"]),
+            "closureGatesVerified": sum(
+                sum(gate["verified"] for gate in row["closureGates"])
+                for row in contract["fiveOpenIntegrationGaps"]
+            ),
+            "closureGatesBlocked": sum(
+                sum(not gate["verified"] for gate in row["closureGates"])
+                for row in contract["fiveOpenIntegrationGaps"]
+            ),
             "productionDeploymentVerified": False,
         },
         "gaps": contract["fiveOpenIntegrationGaps"],
@@ -563,7 +752,7 @@ h1{{font-size:19px;margin:0}} .meta,.note{{color:var(--dim)}} main{{max-width:12
 .buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}} button,.pick{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 10px;border-radius:7px;cursor:pointer}}
 button:hover,.pick:hover{{border-color:var(--accent)}} button.active{{border-color:var(--accent);background:#16435b}} code{{font-size:11px;word-break:break-all}} ol li{{margin:8px 0}} .status{{color:var(--warn)}}
 #deathStage{{overflow:hidden;border-radius:8px;background:#071019;padding:10px}} #deathFrame.rise{{animation:riseFade 2.2s ease-in forwards}} @keyframes riseFade{{0%,35%{{opacity:1;transform:translateY(0)}}100%{{opacity:.08;transform:translateY(-80px)}}}}
-textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1px solid var(--line);border-radius:7px;padding:8px}}
+textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1px solid var(--line);border-radius:7px;padding:8px}} .gates{{margin:7px 0 0;padding-left:18px}} .gate-ok{{color:var(--ok)}} .gate-blocked{{color:var(--warn)}}
 </style></head><body><header><h1>何布／波普 PN020 武器與死亡演出審查</h1><div class="meta">資料指紋 <code>{contract['sourceFingerprint']}</code> · 正式站部署仍待 Main</div></header>
 <main><div class="warn">三支法杖都是功能分支的獨立後台選項。<b>{'已套用你的 Kagayaki 手動選擇；其他兩支仍保留為選項。' if contract['weaponReview']['selectedCandidateId'] else '尚未套用裁決，不會自動切換。'}</b></div>
 <h2>一、核對三支法杖</h2><div id="weapons" class="grid"></div>{'' if contract['weaponReview']['selectedCandidateId'] else '<div class="buttons"><button id="clearWeapon">清除法杖選擇</button></div>'}
@@ -586,7 +775,7 @@ for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContac
 function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>x.classList.toggle('chosen',x.dataset.id===state.weaponCandidateId));document.querySelectorAll('input[name=weapon]').forEach(x=>x.checked=x.value===state.weaponCandidateId);document.querySelectorAll('input[name=death]').forEach(x=>x.checked=x.value===state.deathCandidateId)}}
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
 const clearWeapon=document.getElementById('clearWeapon');if(clearWeapon)clearWeapon.onclick=()=>{{state.weaponCandidateId=null;save()}};
-document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.nameZh}}</b> <code>${{g.id}}</code> · <span class="status">${{g.closed?'closed':'remaining'}}／${{g.status}}</span><br><span class="note">${{g.evidence}}</span><br><span class="note">關閉條件：${{g.closureCriteria.join('；')}}</span><br><span class="note">審查規則：${{g.ownerReviewPolicy}}</span></li>`).join('');
+document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>{{const gates=g.closureGates.map(x=>`<li class="${{x.verified?'gate-ok':'gate-blocked'}}"><b>${{x.verified?'已驗證':'阻擋'}}</b> · ${{x.nameZh}}：${{x.detail}}</li>`).join('');return `<li><b>${{g.nameZh}}</b> <code>${{g.id}}</code> · <span class="status">${{g.closed?'closed':'remaining'}}／${{g.status}}</span><br><span class="note">${{g.evidence}}</span><br><span class="note">Gate：${{g.closureGateSummary.verified}}/${{g.closureGateSummary.total}} 已驗證，${{g.closureGateSummary.blocked}} 項阻擋。</span><ul class="gates">${{gates}}</ul><span class="note">關閉條件：${{g.closureCriteria.join('；')}}</span><br><span class="note">審查規則：${{g.ownerReviewPolicy}}</span></li>`}}).join('');
 document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">預覽已核准／功能分支已綁定</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
 const death=document.getElementById('deathFrame'), selected=D.weaponReview.candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)||D.weaponReview.candidates[0],base=selected.validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();

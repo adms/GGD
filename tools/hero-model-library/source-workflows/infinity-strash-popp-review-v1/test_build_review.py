@@ -44,7 +44,19 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(self.contract["closedIntegrationGapCount"], 1)
         self.assertTrue(all(row["remaining"] for row in gaps if row is not death))
         events = next(row for row in gaps if row["id"] == "animation-events-and-sfx-binding")
-        self.assertEqual(events["status"], "owner-listening-approved-game-format-converted-awaiting-ggd-targets")
+        self.assertEqual(events["status"], "blocked-missing-owner-approved-unique-ggd-targets-and-runtime-playback")
+        expected_gate_counts = {
+            "distinct-death-presentation": (3, 0),
+            "source-toon-and-hair-colour-parity": (1, 3),
+            "original-vfx-conversion": (2, 3),
+            "animation-events-and-sfx-binding": (2, 2),
+            "skill-timing-and-full-combat-binding": (1, 3),
+        }
+        for gap in gaps:
+            summary = gap["closureGateSummary"]
+            self.assertEqual((summary["verified"], summary["blocked"]), expected_gate_counts[gap["id"]])
+            self.assertEqual(summary["total"], summary["verified"] + summary["blocked"])
+            self.assertTrue(all(gate["state"] == ("verified" if gate["verified"] else "blocked") for gate in gap["closureGates"]))
         audio = self.contract["audioReviewEvidence"]
         self.assertEqual(audio["fileCount"], 311)
         self.assertFalse(audio["allListeningReviewComplete"])
@@ -103,6 +115,9 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(ledger["summary"]["vfxBindingProposals"], 7)
         self.assertEqual(ledger["summary"]["vfxReserveCandidates"], 5)
         self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 7)
+        self.assertEqual(ledger["summary"]["closureGates"], 20)
+        self.assertEqual(ledger["summary"]["closureGatesVerified"], 9)
+        self.assertEqual(ledger["summary"]["closureGatesBlocked"], 11)
         self.assertEqual(ledger["weaponDecision"]["candidateCount"], 3)
         self.assertEqual(
             ledger["weaponDecision"]["selectedCandidateId"],
@@ -111,7 +126,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(ledger["weaponDecision"]["selectionMode"], "manual")
         by_id = {row["id"]: row for row in ledger["gaps"]}
         self.assertFalse(by_id["original-vfx-conversion"]["ownerReviewRequiredBeforeRuntimeMutation"])
-        self.assertEqual(by_id["original-vfx-conversion"]["status"], "feature-branch-seven-bound-native-niagara-mesh-parity-open")
+        self.assertEqual(
+            by_id["original-vfx-conversion"]["status"],
+            "feature-branch-seven-bound-blocked-native-niagara-timing-and-root-mesh-attribution",
+        )
         self.assertTrue(by_id["animation-events-and-sfx-binding"]["ownerReviewRequiredBeforeRuntimeMutation"])
 
     def test_html_has_visible_state_controls_and_applied_owner_receipt(self):
@@ -126,6 +144,8 @@ class PoppReviewTest(unittest.TestCase):
         self.assertIn("五項權威整合狀態", page)
         self.assertIn("asset-review-portal.html", page)
         self.assertIn("VFX 語意配對（功能分支已綁定）", page)
+        self.assertIn("closureGateSummary", page)
+        self.assertIn("Gate：", page)
         self.assertIn("預覽已核准／功能分支已綁定", page)
         self.assertIn("candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)", page)
         self.assertNotIn("id=\"clearWeapon\"", page)

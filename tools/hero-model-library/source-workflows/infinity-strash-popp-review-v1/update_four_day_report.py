@@ -27,6 +27,12 @@ def read_ledger() -> dict:
     if summary.get("runtimeBindingsAddedByThisWorkflow") != 7:
         raise ValueError("Popp gap ledger must pin the seven approved VFX candidate relationships")
     if (
+        summary.get("closureGates") != 20
+        or summary.get("closureGatesVerified") != 9
+        or summary.get("closureGatesBlocked") != 11
+    ):
+        raise ValueError("Popp gap ledger must pin the current per-condition gate boundary")
+    if (
         summary.get("eventAudioGameFormatFiles") != 35
         or summary.get("eventAudioCandidateRelationshipsConverted") != 36
         or summary.get("eventAudioNativeEventRows") != 8
@@ -51,11 +57,19 @@ def render(payload: dict) -> str:
     for row in payload["gaps"]:
         state = "**已關閉**" if row["closed"] else "剩餘"
         criteria = "；".join(row["closureCriteria"])
+        first_blocker = next((gate for gate in row["closureGates"] if not gate["verified"]), None)
+        next_gate = "全部 gate 已驗證" if first_blocker is None else (
+            f"{first_blocker['nameZh']}：{first_blocker['detail']}"
+        )
         lines.append(
             f"| `{row['id']}` | {row['nameZh']} | {state}／`{row['status']}` | "
-            f"{criteria} | {row['ownerReviewPolicy']} |"
+            f"{criteria} | {next_gate} |"
         )
     lines.extend([
+        "",
+        f"機器 gate 共 {summary['closureGates']} 項：已驗證 {summary['closureGatesVerified']}，"
+        f"阻擋 {summary['closureGatesBlocked']}。每一個阻擋 gate 都有來源檔與 SHA-256 收據，"
+        "不能用已轉換候選、索引筆數或功能分支資料取代缺少的來源／核准／播放證據。",
         "",
         f"審查與技術狀態：GGD VFX 候選 {summary['ggdVfxCandidates']} 個，視覺核准 "
         f"{summary['vfxVisuallyAccepted']}；其中 {summary['vfxBindingProposals']} 個已依來源名稱整理成 Q/W/R 審查提案，"
