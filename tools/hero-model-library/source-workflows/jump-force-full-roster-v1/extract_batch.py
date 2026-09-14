@@ -109,6 +109,10 @@ def unpack_container_chunks(
     max_command_bytes: int,
 ) -> tuple[dict[str, Path], int]:
     """Use repak unpack with repeated includes, never one process per member."""
+    # repak creates the final output directory, but its current CLI does not
+    # create a missing parent directory.  Each container gets its own staging
+    # parent so the real extractor behaves like the transactional test double.
+    staging_root.mkdir(parents=True, exist_ok=True)
     extracted: dict[str, Path] = {}
     invocation_count = 0
     base_for_budget = [

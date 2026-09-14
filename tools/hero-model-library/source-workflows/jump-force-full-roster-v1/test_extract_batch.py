@@ -31,6 +31,8 @@ if "--aes-key" not in args or "unpack" not in args:
     raise SystemExit(2)
 key = args[args.index("--aes-key") + 1]
 output = Path(args[args.index("--output") + 1])
+if not output.parent.is_dir():
+    raise SystemExit(10)
 members = []
 for index, arg in enumerate(args):
     if arg in {"--include", "-i"}:
