@@ -12,6 +12,25 @@
  * （`round11End.test.ts` 第二條釘住的那一條路）。⛔ 不縮 `durationSec` —— 縮了就不是出貨的回合。
  *
  * 突變紀錄寫在 commit 訊息。
+ *
+ * ── ⛔ 更正 73dd2417b（2026-09-15，GH#1196 審查）：「預警圈歸零」**沒有被驗到** ─────────────
+ * 那一版的 ③ 斷言「比賽結束後再空跑 3 秒，`round11Bombardment` 事件數 = 0」—— ⛔ 結構上永遠綠：
+ * `tickRound11Events` / `tickRound11Bombardment` 只在 `MatchController.tick()` 的 `case "combat"`
+ * 裡被呼叫，比賽結束後**沒有任何一條路**發得出那個事件，拿掉任何清理它都不會紅（形態④）。
+ * 而「正在飛的那一發」`round11Bombard`（private）⛔ 比賽結束時**沒有人清它**（只在進第十一回合、
+ * 或那一發結算完時設回 null）；它唯一的讀者同樣只在 `case "combat"` 跑、客戶端今天也不讀那則事件
+ * ⇒ 留著它沒有玩家看得到的後果（⚠️ Claude 讀碼的推論，⛔ 沒有實機驗證）。
+ * ⇒ 那條斷言已刪除，⛔ 不換成一條同樣空的；「預警圈歸零」在本檔**未驗**。
+ * 另：出貨波次表每 20 秒抽一次、轟炸權重 5/100，本檔 140 秒就收回合（7 抽）⇒ 回合裡不一定發過轟炸。
+ *
+ * ── 排程 ──────────────────────────────────────────────────────────────────────
+ * `round11EventsFired`（private）⛔ 比賽結束時**不歸零**（只在進第十一回合時歸零），它的唯一讀者
+ * `tickRound11Events` 只在 `case "combat"` 跑 ⇒ 結束後是死值，⛔ 斷言它 = 0 會是一條錯的斷言。
+ * ⭐ 排程真正的狀態是**波次時鐘** `world.mobTicks`：`round11EventsDue(mobTicks / TICK_HZ)` 決定應發幾個，
+ * `endCombatMobs` 把它設回 -1 ⇒ 應發數 0 ⇒ 斷言「回合中發過（非空）」＋「結束後時鐘 < 0」。
+ * harness 的 `eventsFiredAtLastCombatTick` 用出貨的 `round11EventsDue` 從時鐘推：每一個 combat tick
+ * 結束時它等於 `round11EventsFired`（`world.step` 先 `mobTicks++`，同一 tick 的 `tickRound11Events`
+ * 再用 `while` 把 fired 補到 due）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { runRound11Stress, shippedArenaRules, type Round11StressRun } from "./round11StressHarness";
@@ -38,7 +57,7 @@ describe("第十一回合滿載清理（GH#1196 H⑤）", () => {
     expect(run.deadRowsInMobTable, "⛔ world.mob 裡躺著死的列").toBe(0);
   });
 
-  it("⭐⭐ 回合結束清場：結束前場上是滿的，結束後殭屍／排程／預警圈歸零", () => {
+  it("⭐⭐ 回合結束清場：結束前場上是滿的，結束後殭屍／排程歸零（⚠️ 預警圈未驗，見檔頭）", () => {
     expect(run.after.phase, "⭐ 回合真的走出貨出口結束到比賽結束").toMatch(/matchEnd$/);
     expect(run.mobsAtLastCombatTick, "⛔ 結束前場上不是滿的 ⇒ 清場沒被問過").toBeGreaterThanOrEqual(run.configuredCap);
     expect(run.after.mobTable, "⛔ 比賽結束後殭屍還在").toBe(0);
@@ -46,6 +65,8 @@ describe("第十一回合滿載清理（GH#1196 H⑤）", () => {
     expect(run.after.mobZones, "⛔ 還有生怪區").toBe(0);
     expect(run.after.bossSpawnsThisRound, "⛔ 王的每回合配額沒歸零").toBe(0);
     expect(run.after.entities, "⛔ 實體數沒有回到進場時的基準線以下").toBeLessThanOrEqual(run.entitiesAtEntry);
-    expect(run.after.bombardmentsAfterEnd, "⛔ 比賽結束後還在發預警圈").toBe(0);
+    // ⭐ 排程：非空前提（回合中真的發過波次事件）＋ 結束後波次時鐘解除（⇒ `round11EventsDue` 回 0）。
+    expect(run.eventsFiredAtLastCombatTick, "⛔ 回合中一個波次事件都沒發 ⇒ 排程沒被問過").toBeGreaterThan(0);
+    expect(run.after.mobTicks, "⛔ 比賽結束後波次時鐘還在走（排程沒解除）").toBeLessThan(0);
   });
 });
