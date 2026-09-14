@@ -35,6 +35,7 @@ import type { EntityId } from "@ggd/shared/ids";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { recordBossKill } from "@ggd/shared/sim/round11Gate";
 import { isMobAlive, mobsAliveInZone, spawnMob } from "@ggd/shared/sim/mobs";
+import { round11EventsDue } from "@ggd/shared/sim/round11Waves";
 import type { ConfigArenaRulesDoc } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { rulesFromDoc, type ArenaRules } from "./arenaRules";
@@ -71,7 +72,7 @@ export interface Round11StressOptions {
    * 腳本⛔ 不傳（它要跑完整時長）。
    */
   wipeAtSec?: number;
-  /** 比賽結束後再空跑幾個 tick 看有沒有東西還在動。 */
+  /** 比賽結束後再空跑幾個 tick，`after` 在那之後才量（看有沒有東西又長回來）。 */
   lingerTicks?: number;
 }
 
@@ -104,20 +105,31 @@ export interface Round11StressRun {
   perSecond: Array<{ sec: number; alive: number; cap: number; entities: number }>;
   /** 最後一個 combat tick 結束時的殭屍表大小（⭐ 清場斷言的非空前提）。 */
   mobsAtLastCombatTick: number;
+  /**
+   * 最後一個 combat tick 結束時出貨的 `round11EventsDue(world.mobTicks)` —— ⭐ 等於那一刻的
+   * `round11EventsFired`（private；同一 tick 的 `tickRound11Events` 用 `while` 把它補到 due）。
+   * ⭐ 排程斷言的非空前提：回合裡真的發過波次事件。
+   */
+  eventsFiredAtLastCombatTick: number;
   /** 進第十一回合那一刻的 `world.transform.size`。 */
   entitiesAtEntry: number;
   after: {
     phase: string;
     mobTable: number;
     mobRulesArmed: boolean;
+    /** 波次時鐘（`endCombatMobs` 設回 -1 ⇒ 出貨的 `round11EventsDue` 應發數 0）。 */
     mobTicks: number;
     mobZones: number;
     bossSpawnsThisRound: number;
     entities: number;
-    /** ⚠️ 換邊帳本 —— 刻意**不**在比賽結束時清（重連要恢復「王／旁觀」、結算分數讀它），見報告。 */
+    /**
+     * ⚠️ 換邊帳本 —— 出貨行為是比賽結束時**不清**。⛔ **是否刻意：未裁決**（GH#1196 爭議）。
+     * 重連的「王／旁觀」與 `round11ScoreFor` 都讀它，所以**可能**是必要的 —— 那是 Claude 讀碼的推論，
+     * ⛔ 不是設計決定，也⛔ 不是 owner 的話。測試不斷言它。
+     */
     possessions: number;
-    /** 比賽結束之後再跑 `lingerTicks` 個 tick，期間發出的 `round11Bombardment` 數。 */
-    bombardmentsAfterEnd: number;
+    // ⛔ 2026-09-15 刪掉 `bombardmentsAfterEnd`：比賽結束後結構上發不出 `round11Bombardment`
+    //   （只在 `case "combat"` 裡跑）⇒ 它永遠是 0，⛔ 量不到任何東西（見 round11Stress.test.ts 檔頭）。
   };
   /** heapUsed（bytes）：進第十一回合時 / 比賽結束後。有 `global.gc` 時先 GC。 */
   heapBeforeBytes: number;
@@ -176,6 +188,8 @@ export function runRound11Stress(opts: Round11StressOptions = {}): Round11Stress
   let deadRowsInMobTable = 0;
   let unhandledEvents = 0;
   let mobsAtLastCombatTick = 0;
+  let eventsFiredAtLastCombatTick = 0;
+  const eventIntervalSec = rules.round11.waveTable.eventIntervalSec;
   let wiped = false;
 
   while (ctl.phase.round === round && ctl.phase.phase === "combat" && costs.length < 200_000) {
@@ -234,6 +248,9 @@ export function runRound11Stress(opts: Round11StressOptions = {}): Round11Stress
       if (m.kind === "boss") bosses++;
     }
     const cap = rulesNow?.maxAlivePerZone ?? 0;
+    // ⚠️ 比出貨的門鬆：`runRound11Event` 的門（`mobsAliveInZone >= maxAlivePerZone`）把王算進去，
+    //   這裡扣掉場上的王 ⇒ 最多鬆「場上王的隻數」（GH#1196 審查）。⛔ 沒收緊：王的門不看存活上限，
+    //   精確的不變式要記「每一次一般生怪時場上已有幾隻王」，而突變 B（拿掉 break）照樣紅。
     if (alive - bosses > cap) capBreaches++;
     if (alive > cap) overCapWithBossTicks++;
     if (alive > peakAlive) {
@@ -244,16 +261,13 @@ export function runRound11Stress(opts: Round11StressOptions = {}): Round11Stress
       perSecond.push({ sec: Math.round(costs.length / TICK_HZ), alive, cap, entities: w.transform.size });
     }
     mobsAtLastCombatTick = w.mob.size;
+    eventsFiredAtLastCombatTick = round11EventsDue(w.mobTicks / TICK_HZ, eventIntervalSec);
   }
 
   const phaseAtLeave = ctl.phase.phase;
   let guard = 0;
   while (ctl.phase.phase !== "matchEnd" && guard++ < 10_000) ctl.tick();
-  let bombardmentsAfterEnd = 0;
-  for (let i = 0; i < (opts.lingerTicks ?? TICK_HZ * 3); i++) {
-    ctl.tick();
-    bombardmentsAfterEnd += w.events.filter((e) => e.type === "round11Bombardment").length;
-  }
+  for (let i = 0; i < (opts.lingerTicks ?? TICK_HZ * 3); i++) ctl.tick();
 
   return {
     saturate,
@@ -271,6 +285,7 @@ export function runRound11Stress(opts: Round11StressOptions = {}): Round11Stress
     unhandledEvents,
     perSecond,
     mobsAtLastCombatTick,
+    eventsFiredAtLastCombatTick,
     entitiesAtEntry,
     after: {
       phase: `${phaseAtLeave}→${ctl.phase.phase}`,
@@ -281,7 +296,6 @@ export function runRound11Stress(opts: Round11StressOptions = {}): Round11Stress
       bossSpawnsThisRound: w.bossSpawnsThisRound.size,
       entities: w.transform.size,
       possessions: ctl.round11PossessionsForTest.size,
-      bombardmentsAfterEnd,
     },
     heapBeforeBytes,
     heapAfterBytes: heap(),
