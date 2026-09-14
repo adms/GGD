@@ -103,3 +103,10 @@ python3 -m unittest discover \
   -s tools/hero-model-library/source-workflows/jump-force-full-roster-v1 \
   -p 'test_*.py'
 ```
+
+固定五日清單中的 JUMP 區塊也由 `plan.json` 產生：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py --write
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py --check
+```

@@ -79,7 +79,7 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/build_plan.py",
-      "sha256": "8e8cb574d7fe17925b48b1fe9923efa57410097804b4c1aba4c0f2fee456a9da"
+      "sha256": "ab116ad44d6eaf54fbc045050b1ff51e357f044e3dbc1921a011aed6fbcaf5b6"
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prepare_mirror.py",
@@ -92,6 +92,10 @@
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
       "sha256": "f1107afccbae868a989151aa4478d30e81480b1c4d6b26e42044f011d8f05203"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
+      "sha256": "2ad3672e4c96f60c251bda488a66e0929cc3592893ba2c63833f9cb032b7fb5f"
     }
   ],
   "conversionReferences": [

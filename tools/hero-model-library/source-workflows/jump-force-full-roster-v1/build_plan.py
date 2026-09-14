@@ -166,6 +166,7 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prepare_mirror.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
     ]
     conversion_references = [
         "tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/compose_glb.py",
