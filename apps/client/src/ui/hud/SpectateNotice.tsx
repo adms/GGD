@@ -64,7 +64,7 @@ import { SfxButton } from "../SfxButton";
 export const SPECTATE_POLL_MS = 200;
 
 /** The line the owner asked for in v0.9.1, kept verbatim for the WATCHING state. */
-export const SPECTATE_NOTICE_TEXT = "";
+export const SPECTATE_NOTICE_TEXT = "等待並觀戰別的競技場晉級戰鬥中";
 /** The OFFER state's line: your fight is over and nothing has moved on its own. */
 export const SPECTATE_OFFER_TEXT = "你的競技場已分出勝負";
 export const SPECTATE_GO_LABEL = "前往觀戰";
