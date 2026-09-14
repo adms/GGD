@@ -46,15 +46,27 @@ if (contract.schema !== "ggd-bricks@1") fail(`不支援 ${contract.schema}`);
 
 // Execute the real React controls and their handlers. Schema membership alone
 // cannot establish that an input changes a document and survives reopening.
+// Hang detector, not a verdict: standalone this child takes ~35 s, but under
+// skills:check's 16-way fan-out it measured 124 s and the old fixed 120 s cap
+// SIGTERMed a healthy run. Default = the 5-minute "go check if it hung" line;
+// GGD_FORM_RECEIPTS_TIMEOUT_MS=120000 restores the previous cap.
+const TIMEOUT_MS = Number(process.env.GGD_FORM_RECEIPTS_TIMEOUT_MS ?? 300_000);
 const temporary = mkdtempSync(join(tmpdir(), "ggd-form-receipts-"));
 let measurement;
+let timedOut = false;
 try {
   const output = join(temporary, "interactions.json");
-  execFileSync("pnpm", ["--filter", "@ggd/editor", "exec", "vitest", "run", "src/form/editorFormInteractions.test.tsx", "--pool=forks", "--maxWorkers=1", "--minWorkers=1"], {
-    cwd: ROOT, env: { ...process.env, GGD_FORM_RECEIPTS_OUTPUT: output }, encoding: "utf8", timeout: 120_000, maxBuffer: 16 * 1024 * 1024,
-  });
-  measurement = JSON.parse(readFileSync(output, "utf8"));
+  try {
+    execFileSync("pnpm", ["--filter", "@ggd/editor", "exec", "vitest", "run", "src/form/editorFormInteractions.test.tsx", "--pool=forks", "--maxWorkers=1", "--minWorkers=1"], {
+      cwd: ROOT, env: { ...process.env, GGD_FORM_RECEIPTS_OUTPUT: output }, encoding: "utf8", timeout: TIMEOUT_MS, maxBuffer: 16 * 1024 * 1024,
+    });
+    measurement = JSON.parse(readFileSync(output, "utf8"));
+  } catch (error) {
+    if (error?.code !== "ETIMEDOUT") throw error;
+    timedOut = true;
+  }
 } finally { rmSync(temporary, { recursive: true, force: true }); }
+if (timedOut) fail(`量測子行程超過 ${TIMEOUT_MS / 1000} 秒被終止（負載逾時或卡住，⛔ 不是收據不符）—— 單獨重跑 \`pnpm formreceipts:check\` 判斷`);
 const receipts = measurement.receipts.sort((a, b) => a.layer.localeCompare(b.layer) || a.id.localeCompare(b.id));
 const countByLayer = Object.fromEntries(
   [...new Set(receipts.map((row) => row.layer))].sort().map((layer) => {
