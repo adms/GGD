@@ -1,7 +1,7 @@
 {
   "id": "lol-lux",
   "name": "拉克絲",
-  "description": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "description": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。",
   "role": "fighter",
   "attackType": "ranged",
   "archetype": "fighter",

@@ -56,6 +56,7 @@
  */
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { retiredChampionIds, valhallaExcludedHiddenIds } from "@ggd/shared/content/championRetirement";
+import { SELA, THORNE } from "@ggd/shared/sim/content/skeleton";
 import { whitelistedChampionIds, type Whitelist } from "../panels/champSelectFilter";
 
 /** How long one champion holds the stage (owner: 「每過1分鐘就會輪播隨機下一個」). */
@@ -80,8 +81,17 @@ export function valhallaRoster(wl: Whitelist): string[] {
   //   公告出去」—— 那是 #336 開發者自己推的（⛔ 沒有 owner 原話、也沒有測試），已作廢。
   // ⭐ 現在讀 `config.roster@1.hiddenInValhalla`（出貨 "show" ＝空集合；後台切 "exclude"
   //   一鍵回到舊行為）。⛔ 選人畫面／🎲／商店照舊傳整份隱藏清單 —— 那三處不經過這裡。
-  return whitelistedChampionIds(Champions.ids(), wl, retiredChampionIds(), valhallaExcludedHiddenIds());
+  // ⭐ GH#1258 ⑤：引擎骨架（sela/thorne，內容載入失敗時的 fail-open 兩位）不是英雄 ——
+  //   白名單生效時它們本來就不在 starter 上，⛔ 但平台連不上（NO_FILTER）時會混進輪播。
+  //   id 從 `sim/content/skeleton` 的權威字面值推導，⛔ 不抄兩個字串。
+  //   （變身態不在這裡擋：`whitelistedChampionIds` 已經讀內容卡的 `transform.role`。）
+  return whitelistedChampionIds(Champions.ids(), wl, retiredChampionIds(), valhallaExcludedHiddenIds()).filter(
+    (id) => !SKELETON_IDS.has(id),
+  );
 }
+
+/** 引擎骨架英雄（fail-open 那兩位）—— 從 `SELA`/`THORNE` 推導。 */
+const SKELETON_IDS: ReadonlySet<string> = new Set([String(SELA.id), String(THORNE.id)]);
 
 // ---------------------------------------------------------------------------
 // shuffle bag
