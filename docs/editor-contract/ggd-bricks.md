@@ -180,11 +180,11 @@ capability 指紋：`fb8d3eb8`
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
 | `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 7 |
-| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 113 |
+| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 124 |
 | `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 35 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 9 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `heal` | 4 | 0 | 0 | ⛔ | ✅ | 12 |
+| `heal` | 4 | 0 | 0 | ⛔ | ✅ | 20 |
 | `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 16 |
 | `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 16 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
@@ -208,9 +208,9 @@ capability 指紋：`fb8d3eb8`
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 6 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 11 |
-| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 92 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 94 |
 | `spend-resource` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
-| `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 6 |
+| `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 7 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 3 |
 | `transform` | 6 | 0 | 0 | ⛔ | ✅ | 13 |
 | `traveling-wave` | 9 | 0 | 0 | ⛔ | ✅ | 7 |
