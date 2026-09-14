@@ -22,8 +22,9 @@
  * HONESTY RULES (every constant below mirrors a real line of sim):
  *   • `ground`   → circle at the cast point, `(radius ?? 1) × abilityRange`.
  *     The `?? 1` is NOT an invention: it is the sim's own default, at
- *     `abilitySystem.ts` `enemiesInCircle(..., resolveAbilityRadius(world,
- *     def.radius ?? 1))` and re-applied in `CastResolveSystem.ts`. The old
+ *     `abilitySystem.ts` `groundAoeTargets` → `targetingRadius(def)` →
+ *     `TARGETING_RADIUS_WHEN_OMITTED` (GH#1246; `CastResolveSystem.ts` reaches
+ *     the same function), imported below rather than copied. The old
  *     `?? 1.2` in VfxSystem matched nothing in the sim.
  *     ⭐ EXCEPT when the ability carries a `damageLine` — see the next block.
  *   • `ground` + `damageLine` → LINE. See `groundLashGeometry` below; this is
@@ -64,6 +65,7 @@
  */
 
 import { clampSpreadRadius } from "@ggd/shared/sim/effects/spreadLimits";
+import { TARGETING_RADIUS_WHEN_OMITTED } from "@ggd/shared/sim/abilities/abilitySystem";
 import { uiCues } from "../ui/uiCuesConfig";
 
 /** castType values, mirrored from `@ggd/shared/sim/content/defs` CastType. */
@@ -71,11 +73,19 @@ export type TelegraphCastType = "targeted" | "skillshot" | "ground" | "self" | "
 
 /**
  * The SIM's own default AoE radius for a `ground` ability with no authored
- * `radius` (`abilitySystem.ts` / `CastResolveSystem.ts`: `def.radius ?? 1`).
- * Pinned by `telegraphShape.test.ts` against the real sim source so the ring
- * can never silently drift away from the circle the damage query uses.
+ * `radius` —— ⭐ **imported, not copied**（第〇·四守則：一個值一個住處）.
+ *
+ * GH#1246 (`4d8aa368f`, 2026-09-12) split the sim's omitted-`radius` meaning
+ * into two named resolvers: `targetingRadius(def)` (who gets hit — omitted ⇒
+ * `TARGETING_RADIUS_WHEN_OMITTED`) and `authoredAoeRadius(def)` (is it an AoE —
+ * omitted ⇒ 0). The ground ring draws the circle `groundAoeTargets` SELECTS
+ * with, i.e. the targeting one. Before that commit this was a literal `1`
+ * pinned against the literal `def.radius ?? 1` in `abilitySystem.ts`; the
+ * literal moved into the constant, so the ring now reads that very constant.
+ * `telegraphShape.test.ts` pins that `groundAoeTargets` really goes through
+ * `targetingRadius` (not `authoredAoeRadius`, whose 0 would draw no ring).
  */
-export const SIM_GROUND_DEFAULT_RADIUS = 1;
+export const SIM_GROUND_DEFAULT_RADIUS = TARGETING_RADIUS_WHEN_OMITTED;
 
 /**
  * Champion body radius (`spawnChampion.ts` `radius: 0.6`). Used for the
