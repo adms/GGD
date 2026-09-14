@@ -45,6 +45,7 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { isAlternateForm, zVfxDoc } from "@ggd/shared/content";
 import { rosterBindings, abilityVfxKeys, curatedDocs, vfxKeyFor } from "./bindings";
+import { abilityArtRows } from "./abilityArtContent";
 
 import { readStarterRoster } from "@ggd/shared/testkit/starterRoster";
 
@@ -88,14 +89,88 @@ const roster: string[] = goList(readFileSync(STARTER_GO, "utf8"), "starterChampi
  * RATCHET in the same spirit as #128's castability floor: it moves up when the
  * operator genuinely opens heroes (48 → 50 when task #212 opened 賈修貝爾
  * `godie-hblm` and 揍敵客桀諾 `godie-efur`), and every id it counts must also
- * carry a `bindings.ts` ROSTER row, so opening a hero without classifying its
- * five casts still fails here. 51 → 53 on 2026-07-30 when the owner opened
+ * carry art for its five casts — a `bindings.ts` ROSTER row, or (forge-authored
+ * heroes since GH#1165, see `inArtTable`) a real vfx doc bound in its own
+ * ability docs — so opening a hero without art behind its casts still fails here. 51 → 53 on 2026-07-30 when the owner opened
  * 白木卡迪那 `godie-e00s` and 傑富力士 `godie-ucrl`; both owed rows and got them.
  */
 // ⭐ 名單長度**從 starter.go 推導**（`starterRosterSize`），⛔ 不再抄一份數字。
 //    2026-08-16 owner 下架四位（53→49）時，這個數字的四份副本讓四條測試
 //    同時紅，而每一條都在講自己的功能壞了 —— 沒有一條說出「名單變短了」。
 const ROSTER_SIZE = readStarterRoster(REPO).length;
+
+/**
+ * ⭐⭐ 一位上架英雄「五招畫什麼」住在**哪一個住處** —— 從出貨內容推導，⛔ 不手寫 id。
+ *
+ * ⚠️ 下面那條主守衛以前假設「上架名單上**每一位**都在分類表
+ * （`content/config/vfx-ability-art.json` 的 `prim`）裡有五列」。
+ * 那在 task #79 時是真的：名單全是 w3x 英雄，分類是讀技能中文名分出來的。
+ * ⛔ 2026-09-10 起不再是：`4b5713641`／`503dd557b`／`5f7d222ef`（GH#1165）經
+ * hero-forge 編譯上架了 81 位，它們招式的特效由**作者稿**決定（recipe 的
+ * `resolvedVfxId` → 技能文件自己的 `vfxKey`，`tools/ship-81/gen.py`）——
+ * 分類表**不是它們的住處**；替它們在表裡再抄一份 ＝ 第〇·四守則的第二個住處
+ * （作者改 recipe 的那一天，表裡那份就是謊話）。
+ * ⇒ 兩個住處、各自一條證據，⛔ 沒有一位可以兩邊都不是：
+ *   · 表裡**有任何一列**（prim／family／owner／promoted）⇒ 五格都要有 `prim` 列
+ *     （`w3xAbilityArt.primitiveFallbackFor` 的第 3 階只讀這一格 —— 那一位的家族美術
+ *     解不出來時，就靠它不畫空白）。⭐ 這一半與改動前逐字相同。
+ *   · 表裡**一列都沒有** ⇒ 五格技能文件都要**自己**帶 `vfxKey`、⛔ 不是火焰佔位、
+ *     而且指向一份**真的畫得出東西**的 vfx 文件 —— ⭐ 與本檔 operator 稽核同一把尺
+ *     （`abilityArtProblem`），⛔ 不是「文件存在就算」。
+ */
+function inArtTable(champ: string): boolean {
+  return Object.keys(abilityArtRows()).some((id) => id.startsWith(`${champ}.`));
+}
+
+/** 這一份 vfx 文件真的畫得出東西嗎？`null` ＝ 是；否則回傳理由。⭐ 本檔兩條守衛共用這一把尺。 */
+function vfxKeyProblem(vfxKey: string | undefined): string | null {
+  if (!vfxKey) return "has no vfxKey — it would cast with nothing";
+  if (vfxKey === "fx.ember-bolt-cast") return "still points at the generic fire placeholder";
+  const vfxPath = join(CONTENT, "vfx", `${vfxKey}.json`);
+  if (!existsSync(vfxPath)) return `→ ${vfxKey} names a vfx doc that does not exist`;
+  const vfx = JSON.parse(readFileSync(vfxPath, "utf8")) as {
+    schema?: string;
+    mode?: string;
+    rate?: number;
+    burstCount?: number;
+    lifetimeSec?: { min: number; max: number };
+    size?: { start: number };
+    lifespanSec?: number;
+    widthAbove?: number;
+  };
+  if (vfx.schema === "ribbon@1") {
+    // A swept trail: it is visible iff it lives and has width.
+    if (!((vfx.lifespanSec ?? 0) > 0)) return `→ ${vfxKey} is a ribbon with no lifespan`;
+    if (!((vfx.widthAbove ?? 0) > 0)) return `→ ${vfxKey} is a ribbon with no width`;
+    return null;
+  }
+  const emission = vfx.mode === "burst" ? (vfx.burstCount ?? 0) : (vfx.rate ?? 0);
+  if (!(emission > 0)) return `→ ${vfxKey} emits no particles (${vfx.mode})`;
+  if (!((vfx.lifetimeSec?.max ?? 0) > 0)) return `→ ${vfxKey} particles die instantly`;
+  if (!((vfx.size?.start ?? 0) > 0)) return `→ ${vfxKey} particles have zero size`;
+  return null;
+}
+
+/** 一支技能（出貨的 `content/abilities/<id>.json`）自己綁的特效畫得出東西嗎？ */
+function abilityArtProblem(abilityId: string): string | null {
+  const abilityPath = join(CONTENT, "abilities", `${abilityId}.json`);
+  if (!existsSync(abilityPath)) return "has no content doc";
+  const ability = JSON.parse(readFileSync(abilityPath, "utf8")) as { vfxKey?: string };
+  const problem = vfxKeyProblem(ability.vfxKey);
+  if (!problem || ability.vfxKey) return problem;
+  // ⭐ 說清楚它**還剩什麼**：有 vfx-script 的話，列出那份 script 的段落種類 ——
+  //   ⛔ 不讓「cast with nothing」蓋掉「身體動作／浮字／子型別呼叫其實在」這個事實。
+  const scriptPath = join(CONTENT, "vfx-scripts", `${abilityId}.json`);
+  if (!existsSync(scriptPath)) return problem;
+  const script = JSON.parse(readFileSync(scriptPath, "utf8")) as { segments?: Record<string, unknown>[] };
+  const kinds = (script.segments ?? []).map((s) => {
+    const kind = s["kind"];
+    return typeof kind === "string" ? kind : "call";
+  });
+  return `has no vfxKey — only its vfx-script draws for it (segments: ${kinds.join(", ")})`;
+}
+
+const PLAYER_SLOTS = ["q", "w", "e", "r", "ex"] as const;
 
 describe("roster bindings cover every whitelisted champion (ability-vfx-bindings)", () => {
   it("binds every ability of every roster champion (none missing)", () => {
@@ -104,12 +179,26 @@ describe("roster bindings cover every whitelisted champion (ability-vfx-bindings
     // assertion below vacuous, which is the failure mode this file just had.
     expect(roster.length, "starter.go yielded no champions — the parse broke").toBe(ROSTER_SIZE);
     const binds = rosterBindings();
-    for (const champ of roster) {
+    const tableRoster = roster.filter(inArtTable);
+    const authoredRoster = roster.filter((champ) => !inArtTable(champ));
+    // ⛔ 分類表沒載入時「每一位都是作者稿」會讓表那一半結構上永遠綠 —— 先自證。
+    expect(tableRoster.length, "⛔ 分類表裡一位上架英雄都沒有 —— 表沒載入？（量尺壞了）").toBeGreaterThan(0);
+    for (const champ of tableRoster) {
       const slots = binds.filter((b) => b.abilityId.startsWith(`${champ}.`)).map((b) => b.abilityId);
-      expect(new Set(slots)).toEqual(
-        new Set([`${champ}.q`, `${champ}.w`, `${champ}.e`, `${champ}.r`, `${champ}.ex`]),
-      );
+      expect(new Set(slots)).toEqual(new Set(PLAYER_SLOTS.map((slot) => `${champ}.${slot}`)));
     }
+    // ⭐ 作者稿那一半 —— 一次撈全部再紅（⛔ 不是停在第一支），逐支指名。
+    const unbound = authoredRoster.flatMap((champ) =>
+      PLAYER_SLOTS.flatMap((slot) => {
+        const problem = abilityArtProblem(`${champ}.${slot}`);
+        return problem ? [`${champ}.${slot} ${problem}`] : [];
+      }),
+    );
+    expect(
+      unbound,
+      "⛔ 這些上架技能在分類表裡沒有列，⛔ 自己的技能文件也沒有綁到畫得出東西的特效：\n  " +
+        unbound.join("\n  "),
+    ).toEqual([]);
     // The table COVERS the roster; anything beyond it must be a 變身 form. Task
     // #249 swapped 10 roster slots from the alternate body to the base, and the
     // alternate rows were KEPT rather than deleted — the two halves of a pair
@@ -133,7 +222,7 @@ describe("roster bindings cover every whitelisted champion (ability-vfx-bindings
         true,
       );
     }
-    expect(binds).toHaveLength((roster.length + extra.length) * 5);
+    expect(binds).toHaveLength((tableRoster.length + extra.length) * PLAYER_SLOTS.length);
   });
 
   it("no roster ability keeps the generic fire placeholder", () => {
@@ -235,7 +324,6 @@ describe("operator whitelist vs bindings (ability-vfx-bindings)", () => {
       expect(champions.length, `${OPERATOR_DOC} lists no champions`).toBeGreaterThan(0);
 
       const bound = new Set(rosterBindings().map((b) => b.abilityId));
-      const PLAYER_SLOTS = ["q", "w", "e", "r", "ex"];
       // ⭐ GH#479（2026-08-20）：**已下架**的英雄即使還勾在 operator 白名單上也進不了
       // 選人畫面（下架刻意住在白名單之外，手動與隨機兩條路都擋），而他們的技能檔已隨
       // 退場批次進了 `content/_legacy/` ⇒ 對他們斷言「有出貨的 vfx」是在量一個
@@ -248,8 +336,11 @@ describe("operator whitelist vs bindings (ability-vfx-bindings)", () => {
 
         // A champion with all five player slots open is pickable — it owes a
         // bindings.ts row for each, or its casts fall back to the placeholder.
+        // ⭐ …when its art lives in the classification table at all. A forge-
+        // authored hero (no table row of any kind — see `inArtTable`) owes the
+        // per-ability evidence below instead, which every enabled ability gets.
         const allFiveOpen = PLAYER_SLOTS.every((s) => enabled.includes(`${champ}.${s}`));
-        if (allFiveOpen) {
+        if (allFiveOpen && inArtTable(champ)) {
           for (const slot of PLAYER_SLOTS) {
             expect(
               bound.has(`${champ}.${slot}`),
@@ -260,37 +351,11 @@ describe("operator whitelist vs bindings (ability-vfx-bindings)", () => {
         }
 
         for (const abilityId of enabled) {
-          const abilityPath = join(CONTENT, "abilities", `${abilityId}.json`);
-          expect(existsSync(abilityPath), `${abilityId} is whitelisted but has no content doc`).toBe(true);
-          const ability = JSON.parse(readFileSync(abilityPath, "utf8")) as { vfxKey?: string };
-          const vfxKey = ability.vfxKey;
-          expect(vfxKey, `${abilityId} has no vfxKey — it would cast with nothing`).toBeTruthy();
-          expect(vfxKey, `${abilityId} still points at the generic fire placeholder`).not.toBe(
-            "fx.ember-bolt-cast",
-          );
-
-          const vfxPath = join(CONTENT, "vfx", `${vfxKey}.json`);
-          expect(existsSync(vfxPath), `${abilityId} → ${vfxKey} names a vfx doc that does not exist`).toBe(true);
-          const vfx = JSON.parse(readFileSync(vfxPath, "utf8")) as {
-            schema?: string;
-            mode?: string;
-            rate?: number;
-            burstCount?: number;
-            lifetimeSec?: { min: number; max: number };
-            size?: { start: number };
-            lifespanSec?: number;
-            widthAbove?: number;
-          };
-          if (vfx.schema === "ribbon@1") {
-            // A swept trail: it is visible iff it lives and has width.
-            expect(vfx.lifespanSec ?? 0, `${vfxKey} is a ribbon with no lifespan`).toBeGreaterThan(0);
-            expect(vfx.widthAbove ?? 0, `${vfxKey} is a ribbon with no width`).toBeGreaterThan(0);
-            continue;
-          }
-          const emission = vfx.mode === "burst" ? (vfx.burstCount ?? 0) : (vfx.rate ?? 0);
-          expect(emission, `${vfxKey} emits no particles (${vfx.mode})`).toBeGreaterThan(0);
-          expect(vfx.lifetimeSec?.max ?? 0, `${vfxKey} particles die instantly`).toBeGreaterThan(0);
-          expect(vfx.size?.start ?? 0, `${vfxKey} particles have zero size`).toBeGreaterThan(0);
+          // ⭐ Same yardstick as the starter-set audit above (`abilityArtProblem`):
+          // doc exists → vfxKey present, not the fire placeholder → that vfx doc
+          // exists and actually emits (ribbon: lives and has width).
+          const problem = abilityArtProblem(abilityId);
+          expect(problem, `${abilityId} is whitelisted but ${problem}`).toBeNull();
         }
       }
     },
