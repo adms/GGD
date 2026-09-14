@@ -15,7 +15,10 @@ gh-pat-fine	content	github_pat_[A-Za-z0-9_]{60,}	github_pat_{{}}11ABCDEFG0abcdef
 slack-token	content	xox[baprs]-[A-Za-z0-9-]{12,}	xoxb{{}}-000000000000-000000000000-abcdefghijklmnopqrstuvwx	Slack token
 slack-webhook	content	https://hooks\.slack\.com/services/[A-Za-z0-9/+_-]{20,}	https://hooks.slack.com/services/T00000000/B00000000/{{}}abcdefghijklmnopqrstuvwx	Slack incoming webhook
 anthropic-key	content	sk-ant-[A-Za-z0-9_-]{24,}	sk-ant-{{}}api03-DUMMYDUMMYDUMMYDUMMYDUMMYDUMMY	Anthropic API key
-openai-key	content	sk-(proj-)?[A-Za-z0-9_-]{32,}	sk-proj-{{}}DUMMYDUMMYDUMMYDUMMYDUMMYDUMMYDUMMY	OpenAI API key
+# ⚠️ openai-key 左邊要是 token 邊界（2026-09-15）：`psk-blender-popp-…` 這種資料夾名裡的 `sk-` 會被當成金鑰開頭
+#    （tools/hero-model-library/…/collect_popp_delivery.py:29-30 的兩筆誤報）。真的 key 前面一定是引號、`=`、空白或行首，
+#    ⛔ 不會緊接英數或 `-`。校準②的對照檔裡放了同形的一行，拿掉這個邊界就會 exit 3。
+openai-key	content	(^|[^A-Za-z0-9_-])sk-(proj-)?[A-Za-z0-9_-]{32,}	sk-proj-{{}}DUMMYDUMMYDUMMYDUMMYDUMMYDUMMYDUMMY	OpenAI API key
 hf-token	content	hf_[A-Za-z]{34}	hf_{{}}DUMMYDUMMYDUMMYDUMMYDUMMYDUMMYdumm	HuggingFace token
 npm-token	content	npm_[A-Za-z0-9]{36}	npm_{{}}0123456789abcdefghijklmnopqrstuvwxyzAB	npm publish token
 gitlab-pat	content	glpat-[A-Za-z0-9_-]{20}	glpat-{{}}DUMMYDUMMYDUMMYDUMMY	GitLab PAT

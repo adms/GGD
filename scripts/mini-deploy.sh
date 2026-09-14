@@ -31,8 +31,16 @@ info(){ printf '    %s\n' "$*"; }
 FAIL=0; bad(){ printf '  %s✗%s %s\n' "$RED" "$RST" "$*"; FAIL=$((FAIL+1)); }
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+# ⭐ 主機身分：環境變數 > scripts/hosts.local.sh > 主工作樹那一份（見 _hosts.sh）。
+#   ⚠️ 在此之前這支只讀環境變數 ⇒ CLAUDE.md 部署段那條（已經拿掉 USER/HOST 的）指令直接跑會死在
+#   「請設 GGD_MINI_USER」，而下面的回滾機柵欄也只在 ship-it.sh 幫忙 export 時才生效。
+# shellcheck source=/dev/null
+[ -f "$REPO/scripts/_hosts.sh" ] && . "$REPO/scripts/_hosts.sh"
 HOST="${GGD_MINI_HOST:-GenieAccelerdeMac-mini-2.local}"
 USER_="${GGD_MINI_USER:-}"
+case "$HOST$USER_" in
+  *"<"*) echo "${RED}⛔ GGD_MINI_HOST／GGD_MINI_USER 還是 .example 的 <佔位> —— 填 scripts/hosts.local.sh$RST" >&2; exit 2 ;;
+esac
 REMOTE_REPO="${GGD_MINI_REPO:-\$HOME/GGD}"
 
 # ⛔ 硬柵欄:這支腳本不可以對正式站說話

@@ -115,7 +115,7 @@
   ],
   "deploy": {
     "sshTarget": "$GGD_DEPLOY_SSH",
-    "remoteDir": "$GGD_DEPLOY_REMOTE",
+    "remoteDir": "${GGD_DEPLOY_REMOTE:-$HOME/GGD}",
     "targetEnv": "GGD_DEPLOY_SSH"
   },
 

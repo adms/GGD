@@ -143,6 +143,8 @@ CONTROL = (
     "const cooldownTier = '極大'; const damage = 6000; // 五級距\n"
     "export const token = 'hook:onDeath';\n"
     "const sha = 'e3b0c44298fc1c149afbf4c8996fb924';\n"
+    # ⭐ 資料夾名裡的 `…psk-blender-…`（2026-09-15 真的誤報過）—— `sk-` 前面緊接英數 ⇒ ⛔ 不是金鑰開頭
+    "const dir = 'failed-attempts/animated-candidates-psk-blender-popp-magikaru-v2-missing-texture-name';\n"
 )
 
 

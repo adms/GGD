@@ -2524,6 +2524,8 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 `cp scripts/hosts.local.sh.example` 再填）,而每一支部署腳本都 `source scripts/_hosts.sh` 讀它。
 ⛔ 沒設就**乾淨地死並說要做什麼**,⛔ 不是靜默退回一個寫死的預設。
 ⚠️ 環境變數仍然優先 ⇒ 一次性覆寫與 rollback 照舊。
+⭐ lane／合併用的 `git worktree` 沒有自己那一份時，`_hosts.sh` 讀**主工作樹**的 `scripts/hosts.local.sh`
+（只印讀了哪一份，⛔ 不印值；`GGD_HOSTS_INHERIT=0` 關掉）⇒ 在 worktree 裡跑 BMPNDD 的 D 步驟不會因為少一個檔而失敗。
 
 ### ⭐ 部署（唯一入口）
 
@@ -2565,7 +2567,7 @@ bash scripts/mini-deploy.sh deploy
 
 ```bash
 # ⚠️ 這是**回滾**用的,⛔ 不是正式部署
-ssh -A "$GGD_DEPLOY_SSH" "cd \"\${GGD_DEPLOY_REMOTE:-\$HOME/GGD}\" && bash scripts/host-deploy.sh"
+ssh -A $GGD_DEPLOY_SSH 'cd ${GGD_DEPLOY_REMOTE:-$HOME/GGD} && bash scripts/host-deploy.sh'
 ```
 
 只改 `content/` 的話加 `--content-only`（`content/` 是 live bind-mount，
