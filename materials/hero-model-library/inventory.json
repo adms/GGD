@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T16:11:04+08:00",
-  "inputsSha256": "ed3661393bc00b2b392cc5569a9fbb9248f67985efdae167160ad8f9225df365",
+  "generatedAt": "2026-09-15T02:38:50+08:00",
+  "inputsSha256": "7f3d8518decc62846516488080d928aed7a3c1ab31e517d7481997800967c3ca",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -193160,7 +193160,7 @@
         "accessStatus": "previously-acquired-local-source",
         "acquisitionStatus": "downloaded-verified",
         "countsAsNewAcquisition": false,
-        "readiness": "four-policy-and-static-visual-validated-components-pending-motion-review-hero-design-and-registration",
+        "readiness": "eight-policy-and-static-visual-validated-components-pending-motion-review-hero-design-and-registration",
         "purchaseDecision": "no-purchase-existing-local-source",
         "defaultEligible": false,
         "resourceRole": "original-game-model-animation-reserve",
@@ -193177,29 +193177,99 @@
           "animation",
           "vfx-source"
         ],
-        "publicationStatus": "four-converted-components-in-git; source-snapshot-readback-verified; git-snapshot-backup-pending-parent-integration",
+        "publicationStatus": "eight-converted-components-in-git; source-snapshot-readback-verified; latest-git-snapshot-backup-pending-parent-integration",
         "componentCandidates": [
           {
-            "id": "mba-unused-ruru-native-six-motion-v1",
+            "id": "mba-unused-batch2-gajet1-native-six-motion-v1",
             "sourceId": "magical-battle-arena-complete-form-1.60-plus",
-            "sourceCharacterId": "mba:Chara01_O",
-            "nameZh": "露露·傑拉德",
-            "originalName": "ルル・ジェラード",
-            "workZh": "原創（魔法少女武鬥祭）",
+            "sourceCharacterId": "mba:Chara09",
+            "nameZh": "Gadget Drone I 型",
+            "originalName": "ガジェットドローンⅠ型",
+            "workZh": "魔法少女奈葉（魔法少女武鬥祭）",
             "sourceVersion": "Complete Form 1.60+",
             "sourcePlatform": "Windows PC",
             "selectionClass": "mba",
             "resourceRole": "independent-mba-character-body-native-motion-reserve",
             "sourceClass": "original-game-direct-extraction",
             "source": {
-              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
-              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
-              "bytes": 6179096,
-              "sha256": "c3aa6e901a46f8b2c974520790549747681e9f6cce7a9194492cc7b49f6df5e7"
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara09/Gajet1.glb",
+              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara09/Gajet1.glb",
+              "bytes": 1402636,
+              "sha256": "89066fee1031928d45eba7dad942923b876575bd593b29c391a9e6ad0deea909",
+              "preparationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/gajet1/preparation.json",
+              "preparedBytes": 1300488,
+              "preparedSha256": "048c077d6141bcfb38e6731f2b86b9445d5d20435752c03ce75da9cc812098c9",
+              "originalAnimationCount": 63,
+              "originalAnimationNames": [
+                "sp02_02",
+                "sp02_01",
+                "sp01_02",
+                "sp01_01",
+                "b_dash_attack_02",
+                "b_dash_attack_01",
+                "maryokudan_move",
+                "lose",
+                "win",
+                "kakusei",
+                "maryokudan_02",
+                "maryokudan_01",
+                "hukitobasi",
+                "utiorosi",
+                "utiage",
+                "Charge",
+                "attack_03",
+                "attack_02",
+                "attack_01",
+                "wait",
+                "Escape",
+                "B-Dash-End",
+                "B-Dash-Start",
+                "DIM_BIND_Damage",
+                "DIM_BIND",
+                "RB_DAMAGE",
+                "RB_HIT",
+                "RB_BIND",
+                "Barel-END",
+                "Barel-Hit",
+                "D-Down-Damage",
+                "U-Down-Damage",
+                "C-Falte",
+                "D-GetUp",
+                "D-Down",
+                "U-GetUp",
+                "U-Down",
+                "F-Scatter-Stop",
+                "F-Scatter",
+                "F-Falter-Stop",
+                "F-Falter",
+                "B-Scatter-Stop",
+                "B-Scatter",
+                "B-Falter-Stop",
+                "B-Falter",
+                "Damage-5",
+                "Damage-4",
+                "Damage-3",
+                "Damage-2",
+                "Damage-1",
+                "Guard",
+                "D-Move",
+                "U-Move",
+                "Warp",
+                "Dash-Stop",
+                "Dash",
+                "B-Step",
+                "R-Step",
+                "L-Step",
+                "B-Move",
+                "R-Move",
+                "L-Move",
+                "F-Move"
+              ],
+              "preparedAnimationCount": 6
             },
-            "gitPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
-            "bytes": 618276,
-            "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+            "gitPath": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+            "bytes": 145472,
+            "sha256": "4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407",
             "componentReady": true,
             "converted": true,
             "fullHeroModel": false,
@@ -193211,14 +193281,519 @@
             "defaultEligible": false,
             "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
             "metrics": {
-              "triangles": 2787,
+              "triangles": 168,
               "drawPrimitives": 1,
               "textures": 1,
               "maxTextureEdge": 256,
               "skins": 1,
               "skinnedPrimitives": 1,
               "nativeClips": 6,
-              "maxChannelsPerClip": 87
+              "maxChannelsPerClip": 24
+            },
+            "nativeMotion": {
+              "clipMap": {
+                "idle": "wait",
+                "run": "F-Move",
+                "attack": "attack_01",
+                "cast": "sp01_01",
+                "hurt": "Damage-1",
+                "death": "D-Down"
+              },
+              "origin": "native-same-character-mba",
+              "semanticApproval": "pending",
+              "continuousPlaybackReview": "pending",
+              "death": "D-Down is a native knockdown proposed only as a death surrogate"
+            },
+            "validation": {
+              "budgetErrors": [],
+              "budgetWarnings": [],
+              "khronosErrors": 0,
+              "khronosWarnings": 19,
+              "khronosWarningCodes": [
+                "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "NODE_SKINNED_MESH_NON_ROOT"
+              ],
+              "allFinite": true,
+              "deterministicRebuild": true
+            },
+            "scaleAndOrientation": {
+              "sourceWorldSkinnedBounds": {
+                "min": [
+                  -7.880377314692396,
+                  0.12578156181844413,
+                  -1.6350029235333636
+                ],
+                "max": [
+                  7.879446528545714,
+                  6.498779393714358,
+                  1.08729030321971
+                ],
+                "extent": [
+                  15.75982384323811,
+                  6.372997831895914,
+                  2.7222932267530737
+                ]
+              },
+              "finalWorldSkinnedBounds": {
+                "min": [
+                  -7.880377314692396,
+                  0.12578156181844413,
+                  -1.6350029235333636
+                ],
+                "max": [
+                  7.879446528545714,
+                  6.498779393714358,
+                  1.08729030321971
+                ],
+                "extent": [
+                  15.75982384323811,
+                  6.372997831895914,
+                  2.7222932267530737
+                ]
+              },
+              "frontBackIsometricRendered": true
+            },
+            "staticVisualReview": {
+              "accepted": true,
+              "reviewedOn": "2026-09-15",
+              "scope": "source/final front, isometric and back; no black-strip/source-backdrop failure observed; shader parity and motion gameplay excluded",
+              "screenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-front.png",
+                  "bytes": 86658,
+                  "sha256": "b942c3f30e387731740407b57031b6f755b6e356640a8464bd779c3540e5a4fc"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-isometric.png",
+                  "bytes": 82947,
+                  "sha256": "2a561d983bc4fd52e8a6619ebb0404a108bfdb990e30b2855b88046c0858f2f4"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-back.png",
+                  "bytes": 70269,
+                  "sha256": "d8991f2ed4987a8f4deb90e4f22515feee369d56c5fcf67837dadd33315d1a45"
+                }
+              },
+              "sourceScreenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-front.png",
+                  "bytes": 92409,
+                  "sha256": "3f05b1214b386973975ed406cfafbf135762bc95c953b560df70142c1d6ad1a3"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-isometric.png",
+                  "bytes": 85814,
+                  "sha256": "2af0ee5a2afb96c82f3ac41c45b845f1e8906575f27b285e11727f70fb7584ab"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-back.png",
+                  "bytes": 78241,
+                  "sha256": "79060d8af8d6db3d3c1e0e247cdfde3a40e9e51bee045de6933835e957243c99"
+                }
+              }
+            },
+            "conversionEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/conversion.json",
+              "bytes": 11506,
+              "sha256": "193c888a38bae9dbbc7586432e8a41adf4d3b85f1a6496f89a1052b19207e131"
+            },
+            "preparationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/preparation.json",
+              "bytes": 4736,
+              "sha256": "a6fd5f991ca64916c2d47272ffac17e91fa1ee43e7eca62bbeda538b83bf299a"
+            },
+            "sourceSnapshot": {
+              "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+              "readbackVerified": true,
+              "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+              "automaticConsumption": false
+            },
+            "missing": [
+              "GGD hero definition and skill design",
+              "motion playback and semantic approval",
+              "D-Down death-surrogate approval",
+              "source-engine shader parity",
+              "backend dropdown registration and selection test",
+              "Git commit backup and Main deployment verification"
+            ]
+          },
+          {
+            "id": "mba-unused-batch2-kukuri-native-six-motion-v1",
+            "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+            "sourceCharacterId": "mba:Chara07_02",
+            "nameZh": "柯柯麗",
+            "originalName": "ククリ",
+            "workZh": "魔法陣咕嚕咕嚕（魔法少女武鬥祭）",
+            "sourceVersion": "Complete Form 1.60+",
+            "sourcePlatform": "Windows PC",
+            "selectionClass": "mba",
+            "resourceRole": "independent-mba-character-body-native-motion-reserve",
+            "sourceClass": "original-game-direct-extraction",
+            "source": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+              "bytes": 4824140,
+              "sha256": "bc98efe10be27cc65943a8897e7d3c498c69777e09ede50820ea5443ec13ecb1",
+              "preparationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/kukuri/preparation.json",
+              "preparedBytes": 4653200,
+              "preparedSha256": "e9d04037a0966a33cdc436cf6aa06136dc8a224c0b91ea5a0b6f0c5a65401ee2",
+              "originalAnimationCount": 68,
+              "originalAnimationNames": [
+                "kami_03",
+                "kami_02",
+                "kami_01",
+                "burst_02_02",
+                "burst_02_01",
+                "burst_01_02",
+                "burst_01_01",
+                "sp01_miss_03",
+                "sp01_miss_02",
+                "sp01_miss_01",
+                "sp01",
+                "b_dash_attack_02",
+                "b_dash_attack_01",
+                "lose",
+                "win",
+                "kakusei",
+                "maryokudan_02",
+                "maryokudan_01",
+                "hukitobasi",
+                "utiorosi",
+                "utiage",
+                "Charge_01",
+                "attack_01_02",
+                "attack_01_01",
+                "wait",
+                "Escape",
+                "B-Dash-End",
+                "B-Dash-Start",
+                "DIM_BIND_Damage",
+                "DIM_BIND",
+                "RB_DAMAGE",
+                "RB_HIT",
+                "RB_BIND",
+                "Barel-END",
+                "Barel-Hit",
+                "D-Down-Damage",
+                "U-Down-Damage",
+                "C-Falte",
+                "D-GetUp",
+                "D-Down",
+                "U-GetUp",
+                "U-Down",
+                "F-Scatter-Stop",
+                "F-Scatter",
+                "F-Falter-Stop",
+                "F-Falter",
+                "B-Scatter-Stop",
+                "B-Scatter",
+                "B-Falter-Stop",
+                "B-Falter",
+                "Damage-5",
+                "Damage-4",
+                "Damage-3",
+                "Damage-2",
+                "Damage-1",
+                "Guard",
+                "D-Move",
+                "U-Move",
+                "Warp",
+                "Dash-Stop",
+                "Dash",
+                "B-Step",
+                "R-Step",
+                "L-Step",
+                "B-Move",
+                "R-Move",
+                "L-Move",
+                "F-Move"
+              ],
+              "preparedAnimationCount": 6
+            },
+            "gitPath": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+            "bytes": 626792,
+            "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+            "componentReady": true,
+            "converted": true,
+            "fullHeroModel": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "runtimeSelectable": false,
+            "runtimeDropdownRegistered": false,
+            "automaticEligible": false,
+            "defaultEligible": false,
+            "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+            "metrics": {
+              "triangles": 3239,
+              "drawPrimitives": 1,
+              "textures": 1,
+              "maxTextureEdge": 256,
+              "skins": 1,
+              "skinnedPrimitives": 1,
+              "nativeClips": 6,
+              "maxChannelsPerClip": 81
+            },
+            "nativeMotion": {
+              "clipMap": {
+                "idle": "wait",
+                "run": "F-Move",
+                "attack": "attack_01_01",
+                "cast": "sp01",
+                "hurt": "Damage-1",
+                "death": "D-Down"
+              },
+              "origin": "native-same-character-mba",
+              "semanticApproval": "pending",
+              "continuousPlaybackReview": "pending",
+              "death": "D-Down is a native knockdown proposed only as a death surrogate"
+            },
+            "validation": {
+              "budgetErrors": [],
+              "budgetWarnings": [],
+              "khronosErrors": 0,
+              "khronosWarnings": 19,
+              "khronosWarningCodes": [
+                "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "NODE_EMPTY",
+                "NODE_SKINNED_MESH_NON_ROOT"
+              ],
+              "allFinite": true,
+              "deterministicRebuild": true
+            },
+            "scaleAndOrientation": {
+              "sourceWorldSkinnedBounds": {
+                "min": [
+                  -2.405644178390503,
+                  -0.5673784613609314,
+                  -2.4688916206359863
+                ],
+                "max": [
+                  2.405644178390503,
+                  4.640766620635986,
+                  2.196007013320923
+                ],
+                "extent": [
+                  4.811288356781006,
+                  5.208145081996918,
+                  4.664898633956909
+                ]
+              },
+              "finalWorldSkinnedBounds": {
+                "min": [
+                  -2.405644178390503,
+                  -0.5673784613609314,
+                  -2.4688916206359863
+                ],
+                "max": [
+                  2.405644178390503,
+                  4.640766620635986,
+                  2.196007013320923
+                ],
+                "extent": [
+                  4.811288356781006,
+                  5.208145081996918,
+                  4.664898633956909
+                ]
+              },
+              "frontBackIsometricRendered": true
+            },
+            "staticVisualReview": {
+              "accepted": true,
+              "reviewedOn": "2026-09-15",
+              "scope": "source/final front, isometric and back; no black-strip/source-backdrop failure observed; shader parity and motion gameplay excluded",
+              "screenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-front.png",
+                  "bytes": 238608,
+                  "sha256": "bd4da925a7c49804617fd9f516de4eebcc6342e2ad678142dcb46902dbea5af6"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-isometric.png",
+                  "bytes": 271593,
+                  "sha256": "d480b490978e646098b12fbcb9e09b5167e0d1118c63b00779b1895d0de19bee"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-back.png",
+                  "bytes": 206438,
+                  "sha256": "43e160f53b4d784535cad0ebfb90649c9fd2700310fa6ce417fb92b67bd385a9"
+                }
+              },
+              "sourceScreenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-front.png",
+                  "bytes": 313059,
+                  "sha256": "a1b9011d52e591ffa86911586154c38612d65a706a8401ea43539e7387dd191b"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-isometric.png",
+                  "bytes": 359755,
+                  "sha256": "23140e2d0af5b07f1689badfe1de4f195a3f1cdb162e59aa4ded378e2952e99f"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-back.png",
+                  "bytes": 260862,
+                  "sha256": "3170730add24d01df635d5252c291171ab2537f5450b86831bdf3f62e906e5fb"
+                }
+              }
+            },
+            "conversionEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/conversion.json",
+              "bytes": 11792,
+              "sha256": "4044ed09c5dae4a04256fc759d0af978d3d7fb7619b34ae8851bd4333634568b"
+            },
+            "preparationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/preparation.json",
+              "bytes": 5439,
+              "sha256": "642e706f669a90cbbe1eefbd148c8781416eac4ff56baa939a44bc7885da4d0d"
+            },
+            "sourceSnapshot": {
+              "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+              "readbackVerified": true,
+              "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+              "automaticConsumption": false
+            },
+            "missing": [
+              "GGD hero definition and skill design",
+              "motion playback and semantic approval",
+              "D-Down death-surrogate approval",
+              "source-engine shader parity",
+              "backend dropdown registration and selection test",
+              "Git commit backup and Main deployment verification"
+            ]
+          },
+          {
+            "id": "mba-unused-batch2-naga-native-six-motion-v1",
+            "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+            "sourceCharacterId": "mba:Chara08",
+            "nameZh": "白蛇娜卡",
+            "originalName": "白蛇のナーガ",
+            "workZh": "秀逗魔導士（魔法少女武鬥祭）",
+            "sourceVersion": "Complete Form 1.60+",
+            "sourcePlatform": "Windows PC",
+            "selectionClass": "mba",
+            "resourceRole": "independent-mba-character-body-native-motion-reserve",
+            "sourceClass": "original-game-direct-extraction",
+            "source": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara08/Naga.glb",
+              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara08/Naga.glb",
+              "bytes": 7618544,
+              "sha256": "eeeaccdd0fdff24be7c27f09c04fdd3dc9f00030c4a3aeae15780b2a438a1d9d",
+              "preparationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/naga/preparation.json",
+              "preparedBytes": 7246916,
+              "preparedSha256": "558638e3c1527a2cb9300c66675cdb3b17ac33c18edc6aed6863c788ada96b36",
+              "originalAnimationCount": 86,
+              "originalAnimationNames": [
+                "manto_center_nomal",
+                "manto_center_high",
+                "manto_up_nomal",
+                "manto_up_high",
+                "manto_down_nomal",
+                "manto_down_high",
+                "manto_right_high",
+                "manto_left_high",
+                "kami_center_nomal",
+                "kami_center_high",
+                "kami_up_nomal",
+                "kami_up_high",
+                "kami_down_nomal",
+                "kami_down_high",
+                "burst_02_03",
+                "burst_02_02",
+                "burst_02_01",
+                "burst_01_05",
+                "burst_01_04",
+                "burst_01_03",
+                "burst_01_02",
+                "burst_01_01",
+                "sp03_01",
+                "sp02_01",
+                "sp01_01",
+                "b_dash_attack_02",
+                "b_dash_attack_01",
+                "lose",
+                "win",
+                "kakusei",
+                "maryokudan_02",
+                "maryokudan_01",
+                "hukitobasi",
+                "utiorosi",
+                "utiage",
+                "Charge",
+                "attack_05",
+                "attack_04",
+                "attack_03",
+                "attack_02",
+                "attack_01",
+                "wait",
+                "start_01",
+                "Escape",
+                "B-Dash-End",
+                "B-Dash-Start",
+                "DIM_BIND_Damage",
+                "DIM_BIND",
+                "RB_DAMAGE",
+                "RB_HIT",
+                "RB_BIND",
+                "Barel-END",
+                "Barel-Hit",
+                "D-Down-Damage",
+                "U-Down-Damage",
+                "C-Falte",
+                "D-GetUp",
+                "D-Down",
+                "U-GetUp",
+                "U-Down",
+                "F-Scatter-Stop",
+                "F-Scatter",
+                "F-Falter-Stop",
+                "F-Falter",
+                "B-Scatter-Stop",
+                "B-Scatter",
+                "B-Falter-Stop",
+                "B-Falter",
+                "Damage-5",
+                "Damage-4",
+                "Damage-3",
+                "Damage-2",
+                "Damage-1",
+                "Guard",
+                "D-Move",
+                "U-Move",
+                "Warp",
+                "Dash-Stop",
+                "Dash",
+                "B-Step",
+                "R-Step",
+                "L-Step",
+                "B-Move",
+                "R-Move",
+                "L-Move",
+                "F-Move"
+              ],
+              "preparedAnimationCount": 6
+            },
+            "gitPath": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+            "bytes": 800640,
+            "sha256": "25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6",
+            "componentReady": true,
+            "converted": true,
+            "fullHeroModel": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "runtimeSelectable": false,
+            "runtimeDropdownRegistered": false,
+            "automaticEligible": false,
+            "defaultEligible": false,
+            "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+            "metrics": {
+              "triangles": 3587,
+              "drawPrimitives": 1,
+              "textures": 1,
+              "maxTextureEdge": 256,
+              "skins": 1,
+              "skinnedPrimitives": 1,
+              "nativeClips": 6,
+              "maxChannelsPerClip": 108
             },
             "nativeMotion": {
               "clipMap": {
@@ -193250,70 +193825,88 @@
             "scaleAndOrientation": {
               "sourceWorldSkinnedBounds": {
                 "min": [
-                  -1.9798624333718777,
-                  0.5678573693015778,
-                  -1.7234911221786007
+                  -4.338895099444613,
+                  1.01661111439185,
+                  -2.358421170091944
                 ],
                 "max": [
-                  2.3952331899886303,
-                  6.037999815315004,
-                  2.8995287373591765
+                  1.7764328267638803,
+                  6.683558754377941,
+                  4.343042056903869
                 ],
                 "extent": [
-                  4.375095623360508,
-                  5.470142446013426,
-                  4.623019859537777
+                  6.115327926208494,
+                  5.666947639986091,
+                  6.701463226995813
                 ]
               },
-              "frontBackIsometricRendered": true,
-              "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+              "finalWorldSkinnedBounds": {
+                "min": [
+                  -4.338895099444613,
+                  1.01661111439185,
+                  -2.358421170091944
+                ],
+                "max": [
+                  1.7764328267638803,
+                  6.683558754377941,
+                  4.343042056903869
+                ],
+                "extent": [
+                  6.115327926208494,
+                  5.666947639986091,
+                  6.701463226995813
+                ]
+              },
+              "frontBackIsometricRendered": true
             },
             "staticVisualReview": {
               "accepted": true,
-              "reviewedOn": "2026-09-14",
-              "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+              "reviewedOn": "2026-09-15",
+              "scope": "source/final front, isometric and back; no black-strip/source-backdrop failure observed; shader parity and motion gameplay excluded",
               "screenshots": {
                 "front": {
-                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/front.png",
-                  "bytes": 266450,
-                  "sha256": "53e6cb600ea102de6beaac914f103b11fad29769c1810e1268746494f41fe871"
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-front.png",
+                  "bytes": 193015,
+                  "sha256": "b0993d6e3d219ece9f5e633b6e9571e6b68ea2fb377ff325bd2cf678e7f33d02"
                 },
                 "isometric": {
-                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/isometric.png",
-                  "bytes": 266206,
-                  "sha256": "afd654a2c25ede2141bc3422f3c7c3da72193e484f2b2d1b4a0eed4a8cdea27c"
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-isometric.png",
+                  "bytes": 206708,
+                  "sha256": "43fbfa17546b11aa52a9e0f89f2b48cbbcaef5fd7d220c130d9c81eb7a336e15"
                 },
                 "back": {
-                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/back.png",
-                  "bytes": 264305,
-                  "sha256": "312e4d1ee179abffcfac091bd72bdce725166ec7e83489f7f3036fbecc6fb63d"
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-back.png",
+                  "bytes": 171042,
+                  "sha256": "7d3d70833d260c5fd156001e2c2e9ba6f10323ef0d9c9c7a8eac39b0c995b397"
                 }
               },
-              "sourceFront": {
-                "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/source-front.png",
-                "bytes": 296775,
-                "sha256": "0f1096fe3945c722b617b0d6297a0b6a0e18636edb65f4d930257e55a60bc958"
+              "sourceScreenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-front.png",
+                  "bytes": 217691,
+                  "sha256": "59a058c3000f3ad49bde1a224109bdc23135e71304be848f6db8ecbcd415e419"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-isometric.png",
+                  "bytes": 236962,
+                  "sha256": "37ac19573f06d803372faa9a7f8bdd124a1212ca5d51455c9532d8705ba2de1a"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-back.png",
+                  "bytes": 196163,
+                  "sha256": "a1aeff14afb10cee785ab8cf0bf10db097f1838076223b47c1c5c46168fead7a"
+                }
               }
             },
             "conversionEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/conversion.json",
-              "bytes": 12022,
-              "sha256": "41d1ddefec467b6a2fc06dd6da82beddcc8bfec6e19f8fd11d6915729905ef98"
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/conversion.json",
+              "bytes": 12213,
+              "sha256": "b855b3cb526a2685511deb65d729f09f19f4849f1e55df8e4ab321859ec5ef39"
             },
             "preparationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/preparation.json",
-              "bytes": 5519,
-              "sha256": "0cb2a0f6f89f833b94394fd9c52a6d4d7eca5ec3b6a1a3ceef44e6c07341bea1"
-            },
-            "webglProofEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-proof.json",
-              "bytes": 2408,
-              "sha256": "d7dbe142224faec6e1178554b8da124d32fa4b6b06bf05e10472c476e420c5a2"
-            },
-            "webglRunEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-run.json",
-              "bytes": 340,
-              "sha256": "c2fbb3496fb17e9255ce9417de646a11d6718a8e07ec8c8662b83adf69d6cb40"
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/preparation.json",
+              "bytes": 5835,
+              "sha256": "84fd8a23e39fc8c7bd21fb67cb65077c68efd02c11bc6c7fd7404b8cb9c61ece"
             },
             "sourceSnapshot": {
               "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
@@ -193327,7 +193920,260 @@
               "D-Down death-surrogate approval",
               "source-engine shader parity",
               "backend dropdown registration and selection test",
-              "Git commit S3 backup and Main deployment verification"
+              "Git commit backup and Main deployment verification"
+            ]
+          },
+          {
+            "id": "mba-unused-batch2-nowel-native-six-motion-v1",
+            "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+            "sourceCharacterId": "mba:Chara02_O",
+            "nameZh": "諾威爾·迪亞斯塔西斯",
+            "originalName": "ノウェル・ディアスタシス",
+            "workZh": "原創（魔法少女武鬥祭）",
+            "sourceVersion": "Complete Form 1.60+",
+            "sourcePlatform": "Windows PC",
+            "selectionClass": "mba",
+            "resourceRole": "independent-mba-character-body-native-motion-reserve",
+            "sourceClass": "original-game-direct-extraction",
+            "source": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara02_O/Nowel.glb",
+              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara02_O/Nowel.glb",
+              "bytes": 5743008,
+              "sha256": "7236780dfb38d380c483e5cec72fbf1af75c125462f336841371b20eac70caf9",
+              "preparationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/nowel/preparation.json",
+              "preparedBytes": 5451988,
+              "preparedSha256": "343149e0d1f0d31c5fe60a5484c7c91d983edc28f9e87ccc99baa5f299829ce9",
+              "originalAnimationCount": 77,
+              "originalAnimationNames": [
+                "wing_l",
+                "wing_s",
+                "skart_l",
+                "skart_s",
+                "ribon_l",
+                "ribon_s",
+                "kami_l",
+                "kami_s",
+                "burst_02_05",
+                "burst_02_04",
+                "burst_02_03",
+                "maryokuwaza_03",
+                "win",
+                "lose",
+                "wait",
+                "kakusei",
+                "hassya",
+                "maryokudan",
+                "hukitobasi",
+                "utiorosi",
+                "utiage",
+                "attack_03",
+                "attack_02",
+                "attack_01",
+                "burst_02_02",
+                "burst_02_01",
+                "burst_01_02",
+                "burst_01_01",
+                "maryokuwaza_02",
+                "maryokuwaza_01",
+                "b_dash_attack_02",
+                "b_dash_attack_01",
+                "maryokudan_move",
+                "maryokutame",
+                "Escape",
+                "B-Dash-End",
+                "B-Dash-Start",
+                "DIM_BIND_Damage",
+                "DIM_BIND",
+                "RB_DAMAGE",
+                "RB_HIT",
+                "RB_BIND",
+                "ACS_HIT",
+                "ACS_BIND",
+                "D-Down-Damage",
+                "U-Down-Damage",
+                "C-Falter",
+                "D-GetUp",
+                "D-Down",
+                "U-GetUp",
+                "U-Down",
+                "F-Scatter-Stop",
+                "F-Scatter",
+                "F-Falter-Stop",
+                "F-Falter",
+                "B-Scatter-Stop",
+                "B-Scatter",
+                "B-Falter-Stop",
+                "B-Falter",
+                "Damage-5",
+                "Damage-4",
+                "Damage-3",
+                "Damage-2",
+                "Damage-1",
+                "Guard",
+                "D-Move",
+                "U-Move",
+                "Warp",
+                "Dash-Stop",
+                "Dash",
+                "B-Step",
+                "R-Step",
+                "L-Step",
+                "B-Move",
+                "R-Move",
+                "L-Move",
+                "F-Move"
+              ],
+              "preparedAnimationCount": 6
+            },
+            "gitPath": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+            "bytes": 642648,
+            "sha256": "e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac",
+            "componentReady": true,
+            "converted": true,
+            "fullHeroModel": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "runtimeSelectable": false,
+            "runtimeDropdownRegistered": false,
+            "automaticEligible": false,
+            "defaultEligible": false,
+            "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+            "metrics": {
+              "triangles": 3180,
+              "drawPrimitives": 1,
+              "textures": 1,
+              "maxTextureEdge": 256,
+              "skins": 1,
+              "skinnedPrimitives": 1,
+              "nativeClips": 6,
+              "maxChannelsPerClip": 105
+            },
+            "nativeMotion": {
+              "clipMap": {
+                "idle": "wait",
+                "run": "F-Move",
+                "attack": "attack_01",
+                "cast": "maryokuwaza_01",
+                "hurt": "Damage-1",
+                "death": "D-Down"
+              },
+              "origin": "native-same-character-mba",
+              "semanticApproval": "pending",
+              "continuousPlaybackReview": "pending",
+              "death": "D-Down is a native knockdown proposed only as a death surrogate"
+            },
+            "validation": {
+              "budgetErrors": [],
+              "budgetWarnings": [],
+              "khronosErrors": 0,
+              "khronosWarnings": 20,
+              "khronosWarningCodes": [
+                "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "NODE_SKINNED_MESH_NON_ROOT"
+              ],
+              "allFinite": true,
+              "deterministicRebuild": true
+            },
+            "scaleAndOrientation": {
+              "sourceWorldSkinnedBounds": {
+                "min": [
+                  -1.675445009402111,
+                  0.3821176347452049,
+                  -1.3925831048575503
+                ],
+                "max": [
+                  1.6111801387545484,
+                  6.276901720120037,
+                  3.8901089294271003
+                ],
+                "extent": [
+                  3.2866251481566593,
+                  5.894784085374832,
+                  5.282692034284651
+                ]
+              },
+              "finalWorldSkinnedBounds": {
+                "min": [
+                  -1.675445009402111,
+                  0.3821176347452049,
+                  -1.3925831048575503
+                ],
+                "max": [
+                  1.6111801387545484,
+                  6.276901720120037,
+                  3.8901089294271003
+                ],
+                "extent": [
+                  3.2866251481566593,
+                  5.894784085374832,
+                  5.282692034284651
+                ]
+              },
+              "frontBackIsometricRendered": true
+            },
+            "staticVisualReview": {
+              "accepted": true,
+              "reviewedOn": "2026-09-15",
+              "scope": "source/final front, isometric and back; no black-strip/source-backdrop failure observed; shader parity and motion gameplay excluded",
+              "screenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-front.png",
+                  "bytes": 170218,
+                  "sha256": "6ecf6294c49d2f06b7e78ef4e9f0d7233bb4943117a49f38cbf716e37ebd834d"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-isometric.png",
+                  "bytes": 183514,
+                  "sha256": "a5f34338fd89617d28be534504bd01793356842cf8e997828fedd9fe2120e829"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-back.png",
+                  "bytes": 157843,
+                  "sha256": "f414d367a08878121aebc902bdac44f515384ec2f568efcf741798b9969fe5ec"
+                }
+              },
+              "sourceScreenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-front.png",
+                  "bytes": 213512,
+                  "sha256": "3f2e6609a810c85de41dc3f4ed9cd24b4910c8e88ac305c07608ef34b380a75e"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-isometric.png",
+                  "bytes": 233609,
+                  "sha256": "66b82092677d0b018e63c3e8a6516b5824ab534ae9ee2a373da3db4e3df53942"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-back.png",
+                  "bytes": 199080,
+                  "sha256": "4ed88cde3ce64a998c29fcfc9fe24955271e475341b0d0830b374c6a6a0779f2"
+                }
+              }
+            },
+            "conversionEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/conversion.json",
+              "bytes": 12036,
+              "sha256": "601bcf308b9197add18233bed4ddacbbfc48073624e94be5b0cc347c7061c37c"
+            },
+            "preparationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/preparation.json",
+              "bytes": 5506,
+              "sha256": "e2ae971b34370986bec50a0bcdc593cd6b708a964bbc4da9893f05ca13cbd00d"
+            },
+            "sourceSnapshot": {
+              "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+              "readbackVerified": true,
+              "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+              "automaticConsumption": false
+            },
+            "missing": [
+              "GGD hero definition and skill design",
+              "motion playback and semantic approval",
+              "D-Down death-surrogate approval",
+              "source-engine shader parity",
+              "backend dropdown registration and selection test",
+              "Git commit backup and Main deployment verification"
             ]
           },
           {
@@ -193464,6 +194310,157 @@
               "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/webgl-run.json",
               "bytes": 342,
               "sha256": "582f51b801bf38a7a8d8846b8f554d6ce71a2726b7b9adb92e824d8b1d71ad81"
+            },
+            "sourceSnapshot": {
+              "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+              "readbackVerified": true,
+              "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+              "automaticConsumption": false
+            },
+            "missing": [
+              "GGD hero definition and skill design",
+              "motion playback and semantic approval",
+              "D-Down death-surrogate approval",
+              "source-engine shader parity",
+              "backend dropdown registration and selection test",
+              "Git commit S3 backup and Main deployment verification"
+            ]
+          },
+          {
+            "id": "mba-unused-ruru-native-six-motion-v1",
+            "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+            "sourceCharacterId": "mba:Chara01_O",
+            "nameZh": "露露·傑拉德",
+            "originalName": "ルル・ジェラード",
+            "workZh": "原創（魔法少女武鬥祭）",
+            "sourceVersion": "Complete Form 1.60+",
+            "sourcePlatform": "Windows PC",
+            "selectionClass": "mba",
+            "resourceRole": "independent-mba-character-body-native-motion-reserve",
+            "sourceClass": "original-game-direct-extraction",
+            "source": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
+              "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
+              "bytes": 6179096,
+              "sha256": "c3aa6e901a46f8b2c974520790549747681e9f6cce7a9194492cc7b49f6df5e7"
+            },
+            "gitPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+            "bytes": 618276,
+            "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+            "componentReady": true,
+            "converted": true,
+            "fullHeroModel": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "runtimeSelectable": false,
+            "runtimeDropdownRegistered": false,
+            "automaticEligible": false,
+            "defaultEligible": false,
+            "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+            "metrics": {
+              "triangles": 2787,
+              "drawPrimitives": 1,
+              "textures": 1,
+              "maxTextureEdge": 256,
+              "skins": 1,
+              "skinnedPrimitives": 1,
+              "nativeClips": 6,
+              "maxChannelsPerClip": 87
+            },
+            "nativeMotion": {
+              "clipMap": {
+                "idle": "wait",
+                "run": "F-Move",
+                "attack": "attack_01",
+                "cast": "sp01_01",
+                "hurt": "Damage-1",
+                "death": "D-Down"
+              },
+              "origin": "native-same-character-mba",
+              "semanticApproval": "pending",
+              "continuousPlaybackReview": "pending",
+              "death": "D-Down is a native knockdown proposed only as a death surrogate"
+            },
+            "validation": {
+              "budgetErrors": [],
+              "budgetWarnings": [],
+              "khronosErrors": 0,
+              "khronosWarnings": 20,
+              "khronosWarningCodes": [
+                "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "NODE_SKINNED_MESH_NON_ROOT"
+              ],
+              "allFinite": true,
+              "deterministicRebuild": true
+            },
+            "scaleAndOrientation": {
+              "sourceWorldSkinnedBounds": {
+                "min": [
+                  -1.9798624333718777,
+                  0.5678573693015778,
+                  -1.7234911221786007
+                ],
+                "max": [
+                  2.3952331899886303,
+                  6.037999815315004,
+                  2.8995287373591765
+                ],
+                "extent": [
+                  4.375095623360508,
+                  5.470142446013426,
+                  4.623019859537777
+                ]
+              },
+              "frontBackIsometricRendered": true,
+              "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+            },
+            "staticVisualReview": {
+              "accepted": true,
+              "reviewedOn": "2026-09-14",
+              "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+              "screenshots": {
+                "front": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/front.png",
+                  "bytes": 266450,
+                  "sha256": "53e6cb600ea102de6beaac914f103b11fad29769c1810e1268746494f41fe871"
+                },
+                "isometric": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/isometric.png",
+                  "bytes": 266206,
+                  "sha256": "afd654a2c25ede2141bc3422f3c7c3da72193e484f2b2d1b4a0eed4a8cdea27c"
+                },
+                "back": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/back.png",
+                  "bytes": 264305,
+                  "sha256": "312e4d1ee179abffcfac091bd72bdce725166ec7e83489f7f3036fbecc6fb63d"
+                }
+              },
+              "sourceFront": {
+                "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/source-front.png",
+                "bytes": 296775,
+                "sha256": "0f1096fe3945c722b617b0d6297a0b6a0e18636edb65f4d930257e55a60bc958"
+              }
+            },
+            "conversionEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/conversion.json",
+              "bytes": 12022,
+              "sha256": "41d1ddefec467b6a2fc06dd6da82beddcc8bfec6e19f8fd11d6915729905ef98"
+            },
+            "preparationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/preparation.json",
+              "bytes": 5519,
+              "sha256": "0cb2a0f6f89f833b94394fd9c52a6d4d7eca5ec3b6a1a3ceef44e6c07341bea1"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-proof.json",
+              "bytes": 2408,
+              "sha256": "d7dbe142224faec6e1178554b8da124d32fa4b6b06bf05e10472c476e420c5a2"
+            },
+            "webglRunEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-run.json",
+              "bytes": 340,
+              "sha256": "c2fbb3496fb17e9255ce9417de646a11d6718a8e07ec8c8662b83adf69d6cb40"
             },
             "sourceSnapshot": {
               "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
@@ -193841,12 +194838,25 @@
           "readbackVerified": true,
           "allowAutomaticConsumption": false
         },
-        "verification": "4 名身份由 character-candidates.json 與原生 .chr 定義直接對到來源 GLB。4/4 產生獨立 Git GLB，2,787–4,412 triangles、1 draw、1×256px atlas、1 skin、6 個同角色原生片段、finite float 全通過、Khronos 0 errors；每顆 19–20 個已保留的 source skin/root warnings。三視圖與來源/成品正面人工核對通過；動作語意、連續播放、D-Down 死亡替代、英雄設計、後台註冊與部署未完成。八神疾風因來源黑色矩形條拒收。",
+        "verification": "8 名身份由 character-candidates.json 與原生 .chr 定義直接對到來源 GLB。8/8 為獨立 Git GLB、1 draw、1×256px atlas、1 skin、6 個同角色原生片段、finite float 全通過、Khronos 0 errors；兩批均有來源／成品三視圖。動作語意、連續播放、D-Down 死亡替代、英雄設計、後台註冊與部署未完成；八神疾風仍因來源黑色矩形條拒收。",
         "limitations": [
           "Khronos warning counts are retained, not hidden; all four have zero Khronos errors.",
           "Static visual acceptance does not approve motion meaning, source shader parity, hero binding, dropdown selection or deployment.",
           "No decimation, recolor, proxy mapping, default change or extension of the eleven authorized derivatives occurred."
-        ]
+        ],
+        "conversionStageBackup": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/s3-backup-receipt.json",
+          "bytes": 1803,
+          "sha256": "64e25571e29058ace658f3aa9c83630dfd94a6a9c84cc06c28a3a3b4f73c5aaa",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/mba-unused-model-batch2-v1/a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/mba-unused-model-batch2-v1/a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d.files.json",
+          "archiveSha256": "a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d",
+          "archiveBytes": 25131785,
+          "fileCount": 85,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789403341"
+        }
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

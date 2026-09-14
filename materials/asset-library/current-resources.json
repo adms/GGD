@@ -6521,7 +6521,7 @@
     "productionDeploymentVerified": false,
     "entryGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json",
     "entrySha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
-    "receiptSha256": "56249fde7d0fe5b93dcd35824419077a3fa194595cfc7660a40e700bfad78e9e",
+    "receiptSha256": "b38ad05eabeaa87ab256648e209e6b9d771efe7bfc0b44c34cdc611f86f4e426",
     "documentSha256": "878516c59006c1e7de6c987a58672d0b603fc84d0f19b3a0a597cc071cb5a031",
     "runnerGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
     "runnerSha256": "dfe466c59de95feb47b0abd203db7305958f9494b5a1f976dee1c7715df12942",
@@ -6550,7 +6550,7 @@
   },
   "kofXivTerryPathIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json",
-    "sha256": "7f16a47a0e88c48299f7a57915139ad68309f8c92f69890cb636e206d17e4942",
+    "sha256": "344f0d0f819b0c8eeaa26b95d8fff42308da39ed26028a502508ea879f981c50",
     "filesGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
     "filesSha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
     "documentGitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/README.md",
