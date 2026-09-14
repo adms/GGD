@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "3265eab5345aed9f008314aeefebb7514a2cf315b04903dfc0e22d46c26a13b6"
+      "sha256": "3f018793720776de9778a1fe038f2b1711c5529cb614647f284f576c6eeee53b"
     }
   },
   "summary": {
@@ -5231,6 +5231,7 @@
         "palworldResourceIndex",
         "palworldVfxSfxInventory",
         "playstationPlatformSourceInventory",
+        "poppIntegrationGapLedger",
         "poppVfxDependencySupport",
         "postRegistrationReview",
         "projectSevenJapaneseVoiceIndex",
