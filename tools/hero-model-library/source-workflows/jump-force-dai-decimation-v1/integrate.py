@@ -17,6 +17,7 @@ CANDIDATE_ID = "jump-force-native-dai-chr0430-decimated-256-v1"
 EVIDENCE_NAMES = (
     "conversion.json", "validation.json", "draw-call-audit.json",
     "visual-comparison.json", "ab-contact-sheet.png", "worst-difference-overview.png",
+    "s3-backup-receipt.json",
 )
 
 
@@ -33,6 +34,7 @@ def build(current: dict) -> dict:
     validation = json.loads((EVIDENCE / "validation.json").read_text())
     draw = json.loads((EVIDENCE / "draw-call-audit.json").read_text())
     visual = json.loads((EVIDENCE / "visual-comparison.json").read_text())
+    backup = json.loads((EVIDENCE / "s3-backup-receipt.json").read_text())
     if conversion.get("candidateId") != CANDIDATE_ID or conversion.get("sourceId") != SOURCE_ID:
         raise ValueError("unexpected conversion identity")
     if validation.get("candidateId") != CANDIDATE_ID or validation.get("candidate", {}).get("sha256") != conversion["output"]["sha256"]:
@@ -55,6 +57,14 @@ def build(current: dict) -> dict:
         raise ValueError("visual evidence not accepted")
     if draw.get("decision", {}).get("safeCurrentAutomationCanReachSix") is not False:
         raise ValueError("draw-call audit must retain the hard blocker")
+    if (backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or backup.get("profile") != "vibe-coding"
+            or backup.get("region") != "ap-east-2"
+            or "assumed-role/vibe-coding-s3-role/" not in backup.get("callerArn", "")
+            or not backup.get("fullGetVerified")
+            or not backup.get("allMemberSha256Verified")
+            or not backup.get("localUnchanged")):
+        raise ValueError("conversion-stage S3 backup receipt is absent or invalid")
 
     result = json.loads(json.dumps(current))
     matches = [row for row in result["publicSources"] if row.get("id") == SOURCE_ID]
@@ -98,6 +108,17 @@ def build(current: dict) -> dict:
         "runtimeSelectable": False,
         "deployed": False,
         "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+        "s3Backup": {
+            "s3Uri": backup["s3Uri"],
+            "manifestUri": backup["manifestUri"],
+            "archiveSha256": backup["archiveSha256"],
+            "archiveBytes": backup["archiveBytes"],
+            "fileCount": backup["fileCount"],
+            "fullGetVerified": True,
+            "allMemberSha256Verified": True,
+            "localUnchanged": True,
+            "receipt": pin(EVIDENCE / "s3-backup-receipt.json"),
+        },
         "evidence": {name: pin(EVIDENCE / name) for name in EVIDENCE_NAMES},
         "limitations": [
             "20 draw primitives exceed the current champion hard limit of 6; exact material semantics only collapse to 11 groups.",

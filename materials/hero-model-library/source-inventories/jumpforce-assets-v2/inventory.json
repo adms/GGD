@@ -1868,6 +1868,15 @@
       "runtimeSelectable": false,
       "productionDeployed": false,
       "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+        "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+        "archiveBytes": 12001636,
+        "fileCount": 30,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      },
       "evidence": [
         {
           "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
@@ -1898,6 +1907,11 @@
           "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
           "bytes": 616849,
           "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+          "bytes": 1599,
+          "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
         }
       ]
     },
@@ -1927,13 +1941,13 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3260772,
-      "sha256": "c46d54f321b2c58b9cd9c595c3718fa23e10b8c02199556163330e3f221ddf06"
+      "bytes": 3296057,
+      "sha256": "4db068e82adb4b3fc97aae21bd2daa4b04399a080810da098150e9a0e3bd5ae5"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "bytes": 35316686,
-      "sha256": "b8f156a5cabba5d12986a42fbdddb022c113dfced9aa1ad7c2a34327662e51ec"
+      "bytes": 35318370,
+      "sha256": "dcb5d1d31e45ba69eeda8cbbf52ab65e3b9ae2fb7a7631958c467af7905b1cea"
     },
     {
       "gitPath": "materials/hero-model-library/voice-index.json",
@@ -2009,6 +2023,11 @@
       "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
       "bytes": 616849,
       "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+      "bytes": 1599,
+      "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
     }
   ]
 }

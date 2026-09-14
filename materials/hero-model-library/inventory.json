@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T09:10:05+08:00",
-  "inputsSha256": "c9df3712db10906554e14be88f37bbe2d4bb836f870a8d9ca53c76d4f0747ea4",
+  "generatedAt": "2026-09-14T16:11:04+08:00",
+  "inputsSha256": "ed3661393bc00b2b392cc5569a9fbb9248f67985efdae167160ad8f9225df365",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -50977,7 +50977,7 @@
           "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "priority-scope-extracted-verified",
-          "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
+          "readiness": "complete-body-source-textures-webgl-accepted; formal-decimation-geometry-texture-validated-draw-motion-blocked",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-vfx-audio-reserve",
@@ -50996,7 +50996,7 @@
             "skill-configuration"
           ],
           "assetKindStates": {
-            "model-package": "extracted-and-converted-review-glb",
+            "model-package": "formal-decimation-7947-tri-256px-validated-draw20-motion0-blocked",
             "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
             "skeleton-package": "extracted-159-joint-skin",
             "vfx-package": "extracted-pending-conversion-and-event-binding",
@@ -51143,6 +51143,41 @@
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/isometric.png",
               "bytes": 278604,
               "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+              "bytes": 3196,
+              "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+              "bytes": 3618,
+              "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+              "bytes": 8860,
+              "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+              "bytes": 2718,
+              "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+              "bytes": 1216259,
+              "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+              "bytes": 616849,
+              "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1599,
+              "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
             }
           ],
           "gameConfigurationEvidence": {
@@ -51232,6 +51267,118 @@
               "defaultEligible": false,
               "backendSelectable": false,
               "deployed": false
+            },
+            {
+              "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+              "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+              "name": "小呆／達伊",
+              "character": "小呆／達伊 / Dai",
+              "originalName": "Dai",
+              "nativeCharacterId": "chr0430",
+              "heroIds": [
+                "godie-nbbc",
+                "godie-n01c"
+              ],
+              "sourceGame": "JUMP FORCE",
+              "platform": "Windows (Steam); converted offline on macOS",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "model",
+                "texture",
+                "skeleton"
+              ],
+              "derivedFromCandidateId": "jump-force-native-dai-chr0430-review-v4",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+              "bytes": 2619896,
+              "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+              "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+              "sourceBytes": 76796608,
+              "sourceSha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810",
+              "metrics": {
+                "triangles": 7947,
+                "drawPrimitives": 20,
+                "maxTextureEdge": 256,
+                "skins": 1,
+                "joints": 159,
+                "textures": 24,
+                "clips": 0
+              },
+              "converted": true,
+              "structuralValidationPassed": true,
+              "geometryAdoptionPassed": true,
+              "textureEdgePassed": true,
+              "visualValidationPassed": true,
+              "litPixelContractMaxPct": 5,
+              "maxLitClassificationXorPct": 1.01625,
+              "drawCallLimitPassed": false,
+              "ggdHardPolicyPassed": false,
+              "nativeAnimationCount": 0,
+              "sixStateMotionComplete": false,
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "runtimeDropdownRegistered": false,
+              "runtimeSelectable": false,
+              "deployed": false,
+              "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+              "s3Backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+                "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+                "archiveBytes": 12001636,
+                "fileCount": 30,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                  "bytes": 1599,
+                  "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+                }
+              },
+              "evidence": {
+                "conversion.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+                  "bytes": 3196,
+                  "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+                },
+                "validation.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+                  "bytes": 3618,
+                  "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+                },
+                "draw-call-audit.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+                  "bytes": 8860,
+                  "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+                },
+                "visual-comparison.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+                  "bytes": 2718,
+                  "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+                },
+                "ab-contact-sheet.png": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+                  "bytes": 1216259,
+                  "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+                },
+                "worst-difference-overview.png": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+                  "bytes": 616849,
+                  "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+                },
+                "s3-backup-receipt.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                  "bytes": 1599,
+                  "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+                }
+              },
+              "limitations": [
+                "20 draw primitives exceed the current champion hard limit of 6; exact material semantics only collapse to 11 groups.",
+                "The current single-channel atlas supports only 2 of 20 primitives; 16 carry secondary PBR textures, one MASK lens tiles outside [0,1], and one has no base texture.",
+                "Khronos reports 0 errors, 24 IMAGE_FEATURES_UNSUPPORTED warnings from retained PNG metadata, and 10 informational unused tangent/object findings.",
+                "No native animation clips are present; no GGD six-state action set is registered.",
+                "Source-game parent shader parity and production runtime selection remain unverified."
+              ]
             }
           ],
           "backendIntegration": {
@@ -51246,7 +51393,7 @@
             "selectionVerified": false,
             "productionDeployed": false
           },
-          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。 Formal decimation candidate f8f3f1c… reduces 59,768 to 7,947 triangles and 2048px to 256px with rig/material semantics and fixed-view visual acceptance, but remains unused because 20 draw primitives exceed the hard limit 6 and it has zero motion clips.",
           "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
             "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
@@ -51255,7 +51402,9 @@
             "Steam-native VFX and audio packages are not converted or bound to GGD events.",
             "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
             "No model option is registered, selectable or deployed from this source yet.",
-            "Redistribution rights for original game assets are not asserted."
+            "Redistribution rights for original game assets are not asserted.",
+            "The formal 7,947-triangle candidate remains local-only and unused: 20 draw primitives exceed the current hard limit of 6.",
+            "No safe current atlas operation can reduce 20 primitives to 6 without a source-specific multi-channel atlas and skinned-node merge; exact material states have a lower bound of 11."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-priority-original-assets-build-8523149/b612750c438b6ffbdd86a9f9b4a849cfde85fecea532a78b3c4c4acd151f679d.zip",
@@ -55798,7 +55947,7 @@
           "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "priority-scope-extracted-verified",
-          "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
+          "readiness": "complete-body-source-textures-webgl-accepted; formal-decimation-geometry-texture-validated-draw-motion-blocked",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-vfx-audio-reserve",
@@ -55817,7 +55966,7 @@
             "skill-configuration"
           ],
           "assetKindStates": {
-            "model-package": "extracted-and-converted-review-glb",
+            "model-package": "formal-decimation-7947-tri-256px-validated-draw20-motion0-blocked",
             "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
             "skeleton-package": "extracted-159-joint-skin",
             "vfx-package": "extracted-pending-conversion-and-event-binding",
@@ -55964,6 +56113,41 @@
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/isometric.png",
               "bytes": 278604,
               "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+              "bytes": 3196,
+              "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+              "bytes": 3618,
+              "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+              "bytes": 8860,
+              "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+              "bytes": 2718,
+              "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+              "bytes": 1216259,
+              "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+              "bytes": 616849,
+              "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+            },
+            {
+              "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1599,
+              "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
             }
           ],
           "gameConfigurationEvidence": {
@@ -56053,6 +56237,118 @@
               "defaultEligible": false,
               "backendSelectable": false,
               "deployed": false
+            },
+            {
+              "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+              "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+              "name": "小呆／達伊",
+              "character": "小呆／達伊 / Dai",
+              "originalName": "Dai",
+              "nativeCharacterId": "chr0430",
+              "heroIds": [
+                "godie-nbbc",
+                "godie-n01c"
+              ],
+              "sourceGame": "JUMP FORCE",
+              "platform": "Windows (Steam); converted offline on macOS",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "model",
+                "texture",
+                "skeleton"
+              ],
+              "derivedFromCandidateId": "jump-force-native-dai-chr0430-review-v4",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+              "bytes": 2619896,
+              "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+              "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+              "sourceBytes": 76796608,
+              "sourceSha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810",
+              "metrics": {
+                "triangles": 7947,
+                "drawPrimitives": 20,
+                "maxTextureEdge": 256,
+                "skins": 1,
+                "joints": 159,
+                "textures": 24,
+                "clips": 0
+              },
+              "converted": true,
+              "structuralValidationPassed": true,
+              "geometryAdoptionPassed": true,
+              "textureEdgePassed": true,
+              "visualValidationPassed": true,
+              "litPixelContractMaxPct": 5,
+              "maxLitClassificationXorPct": 1.01625,
+              "drawCallLimitPassed": false,
+              "ggdHardPolicyPassed": false,
+              "nativeAnimationCount": 0,
+              "sixStateMotionComplete": false,
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "runtimeDropdownRegistered": false,
+              "runtimeSelectable": false,
+              "deployed": false,
+              "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+              "s3Backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+                "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+                "archiveBytes": 12001636,
+                "fileCount": 30,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "receipt": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                  "bytes": 1599,
+                  "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+                }
+              },
+              "evidence": {
+                "conversion.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+                  "bytes": 3196,
+                  "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+                },
+                "validation.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+                  "bytes": 3618,
+                  "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+                },
+                "draw-call-audit.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+                  "bytes": 8860,
+                  "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+                },
+                "visual-comparison.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+                  "bytes": 2718,
+                  "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+                },
+                "ab-contact-sheet.png": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+                  "bytes": 1216259,
+                  "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+                },
+                "worst-difference-overview.png": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+                  "bytes": 616849,
+                  "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+                },
+                "s3-backup-receipt.json": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                  "bytes": 1599,
+                  "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+                }
+              },
+              "limitations": [
+                "20 draw primitives exceed the current champion hard limit of 6; exact material semantics only collapse to 11 groups.",
+                "The current single-channel atlas supports only 2 of 20 primitives; 16 carry secondary PBR textures, one MASK lens tiles outside [0,1], and one has no base texture.",
+                "Khronos reports 0 errors, 24 IMAGE_FEATURES_UNSUPPORTED warnings from retained PNG metadata, and 10 informational unused tangent/object findings.",
+                "No native animation clips are present; no GGD six-state action set is registered.",
+                "Source-game parent shader parity and production runtime selection remain unverified."
+              ]
             }
           ],
           "backendIntegration": {
@@ -56067,7 +56363,7 @@
             "selectionVerified": false,
             "productionDeployed": false
           },
-          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。 Formal decimation candidate f8f3f1c… reduces 59,768 to 7,947 triangles and 2048px to 256px with rig/material semantics and fixed-view visual acceptance, but remains unused because 20 draw primitives exceed the hard limit 6 and it has zero motion clips.",
           "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
             "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
@@ -56076,7 +56372,9 @@
             "Steam-native VFX and audio packages are not converted or bound to GGD events.",
             "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
             "No model option is registered, selectable or deployed from this source yet.",
-            "Redistribution rights for original game assets are not asserted."
+            "Redistribution rights for original game assets are not asserted.",
+            "The formal 7,947-triangle candidate remains local-only and unused: 20 draw primitives exceed the current hard limit of 6.",
+            "No safe current atlas operation can reduce 20 primitives to 6 without a source-specific multi-channel atlas and skinned-node merge; exact material states have a lower bound of 11."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-priority-original-assets-build-8523149/b612750c438b6ffbdd86a9f9b4a849cfde85fecea532a78b3c4c4acd151f679d.zip",
@@ -190197,7 +190495,7 @@
         "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "priority-scope-extracted-verified",
-        "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
+        "readiness": "complete-body-source-textures-webgl-accepted; formal-decimation-geometry-texture-validated-draw-motion-blocked",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": false,
         "resourceRole": "canonical-game-model-vfx-audio-reserve",
@@ -190216,7 +190514,7 @@
           "skill-configuration"
         ],
         "assetKindStates": {
-          "model-package": "extracted-and-converted-review-glb",
+          "model-package": "formal-decimation-7947-tri-256px-validated-draw20-motion0-blocked",
           "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
           "skeleton-package": "extracted-159-joint-skin",
           "vfx-package": "extracted-pending-conversion-and-event-binding",
@@ -190363,6 +190661,41 @@
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/isometric.png",
             "bytes": 278604,
             "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+            "bytes": 3196,
+            "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+            "bytes": 3618,
+            "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+            "bytes": 8860,
+            "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+            "bytes": 2718,
+            "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+            "bytes": 1216259,
+            "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+            "bytes": 616849,
+            "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+          },
+          {
+            "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1599,
+            "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
           }
         ],
         "gameConfigurationEvidence": {
@@ -190452,6 +190785,118 @@
             "defaultEligible": false,
             "backendSelectable": false,
             "deployed": false
+          },
+          {
+            "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+            "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+            "name": "小呆／達伊",
+            "character": "小呆／達伊 / Dai",
+            "originalName": "Dai",
+            "nativeCharacterId": "chr0430",
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "sourceGame": "JUMP FORCE",
+            "platform": "Windows (Steam); converted offline on macOS",
+            "selectionClass": "canonical-game",
+            "assetKinds": [
+              "model",
+              "texture",
+              "skeleton"
+            ],
+            "derivedFromCandidateId": "jump-force-native-dai-chr0430-review-v4",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+            "bytes": 2619896,
+            "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+            "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+            "sourceBytes": 76796608,
+            "sourceSha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810",
+            "metrics": {
+              "triangles": 7947,
+              "drawPrimitives": 20,
+              "maxTextureEdge": 256,
+              "skins": 1,
+              "joints": 159,
+              "textures": 24,
+              "clips": 0
+            },
+            "converted": true,
+            "structuralValidationPassed": true,
+            "geometryAdoptionPassed": true,
+            "textureEdgePassed": true,
+            "visualValidationPassed": true,
+            "litPixelContractMaxPct": 5,
+            "maxLitClassificationXorPct": 1.01625,
+            "drawCallLimitPassed": false,
+            "ggdHardPolicyPassed": false,
+            "nativeAnimationCount": 0,
+            "sixStateMotionComplete": false,
+            "defaultEligible": false,
+            "backendSelectable": false,
+            "runtimeDropdownRegistered": false,
+            "runtimeSelectable": false,
+            "deployed": false,
+            "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+            "s3Backup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+              "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+              "archiveBytes": 12001636,
+              "fileCount": 30,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true,
+              "receipt": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                "bytes": 1599,
+                "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+              }
+            },
+            "evidence": {
+              "conversion.json": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+                "bytes": 3196,
+                "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+              },
+              "validation.json": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+                "bytes": 3618,
+                "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+              },
+              "draw-call-audit.json": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+                "bytes": 8860,
+                "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+              },
+              "visual-comparison.json": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+                "bytes": 2718,
+                "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+              },
+              "ab-contact-sheet.png": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+                "bytes": 1216259,
+                "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+              },
+              "worst-difference-overview.png": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+                "bytes": 616849,
+                "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+              },
+              "s3-backup-receipt.json": {
+                "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+                "bytes": 1599,
+                "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+              }
+            },
+            "limitations": [
+              "20 draw primitives exceed the current champion hard limit of 6; exact material semantics only collapse to 11 groups.",
+              "The current single-channel atlas supports only 2 of 20 primitives; 16 carry secondary PBR textures, one MASK lens tiles outside [0,1], and one has no base texture.",
+              "Khronos reports 0 errors, 24 IMAGE_FEATURES_UNSUPPORTED warnings from retained PNG metadata, and 10 informational unused tangent/object findings.",
+              "No native animation clips are present; no GGD six-state action set is registered.",
+              "Source-game parent shader parity and production runtime selection remain unverified."
+            ]
           }
         ],
         "backendIntegration": {
@@ -190466,7 +190911,7 @@
           "selectionVerified": false,
           "productionDeployed": false
         },
-        "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。 Formal decimation candidate f8f3f1c… reduces 59,768 to 7,947 triangles and 2048px to 256px with rig/material semantics and fixed-view visual acceptance, but remains unused because 20 draw primitives exceed the hard limit 6 and it has zero motion clips.",
         "limitations": [
           "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
           "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
@@ -190475,7 +190920,9 @@
           "Steam-native VFX and audio packages are not converted or bound to GGD events.",
           "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
           "No model option is registered, selectable or deployed from this source yet.",
-          "Redistribution rights for original game assets are not asserted."
+          "Redistribution rights for original game assets are not asserted.",
+          "The formal 7,947-triangle candidate remains local-only and unused: 20 draw primitives exceed the current hard limit of 6.",
+          "No safe current atlas operation can reduce 20 primitives to 6 without a source-specific multi-channel atlas and skinned-node merge; exact material states have a lower bound of 11."
         ],
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-priority-original-assets-build-8523149/b612750c438b6ffbdd86a9f9b4a849cfde85fecea532a78b3c4c4acd151f679d.zip",

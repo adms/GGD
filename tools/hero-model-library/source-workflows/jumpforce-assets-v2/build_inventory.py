@@ -121,12 +121,13 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     map_path = ROOT / "tools/hero-model-library/source-workflows/jumpforce-steam-streaming-audio-v1/character-map.json"
     policy_path = OUT / "dai-current-policy.json"
     decimation_dir = BASE / "priority-evidence/jump-force-dai-decimation-v1"
-    decimation_paths = [decimation_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "visual-comparison.json", "ab-contact-sheet.png", "worst-difference-overview.png")]
+    decimation_paths = [decimation_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "visual-comparison.json", "ab-contact-sheet.png", "worst-difference-overview.png", "s3-backup-receipt.json")]
     inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *decimation_paths]
     downloads, public_files, voice = read(downloads_path), read(public_files_path), read(voice_path)
     reconciliation, pak, dai, visual = read(reconciliation_path), read(pak_path), read(dai_manifest_path), read(dai_visual_path)
     dai_config, streaming, character_map, policy = read(dai_config_path), read(streaming_evidence_path), read(map_path), read(policy_path)
     decimation, decimation_validation, draw_audit, visual_comparison = [read(path) for path in decimation_paths[:4]]
+    decimation_backup = read(decimation_paths[-1])
     sources = {row["id"]: row for row in downloads["publicSources"]}
     manifests = {row["id"]: row for row in public_files["sources"]}
     voice_groups = {row["id"]: row for row in voice["groups"]}
@@ -150,6 +151,11 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
             or not visual_comparison.get("litPixelContractPassed")
             or draw_audit.get("decision", {}).get("safeCurrentAutomationCanReachSix") is not False):
         raise ValueError("Dai formal decimation evidence lost its bounded pass/block decision")
+    if (decimation_backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or not decimation_backup.get("fullGetVerified")
+            or not decimation_backup.get("allMemberSha256Verified")
+            or "assumed-role/vibe-coding-s3-role/" not in decimation_backup.get("callerArn", "")):
+        raise ValueError("Dai formal decimation S3 backup is absent or invalid")
 
     package_rows = []
     package_groups = {}
@@ -375,6 +381,15 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
                 "runtimeSelectable": False,
                 "productionDeployed": False,
                 "readiness": decimation_validation["readiness"],
+                "s3Backup": {
+                    "s3Uri": decimation_backup["s3Uri"],
+                    "manifestUri": decimation_backup["manifestUri"],
+                    "archiveSha256": decimation_backup["archiveSha256"],
+                    "archiveBytes": decimation_backup["archiveBytes"],
+                    "fileCount": decimation_backup["fileCount"],
+                    "fullGetVerified": decimation_backup["fullGetVerified"],
+                    "allMemberSha256Verified": decimation_backup["allMemberSha256Verified"],
+                },
                 "evidence": [pin(path) for path in decimation_paths],
             },
             "genericPbrVisualReviewAccepted": visual["review"]["genericPbrMaterialBindingAccepted"],

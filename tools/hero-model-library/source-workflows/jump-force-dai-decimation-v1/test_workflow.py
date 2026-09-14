@@ -50,6 +50,8 @@ class DaiDecimationWorkflowTest(unittest.TestCase):
         self.assertEqual(len(candidates), 1)
         self.assertFalse(candidates[0]["ggdHardPolicyPassed"])
         self.assertFalse(candidates[0]["runtimeSelectable"])
+        self.assertTrue(candidates[0]["s3Backup"]["fullGetVerified"])
+        self.assertTrue(candidates[0]["s3Backup"]["allMemberSha256Verified"])
 
 
 if __name__ == "__main__":
