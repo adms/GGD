@@ -57937,7 +57937,8 @@
         "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
       },
       "derivedSourceIds": [
-        "steam-infinity-strash-priority-original-assets-build-local-20240328"
+        "steam-infinity-strash-priority-original-assets-build-local-20240328",
+        "infinity-strash-vearn-post-form-local-audit-v2"
       ],
       "backendIntegration": {
         "required": true,
@@ -62526,6 +62527,207 @@
         "EN680 Baran",
         "EN681 Baran"
       ]
+    },
+    {
+      "id": "infinity-strash-vearn-post-form-local-audit-v2",
+      "target": "Infinity Strash 巴恩變身後／年輕真身來源鑑別（EN801、EN653、EN680、EN681 嚴格分離）",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "ownerEntryIds": [],
+      "url": "local://user-owned-infinity-strash-primary-paks",
+      "uploader": "User-owned local Steam install preserved in the GGD asset library",
+      "format": "derived PAK index audit plus serialized body/blueprint probes",
+      "accessStatus": "local-preserved-user-owned-source",
+      "acquisitionStatus": "source-gap-audited-no-post-transformation-payload-located",
+      "readiness": "identity-separated-post-transformation-model-not-located",
+      "purchaseDecision": "no-purchase-local-source-audit",
+      "defaultEligible": false,
+      "resourceRole": "identity-and-source-gap-evidence",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final",
+      "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "platform": "Windows Steam build represented by the user-owned 2024-03-28 source snapshot",
+      "selectionClass": "canonical-game-source-audit",
+      "discoveryChannel": "local-preserved-primary-paks",
+      "assetKinds": [
+        "source-index",
+        "model-probe",
+        "configuration-probe"
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "files": [
+        {
+          "path": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-post-form-v2/report.json",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/report.json",
+          "bytes": 19107,
+          "sha256": "af894edf5be2307fddbf63712c133428d95b18bf313df45ff177b6f8f32180d7"
+        },
+        {
+          "path": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-post-form-v2/files.json",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/files.json",
+          "bytes": 6809,
+          "sha256": "793eb68e9833e592124c56792e15abfb444b01265dfaaf0483e91a6de0511f9b"
+        }
+      ],
+      "sourceContainers": [
+        {
+          "label": "pakchunk0",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+          "bytes": 8332792957,
+          "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+          "indexedEntries": 181304
+        },
+        {
+          "label": "pakchunk1",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+          "bytes": 4382548320,
+          "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+          "indexedEntries": 12254
+        }
+      ],
+      "indexedEntries": 193558,
+      "criticalProbeFiles": 16,
+      "criticalProbeBytes": 36453566,
+      "rehash": {
+        "EN801": {
+          "files": 902,
+          "bytes": 76493514
+        },
+        "EN653": {
+          "files": 790,
+          "bytes": 54626973
+        }
+      },
+      "identityRecords": [
+        {
+          "nameZh": "巴恩大魔王（老年／變身前）",
+          "originalName": "Vearn",
+          "nativeCharacterId": "EN801",
+          "relationship": "target-pre-transformation-form",
+          "identityEvidencePath": "strash/Content/WwiseAudio/Events/EN_Boss/EN801_Vearn/EN801_Vearn_FOLDER.uasset",
+          "indexedPathCount": 902,
+          "categoryCounts": {
+            "audio": 192,
+            "configuration": 100,
+            "material": 42,
+            "model": 14,
+            "motion": 192,
+            "related-package": 136,
+            "skeleton": 6,
+            "texture": 69,
+            "vfx": 151
+          }
+        },
+        {
+          "nameZh": "密斯特巴恩",
+          "originalName": "MystVearn",
+          "nativeCharacterId": "EN653",
+          "relationship": "separate-character-not-post-transformation-vearn",
+          "identityEvidencePath": "strash/Content/WwiseAudio/Events/EN_Boss/EN653_MystVearn/Atk01_kugutsusyo/Atk01_kugutsusyo_FOLDER.uasset",
+          "indexedPathCount": 790,
+          "categoryCounts": {
+            "audio": 190,
+            "configuration": 200,
+            "material": 18,
+            "model": 4,
+            "motion": 172,
+            "related-package": 118,
+            "skeleton": 4,
+            "texture": 24,
+            "vfx": 60
+          }
+        },
+        {
+          "nameZh": "巴蘭",
+          "originalName": "Baran",
+          "nativeCharacterId": "EN680",
+          "relationship": "separate-character-not-vearn",
+          "identityEvidencePath": "strash/Content/WwiseAudio/Events/EN_Boss/EN680_Baran/EN680_Baran_FOLDER.uasset",
+          "indexedPathCount": 1165,
+          "categoryCounts": {
+            "audio": 250,
+            "configuration": 180,
+            "material": 34,
+            "model": 26,
+            "motion": 182,
+            "related-package": 364,
+            "skeleton": 10,
+            "texture": 57,
+            "vfx": 62
+          }
+        },
+        {
+          "nameZh": "龍魔人巴蘭",
+          "originalName": "Ryu Baran / Baran_ma",
+          "nativeCharacterId": "EN681",
+          "relationship": "separate-baran-form-not-vearn",
+          "identityEvidencePath": "strash/Content/Strash/LevelDesign/Spawner/AISpawnerData/BG17_FM0007_FG16_ADDBOSS0018/BG17_FM0008_FG19_ADDBOSS0012_StrashAISpawner_W2_EN681_RyuBaran.uasset",
+          "indexedPathCount": 1216,
+          "categoryCounts": {
+            "audio": 214,
+            "configuration": 184,
+            "material": 32,
+            "model": 20,
+            "motion": 232,
+            "related-package": 410,
+            "skeleton": 4,
+            "texture": 36,
+            "vfx": 84
+          }
+        }
+      ],
+      "result": {
+        "preTransformationOldVearnNativeBodyLocated": true,
+        "postTransformationYoungTrueBodyLocated": false,
+        "convertedPostTransformationModelCount": 0,
+        "postTransformationRuntimeOptionCount": 0,
+        "status": "identity-separated-source-gap-confirmed",
+        "nextAction": "retain post-transformation Vearn as not-located and acquire an explicitly identified licensed source"
+      },
+      "acquiredAssetPayloadCount": 0,
+      "modelCandidates": [],
+      "backendIntegration": {
+        "required": true,
+        "state": "blocked-post-transformation-source-not-located",
+        "registered": false,
+        "selectable": false,
+        "selectionVerified": false,
+        "productionDeployed": false
+      },
+      "verification": "Both complete PAKs were rehashed, all 193,558 indexed paths were searched, 1,692 existing EN801/EN653 raw packages were rehashed, and 16 EN801/EN653/EN680/EN681 body/blueprint probe files were extracted with per-file SHA-256. Only EN801/00 exists in the EN8xx body set; no explicitly named young/true/post-transformation Vearn package was found.",
+      "gaps": [
+        "Post-transformation/young true-body Vearn model, textures, skeleton and native motions were not located.",
+        "No post-transformation VFX, audio or voice payload can be assigned without an explicit identity source."
+      ],
+      "limitations": [
+        "This audit establishes the state of the two preserved primary PAKs and existing local acquisition index only.",
+        "A zero result does not prove that no separately licensed community or other-game model exists.",
+        "No new post-transformation model was found, so conversion, validation, dropdown registration and deployment remain zero.",
+        "The EN680/EN681 probes are identity evidence only and are not conversion or hero-registration work."
+      ],
+      "notAliases": [
+        "MystVearn",
+        "密斯特巴恩",
+        "Baran",
+        "巴蘭",
+        "RyuBaran",
+        "龍魔人巴蘭"
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-post-form-local-audit-v2/4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-post-form-local-audit-v2/4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5.files.json",
+        "bytes": 15547376,
+        "sha256": "4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5",
+        "fileCount": 18,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "allMemberSha256Verified": true,
+        "s3ReadbackVerified": true,
+        "localUnchanged": true,
+        "s3Use": "backup-only-not-runtime-entry"
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
