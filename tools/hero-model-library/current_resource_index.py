@@ -340,13 +340,13 @@ def build(git_link_root=ROOT):
         or jumpforce.get('summary',{}).get('runtimeSelectableAssets')!=0
         or jumpforce_review.get('schema')!='ggd.jumpforce-audio-listening-review-groups@1'
         or jumpforce_review.get('counts',{}).get('approvedForRuntimeBinding')!=0
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('sha256')!='8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c'
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('gitPath')!='content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('sha256')!='53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('gitPath')!='content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb'
         or jumpforce_entry.get('daiCandidateStatus',{}).get('triangles')!=7930
         or jumpforce_entry.get('daiCandidateStatus',{}).get('drawPrimitives')!=6
         or jumpforce_entry.get('daiCandidateStatus',{}).get('animations')!=0
         or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerPublicationAuthorized') is not True
-        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerVisualQualityReview')!='pending-new-six-draw-render-review'
+        or jumpforce_entry.get('daiCandidateStatus',{}).get('ownerVisualQualityReview')!='pending-owner-v5-visual-review'
         or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeRegistered') is not False
         or jumpforce_entry.get('daiCandidateStatus',{}).get('runtimeSelectable') is not False
         or jumpforce_entry.get('daiCandidateStatus',{}).get('productionDeployed') is not False):

@@ -1,0 +1,66 @@
+{
+  "schema": "ggd.jump-force-dai-material-faithful-six-draw@1",
+  "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v5",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "input": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "atlasPlan": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/atlas/atlas-plan.json",
+    "bytes": 2959,
+    "sha256": "6fd46ba5fb085697cc5230f0c6b498937acadee4a54c27789e8bdc1b2dc76653"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-a/dai-chr0430-six-draw.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-b/dai-chr0430-six-draw.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+  },
+  "byteIdenticalRebuild": true,
+  "observed": {
+    "triangles": 7930,
+    "drawPrimitives": 6,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "animations": 0
+  },
+  "tools": {
+    "builder": {
+      "bytes": 8792,
+      "sha256": "55e49b5a1e47badf7ed07a522356408cf0628c642b4e293c15835a1751001b44",
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/build_six_draw_v5.py"
+    },
+    "pillow": "12.3.0"
+  },
+  "preservation": {
+    "sourceMeshObjects": 20,
+    "mergedOpaqueMaterialPrimitives": 15,
+    "preservedEyeLensHairGlassPrimitives": 5,
+    "damageMeshesRemoved": false,
+    "perMaterialAtlasTiles": 15,
+    "representativeTextureReuse": false,
+    "v3RejectedExperiment": "V4 V-shift produced visible full-body material corruption and is not a candidate"
+  },
+  "states": {
+    "geometryTargetPassed": true,
+    "drawCallLimitPassed": true,
+    "textureEdgePassed": true,
+    "visualReview": "pending-v5-render-review",
+    "animationBinding": "blocked-no-reviewed-motion",
+    "backendOptionRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}
