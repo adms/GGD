@@ -101,8 +101,14 @@ def validate_manifest(manifest: dict, evidence: dict, receipt: dict) -> list[dic
             raise ValueError("S3 archive manifest has an unsafe or incomplete member record")
         paths.append(path)
         total_bytes += size
-    if paths != sorted(paths) or len(paths) != len(set(paths)):
-        raise ValueError("S3 archive manifest member paths are not deterministic and unique")
+    # ``backup_intake.py`` freezes the inventory in pathlib's deterministic
+    # path order.  That order is not necessarily the bytewise string order
+    # (for example ``es`` and ``es-419``), so a second sort here would reject
+    # a valid frozen manifest.  Member identity is protected by the manifest
+    # SHA records and the full tar readback; uniqueness is the invariant this
+    # promotion gate needs to enforce.
+    if len(paths) != len(set(paths)):
+        raise ValueError("S3 archive manifest member paths are not unique")
     if total_bytes != EXPECTED_BYTES or local.get("fileCount") != EXPECTED_FILES or local.get("bytes") != EXPECTED_BYTES:
         raise ValueError("S3 archive manifest totals differ from the verified local mirror")
     if receipt.get("fileCount") != len(rows):
@@ -136,6 +142,7 @@ def validate_completed_receipt(receipt_path: Path, evidence: dict) -> dict:
         receipt.get("source") != evidence["localMirror"]["absoluteRoot"]
         or receipt.get("fullGetVerified") is not True
         or receipt.get("allMemberSha256Verified") is not True
+        or receipt.get("manifestS3ReadbackVerified") is not True
         or receipt.get("localUnchanged") is not True
         or not isinstance(receipt.get("archiveBytes"), int)
         or receipt["archiveBytes"] <= 0
@@ -148,6 +155,20 @@ def validate_completed_receipt(receipt_path: Path, evidence: dict) -> dict:
         raise ValueError("full S3 readback bytes no longer match the frozen archive")
     manifest = load_json(manifest_path)
     rows = validate_manifest(manifest, evidence, receipt)
+    manifest_readback = receipt.get("manifestS3Readback")
+    if not isinstance(manifest_readback, dict):
+        raise ValueError("S3 receipt has no verified manifest readback")
+    try:
+        manifest_readback_path = Path(manifest_readback["absolutePath"]).resolve()
+    except (KeyError, TypeError) as error:
+        raise ValueError("S3 receipt manifest readback path is invalid") from error
+    if (
+        not manifest_readback_path.is_file()
+        or manifest_readback.get("bytes") != manifest_path.stat().st_size
+        or manifest_readback.get("sha256") != sha256(manifest_path)
+        or sha256(manifest_readback_path) != sha256(manifest_path)
+    ):
+        raise ValueError("S3 manifest readback bytes no longer match the frozen manifest")
     return {
         "uri": receipt["s3Uri"],
         "manifestUri": receipt["manifestUri"],
@@ -156,8 +177,10 @@ def validate_completed_receipt(receipt_path: Path, evidence: dict) -> dict:
         "fileCount": len(rows),
         "fullGetVerified": True,
         "allMemberSha256Verified": True,
+        "manifestS3ReadbackVerified": True,
         "localUnchanged": True,
         "manifest": file_metadata(manifest_path),
+        "manifestS3Readback": file_metadata(manifest_readback_path),
         "receipt": file_metadata(receipt_path),
     }
 
@@ -179,6 +202,22 @@ def receipt_matches_evidence(evidence: dict, receipt_summary: dict) -> None:
     for key, value in receipt_summary.items():
         if evidence["s3"].get(key) != value:
             raise ValueError("Git S3 evidence no longer matches the completed receipt: " + key)
+
+
+def upgrade_verified_evidence(evidence: dict, receipt_summary: dict) -> dict:
+    """Add newer receipt evidence without changing any verified prior value."""
+    candidate = copy.deepcopy(evidence)
+    if candidate.get("s3", {}).get("status") != S3_READBACK_VERIFIED:
+        raise ValueError("existing JUMP FORCE S3 status is not verified")
+    for key, value in receipt_summary.items():
+        # A regenerated receipt is expected to change its own local metadata
+        # after an additive verification step.  Archive identity and every
+        # other already-published assertion remain immutable.
+        if key in candidate["s3"] and candidate["s3"][key] != value and key != "receipt":
+            raise ValueError("existing JUMP FORCE verified S3 value cannot be overwritten: " + key)
+        candidate["s3"][key] = value
+    validate_evidence(candidate, load_json(AUTHORITY))
+    return candidate
 
 
 def refresh_generated(repo: Path, workspace: Path, *, check: bool) -> None:
@@ -206,8 +245,7 @@ def main() -> int:
     if evidence.get("s3", {}).get("status") == S3_PENDING:
         expected = promoted_evidence(evidence, receipt_summary)
     elif evidence.get("s3", {}).get("status") == S3_READBACK_VERIFIED:
-        receipt_matches_evidence(evidence, receipt_summary)
-        expected = evidence
+        expected = upgrade_verified_evidence(evidence, receipt_summary)
     else:
         raise ValueError("existing JUMP FORCE S3 status is not promotable")
     if args.check:

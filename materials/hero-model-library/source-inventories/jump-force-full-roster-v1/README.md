@@ -5,7 +5,7 @@
 - 高信度原生 ID：63 個，分 9 批。
 - 第一批就緒收據：六顆 authority PAK 已再次 live SHA 驗證，14,031 筆 member 關係待抽；狀態 `blocked-awaiting-owner-or-runtime-key-injection`（key `not-supplied`），不可算作已抽取。
 - 選定檔案關係：86,238 筆；逐檔計畫在 `selected-paths.jsonl.gz`。
-- 本機留底：3,466 files／23,856,777,652 bytes；PAK authority 6/6，S3 pending。
+- 本機留底：3,466 files／23,856,777,652 bytes；PAK authority 6/6，S3 s3-readback-verified。
 - 目前狀態：鏡像已驗證；尚未抽取角色 payload、轉換、建立後台選項或部署。
 - 身份範圍：已確認角色 family；服裝、形態、NPC 身份仍須在抽取後逐件核對。
 - 動作範圍：目前定位的是 `AnimBP`／`*_anim` 依賴入口；不能把它們直接算成已取得原生動作剪輯。

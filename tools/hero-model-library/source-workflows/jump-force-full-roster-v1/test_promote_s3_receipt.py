@@ -19,8 +19,13 @@ SPEC.loader.exec_module(MOD)
 
 class PromoteS3ReceiptTest(unittest.TestCase):
     def pending_evidence(self):
-        return json.loads((HERE.parents[3] / "materials/hero-model-library/source-inventories/"
-                           "jump-force-full-roster-v1/local-mirror-evidence.json").read_text())
+        evidence = json.loads((HERE.parents[3] / "materials/hero-model-library/source-inventories/"
+                               "jump-force-full-roster-v1/local-mirror-evidence.json").read_text())
+        # Keep the promotion tests independent of the repository's current
+        # state: the real receipt may already have promoted the live evidence.
+        evidence["status"] = "verified-local"
+        evidence["s3"] = {"status": "pending", "uri": None}
+        return evidence
 
     def completed_receipt(self, root: Path, evidence: dict):
         payload_dir = root / "backup" / "receipt-sha"
@@ -46,6 +51,8 @@ class PromoteS3ReceiptTest(unittest.TestCase):
         }
         manifest_path = payload_dir / "manifest.json"
         manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        manifest_readback = payload_dir / "manifest-s3-readback.json"
+        manifest_readback.write_bytes(manifest_path.read_bytes())
         receipt = {
             "schema": MOD.RECEIPT_SCHEMA,
             "s3Uri": uri,
@@ -55,6 +62,12 @@ class PromoteS3ReceiptTest(unittest.TestCase):
             "fileCount": MOD.EXPECTED_FILES,
             "fullGetVerified": True,
             "allMemberSha256Verified": True,
+            "manifestS3ReadbackVerified": True,
+            "manifestS3Readback": {
+                "absolutePath": str(manifest_readback),
+                "bytes": manifest_readback.stat().st_size,
+                "sha256": hashlib.sha256(manifest_readback.read_bytes()).hexdigest(),
+            },
             "localUnchanged": True,
             "source": evidence["localMirror"]["absoluteRoot"],
             "localArchive": str(archive),
@@ -114,6 +127,24 @@ class PromoteS3ReceiptTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "3,466-file mirror"):
                 MOD.validate_completed_receipt(receipt_path, evidence)
 
+    def test_accepts_pathlib_inventory_order_when_member_names_are_unique(self):
+        """Pathlib ordering may differ from a bytewise string sort (es/es-419)."""
+        evidence = self.pending_evidence()
+        with tempfile.TemporaryDirectory() as temp:
+            receipt_path = self.completed_receipt(Path(temp), evidence)
+            receipt = json.loads(receipt_path.read_text())
+            manifest_path = Path(receipt["manifest"])
+            manifest = json.loads(manifest_path.read_text())
+            manifest["files"][0]["path"] = "JUMP_FORCE/Localization/es/Game.locres"
+            manifest["files"][1]["path"] = "JUMP_FORCE/Localization/es-419/Game.archive"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            manifest_readback = Path(receipt["manifestS3Readback"]["absolutePath"])
+            manifest_readback.write_bytes(manifest_path.read_bytes())
+            receipt["manifestS3Readback"]["bytes"] = manifest_readback.stat().st_size
+            receipt["manifestS3Readback"]["sha256"] = hashlib.sha256(manifest_readback.read_bytes()).hexdigest()
+            receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+            self.assertEqual(MOD.validate_completed_receipt(receipt_path, evidence)["fileCount"], 3466)
+
     def test_existing_verified_evidence_cannot_be_repromoted(self):
         evidence = self.pending_evidence()
         with tempfile.TemporaryDirectory() as temp:
@@ -122,6 +153,23 @@ class PromoteS3ReceiptTest(unittest.TestCase):
         verified = MOD.promoted_evidence(evidence, summary)
         with self.assertRaisesRegex(ValueError, "cannot be overwritten"):
             MOD.promoted_evidence(verified, summary)
+
+    def test_verified_evidence_can_add_new_receipt_proof_but_not_change_values(self):
+        evidence = self.pending_evidence()
+        with tempfile.TemporaryDirectory() as temp:
+            receipt = self.completed_receipt(Path(temp), evidence)
+            summary = MOD.validate_completed_receipt(receipt, evidence)
+        verified = MOD.promoted_evidence(evidence, summary)
+        old_summary = dict(summary)
+        old_summary.pop("manifestS3ReadbackVerified")
+        old_summary.pop("manifestS3Readback")
+        old_verified = MOD.promoted_evidence(evidence, old_summary)
+        upgraded = MOD.upgrade_verified_evidence(old_verified, summary)
+        self.assertTrue(upgraded["s3"]["manifestS3ReadbackVerified"])
+        changed = dict(summary)
+        changed["archiveSha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "cannot be overwritten"):
+            MOD.upgrade_verified_evidence(old_verified, changed)
 
     def test_check_mode_requires_the_receipt_and_checks_generated_outputs(self):
         evidence = self.pending_evidence()

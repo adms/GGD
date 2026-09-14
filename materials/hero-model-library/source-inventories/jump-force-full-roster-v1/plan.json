@@ -15,13 +15,13 @@
     "rawGameRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
     "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
     "completionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
-    "stateAtPlanGeneration": "verified-local",
+    "stateAtPlanGeneration": "verified-local-and-s3-readback-verified",
     "evidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
-    "evidenceSha256": "b63f440fc5fef7e4355f6dd38ab932cb92f8cbdd1eff0c25a1f29d8add2e5754",
+    "evidenceSha256": "ffd5d4b24b973c66eac8cf6e111571f56c1ce072f2b810c50e431cdb1cb38629",
     "fileCount": 3466,
     "bytes": 23856777652,
     "verifiedPakCount": 6,
-    "s3Status": "pending",
+    "s3Status": "s3-readback-verified",
     "lv99ShareRequired": false
   },
   "inputs": {
@@ -106,7 +106,7 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py",
-      "sha256": "f7f3c9e88ac879f11bfe438f6fca4a5cf6d6f88c6ccea4005afff4b8fd5298de"
+      "sha256": "6dbf173451ac74f6f0e460da4633bc7c4aea43c6da36c733dfbef376fcd88f98"
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",

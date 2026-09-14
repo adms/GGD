@@ -21,7 +21,7 @@ class UpdateFourDayReportTest(unittest.TestCase):
         self.assertIn("3,466 檔／23,856,777,652 bytes", generated)
         self.assertIn("6/6", generated)
         self.assertIn("不再需要 LV99 分享", generated)
-        self.assertIn("S3 狀態為 `pending`", generated)
+        self.assertIn("S3 狀態為 `s3-readback-verified`", generated)
         self.assertIn("`mirrorPak=6/6`", generated)
         self.assertIn("`extracted=0`", generated)
         self.assertIn("`convertedModel=0`", generated)
