@@ -83,6 +83,7 @@ import { zModelVersionCommand } from "@ggd/shared/content/schema/championModelVe
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 import { HeroCatalogHistory } from "./catalogHistory";
 import { CatalogHeroRoutes } from "./catalogHeroRoutes";
+import { registerHeroBodyModelRoutes } from "./modelClaims";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -529,6 +530,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   });
 
   // ---------- reads ----------
+  registerHeroBodyModelRoutes(app, root); // GH#1188：可挑的英雄身體 ＋ 待認領
   app.get("/content-api/manifest", async (_req, reply) => {
     const p = join(root, "manifest.json");
     if (!existsSync(p)) return err(reply, 404, "manifest.json not found — run content:build");

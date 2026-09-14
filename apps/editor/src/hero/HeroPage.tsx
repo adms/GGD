@@ -115,7 +115,12 @@ export function HeroPage() {
           state.commit({ ...value, project: next, ...(value.modelDraft ? { modelDraft: { ...value.modelDraft, active: false } } : {}) });
         }}>
           {!catalog.modelIds.includes(project.presentation.modelKey) ? <option value={project.presentation.modelKey} disabled>{project.presentation.modelKey}（原值，目前目錄未支援）</option> : null}
-          {catalog.modelIds.map((id) => <option key={id} value={id}>{project.presentation.uploadedModel && id === project.presentation.modelKey ? "已上傳的英雄模型" : id}</option>)}</select></label>{lockButton("presentation", "presentation.modelKey")}
+          {[false, true].map((unclaimed) => {
+            // GH#1188：下載好了、還沒有任何英雄卡認領的模型照樣可選，但另起一組標成「待認領」。
+            const ids = catalog.modelIds.filter((id) => (catalog.unclaimedModelIds ?? []).includes(id) === unclaimed);
+            const options = ids.map((id) => <option key={id} value={id}>{project.presentation.uploadedModel && id === project.presentation.modelKey ? "已上傳的英雄模型" : unclaimed ? `${id}（待認領）` : id}</option>);
+            return !unclaimed ? options : ids.length ? <optgroup key="unclaimed" label={`待認領：已下載、還沒有英雄卡（${ids.length}）`}>{options}</optgroup> : null;
+          })}</select></label>{lockButton("presentation", "presentation.modelKey")}
         {project.presentation.modelProvenance ? <aside className="hero-model-source" aria-label="模型實際來源">
           <strong>{{ exact: "同角色素材", alternate: "同角色版本互通", "style-proxy": "近似風格替代" }[project.presentation.modelProvenance.relationship]}</strong>
           <p>{project.presentation.modelProvenance.sourceCharacter} · {project.presentation.modelProvenance.sourceWork}</p>

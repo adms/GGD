@@ -43,4 +43,8 @@ it("bundles every pickable document template plus the offline preview inputs", (
   //    ⭐ 後台下拉早就濾掉了（`contentApi.ts` 的 `!entry.id.startsWith("version.body.")`）
   //    ⇒ 這一條讓**兩個面對同一個問題給同一個答案**。
   expect(bundledHeroCatalog.modelIds.filter((id) => id.startsWith("version.body."))).toEqual([]);
+  // ⭐ GH#1188：待認領那一桶真的送到選單資料上，而且只是可挑清單的子集（⛔ FX／停用不會被標成待認領）。
+  const unclaimed = bundledHeroCatalog.unclaimedModelIds ?? [];
+  expect(unclaimed.length).toBeGreaterThan(0);
+  expect(unclaimed.every((id) => bundledHeroCatalog.modelIds.includes(id) && !bodies.has(id))).toBe(true);
 });

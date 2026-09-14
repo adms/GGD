@@ -3,7 +3,7 @@ import { ContentLoader, HttpContentSource, HERO_SIMULATION_COLLECTIONS, type Tem
 import { zTemplateDoc } from "@ggd/shared/content/schema/template";
 import type { VfxSubtypeDoc } from "@ggd/shared/content/schema/vfxSubtype";
 import { pickableTemplateIds } from "../forge/typeCatalog";
-import { heroBodyModelIds } from "@ggd/shared/content/heroForge/bodyModels";
+import { heroBodyModels } from "@ggd/shared/content/heroForge/bodyModels";
 import type { HeroPackageCatalog } from "@ggd/shared/content/import/heroPackage";
 
 // Shipped catalog is available even before this device has a network session.
@@ -17,12 +17,18 @@ export interface HeroCatalog {
   projectiles: ProjectileDoc[];
   vfxSubtypes?: VfxSubtypeDoc[];
   modelIds: string[];
+  /** `modelIds` 裡還沒有任何英雄卡認領的（GH#1188；判準在 `heroBodyModels`）。 */
+  unclaimedModelIds?: string[];
   simulationDocuments: Array<[string, Record<string, unknown>]>;
   source: "local-api" | "bundled";
   validatedUploadedModel?: HeroPackageCatalog["validatedUploadedModel"];
 }
 export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDocuments"], models: readonly Record<string, unknown>[], source: HeroCatalog["source"]): HeroCatalog {
   const docs = (collection: string) => simulationDocuments.filter(([key]) => key.startsWith(`${collection}/`)).map(([, document]) => document);
+  // A new catalog-approved body does not require a fake official champion.
+  // Unmarked FX/props remain unavailable, matching Main's import rule.
+  // GH#1188：同一次掃描帶出「還沒有任何英雄卡認領」的那一桶，選單標成待認領。
+  const bodies = heroBodyModels([...simulationDocuments, ...models.map((model) => [`models/${model.id}`, model] as const)]);
   return { simulationDocuments, source, configs: docs("config"),
     ...(import.meta.env.VITE_HERO_GENERATOR_VERSION ? { generatorVersion: String(import.meta.env.VITE_HERO_GENERATOR_VERSION) } : {}),
     templates: docs("ability-templates").flatMap((value) => {
@@ -31,9 +37,7 @@ export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDo
     }),
     projectiles: docs("projectiles") as unknown as ProjectileDoc[],
     vfxSubtypes: docs("vfx-subtypes") as unknown as VfxSubtypeDoc[],
-    // A new catalog-approved body does not require a fake official champion.
-    // Unmarked FX/props remain unavailable, matching Main's import rule.
-    modelIds: heroBodyModelIds([...simulationDocuments, ...models.map((model) => [`models/${model.id}`, model] as const)]),
+    modelIds: bodies.ids, unclaimedModelIds: bodies.unclaimed,
   };
 }
 const simulationDocuments: HeroCatalog["simulationDocuments"] = Object.entries(simulationFiles).flatMap(([path, raw]) => {
