@@ -22,11 +22,15 @@
  *    ＝ 付完的班永遠留在佇列裡，每一次施法都讓 `delayedSystem` 的迴圈更長一點 ——
  *      **逐字就是 owner 描述的那個症狀**。
  *      → ① 紅：「第 2 回合開打時還帶著上一回合的排程: expected 8 to be 0」
+ *  · ⭐ GH#1241（那顆種子的 bot 不放召喚物 ⇒ ② 對它是空的，第二條自己放出貨的 `summon`）：拿掉 `concludeCombat` 的 `endCombatSummons` → 紅「第 1 回合結算後召喚物還在場上: expected 2 to be +0」
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { CONTENT } from "../testkit/contentFixtures";
+import { Abilities } from "@ggd/shared/sim/content/registry";
+import { runEffects } from "@ggd/shared/sim/effects/effectRunner";
+import type { EffectDef } from "@ggd/shared/sim/effects/effect";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { resolveArenaRules } from "./arenaRules";
 
@@ -67,5 +71,25 @@ describe("每回合的負載不隨回合數成長（sim）", () => {
     expect(round, "這一場沒有打滿多回合").toBeGreaterThan(2);
     expect(peakQueued, "整場一筆排程都沒有 —— ① 是空的").toBeGreaterThan(0);
     expect(peakMobs, "整場一隻殭屍都沒生 —— ② 沒被壓到").toBeGreaterThan(0);
+  }, 300_000);
+
+  it("★ 召喚物不跨回合：出貨內容裡 durationSec 最長的 summon 走出貨的 runEffects，結算那一 tick 收乾淨", () => {
+    const shipped: { e: EffectDef & { durationSec?: number }; origin: string }[] = [];
+    for (const a of Abilities.all()) JSON.stringify(a.effects, (_k, v) => { if (v?.kind === "summon") shipped.push({ e: v, origin: `ability:${a.id}` }); return v; });
+    const { e, origin } = shipped.reduce((b, s) => ((s.e.durationSec ?? Infinity) > (b.e.durationSec ?? Infinity) ? s : b));
+    const ctl = new MatchController("summon-4242", 4242, allBots(), undefined, undefined, resolveArenaRules());
+    const w = ctl.world;
+    let carried = 0;
+    for (let n = 0; n < 400_000 && ctl.phase.phase !== "matchEnd"; n++) {
+      const { round, phase } = ctl.phase;
+      const caster = [...w.champion.keys()].find((id) => w.health.get(id)?.alive && !w.settledZones.has(w.transform.get(id)!.zone));
+      if (phase === "combat" && w.summon.size === 0 && caster !== undefined) runEffects([e], { world: w, caster, rank: 1, targets: [], point: w.transform.get(caster)!.pos, origin, rng: w.rng });
+      const before = w.summon.size;
+      ctl.tick();
+      if (phase !== "combat" || ctl.phase.phase === "combat") continue;
+      carried += before > 0 ? 1 : 0;
+      expect(w.summon.size, `第 ${round} 回合結算後召喚物還在場上`).toBe(0);
+    }
+    expect(carried, "沒有任何一回合帶著召喚物進結算 —— 這一條是空的").toBeGreaterThan(0);
   }, 300_000);
 });

@@ -456,6 +456,28 @@ export function summonSystem(world: SimWorld): void {
 }
 
 /**
+ * 回合結束：場上每一具召喚物收走（GH#1241）—— `endCombatMobs` 那一族的第九支。
+ *
+ * owner 2026-08-19（GH#429，逐字）：
+ * > 「回合清理的分析 你還少了召喚物 以及技能殘留效果 …（除非有特別寫跨回合）」
+ *
+ * ⛔ 為什麼在此之前會漏：{@link summonSystem} 只認三個結束條件（死亡／到期／主人死），
+ * ⛔ 而回合邊界**三個都不成立** —— 贏家的主人活著、`expiresAtTick` 是絕對 tick
+ * （`durationSec` 比結算＋中場長的那一具就活得過去；缺席更是 +Infinity）。
+ * 而回合清理是 `concludeCombat` 裡**逐類手列**的 `endCombat*`，沒有人替召喚物補上這一行。
+ *
+ * ⭐ 規則對**全部**召喚物一視同仁（⛔ 沒有逐 id／逐技能的例外）。owner 括號裡的
+ * 「特別寫跨回合」今天出貨 0 支；真的有一支要寫時，它是 `summon` schema 的一格
+ * 欄位（進 fieldAdoption 棘輪），⛔ 不是這裡的一個 if。
+ *
+ * 靜默 destroy、⛔ 不發 `summonDespawn`：與同族八支一致（殭屍／守衛／金幣⋯回合結束
+ * 都是靜默收走），實體從 snapshot 消失本身就是客戶端的訊號。
+ */
+export function endCombatSummons(world: SimWorld): void {
+  for (const id of [...world.summon.keys()].sort((a, b) => a - b)) world.destroy(id);
+}
+
+/**
  * The team a summon fights on. Exported so the handler and any future caller
  * resolve 歸屬 the same way — `"neutral"` is the SAME sentinel MONSTER team the
  * zombies use, which is what makes a hostile summon an enemy to all four player
