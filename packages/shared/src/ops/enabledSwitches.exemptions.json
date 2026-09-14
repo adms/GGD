@@ -48,6 +48,28 @@
       ]
     },
     {
+      "switch": "content/config/balance-anchors.json:enabled",
+      "kind": "generator-consumer",
+      "reason": "消費端是**兩支產生器**，⛔ 不是 runtime（`7be8705ee`，owner 2026-09-12「這些常數是**可被編輯的設定檔** 而非寫死」）：`tools/balance-anchors/gen.ts`（`anchors:build`）與 `tools/stat-caps/gen_stat_caps.ts`（`statcaps:build`）讀這份檔，`d.enabled === false` ⇒ 錨點／屬性上限退回取名單中位並印一行明說。runtime 讀的是它們的**產物**（`packages/shared/src/content/balanceAnchorsDerived.ts` · `content/config/damage-tiers.json` · `content/config/stat-caps.json`），而 `tools/` 不在掃描器的四個出貨根裡。⚠️ 代價要說清楚：後台翻這一格要等下一次 `skills:sync`（鏈上有 `anchors:build`／`statcaps:build`）重生成並出貨才生效 —— 與 `skill-normalize` 同一個形狀。",
+      "refute": "兩支產生器不再讀 `d.enabled`（下面的 evidence 會失敗）、或這一格搬進 runtime 有了 production 讀端（閘②會要求刪列），這一列就不成立。",
+      "evidence": [
+        {
+          "file": "tools/balance-anchors/gen.ts",
+          "mustContain": [
+            "content/config/balance-anchors.json",
+            "if (d.enabled === false)"
+          ]
+        },
+        {
+          "file": "tools/stat-caps/gen_stat_caps.ts",
+          "mustContain": [
+            "content/config/balance-anchors.json",
+            "d.enabled === false"
+          ]
+        }
+      ]
+    },
+    {
       "switch": "content/config/asset-downloads.json:enabled",
       "kind": "feature-not-wired",
       "reason": "⭐ GH#1124 第 4 項。消費端 `needsSignedUrl()`（apps/client/src/content/assetVersion.ts）已經寫好而**還沒有人呼叫** —— ⭐ 呼叫端是 **GH#1125** 的三層快取（記憶體 → Cache Storage → 簽署網址），那是另一張票。⚠️ ⭐ 而它今天就算接上也**跑不通**：2026-09-09 在正式站 mini 實測，`aws` 指令不存在、`~/.aws` 不存在 ⇒ 後端簽不出任何網址；bucket 也沒有任何 CORS（`OPTIONS` 預檢回 403）⇒ 瀏覽器 fetch 會被擋。⛔ 兩個都是 owner 的動作（憑證是安全決策；CORS 他明說「目前授權未包含修改」）。⇒ ⭐ 這一格**先把線接好**，⛔ 而不是等憑證到位那天再從頭做四個住處。",
