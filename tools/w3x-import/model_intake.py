@@ -29,10 +29,12 @@
 
 ⛔ `--merge` **會就地改檔** ⇒ 它一定先把原檔複製到 `docs/legacy/_overwrites/`。
 """
-import argparse, json, os, shutil, struct, subprocess, sys, tempfile, time
+import argparse, hashlib, json, os, re, shutil, struct, subprocess, sys, tempfile, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DEFAULT_SCAN = os.path.join(ROOT, "content", "assets", "models")
+#: ⚠️ `--content` 只給量尺自證的測試換一棵假內容樹（作者／CI 才會轉 ⇒ 旗標，⛔ 不進後台）。
+CONTENT = os.path.join(ROOT, "content")
+DEFAULT_SCAN = os.path.join(CONTENT, "assets", "models")
 # ⭐ runtime 容量診斷，與 `HERO_MODEL_BUDGET` 同步。28k 是較寬的 renderer
 #    safety ceiling，⛔ 不能代替 hero 正式採用規則；後者動態讀 ADOPTION_POLICY_JSON。
 #    改 runtime 上限時兩邊仍要一致，而 `--check` 會由 _budget_drift 擋漂移。
@@ -52,32 +54,208 @@ def hero_body_glbs() -> set:
     ⛔ 對它們喊「沒綁骨架」會讓這條檢查對 641 顆裡的大多數變成噪音 ——
     而一條一直喊的警報沒有人讀（本 repo 已記錄過這個形狀）。
     """
-    out = set()
-    d = os.path.join(ROOT, "content", "models")
-    if not os.path.isdir(d):
-        return out
-    for name in os.listdir(d):
-        if not name.endswith(".json") or name.startswith("_"):
-            continue
-        try:
+    return {os.path.abspath(os.path.join(CONTENT, doc["glbPath"]))
+            for doc in _json_docs("models") if doc.get("heroBody") and doc.get("glbPath")}
+
+
+def _json_docs(collection: str) -> list:
+    """⛔ 讀壞一份就停：跳過一份英雄卡＝它的預設身體可能被靜默分進 (c)（fail-open 而沒有人喊）。"""
+    d = os.path.join(CONTENT, collection)
+    out = []
+    for name in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if name.endswith(".json") and not name.startswith("_"):
             with open(os.path.join(d, name), encoding="utf-8") as f:
-                doc = json.load(f)
-        except Exception:
-            continue
-        if doc.get("heroBody") and doc.get("glbPath"):
-            out.add(os.path.abspath(os.path.join(ROOT, "content", doc["glbPath"])))
+                out.append(json.load(f))
     return out
 
 
+# ═══════════════════════════════════════════════════════════════════════════
+#  ⭐ 角色分帳（GH#1263）—— 以**關係**判定，⛔ 不是資料夾豁免
+# ═══════════════════════════════════════════════════════════════════════════
+# 在此之前棘輪的分母是「`content/assets/models` 底下每一顆」。⚠️ 而其中一大批的位元組
+# **結構上不可以改**：凍結版本（`ModelVersions.verify()` 拿 binarySha256 比對）、原上線模型、
+# 不可變 release 的認領 ⇒ ⛔ 它們有問題就**永遠**有問題 ⇒ 那條棘輪永遠降不回去（假綠燈⑨）。
+#
+# ⭐ 判準：**棘輪只數修得動的東西** —— 每一顆被數進去的，都存在一條「⛔ 不改任何凍結位元組」
+#   就能讓它消失的路。每顆 GLB 取最高者（a > b > c）：
+#   (a) 玩家預設拿得到 ⇒ **硬棘輪**
+#       英雄 `modelKey` 解析到的檔 · Hero Forge 範例預設 · 內容依 id／路徑在執行期載入的 ·
+#       其餘沒有任何凍結或血緣關係的（新匯入／場景／道具）· 以及上面這些的 `_lod.json` 分級檔
+#       修法：註冊正規化後的新版本並切作用中（凍結的）／就地轉檔（沒凍結的）
+#   (b) 可切換、非預設 ⇒ **第二條棘輪，只能變小**
+#       每位英雄每條血緣（`sourceModelKey`）的代表版本（非現役取最新註冊，`previous` 除外）·
+#       Hero Forge 備選 · 編輯器可挑的英雄身體（`heroBody: true`）
+#       修法：同一個來源再註冊一次（`prepare` 會正規化）⇒ 新版本成為代表，舊的落進 (c)
+#   (c) 凍結／歷史血緣／素材 ⇒ **列出不計**（印顆數與理由）
+#       原上線模型 · 同血緣已有後繼的舊版本 · 沒有英雄引用的凍結版本文件 · 版本 binarySha256
+#       釘住的同位元組副本 · 版本的來源檔 · 不可變 release 認領 · 中央素材庫的獨立元件
+#       ⚠️ 檔名是 64 位雜湊的，**位元組必須還對得上檔名** —— 對不上 ⇒ 凍結檔被改過 ⇒ 算 (a)。
+ROLE_TITLES = {
+    "a": "玩家預設拿得到（硬棘輪）",
+    "b": "可切換、非預設（只能變小）",
+    "c": "凍結／歷史血緣／素材（列出不計）",
+}
+FORGE_KEYS_MTS = os.path.join(ROOT, "tools", "w3x-import", "forge_model_keys.mts")
+RELEASE_JSON = os.path.join(ROOT, "materials", "hero-model-library", "release.json")
+COMPONENTS_JSON = os.path.join(ROOT, "materials", "asset-library", "current-resources.json")
+#: 執行期引用**不讀**這幾個目錄：模型文件本身、二進位資產、退休內容。
+_REF_SKIP_DIRS = {"models", "assets", "_legacy"}
+
+
+def forge_model_keys():
+    """Hero Forge 範例的 (預設, 備選) modelKey —— 從出貨註冊表讀，⛔ 讀不到就停（⛔ 不當成空集合）。"""
+    out = subprocess.run(["node", "--import", "tsx", FORGE_KEYS_MTS], cwd=ROOT, capture_output=True, text=True)
+    if out.returncode != 0:
+        raise ValueError(f"讀不到 Hero Forge 的模型選項：{out.stderr.strip()[-300:]}")
+    doc = json.loads(out.stdout)
+    return set(doc["defaults"]), set(doc["alternatives"])
+
+
+def _value_refs() -> set:
+    """內容裡**以值**出現的每一個字串（模型 id 或 `.glb` 路徑都在裡面）。
+
+    ⚠️ ⛔ 物件鍵不算：`config/ambient-vfx.json` 以 modelKey 當**索引鍵**掛裝飾特效，它不載入模型。
+    ⛔ `modelVersions` 不算：那是版本歷史，上面逐欄結構化分過類了。
+    """
+    out = set()
+
+    def walk(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k != "modelVersions":
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+        elif isinstance(x, str):
+            out.add(x)
+
+    for name in sorted(os.listdir(CONTENT)):
+        d = os.path.join(CONTENT, name)
+        if name in _REF_SKIP_DIRS or not os.path.isdir(d):
+            continue
+        for sub, _dirs, names in os.walk(d):
+            for n in names:
+                if n.endswith(".json") and not n.startswith("_"):
+                    with open(os.path.join(sub, n), encoding="utf-8") as fh:
+                        walk(json.load(fh))
+    return out
+
+
+def glb_roles(files, forge=None) -> dict:
+    """每顆 GLB → (角色, 類別, 細節)。⭐ 關係全部從出貨內容推導（每顆取最高者 a > b > c）。"""
+    models = {d["id"]: d for d in _json_docs("models") if d.get("glbPath")}
+
+    def glb(key):
+        return os.path.abspath(os.path.join(CONTENT, models[key]["glbPath"])) if key in models else None
+
+    buckets = {"a": {}, "b": {}, "c": {}}
+
+    def put(role, path, category, detail=""):
+        if path:
+            buckets[role].setdefault(os.path.abspath(path), (category, detail))
+
+    pinned = set()
+    for ch in _json_docs("champions"):
+        hero, active = ch.get("id"), ch.get("modelKey")
+        put("a", glb(active), "英雄的預設身體", hero)
+        lineages = {}
+        for v in ch.get("modelVersions") or []:
+            pinned.add(v["binarySha256"])
+            lineages.setdefault(v["sourceModelKey"], []).append(v)
+        for src, vs in lineages.items():
+            head = next((v for v in vs if v["modelKey"] == active), None)
+            live = [v for v in vs if v["source"]["kind"] != "previous"]
+            if head is None and live:
+                head = max(live, key=lambda v: v["registeredAt"])
+                put("b", glb(head["modelKey"]), "英雄的可切換版本（該血緣的代表）", f"{hero}「{head['label']}」")
+            for v in vs:
+                if v is not head:
+                    put("c", glb(v["modelKey"]), "原上線模型" if v["source"]["kind"] == "previous"
+                        else "同血緣已有後繼的舊版本", f"{hero}「{v['label']}」")
+            put("c", glb(src), "版本的來源檔（歷史血緣）", hero)
+    forge_defaults, forge_alts = forge if forge is not None else forge_model_keys()
+    for k in sorted(forge_defaults):
+        put("a", glb(k), "Hero Forge 範例預設", k)
+    for k in sorted(forge_alts):
+        put("b", glb(k), "Hero Forge 範例備選", k)
+    refs = _value_refs()
+    for value in sorted(refs):
+        if value.endswith(".glb"):
+            put("a", os.path.join(CONTENT, value), "內容以路徑在執行期載入", value)
+    for d in models.values():
+        if d["id"] in refs:
+            put("a", glb(d["id"]), "內容以 id 在執行期載入", d["id"])
+        if d.get("heroBody") is True and not d.get("bodyVersion"):
+            put("b", glb(d["id"]), "編輯器可挑的英雄身體（heroBody）", d["id"])
+        if d.get("bodyVersion"):
+            put("c", glb(d["id"]), "沒有英雄引用的凍結版本文件", d["id"])
+    with open(RELEASE_JSON, encoding="utf-8") as fh:
+        for loc in (json.load(fh).get("model_locations") or {}).values():
+            if "/content/" in loc:
+                put("c", os.path.join(CONTENT, loc.split("/content/", 1)[1]), "不可變 release 的認領")
+    with open(COMPONENTS_JSON, encoding="utf-8") as fh:
+        for row in json.load(fh).get("modelComponents") or []:
+            if row.get("componentReady") is True and str(row.get("gitPath", "")).startswith("content/"):
+                put("c", os.path.join(CONTENT, row["gitPath"][len("content/"):]), "中央素材庫的獨立元件（純素材）")
+    lod_json = os.path.join(DEFAULT_SCAN, "_lod.json")
+    tiers = json.load(open(lod_json, encoding="utf-8")).get("models", {}) if os.path.exists(lod_json) else {}
+    for bucket in buckets.values():
+        for base, entry in tiers.items():
+            found = bucket.get(os.path.abspath(os.path.join(CONTENT, base)))
+            for tier in ("mid", "small", "low"):
+                if found and isinstance(entry.get(tier), dict):
+                    bucket.setdefault(os.path.abspath(os.path.join(CONTENT, entry[tier]["path"])),
+                                      (found[0], f"{found[1]} 的 LOD {tier}".strip()))
+
+    roles = {}
+    for f in files:
+        stem = os.path.basename(f)[:-4]
+        hit = next((role for role in ("a", "b") if f in buckets[role]), None)
+        if hit:
+            roles[f] = (hit, *buckets[hit][f])
+            continue
+        found = buckets["c"].get(f) or (("版本 binarySha256 釘住的同位元組副本", "") if stem in pinned else None)
+        if found is None:
+            roles[f] = ("a", "新匯入／場景／道具（沒有任何凍結或血緣關係）", "")
+        elif re.fullmatch(r"[0-9a-f]{64}", stem) and hashlib.sha256(open(f, "rb").read()).hexdigest() != stem:
+            roles[f] = ("a", "⛔ 檔名是雜湊而位元組對不上（凍結檔被改過）", found[0])
+        else:
+            roles[f] = ("c", *found)
+    return roles
+
+
+#: ⭐ (c) 每一類**為什麼不計** —— 一個能被反駁的理由，⛔ 不是「還沒收」。閘每次都印出來。
+C_WHY = {
+    "原上線模型": "系統第一次換模型時凍結的原樣（`prepare` 拒絕手動註冊 previous）；它存在就是為了一鍵回到原樣，轉檔就不再是原樣",
+    "同血緣已有後繼的舊版本": "同一個來源已有較新的版本代表這條血緣；舊版位元組被 `ModelVersions.verify()` 的 binarySha256 釘住，改了就切不回去",
+    "沒有英雄引用的凍結版本文件": "`version.body.*` 快照；後台與編輯器都把它濾出可挑清單（`heroBodyModelIds`），誰都挑不到，檔名就是位元組雜湊",
+    "版本 binarySha256 釘住的同位元組副本": "與某個凍結版本逐位元組相同（檔名＝雜湊）；改它等於讓那個版本的出處說謊",
+    "版本的來源檔（歷史血緣）": "某個凍結版本由它註冊而來；它自己不是任何英雄／Forge 的預設、也不在任何可挑清單裡",
+    "不可變 release 的認領": "`materials/hero-model-library/release.json` 已讀回 S3 的不可變發行；改位元組＝發行紀錄說謊",
+    "中央素材庫的獨立元件（純素材）": "`current-resources.json` 裡 componentReady 但尚未綁英雄的元件；玩家拿不到",
+}
+
+
+def read_ratchet(path: str) -> dict:
+    """基準線：一行一個 `角色=顆數`。⛔ 缺一個就停（⛔ 不當成 0，也不當成無限大）。"""
+    got = {}
+    for line in open(path, encoding="utf-8"):
+        m = re.fullmatch(r"\s*([ab])\s*=\s*(\d+)\s*", line)
+        if m:
+            got[m.group(1)] = int(m.group(2))
+    if set(got) != {"a", "b"}:
+        raise ValueError(f"{os.path.relpath(path, ROOT)} 要有 a=… 與 b=… 兩行（讀到 {sorted(got)}）")
+    return got
+
 def tex_cap(path: str) -> int:
-    rel = os.path.relpath(os.path.abspath(path), os.path.join(ROOT, "content"))
+    rel = os.path.relpath(os.path.abspath(path), CONTENT)
     for k, (edge, _why) in TEX_EDGE_EXEMPT.items():
         if k in rel:
             return edge
     return BUDGET["texEdge"]
 BUDGET_TS = os.path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts")
 ADOPTION_POLICY_JSON = os.path.join(ROOT, "packages/shared/src/content/modelUpload/adoptionPolicy.json")
-CHAMPION_MODEL_DIR = os.path.abspath(os.path.join(ROOT, "content", "assets", "models", "champions"))
 
 
 def read_hero_adoption_policy() -> dict:
@@ -101,9 +279,9 @@ def read_hero_adoption_policy() -> dict:
 
 def explicit_champion_path(path: str) -> bool:
     """Whether a file is under the explicit content/assets/models/champions tree."""
-    absolute = os.path.abspath(path)
+    absolute, champions = os.path.abspath(path), os.path.abspath(os.path.join(DEFAULT_SCAN, "champions"))
     try:
-        return os.path.commonpath((absolute, CHAMPION_MODEL_DIR)) == CHAMPION_MODEL_DIR
+        return os.path.commonpath((absolute, champions)) == champions
     except ValueError:
         return False
 
@@ -219,6 +397,44 @@ def merge(path):
     return _merge(path)
 
 
+def file_issues(f, s, v, heroes, adoption):
+    """一顆 GLB 的問題清單（純函式：量尺與分類共用同一份判準）。"""
+    issues = []
+    if v and v["errors"] != 0:
+        issues.append(f"⛔ glTF 驗證 {v['errors']} 個錯（{','.join(v['codes'])}）")
+    if s["draws"] > s["distinct"]:
+        issues.append(f"⚠️ draw {s['draws']} 但只有 {s['distinct']} 種畫法 ⇒ 可合併")
+    if s["zeroClips"]:
+        issues.append(f"⛔ 零長度片段 ×{len(s['zeroClips'])}：{s['zeroClips'][:2]}")
+    if s["images"] and s["texEdge"] <= 8:
+        issues.append("⛔ 貼圖整組 ≤8×8（＝佔位圖，八成是 BLP 沒查到）")
+    cap = tex_cap(f)
+    if s["texEdge"] > cap:
+        issues.append(f"⛔ 貼圖邊長 {s['texEdge']} > {cap}")
+    if f in heroes or explicit_champion_path(f):
+        trigger = adoption["decimateWhenTrianglesAbove"]
+        target = adoption["decimatedTargetTrianglesMax"]
+        if s["tris"] > trigger:
+            issues.append(
+                f"⛔ 英雄模型三角面 {s['tris']:,} 超過正式採用門檻 {trigger:,}；"
+                f"請從保留原檔另產生 ≤{target:,} 面候選並完成視覺與骨架驗收"
+            )
+    if s["tris"] > BUDGET["tris"]:
+        issues.append(
+            f"⛔ runtime 容量診斷：三角面 {s['tris']:,} > {BUDGET['tris']:,}；"
+            "此 28k renderer 上限不能代替英雄正式採用門檻"
+        )
+    if s["draws"] > BUDGET["meshes"]:
+        issues.append(f"⛔ draw call {s['draws']} > {BUDGET['meshes']}（英雄身體）")
+    # ⭐ ⑥ 骨架綁定 —— ⛔ 只問英雄身體（道具/場景本來就沒有骨架）。
+    if f in heroes:
+        if s["skins"] == 0:
+            issues.append("⛔ 沒有骨架綁定（glTF 沒有 skins）⇒ 進場是不會動的 T-pose")
+        elif s["skinned"] < s["draws"]:
+            issues.append(f"⛔ {s['draws'] - s['skinned']}/{s['draws']} 塊網格沒有蒙皮權重（缺 JOINTS_0）")
+    return issues
+
+
 def _budget_drift():
     """⭐ python 這一份上限與 TS 那一份對不上 ⇒ 喊出來（⛔ 不要靜默用舊值）。"""
     try:
@@ -238,13 +454,20 @@ def _budget_drift():
 
 
 def main() -> int:
+    global CONTENT, DEFAULT_SCAN
     ap = argparse.ArgumentParser()
     ap.add_argument("paths", nargs="*")
     ap.add_argument("--all", action="store_true", help=f"掃 {DEFAULT_SCAN}")
     ap.add_argument("--merge", action="store_true", help="⛔ 就地合併可合併的 primitive（會先留底）")
     ap.add_argument("--check", action="store_true", help="有問題就回非零（閘模式）")
     ap.add_argument("--no-validate", action="store_true", help="跳過嚴格 glTF 驗證（快）")
+    ap.add_argument("--ratchet", metavar="FILE", help="棘輪閘：(a)(b) 有問題顆數與基準線比（GH#1263）")
+    ap.add_argument("--roles-json", metavar="OUT", help="逐顆寫出角色、理由與問題")
+    ap.add_argument("--content", metavar="DIR", help="⚠️ 只給量尺自證的測試：換一棵內容樹")
     a = ap.parse_args()
+    if a.content:
+        CONTENT = os.path.abspath(a.content)
+        DEFAULT_SCAN = os.path.join(CONTENT, "assets", "models")
 
     files = []
     for p in (a.paths or ([DEFAULT_SCAN] if a.all else [])):
@@ -295,43 +518,10 @@ def main() -> int:
         except Exception as e:
             rows.append((rel, None, [f"⛔ 讀不開：{e}"]))
             continue
-        issues = []
         v = (val or {}).get(f)
-        if v and v["errors"] != 0:
-            issues.append(f"⛔ glTF 驗證 {v['errors']} 個錯（{','.join(v['codes'])}）")
-            for c in v["codes"]:
-                codes[c] = codes.get(c, 0) + 1
-        if s["draws"] > s["distinct"]:
-            issues.append(f"⚠️ draw {s['draws']} 但只有 {s['distinct']} 種畫法 ⇒ 可合併")
-        if s["zeroClips"]:
-            issues.append(f"⛔ 零長度片段 ×{len(s['zeroClips'])}：{s['zeroClips'][:2]}")
-        if s["images"] and s["texEdge"] <= 8:
-            issues.append("⛔ 貼圖整組 ≤8×8（＝佔位圖，八成是 BLP 沒查到）")
-        cap = tex_cap(f)
-        if s["texEdge"] > cap:
-            issues.append(f"⛔ 貼圖邊長 {s['texEdge']} > {cap}")
-        if f in heroes or explicit_champion_path(f):
-            trigger = adoption["decimateWhenTrianglesAbove"]
-            target = adoption["decimatedTargetTrianglesMax"]
-            if s["tris"] > trigger:
-                issues.append(
-                    f"⛔ 英雄模型三角面 {s['tris']:,} 超過正式採用門檻 {trigger:,}；"
-                    f"請從保留原檔另產生 ≤{target:,} 面候選並完成視覺與骨架驗收"
-                )
-        if s["tris"] > BUDGET["tris"]:
-            issues.append(
-                f"⛔ runtime 容量診斷：三角面 {s['tris']:,} > {BUDGET['tris']:,}；"
-                "此 28k renderer 上限不能代替英雄正式採用門檻"
-            )
-        if s["draws"] > BUDGET["meshes"]:
-            issues.append(f"⛔ draw call {s['draws']} > {BUDGET['meshes']}（英雄身體）")
-        # ⭐ ⑥ 骨架綁定 —— ⛔ 只問英雄身體（道具/場景本來就沒有骨架）。
-        if f in heroes:
-            if s["skins"] == 0:
-                issues.append("⛔ 沒有骨架綁定（glTF 沒有 skins）⇒ 進場是不會動的 T-pose")
-            elif s["skinned"] < s["draws"]:
-                issues.append(f"⛔ {s['draws'] - s['skinned']}/{s['draws']} 塊網格沒有蒙皮權重（缺 JOINTS_0）")
-        rows.append((rel, s, issues))
+        for c in (v["codes"] if v and v["errors"] != 0 else []):
+            codes[c] = codes.get(c, 0) + 1
+        rows.append((rel, s, file_issues(f, s, v, heroes, adoption)))
 
     bad = [r for r in rows if r[2]]
     if merged:
@@ -341,13 +531,59 @@ def main() -> int:
     print(f"\n⭐ 掃了 {len(rows)} 顆 · 乾淨 {len(rows) - len(bad)} · ⛔ 有問題 {len(bad)}")
     if codes:
         print(f"   glTF 錯誤代碼分佈：{codes}")
-    for rel, _s, iss in bad[:40]:
-        print(f"   {rel}")
-        for i in iss:
-            print(f"      {i}")
-    if len(bad) > 40:
-        print(f"   …另外 {len(bad) - 40} 顆")
-    return 1 if (a.check and bad) else 0
+    if not (a.all or a.ratchet or a.roles_json):
+        for rel, _s, iss in bad[:40]:
+            print(f"   {rel}")
+            for i in iss:
+                print(f"      {i}")
+        if len(bad) > 40:
+            print(f"   …另外 {len(bad) - 40} 顆")
+        return 1 if (a.check and bad) else 0
+
+    try:
+        roles = glb_roles(files)
+        base = read_ratchet(a.ratchet) if a.ratchet else None
+    except (OSError, ValueError, KeyError) as exc:
+        print(f"⛔ 角色分帳跑不起來：{exc}")
+        print("   ⇒ ⚠️ 分不出角色就數不出棘輪 ⇒ 刻意回非零，⛔ 不退回全 repo 分母。")
+        return 2
+    table = {r: [] for r in "abc"}
+    for f, (rel, _s, iss) in zip(files, rows):
+        role, category, detail = roles[f]
+        table[role].append((rel, category, detail, iss))
+    if a.roles_json:
+        with open(a.roles_json, "w", encoding="utf-8") as fh:
+            json.dump({r: [dict(zip(("path", "category", "detail", "issues"), row)) for row in table[r]]
+                       for r in "abc"}, fh, ensure_ascii=False, indent=1)
+    count = {r: sum(1 for row in table[r] if row[3]) for r in "abc"}
+    print("   角色分帳（GH#1263）—— ⭐ 以關係判定，每顆取最高者 a > b > c；棘輪只數修得動的：")
+    for r in "abc":
+        print(f"   ({r}) {ROLE_TITLES[r]:<18} {len(table[r]):>4} 顆 · 有問題 {count[r]}")
+    cats = {}
+    for _rel, category, _d, iss in table["c"]:
+        n = cats.setdefault(category, [0, 0])
+        n[0] += 1
+        n[1] += bool(iss)
+    print("   ⭐ (c) 為什麼不計：")
+    for category, (n, nbad) in sorted(cats.items(), key=lambda kv: -kv[1][0]):
+        print(f"      {n:>4} 顆（有問題 {nbad}）{category} —— {C_WHY.get(category, '⛔ 沒有登記理由')}")
+    if not base:
+        return 1 if (a.check and bad) else 0
+
+    code = 0
+    for r in "ab":
+        if count[r] > base[r]:
+            code = 1
+            print(f"\n⛔⛔ ({r}) {ROLE_TITLES[r]}：有問題 {base[r]} → {count[r]} —— ⭐ 這一次帶進了新的壞模型：")
+            for rel, category, detail, iss in [row for row in table[r] if row[3]][:30]:
+                print(f"   {rel}  [{category} {detail}]")
+                for i in iss:
+                    print(f"      {i}")
+        elif count[r] < base[r]:
+            code = 1
+            print(f"\n⭐ ({r}) 有問題 {base[r]} → {count[r]} —— ⇒ 把 {os.path.relpath(a.ratchet, ROOT)} 的 {r}= 改成 {count[r]} 並 commit。")
+            print("   ⛔ 不改的話棘輪會鬆掉，而鬆掉的棘輪會開始放行真的回歸。")
+    return code
 
 
 if __name__ == "__main__":
