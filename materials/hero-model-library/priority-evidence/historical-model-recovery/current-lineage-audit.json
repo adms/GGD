@@ -33,13 +33,13 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3092685,
-      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+      "bytes": 3127436,
+      "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
       "bytes": 7190,
-      "sha256": "66198edf98d9645d810ed886a964b362ea42967ae6416a8f8fe44da7950ce223"
+      "sha256": "3d0038d655d0eed2bb8d93f9e3a02a6804ac3af4641fcd14f04c2eda5bfe44b0"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
@@ -78,8 +78,8 @@
     },
     {
       "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "bytes": 5478,
-      "sha256": "5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c"
+      "bytes": 5612,
+      "sha256": "e217f6c21962fe2dac430df88e0f8058513d7882f34ce2bca60d73bf20e97ceb"
     },
     {
       "gitPath": "tools/hero-model-library/audit_historical_model_lineage.mts",
