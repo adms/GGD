@@ -54,6 +54,45 @@ def verify_component_git_contents(components, repo=ROOT):
         raise
 
 
+def verify_popp_approval_boundary(gap_ledger, review_contract, vfx_proposals):
+    """Require current owner approvals without promoting them to runtime binding."""
+    summary=gap_ledger.get('summary',{})
+    owner=review_contract.get('portalOwnerReview',{})
+    audio=owner.get('audio',{})
+    vfx=owner.get('vfx',{})
+    audio_gate=review_contract.get('eventAudioReviewGate',{})
+    vfx_runtime=review_contract.get('vfxRuntimeCandidates',{}).get('summary',{})
+    if (summary.get('eventAudioCandidates')!=36
+        or summary.get('eventAudioReviewed')!=36
+        or summary.get('ggdVfxCandidates')!=12
+        or summary.get('vfxVisuallyAccepted')!=12
+        or summary.get('runtimeBindingsAddedByThisWorkflow')!=0
+        or review_contract.get('schema')!='ggd.popp-integration-review@1'
+        or audio.get('candidateCount')!=36
+        or audio.get('approvedCount')!=36
+        or audio.get('runtimeBindingAuthorizedCount')!=0
+        or vfx.get('candidateCount')!=12
+        or vfx.get('visuallyApprovedCount')!=12
+        or vfx.get('bindingApprovedCount')!=0
+        or vfx.get('runtimeBindingAuthorizedCount')!=0
+        or owner.get('runtimeMutationAllowed') is not False
+        or owner.get('runtimeMutationAuthorizedForAll') is not False
+        or audio_gate.get('candidateCount')!=36
+        or audio_gate.get('reviewedCount')!=36
+        or audio_gate.get('sourceQueueReviewedCount')!=0
+        or audio_gate.get('automaticBindingAllowed') is not False
+        or audio_gate.get('runtimeSelectable') is not False
+        or vfx_runtime.get('ggdVfxDocumentsBuilt')!=12
+        or vfx_runtime.get('visuallyAccepted')!=12
+        or vfx_runtime.get('sourceManifestVisuallyAccepted')!=0
+        or vfx_runtime.get('skillBindingsCreated')!=0
+        or vfx_runtime.get('runtimeSelectable')!=0
+        or vfx_runtime.get('productionDeployed')!=0
+        or vfx_proposals.get('runtimeBindingsCreated')!=0
+        or vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not False):
+        raise ValueError('Popp owner approvals are stale or overclaim runtime binding/readiness')
+
+
 def component_git_evidence(components):
     """Return unique direct evidence blobs declared by model components.
 
@@ -369,6 +408,7 @@ def build(git_link_root=ROOT):
     popp_gap_definitions_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json'
     popp_vfx_proposals_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json'
     popp_gap_ledger=read(popp_gap_ledger_path)
+    popp_review_contract=read(popp_review_contract_path)
     popp_gap_summary=popp_gap_ledger.get('summary',{})
     popp_gap_rows=popp_gap_ledger.get('gaps',[])
     if (popp_gap_ledger.get('schema')!='ggd.popp-integration-gap-ledger@1'
@@ -376,10 +416,6 @@ def build(git_link_root=ROOT):
         or popp_gap_summary.get('defined')!=5
         or popp_gap_summary.get('closed')!=1
         or popp_gap_summary.get('remaining')!=4
-        or popp_gap_summary.get('eventAudioCandidates')!=36
-        or popp_gap_summary.get('eventAudioReviewed')!=0
-        or popp_gap_summary.get('ggdVfxCandidates')!=12
-        or popp_gap_summary.get('vfxVisuallyAccepted')!=0
         or popp_gap_summary.get('vfxBindingProposals')!=7
         or popp_gap_summary.get('vfxReserveCandidates')!=5
         or popp_gap_summary.get('runtimeBindingsAddedByThisWorkflow')!=0
@@ -398,10 +434,10 @@ def build(git_link_root=ROOT):
             or item.get('bytes')!=path.stat().st_size):
             raise ValueError('Popp gap ledger evidence is stale: '+str(path))
     popp_vfx_proposals=popp_gap_ledger.get('vfxBindingReviewProposals',{})
+    verify_popp_approval_boundary(popp_gap_ledger,popp_review_contract,popp_vfx_proposals)
     if (popp_vfx_proposals.get('source',{}).get('sha256')!=hashlib.sha256(popp_vfx_proposals_path.read_bytes()).hexdigest()
         or popp_vfx_proposals.get('proposedCandidateCount')!=7
         or popp_vfx_proposals.get('reserveCandidateCount')!=5
-        or popp_vfx_proposals.get('policy',{}).get('visuallyApproved') is not False
         or popp_vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not False
         or popp_vfx_proposals.get('runtimeBindingsCreated')!=0):
         raise ValueError('Popp VFX review proposals are stale or overclaim approval/runtime binding')
@@ -973,6 +1009,7 @@ def build(git_link_root=ROOT):
             reviewPageSha256=hashlib.sha256(popp_review_page_path.read_bytes()).hexdigest(),
             weaponDecision=popp_gap_ledger['weaponDecision'],
             summary=popp_gap_summary,
+            ownerReview=popp_review_contract['portalOwnerReview'],
             gaps=popp_gap_rows,
             vfxBindingReviewProposals=popp_vfx_proposals,
             runtimeMutationAllowed=False,
