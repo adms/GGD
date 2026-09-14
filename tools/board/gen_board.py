@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
-from ledger_table import strip_id  # noqa: E402 —— ⭐ GH#1255：帳本列的身分標記 `<!-- id:… -->` 只有一個住處，⛔ 不渲染
+from ledger_table import strip_id  # noqa: E402 —— ⭐ GH#1255：帳本列的身分標記 `<!-- id:… -->` 在 Python 端只住 ledger_table.py，⛔ 不渲染（JS 那份見 ledgerIdMarkParity.test.ts）
 OUT = ROOT / "docs/_release/ggd-board.html"
 
 

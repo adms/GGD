@@ -267,9 +267,10 @@ def unmapped_rows(day: str):
 
 
 def evaluate(day: str, tx: dict):
-    """回傳 (訊息, 漏掉的, 未對票的, 來源是不是 transcript, 認領)。
+    """回傳 (訊息, 漏掉的, 未對票的, 來源是不是 transcript, 認領, 認領有歧義的分鐘)。
 
     認領＝`{帳本行號: 身分}`：**舊列**（沒有身分）認得這一則 ⇒ 建置器把身分蓋上去（`LT.stamp_ids`）。
+    歧義＝`[(HH:MM, 那一分鐘還沒認到列的帶身分訊息數, 那一分鐘還沒有身分的舊列數)]` —— 見第二趟的註解。
     """
     msgs = tx.get(day) or []
     from_tx = bool(msgs)
@@ -286,7 +287,8 @@ def evaluate(day: str, tx: dict):
     #
     # ⭐ GH#1255：帶**身分**的訊息先問身分 —— 有一列帶著它 ⇒ 有列。沒有 ⇒ 去認一列**還沒有身分**的舊列，
     #   每一列**只能被認一次**（同一分鐘逐字相同、uuid 不同的兩則 ⇒ 第二則沒有列可認 ⇒ 漏列 ⇒ 建置器補一列）。
-    #   兩趟：先認「那一列的字就是這一則」的，再認「那一分鐘有一列、字在帳本某處」的（舊判準，改述過的列）。
+    #   兩趟：先認「那一列的字就是這一則」的，再認「那一分鐘有一列、字在帳本某處」的（舊判準，改述過的列）
+    #   ⚠️ 第二趟只在「那一分鐘只有一種配法」時才認（見下面那段，GH#1255 審查後補）。
     free = [(n, c) for n, c in rows if not LT.row_id(c[1])]
     adopt: dict = {}
     pending = []
@@ -299,7 +301,21 @@ def evaluate(day: str, tx: dict):
             adopt[hit] = mid
         else:
             pending.append((t, m, mid))
-    missing = []
+    # ⛔⛔ 第二趟**不看那一列的字**（改述過的列本來就對不上）⇒ 它只能靠「那一分鐘**只有一種**配法」才算數。
+    #   b8b1009bd 寫的是「輪到誰、誰就拿那一分鐘第一列還沒被認的舊列」⇒ 同一分鐘有 A（改述過的列、第一趟沒認到）
+    #   與 B（沒有自己的列，字出現在別列）時，B 先輪到 ⇒ ⭐ **A 的列被蓋上 B 的身分**、A 另補一列（審查者指出；
+    #   09-11～09-15 出貨資料審查者量過 0 例 ⛔ 但舊日子 `--date` 重產會走到這一趟）。
+    #   ⭐ 身分蓋錯之後 `--map <身分>` 改到的就是別人的列 —— 那是**把一把錯的鑰匙寫進資料**
+    #   （第〇·六守則：join key 自己錯的時候，照 key 同步會毀資料）。
+    #   ⇒ 那一分鐘「還沒認到列的帶身分訊息」與「還沒有身分的舊列」**都恰好一個** ⇒ 認；
+    #     否則 ⛔ 不猜：當成漏列補新列（舊列一個位元組都不動、留著沒有身分），並把那一分鐘印出來（⛔ 不靜默）。
+    #   ⭐ 多一列無害、蓋錯身分要人工才救得回來 —— 與 `ledger_table.dedupe` 的「寧可留兩列」同一個方向。
+    #   ⛔ 刻意沒有「退回舊行為」的開關：舊行為就是寫錯身分；要回頭 ⇒ revert 這個 commit。
+    unresolved: dict = {}
+    for t, _m, mid in pending:
+        if mid:
+            unresolved[t] = unresolved.get(t, 0) + 1
+    missing, ambiguous = [], []
     for t, m, mid in pending:
         if not covered(m, hay):
             missing.append((t, m, mid))
@@ -308,12 +324,21 @@ def evaluate(day: str, tx: dict):
             if not any(c[0].strip() == t for _, c in rows):
                 missing.append((t, m, mid))
             continue
-        hit = next((n for n, c in free if n not in adopt and c[0].strip() == t), None)
-        if hit is None:
-            missing.append((t, m, mid))
-        else:
-            adopt[hit] = mid
-    return msgs, missing, unmapped_rows(day), from_tx, adopt
+        cand = [n for n, c in free if n not in adopt and c[0].strip() == t]
+        if unresolved[t] == 1 and len(cand) == 1:
+            adopt[cand[0]] = mid
+            continue
+        if cand and (t, unresolved[t], len(cand)) not in ambiguous:
+            ambiguous.append((t, unresolved[t], len(cand)))
+        missing.append((t, m, mid))
+    return msgs, missing, unmapped_rows(day), from_tx, adopt, ambiguous
+
+
+def report_ambiguous(day: str, ambiguous) -> None:
+    """第二趟認領不猜的那幾分鐘（見 `evaluate()`）—— 建置與 `--check` 都印，⛔ 不靜默。"""
+    for t, n_msg, n_row in ambiguous:
+        print(f"⚠️ 認領有歧義 {day} {t}：{n_msg} 則帶身分的訊息 × {n_row} 列沒有身分的舊列，字對不上 ⇒ "
+              "⛔ 不猜哪一列是哪一則：補新列（帶身分），舊列不動、留著沒有身分")
 
 
 def report(day: str, missing, bad, prefix: str = "⛔") -> None:
@@ -417,11 +442,12 @@ if CHECK:
 
     failed = False
     for day in hard:
-        msgs, missing, bad, from_tx, _ = evaluate(day, tx)
+        msgs, missing, bad, from_tx, _, amb = evaluate(day, tx)
         if not from_tx and msgs:
             print(f"⚠️ transcript 撈不到 {day} 的訊息 —— 退回已版控的 {archive_of(day)}（{len(msgs)} 則）")
         if missing or bad:
             failed = True
+            report_ambiguous(day, amb)
             report(day, missing, bad)
         else:
             print(f"✓ 逐則對票 {day}：{len(msgs)} 則訊息全部有列、全部對到票")
@@ -439,8 +465,9 @@ if CHECK:
 
     # ⭐ 今天:印出來但**不擋**（失敗形態⑨ —— 見檔頭。⛔ fail-open 但不靜默）。
     if live:
-        _, missing, bad, _, _ = evaluate(live, tx)
+        _, missing, bad, _, _, amb = evaluate(live, tx)
         if missing or bad:
+            report_ambiguous(live, amb)
             report(live, missing, bad, prefix="⏳")
             print(f"⏳ 上面 {len(missing)} 則漏列 + {len(bad)} 列未對票是**今天（{live}）**的 —— "
                   "這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。")
@@ -456,9 +483,10 @@ if CHECK:
 
 # ── build ──────────────────────────────────────────────────────────────────
 tx = from_transcript({DAY})
-msgs, missing, _bad, FROM_TX, ADOPT = evaluate(DAY, tx)
+msgs, missing, _bad, FROM_TX, ADOPT, AMBIGUOUS = evaluate(DAY, tx)
 if not FROM_TX and msgs:
     print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
+report_ambiguous(DAY, AMBIGUOUS)
 
 
 def _bytes(p: Path) -> bytes:

@@ -194,6 +194,29 @@ describe("GH#1255 帳本以身分成列", () => {
     expect(map("bbbbbbbb").status).toBe(0);
     expect(rows().filter((l) => l.startsWith("| 10:40 |")).map((l) => l.endsWith("| #1255 |"))).toEqual([true, false]);
   });
+
+  /**
+   * GH#1255 審查後補 —— 第二趟認領**不看那一列的字**，所以只准在「那一分鐘只有一種配法」時認。
+   * 夾具＝審查者描述的形狀：11:00 有 A（帳本裡是改述過的列）與 B（沒有自己的列，字被逐字寫進 11:05 那一列），B 先輪到。
+   * b8b1009bd 的寫法 ⇒ A 的列被蓋上 B 的身分。突變（跑過，commit 訊息記）：條件改回 `if cand:` ⇒ 紅。
+   */
+  it("第二趟認領 ⛔ 不猜：同一分鐘兩則都沒認到列 ⇒ 改述過的舊列不被蓋上別則的身分，並印出歧義", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ggd-msgledger-amb-"));
+    const B = "這一則沒有自己的列 但它的字被逐字寫進了十一點零五分那一列";
+    const said = (s: string, uuid: string, content: string) =>
+      JSON.stringify({ type: "user", uuid, timestamp: `${DAY}T03:00:${s}.000Z`, message: { role: "user", content } }); // 11:00 GMT+8
+    writeFileSync(join(dir, "s.jsonl"), [said("10", "bbbb2222-1", B), said("40", "aaaa2222-1", "這一則在帳本裡被改述過 第一趟的文字窗認不到它")].join("\n") + "\n");
+    writeFileSync(join(dir, `${DAY}.md`), `# ${DAY}\n\n## 逐則對票\n\n| 時間 | owner 說了什麼（逐字） | 票 |\n|---|---|---|\n` +
+      `| 11:00 | 改述：他要先認字再認分鐘 | #301 |\n| 11:05 | ${B} | #302 |\n`);
+    const r = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--date", DAY], {
+      cwd: REPO, encoding: "utf8", env: { ...process.env, GGD_LEDGER_DIR: dir, GGD_TRANSCRIPT_DIR: dir, GGD_LEDGER_NO_REGEN: "1" },
+    });
+    expect(r.status, r.stdout + r.stderr).toBe(0);
+    const rows = readFileSync(join(dir, `${DAY}.md`), "utf8").split("\n").filter((l) => l.startsWith("| 11:0"));
+    expect(rows.find((l) => l.includes("改述：")), "⛔ 改述過的舊列被蓋上別則的身分（第二趟只看分鐘就認）").toBe("| 11:00 | 改述：他要先認字再認分鐘 | #301 |");
+    expect(rows.filter((l) => /id:(bbbb2222|aaaa2222)/.test(l)), "兩則都要有自己的列").toHaveLength(2);
+    expect(r.stdout, "不猜的時候要說出來（⛔ 不靜默）").toContain("認領有歧義");
+  });
 });
 
 // ⭐ GH#1163 —— build 沒指定 --date 也要補**昨天**（`--check` 硬檢查的正是昨天）。

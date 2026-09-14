@@ -24,7 +24,7 @@ describe("gen_board.py 覆蓋前留底（GH#865）", () => {
   it("舊的那一份被複製進 legacy，且內容一模一樣", () => {
     const tmp = mkdtempSync(join(tmpdir(), "ggd-board-"));
     // 只複製產生器需要的最小輸入 —— ⛔ 不 clone 整個 repo。
-    // ⭐ `scripts/ledger_table.py`：gen_board 從它取帳本列身分標記的格式（GH#1255，唯一住處）
+    // ⭐ `scripts/ledger_table.py`：gen_board 從它取帳本列身分標記的格式（GH#1255，Python 端的唯一住處）
     for (const d of ["tools/board", "docs/_daily", "docs/_release", "scripts/ledger_table.py"]) {
       const src = join(REPO, d);
       if (existsSync(src)) cpSync(src, join(tmp, d), { recursive: true });

@@ -163,8 +163,16 @@ def _unlock(path: Path) -> None:
 #   ⇒ 身分＝那個 uuid 的前 8 碼；帳本列把它放在原話格尾**不渲染**的 `<!-- id:… -->`，
 #     全文存檔放在 `## HH:MM · <身分>`。⛔ 帳本與存檔只**引用**它，不另算。
 # ⚠️ 舊列（沒有身分）照舊用「同一分鐘 ＋ 同一段文字」認；建置器認到之後把身分蓋上去。
+#
+# ⚠️⚠️ 更正 b8b1009bd 的「格式與解析**只住** ledger_table.py」——那句說過頭了。量到的拼寫處（GH#1255 審查後）：
+#   | 住處 | 拼的是什麼 | 誰守 |
+#   |---|---|---|
+#   | 這裡 `ID_LEN`／`_ID_MARK`／`with_id`／`--map` 的身分判定 | 帳本列標記 `<!-- id:… -->` 的寫、讀、剝 | ⭐ Python 端的唯一住處（gen_board.py、board-roll.sh 都 import `strip_id`） |
+#   | `tools/admin-live/datasets/parallel-board.mjs` 的 `ID_MARK` | 同一個標記的剝除（JS 讀不到這裡） | `packages/shared/src/ops/ledgerIdMarkParity.test.ts`（叫這裡真的 `with_id`／`strip_id` 對照） |
+#   | `scripts/message-ledger.sh` 的 `ARCHIVE_HEAD` 與存檔寫入 | **另一種**格式：存檔段落標題 `## HH:MM · <身分>`（長度取這裡的 `ID_LEN`） | 讀寫同在那一支；`messageLedgerScript.test.ts` 斷言標題 |
+#   | `scripts/ruling.sh` 解析 `--find-time` 第一行的正則 | 身分字元集與長度 `[0-9a-f]{8}` | ⛔ 沒有專屬閘（長度一改它會對不上 ⇒ 列鍵退回執行時間；見審查報告） |
 ID_LEN = 8
-_ID_MARK = re.compile(r"\s*<!-- id:([0-9a-f]{8}) -->")
+_ID_MARK = re.compile(r"\s*<!-- id:([0-9a-f]{%d}) -->" % ID_LEN)
 
 
 def short_id(uuid: str | None) -> str | None:
@@ -472,7 +480,7 @@ def map_ticket(path: Path, when: str, ticket: str) -> int:
     ]
     if not by_id and len(targets) > 1:
         cands = "\n".join(
-            f"   · {row_id(cells(lines[i])[1]) or '（沒有身分 —— 先跑 `pnpm msgledger:build -- --date <日>` 補上）'}"
+            f"   · {row_id(cells(lines[i])[1]) or '（沒有身分 —— 先跑 `pnpm msgledger:build --date <日>` 補上）'}"
             f"  {strip_id(cells(lines[i])[1])[:50]}…" for i in targets)
         raise SystemExit(f"⛔ {path} 的 {when} 有 {len(targets)} 列 —— 用**身分**指定是哪一列：\n{cands}")
     for i in targets:
