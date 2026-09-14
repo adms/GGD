@@ -50,23 +50,17 @@ function recount(): { handWritten: number; shapes: Map<string, number> } {
   const dir = join(ROOT, "content/abilities");
   const shapes = new Map<string, number>();
   let handWritten = 0;
-  const refsOf = (t: unknown): string[] => {
-    if (typeof t === "string") return [t];
-    if (Array.isArray(t)) return t.flatMap(refsOf);
-    if (t && typeof t === "object") {
-      const o = t as { ref?: unknown; stack?: unknown };
-      if (typeof o.ref === "string") return [o.ref];
-      if (Array.isArray(o.stack)) return o.stack.flatMap(refsOf);
-    }
-    return [];
-  };
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const d = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
       template?: unknown;
       effects?: unknown[];
     };
-    if (refsOf(d.template).length > 0) continue;
+    // ⭐ 判準刻意最笨：`template` 這一格**在不在**（schema 收的每一種綁定都至少一張卡）。
+    // ⛔⛔ 2026-09-15 之前這裡抄了一份與 `gen.ts::refsOf()` **逐字相同**的形狀判斷（只認 `ref`／`stack`）
+    //   ⇒ 兩邊一起不認 `{cards,onConflict}`、一起數出 159 ⇒ ⭐「重算與普查一致」而兩邊都錯了 11 支（GH#993）。
+    //   ⇒ 重算**不可以**與被驗的那一支共用實作，⛔ 否則它驗的是「兩份抄本一致」。
+    if (d.template !== undefined) continue;
     const effects = d.effects ?? [];
     if (effects.length === 0) continue;
     handWritten++;

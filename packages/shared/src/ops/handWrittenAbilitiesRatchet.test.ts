@@ -110,7 +110,13 @@ const CENSUS = JSON.parse(
 //
 //   ⚠️ ⭐ **零支來自七名 LOL 英雄**：`lol-*` 的 42 支技能**全部**有 `template.ref`
 //   （社群編輯器對 Q/W/E/R/EX/PASSIVE 都發了綁定）⇒ 它們對這一格的貢獻是 **0**。
-const HAND_WRITTEN_BASELINE = 159;
+// ⭐ 2026-09-15（GH#993 步驟①）：159 → **148（−11）**。⛔ 沒有任何一支技能被改 ——
+//   降的是上面那 11 支 `b2-*` 的**誤判**：`gen.ts::refsOf()`（與 `bricks.ts::docTemplateRefs()`
+//   同一個洞）改成走出貨的 `normalizeTemplateBinding()`，`{cards,onConflict}` 從此認得。
+//   ⇒ 剩下的 +37 是真的（`community-review-NN-20260907.ex` 沒有 `template`），⛔ 本 lane 沒碰。
+//   ⭐ 「普查的手刻數與內容一致」那條閘住 `content/brickDemandCensus.test.ts`（⛔ 不在這裡再寫一份）——
+//   ⚠️ 而它在此之前抄了同一段 bug 才一直是綠的，同一個 commit 一起修。
+const HAND_WRITTEN_BASELINE = 148;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——
