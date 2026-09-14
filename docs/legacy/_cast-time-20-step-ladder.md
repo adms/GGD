@@ -2,6 +2,20 @@
 
 > ⛔ **這一份是退休區。** 這條公式**不再出貨**，⛔ 不要拿它判斷任何一支技能的吟唱時間。
 > ⭐ 今天的真源是 `content/config/cast-time-tiers.json`（五級距）。
+> ⭐ 2026-09-15（GH#1243）：原始碼 `castTimeFormula.ts`（635 行）也搬過來了 ——
+> `docs/legacy/code/packages/shared/src/content/castTimeFormula.ts`。
+> 搬之前量過：出貨程式與工具**零個** import（`castTimeTierMigration.test.ts` 第二條也在擋回頭匯入）。
+
+## ⭐ 吟唱屬於誰（⛔ 這一段是唯一住處，其他地方只指過來）
+
+| 誰 | 寫什麼 |
+|---|---|
+| **作者** | `castTimeTier`（五格之一）。產生器擁有的 90 支寫在 `tools/skill-remake/heroes/*.py` 的 `castTimeTier=`，或規格秒數 `cast_time=`（`common.py::_cast_time_tier()` 靠最近一格、平手取較快、要施法最低「小」）；其餘寫在 `content/abilities/*.json` |
+| `deriveCastTimes.ts --write` | 把級別**物化**成 `castTimeSec`（含 `template.params` / `template.cards[].params` 與英雄卡內嵌）。純被動不寫 |
+| `resolveCastTimeTierOnDoc`（載入時） | 級別贏過 `castTimeSec` |
+| `applyCastTimeRules`（施法當下） | owner 的夾子 `castTimeMaxSec`、floor、倍率、tick 對齊 |
+
+⛔ 沒有任何一支程式從傷害／冷卻／半徑**反推**吟唱。
 
 ## ⭐ 為什麼被搬到這裡
 
