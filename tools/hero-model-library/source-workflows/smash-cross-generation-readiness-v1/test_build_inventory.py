@@ -22,6 +22,11 @@ class SmashCrossGenerationReadinessTest(unittest.TestCase):
         self.assertGreater(data["summary"]["switchCommunityModelCandidates"], 0)
         self.assertIn(data["inputConsistency"]["status"], {"current", "stale-upstream-reconciliation-rebuild-required"})
         self.assertEqual(data["summary"]["newConvertedCandidatesThisAudit"], 0)
+        self.assertEqual(data["summary"]["macosBlenderToolInitBlockers"], 1)
+        blocker = data["tooling"]["samusMacosBlender522Blocker"]
+        self.assertEqual(blocker["status"], "blocked-tool-init-crash")
+        self.assertFalse(blocker["converted"])
+        self.assertFalse(blocker["runtimeSelectable"])
         self.assertFalse(data["summary"]["productionDeploymentVerified"])
 
 

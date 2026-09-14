@@ -33,14 +33,19 @@
       "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json"
     },
     "downloadSources": {
-      "bytes": 3336844,
-      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+      "bytes": 3339978,
+      "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
       "gitPath": "materials/hero-model-library/download-sources.json"
+    },
+    "samusMacosBlender522Blocker": {
+      "bytes": 3158,
+      "sha256": "bdd08f5dd50ae36e4edd6230211c6768f3a64df5d3edec1f8ff240920d19e8cc",
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-samus-blender522-macos-blocker-v1/receipt.json"
     }
   },
   "inputConsistency": {
     "ultimateReconciliationPinnedDownloadSourcesSha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45",
-    "currentDownloadSourcesSha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+    "currentDownloadSourcesSha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
     "ultimateReconciliationMatchesCurrentCatalog": false,
     "status": "stale-upstream-reconciliation-rebuild-required",
     "effect": "The cross-generation counts retain the current checked-in reconciliation values, but its source-catalog pin must be rebuilt before treating that reconciliation as a fresh full-pipeline check."
@@ -189,6 +194,24 @@
       },
       "failure": "Blender background conversion exited from SIGSEGV before emitting a GLB or a conversion receipt. The partial local output root is retained for diagnosis and is not a candidate.",
       "runtimeSelectable": false
+    },
+    "samusMacosBlender522Blocker": {
+      "evidence": {
+        "bytes": 3158,
+        "sha256": "bdd08f5dd50ae36e4edd6230211c6768f3a64df5d3edec1f8ff240920d19e8cc",
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-samus-blender522-macos-blocker-v1/receipt.json"
+      },
+      "candidateId": "ssbu-samus-c00-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/samus/model/body/c00/samus-c00.blend",
+        "bytes": 4295156,
+        "sha256": "fa0866aa0ce4b374d352320618721758851e1a1335f8ee0689c36daa61257b6a"
+      },
+      "status": "blocked-tool-init-crash",
+      "converted": false,
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "failure": "Blender 5.2.1 crashes in Metal/GPU backend initialization before the converter can open the source; no GLB, conversion receipt, candidate, registration, runtime option, or deployment exists."
     }
   },
   "summary": {
@@ -200,6 +223,7 @@
     "switchAcceptedIndependentComponents": 18,
     "readableOriginalGamePayloads": 0,
     "newConvertedCandidatesThisAudit": 0,
+    "macosBlenderToolInitBlockers": 1,
     "backendSelectableThisAudit": 0,
     "productionDeploymentVerified": false
   },
@@ -207,6 +231,7 @@
     "The GameCube and Wii counts are locally verified audio source members, not full game extractions.",
     "The Switch model and motion counts are community-source candidates. They are not Nintendo base-game payloads.",
     "NSandNS2 containers are inventory metadata only until their local bytes, headers and member table are actually read.",
-    "The Mario controlled rebuild probe crashed before a GLB existed; it neither adds a component nor changes any approval, dropdown or deployment state."
+    "The Mario controlled rebuild probe crashed before a GLB existed; it neither adds a component nor changes any approval, dropdown or deployment state.",
+    "Samus c00 has a source-pinned macOS Blender 5.2.1 Metal/GPU initialization crash receipt. It is a tool blocker, not a converted model, a component, a dropdown option or a deployment."
   ]
 }
