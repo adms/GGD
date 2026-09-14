@@ -79,15 +79,21 @@ class FateUbwBacklogConversionIndexTest(unittest.TestCase):
         self.assertIn("127項已轉換原生動作", family["motion"])
         self.assertIn("5項未提供來源時長", family["motion"])
 
-    def test_portable_generator_checks_without_three_local_cache_files(self):
+    def test_portable_generator_rebuilds_and_checks_without_three_local_cache_files(self):
         files = [
             "tools/hero-model-library/build_model_design_backlog.py",
             "tools/hero-model-library/design_backlog_labels.py",
             "tools/hero-model-library/design_backlog_resources.py",
             "tools/hero-model-library/fateubw_backlog_overlay.py",
+            "tools/hero-model-library/mba_pilot_backlog_overlay.py",
             "materials/hero-model-library/已取得模型待設計英雄.json",
             "materials/hero-model-library/已取得模型待設計英雄.md",
             "materials/hero-model-library/download-sources.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json",
+            "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+            "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+            "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+            "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
             "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
             "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
             "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
@@ -100,11 +106,16 @@ class FateUbwBacklogConversionIndexTest(unittest.TestCase):
                 target = checkout / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / relative, target)
-            completed = subprocess.run(
+            rebuild = subprocess.run(
+                [sys.executable, str(checkout / files[0])],
+                cwd=checkout, text=True, capture_output=True,
+            )
+            self.assertEqual(0, rebuild.returncode, rebuild.stdout + rebuild.stderr)
+            checked = subprocess.run(
                 [sys.executable, str(checkout / files[0]), "--check"],
                 cwd=checkout, text=True, capture_output=True,
             )
-            self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
+            self.assertEqual(0, checked.returncode, checked.stdout + checked.stderr)
 
 
 if __name__ == "__main__":
