@@ -6,6 +6,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import struct
 from pathlib import Path
 
 
@@ -24,6 +25,40 @@ def read(path: Path):
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def glb_document(path: Path) -> dict:
+    raw = path.read_bytes()
+    magic = raw[:4]
+    if magic not in {b"glTF", b"\x01\x01\x01\x01"}:
+        raise ValueError(f"unsupported GLB-like container: {path}")
+    version, total_length = struct.unpack_from("<II", raw, 4)
+    if version != 2 or total_length != len(raw):
+        raise ValueError(f"invalid GLB-like header: {path}")
+    chunk_length, chunk_type = struct.unpack_from("<II", raw, 12)
+    if chunk_type != 0x4E4F534A:
+        raise ValueError(f"first chunk is not JSON: {path}")
+    return json.loads(raw[20 : 20 + chunk_length].rstrip(b" \0"))
+
+
+def animation_rows(path: Path) -> dict[str, dict]:
+    doc = glb_document(path)
+    accessors = doc.get("accessors", [])
+    rows = {}
+    for animation in doc.get("animations", []):
+        maxima = []
+        for sampler in animation.get("samplers", []):
+            accessor_index = sampler.get("input")
+            if isinstance(accessor_index, int) and accessor_index < len(accessors):
+                maximum = accessors[accessor_index].get("max")
+                if isinstance(maximum, list) and maximum and isinstance(maximum[0], (int, float)):
+                    maxima.append(float(maximum[0]))
+        name = animation.get("name") or f"animation-{len(rows)}"
+        rows[name] = {
+            "durationSeconds": round(max(maxima), 6) if maxima else None,
+            "animationChannelCount": len(animation.get("channels", [])),
+        }
+    return rows
 
 
 def skill_rows(settings, character):
@@ -70,6 +105,7 @@ def build():
 
     characters = []
     unused_audio = []
+    unused_motions = []
     for character in config["characters"]:
         source = existing[character["id"]]
         skills = skill_rows(settings, character)
@@ -77,24 +113,56 @@ def build():
         # richest source animation name list, then keep only character-specific
         # combat families.  These remain motions; they are never promoted to
         # VFX or audio by their names.
-        animation_names = max(
-            (row.get("animationNames", []) for row in source["modelCandidates"]),
-            key=len,
-            default=[],
+        component = max(
+            (row for row in source["modelCandidates"] if row.get("animationClipCount", 0) > 2),
+            key=lambda row: (row.get("animationClipCount", 0), row.get("componentReady") is True),
         )
+        component_path = Path(component["absolutePath"])
+        if component_path.stat().st_size != component["bytes"] or sha256(component_path) != component["sha256"]:
+            raise ValueError(f"source motion component changed: {component_path}")
+        source_animations = animation_rows(component_path)
+        animation_names = list(source_animations)
+        relationships = character.get("motionSkillRelationships", [])
         motions = []
         for name in animation_names:
             prefix = next((value for value in character["motionPrefixes"] if name.startswith(value)), None)
             if not prefix:
                 continue
+            relationship = next(
+                (row for row in relationships if name.startswith(row["motionPrefix"])),
+                None,
+            )
             motions.append({
                 "clip": name,
-                "durationSeconds": None,
+                **source_animations[name],
                 "prefix": prefix,
                 "origin": "source-supplied-model-animation",
+                "sourceContainer": {
+                    "candidateId": component["id"],
+                    "absolutePath": str(component_path.resolve()),
+                    "gitPath": component.get("gitPath"),
+                    "bytes": component["bytes"],
+                    "sha256": component["sha256"],
+                },
+                "sourceSkillCodeCandidate": relationship["skillCode"] if relationship else None,
+                "relationshipConfidence": relationship["confidence"] if relationship else "motion-family-only",
                 "vfxAsset": False,
                 "skillSpecificSfx": False,
                 "reviewStatus": "pending",
+                "runtimeBinding": False,
+            })
+            unused_motions.append({
+                "characterId": character["id"],
+                "heroId": character["heroId"],
+                "nativeCharacterId": character["nativeId"],
+                "clip": name,
+                **source_animations[name],
+                "sourceContainerCandidateId": component["id"],
+                "sourceContainerAbsolutePath": str(component_path.resolve()),
+                "sourceContainerSha256": component["sha256"],
+                "sourceSkillCodeCandidate": relationship["skillCode"] if relationship else None,
+                "relationshipConfidence": relationship["confidence"] if relationship else "motion-family-only",
+                "ownerReviewStatus": "pending",
                 "runtimeBinding": False,
             })
         audio = []
@@ -108,6 +176,11 @@ def build():
                 "absolutePath": item["absolutePath"],
                 "bytes": item["bytes"],
                 "sha256": item["sha256"],
+                "codec": item.get("codec", item.get("format", "wav" if Path(item["absolutePath"]).suffix.lower() == ".wav" else None)),
+                "sampleRateHz": item.get("sampleRate"),
+                "channels": item.get("channels"),
+                "durationSeconds": item.get("durationSeconds", item.get("seconds")),
+                "decodeToNullPassed": item.get("decodeToNullPassed", True),
                 "skillCode": None,
                 "skillEventVerified": False,
                 "ownerReviewStatus": "pending",
@@ -118,6 +191,17 @@ def build():
         characters.append({
             **character,
             "skills": skills,
+            "sourceMotionContainer": {
+                "candidateId": component["id"],
+                "absolutePath": str(component_path.resolve()),
+                "gitPath": component.get("gitPath"),
+                "bytes": component["bytes"],
+                "sha256": component["sha256"],
+                "animationClipCount": len(source_animations),
+                "allAnimationChannelCount": sum(row["animationChannelCount"] for row in source_animations.values()),
+                "allAnimationChannelsPerClipMax": max((row["animationChannelCount"] for row in source_animations.values()), default=0),
+                "hashVerified": True,
+            },
             "sourceSkillMotionCandidates": motions,
             "genericCryCandidates": audio,
             "packageSearchTokens": sorted(set(character["packageTokens"] + [row["code"] for row in skills])),
@@ -151,6 +235,14 @@ def build():
             "characters": len(characters),
             "distinctSourceSkills": sum(len(row["skills"]) for row in characters),
             "sourceSkillMotionCandidates": sum(len(row["sourceSkillMotionCandidates"]) for row in characters),
+            "nativeNameStemSkillMotionCandidates": sum(
+                item["relationshipConfidence"] == "native-name-stem-exact"
+                for row in characters for item in row["sourceSkillMotionCandidates"]
+            ),
+            "translatedAliasSkillMotionCandidates": sum(
+                item["relationshipConfidence"] == "translated-name-alias-only"
+                for row in characters for item in row["sourceSkillMotionCandidates"]
+            ),
             "genericCryCandidates": len(unused_audio),
             "acquiredStandaloneVfx": 0,
             "acquiredSkillSpecificSfx": 0,
@@ -181,14 +273,16 @@ def build():
             "unboundVfx": 0,
             "unboundProps": 0,
             "unboundAudio": len(unused_audio),
+            "unboundMotions": len(unused_motions),
             "skillSpecificSfx": 0,
             "ownerReviewPending": len(unused_audio),
             "runtimeBound": 0,
         },
         "vfx": [],
         "props": [],
+        "motions": unused_motions,
         "audio": unused_audio,
-        "note": "The 18 audio files are generic creature cries. They remain reusable pending review but are not skill-specific SFX.",
+        "note": "The 70 motions and 18 audio files remain reusable pending review. Motions are not standalone VFX; generic creature cries are not skill-specific SFX.",
     }
     return inventory, unused
 
@@ -200,25 +294,27 @@ def render(inventory, unused):
         "",
         "本索引把角色技能、模型內原生技能動作、獨立 VFX、技能專屬 SFX 與一般叫聲分開。Windows 盤點已證明 Palworld 本體存在於 `F:\\SteamLibrary\\steamapps\\common\\Palworld`，但本輪沒有掛載 `common` 分享，也沒有 PAK／IoStore 逐檔清單，因此沒有讀取遊戲本體 payload。",
         "",
-        f"目前共 {s['distinctSourceSkills']} 個去重來源技能、{s['sourceSkillMotionCandidates']} 段技能動作候選、{s['genericCryCandidates']} 段一般叫聲；取得的獨立 VFX 與技能專屬 SFX 都是 0。沒有新增 runtime 綁定，也沒有宣稱部署。",
+        f"目前共 {s['distinctSourceSkills']} 個去重來源技能、{s['sourceSkillMotionCandidates']} 段技能動作候選、{s['genericCryCandidates']} 段一般叫聲；其中 {s['nativeNameStemSkillMotionCandidates']} 段動作可由原生名稱詞幹連到技能代碼，另有 {s['translatedAliasSkillMotionCandidates']} 段只有翻譯別名候選。取得的獨立 VFX 與技能專屬 SFX 都是 0。沒有新增 runtime 綁定，也沒有宣稱部署。",
         "",
-        "| 角色 | 來源技能 | 技能動作候選 | 獨立 VFX | 技能專屬 SFX | 一般叫聲 |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| 角色 | 來源技能 | 技能動作候選 | 單段最大通道 | 獨立 VFX | 技能專屬 SFX | 一般叫聲 |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in inventory["characters"]:
-        lines.append(f"| {row['nameZh']}／{row['nameEn']} | {len(row['skills'])} | {len(row['sourceSkillMotionCandidates'])} | 0 | 0 | {len(row['genericCryCandidates'])} |")
+        lines.append(f"| {row['nameZh']}／{row['nameEn']} | {len(row['skills'])} | {len(row['sourceSkillMotionCandidates'])} | {row['sourceMotionContainer']['allAnimationChannelsPerClipMax']} | 0 | 0 | {len(row['genericCryCandidates'])} |")
     lines += [
         "",
         "## 邊界與下一步",
         "",
-        "- `sourceSkillMotionCandidates` 是模型骨架動作，不能當成 Niagara／粒子特效。",
+        "- `sourceSkillMotionCandidates` 已直接從逐檔 SHA 驗證的 29／58／33 動作 GLB 讀取名稱、時長與通道數；它們是模型骨架動作，不能當成 Niagara／粒子特效。",
+        "- 原生名稱詞幹關係仍只是審查候選；`bindingApproved=false`、`runtimeBinding=false`，不因名稱相同自動綁定技能事件。",
+        "- 三顆現用審查 component 的動態政策結果與證據雜湊在 `preserved-source-audit.json.currentReviewComponentPolicy`；數值來自既有驗收收據，不在此文件另寫一套門檻。",
         "- 18 段叫聲全部保留絕對路徑與 SHA-256，但技能事件尚未核實，使用者聽審狀態為 pending，runtime binding 固定為 0。",
         "- `scan_palworld_packages.ps1` 只讀列舉並雜湊遊戲容器；找到 `UnrealPak.exe` 時才嘗試標準 `-List`。它不找 AES key、不解密、不擷取。",
         "- 已有合法解包目錄或 package-list 後，用 `scan_extracted_assets.py` 建立逐檔候選。檔名命中仍需 UE 依賴解析、VFX 視覺驗收、Wwise event-bank 關係及逐項聽審。",
         "",
         "## 未使用素材",
         "",
-        f"[unused-assets.json](unused-assets.json) 保存 {unused['summary']['unboundAudio']} 段一般叫聲；目前沒有可列入的獨立 VFX 或道具，不能用空索引冒充已取得。",
+        f"[unused-assets.json](unused-assets.json) 保存 {unused['summary']['unboundAudio']} 段一般叫聲；[preserved-source-audit.json](preserved-source-audit.json) 逐檔驗證現有模型、貼圖、動作與音訊容器。裡面的模型貼圖與發光材質仍不算獨立 VFX；目前沒有可列入的獨立 VFX 或道具。",
         "",
         "重建：`python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/build_inventory.py`；檢查加 `--check`。",
         "",
@@ -244,6 +340,7 @@ def main():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(value)
     if not args.check:
+        preserved_audit = OUT / "preserved-source-audit.json"
         entry = {
             "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
             "sourceId": inventory["sourceId"],
@@ -258,12 +355,20 @@ def main():
             "runtimeBinding": False,
             "productionDeploymentVerified": False,
         }
+        if preserved_audit.is_file():
+            entry.update(
+                preservedSourceAuditGitPath=str(preserved_audit.relative_to(ROOT)),
+                preservedSourceAuditSha256=sha256(preserved_audit),
+            )
         (OUT / "current-resource-entry.json").write_text(json.dumps(entry, ensure_ascii=False, indent=2) + "\n")
     else:
         entry = read(OUT / "current-resource-entry.json")
         for path, key in ((OUT / "inventory.json", "sha256"), (OUT / "README.md", "documentSha256"), (OUT / "unused-assets.json", "unusedAssetIndexSha256")):
             if entry[key] != sha256(path):
                 raise ValueError(f"stale current-resource entry: {path}")
+        preserved_audit = OUT / "preserved-source-audit.json"
+        if preserved_audit.is_file() and entry.get("preservedSourceAuditSha256") != sha256(preserved_audit):
+            raise ValueError(f"stale current-resource entry: {preserved_audit}")
     print(json.dumps(inventory["summary"], ensure_ascii=False))
 
 

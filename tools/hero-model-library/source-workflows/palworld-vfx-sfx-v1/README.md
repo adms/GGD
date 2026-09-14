@@ -28,6 +28,11 @@ python3 scan_extracted_assets.py --package-list package-list.txt --out scan.json
 
 ```sh
 python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/build_inventory.py
+python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/audit_preserved_sources.py
+python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/build_inventory.py
 python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/build_inventory.py --check
+python3 tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/audit_preserved_sources.py --check
 python3 -m unittest discover -s tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1 -p 'test_*.py'
 ```
+
+`audit_preserved_sources.py` 會逐檔驗證中央索引目前指到的 23 個模型候選、18 段叫聲及其保存母檔，並直接解析 GLB／`viewer-model` 內的材質、圖片與動畫結構。它只證明現有本機來源 bytes；模型貼圖、發光材質與 `Ring` 動作名稱都不會被升級成獨立 VFX。

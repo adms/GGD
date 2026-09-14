@@ -7380,15 +7380,17 @@
     "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
     "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
     "gitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json",
-    "sha256": "f202f141e918c7df1262eb9a459067ea4d4c83d61f54ddc4967891bcda420075",
+    "sha256": "b932a6fcb35f5a713824cc0ad3a7fc7928a21c77300d4529e6de6392f80470ca",
     "documentGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md",
-    "documentSha256": "9dce6e84bcba5fbad0b65b783e7fb2df56915cb4e10337856c6fde7075c582ff",
+    "documentSha256": "257c5a08b004a01f8099d6dd3e7319491c1859a28992e20ee3a1d5b47eeb60e9",
     "unusedAssetIndexGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/unused-assets.json",
-    "unusedAssetIndexSha256": "dbe57cd7ae654c726dd7d3ad5b8c1419afa3fa0c93d697cc148f701437c66fa4",
+    "unusedAssetIndexSha256": "ac00f81a5ec92fec39c259d7008d164d35b7d3ce21b6b684a4df83f44fac9bc9",
     "summary": {
       "characters": 3,
       "distinctSourceSkills": 27,
       "sourceSkillMotionCandidates": 70,
+      "nativeNameStemSkillMotionCandidates": 30,
+      "translatedAliasSkillMotionCandidates": 3,
       "genericCryCandidates": 18,
       "acquiredStandaloneVfx": 0,
       "acquiredSkillSpecificSfx": 0,
@@ -7401,8 +7403,10 @@
     "stage": "source-installed-container-payload-unavailable",
     "runtimeBinding": false,
     "productionDeploymentVerified": false,
+    "preservedSourceAuditGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/preserved-source-audit.json",
+    "preservedSourceAuditSha256": "47228b7d73e2db3cb3aab4dcb00880af4348f2dcb279a69aeec2c2b17cd59596",
     "entryGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/current-resource-entry.json",
-    "entrySha256": "ec45d35704ffc233860012f151b902a5a5daa993900bbe82e1b07c545837fe88"
+    "entrySha256": "d31605893ea29368a0601c6c66fb673f3bf0647cc78767193a5ccc517301dc6d"
   },
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",

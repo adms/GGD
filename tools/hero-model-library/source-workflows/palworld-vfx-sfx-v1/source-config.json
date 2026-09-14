@@ -26,6 +26,14 @@
       "nativeId": "JetDragon",
       "heroId": "acquired-jetragon",
       "motionPrefixes": ["FarSkill", "JumpBeam"],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "JumpBeam",
+          "skillCode": "Unique_JetDragon_JumpBeam",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        }
+      ],
       "packageTokens": ["JetDragon", "JumpBeam", "BeamComet"]
     },
     {
@@ -35,6 +43,12 @@
       "nativeId": "WorldTreeDragon",
       "heroId": "acquired-astralym",
       "motionPrefixes": ["FarSkill", "HaloBeam", "HaloCutter", "LaserGliding", "Paldium", "Supernova"],
+      "motionSkillRelationships": [
+        {"motionPrefix": "PaldiumShot", "skillCode": "Unique_WorldTreeDragon_PaldiumShot", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumCannon", "skillCode": "Unique_WorldTreeDragon_PaldiumCannon", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumRain", "skillCode": "Unique_WorldTreeDragon_PaldiumRain", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumExplosion", "skillCode": "Unique_WorldTreeDragon_PaldiumExplosion", "confidence": "native-name-stem-exact", "bindingApproved": false}
+      ],
       "packageTokens": ["WorldTreeDragon", "PaldiumShot", "PaldiumCannon", "PaldiumRain", "PaldiumExplosion"]
     },
     {
@@ -44,6 +58,14 @@
       "nativeId": "PinkCat",
       "heroId": "acquired-cattiva",
       "motionPrefixes": ["FarSkill", "NekoPunch"],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "NekoPunch",
+          "skillCode": "Unique_PinkCat_CatPunch",
+          "confidence": "translated-name-alias-only",
+          "bindingApproved": false
+        }
+      ],
       "packageTokens": ["PinkCat", "CatPunch", "NekoPunch"]
     }
   ]

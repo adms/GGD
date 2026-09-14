@@ -409,8 +409,10 @@ def build(git_link_root=ROOT):
     palworld_av_path=base/'source-inventories/palworld-vfx-sfx-v1/inventory.json'
     palworld_av_document_path=base/'source-inventories/palworld-vfx-sfx-v1/README.md'
     palworld_av_unused_path=base/'source-inventories/palworld-vfx-sfx-v1/unused-assets.json'
+    palworld_av_preserved_audit_path=base/'source-inventories/palworld-vfx-sfx-v1/preserved-source-audit.json'
     palworld_av_entry_path=base/'source-inventories/palworld-vfx-sfx-v1/current-resource-entry.json'
     palworld_av=read(palworld_av_path)
+    palworld_av_preserved_audit=read(palworld_av_preserved_audit_path)
     palworld_av_entry=read(palworld_av_entry_path)
     if (palworld_av.get('schema')!='ggd.palworld-vfx-sfx-inventory@1'
         or palworld_av.get('summary',{}).get('characters')!=3
@@ -419,9 +421,19 @@ def build(git_link_root=ROOT):
         or palworld_av.get('summary',{}).get('acquiredSkillSpecificSfx')!=0
         or palworld_av.get('summary',{}).get('runtimeBindingsAdded')!=0):
         raise ValueError('Palworld VFX/SFX inventory is absent, stale or overclaims readiness')
+    if (palworld_av_preserved_audit.get('schema')!='ggd.palworld-preserved-source-audit@1'
+        or palworld_av_preserved_audit.get('summary',{}).get('characters')!=3
+        or palworld_av_preserved_audit.get('summary',{}).get('modelCandidateFilesVerified')!=23
+        or palworld_av_preserved_audit.get('summary',{}).get('genericCryCandidatesVerified')!=18
+        or palworld_av_preserved_audit.get('summary',{}).get('standaloneVfxCandidates')!=0
+        or palworld_av_preserved_audit.get('summary',{}).get('skillSpecificSfxCandidates')!=0
+        or palworld_av_preserved_audit.get('summary',{}).get('runtimeBindingsAdded')!=0):
+        raise ValueError('Palworld preserved-source audit is absent, stale or overclaims readiness')
     for path,key in ((palworld_av_path,'sha256'),(palworld_av_document_path,'documentSha256'),(palworld_av_unused_path,'unusedAssetIndexSha256')):
         if palworld_av_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('Palworld VFX/SFX current-resource pointer is stale: '+str(path))
+    if palworld_av_entry.get('preservedSourceAuditSha256')!=hashlib.sha256(palworld_av_preserved_audit_path.read_bytes()).hexdigest():
+        raise ValueError('Palworld preserved-source current-resource pointer is stale: '+str(palworld_av_preserved_audit_path))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
