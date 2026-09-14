@@ -36,6 +36,7 @@ import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { cover } from "../../testkit/cover";
+import { registerShippedModelDocs } from "../../testkit/shippedModelDocs";
 import {
   characterKeys,
   distinctCharacters,
@@ -140,6 +141,8 @@ const champ = (id: string): IdentityChampion => {
   if (!c) throw new Error(`champion ${id} missing from content/champions and content/_legacy`);
   return c;
 };
+// GH#1250：身分排序的第三鍵（替身 vs 本人模型）讀模型文件的 glb，⛔ 沒有種子退路 ⇒ 先把出貨的模型文件灌進 registry。
+registerShippedModelDocs(CONTENT_DIR);
 const KEYS = characterKeys(CORPUS);
 const sameCharacter = (a: string, b: string): boolean => KEYS.get(a) === KEYS.get(b);
 

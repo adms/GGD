@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Panel, Btn, Badge } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
-import { loadCollection } from "../content";
+import { loadCollection, loadDocsByIds } from "../content";
 import {
   BODY_COLLECTION,
   BODY_DOC_ID,
@@ -40,6 +40,8 @@ function errText(err: unknown): string {
 export function VoxelBodyPage(): JSX.Element {
   const [doc, setDoc] = useState<VoxelBodiesDoc>(emptyBodiesDoc());
   const [champs, setChamps] = useState<ChampionLite[]>([]);
+  /** GH#1250 —— 英雄指到的那幾份模型文件（判「誰站在通用身體上」要看 glb）。 */
+  const [modelDocs, setModelDocs] = useState<ReadonlyMap<string, unknown>>(new Map());
   const [busy, setBusy] = useState<string | null>(null);
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -62,20 +64,21 @@ export function VoxelBodyPage(): JSX.Element {
       }
       try {
         const rows = await loadCollection("champions");
-        setChamps(
-          rows.map((r: { id: string }) => ({
-            id: r.id,
-            name: (r as { name?: string }).name,
-            modelKey: (r as { modelKey?: string }).modelKey,
-          })),
-        );
+        const lite = rows.map((r: { id: string }) => ({
+          id: r.id,
+          name: (r as { name?: string }).name,
+          modelKey: (r as { modelKey?: string }).modelKey,
+        }));
+        setChamps(lite);
+        const keys = [...new Set(lite.map((c) => c.modelKey).filter((k): k is string => typeof k === "string"))];
+        setModelDocs(await loadDocsByIds("models", keys));
       } catch (err) {
         setApiErr((prev) => prev ?? errText(err));
       }
     })();
   }, []);
 
-  const rows = useMemo(() => bodyRows(champs, doc.bodies), [champs, doc]);
+  const rows = useMemo(() => bodyRows(champs, doc.bodies, modelDocs), [champs, doc, modelDocs]);
   const sum = useMemo(() => bodySummary(rows), [rows]);
 
   const write = async (next: VoxelBodiesDoc, id: string, msg: string): Promise<void> => {

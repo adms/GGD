@@ -4,7 +4,7 @@
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
     "champions": 153,
-    "standIns": 2,
+    "standIns": 3,
     "failures": 0
   },
   "appearances": [
@@ -6699,7 +6699,7 @@
         }
       },
       "teamTintMaterials": [],
-      "isStandIn": false,
+      "isStandIn": true,
       "axesNotCovered": [
         "skin",
         "form",

@@ -271,8 +271,11 @@ export function resolveAppearance(
       // ⭐ 主人的判準：modelKey 的最後一段等於 championId 的最後一段
       //   （`champ.sela` ↔ `sela`、`champ.skin.barbarian` ↔ 沒有人）。
       //   ⛔ 刻意用字串比對而不是查表 —— 查表會是那份對應的第二個住處。
+      // ⭐ GH#1250：把**手上這份**模型文件傳進去 ⇒ 判準看 glb 住在哪（通用身體包），
+      //   ⛔ 不再只查手寫 4 顆 key（`champ.godie-zombiex` 站在殭屍小怪的 blocky-undead.glb 上，
+      //   在此之前對外契約寫它 `isStandIn: false`）。
       isStandIn:
-        isStandInModel(modelKey) &&
+        isStandInModel(modelKey, model) &&
         (modelKey.split(".").pop() ?? "") !== (championId.split(/[.-]/).pop() ?? ""),
 
       axesNotCovered: AXES_NOT_COVERED,
