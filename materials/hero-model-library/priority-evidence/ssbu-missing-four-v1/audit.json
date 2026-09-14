@@ -16,6 +16,7 @@
     "nativeClipCount": 5,
     "formalGeometryEligibleVariants": 6,
     "formalDecimationRequiredVariants": 0,
+    "s3VerifiedVariants": 6,
     "sixStateCompleteVariants": 0,
     "newRuntimeDropdownOptions": 0,
     "reviewMediaReady": 0,
@@ -176,6 +177,8 @@
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+        "archiveMember": "normalized-01/component.glb",
+        "status": "s3-full-readback-verified",
         "readbackReverifiedByThisWorkflow": false
       },
       "productionDeploymentVerified": false
@@ -276,6 +279,8 @@
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+        "archiveMember": "body.glb",
+        "status": "s3-full-readback-verified",
         "readbackReverifiedByThisWorkflow": false
       },
       "productionDeploymentVerified": false
@@ -385,8 +390,10 @@
       "defaultPreserved": "imported.heropikachu",
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
-        "existingUri": null,
-        "readbackReverifiedByThisWorkflow": false
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
+        "archiveMember": "male-c00/candidate.glb",
+        "status": "s3-full-readback-verified",
+        "readbackReverifiedByThisWorkflow": true
       },
       "productionDeploymentVerified": false
     },
@@ -500,8 +507,10 @@
       "defaultPreserved": "imported.heropikachu",
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
-        "existingUri": null,
-        "readbackReverifiedByThisWorkflow": false
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
+        "archiveMember": "female-c01/candidate.glb",
+        "status": "s3-full-readback-verified",
+        "readbackReverifiedByThisWorkflow": true
       },
       "productionDeploymentVerified": false
     },
@@ -591,6 +600,8 @@
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-steve-c00-blender4513-v1-backup/ec511ab6217a007d094bf99939a632bfd01f9590e5a7a53cdbc8599383b72f3e.tar.gz",
+        "archiveMember": "body.glb",
+        "status": "s3-full-readback-verified",
         "readbackReverifiedByThisWorkflow": false
       },
       "productionDeploymentVerified": false
@@ -681,6 +692,8 @@
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-alex-c01-blender4513-v1-backup/13beca9a10a77aa080d8e234d8ca5d36ff7c30517cc53ade2dc315434c8c1b29.tar.gz",
+        "archiveMember": "body.glb",
+        "status": "s3-full-readback-verified",
         "readbackReverifiedByThisWorkflow": false
       },
       "productionDeploymentVerified": false
@@ -746,7 +759,7 @@
     "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
     "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
     "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
-    "Pokémon Trainer 新減面階段尚未上傳 S3；來源轉換既有備份不宣稱涵蓋本批新階段。",
+    "Pokémon Trainer 男／女的新減面階段已由同一份 46 檔封存包覆蓋，S3 完整讀回與逐檔 SHA-256 均通過。",
     "死亡替代目前都沒有目標骨架上的 hurt/down 播放證據，因此只保留提案，不建立 model@1、不加下拉選項、不自動綁定。",
     "既有手動預設完全保留；本收據不代表 Main 合併或正式站部署。"
   ]

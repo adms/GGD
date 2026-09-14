@@ -112,6 +112,17 @@ class SupplementalBackup(unittest.TestCase):
         self.assertEqual(index['sources'][0]['id'], 'original-source')
         self.assertEqual(index['sources'][1]['acquiredAssetPayloadCount'], 0)
 
+    def test_catalog_only_candidate_without_local_path_does_not_block_source_backup(self):
+        downloads, _ = self.decoded()
+        downloads['publicSources'][0]['componentCandidates'].append(
+            dict(id='identity-pending', readiness='identity-pending', runtimeSelectable=False))
+        (self.base / 'download-sources.json').write_text(json.dumps(downloads))
+        self.run_record()
+        downloads, index = self.decoded()
+        catalog_only = downloads['publicSources'][0]['componentCandidates'][1]
+        self.assertNotIn('backupLocations', catalog_only)
+        self.assertEqual(index['sources'][-1]['id'], 'conversion-source')
+
     def test_scoped_uploader_receipt_is_verified_and_registered(self):
         scoped = self.scoped_snapshot('scoped', ['weapon.glb'])
         self.run_record(scoped)

@@ -222,7 +222,13 @@ def main(argv=None, repo=None):
             if not prior:
                 source['supplementalDeliveries'].append(link)
         for candidate in source.get('componentCandidates', []):
-            local = Path(candidate['absolutePath']).resolve()
+            absolute_path = candidate.get('absolutePath')
+            if not absolute_path:
+                # A source may also carry catalog-only or blocked candidates.
+                # Only candidates with a concrete local payload can be linked
+                # to an archive member.
+                continue
+            local = Path(absolute_path).resolve()
             if not local.is_relative_to(source_root):
                 continue
             member = local.relative_to(source_root).as_posix()

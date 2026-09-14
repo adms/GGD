@@ -26,6 +26,8 @@ CONFIG = {
     },
 }
 EVIDENCE_ROOT = Path("materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1")
+BACKUP_ID = "ssbu-ptrainer-formal-decimation-v1-backup"
+BACKUP_RECEIPT = EVIDENCE_ROOT / "s3-backup-receipt.json"
 
 
 def require(value: bool, message: str) -> None:
@@ -53,8 +55,19 @@ def ref(path: Path, data: bytes) -> dict:
 def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
     stage_root = asset_root / "conversions/ssbu-ptrainer-formal-decimation-v1"
     downloads_path = repo / "materials/hero-model-library/download-sources.json"
+    public_files_path = repo / "materials/hero-model-library/public-source-files.json"
     downloads = json.loads(downloads_path.read_text())
+    public_files = json.loads(public_files_path.read_text())
     source = next(row for row in downloads["publicSources"] if row["id"] == "gitlab-ssbu-models")
+    backup_rows = [row for row in public_files["sources"] if row.get("id") == BACKUP_ID]
+    require(len(backup_rows) == 1, "missing verified Pokemon Trainer decimation backup")
+    backup = backup_rows[0]
+    require(all(backup.get(key) is True for key in ("fullReadbackVerified", "s3ReadbackVerified", "localPreserved")),
+            "Pokemon Trainer decimation backup is not fully verified")
+    backup_members = {row["path"]: row for row in backup["files"]}
+    git_backup_receipt = repo / BACKUP_RECEIPT
+    require(git_backup_receipt.is_file() and sha(git_backup_receipt) == backup["receiptSha256"],
+            "Git copy of Pokemon Trainer decimation backup receipt is missing or changed")
     component_rows = source.setdefault("componentCandidates", [])
     attempts = source.setdefault("conversionAttempts", [])
     writes: dict[Path, bytes] = {}
@@ -67,6 +80,18 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
         visual = json.loads((stage / "visual-comparison.json").read_text())
         require(validation["formalAdoptionGeometryEligible"] and validation["motion"]["native"] == 0, f"validation differs: {variant}")
         require(visual["underFivePercentContract"] and visual["humanReview"]["result"] == "accepted", f"visual acceptance missing: {variant}")
+        archive_member = f"{variant}/candidate.glb"
+        backed_up_candidate = backup_members.get(archive_member)
+        require(backed_up_candidate is not None and
+                (backed_up_candidate["bytes"], backed_up_candidate["sha256"]) == (cfg["bytes"], cfg["sha256"]),
+                f"verified backup does not cover candidate: {variant}")
+        backup_locator = {
+            "s3Uri": backup["s3Uri"], "manifestUri": backup["manifestUri"],
+            "s3ArchiveMember": archive_member, "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": backup["receiptPath"], "backupReceiptSha256": backup["receiptSha256"],
+            "backupReceiptGitPath": BACKUP_RECEIPT.as_posix(),
+            "status": "s3-full-readback-verified",
+        }
         evidence = EVIDENCE_ROOT / variant
         fixed = {
             "decimation.json": (stage / "decimation.json").read_bytes(),
@@ -81,7 +106,7 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
             "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
             "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
-            "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+            "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
             "Main merge and production deployment are not verified.",
         ]
         old = next(row for row in component_rows if row.get("id") == cfg["oldComponentId"])
@@ -124,7 +149,7 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
             "status": {"converted": True, "structurallyValidated": True, "visuallyAcceptedIndependentComponent": True,
                 "formalAdoptionGeometryEligible": True, "sixStateComplete": False, "heroBound": False,
                 "runtimeSelectable": False, "deployed": False},
-            "s3": {"newStage": "pending-not-uploaded", "sourceConversionBackup": source_backup}, "limitations": limitations,
+            "s3": {"newStage": backup_locator, "sourceConversionBackup": source_backup}, "limitations": limitations,
         }
         fixed["delivery.json"] = encode(delivery); refs["delivery.json"] = ref(evidence / "delivery.json", fixed["delivery.json"])
         candidate_row = copy.deepcopy(old)
@@ -153,8 +178,12 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
             "limitations": limitations, "deliveryEvidence": refs["delivery.json"], "acceptanceEvidence": refs["acceptance.json"],
             "validationEvidence": refs["validation.json"], "sourceFidelityEvidence": refs["preservation.json"],
             "visualEvidence": refs["visual-comparison.json"], "sourceRebuildEvidence": refs["source-rebuild.json"],
-            "backupStatus": "new-decimation-stage-pending-s3", "s3BackupStatus": "pending-not-uploaded",
-            "s3Uri": None, "s3ManifestUri": None, "backupReceiptPath": None,
+            "backupStatus": "s3-full-readback-verified", "s3BackupStatus": "s3-full-readback-verified",
+            "s3Uri": backup["s3Uri"], "s3ManifestUri": backup["manifestUri"],
+            "s3ArchiveMember": archive_member, "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": backup["receiptPath"], "backupReceiptSha256": backup["receiptSha256"],
+            "backupLocations": [{key: backup_locator[key] for key in
+                ("s3Uri", "s3ArchiveMember", "s3Use", "backupReceiptPath", "backupReceiptSha256")}],
             "sourceConversionBackup": source_backup,
         })
         previous = [row for row in component_rows if row.get("id") == cfg["componentId"]]
@@ -163,7 +192,8 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
         attempt = {"id": cfg["componentId"], "componentId": cfg["componentId"], "status": candidate_row["readiness"],
             "localPath": str(stage), "outputPath": str(candidate), "outputSha256": cfg["sha256"],
             "nativeAnimationCount": 0, "runtimeReady": False, "runtimeSelectable": False,
-            "backupStatus": "pending-not-uploaded", "formalHeroAdoptionEligible": True}
+            "backupStatus": "s3-full-readback-verified", "formalHeroAdoptionEligible": True,
+            "s3Uri": backup["s3Uri"], "s3ArchiveMember": archive_member}
         old_attempt = [row for row in attempts if row.get("id") == cfg["componentId"]]
         if old_attempt: old_attempt[0].clear(); old_attempt[0].update(attempt)
         else: attempts.append(attempt)
@@ -173,7 +203,7 @@ def build(repo: Path, asset_root: Path) -> dict[Path, bytes]:
     writes[downloads_path] = encode(downloads)
     writes[repo / EVIDENCE_ROOT / "batch.json"] = encode({
         "schema": "ggd-ssbu-ptrainer-formal-decimation-batch@1", "candidates": delivered,
-        "summary": {"converted": 2, "formalGeometryEligible": 2, "nativeMotionCount": 0, "runtimeDropdownRegistered": 0, "s3NewStageUploaded": 0, "productionDeployed": 0},
+        "summary": {"converted": 2, "formalGeometryEligible": 2, "nativeMotionCount": 0, "runtimeDropdownRegistered": 0, "s3NewStageUploaded": 2, "productionDeployed": 0},
     })
     return writes
 

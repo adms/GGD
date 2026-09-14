@@ -10,6 +10,20 @@
     "sha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
     "convertedPngFiles": 55
   },
+  "textureConversionBackup": {
+    "id": "kof-xiv-priority-vfx-textures-20260914-v1-backup",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.files.json",
+    "archiveBytes": 3571119,
+    "archiveSha256": "64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36",
+    "fileCount": 56,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true,
+    "receiptGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/s3-backup-receipt.json",
+    "receiptSha256": "cbe113181a58dfe7b562859c7f11491224b7df42300c58c3ff33c1470661a4bb",
+    "s3Use": "backup-only-not-runtime-entry"
+  },
   "summary": {
     "characters": 3,
     "acquiredEffectDirectoryFiles": 256,

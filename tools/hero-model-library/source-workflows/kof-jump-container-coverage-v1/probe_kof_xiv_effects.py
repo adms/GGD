@@ -28,6 +28,8 @@ CHARACTERS = {
     "KYO": {"nameZh": "草薙京", "heroIds": []},
 }
 SOURCE_ID = "steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+BACKUP_ID = "kof-xiv-priority-vfx-textures-20260914-v1-backup"
+BACKUP_RECEIPT_GIT_PATH = "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/s3-backup-receipt.json"
 ASCII_RUN = re.compile(rb"[ -~]{3,}")
 MEANINGFUL_LABEL = re.compile(
     r"(?:fire|smoke|grain|light|glare|spark|locus|shockwave|distortion|blur|paper|"
@@ -181,6 +183,22 @@ def build(repo: Path, workspace: Path, write: bool) -> dict[str, object]:
     source_root = workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara"
     conversion_manifest_path = workspace / "GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/manifest.json"
     conversion = json.loads(conversion_manifest_path.read_text(encoding="utf-8"))
+    public_files = json.loads((repo / "materials/hero-model-library/public-source-files.json").read_text(encoding="utf-8"))
+    backup_rows = [row for row in public_files["sources"] if row.get("id") == BACKUP_ID]
+    if len(backup_rows) != 1:
+        raise ValueError("missing unique KOF XIV VFX conversion backup")
+    backup = backup_rows[0]
+    if not all(backup.get(key) is True for key in ("fullReadbackVerified", "s3ReadbackVerified", "localPreserved")):
+        raise ValueError("KOF XIV VFX conversion backup is not fully read-back verified")
+    backup_receipt = repo / BACKUP_RECEIPT_GIT_PATH
+    if not backup_receipt.is_file() or sha256(backup_receipt) != backup["receiptSha256"]:
+        raise ValueError("Git copy of KOF XIV VFX backup receipt is missing or changed")
+    backup_members = {row["path"]: row for row in backup["files"]}
+    for row in conversion["files"]:
+        member = Path(row["outputAbsolutePath"]).resolve().relative_to(conversion_manifest_path.parent.resolve()).as_posix()
+        pinned = backup_members.get(member)
+        if pinned is None or (pinned["bytes"], pinned["sha256"]) != (row["outputBytes"], row["outputSha256"]):
+            raise ValueError(f"verified KOF XIV VFX backup does not cover {member}")
     gate = load_vfx_safety_gate(repo)
     carrier_audits = {
         row["outputAbsolutePath"]: blend_carrier_audit(Path(row["outputAbsolutePath"]), gate)
@@ -302,6 +320,20 @@ def build(repo: Path, workspace: Path, write: bool) -> dict[str, object]:
             "absolutePath": str(conversion_manifest_path.resolve()),
             "sha256": sha256(conversion_manifest_path),
             "convertedPngFiles": len(conversion["files"]),
+        },
+        "textureConversionBackup": {
+            "id": BACKUP_ID,
+            "s3Uri": backup["s3Uri"],
+            "manifestUri": backup["manifestUri"],
+            "archiveBytes": backup["bytes"],
+            "archiveSha256": backup["sha256"],
+            "fileCount": backup["fileCount"],
+            "fullGetVerified": True,
+            "allMemberSha256Verified": True,
+            "localUnchanged": True,
+            "receiptGitPath": BACKUP_RECEIPT_GIT_PATH,
+            "receiptSha256": backup["receiptSha256"],
+            "s3Use": "backup-only-not-runtime-entry",
         },
         "summary": {
             "characters": len(characters),

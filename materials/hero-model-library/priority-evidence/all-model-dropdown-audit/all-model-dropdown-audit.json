@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "19889997892bed10e61a43d7544fd7bc91b4fc170e5323beb979d8869b58b57c"
+      "sha256": "864381d746406dfd6dcc757dddf83e2313cc8b4984cb62bd58018a90003fbffe"
     }
   },
   "summary": {
@@ -927,7 +927,7 @@
         "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
         "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
         "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
-        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
         "Main merge and production deployment are not verified."
       ]
     },
@@ -980,7 +980,7 @@
         "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
         "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
         "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
-        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
         "Main merge and production deployment are not verified."
       ]
     },

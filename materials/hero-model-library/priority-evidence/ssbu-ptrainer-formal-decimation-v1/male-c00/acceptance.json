@@ -16,7 +16,7 @@
     "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
     "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
     "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
-    "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+    "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
     "Main merge and production deployment are not verified."
   ]
 }

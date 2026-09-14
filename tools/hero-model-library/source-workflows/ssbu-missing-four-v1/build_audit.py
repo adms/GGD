@@ -193,7 +193,12 @@ def build() -> dict[str, Any]:
             "semanticClipMap": {}, "missingRequiredStates": REQUIRED_STATES,
             "modelComponentAccepted": True, "sixStateComplete": False,
             "modelOptionRegistered": False, "defaultPreserved": defaults[spec["heroId"]],
-            "blocker": blocker, "s3": {"existingUri": component.get("s3Uri"), "readbackReverifiedByThisWorkflow": False},
+            "blocker": blocker, "s3": {
+                "existingUri": component.get("s3Uri"),
+                "archiveMember": component.get("s3ArchiveMember"),
+                "status": component.get("s3BackupStatus", component.get("backupStatus")),
+                "readbackReverifiedByThisWorkflow": component.get("s3BackupStatus") == "s3-full-readback-verified",
+            },
             "productionDeploymentVerified": False,
         })
     unique_sources = {item["absolutePath"]: item for row in rows for item in row["sourceFiles"] + row["nativeMotionFiles"]}
@@ -220,6 +225,7 @@ def build() -> dict[str, Any]:
             "nativeClipCount": sum(len(row["nativeClipNames"]) for row in rows),
             "formalGeometryEligibleVariants": sum(row["formalHeroAdoption"]["eligible"] for row in rows),
             "formalDecimationRequiredVariants": sum(row["formalHeroAdoption"]["requiresDecimatedCandidate"] for row in rows),
+            "s3VerifiedVariants": sum(row["s3"]["status"] == "s3-full-readback-verified" for row in rows),
             "sixStateCompleteVariants": 0, "newRuntimeDropdownOptions": 0, "reviewMediaReady": 0,
             "productionDeployed": 0,
         },
@@ -228,7 +234,7 @@ def build() -> dict[str, Any]:
             "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
             "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
             "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
-            "Pokémon Trainer 新減面階段尚未上傳 S3；來源轉換既有備份不宣稱涵蓋本批新階段。",
+            "Pokémon Trainer 男／女的新減面階段已由同一份 46 檔封存包覆蓋，S3 完整讀回與逐檔 SHA-256 均通過。",
             "死亡替代目前都沒有目標骨架上的 hurt/down 播放證據，因此只保留提案，不建立 model@1、不加下拉選項、不自動綁定。",
             "既有手動預設完全保留；本收據不代表 Main 合併或正式站部署。",
         ],
@@ -251,7 +257,7 @@ def report_block(audit: dict[str, Any]) -> str:
         display = "Steve／Alex" if hero_id == "acquired-minecraft" else rows[0]["nameZh"].split("（")[0]
         lines.append(f"| {display}（`{hero_id}`） | {len(rows)} | {clips} | {formal} | 六態缺；未新增 model@1／下拉 |")
     lines += [
-        "", "Pokémon Trainer 男／女已分別從 10,698／11,086 面降到 7,896／7,892 面；逐位元重建、Khronos 0 error／0 warning、GGD hard policy、材質／貼圖／骨架保存與 Babylon front/back/isometric A/B 均通過。最大 changed-pixel 差異為 0.300156%／0.224531%（契約上限 5%）。新減面階段 S3 仍為待上傳。", "",
+        "", "Pokémon Trainer 男／女已分別從 10,698／11,086 面降到 7,896／7,892 面；逐位元重建、Khronos 0 error／0 warning、GGD hard policy、材質／貼圖／骨架保存與 Babylon front/back/isometric A/B 均通過。最大 changed-pixel 差異為 0.300156%／0.224531%（契約上限 5%）。46 檔減面階段已完成 S3 完整讀回與逐檔 SHA-256 驗證。", "",
         "Mario 的原生 clip 保留 `d01specialairsdash`、`d01specialairsend`、`d01specialairsjump`、`d01specialsdash`、`d01specialsend`，沒有把特殊招式硬標為六態。其餘三組固定來源原生 body motion 都是 0。", "",
         "四組的「hurt/down＋向上淡出」死亡替代均為待 owner 審查提案；目前沒有目標骨架 hurt/down 動作與可播放審查媒體，所以不可自動綁定。既有 `imported.linkstik`、`imported.herobuu`、`imported.heropikachu`、`champ.thorne` 預設保持不變。", "",
         "來源：`tools/hero-model-library/source-workflows/ssbu-missing-four-v1/build_audit.py`；收據：`materials/hero-model-library/priority-evidence/ssbu-missing-four-v1/audit.json`。", "", END,
