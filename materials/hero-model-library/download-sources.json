@@ -3550,14 +3550,9 @@
         "usage": "legacy; human permission required; not runtime-ready"
       },
       "backendIntegration": {
-        "required": true,
         "state": "pending-standardization",
-        "heroIds": [
-          "community-review-22-20260907"
-        ],
-        "ownerEntryIds": [],
-        "release": null,
-        "selectionVerified": false
+        "selectionVerified": false,
+        "productionDeploymentVerified": false
       },
       "selectionClass": "community-mod",
       "supplementalDeliveries": [
@@ -4357,6 +4352,73 @@
           "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
           "sourceAnimatorComponentCount": 6,
           "sourceAnimationClipCount": 0
+        },
+        {
+          "id": "rezero-rem-thunderstore-0.1.1-static-skinned-formal-decimation-v1",
+          "conversionCandidateId": "rezero-rem-thunderstore-0.1.1-static-skinned-formal-decimation-v1",
+          "sourceId": "thunderstore-rezero",
+          "sourceClass": "community-mod",
+          "selectionClass": "community-mod",
+          "nameZh": "蕾姆",
+          "originalName": "Rem",
+          "workZh": "Re:Zero",
+          "sourceGame": "Lethal Company community model replacement",
+          "platform": "PC / Unity AssetBundle",
+          "nativeId": "remPrefab",
+          "sourceVersion": "0.1.1",
+          "resourceRole": "character-body-decimation-candidate-pending-validation",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-formal-decimation-v1/final/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-formal-decimation-v1/final/body.glb",
+          "bytes": 606944,
+          "sha256": "66ac1e2abc5e04d066c03514c7ed387a6808d5182bfad68b4e0fd84d887e8f12",
+          "componentReady": false,
+          "converted": true,
+          "structuralValidationPassed": false,
+          "visualValidationPassed": false,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "possibleTargetHeroIds": [
+            "b2-rem"
+          ],
+          "identityIds": [
+            "rem"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "triangles": 7883,
+          "drawPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 151,
+          "textureCount": 1,
+          "readiness": "formal-decimated-local-candidate-pending-full-structural-visual-and-motion-review",
+          "formalAdoption": {
+            "triggerTrianglesAbove": 10000,
+            "targetTrianglesMax": 8000,
+            "sourceTriangles": 18328,
+            "candidateTriangles": 7883
+          },
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain absent.",
+            "This is a geometry-only candidate; source and output texture/material containers are retained without texture resampling.",
+            "Automated front renders are evidence only. Owner visual acceptance and any borrowed/procedural-motion playback review are still required before dropdown registration.",
+            "No VFX, sound effect, dialogue or voice asset was accepted from this source."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/receipt.json",
+            "bytes": 1988,
+            "sha256": "75012aa08e36957217bfa83f4393bba79dd78f4b1cf767932e958e211cca5874"
+          }
         }
       ],
       "conversionAttempts": [

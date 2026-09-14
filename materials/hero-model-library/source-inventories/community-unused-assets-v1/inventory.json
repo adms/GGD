@@ -3,8 +3,8 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3336844,
-      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
+      "bytes": 3339978,
+      "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -127,7 +127,7 @@
   },
   "summary": {
     "sourceRecords": 59,
-    "componentRecords": 41,
+    "componentRecords": 42,
     "excludedPublicSourceRecords": 61,
     "excludedReasons": {
       "not-acquired": 2,
@@ -172,9 +172,9 @@
       "verifiedBytes": 26424809517,
       "missingFiles": 39,
       "mismatchedFiles": 1,
-      "componentFilesExpected": 41,
-      "componentFilesVerified": 41,
-      "componentVerifiedBytes": 47515376,
+      "componentFilesExpected": 42,
+      "componentFilesVerified": 42,
+      "componentVerifiedBytes": 48122320,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0
     }
@@ -196,7 +196,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "c15d9c16983b71a3ee85662acc5925ac933b100e4e16e81d50aac90701743b8d"
+    "sha256": "6f903172e00136eb4b265bf1eb3f5bc50cb1e052ec2a7946718f3c95292174e0"
   },
   "sources": [
     {
@@ -1905,7 +1905,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1971,7 +1971,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -3567,7 +3567,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+        "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [
@@ -4000,7 +4000,8 @@
         "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
-        "rezero-felix-thunderstore-0.1.1-static-skinned-v1"
+        "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+        "rezero-rem-thunderstore-0.1.1-static-skinned-formal-decimation-v1"
       ]
     },
     {
@@ -5568,6 +5569,40 @@
         "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
         "Unity custom shader behavior is represented only by a portable base-color PBR material.",
         "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ]
+    },
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-static-skinned-formal-decimation-v1",
+      "sourceId": "thunderstore-rezero",
+      "nameZh": "蕾姆",
+      "originalName": "Rem",
+      "nativeId": "remPrefab",
+      "resourceRole": "character-body-decimation-candidate-pending-validation",
+      "assetKinds": [
+        "model"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: model-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-formal-decimation-v1/final/body.glb",
+      "gitPath": null,
+      "s3Uri": null,
+      "sha256": "66ac1e2abc5e04d066c03514c7ed387a6808d5182bfad68b4e0fd84d887e8f12",
+      "bytes": 606944,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": false,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "formal-decimated-local-candidate-pending-full-structural-visual-and-motion-review",
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain absent.",
+        "This is a geometry-only candidate; source and output texture/material containers are retained without texture resampling.",
+        "Automated front renders are evidence only. Owner visual acceptance and any borrowed/procedural-motion playback review are still required before dropdown registration.",
+        "No VFX, sound effect, dialogue or voice asset was accepted from this source."
       ]
     },
     {

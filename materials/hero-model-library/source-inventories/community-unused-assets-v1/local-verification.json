@@ -1,7 +1,7 @@
 {
   "schema": "ggd.community-unused-assets-local-verification@1",
   "inputSha256": {
-    "downloadSources": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+    "downloadSources": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
     "publicSourceFiles": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64"
   },
   "scope": "All acquired sources in the four-kind community/MOD inventory; every authoritative manifest member is checked.",
@@ -14,9 +14,9 @@
     "verifiedBytes": 26424809517,
     "missingFiles": 39,
     "mismatchedFiles": 1,
-    "componentFilesExpected": 41,
-    "componentFilesVerified": 41,
-    "componentVerifiedBytes": 47515376,
+    "componentFilesExpected": 42,
+    "componentFilesVerified": 42,
+    "componentVerifiedBytes": 48122320,
     "componentMissingFiles": 0,
     "componentMismatchedFiles": 0
   },
@@ -184,9 +184,9 @@
       "allManifestFilesVerified": true,
       "verificationState": "all-enumerated-files-verified",
       "problems": [],
-      "componentFilesExpected": 6,
-      "componentFilesVerified": 6,
-      "componentVerifiedBytes": 6083216,
+      "componentFilesExpected": 7,
+      "componentFilesVerified": 7,
+      "componentVerifiedBytes": 6690160,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0,
       "allEnumeratedComponentsVerified": true,
