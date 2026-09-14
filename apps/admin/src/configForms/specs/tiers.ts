@@ -270,10 +270,10 @@ export const DAMAGE_TIERS_SPEC: ConfigDocSpec<"damageTiers"> = {
       const n = castsToKillBase(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
       return `**LV${lv} ${n.toFixed(1)} 發 ${n <= KILL_CASTS_REF ? "✅" : "❌"} ${ANCHOR_ROLE[lv]}**`;
     }).join("・")}。每一級**自己**要求的錨是 ${BALANCE_ANCHOR_LEVELS.map((lv) => `LV${lv} ${anchorFloor(lv)}`).join(" / ")}。`,
-    `⚠️ **玩家實際**要打幾發是**另一個數字**（含系統倍率）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
+    `試算・照血條算要幾發「${SKILL_TIER_NAMES[0]}」（分母＝引擎最終血量，含 HP 系統倍率；⛔ **沒算 AP 加成**）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
       const n = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
       return `LV${lv} ${n.toFixed(1)} 發`;
-    }).join("・")}。⭐ 兩欄**刻意不相等**，差距就是 HP 系統倍率本身 —— 那正是你要的旋鈕。⛔ 拿這一欄去對門檻是**兩個空間混算**（2026-08-22 抓到：產生的平衡文件因此把三個錨點全印 ❌，而閘一路是綠的）。`,
+    }).join("・")}。只是顯示，⛔ 不是門檻、不評判 —— owner 2026-09-15（逐字）：「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」。它和上一行刻意不相等（差的就是 HP 系統倍率），⛔ 不拿它去對 ${KILL_CASTS_REF} 發。`,
     "⚠️ 高等級的缺口**不是這五格調得掉的**：血量比傷害長得快。要補它得動成長曲線，⛔ 不是把這一頁填爆。",
     "⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5 倍），再在傷害軸打一次折就是同一個懲罰收兩次。",
     "⚠️ 「範圍·極小」是這個讀法唯一壞掉的一格。owner 的答案是「**那一格要求傷害是大／極大**」，而它住在「編輯器創作規則」頁的相稱性表，⛔ 不是把這張表拆成兩張。",
