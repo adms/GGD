@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { sortModelVersions, modelVersionAutomaticEligible, modelSelectionClass, MODEL_SOURCE_LABELS, MODEL_SOURCE_ORDER, MODEL_SELECTION_LABELS, MODEL_SELECTION_ORDER, type ChampionModelVersionState, type ModelVersionCommand, type ModelVersionSource } from "@ggd/shared/content/schema/championModelVersions";
 export interface ModelSelectionApi {
   fetchDoc(collection: "models", id: string): Promise<{ doc: Record<string, unknown> | null }>;
@@ -11,6 +11,12 @@ export interface ModelSelectionApi {
 import { Btn, Panel } from "./widgets";
 import { DANGER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
+/**
+ * 🔭 即時預覽（owner 2026-09-15「下拉式選單 要能即時載入御覽」）——
+ * ⛔ 一定要 lazy：`ModelPreview` 帶著 Babylon（~1MB），⛔ 不可以進 admin 主 bundle（contentGate.test.ts）。
+ */
+const LazyModelPreview = lazy(() => import("./ModelPreview").then((m) => ({ default: m.ModelPreview })));
+
 const KIND_LABELS: Record<ModelVersionSource["kind"], string> = {
   exact: "同一角色", alternate: "同角色其他形態", "style-proxy": "相近風格替代", previous: "原上線版本",
 };
@@ -19,6 +25,8 @@ const inputStyle = { background: "#10141f", color: TEXT_MAIN, border: "1px solid
 export function ChampionModelVersions(props: {
   api: ModelSelectionApi; championId: string; document: unknown; allowRegister?: boolean; disabled: boolean; dirty: boolean;
   onBusy: (busy: boolean) => void; onSaved: () => void;
+  /** 預覽怎麼畫 —— 預設是 lazy 的 3D `ModelPreview`；守衛換成一個看得見的樁（無 DOM 的測試環境跑不了 Babylon）。 */
+  preview?: (doc: Record<string, unknown>, role: "selected" | "candidate") => React.ReactNode;
 }): React.JSX.Element {
   const { api, championId } = props;
   const [state, setState] = useState<ChampionModelVersionState | null>(null);
@@ -27,6 +35,7 @@ export function ChampionModelVersions(props: {
   const [notice, setNotice] = useState("");
   const [models, setModels] = useState<string[]>([]);
   const [model, setModel] = useState<Record<string, unknown> | null>(null);
+  const [candidate, setCandidate] = useState<Record<string, unknown> | null>(null);
   const [sourceModelKey, setSourceModelKey] = useState("");
   const [label, setLabel] = useState("");
   const [source, setSource] = useState<ModelVersionSource>({ kind: "exact", character: "", work: "", library: "", reference: "", tier: "300heroes" });
@@ -52,6 +61,19 @@ export function ChampionModelVersions(props: {
     if (selected) void api.fetchDoc("models", selected).then((result) => { if (current) setModel(result.doc); });
     return () => { current = false; };
   }, [api, selected]);
+  // ⭐ 新增選項之前也要看得到：輸入的是目錄裡真的有的模型 id 才去抓（⛔ 不對每一個按鍵發請求）
+  const candidateKey = models.includes(sourceModelKey.trim()) ? sourceModelKey.trim() : "";
+  useEffect(() => {
+    let current = true;
+    setCandidate(null);
+    if (candidateKey) void api.fetchDoc("models", candidateKey).then((result) => { if (current) setCandidate(result.doc); });
+    return () => { current = false; };
+  }, [api, candidateKey]);
+  const renderPreview = props.preview ?? ((doc: Record<string, unknown>) => (
+    <Suspense fallback={<div style={{ color: TEXT_DIM, fontSize: 12 }}>正在載入 3D 預覽…</div>}>
+      <LazyModelPreview doc={doc} champion={props.document} />
+    </Suspense>
+  ));
 
   const apply = async (command: ModelVersionCommand) => {
     props.onBusy(true); setError(null); setNotice("");
@@ -75,6 +97,10 @@ export function ChampionModelVersions(props: {
           </option>)}
         </select>
       </label>
+      {model && <div data-field="model-preview" data-glb={String(model.glbPath ?? "")}>
+        <div style={{ color: TEXT_DIM, fontSize: 12, marginBottom: 4 }}>即時預覽（只看，⛔ 不會上線；按「套用選取版本」才會換）</div>
+        {renderPreview(model, "selected")}
+      </div>}
       {version && <div style={{ color: TEXT_DIM, fontSize: 12 }}>
         素材角色：{version.source.character} · 作品：{version.source.work} · 素材庫：{version.source.library}<br />
         來源：{version.source.reference}<br />
@@ -89,6 +115,10 @@ export function ChampionModelVersions(props: {
         <fieldset disabled={locked} style={{ border: 0, padding: "10px 0", display: "grid", gap: 8 }}>
           <label>已匯入模型<input aria-label="新增版本的模型" list={`model-options-${championId}`} style={inputStyle} value={sourceModelKey} onChange={(e) => setSourceModelKey(e.target.value)} /></label>
           <datalist id={`model-options-${championId}`}>{models.map((id) => <option key={id} value={id} />)}</datalist>
+          {candidate && <div data-field="model-candidate-preview" data-glb={String(candidate.glbPath ?? "")}>
+            <div style={{ color: TEXT_DIM, fontSize: 12, marginBottom: 4 }}>候選模型預覽（新增前先看動作與朝向）</div>
+            {renderPreview(candidate, "candidate")}
+          </div>}
           <label>版本名稱<input aria-label="模型版本名稱" maxLength={160} style={inputStyle} value={label} onChange={(e) => setLabel(e.target.value)} /></label>
           <label>來源類別<select aria-label="模型來源類別" style={inputStyle} value={source.tier} onChange={(e) => setSource({ ...source, tier: e.target.value as ModelVersionSource["tier"] })}>{MODEL_SOURCE_ORDER.map((tier) => <option key={tier} value={tier}>{MODEL_SOURCE_LABELS[tier]}</option>)}</select></label>
           <label>預設順位<select aria-label="模型來源順位" style={inputStyle} value={source.selectionClass ?? source.tier} onChange={(e) => setSource({ ...source, selectionClass: e.target.value as ModelVersionSource["selectionClass"] })}>{MODEL_SELECTION_ORDER.map((key) => <option key={key} value={key}>{MODEL_SELECTION_LABELS[key]}</option>)}</select></label>

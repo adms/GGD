@@ -1,0 +1,13 @@
+/* 後台模型即時預覽 —— 只給 ModelPanel 的幾個 class（取自 apps/editor/src/styles.css），
+   ⛔ 不整份匯入編輯器的全域樣式（那會改到後台其他頁）。變數在後台沒有定義 ⇒ 一律帶預設值。 */
+.admin-model-preview .preview3d { margin-bottom: 8px; }
+.admin-model-preview .preview3d-canvas { width: 100%; height: 300px; display: block; border: 1px solid var(--line, #2c3448); border-radius: 6px; background: #0b0d12; outline: none; touch-action: none; }
+.admin-model-preview .preview3d-controls { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; font-size: 12px; }
+.admin-model-preview .preview3d-controls select { max-width: 220px; font-size: 12px; }
+.admin-model-preview .preview3d-check { display: flex; align-items: center; gap: 3px; font-size: 12px; color: var(--muted, #8a93a6); }
+.admin-model-preview .preview3d-clipmap { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.admin-model-preview .preview3d-clipmap button { font-size: 11px; padding: 2px 7px; }
+.admin-model-preview .preview3d-clipmap .clip-ok { border-color: #3f7b4f; }
+.admin-model-preview .preview3d-clipmap .clip-missing { border-color: var(--error, #ff6b6b); color: var(--error, #ff6b6b); opacity: 0.8; }
+.admin-model-preview .preview-note { color: var(--muted, #8a93a6); font-size: 12px; }
+.admin-model-preview .preview3d-error { color: var(--error, #ff6b6b); }
