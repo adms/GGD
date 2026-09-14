@@ -259,3 +259,32 @@ describe("select-voice pick + gain", () => {
     expect(selectVoiceGain("soundset")).toBe(1);
   });
 });
+
+/**
+ * ⭐ 2026-09-15 —— **內容檔宣告的變身對**也要借語音（梅普露 b2-maple ↔ b2-maple-alt）。
+ * ⛔ 在此之前執行期只查 w3x 那張 26 對的表 ⇒ 梅普露一變身就啞了，而每一條語音覆蓋測試都是綠的
+ *    （它們的名單不含變身態，而且不載入 registry ⇒ 結構上看不到這條路）。
+ * ⭐ 驗出貨的東西：出貨的 `content/champions` 變身宣告 × 出貨的 MANIFEST，走出貨的 `resolveVoicePackId`。
+ */
+describe("content-declared transform pairs borrow the counterpart's pack", () => {
+  it("every shipped content pair with exactly one voiced half resolves the other half to it", async () => {
+    const { readdirSync, readFileSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const { contentFormPairs } = await import("@ggd/shared/content/voiceFormSharing");
+    const { Champions } = await import("@ggd/shared/sim/content/registry");
+    const { resolveVoicePackId, voicePackFromDoc: fromDoc } = await import("./selectVoiceLadder");
+    const content = join(import.meta.dirname, "../../../../content");
+    const docs = readdirSync(join(content, "champions"))
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => JSON.parse(readFileSync(join(content, "champions", f), "utf8")));
+    const pack = fromDoc(JSON.parse(readFileSync(join(content, VOICE_PACK_MANIFEST_PATH), "utf8")));
+    expect(pack, "出貨的語音 MANIFEST 讀不到").not.toBeNull();
+    const oneSided = contentFormPairs(docs).filter((p) => !!pack!.champions[p.baseId] !== !!pack!.champions[p.alternateId]);
+    expect(oneSided.length, "⛔ 出貨內容裡找不到任何單邊有語音包的變身對 ⇒ 這一條在量空氣").toBeGreaterThan(0);
+    for (const d of docs) if (d.transform) Champions.register(d.id, d as never);
+    for (const p of oneSided) {
+      const [mute, donor] = pack!.champions[p.baseId] ? [p.alternateId, p.baseId] : [p.baseId, p.alternateId];
+      expect(resolveVoicePackId(pack, mute), `${mute} 變身之後應該借 ${donor} 的語音包`).toEqual({ id: donor, sharedFrom: donor });
+    }
+  });
+});

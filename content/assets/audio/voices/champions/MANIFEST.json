@@ -30,10 +30,16 @@
   },
   "generatedCount": 132,
   "partialCount": 81,
-  "sharedCount": 19,
-  "championCount": 151,
+  "sharedCount": 20,
+  "championCount": 152,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
+    {
+      "championId": "b2-maple-alt-9769eb88b85b",
+      "sharedFrom": "b2-maple",
+      "heroNumber": "",
+      "direction": "base-to-alternate"
+    },
     {
       "championId": "godie-e00l",
       "sharedFrom": "godie-e002",
