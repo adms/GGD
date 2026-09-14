@@ -2,7 +2,7 @@
   "schema": "ggd-priority-model-policy-audit@1",
   "generatedFrom": {
     "priorityRelease": "materials/hero-model-library/priority-release.json",
-    "priorityReleaseSha256": "a26eba4def9edc782106140fe043a8eab940b475dc1df04e78da16a7a90a9036",
+    "priorityReleaseSha256": "18f19ce5c7fb2d7bbac9f3da5eb24a727f8010c981f604619987d810ea402ced",
     "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
     "adoptionPolicySha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf",
     "runtimeBudget": "packages/shared/src/content/modelUpload/budget.ts",
