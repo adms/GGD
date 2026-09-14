@@ -80,6 +80,13 @@ const NO_ARTIFACT: Record<string, string> = {
  * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
  */
 const GENERATOR_NO_CHECK: Record<string, string> = {
+  "valhalla-intro":
+    "⭐ 2026-09-15（GH#1258）—— `strip_dev_notes.py` 是**一次性、欄位級**的剝除器：它把 44 張卡描述裡的" +
+    "開發流程樣板剝掉，並把**剝之前的原文**另存成 `docs/legacy/_valhalla-card-dev-notes-full.md`（第一·五守則：另存）。" +
+    "⇒ 那份 legacy 檔是**歷史快照**，⛔ 不是「會隨來源漂移的產物」：剝完之後卡上已經沒有樣板，重跑只會得到空集合，" +
+    "它沒有「過期」這種狀態。之後防回流的是兩條閘：`championDevNotesStripped.test.ts`（全部卡）與 " +
+    "`valhallaShippedRoster.test.ts`（英靈殿印出來的字），以及兩支匯入器在組裝處 import 同一個 `stripped()`。" +
+    "反駁方式：哪一天這支腳本被當成常駐產生器重跑並**改寫**那份 legacy 檔（而不是一次性另存），刪掉本列、給它 `*:check`。",
   "hero-model-library":
     "⭐ 2026-09-13 —— `import_kisaragi_train_audio.py` 是一次性的外部素材匯入器，" +
     "⛔ 不是可以從 repo 內來源重建的產生器：它強制要求 `--intake` 指向本機/S3 保存的" +
