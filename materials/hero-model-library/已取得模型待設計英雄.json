@@ -60,7 +60,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+      "sha256": "494b485c3e2d4f292a247238711b2c10741097775cd80a2f2b71eb2879f97140"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -701,6 +701,10 @@
     {
       "path": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json",
       "sha256": "ad2bbd112199d7389e220455e05577c49446db47ead0f699184b5316f5aab2c4"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json",
+      "sha256": "c866823f7079998a1624239dfce27466c28359017c83c5372bb58125b5536cc2"
     }
   ],
   "characters": [
@@ -88225,6 +88229,46 @@
           },
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
           "localSizeMatches": true
+        },
+        {
+          "id": "mba-unused-ruru-native-six-motion-v1",
+          "library": "mba",
+          "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+          "gitPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+          "bytes": 618276,
+          "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+          "format": "glTF Binary",
+          "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-mba-character-body-native-motion-reserve",
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "runtimeDropdownRegistered": false,
+          "defaultEligible": false,
+          "existsLocal": true,
+          "localSizeMatches": true,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/conversion.json",
+            "bytes": 12022,
+            "sha256": "41d1ddefec467b6a2fc06dd6da82beddcc8bfec6e19f8fd11d6915729905ef98"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-proof.json",
+            "bytes": 2408,
+            "sha256": "d7dbe142224faec6e1178554b8da124d32fa4b6b06bf05e10472c476e420c5a2"
+          },
+          "missing": [
+            "GGD hero definition and skill design",
+            "motion playback and semantic approval",
+            "D-Down death-surrogate approval",
+            "source-engine shader parity",
+            "backend dropdown registration and selection test",
+            "Git commit S3 backup and Main deployment verification"
+          ]
         }
       ],
       "mappedHeroIds": [],
@@ -88487,6 +88531,46 @@
           },
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara05/Kirara.glb",
           "localSizeMatches": true
+        },
+        {
+          "id": "mba-unused-kirara-native-six-motion-v1",
+          "library": "mba",
+          "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+          "gitPath": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+          "bytes": 911004,
+          "sha256": "86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6",
+          "format": "glTF Binary",
+          "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-mba-character-body-native-motion-reserve",
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "runtimeDropdownRegistered": false,
+          "defaultEligible": false,
+          "existsLocal": true,
+          "localSizeMatches": true,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/conversion.json",
+            "bytes": 11820,
+            "sha256": "d9b11fa4e114acd78df6dc466bb83ae309067e4a696f568f239d3ed820350155"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/webgl-proof.json",
+            "bytes": 2408,
+            "sha256": "27d571de97e04c6924201af0ff8ccec41593bfd3a0c4300c28cbe6078189f0e1"
+          },
+          "missing": [
+            "GGD hero definition and skill design",
+            "motion playback and semantic approval",
+            "D-Down death-surrogate approval",
+            "source-engine shader parity",
+            "backend dropdown registration and selection test",
+            "Git commit S3 backup and Main deployment verification"
+          ]
         }
       ],
       "mappedHeroIds": [],
@@ -88618,6 +88702,46 @@
           },
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara06/Sarara.glb",
           "localSizeMatches": true
+        },
+        {
+          "id": "mba-unused-sarara-native-six-motion-v1",
+          "library": "mba",
+          "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+          "gitPath": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+          "bytes": 750360,
+          "sha256": "b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1",
+          "format": "glTF Binary",
+          "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-mba-character-body-native-motion-reserve",
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "runtimeDropdownRegistered": false,
+          "defaultEligible": false,
+          "existsLocal": true,
+          "localSizeMatches": true,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/conversion.json",
+            "bytes": 11566,
+            "sha256": "aa273f6665defe939825d891c40d158093a3b0ada11072c9039d87e07a545a49"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/webgl-proof.json",
+            "bytes": 2409,
+            "sha256": "4894ddc01c3d3d74beec521affac39d82e66f4ef52b47db781a68f1b6ce551fb"
+          },
+          "missing": [
+            "GGD hero definition and skill design",
+            "motion playback and semantic approval",
+            "D-Down death-surrogate approval",
+            "source-engine shader parity",
+            "backend dropdown registration and selection test",
+            "Git commit S3 backup and Main deployment verification"
+          ]
         }
       ],
       "mappedHeroIds": [],
@@ -89174,6 +89298,46 @@
           },
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara11/Vita.glb",
           "localSizeMatches": true
+        },
+        {
+          "id": "mba-unused-vita-native-six-motion-v1",
+          "library": "mba",
+          "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+          "gitPath": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+          "bytes": 707692,
+          "sha256": "982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf",
+          "format": "glTF Binary",
+          "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-mba-character-body-native-motion-reserve",
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "runtimeDropdownRegistered": false,
+          "defaultEligible": false,
+          "existsLocal": true,
+          "localSizeMatches": true,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/conversion.json",
+            "bytes": 12085,
+            "sha256": "79b54a58a8d7fb4c3d6d169dac55568992735d7c106fe27a80811bf4746791a0"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/webgl-proof.json",
+            "bytes": 2410,
+            "sha256": "e0cd6bfb4cecfaa1fc6ea58c45680edf17e7f90bb244cd5021e8639952e59850"
+          },
+          "missing": [
+            "GGD hero definition and skill design",
+            "motion playback and semantic approval",
+            "D-Down death-surrogate approval",
+            "source-engine shader parity",
+            "backend dropdown registration and selection test",
+            "Git commit S3 backup and Main deployment verification"
+          ]
         }
       ],
       "mappedHeroIds": [],
@@ -209071,7 +209235,8 @@
     "Counts are source identities; forms and cross-library aliases remain explicit until reviewed.",
     "Mechanics present is not proof of faithful design, balance or gameplay acceptance.",
     "Unknown source identity is not a confirmed undesigned hero.",
-    "Local file size presence is not full model conversion acceptance."
+    "Local file size presence is not full model conversion acceptance.",
+    "MBA pilot components passed policy and static visual review only; motion semantics, hero design, dropdown registration and deployment remain pending."
   ],
   "portableOverlay": {
     "schema": "ggd-fateubw-backlog-overlay@1",
