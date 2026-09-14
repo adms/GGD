@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "ebd5131324b1",
+  "fingerprint": "ea7cd13b6c79",
   "capabilityFingerprint": "fb8d3eb8",
   "required": [
     {
@@ -11202,6 +11202,21 @@
     {
       "group": "configField",
       "name": "hiddenChampionsInMobPool",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla=exclude",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla=show",
       "owner": "config.roster@1"
     },
     {
@@ -25464,9 +25479,9 @@
     "projectileField": 21,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4087,
+    "configField": 4090,
     "_notRequired": 15,
-    "_total": 5230,
+    "_total": 5233,
     "_ownerOnly": 39
   }
 }
