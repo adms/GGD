@@ -8,6 +8,7 @@ import argparse,hashlib,json,re,unicodedata
 from design_backlog_labels import labels_for, hero_check_label
 from design_backlog_resources import resource_view, resource_cell, source_overview, audio_reserve_section
 from fateubw_backlog_overlay import apply_fateubw_overlay
+from mba_pilot_backlog_overlay import apply_mba_pilot_overlay
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'materials/hero-model-library'
@@ -194,7 +195,7 @@ def build(*, refresh_local_audits=False):
         base=read(portable)
         if base.get('schema')!='ggd-acquired-model-design-backlog@1':
             raise ValueError('Portable backlog base schema drifted; refresh it with reviewed local audits.')
-    return apply_fateubw_overlay(base, ROOT)
+    return apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT)
 
 def friendly_stage(value):
     value=str(value or 'unknown')

@@ -1,0 +1,223 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "sarara",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara06",
+    "definition": "CharacterDefinitions/Chara06.chr",
+    "characterNative": "D-Down",
+    "nativeModel": "Model/Chara06/Sarara.x",
+    "convertedGlb": "models/Model/Chara06/Sarara.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara06/Sarara.glb",
+    "bytes": 6190828,
+    "sha256": "2dbb0fac2373a64a84ebdc36d740fc08808a81a9aa075aa03d6625cd3dd2f524"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 5,
+    "outputDrawPrimitives": 1,
+    "vertices": 2805,
+    "triangles": 3365,
+    "atlasEdge": 1024,
+    "sourceAtlasEdge": 1024,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 189,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "3": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "4": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 0,
+      "maxSumDelta": 2.9802322387695312e-08
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-pilot-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 68,
+    "originalNames": [
+      "ribon_02",
+      "ribon_01",
+      "kami_02",
+      "kami_01",
+      "sp03_01",
+      "sp02_01",
+      "sp01_01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "maryokudan_move",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge",
+      "attack_03",
+      "attack_02",
+      "attack_01",
+      "wait",
+      "start_02",
+      "start_01",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 22
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 67
+      },
+      {
+        "name": "attack_01",
+        "originalIndex": 21
+      },
+      {
+        "name": "sp01_01",
+        "originalIndex": 6
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 54
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 39
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      1024,
+      1024
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "b5f886cc6b7062af3f357288868ced272678ec6f673101fa2330a263874d20b6",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-pilot-v1/prepared-e/sarara/body-prepared.glb",
+    "bytes": 5904440,
+    "sha256": "ad0d61ed66227e1e0529fb2ae61923d1ec02124d9da61e4db3a16eee77cdfe36"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}
