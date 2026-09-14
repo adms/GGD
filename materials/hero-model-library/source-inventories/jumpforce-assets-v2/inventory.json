@@ -1827,6 +1827,80 @@
       "drawCalls",
       "maxTextureEdge"
     ],
+    "formalDecimationCandidate": {
+      "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+      "bytes": 2619896,
+      "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+      "sourceSha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810",
+      "before": {
+        "triangles": 59768,
+        "drawPrimitives": 20,
+        "maxTextureEdge": 2048,
+        "skins": 1,
+        "joints": 159,
+        "textures": 24,
+        "clips": 0
+      },
+      "after": {
+        "triangles": 7947,
+        "drawPrimitives": 20,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 159,
+        "textures": 24,
+        "clips": 0
+      },
+      "byteIdenticalRebuild": true,
+      "khronosErrors": 0,
+      "khronosWarnings": 24,
+      "finiteFloatAccessorsPassed": true,
+      "rigPreserved": true,
+      "visualMaxLitXorPct": 1.01625,
+      "visualContractPassed": true,
+      "drawCallLimit": 6,
+      "exactSemanticMaterialGroups": 11,
+      "atlasEligiblePrimitives": 2,
+      "drawCallPassed": false,
+      "hardPolicyPassed": false,
+      "nativeSixStateMotionComplete": false,
+      "runtimeRegistered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "readiness": "geometry-and-texture-validated; draw-call-hard-blocked; no-six-state-motion",
+      "evidence": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+          "bytes": 3196,
+          "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+          "bytes": 3618,
+          "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+          "bytes": 8860,
+          "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+          "bytes": 2718,
+          "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+          "bytes": 1216259,
+          "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+          "bytes": 616849,
+          "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+        }
+      ]
+    },
     "genericPbrVisualReviewAccepted": true,
     "sourceGameShaderParity": false,
     "ggdIntakeAccepted": false,
@@ -1841,6 +1915,8 @@
     "daiNativePackagesExtracted": true,
     "daiModelConvertedCandidate": true,
     "daiCurrentHardPolicyPassed": false,
+    "daiFormalDecimationGeometryTexturePassed": true,
+    "daiFormalDecimationDrawCallPassed": false,
     "daiNativeMotionConverted": false,
     "vfxConverted": false,
     "audioSpeakerEventBindingVerified": false,
@@ -1851,13 +1927,13 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3092685,
-      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+      "bytes": 3260772,
+      "sha256": "c46d54f321b2c58b9cd9c595c3718fa23e10b8c02199556163330e3f221ddf06"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "bytes": 35213925,
-      "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
+      "bytes": 35316686,
+      "sha256": "b8f156a5cabba5d12986a42fbdddb022c113dfced9aa1ad7c2a34327662e51ec"
     },
     {
       "gitPath": "materials/hero-model-library/voice-index.json",
@@ -1903,6 +1979,36 @@
       "gitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/dai-current-policy.json",
       "bytes": 3137,
       "sha256": "40429ccb59b28176b0cadc0b7b6e272966566e8e587295db75663239de315650"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+      "bytes": 3196,
+      "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+      "bytes": 3618,
+      "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+      "bytes": 8860,
+      "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+      "bytes": 2718,
+      "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+      "bytes": 1216259,
+      "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+      "bytes": 616849,
+      "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
     }
   ]
 }

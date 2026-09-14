@@ -21,6 +21,15 @@ class JumpForceInventoryTest(unittest.TestCase):
         self.assertEqual(len(queue["excluded"]["unresolvedSteamNativeIds"]), 5)
         self.assertFalse(inventory["stages"]["audioSpeakerEventBindingVerified"])
         self.assertFalse(inventory["stages"]["runtimeSelectable"])
+        candidate = inventory["dai"]["formalDecimationCandidate"]
+        self.assertEqual(candidate["after"]["triangles"], 7947)
+        self.assertEqual(candidate["after"]["maxTextureEdge"], 256)
+        self.assertEqual(candidate["after"]["drawPrimitives"], 20)
+        self.assertTrue(candidate["byteIdenticalRebuild"])
+        self.assertTrue(candidate["rigPreserved"])
+        self.assertTrue(candidate["visualContractPassed"])
+        self.assertFalse(candidate["drawCallPassed"])
+        self.assertFalse(candidate["runtimeSelectable"])
 
 
 if __name__ == "__main__":
