@@ -3934,56 +3934,71 @@ owner 2026-08-13：
 
 ### `champions/` （48 檔）
 
-| 檔案 | 是什麼 |
-|---|---|
-| `godie-e00j.json` | 英雄「皇者 - 騜」，4 格技能 |
-| `godie-e00k.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
-| `godie-e00q.json` | 英雄「英靈-亞瑟王 - 黑化Saber」，4 格技能 |
-| `godie-e00t.json` | 英雄「七夜怪談 - 貞子」，4 格技能 |
-| `godie-e00u.json` | 英雄「完全而瀟灑的女僕 - 十六夜Sakuya」，4 格技能 |
-| `godie-e00v.json` | 英雄「百畝森林的霸主 - 維尼」，4 格技能 |
-| `godie-e00z.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
-| `godie-e012.json` | 英雄「殺人劍客 - 佐佐木小次郎」，4 格技能 |
-| `godie-e015.json` | 英雄「夜市人生 - 金居福」，4 格技能 |
-| `godie-ecen.json` | 英雄「姜窩肯 - 約翰走路」，4 格技能 |
-| `godie-ekee.json` | 英雄「會叫的野獸 - 傳說中的大刀」，4 格技能 |
-| `godie-ewrd.json` | 英雄「天上天下 - 棗 真夜」，4 格技能 |
-| `godie-h001.json` | 英雄「地獄來襲者 - 斑剎」，4 格技能 |
-| `godie-h00w.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 |
-| `godie-h021.json` | 英雄「破銅爛鐵 - 阿強一號」，4 格技能 |
-| `godie-h022.json` | 英雄「白色之翼 - 涅吉。史普林。菲爾德」，4 格技能 |
-| `godie-h02n.json` | 英雄「腦包英雄 - 打我阿笨蛋」，4 格技能 |
-| `godie-h02s.json` | 英雄「死亡騎士」，4 格技能 |
-| `godie-h02y.json` | 英雄「幕末復仇狂者 - 志志雄真實」，4 格技能 |
-| `godie-h02z.json` | 英雄「不良少年」，4 格技能 |
-| `godie-harf.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 |
-| `godie-hblm.json` | 英雄「慈悲的王者 - 賈修貝爾」，4 格技能 |
-| `godie-hlgr.json` | 英雄「鋼彈 - 煌」，4 格技能 |
-| `godie-hpal.json` | 英雄「不死之身-無 - 藤井八雲」，4 格技能 |
-| `godie-n01b.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
-| `godie-n01l.json` | 英雄「學姊 - 小派」，4 格技能 |
-| `godie-naka.json` | 英雄「猿飛佐助 - 風魔小次郎」，4 格技能 |
-| `godie-nbst.json` | 英雄「變態正義 - 瘋狂假面」，4 格技能 |
-| `godie-nman.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
-| `godie-nplh.json` | 英雄「通靈人 - 麻倉葉」，4 格技能 |
-| `godie-ntin.json` | 英雄「時空管理局執務官 - 菲特·泰斯塔羅沙」，4 格技能 |
-| `godie-o01z.json` | 英雄「魔砲少女 - 高町奈葉」，4 格技能 |
-| `godie-o02n.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 |
-| `godie-o02o.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 |
-| `godie-o02s.json` | 英雄「憂鬱少女 - 涼宮八ㄦ匕」，4 格技能 |
-| `godie-o02v.json` | 英雄「白色惡魔 - 高町奈葉」，4 格技能 |
-| `godie-o02w.json` | 英雄「笑傲江湖 - 令狐沖」，4 格技能 |
-| `godie-obla.json` | 英雄「被剝削的勞工階級 - 牧太郎」，4 格技能 |
-| `godie-opgh.json` | 英雄「常勝將軍 - 趙子龍」，4 格技能 |
-| `godie-oshd.json` | 英雄「魔鬼筋肉人 - 鬼王達」，4 格技能 |
-| `godie-othr.json` | 英雄「X戰警 - 金鋼狼」，4 格技能 |
-| `godie-u00b.json` | 英雄「最M的魔法Jizz - 清蒸 飛鼠先生」，4 格技能 |
-| `godie-u011.json` | 英雄「死亡老二 - 克勞薩先生」，4 格技能 |
-| `godie-u012.json` | 英雄「重金屬樂團的怪物 - 克勞薩II世」，4 格技能 |
-| `godie-u01f.json` | 英雄「萬夫莫敵 - 黑化張飛」，4 格技能 |
-| `godie-u01q.json` | 英雄「測試英雄 - 索隆」，4 格技能 |
-| `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 |
-| `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 |
+⭐ **每張卡的狀態由產生器照三條規則算出來**（⛔ 不是手寫，也⛔ 不抄名單）：
+
+| 順序 | 規則（變身態看卡上 `transform.counterpartId` 的本體） | 狀態 | 張數 |
+|---:|---|---|---:|
+| 1 | 它或本體在 `content/config/roster.json` 的 `retiredChampions` | 已下架 | 7 |
+| 2 | 它或本體在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` | 待重上架（#1205） | 8 |
+| 3 | 其他 | 從未開放（回收桶） | 33 |
+
+「回收桶」的出處 —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：
+「你可不可以把沒開放的英雄資料包含技能都放到一個 leagcy 區 預設不要再被讀取到了 不然我已經重複講了好幾次 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」；owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）：「⋯留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」。
+
+⚠️ `COMMUNITY_ACQUIRED_LEGACY` 裡**沒有退休卡**的：`godie-eevi`（兩棵樹都沒有卡）。
+
+⚠️ **待重上架 ≠ 選得到**（Claude 的推論，讀碼得來）：`apps/platform/internal/curation/legacyevict.go` 只看檔名在不在 `_legacy/`，同一個 id 勾進白名單會被自動剔除 ⇒ 卡還躺在這裡時它回不來；舊卡怎麼離開退休區屬於 #1205 的範圍。
+
+| 檔案 | 是什麼 | 狀態 | 為什麼 |
+|---|---|---|---|
+| `godie-e00j.json` | 英雄「皇者 - 騜」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e00k.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e00q.json` | 英雄「英靈-亞瑟王 - 黑化Saber」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-e00t.json` | 英雄「七夜怪談 - 貞子」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-e00u.json` | 英雄「完全而瀟灑的女僕 - 十六夜Sakuya」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e00v.json` | 英雄「百畝森林的霸主 - 維尼」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e00z.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 | 已下架 | 變身態，本體 `godie-e00k` 在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e012.json` | 英雄「殺人劍客 - 佐佐木小次郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e015.json` | 英雄「夜市人生 - 金居福」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ecen.json` | 英雄「姜窩肯 - 約翰走路」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ekee.json` | 英雄「會叫的野獸 - 傳說中的大刀」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ewrd.json` | 英雄「天上天下 - 棗 真夜」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h001.json` | 英雄「地獄來襲者 - 斑剎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h00w.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-harf` |
+| `godie-h021.json` | 英雄「破銅爛鐵 - 阿強一號」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-h022.json` | 英雄「白色之翼 - 涅吉。史普林。菲爾德」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02n.json` | 英雄「腦包英雄 - 打我阿笨蛋」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02s.json` | 英雄「死亡騎士」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02y.json` | 英雄「幕末復仇狂者 - 志志雄真實」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02z.json` | 英雄「不良少年」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-harf.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-hblm.json` | 英雄「慈悲的王者 - 賈修貝爾」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-hlgr.json` | 英雄「鋼彈 - 煌」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-hpal.json` | 英雄「不死之身-無 - 藤井八雲」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-n01b.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 | 待重上架（#1205） | 變身態，本體 `godie-nman` 在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-n01l.json` | 英雄「學姊 - 小派」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-naka.json` | 英雄「猿飛佐助 - 風魔小次郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-nbst.json` | 英雄「變態正義 - 瘋狂假面」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-nman.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-nplh.json` | 英雄「通靈人 - 麻倉葉」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-ntin.json` | 英雄「時空管理局執務官 - 菲特·泰斯塔羅沙」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o01z.json` | 英雄「魔砲少女 - 高町奈葉」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02n.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02o.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-o02n` |
+| `godie-o02s.json` | 英雄「憂鬱少女 - 涼宮八ㄦ匕」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02v.json` | 英雄「白色惡魔 - 高町奈葉」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-o01z` |
+| `godie-o02w.json` | 英雄「笑傲江湖 - 令狐沖」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-obla.json` | 英雄「被剝削的勞工階級 - 牧太郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-opgh.json` | 英雄「常勝將軍 - 趙子龍」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-oshd.json` | 英雄「魔鬼筋肉人 - 鬼王達」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-othr.json` | 英雄「X戰警 - 金鋼狼」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u00b.json` | 英雄「最M的魔法Jizz - 清蒸 飛鼠先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u011.json` | 英雄「死亡老二 - 克勞薩先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-u012` |
+| `godie-u012.json` | 英雄「重金屬樂團的怪物 - 克勞薩II世」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u01f.json` | 英雄「萬夫莫敵 - 黑化張飛」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-u01q.json` | 英雄「測試英雄 - 索隆」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
 
 ### `config/` （2 檔）
 
