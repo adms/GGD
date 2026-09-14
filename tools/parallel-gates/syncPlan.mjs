@@ -15,12 +15,16 @@
  * ⚠️ 這一支**只印計畫**，⛔ 它不執行任何產生器（`skills:sync` 寫 `bundle.json`，全域鎖）。
  *
  * ── ⭐ 輸入表是**推導**出來的，⛔ 沒有一行手寫的「這支吃哪些檔」──────────────
- * 三個來源，全部可以被反駁：
+ * 五個來源，全部可以被反駁：
  *   ① **量到的讀**（`sync-io.json` 的 `reads`）—— `trace.mjs` 真的把 32 支跑一遍量的。
  *   ② **產生器自己的原始碼**裡出現的路徑字面值（要真的對得上一個 git 追蹤的檔或目錄）。
  *      ⚠️ ①**不夠**：`merge-io.mjs` 刻意只留「有人寫過」的讀（否則檔案 20KB→2.5MB），
  *      所以 `treasure:csv` 讀了 98 個檔卻在表上是 `reads: []`。②補的正是這一半。
  *   ③ **產生器自己**（`tools/<dir>/` 或那支 `scripts/*.sh`）—— 程式改了它一定要重跑。
+ *      ⭐ GH#1166：入口要穿過 `bash scripts/genrun.sh <step> <raw>` 才找得到（見 entryFiles）。
+ *   ⑤ **產生器原始碼的程式參照**（import／`@ggd/*`／別的 `tools/<dir>`）—— 見 codeRefs。
+ *      ⚠️ ③一接上 genrun，改產生器原始碼就從「全跑」變成「裁剪」⇒ 跨目錄相依第一次需要被看見。
+ *   （④＝寫出去的目錄回推讀過的目錄，見 inputTable 內文。）
  *
  * ── ⛔ fail-closed 是硬要求（三道）──────────────────────────────────────────
  *   ⓐ 改動路徑對不到**任何**一支的輸入表 ⇒ **全跑**（⛔ 不是「猜它沒關係」）。
@@ -44,6 +48,7 @@ import { buildGraph, layers, loadIo } from "./graph.mjs";
 const HERE = new URL(".", import.meta.url).pathname;
 const REPO = new URL("../../", import.meta.url).pathname;
 const SRC = /\.(py|ts|tsx|mjs|cjs|js|sh)$/;
+const GENRUN = "scripts/genrun.sh";
 
 const git = (repo, args) =>
   execFileSync("git", args, { cwd: repo, encoding: "utf8", maxBuffer: 1 << 28 })
@@ -82,6 +87,14 @@ export function readScripts(repo) {
  * 一支 `pnpm <name>` 最後**真的執行**了哪幾個原始碼檔。
  * ⭐ 遞迴解 `pnpm x`／`pnpm --filter @ggd/y x` —— `content:build` 是四支的聚合，
  * 而它的第一支還住在 `packages/shared/package.json` 裡。
+ *
+ * ⭐⭐ GH#1166 —— **也要遞迴解 `bash scripts/genrun.sh <step> [<raw>]`**。
+ * ⛔ 在此之前這一支只認 `pnpm …`，而 GH#815 之後鏈上 **65/69 步**的公開名都是 genrun 包裝
+ * ⇒ 入口只剩 `scripts/genrun.sh` 一個檔 ⇒ **63 步解析不到自己的產生器原始碼**
+ * ⇒ 改 `tools/skill-remake/apply_tiers.py`／`tools/balance-anchors/gen.ts` 這種「產生器本人」
+ *   一律對不到輸入表 ⇒ fail-closed **全跑 69 步**（安全，⛔ 但裁剪對產生器改動整個失效）。
+ * ⭐ 語意照抄 genrun.sh 本人：`RUN="${2:-$STEP}"`，而它先 `cd` 到 repo 根再 `pnpm "$RUN"`
+ *   ⇒ 遞迴的 home 是根（`""`）。⛔ 不猜 `<step>:raw` 這個命名慣例 —— 讀的是**它真的傳的參數**。
  */
 export function entryFiles(scripts, name, home = "", seen = new Set()) {
   const key = `${home}|${name}`;
@@ -98,8 +111,18 @@ export function entryFiles(scripts, name, home = "", seen = new Set()) {
         for (const f of entryFiles(scripts, m[2], sub, seen)) out.add(f);
         continue;
       }
+      const gr = /^(?:bash\s+)?(?:\.\/)?(scripts\/genrun\.sh)\s+([\w:.@/-]+)(?:\s+([\w:.@/-]+))?$/.exec(part);
+      if (gr) {
+        out.add(GENRUN);
+        for (const f of entryFiles(scripts, gr[3] ?? gr[2], "", seen)) out.add(f);
+        continue;
+      }
+      // ⭐ GH#1166：`pnpm --filter @ggd/shared exec tsx scripts/x.ts` 的路徑是**那個套件**的相對路徑
+      //   （⛔ 不是寫這行的 package.json 的）；套件名本身（`@ggd/shared`）⛔ 不是路徑。
+      const ex = /^pnpm\s+--filter\s+(\S+)\s+exec\s/.exec(part);
+      const at = ex ? Object.values(scripts).flat().find((x) => x.name === ex[1])?.home ?? e.home : e.home;
       for (const tok of part.split(/\s+/)) {
-        if (tok.includes("/") && !tok.startsWith("-")) out.add(join(e.home, tok).replace(/^\/+/, ""));
+        if (tok.includes("/") && !tok.startsWith("-") && !tok.startsWith("@")) out.add(join(at, tok).replace(/^\/+/, ""));
       }
     }
   }
@@ -146,6 +169,44 @@ function literals(text, known) {
 }
 
 /**
+ * ⭐⭐ GH#1166 —— 一份原始碼的**程式參照**（⛔ 不是路徑字面值那一種）：
+ *   · 相對 import／require（`../../packages/shared/src/x.ts`、`./lib.js`→`lib.ts`）⇒ 解析到的**檔**
+ *   · workspace 套件（`@ggd/shared`）⇒ 那個套件的**整棵目錄**
+ *   · 別的 `tools/<dir>`（python 的 `sys.path.insert(…"tools", "engine-vocab")`、`tools/x/…`）⇒ **整棵**
+ *
+ * ⚠️ 為什麼 genrun 遞迴**必須**連著它一起落地（量到的，⛔ 不是保險）：
+ * 在此之前改產生器原始碼一律 fail-closed 全跑 ⇒ 跨目錄的相依**從來不需要被看見**。
+ * 遞迴一接上，`tools/engine-vocab/engine_vocab.py` 就從「全跑」變成「44 支、⛔ 不含 `contract:numbers`」——
+ * 而 `tools/editor-contract/gen_contract_numbers.py` 用 `sys.path` 吃它 ⇒ ⭐ **裁剪第一次有機會漏跑**。
+ * ⇒ 這一支是**上界**（多算 ⇒ 多跑一支，⛔ 不會少一支）；python 的 `from x import` 沒有路徑可解，
+ *   靠「整棵 `tools/<dir>`」兜住。
+ */
+const CODE = /\.(m?[jt]sx?|cjs|cts)$/;
+function codeRefs(text, file, known, pkgDirs) {
+  const files = new Set();
+  const prefixes = new Set();
+  if (CODE.test(file)) {
+    const specs = text.matchAll(/(?:\bfrom\s*|\bimport\s*\(\s*|\brequire\s*\(\s*|^\s*import\s+)["'`]([^"'`\n]+)["'`]/gm);
+    for (const [, spec] of specs) {
+      if (!spec.startsWith(".")) {
+        const dir = pkgDirs.get(spec.split("/").slice(0, spec.startsWith("@") ? 2 : 1).join("/"));
+        if (dir) prefixes.add(dir);
+        continue;
+      }
+      const base = join(dirname(file), spec);
+      const bare = base.replace(/\.(m|c)?js$/, "");
+      const hit = [base, ...[".ts", ".mts", ".tsx", ".js", ".mjs", ".cjs"].map((x) => bare + x), `${base}/index.ts`, `${base}/index.js`]
+        .find((c) => !c.startsWith("..") && known.has(c) && SRC.test(c));
+      if (hit) files.add(hit);
+    }
+  }
+  for (const [, d] of text.matchAll(/\btools["'`]?\s*[/,]\s*["'`]?([\w.-]+)/g)) {
+    if (known.has(`tools/${d}`)) prefixes.add(`tools/${d}`);
+  }
+  return { files, prefixes };
+}
+
+/**
  * 每一支的輸入表。三個欄位刻意分開，⭐ 因為它們的**證據強度不同**（回報時要說得出來）：
  *   `files`    —— 指名到檔（量到的讀 or 原始碼字面值）
  *   `dirs`     —— 那些檔的**父目錄**：新加一份 ability JSON 也要算它的輸入
@@ -160,6 +221,16 @@ export function inputTable(repo, io, scripts) {
   const table = new Map();
   const roots = new Set();
   const note = (p) => roots.add(p.split("/")[0]);
+  const memo = (fn) => { const c = new Map(); return (k) => (c.has(k) ? c.get(k) : c.set(k, fn(k)).get(k)); };
+  const sources = [...tracked].filter((f) => SRC.test(f) && !f.includes("/out/"));
+  const textOf = memo((f) => stripComments(readFileSync(join(repo, f), "utf8"), f));
+  const underDir = memo((pre) => sources.filter((f) => f.startsWith(`${pre}/`)));
+  const pkgDirs = new Map();
+  for (const p of git(repo, ["ls-files", "**/package.json"])) {
+    if (p.includes("node_modules/") || p.startsWith("docs/legacy/") || !p.includes("/")) continue;
+    try { pkgDirs.set(JSON.parse(readFileSync(join(repo, p), "utf8")).name, dirname(p)); } catch { /* 壞的 package.json ⇒ 少一個套件 ⇒ 那個 import 對不到 ⇒ 少一條輸入（fail-closed 方向） */ }
+  }
+  const refsOf = memo((f) => codeRefs(textOf(f), f, known, pkgDirs));
 
   for (const name of chainSteps) {
     const io1 = byName.get(name);
@@ -195,14 +266,23 @@ export function inputTable(repo, io, scripts) {
       const d = dirname(w);
       if (d.includes("/")) t.prefixes.add(d);
     }
+    const todo = [];
     for (const entry of entryFiles(scripts, name)) {
       note(entry);
       // ⭐ `tools/<dir>/` 整棵算它的；`scripts/x.sh` 這種就只算那一個檔
       //   （⛔ prefix 給到 `scripts` 會把每一支 shell 腳本的改動都算進來）。
       t.prefixes.add(entry.startsWith("tools/") ? entry.split("/").slice(0, 2).join("/") : entry);
-      for (const f of tracked) {
-        if (!f.startsWith(`${dirname(entry)}/`) || !SRC.test(f) || f.includes("/out/")) continue;
-        for (const lit of literals(stripComments(readFileSync(join(repo, f), "utf8"), f), known)) {
+      // ⭐ GH#1166：字面值掃描的範圍與 prefix **同一個判準** —— 入口的父目錄是裸 root（`scripts/x.sh`）
+      //   ⇒ **只掃那一個檔**。⛔ 掃整個 `scripts/` 會讓鏈上 64 支 genrun 包裝的步驟**全部**吃進
+      //   `scripts/**` 裡每一支腳本提過的路徑（ruling.sh、message-ledger.sh⋯）⇒ 假輸入 ⇒ 過度選取。
+      // ⭐ GH#1166：genrun.sh 是**包裝** —— 在鏈裡它只做 `pnpm "$RUN"`（真正的入口 entryFiles 已經遞迴解出）
+      //   ⇒ 只當 prefix（改它 ⇒ 每一支被包的都要跑），⛔ 不掃它的字面值／程式參照：它的訊息字串提到
+      //   `tools/skill-remake/…`，掃進來會讓 64 支全部「讀」那整棵（實測：拿掉遞迴時 ③ 靠這個假輸入照樣綠）。
+      if (entry === GENRUN) continue;
+      const scope = dirname(entry).includes("/") ? `${dirname(entry)}/` : null;
+      for (const f of scope ? underDir(scope.slice(0, -1)) : sources.filter((s) => s === entry)) {
+        todo.push(f);
+        for (const lit of literals(textOf(f), known)) {
           note(lit);
           if (!lit.includes("/")) continue; // 裸 root ⇒ 只算宇宙
           if (tracked.has(lit)) {
@@ -210,6 +290,27 @@ export function inputTable(repo, io, scripts) {
             t.dirs.add(dirname(lit));
           } else t.prefixes.add(lit); // 追蹤到的是目錄 ⇒ 整棵
         }
+      }
+    }
+    // ⭐ GH#1166：程式參照閉包（見 codeRefs）—— 從上面掃過的每一份原始碼沿 import／套件／tools/<dir> 往外走。
+    //   被 import 的檔**只**進 `files`（⛔ 不進 `dirs`：import 指名到檔，新加的兄弟檔要被改到 import 端才算數）；
+    //   ⛔ 也不掃它們的路徑字面值 —— 共用模組的字面值掃進來會讓每一支都「讀」整個 content（過度選取到全跑）。
+    const scanned = new Set();
+    while (todo.length) {
+      const f = todo.pop();
+      if (scanned.has(f)) continue;
+      scanned.add(f);
+      const { files, prefixes } = refsOf(f);
+      for (const r of files) {
+        t.files.add(r);
+        note(r);
+        todo.push(r);
+      }
+      for (const p of prefixes) {
+        if (t.prefixes.has(p)) continue;
+        t.prefixes.add(p);
+        note(p);
+        if (p.startsWith("tools/")) todo.push(...underDir(p));
       }
     }
     table.set(name, t);

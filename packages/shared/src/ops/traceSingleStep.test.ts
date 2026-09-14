@@ -12,6 +12,8 @@
  * ⭐ GH#1056（③④）：沙盒陳舊判準改成**依賴指紋**（只改 script ⇒ 重用；改依賴 ⇒ 重建）；
  * genrun 的對帳快照對探針隱形（走 genrun 的步驟 reads 只含它真的讀的）。兩條各校準**兩個方向**。
  * 突變：genrun.sh 的 `env -u GGD_TRACE_LOG -u GGD_TRACE_ROOT` 拿掉 ⇒ ④ 紅（reads 多出 docs/other.md）。
+ *
+ * ⭐ GH#1166（⑤）：量測前提 —— 全量覆寫時「戶籍記著 >0 寫、這一趟 0 寫」⇒ 拒寫（收斂樹上的 0 寫是沒活可做）。
  */
 import { describe, expect, it } from "vitest";
 import { spawnSync } from "node:child_process";
@@ -116,5 +118,17 @@ describe("trace.mjs --script <一步> (trace-single-step, GH#1034)", () => {
     // 兩個方向：真的讀（docs/in.md）要看得見；對帳 statSync 過的產物（docs/other.md）⛔ 不可以變成讀
     expect(g.reads, "對帳快照的 statSync 被記成讀").toEqual(["docs/in.md"]);
     expect(g.writes, ".content-tree.lock 被記成寫").toEqual(["docs/out2.md"]);
+  });
+
+  it("⑤ 全量覆寫：戶籍記著 >0 寫而這一趟量到 0 寫 ⇒ exit 3、檔案不動、指名；--allow-empty-writes 帶理由才放行（GH#1166）", () => {
+    const { io, run } = fixture();
+    const before = readFileSync(io, "utf8");
+    const r = run("--script", "fake:sync"); // c:step 是 `pass`（沒活可做），戶籍卻記著它寫 2 份
+    expect(r.status, r.stdout + r.stderr).toBe(3);
+    expect(r.stderr).toContain("量測前提不成立");
+    expect(r.stderr).toContain("c:step");
+    expect(readFileSync(io, "utf8"), "0 寫的量測把戶籍整份覆寫了").toBe(before);
+    expect(run("--script", "fake:sync", "--allow-empty-writes").status, "沒帶理由也放行了").toBe(2);
+    expect(run("--script", "fake:sync", "--allow-empty-writes", "c 改成純檢查").status).toBe(0);
   });
 });
