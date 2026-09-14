@@ -84,6 +84,10 @@ python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extr
 
 單一角色可改用 `--native-id chr0430`。抽取器每次先重驗六顆 PAK 的大小與 SHA，依 full path index 的 patch winner 從指定 container 取出原始 member，並保存逐檔 SHA。AES 值不會進收據。
 
+同一 PAK 的所有待抽取 member 會用一次 `repak unpack`與重複的 `--include`參數批次處理，不再每檔啟動一次 repak。當命令列過長時，會按 `--max-command-bytes`（預設 200,000 bytes）切成數個容器 chunk；因此實際 repak 啟動次數只會隨 PAK 與 chunk 數增加，不會隨全部 member 數線性增加。
+
+每個 chunk 先抽到交易暫存目錄，全部命令成功且逐檔存在、大小與 SHA-256 已取得後，才整批移入正式 `raw/`。任一 PAK 或 member 失敗時，正式輸出不會留下半批新檔。已存在的正式檔會直接重算 live SHA-256 並跳過重複抽取；若其他流程在交易期間寫入相同檔案，只會在大小與 SHA-256 相等時接受。收據會分別記錄容器批次數、repak 啟動數、新增檔與已存在檔的即時驗證數。
+
 ## 4. 轉換界線
 
 抽取完成後依序進行 dependency closure、UE Viewer 4.19 匯出、JUMP 專用 Blender／GLB 組裝、貼圖與透明層修正、GGD policy gate、三視角／動畫／音訊審查，再建立後台候選。
