@@ -21,16 +21,71 @@
  * MUTATION LOG（落地前跑過）：
  *   · 把 `mini-deploy.sh` 的 `clash` 偵測那一段拿掉 → 「腳本在 checkout 前先算碰撞」紅
  *   · 把備份的 `cp -p` 改成 `mv` → 「用 cp ⛔ 不是 mv」紅
+ *   · GH#1156：`comm -23 "$t/tree" "$t/index"` 改成 `cat "$t/tree"`（差集→全集）→ 「反方向量到 0」紅
+ *   · GH#1156：兩支 git 拿掉 `-z`（＝舊的 quotePath 引號形狀）→ 「中文與空白路徑也抓得到」紅
  */
 import { describe, it, expect } from "vitest";
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
+import { execFileSync, spawnSync } from "node:child_process";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const SCRIPT = resolve(__dirname, "../../../../scripts/mini-deploy.sh");
 const git = (cwd: string, ...a: string[]): string =>
   execFileSync("git", a, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
+
+/** GH#1156：抽出**出貨的**掃描段（哨兵常數＋兩個函式），⛔ 不抄一份進測試。 */
+function scanBlock(): string {
+  const m = /^CLASH_SCAN_OK=[\s\S]*?^clash_scan_accept\(\) \{[\s\S]*?^\}/m.exec(readFileSync(SCRIPT, "utf8"));
+  if (!m) throw new Error("mini-deploy.sh 裡找不到 clash_scan_script／clash_scan_accept —— GH#1156 的修法被拿掉了？");
+  return m[0];
+}
+/** 照出貨的路走：產生腳本 ⇒ `sh -s -- <sha> <哨兵>`（＝ssh 另一頭做的事）⇒ clash_scan_accept。 */
+function scan(repo: string, sha: string) {
+  const body = `${scanBlock()}\nraw=$(clash_scan_script | sh -s -- "$1" "$CLASH_SCAN_OK") || rc=$?\nclash_scan_accept "\${rc:-0}" "$raw"`;
+  const r = spawnSync("bash", ["-c", body, "_", sha], { cwd: repo, encoding: "utf8" });
+  return { code: r.status, list: r.stdout.split("\n").filter(Boolean).sort() };
+}
+/** base 只有 a.txt；target 另加四個路徑（中文＋空白、被 ignore 的、子目錄）。checkout 回 base。 */
+const TARGET_ONLY = ["plain.txt", "新檔 空白.txt", "ignored.log", "sub/deep.txt"];
+function clashRepo() {
+  const d = mkdtempSync(join(tmpdir(), "mini-clash-"));
+  git(d, "init", "-q", ".");
+  for (const [k, v] of [["user.email", "t@t"], ["user.name", "t"], ["core.quotePath", "true"]]) git(d, "config", k, v);
+  writeFileSync(join(d, ".gitignore"), "*.log\n");
+  writeFileSync(join(d, "a.txt"), "v1");
+  git(d, "add", "-A");
+  git(d, "commit", "-qm", "base");
+  const base = git(d, "rev-parse", "HEAD").trim();
+  mkdirSync(join(d, "sub"));
+  for (const f of TARGET_ONLY) writeFileSync(join(d, f), "from-commit");
+  git(d, "add", "-f", "--", ...TARGET_ONLY);
+  git(d, "commit", "-qm", "target");
+  const target = git(d, "rev-parse", "HEAD").trim();
+  git(d, "checkout", "-q", base);
+  return { d, target };
+}
+
+describe("GH#1156 碰撞掃描（⭐ 真的跑出貨的那一段，兩個方向）", () => {
+  it("★ 目標樹有而未追蹤的檔被抓到 —— 含中文與空白路徑、被 .gitignore 的也算撞", () => {
+    const { d, target } = clashRepo();
+    for (const f of ["plain.txt", "新檔 空白.txt", "ignored.log", "only-local.txt"]) writeFileSync(join(d, f), "HOST");
+    const r = scan(d, target);
+    expect(r.code).toBe(0);
+    expect(r.list).toEqual(["ignored.log", "plain.txt", "新檔 空白.txt"].sort()); // ⛔ 沒有 a.txt／only-local／sub/deep
+  });
+
+  it("★ 反方向：目標樹沒有的未追蹤檔、已追蹤的檔 ⇒ 量到 0", () => {
+    const { d, target } = clashRepo();
+    writeFileSync(join(d, "only-local.txt"), "HOST");
+    expect(scan(d, target)).toEqual({ code: 0, list: [] });
+  });
+
+  it("⭐ 掃描沒跑完 ⇒ 非零（⛔ 不是「0 個碰撞」）", () => {
+    const { d } = clashRepo();
+    expect(scan(d, "0".repeat(40)).code).not.toBe(0);
+  });
+});
 
 describe("GH#884 未追蹤檔與 checkout", () => {
   it("★ ⭐ **前提自證**：`git checkout -f` 真的會靜靜覆蓋未追蹤檔", () => {
@@ -59,7 +114,7 @@ describe("GH#884 未追蹤檔與 checkout", () => {
 
   it("★ ⭐ 腳本在 checkout **之前**先算出碰撞（⛔ 不是事後補救）", () => {
     const src = readFileSync(SCRIPT, "utf8");
-    const iClash = src.indexOf("clash=$(r ");
+    const iClash = src.indexOf("clash_raw=$(clash_scan_script | r ");
     const iCheckout = src.indexOf('git checkout -f -q $deploy_sha"');
     expect(iClash, "⛔ 沒有碰撞偵測").toBeGreaterThan(0);
     expect(iClash, "⛔ 偵測寫在 checkout **之後** = 檔案已經沒了").toBeLessThan(iCheckout);
@@ -67,7 +122,7 @@ describe("GH#884 未追蹤檔與 checkout", () => {
 
   it("⭐ 備份用 **`cp`**，⛔ 不是 `mv`（owner：「用 cp 避免資料不完整」）", () => {
     const src = readFileSync(SCRIPT, "utf8");
-    const i = src.indexOf("clash=$(r ");
+    const i = src.indexOf("clash_raw=$(clash_scan_script | r ");
     const win = src.slice(i, src.indexOf('git checkout -f -q $deploy_sha"'));
     expect(win).toContain("cp -p");
     expect(win, "⛔ `mv` 會讓中斷時兩邊都不完整").not.toMatch(/\bmv\s+["'$]/);
