@@ -6,7 +6,8 @@
     "variants": 6,
     "sourceIds": [
       "gitlab-ssbu-models",
-      "parallel-ns-ultimate14"
+      "parallel-ns-ultimate14",
+      "windows-game-library-20260912"
     ]
   },
   "summary": {
@@ -21,6 +22,54 @@
     "newRuntimeDropdownOptions": 0,
     "reviewMediaReady": 0,
     "productionDeployed": 0
+  },
+  "nsandns2PayloadBoundary": {
+    "sourceId": "windows-game-library-20260912",
+    "windowsRoot": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2",
+    "expectedMacSharePath": "/Volumes/game",
+    "currentMacShareMounted": false,
+    "containers": [
+      {
+        "title": "Super Smash Bros Ultimate[01006A800016E000][US][v0]",
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super Smash Bros Ultimate[01006A800016E000][US][v0].nsp",
+        "bytes": 14638743603,
+        "contentHash": null,
+        "contentInspected": false,
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started"
+      },
+      {
+        "title": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200",
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200.zip",
+        "bytes": 38366835,
+        "contentHash": null,
+        "contentInspected": false,
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started"
+      },
+      {
+        "title": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500",
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500.zip",
+        "bytes": 38366835,
+        "contentHash": null,
+        "contentInspected": false,
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started"
+      }
+    ],
+    "stageCounts": {
+      "inventoryOnlyContainerFiles": 3,
+      "payloadBytesRead": 0,
+      "identifiableFightersFromPayload": 0,
+      "modelFilesIdentified": 0,
+      "motionFilesIdentified": 0,
+      "extractedFiles": 0,
+      "convertedFiles": 0,
+      "acceptedFiles": 0,
+      "backendSelectableModels": 0
+    },
+    "usableForTheseCandidates": false,
+    "reason": "metadata-only; zero payload bytes read, so no fighter identity, model, texture, skeleton or motion can be attributed to these containers"
   },
   "currentManualDefaults": {
     "acquired-mario": "imported.linkstik",
@@ -37,8 +86,13 @@
       "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch MOD",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": "parallel-ns-ultimate14",
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0"
+      },
       "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
       "sourceFiles": [
         {
@@ -109,6 +163,19 @@
           "nativeClipName": "d01specialsend"
         }
       ],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 9,
+        "hiddenOrNonrenderMeshCount": 53,
+        "skeletonCount": 1,
+        "jointCounts": [
+          98
+        ],
+        "usedTextureCount": 6,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
         "bytes": 1148100,
@@ -159,7 +226,9 @@
       "sourceMotionInventory": {
         "aliasCount": 64,
         "bodyAliasCount": 40,
-        "uniqueBodyPayloadCount": 5
+        "uniqueBodyPayloadCount": 5,
+        "fighterPresent": true,
+        "provenance": "community-mod-native-not-verified-original-game"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -174,6 +243,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "imported.linkstik",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
@@ -191,8 +271,13 @@
       "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": null,
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": null
+      },
       "nativeId": "fighter/mewtwo/body/c00",
       "sourceFiles": [
         {
@@ -217,6 +302,19 @@
         }
       ],
       "nativeMotionFiles": [],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 5,
+        "hiddenOrNonrenderMeshCount": 23,
+        "skeletonCount": 1,
+        "jointCounts": [
+          75
+        ],
+        "usedTextureCount": 3,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
         "bytes": 667904,
@@ -261,7 +359,9 @@
       "sourceMotionInventory": {
         "aliasCount": 0,
         "bodyAliasCount": 0,
-        "uniqueBodyPayloadCount": 0
+        "uniqueBodyPayloadCount": 0,
+        "fighterPresent": false,
+        "provenance": "none-in-acquired-ultimate14-source"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -276,6 +376,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "imported.herobuu",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
@@ -293,8 +404,13 @@
       "componentId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": null,
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": null
+      },
       "nativeId": "fighter/ptrainer/model/ptrainer/c00",
       "sourceFiles": [
         {
@@ -329,6 +445,19 @@
         }
       ],
       "nativeMotionFiles": [],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 11,
+        "hiddenOrNonrenderMeshCount": 25,
+        "skeletonCount": 1,
+        "jointCounts": [
+          44
+        ],
+        "usedTextureCount": 5,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
         "bytes": 1178320,
@@ -373,7 +502,9 @@
       "sourceMotionInventory": {
         "aliasCount": 0,
         "bodyAliasCount": 0,
-        "uniqueBodyPayloadCount": 0
+        "uniqueBodyPayloadCount": 0,
+        "fighterPresent": false,
+        "provenance": "none-in-acquired-ultimate14-source"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -388,6 +519,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "imported.heropikachu",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
@@ -405,8 +547,13 @@
       "componentId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": null,
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": null
+      },
       "nativeId": "fighter/ptrainer/model/ptrainer/c01",
       "sourceFiles": [
         {
@@ -446,6 +593,19 @@
         }
       ],
       "nativeMotionFiles": [],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 13,
+        "hiddenOrNonrenderMeshCount": 27,
+        "skeletonCount": 1,
+        "jointCounts": [
+          72
+        ],
+        "usedTextureCount": 6,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
         "bytes": 1221592,
@@ -490,7 +650,9 @@
       "sourceMotionInventory": {
         "aliasCount": 0,
         "bodyAliasCount": 0,
-        "uniqueBodyPayloadCount": 0
+        "uniqueBodyPayloadCount": 0,
+        "fighterPresent": false,
+        "provenance": "none-in-acquired-ultimate14-source"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -505,6 +667,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "imported.heropikachu",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
@@ -522,8 +695,13 @@
       "componentId": "ssbu-pickel-steve-c00-static-skinned-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": null,
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": null
+      },
       "nativeId": "fighter/pickel/body/c00",
       "sourceFiles": [
         {
@@ -538,6 +716,19 @@
         }
       ],
       "nativeMotionFiles": [],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 3,
+        "hiddenOrNonrenderMeshCount": 63,
+        "skeletonCount": 1,
+        "jointCounts": [
+          31
+        ],
+        "usedTextureCount": 1,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
         "bytes": 51664,
@@ -582,7 +773,9 @@
       "sourceMotionInventory": {
         "aliasCount": 0,
         "bodyAliasCount": 0,
-        "uniqueBodyPayloadCount": 0
+        "uniqueBodyPayloadCount": 0,
+        "fighterPresent": false,
+        "provenance": "none-in-acquired-ultimate14-source"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -597,6 +790,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "champ.thorne",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-steve-c00-blender4513-v1-backup/ec511ab6217a007d094bf99939a632bfd01f9590e5a7a53cdbc8599383b72f3e.tar.gz",
@@ -614,8 +818,13 @@
       "componentId": "ssbu-pickel-alex-c01-static-skinned-v1",
       "workZh": "任天堂明星大亂鬥 特別版",
       "platform": "Nintendo Switch",
+      "sourceGameReleasedAt": "2018-12-07",
       "modelSourceId": "gitlab-ssbu-models",
       "motionSourceId": null,
+      "sourceUrls": {
+        "model": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+        "motion": null
+      },
       "nativeId": "fighter/pickel/body/c01",
       "sourceFiles": [
         {
@@ -630,6 +839,19 @@
         }
       ],
       "nativeMotionFiles": [],
+      "sourceModelEvidence": {
+        "format": "blend",
+        "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+        "visibleMeshCount": 3,
+        "hiddenOrNonrenderMeshCount": 63,
+        "skeletonCount": 1,
+        "jointCounts": [
+          31
+        ],
+        "usedTextureCount": 1,
+        "embeddedSourceActionCount": 0,
+        "embeddedScriptsExecuted": false
+      },
       "gitModel": {
         "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
         "bytes": 51960,
@@ -674,7 +896,9 @@
       "sourceMotionInventory": {
         "aliasCount": 0,
         "bodyAliasCount": 0,
-        "uniqueBodyPayloadCount": 0
+        "uniqueBodyPayloadCount": 0,
+        "fighterPresent": false,
+        "provenance": "none-in-acquired-ultimate14-source"
       },
       "semanticClipMap": {},
       "missingRequiredStates": [
@@ -689,6 +913,17 @@
       "sixStateComplete": false,
       "modelOptionRegistered": false,
       "defaultPreserved": "champ.thorne",
+      "stageStatus": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "converted": true,
+        "acceptedIndependentComponent": true,
+        "sixStateMapped": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
       "blocker": "six-state-actions-and-owner-semantic-review",
       "s3": {
         "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-alex-c01-blender4513-v1-backup/13beca9a10a77aa080d8e234d8ca5d36ff7c30517cc53ade2dc315434c8c1b29.tar.gz",
@@ -758,6 +993,7 @@
   "decisions": [
     "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
     "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
+    "NSandNS2 三個容器目前只有 Windows 清單中檔名與大小；本次未掛載 /Volumes/game，payload bytes read 仍為 0，不能用來增加任何角色或動作完成數。",
     "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
     "Pokémon Trainer 男／女的新減面階段已由同一份 46 檔封存包覆蓋，S3 完整讀回與逐檔 SHA-256 均通過。",
     "死亡替代目前都沒有目標骨架上的 hurt/down 播放證據，因此只保留提案，不建立 model@1、不加下拉選項、不自動綁定。",
