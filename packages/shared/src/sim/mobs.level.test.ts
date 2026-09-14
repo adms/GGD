@@ -215,6 +215,7 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
   it("#244 TRIPWIRE — the hero sheet can never move the mob curve again", () => {
     cover("mob-244-hero-sheet-decoupled");
     // Register 喪標麥可 THE HERO at his post-#244 sheet (380 base / 45 growth).
+    // ⚠️ 380／45 是當時的數字，兩個都已退場（見下方 2026-08-21 與 2026-09-15 兩段註記）。
     // Before the split this alone would have made round-3 mobs 470 hp and
     // round-6 mobs 605 — a silent roguelite difficulty change nobody asked for.
     //
@@ -282,9 +283,21 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
       (championStatBase(HERO_DEF, Stat.MaxHealth, 1) + championStatGrowth(HERO_DEF, Stat.MaxHealth) * 11) * 4,
       6,
     );
+    // ⛔ 2026-09-15 —— 這裡原本是 `.toBe(380)`：2026-08-21「字面值 380 退場」漏掉的**最後一個**住處。
+    //   `1bb6c3fea`（owner 2026-09-12 核准的逐出身梯子：「底值統一：血量 150」）把卡面 104 → 150
+    //   ⇒ 有效 1 級血量 104+23×12=380 → 150+23×12=426，而小怪曲線一格都沒動（下面兩行照綠）。
+    //   ⇒ 期望值改從**出貨卡面**推導：註冊表裡的那一份 ＝ 卡片 baseStats ＋ 屬性層（#248）。
     expect(
       championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1),
-    ).toBe(380);
+    ).toBeCloseTo(championStatBase(HERO_DEF, Stat.MaxHealth, 1), 9);
+    // ⭐ 字面值拿掉之後，這條 tripwire 要自己保有**判別力**：英雄卡那條路算出來的血量
+    //   必須與小怪卡不同 —— 兩條路剛好相等時，下面「曲線不動」那兩行讀錯卡也照綠（失敗形態④）。
+    for (const round of [3, 6]) {
+      expect(
+        Math.round(championStatBase(HERO_DEF, Stat.MaxHealth, mobLevelForRound(CFG, round))),
+        `round ${round}: the hero-sheet route must differ from the mob card, or the tripwire proves nothing`,
+      ).not.toBe(hpAtRound(round));
+    }
     // …and the mob curve does not budge —— 這條守的是「英雄卡不可以動到小怪卡」，
     // 所以期望值一樣從小怪卡推導（見 `hpAtRound`）。英雄卡若真的漏進來，血量會是
     // 上面那個 5,321 等級的東西，跟這個差兩個數量級，不是捨入。
