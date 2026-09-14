@@ -482,6 +482,36 @@ def build(git_link_root=ROOT):
             raise ValueError('Palworld VFX/SFX current-resource pointer is stale: '+str(path))
     if palworld_av_entry.get('preservedSourceAuditSha256')!=hashlib.sha256(palworld_av_preserved_audit_path.read_bytes()).hexdigest():
         raise ValueError('Palworld preserved-source current-resource pointer is stale: '+str(palworld_av_preserved_audit_path))
+    palworld_approved_manifest_path=base/'priority-evidence/palworld-approved-runtime-v1/approved-components.json'
+    palworld_approved_receipt_path=base/'priority-evidence/palworld-approved-runtime-v1/receipt.json'
+    palworld_approved_manifest=read(palworld_approved_manifest_path)
+    palworld_approved_receipt=read(palworld_approved_receipt_path)
+    palworld_approved_summary=palworld_approved_manifest.get('summary',{})
+    if (palworld_approved_manifest.get('schema')!='ggd.palworld-approved-components@1'
+        or palworld_approved_receipt.get('schema')!='ggd.palworld-approved-runtime-integration-receipt@1'
+        or palworld_approved_summary.get('ownerApprovedCandidates')!=36
+        or palworld_approved_summary.get('motionSemanticStatesRuntimeSelectable')!=18
+        or palworld_approved_summary.get('approvedGenericMotionBindingsReachable')!=14
+        or palworld_approved_summary.get('approvedPerSkillMotionOverlaysPendingRouter')!=4
+        or palworld_approved_summary.get('approvedCryProductsInGit')!=18
+        or palworld_approved_summary.get('approvedCryRuntimeBindings')!=0
+        or palworld_approved_summary.get('backendDropdownRegisteredHeroes')!=3
+        or palworld_approved_summary.get('standaloneOriginalVfx')!=0
+        or palworld_approved_summary.get('skillSpecificOriginalSfx')!=0
+        or palworld_approved_summary.get('productionDeploymentVerifiedHeroes')!=0
+        or palworld_approved_receipt.get('summary')!=palworld_approved_summary
+        or palworld_approved_receipt.get('states',{}).get('sourceFaithfulAudiovisualComplete') is not False
+        or palworld_approved_receipt.get('states',{}).get('productionDeploymentVerified') is not False):
+        raise ValueError('Palworld approved-component integration is absent, stale or overclaims readiness')
+    if palworld_approved_receipt.get('manifest',{}).get('sha256')!=hashlib.sha256(palworld_approved_manifest_path.read_bytes()).hexdigest():
+        raise ValueError('Palworld approved-component manifest pointer is stale')
+    for row in palworld_approved_manifest.get('cries',[]):
+        product=row['gitProduct'];path=ROOT/product['gitPath']
+        if (not path.is_file() or path.stat().st_size!=product['bytes']
+            or hashlib.sha256(path.read_bytes()).hexdigest()!=product['sha256']
+            or row.get('runtimeBindingCreated') is not False
+            or row.get('runtimeSelectable') is not False):
+            raise ValueError('Palworld approved cry product is absent, changed or overclaims runtime: '+row.get('candidateId','unknown'))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
@@ -1007,6 +1037,19 @@ def build(git_link_root=ROOT):
             **palworld_av_entry,
             entryGitPath=str(palworld_av_entry_path.relative_to(ROOT)),
             entrySha256=hashlib.sha256(palworld_av_entry_path.read_bytes()).hexdigest()),
+        palworldApprovedComponentIntegration=dict(
+            schema=palworld_approved_receipt['schema'],
+            status=palworld_approved_receipt['status'],
+            manifestGitPath=str(palworld_approved_manifest_path.relative_to(ROOT)),
+            manifestSha256=hashlib.sha256(palworld_approved_manifest_path.read_bytes()).hexdigest(),
+            receiptGitPath=str(palworld_approved_receipt_path.relative_to(ROOT)),
+            receiptSha256=hashlib.sha256(palworld_approved_receipt_path.read_bytes()).hexdigest(),
+            summary=palworld_approved_summary,
+            audioProducts=[row['gitProduct'] for row in palworld_approved_manifest['cries']],
+            localHeroForgeMotionSelectable=True,
+            approvedCryRuntimeBindingCreated=False,
+            sourceFaithfulAudiovisualComplete=False,
+            productionDeploymentVerified=False),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -1459,6 +1502,15 @@ def main():
                     'gitPath': result['palworldVfxSfxInventory']['entryGitPath'],
                     'sha256': result['palworldVfxSfxInventory']['entrySha256'],
                 },
+                {
+                    'gitPath': result['palworldApprovedComponentIntegration']['manifestGitPath'],
+                    'sha256': result['palworldApprovedComponentIntegration']['manifestSha256'],
+                },
+                {
+                    'gitPath': result['palworldApprovedComponentIntegration']['receiptGitPath'],
+                    'sha256': result['palworldApprovedComponentIntegration']['receiptSha256'],
+                },
+                *result['palworldApprovedComponentIntegration']['audioProducts'],
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
                     'sha256': result['fateubwMotionReserve']['nativeMotionCompletion']['sha256'],

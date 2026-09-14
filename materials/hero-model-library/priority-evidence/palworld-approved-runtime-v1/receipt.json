@@ -1,0 +1,37 @@
+{
+  "schema": "ggd.palworld-approved-runtime-integration-receipt@1",
+  "status": "three-local-hero-forge-dropdowns-and-18-motion-states-verified; 18-approved-cries-git-preserved-runtime-unbound",
+  "summary": {
+    "characters": 3,
+    "ownerApprovedCandidates": 36,
+    "motionSemanticStatesRuntimeSelectable": 18,
+    "approvedGenericMotionBindingsReachable": 14,
+    "approvedPerSkillMotionOverlaysPendingRouter": 4,
+    "approvedCryProductsInGit": 18,
+    "approvedCryRuntimeBindings": 0,
+    "backendDropdownRegisteredHeroes": 3,
+    "standaloneOriginalVfx": 0,
+    "skillSpecificOriginalSfx": 0,
+    "productionDeploymentVerifiedHeroes": 0
+  },
+  "states": {
+    "ownerApprovalApplied": true,
+    "localHeroForgeAuthoringComplete": true,
+    "backendDropdownRegistered": true,
+    "modelMotionRuntimeSelectable": true,
+    "approvedCryProductsGitPreserved": true,
+    "approvedCryRuntimeBindingCreated": false,
+    "sourceFaithfulAudiovisualComplete": false,
+    "productionDeploymentVerified": false
+  },
+  "manifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
+    "sha256": "3998c27ac5450d236707cb7a4fb7fcd27d3fe5011155560619ff81736e2e1410"
+  },
+  "remaining": [
+    "Implement and validate a per-Hero-Forge-character combat-cry event router before enabling the 18 cry bindings.",
+    "Implement the four approved per-skill motion overlays without changing the already-active generic clipMap states.",
+    "Acquire and convert original standalone Palworld skill VFX and skill-specific SFX.",
+    "Verify Main merge, service content version, backend switching, and production playback after deployment."
+  ]
+}
