@@ -38,6 +38,7 @@
 # ⚠️ ⛔ 不設 `-u`:bash 3.2 對空陣列的 `${arr[@]}` 會當成 unbound。
 set -o pipefail
 cd "$(dirname "$0")/.."
+. "$(dirname "$0")/_hosts.sh"   # 部署主機身分（⛔ 不寫死 —— 這個 repo 是 public 的）
 TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 
 BOLD=$'\033[1m'; GRN=$'\033[32m'; RED=$'\033[31m'; YEL=$'\033[33m'; OFF=$'\033[0m'
@@ -194,7 +195,8 @@ git push origin HEAD || die "push 失敗"
 ok "已推上去"
 
 say "部署（--content-only：⛔ 不重建映像，只重啟 game shard 讓它重讀）"
-ssh -A can@34.81.104.163 'cd /home/can/GGD && bash scripts/host-deploy.sh --content-only' \
+GGD_TUNE_TARGET="$(ggd_host GGD_DEPLOY_SSH '回滾機')" || exit 1
+ssh -A "$GGD_TUNE_TARGET" "cd \"\${GGD_DEPLOY_REMOTE:-\$HOME/GGD}\" && bash scripts/host-deploy.sh --content-only" \
   > "$TMPD/tune-deploy.log" 2>&1
 RC=$?
 tail -14 "$TMPD/tune-deploy.log"
