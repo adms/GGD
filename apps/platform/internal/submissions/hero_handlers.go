@@ -174,12 +174,7 @@ func (h *HeroHandlers) build(w http.ResponseWriter, r *http.Request) {
 		heroError(w, err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/zip")
-	w.Header().Set("X-Content-Type-Options", "nosniff")
-	w.WriteHeader(200)
-	// #nosec G705 -- result is a binary ZIP returned under an explicit application/zip
-	// content type with sniffing disabled; it is never rendered as HTML.
-	_, _ = w.Write(result)
+	writeHeroZip(w, result)
 }
 
 func (h *HeroHandlers) buildTakeover(w http.ResponseWriter, r *http.Request) {
@@ -198,12 +193,7 @@ func (h *HeroHandlers) buildTakeover(w http.ResponseWriter, r *http.Request) {
 		heroError(w, err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/zip")
-	w.Header().Set("X-Content-Type-Options", "nosniff")
-	w.WriteHeader(200)
-	// #nosec G705 -- result is a binary ZIP returned under an explicit application/zip
-	// content type with sniffing disabled; it is never rendered as HTML.
-	_, _ = w.Write(result)
+	writeHeroZip(w, result)
 }
 func (h *HeroHandlers) inspect(w http.ResponseWriter, r *http.Request) {
 	if !h.ugcGate(w) {
@@ -255,6 +245,20 @@ func heroError(w http.ResponseWriter, err error) {
 		return
 	}
 	httpx.WriteError(w, err)
+}
+
+// writeHeroZip —— 英雄 ZIP 回應的**唯一**寫出點（GH#1229）。
+// ⚠️ 在此之前五個 handler 各抄一份標頭，而且**四種組合**：build／buildTakeover 有 nosniff 沒 no-store、
+// adminPackage／sourcePackage 有 no-store 沒 nosniff、ownPackage 兩個都沒有 ⇒ 抄的那一份各自漂。
+// ⭐ 標頭與 #nosec 住同一個函式 ⇒ 理由在結構上成立，⛔ 不是一句會跟標頭走散的註解。
+func writeHeroZip(w http.ResponseWriter, archive []byte) {
+	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Cache-Control", "private, no-store")
+	w.WriteHeader(200)
+	// #nosec G705 -- archive 是二進位 ZIP：上面三行把型別釘成 application/zip 並關掉嗅探，
+	//   瀏覽器不會把它當 HTML 渲染；私有作品不進任何共用快取。標註必須貼在被指的這一行（gosec 行錨）。
+	_, _ = w.Write(archive)
 }
 func heroBody(w http.ResponseWriter, r *http.Request, value any, limit int64) bool {
 	decoder := json.NewDecoder(http.MaxBytesReader(w, r.Body, limit))
@@ -467,9 +471,7 @@ func (h *HeroHandlers) ownPackage(w http.ResponseWriter, r *http.Request) {
 		heroError(w, err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/zip")
-	w.WriteHeader(200)
-	_, _ = w.Write(archive)
+	writeHeroZip(w, archive)
 }
 func (h *HeroHandlers) review(w http.ResponseWriter, r *http.Request) {
 	view, err := h.svc.Review(chi.URLParam(r, "id"))
@@ -494,10 +496,7 @@ func (h *HeroHandlers) adminPackage(w http.ResponseWriter, r *http.Request) {
 		heroError(w, err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/zip")
-	w.Header().Set("Cache-Control", "private, no-store")
-	w.WriteHeader(200)
-	_, _ = w.Write(archive)
+	writeHeroZip(w, archive)
 }
 
 type HeroListRow struct {
@@ -691,11 +690,8 @@ func (h *HeroHandlers) sourcePackage(w http.ResponseWriter, r *http.Request) {
 		heroError(w, err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/zip")
-	w.Header().Set("Cache-Control", "private, no-store")
 	w.Header().Set("X-GGD-Package-Digest", snapshot.Version.PackageDigest)
-	w.WriteHeader(200)
-	_, _ = w.Write(data)
+	writeHeroZip(w, data)
 }
 func (h *HeroHandlers) authorizedHeroSource(r *http.Request) (HeroSnapshot, error) {
 	if _, discover := h.enabled(); !discover {
