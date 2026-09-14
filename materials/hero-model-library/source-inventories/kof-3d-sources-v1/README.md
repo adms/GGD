@@ -33,6 +33,7 @@
 - 兩個候選的 S3 完整讀回：PASS。
 - 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。
 - 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。
+- Ash 音訊：86 個 Float32 WAV 已轉為本機 MP3 審查候選並全檔解碼；逐段語言、說話者、類別與事件確認均為 0，沒有 runtime 綁定或部署。
 - 沒有在 Windows Steam inventory 找到 KOF XV 安裝目錄，所以當前不是完整原作遊戲包盤點。
 
 ## KOF Maximum Impact 系列

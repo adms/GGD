@@ -351,6 +351,53 @@ def build_ash_budget_candidates(workspace: Path) -> dict[str, Any]:
     }
 
 
+def validate_ash_audio_review(repo: Path, workspace: Path) -> dict[str, Any]:
+    """Verify review audio products without upgrading their unreviewed identities."""
+    receipt_path = repo / "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json"
+    files_path = receipt_path.with_name("files.jsonl.gz")
+    for required in (receipt_path, files_path):
+        if not required.is_file():
+            raise FileNotFoundError(required)
+    receipt = json_load(receipt_path)
+    if receipt.get("schema") != "ggd.kof-xv-ash-audio-review-conversion@1" or receipt.get("sourceId") != "kof-xv-ash-audio-float32-v1":
+        raise ValueError("unexpected KOF XV Ash audio review receipt")
+    summary = receipt.get("summary", {})
+    expected = {"sourceFloat32WavFiles": 86, "convertedReviewMp3Files": 86,
+                "perClipLanguageConfirmed": 0, "perClipSpeakerConfirmed": 0,
+                "perClipEventConfirmed": 0, "runtimeBindingsCreated": 0,
+                "backendSelectableAssets": 0, "productionDeployments": 0}
+    if any(summary.get(key) != value for key, value in expected.items()):
+        raise ValueError("KOF XV Ash audio review receipt overclaims readiness")
+    manifest = receipt.get("fileManifest", {})
+    if manifest.get("gitPath") != str(files_path.relative_to(repo)) or manifest.get("sha256") != sha256(files_path):
+        raise ValueError("KOF XV Ash audio review file index hash changed")
+    with gzip.open(files_path, "rt", encoding="utf-8") as stream:
+        rows = [json.loads(line) for line in stream if line.strip()]
+    if len(rows) != 86 or len({row.get("nativeAudioId") for row in rows}) != 86:
+        raise ValueError("KOF XV Ash audio review file count changed")
+    output_root = workspace / "GGD-Asset-Library/conversions/kof-xv-ash-audio-review-v1"
+    source_root = workspace / "GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-audio-float32-v1"
+    for row in rows:
+        source_relative = PurePosixPath(str(row.get("sourceRelativePath", "")))
+        output_relative = PurePosixPath(str(row.get("outputRelativePath", "")))
+        if source_relative.is_absolute() or output_relative.is_absolute() or ".." in source_relative.parts or ".." in output_relative.parts:
+            raise ValueError("unsafe KOF XV Ash audio review path")
+        source = source_root / Path(*source_relative.parts)
+        output = output_root / Path(*output_relative.parts)
+        if (not source.is_file() or source.stat().st_size != row.get("sourceBytes") or sha256(source) != row.get("sourceSha256")
+                or not output.is_file() or output.stat().st_size != row.get("outputBytes") or sha256(output) != row.get("outputSha256")):
+            raise ValueError("KOF XV Ash audio review source or output changed")
+        if row.get("codec") != "mp3" or row.get("fullDecodePassed") is not True:
+            raise ValueError("KOF XV Ash review output is not a fully decoded MP3")
+        if any(row.get(key) != "pending-confirmation" for key in ("reportedLanguage", "speaker", "event")):
+            raise ValueError("KOF XV Ash review clip identity must remain pending")
+        if row.get("runtimeBindingAuthorized") is not False or row.get("runtimeSelectable") is not False:
+            raise ValueError("KOF XV Ash review clip must not be runtime ready")
+    return {"receipt": {"path": str(receipt_path.relative_to(repo)), "bytes": receipt_path.stat().st_size, "sha256": sha256(receipt_path)},
+            "fileManifest": {"path": str(files_path.relative_to(repo)), "bytes": files_path.stat().st_size, "sha256": sha256(files_path)},
+            "summary": summary, "status": receipt.get("status")}
+
+
 def build(repo: Path, workspace: Path) -> dict[str, Any]:
     downloads_path = repo / "materials/hero-model-library/download-sources.json"
     downloads = json_load(downloads_path)
@@ -376,6 +423,7 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     source_groups = classify_public_sources(downloads, workspace)
     extracted_verification = verify_xiv_extracted_files(xiv_selected_root)
     ash_budget = build_ash_budget_candidates(workspace)
+    ash_audio_review = validate_ash_audio_review(repo, workspace)
     conversion_probe = json_load(conversion_probe_path)
     texture_candidates = json_load(texture_candidates_path)
 
@@ -399,6 +447,8 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "kofXivWadListing": {"absolutePath": str(wad_listing.resolve()), "bytes": wad_listing.stat().st_size, "sha256": sha256(wad_listing)},
             "conversionProbe": {"path": str(conversion_probe_path.relative_to(repo)), "bytes": conversion_probe_path.stat().st_size, "sha256": sha256(conversion_probe_path)},
             "textureCandidates": {"path": str(texture_candidates_path.relative_to(repo)), "bytes": texture_candidates_path.stat().st_size, "sha256": sha256(texture_candidates_path)},
+            "kofXvAshAudioReview": ash_audio_review["receipt"],
+            "kofXvAshAudioReviewFiles": ash_audio_review["fileManifest"],
         },
         "kofXiv": {
             "steamInventoryRows": kof_steam_games,
@@ -439,12 +489,13 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "standardGlbArtifactsLocal": len(standard_models),
             "standardGlbArtifactsRuntimeReady": sum(bool(row["runtimeReady"]) for row in standard_models),
             "newBudgetCandidates": ash_budget,
+            "audioReviewCandidates": ash_audio_review,
             "hardPolicyProbe": conversion_probe["kofXvAsh"],
             "conversionState": {
                 "ash": "four full-resolution local GLB variants exist across source and material-repair revisions; two new <=8000-triangle/256-texture derivatives are S3-backed but remain blocked by 18 draw calls and visual review, with zero gameplay animation clips",
                 "mai": "native FBX plus textures and Source Filmmaker head/body parts acquired; the Assimp preflight was rejected for unresolved material URIs and excessive geometry",
                 "iori": "native FBX plus textures acquired; the Assimp preflight was rejected for unresolved material URIs; no accepted GLB exists",
-                "audio": "Ash, Mai and Iori audio reserves exist; language, speaker and event binding remain listening-review work",
+                "audio": "Ash, Mai and Iori audio reserves exist; 86 Ash Float32 WAVs also have local MP3 review candidates, but all language, speaker and event bindings remain listening-review work",
             },
         },
         "kofMaximumImpact": {
@@ -526,6 +577,7 @@ def render_markdown(data: dict[str, Any]) -> str:
         f"- 兩個候選的 S3 完整讀回：{'PASS' if xv['newBudgetCandidates']['s3BackupReceipt']['fullGetVerified'] and xv['newBudgetCandidates']['s3BackupReceipt']['allMemberSha256Verified'] else 'FAIL'}。",
         "- 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。",
         "- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。",
+        f"- Ash 音訊：{xv['audioReviewCandidates']['summary']['convertedReviewMp3Files']} 個 Float32 WAV 已轉為本機 MP3 審查候選並全檔解碼；逐段語言、說話者、類別與事件確認均為 0，沒有 runtime 綁定或部署。",
         "- 沒有在 Windows Steam inventory 找到 KOF XV 安裝目錄，所以當前不是完整原作遊戲包盤點。",
         "",
         "## KOF Maximum Impact 系列",

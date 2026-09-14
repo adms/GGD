@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import io
+import json
 import tempfile
 import unittest
 import zipfile
@@ -64,6 +65,17 @@ class InventoryParsingTest(unittest.TestCase):
     def test_2002_scope_is_separate_from_3d_by_constant_contract(self) -> None:
         self.assertEqual("steam-kof2002um-voice-dat-222440-build-8463197", MODULE.KOF_2002_SOURCE_ID)
         self.assertNotEqual(MODULE.KOF_2002_SOURCE_ID, MODULE.KOF_XIV_SOURCE_ID)
+
+    def test_ash_review_audio_never_becomes_runtime_evidence(self) -> None:
+        receipt_path = HERE.parents[3] / "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json"
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        summary = receipt["summary"]
+        self.assertEqual(86, summary["convertedReviewMp3Files"])
+        self.assertEqual(0, summary["perClipLanguageConfirmed"])
+        self.assertEqual(0, summary["perClipSpeakerConfirmed"])
+        self.assertEqual(0, summary["perClipEventConfirmed"])
+        self.assertEqual(0, summary["runtimeBindingsCreated"])
+        self.assertEqual(0, summary["backendSelectableAssets"])
 
 
 if __name__ == "__main__":

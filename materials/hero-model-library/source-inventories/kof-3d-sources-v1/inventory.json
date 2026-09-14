@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3336844,
-      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
+      "bytes": 3339978,
+      "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -58,6 +58,16 @@
       "path": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json",
       "bytes": 14257,
       "sha256": "f03b31f79423d05ed85624e4f27981d4d716647dea2d017281fd7a2c2e80b100"
+    },
+    "kofXvAshAudioReview": {
+      "path": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json",
+      "bytes": 2227,
+      "sha256": "bdfc9afb0834fb511abdcb00c8af22bc7ec6adb030643cc2f4f023d7c6a12951"
+    },
+    "kofXvAshAudioReviewFiles": {
+      "path": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/files.jsonl.gz",
+      "bytes": 11137,
+      "sha256": "09998de58e7f7850c7e1b1b4d14d9203205db910a6c63a0321a22ac4fe7d70b4"
     }
   },
   "kofXiv": {
@@ -5669,6 +5679,31 @@
         "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
       ]
     },
+    "audioReviewCandidates": {
+      "receipt": {
+        "path": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json",
+        "bytes": 2227,
+        "sha256": "bdfc9afb0834fb511abdcb00c8af22bc7ec6adb030643cc2f4f023d7c6a12951"
+      },
+      "fileManifest": {
+        "path": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/files.jsonl.gz",
+        "bytes": 11137,
+        "sha256": "09998de58e7f7850c7e1b1b4d14d9203205db910a6c63a0321a22ac4fe7d70b4"
+      },
+      "summary": {
+        "sourceFloat32WavFiles": 86,
+        "convertedReviewMp3Files": 86,
+        "convertedBytes": 1227168,
+        "fullDecodePassed": true,
+        "perClipLanguageConfirmed": 0,
+        "perClipSpeakerConfirmed": 0,
+        "perClipEventConfirmed": 0,
+        "runtimeBindingsCreated": 0,
+        "backendSelectableAssets": 0,
+        "productionDeployments": 0
+      },
+      "status": "converted-review-candidates-pending-listening-and-event-mapping"
+    },
     "hardPolicyProbe": {
       "guardExitCode": 1,
       "guard": {
@@ -5806,7 +5841,7 @@
       "ash": "four full-resolution local GLB variants exist across source and material-repair revisions; two new <=8000-triangle/256-texture derivatives are S3-backed but remain blocked by 18 draw calls and visual review, with zero gameplay animation clips",
       "mai": "native FBX plus textures and Source Filmmaker head/body parts acquired; the Assimp preflight was rejected for unresolved material URIs and excessive geometry",
       "iori": "native FBX plus textures acquired; the Assimp preflight was rejected for unresolved material URIs; no accepted GLB exists",
-      "audio": "Ash, Mai and Iori audio reserves exist; language, speaker and event binding remain listening-review work"
+      "audio": "Ash, Mai and Iori audio reserves exist; 86 Ash Float32 WAVs also have local MP3 review candidates, but all language, speaker and event bindings remain listening-review work"
     }
   },
   "kofMaximumImpact": {
