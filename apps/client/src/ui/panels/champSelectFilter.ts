@@ -15,8 +15,8 @@ import {
   isSplitFormBody,
   isTransformedBody,
 } from "@ggd/shared/content/championForms";
-// ⭐ GH#1258 ⑤ —— 變身態的**內容側**答案（英雄卡 `transform.role`），與手寫表取聯集。
-//   讀 registry（CALL TIME），registry 沒填時回「不是」⇒ 純單元測試行為不變。
+// ⭐ GH#1258 ⑤ —— 變身態的**內容側**答案（英雄卡互相指著對方的那一對，`voiceFormSharing.contentFormPairs`），
+//   與手寫表取聯集。讀 registry（CALL TIME），registry 沒填時回「不是」⇒ 純單元測試行為不變。
 import { contentAlternateBaseOf, isContentAlternateBody } from "@ggd/shared/content/contentFormBodies";
 import { isShopService, itemHasEffect, legendaryShelfPrice } from "@ggd/shared/sim/economy/itemTiers";
 import {
@@ -214,9 +214,9 @@ function resolveToPickable(
   hidden: ReadonlySet<string> = NO_HIDDEN,
 ): string | null {
   if (isSplitFormBody(id)) return null;
+  // ⚠️ 2026-09-15：內容宣告的變身態一定帶著互指的本體（`contentFormPairs` 的定義），
+  //   所以這裡解析回來的永遠是本體 —— 第一版那行「變身態卻沒有本體 ⇒ 不列」已經不可能成立，拿掉。
   const base = pickableBaseOf(id);
-  // 內容宣告的變身態卻沒有可換的本體（沒寫 counterpartId / 本體不在）⇒ 沒有人可以代換，直接不列。
-  if (isContentAlternateBody(base)) return null;
   // ⚠️ 下架檢查在 baseFormIdOf **之後**：下架的是「這位英雄」，而變身態會被
   // 解析回本體，所以只檢查傳進來的 id 會漏掉「勾了變身態 → 解析回一個已下架的
   // 本體」這條路。兩個 id 都查是刻意的冗餘。

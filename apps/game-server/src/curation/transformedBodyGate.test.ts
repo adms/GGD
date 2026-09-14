@@ -63,12 +63,16 @@ describe("變身態的身體不可被選（伺服器側）", () => {
     expect(wl.allowsChampion(SSJ)).toBe(false);
   });
 
-  it("⭐ GH#1258：只宣告在內容卡上的變身態（不在手寫表）也擋得住 —— 讀同一個 transform.role", () => {
+  it("⭐ GH#1258：只宣告在內容卡上的變身態（不在手寫表）也擋得住 —— 讀 contentFormPairs 那一對", () => {
+    // ⚠️ 2026-09-15：一對＝兩張卡互相指著對方（`voiceFormSharing.contentFormPairs`，⛔ 單邊 role 不算）。
     const ALT = "test-gate-content-alt" as ChampionId;
-    Champions.register(ALT, { id: ALT, transform: { role: "alternate", counterpartId: BASE } } as unknown as ChampionDef);
+    const CBASE = "test-gate-content-base" as ChampionId;
+    Champions.register(ALT, { id: ALT, transform: { role: "alternate", counterpartId: CBASE } } as unknown as ChampionDef);
+    Champions.register(CBASE, { id: CBASE, transform: { role: "base", counterpartId: ALT } } as unknown as ChampionDef);
     try {
       expect(isTransformedBody(ALT), "夾具前提：手寫表不認得它").toBe(false);
       expect(new Whitelist(null, true).allowsChampion(ALT)).toBe(false);
+      expect(new Whitelist(null, true).allowsChampion(CBASE), "本體那一半照樣選得到").toBe(true);
     } finally {
       Champions.clear();
     }

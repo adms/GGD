@@ -175,8 +175,8 @@ export class Whitelist {
     //     所以 #249 換掉的那 10 個舊 alternate id（含超級賽亞人 godie-o00x）
     //     可能還留在線上白名單裡。客戶端的 `resolveToPickable` 擋得住玩家,
     //     但擋不住 bot／隨機英雄／偽造或重放的 SELECT_CHAMPION。
-    // ⭐ GH#1258 ⑤：手寫表（w3x 26 對）**或**內容卡 `transform.role === "alternate"`
-    //   —— 與後台 `curationTransform.isTransformedBodyRow`、平台 `transformevict.go` 讀同一個欄位。
+    // ⭐ GH#1258 ⑤：手寫表（w3x 26 對）**或**內容卡宣告的一對裡 alternate 那一半
+    //   （兩張卡互相指著對方，`voiceFormSharing.contentFormPairs`）—— 與後台、平台讀同一個欄位。
     //   新批次的變身態（例：b2-maple-alt-*）不必改手寫表就會被擋。
     if (isTransformedBody(id) || isContentAlternateBody(id)) return false;
     return this.bypass || this.champions.has(id);
