@@ -17,6 +17,10 @@ A("79-00", "79-00 靈壓", "self", [0], [0], 0,
 
 A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
   "[主動][指向][範圍][衝刺]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
+  # ⭐ GH#1260 B1-A（2026-09-15，Claude 的判斷，rollback＝revert 該 commit）：
+  #    線上 v0.44.1 本體 0.067 秒 ⇒ 要施法的最低一格「小」0.1（owner 2026-09-12「最低是 0.1 吧」）；
+  #    變身態 `godie-h01o.q` 線上 0.267 跟著本體。⛔ 在此之前是「中」＝同編號取最高。
+  castTimeTier="小",
   # GH#375 —— `imported.bolt.void` 是純視覺（酬載在 dash + damageArea 上）。
   cosmetic_projectile="imported.bolt.void",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 9.17},

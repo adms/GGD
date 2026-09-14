@@ -504,6 +504,7 @@
         300.0
       ],
       "range": 8.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -568,9 +569,8 @@
         }
       ],
       "cooldownTier": "極大",
-      "manaCostTier": "中",
-      "castTimeTier": "極大",
       "rangeTier": "大",
+      "manaCostTier": "中",
       "castTimeSec": 1
     }
   },

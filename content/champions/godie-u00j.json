@@ -69,10 +69,10 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0,
       "effects": [
@@ -123,7 +123,7 @@
         "camKick": 0.351
       },
       "cooldownTier": "小",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "radiusTier": "中",
       "castTimeTier": "極大"
     },
@@ -145,13 +145,13 @@
       ],
       "cooldownTier": "大",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "effects": [
         {
           "kind": "dash",
@@ -204,10 +204,10 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
@@ -234,7 +234,7 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "radiusTier": "中",
       "castTimeTier": "極大"
     },
@@ -253,9 +253,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [
         {
@@ -290,7 +290,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "castTimeTier": "極大"
     }
   },

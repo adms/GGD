@@ -170,10 +170,10 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -192,12 +192,12 @@
       ],
       "vfxKey": "fx.prim.ki.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 1,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小",
-      "castTimeTier": "極大"
+      "manaCostTier": "小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-o00x.r",
@@ -214,9 +214,9 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -274,7 +274,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "template": {
         "ref": "tpl-line-strike",
         "params": {

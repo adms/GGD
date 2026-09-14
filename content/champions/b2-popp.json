@@ -78,12 +78,12 @@
       ],
       "id": "b2-popp.q",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "先幫你預熱",
       "range": 6,
@@ -143,11 +143,11 @@
       ],
       "id": "b2-popp.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "美拉佐瑪烤肉吃到飽",
       "range": 6,
@@ -216,12 +216,12 @@
       ],
       "id": "b2-popp.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "冷氣帳單換定身",
       "radius": 3,

@@ -49,12 +49,12 @@
       ],
       "id": "b2-kisaragi.e",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "解除手閘本車才出發",
       "radius": 3,
@@ -337,11 +337,11 @@
       ],
       "id": "b2-kisaragi.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "如月末班車・乘客全數迷途",
       "radius": 3,

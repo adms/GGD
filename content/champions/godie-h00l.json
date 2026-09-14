@@ -144,8 +144,8 @@
       "vfxKey": "fx.prim.wind.slash",
       "sfxKey": "wc3.druidofthetalonmissilelaunch2",
       "cooldownTier": "極小",
-      "manaCostTier": "極小",
       "castTimeTier": "大",
+      "manaCostTier": "極小",
       "castTimeSec": 0.5
     },
     "W": {
@@ -199,9 +199,9 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.headhunteryes4",
       "cooldownTier": "大",
-      "manaCostTier": "極小",
       "castTimeTier": "大",
       "rangeTier": "極大",
+      "manaCostTier": "極小",
       "castTimeSec": 0.5
     },
     "E": {
@@ -467,6 +467,7 @@
         0.0
       ],
       "range": 0.0,
+      "castTimeTier": "極大",
       "targetsEnemies": false,
       "effects": [
         {
@@ -565,8 +566,7 @@
         "camKick": 0.466
       },
       "cooldownTier": "中",
-      "castTimeTier": "大",
-      "castTimeSec": 0.5
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

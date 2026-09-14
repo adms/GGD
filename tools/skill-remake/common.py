@@ -212,6 +212,10 @@ SPEC_OWNED = frozenset({
     #    ⛔ 不要改成「在 hero 檔裡順便寫 rangeTier」—— 那是把一個壞掉的接縫
     #    繞過去，下一支照樣踩。
     "cooldown", "manaCost", "range", "rangeTier", "innateKind", "radiusTier",
+    # ⭐ `manaCostTier` 2026-09-15 補進來（GH#1260）—— 理由與 rangeTier 同型：
+    #    `tierize()` 從這一天起「級別贏」（文件有級別就不再從值重新歸級），
+    #    ⛔ 不進這張表 ⇒ A-6 把舊文件的級別救回來 ⇒ 規格表裡的 mp 改了也一個位元不動。
+    "manaCostTier",
     # ⭐ `cooldownShape` 2026-08-24 補進來（GH#644 59-01 吞噬）。⚠️ 理由與 rangeTier
     #    同型：不進這張表的欄位會被 A-6 從舊文件救回來，而這一格是**規格**在說
     #    「查哪一張冷卻表」—— 舊值贏過規格就是 tierize 拿錯格線。
@@ -231,9 +235,11 @@ RETIRED = frozenset({
     #    四級距，content/aoeTiers.ts 的 resolveRadiusTier() 在註冊時翻成 radius，
     #    而且**級別贏過手寫值**。救回 radius 等於逆著 owner 走。
     "radius",
-    # ⛔ castTimeSec：唯一來源是 castTimeFormula.deriveCastTime()。effects 整批
-    #    換過之後舊值一定是錯的，抄回來只會讓 castTimeCoverage 用**錯誤的訊息**
-    #    紅。正解是後處理 `pnpm exec tsx packages/shared/scripts/deriveCastTimes.ts --write`。
+    # ⛔ castTimeSec：它是 `castTimeTier` 的**物化值**（`deriveCastTimes.ts --write` 從
+    #    `content/config/cast-time-tiers.json` 查表寫回），⛔ 不是作者寫的。抄回舊值只會留下
+    #    第二個住處。⭐ 吟唱屬於作者的是**級別**：表格欄位 `castTimeTier=`，或規格秒數
+    #    `cast_time=`（由 `_cast_time_tier()` 靠最近一格）。
+    #    ⚠️ 2026-09-15 起 20 階公式 `castTimeFormula.ts` 已搬到 docs/legacy/code（GH#1243）。
     "castTimeSec",
 })
 
@@ -415,6 +421,31 @@ TIER_R = {k: float(v) for k, v in _tierize_load("aoe-tiers")["radius"].items()}
 # （GH#433 的 9 支）它就反了 —— 寫 2.0 會被收成「極小」，而裁決是「小」。
 # ⇒ 那幾支在 hero 檔裡寫 `TIER_RANGE["小"]`，級別本身才是來源。
 TIER_RANGE = {k: float(v) for k, v in _tierize_load("range-tiers")["range"].items()}
+
+# ⭐ 吟唱五級距（`content/config/cast-time-tiers.json`）—— 同 `TIER_R`：從出貨 config 讀，⛔ 不抄字面值。
+from tierize import TIER_NAMES as _TIER_NAMES, nearest_index as _nearest_index  # noqa: E402
+_CAST_ROW = [float(_tierize_load("cast-time-tiers")["seconds"][n]) for n in _TIER_NAMES]
+
+
+def _cast_time_tier(e):
+    """規格表這一列的吟唱級別（GH#1260 B1-A，2026-09-15）。
+
+    ① 明寫 `castTimeTier=` 贏（例：12-002 仙氣發勁，owner 2026-09-02「吟唱時間要降為 0.2秒」）。
+    ② 否則 `cast_time=`（owner 2026-08-08 規格稿逐招寫的「吟唱X秒」）靠**最近一格**，
+       平手取**較快**（`nearest_index` 往低；同 `castTimeTierOf` 的前一格）；
+       要施法的技能最低「小」（owner 2026-09-12「最低是 0.1 吧」）。
+       ⚠️ 秒數超過表頂（1.0）照樣落「極大」—— owner「最多一秒」。
+    ⛔ 在此之前 `cast_time=` 這一欄**沒有任何一行程式讀它**：規格寫 2 秒的 45-03 千鳥出貨是 0.1 秒。
+    """
+    if e.get("castTimeTier"):
+        return e["castTimeTier"]
+    sec = e.get("cast_time")
+    if sec is None:
+        return None
+    i = _nearest_index(float(sec), _CAST_ROW)
+    if float(sec) > 0 and _CAST_ROW[i] <= 0:
+        i = next(j for j, v in enumerate(_CAST_ROW) if v > 0)
+    return _TIER_NAMES[i]
 
 
 def area(dtype="magic", tier="小", maxt=None, onhit=None, **kw):
@@ -1359,10 +1390,12 @@ def build(e):
             doc["innateActivePassive"] = e["innate_active_passive"]
     if e.get("radiusTier"):
         doc["radiusTier"] = e["radiusTier"]
-    # ⭐ 吟唱五級距（GH#943）：填了就寫，載入時 resolveCastTimeTierOnDoc 翻成秒（級距贏過 castTimeSec）。
-    #    ⛔ castTimeSec 仍由 deriveCastTime() 算（RETIRED 那一格的規則不變）—— 這一格只是「作者說要哪一級」。
-    if e.get("castTimeTier"):
-        doc["castTimeTier"] = e["castTimeTier"]
+    # ⭐ 吟唱五級距（GH#943）：吟唱屬於作者的是**級別**，載入時 resolveCastTimeTierOnDoc 翻成秒（級距贏過 castTimeSec）。
+    #    表格明寫 `castTimeTier=` 或規格秒數 `cast_time=` ⇒ 見 `_cast_time_tier()`。
+    #    ⛔ castTimeSec 不寫（RETIRED）：它是 `deriveCastTimes.ts` 從級別查表寫回的物化值。
+    _ct = _cast_time_tier(e)
+    if _ct:
+        doc["castTimeTier"] = _ct
     doc["targetsEnemies"] = e["cast"] != "self" or bool(e.get("radiusTier"))
     # A-5：規格寫的是**酬載**；舊文件上規格沒點名的**非酬載機制**（彈道 / 無敵窗）
     #      在這裡接回來。⛔ 這一行要緊貼在 effects 指派之後 —— 後面任何一步再動
@@ -1497,6 +1530,20 @@ def build(e):
             DROP_LOG.setdefault(aid, {})[k] = v
             continue
         doc.setdefault(k, v)
+    # ── 純被動（有 passive、沒有 effects、沒有模板）不施法 ⇒ 吟唱「極小」────────
+    # ⭐ GH#1260 B1-A（2026-09-15）：`deriveCastTimes.ts` 對它們本來就不寫 castTimeSec（isPassiveOnly），
+    #    ⛔ 但 A-6 救回來的舊級別照樣被 `resolveCastTimeTierOnDoc` 翻成秒 ⇒ 註冊表裡一支
+    #    玩家按不到的被動帶著 1 秒吟唱（77-002 御雷劍、12-03 空破山、79-002 虛化、92-002 最終戈壁、
+    #    77-00 浮雲-旋一閃 0.5 秒）。來源是 da508309c「同編號統一取最高」把變身態的秒數抄過來。
+    if doc.get("passive") is not None and not doc.get("effects") and "template" not in doc:
+        doc["castTimeTier"] = _TIER_NAMES[0]
+    # ⭐ `template.params.castTimeSec` 也是物化值（`deriveCastTimes.ts` 兩處一起寫）⇒ 跟級別走。
+    #    ⛔ 不跟的話表格裡那一格字面值（templatize 當年抄的 1.0）就是第二個住處：
+    #    級別一改，產生器吐 1.0、derive 寫 0.5 ⇒ `skillremake:json --check` 永遠紅。
+    _tp = (doc.get("template") or {}).get("params")
+    if isinstance(_tp, dict) and "castTimeSec" in _tp and doc.get("castTimeTier") in _TIER_NAMES:
+        doc["template"] = json.loads(json.dumps(doc["template"]))  # ⛔ 不回寫到表格 T 本身
+        doc["template"]["params"]["castTimeSec"] = _CAST_ROW[_TIER_NAMES.index(doc["castTimeTier"])]
     # ── A-8：技能自己發動的 damageArea 要含震央（passive/hooks 裡的不碰）──────
     _own_area(doc["effects"])
     # ── B1-B：兄弟酬載折進 onHitTargets（規則，不是逐列參數）──────────────────

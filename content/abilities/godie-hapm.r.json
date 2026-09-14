@@ -19,6 +19,7 @@
   ],
   "range": 0.0,
   "radiusTier": "中",
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -69,6 +70,5 @@
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "cooldownTier": "極大",
   "manaCostTier": "中",
-  "castTimeTier": "小",
-  "castTimeSec": 0.1
+  "castTimeSec": 1
 }

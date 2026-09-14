@@ -62,12 +62,12 @@
         15.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 3,
       "rangeTier": "極小",
       "cooldownTier": "小",
@@ -214,12 +214,12 @@
         15.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 3,
       "rangeTier": "極小",
       "cooldownTier": "小",
@@ -272,11 +272,11 @@
         90.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        600.0,
+        600.0,
+        600.0
       ],
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "range": 3,
       "radius": 7.33,
       "rangeTier": "極小",
