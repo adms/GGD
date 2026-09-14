@@ -355,6 +355,15 @@ def build_audit(probe: dict) -> dict:
         model for model in central_models
         if roster_ids.intersection(model.get("registeredFor") or [])
     ]
+    invalid_target_central_rows = [
+        {"id": model.get("id"), "modelKey": model.get("modelKey"),
+         "validation": model.get("validation"),
+         "runtimeDropdownRegistered": bool(model.get("runtimeDropdownRegistered"))}
+        for model in target_central_rows
+        if not model.get("validation") or not model.get("runtimeDropdownRegistered")
+    ]
+    if invalid_target_central_rows:
+        raise ValueError(f"Central target row lacks qualification/registration evidence: {invalid_target_central_rows}")
     missing_central_registration = []
     champion_sources = {
         row["heroId"]: {option["sourceModelKey"] for option in row["allOptions"]}
