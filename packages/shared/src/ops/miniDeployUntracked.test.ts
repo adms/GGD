@@ -51,7 +51,7 @@ const TARGET_ONLY = ["plain.txt", "新檔 空白.txt", "ignored.log", "sub/deep.
 function clashRepo() {
   const d = mkdtempSync(join(tmpdir(), "mini-clash-"));
   git(d, "init", "-q", ".");
-  for (const [k, v] of [["user.email", "t@t"], ["user.name", "t"], ["core.quotePath", "true"]]) git(d, "config", k, v);
+  for (const [k, v] of [["user.email", "t@t"], ["user.name", "t"], ["core.quotePath", "true"]] as const) git(d, "config", k, v);
   writeFileSync(join(d, ".gitignore"), "*.log\n");
   writeFileSync(join(d, "a.txt"), "v1");
   git(d, "add", "-A");
