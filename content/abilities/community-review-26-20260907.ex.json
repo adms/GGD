@@ -22,7 +22,7 @@
       "kind": "leap",
       "applyTo": "target",
       "mode": "toPoint",
-      "apexHeight": 0.005,
+      "apexHeight": 0,
       "durationSec": 0.45,
       "throwDistance": 2.2,
       "dragToCaster": true,
