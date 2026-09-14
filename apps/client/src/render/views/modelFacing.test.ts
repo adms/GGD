@@ -277,9 +277,9 @@ type CensusVerdict =
   | { kind: "unreadable" };
 
 /**
- * ⚠️ **量到的洞，逐具具名** —— 出貨 124 具模型裡有 3 具的面向**沒有任何守衛在看**。
+ * ⚠️ **量到的洞，逐具具名** —— 出貨模型裡面向**沒有任何守衛在看**的那些（2026-09-15 起 66 具，原本 3 具）。
  * ⛔ 它們不可以繼續躲在一個 `continue` 後面：列在這裡 = 洞還在，但它**有名字、有理由、
- * 而且不會長大**（第 4 具出現就紅）。⭐ 反方向也關：哪天有人把某一具修好變成量得出來，
+ * 而且不會長大**（表外多一具就紅）。⭐ 反方向也關：哪天有人把某一具修好變成量得出來，
  * 它還留在這張表上一樣紅 —— 一張活得比缺陷還久的豁免表就是下一個謊。
  *
  * ⚠️ 這三具**不是**「已知面向錯誤」，是「**面向對不對沒有人知道**」。
@@ -290,6 +290,138 @@ const FACING_UNVERIFIED: Readonly<Record<string, string>> = {
   "imported.luffe": "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 godie-u00n / u00o 魯夫）",
   "imported.herolight": "7 對 L/R 骨頭彼此不同意（骨架疑似被鏡射過）（英雄 godie-emns 夜神月）",
   "prop.guardian.beast": "8 對骨頭略微不同意；是場景 prop，⛔ 不是英雄模型",
+  // ⭐ 2026-09-15 —— 以下 63 具是 09-10 起的批次匯入（ou99／community 骨架、以及 PR #1152
+  //   的 `version.body.*` 凍結副本）量出來的洞：v0.44.1 時 22 具未宣告、合併前 main 24 具、
+  //   合併 PR #1152 之後 63 具。⚠️ 它們**不是**「已知面向錯誤」，是「面向對不對沒有人知道」——
+  //   這批骨架的 L/R 骨頭命名少（多數只有 1–2 對），`chiralityForward()` 量不出方向。
+  //   ⛔ 逐具具名、理由是量到的 n／coherence，⭐ 第 64 具出現照樣紅；修好一具（量得出來）
+  //   ④ 會叫你把它從表上拿掉。要真的判定它們，仍然是 GH#216 的後續（第三個線索）。
+  "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.452782":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.454482":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.454482-standard-v2":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.457280":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.457280-standard-v2":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.463198":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.470426":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.474798":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.478915":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.487191":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.487487-7yzc0mtk":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.487487-7yzc0mtk-standard-v2":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.491448":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.491448-standard-v3":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.497400":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.498214":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.498214-standard-v2":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "ou99.498517":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.06d16d67ecdfa30538206289955afffc2d1f525a57292fd7":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.0c5df87ee0f8b37a38897e2b5bc903c681d8250dbe156c75":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.0cb6555ccbf4b9e95eb4bc18071445cebafcf75d5675eb00":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 b2-kisaragi）",
+  "version.body.1d22559edc8a7be9b96c3a1bc452fff1f678b1ec80eabc46":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.287ebb2bdd01052cd0faf8a27dafd0e9fe63623172b35bb9":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.2a62bf437a4de27aeb05ddc5233dbfbe2937c332e302b435":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 b2-uncle）",
+  "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過（英雄 lol-karthus）",
+  "version.body.39c18a9b1921088ab533c174a64f6ae0bf908933d72ed3ea":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 godie-u00n / godie-u00o）",
+  "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 godie-n003）",
+  "version.body.66347ee0e95b4a1960dd0b58b17e50bedd726e4dddea3a67":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 b2-boxxo）",
+  "version.body.7746382d498189e79235a1a5aeac79a232dcd1bfa70bc353":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.799894656f162f2c3a59eaf222696fce5bb8381b5a4fd08f":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.80c676912c0c63a47519b75f49821316bb6d80cc335f3801":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.8c7d9c17a45eacbf0463ad09896708d85b8a8602f16344c5":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.8ccd5ce36ba95dcfbe12a95f88e973cc09b630b883632578":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.9dc018e902d47bae413635f604c326742a8dcfba4fe52a56":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 b2-klaus）",
+  "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 community-review-30-20260907）",
+  "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.d0dd376d8dc09d756500861ccc7c4ddb9e797aeca35c3b0c":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.d9d8dbfa8ead890dff3d5009b07231e2aee65455e619a061":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 community-review-11-20260907）",
+  "version.body.e2db418dc4431b5e5ccdcc50ca8ecc33946efeb840296340":
+    "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
+  "version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4":
+    "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
 };
 
 function census(): { doc: ModelDocLite; verdict: CensusVerdict }[] {

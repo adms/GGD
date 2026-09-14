@@ -15,7 +15,7 @@
  * Runs on Babylon's NullEngine (headless), like the other render tests.
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
-import { isShipped } from "../testkit/contentFixtures";
+import { isShipped, readContentJson } from "../testkit/contentFixtures";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -387,31 +387,43 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
       stillVoxel.map((c) => c.id),
       "又有 godie-* 掉回程序生成的體素身體了 —— 若是刻意的,把它的 usca-verbatim 規則一起寫回來",
     ).toEqual([]);
-    // 而那六位「靠對半才穿到模型」的,一個都不能**默默**從名單上消失
+    // 而那六位「靠對半才穿到模型」的,一個都不能**默默**失去保底
     // GH#323 —— ⚠️ 2026-08-13 其中四位（h00w / n01b / o02n / u011）隨變身系統整理
-    //    搬進 `content/_legacy/`。那是**刻意的退場**，不是這條規則壞掉 ⇒ 跳過，
-    //    ⛔ 但不是從清單刪掉：留著才看得出「哪幾位還在、規則對它們還成立」。
-    const retiredHere: string[] = [];
+    //    搬進 `content/_legacy/`。
+    // ⭐ 2026-09-15 —— 在此之前退場的四位是**跳過**的，⛔ 而 09-10／09-11 另外兩位
+    //    （o030 b1a939f7c · e010 0c2446749）換上了自己的真模型、不再穿共用替身
+    //    ⇒ 六位同時離開「出貨 × 替身」這個母體，這一條變成空跑（下面那行正是為此而紅）。
+    // ⭐ 修法照這條測試自己寫的「該換一組樣本」，⛔ 不是刪：這裡驗的是**引擎規則**
+    //    `defaultPrefersVoxelBody` 的第三道保底（對半在 manifest ⇒ 不掉回體素），
+    //    ⇒ 名單再縮一次**不應該**讓它紅 ⇒ 照 `contentFixtures.ts` 的判準走①
+    //    `readContentJson`（先 content/ 再 _legacy/）拿真的文件當夾具。
+    //    換上真模型的那兩位**已經不需要**這張保底 ⇒ 記下來、⛔ 不算進樣本。
+    const graduated: string[] = [];
+    const exercised: string[] = [];
     for (const id of NOW_MODEL_BODIED_VIA_COUNTERPART) {
-      const c = standIns.find((x) => x.id === id);
-      if (c === undefined && !isShipped("champions", id)) {
-        retiredHere.push(id);
+      const c = readContentJson<{ id: string; modelKey: string }>(`champions/${id}.json`);
+      if (!STOCK_KEYS.has(c.modelKey)) {
+        graduated.push(id);
         continue;
       }
-      expect(c, `${id} 不再是 stand-in champion 了?（而且它還在出貨名單上）`).toBeTruthy();
+      exercised.push(id);
       expect(
-        defaultPrefersVoxelBody(c!.modelKey, id),
+        defaultPrefersVoxelBody(c.modelKey, id),
         `${id}: #223 的保底 (b) 沒了 —— 這具身體會掉回方塊人`,
       ).toBe(false);
       expect(BLIZZARD_MODEL_CHAMPIONS.includes(id), `${id} 是靠對半繼承的,不在 manifest 裡`).toBe(
         false,
       );
     }
-    // ⛔ 六位不能同時退場 —— 那樣這條就變成空跑，而它是 #223 保底 (b) 的唯一守衛。
+    // 換上自己模型的，出貨時真的不是替身（否則「畢業」是一句沒有證據的話）。
+    for (const id of graduated) {
+      if (isShipped("champions", id)) expect(standIns.find((x) => x.id === id), id).toBeUndefined();
+    }
+    // ⛔ 樣本不能空 —— 那樣這條就變成空跑，而它是 #223 保底 (b) 的唯一守衛。
     expect(
-      retiredHere.length,
-      "這六位全部退場了 —— 這條測試已經不守任何東西，該刪或該換一組樣本",
-    ).toBeLessThan(NOW_MODEL_BODIED_VIA_COUNTERPART.length);
+      exercised,
+      "這六位全部換上了自己的模型 —— 這條測試已經不守任何東西，該換一組穿替身的變身態當樣本",
+    ).not.toEqual([]);
   });
 
   it("every stand-in champion's map scale reaches the renderer", () => {

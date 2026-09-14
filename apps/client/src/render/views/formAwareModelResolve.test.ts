@@ -166,7 +166,10 @@ const ALT_WC3_GLB = `${BLIZZARD_LOCAL_GLB_PREFIX}H00W.glb`;
  */
 const JET_BASE = "godie-ucrl";
 const JET_ALT = "godie-u034";
-const JET_BASE_KEY = "champ.thorne";
+// ⭐ 2026-09-15：本體以前是 `champ.thorne`（佔位方塊騎士）。107626f90（2026-09-10）
+//   「同角色另一張卡早就有模型」把 u034 的 herobiggon 抄給了 ucrl ⇒ 兩半現在穿同一具。
+//   ⭐ 這一對仍然是第四條縫（顏色）唯一可觀測的對象 —— 顏色來自英雄文件，⛔ 不來自模型。
+const JET_BASE_KEY = "imported.herobiggon";
 const JET_ALT_KEY = "imported.herobiggon";
 
 /** 61 克勞薩 —— 唯一一對 w3u 給兩半**不同**模型路徑的,缺省即繼承的實測對象。 */
@@ -554,23 +557,27 @@ const isStandin = (glb: string | null): boolean =>
 
 describe("#223 26 對的出貨普查(這是量測,不是引用)", () => {
   it("寫反的那兩句:穿共用替身的是本體,不是變身態", () => {
-    expect(shippedModelKey("godie-ucrl"), "#06 本體").toBe("champ.thorne");
-    expect(shippedModelKey("godie-u034"), "#06 變身態").toBe("imported.herobiggon");
-    expect(isStandin(shippedGlb("imported.herobiggon")), "變身態不是替身").toBe(false);
+    // ⭐ 2026-09-15 重量：#06 那一句的前提（「本體穿 champ.thorne 替身」）在 107626f90 之後
+    //   **不成立了** —— 本體也換上 herobiggon。⛔ 不刪這兩行：它們守的是「別再把兩半寫反」，
+    //   ⭐ 所以改成讀常數（一個住處），兩半現在都不是替身。
+    expect(shippedModelKey(JET_BASE), "#06 本體").toBe(JET_BASE_KEY);
+    expect(shippedModelKey(JET_ALT), "#06 變身態").toBe(JET_ALT_KEY);
+    expect(isStandin(shippedGlb(JET_BASE_KEY)), "#06 本體不再是替身").toBe(false);
+    expect(isStandin(shippedGlb(JET_ALT_KEY)), "變身態不是替身").toBe(false);
     // #61 兩半都穿替身,但**不是同一個**替身 —— 舊文案寫「都是 champ.thorne」,
     // 而 champ.thorne 只有本體穿。
     expect(shippedModelKey(KRAUSER_BASE), "#61 本體").toBe(KRAUSER_BASE_KEY);
     expect(shippedModelKey(KRAUSER_ALT), "#61 變身態").toBe(KRAUSER_ALT_KEY);
   });
 
-  it("26 對:只有 6 對的變身態穿共用替身,其餘 20 對 overlay 從不出手", () => {
+  it("26 對:只有 4 對的變身態穿共用替身,其餘 22 對 overlay 從不出手", () => {
     const standin = CHAMPION_FORM_PAIRS.filter((p) =>
       isStandin(shippedGlb(shippedModelKey(p.alternateId))),
     ).map((p) => p.alternateId);
-    expect(standin.sort()).toEqual(
-      ["godie-h00w", "godie-o030", "godie-n01b", "godie-u011", "godie-e010", "godie-o02o"].sort(),
-    );
-    expect(CHAMPION_FORM_PAIRS.length - standin.length).toBe(20);
+    // ⭐ 2026-09-15 重量 6→4：o030 臭作（b1a939f7c）與 e010 白木（0c2446749）的變身態
+    //   換上了自己的模型 ⇒ 不再穿共用替身。⭐ 棘輪的正確方向（少兩具借來的身體）。
+    expect(standin.sort()).toEqual(["godie-h00w", "godie-n01b", "godie-u011", "godie-o02o"].sort());
+    expect(CHAMPION_FORM_PAIRS.length - standin.length).toBe(22);
   });
 
   /**
@@ -915,21 +922,17 @@ describe("GH#239 克勞薩的身體 —— 出貨的 hook 拿到出貨的覆蓋�
     // ⚠️ 正面斷言，而且它是這一組的支點:只驗「沒有變差」的話，overlay 從頭到尾
     // 沒出手過也是零退步(第 3 組就是這樣對兩個突變都綠的)。這一行讓「一具都沒
     // 救到」也是一個失敗。
-    // 這 6 具就是第 3 組量到的「變身態穿共用替身」的那 6 個。它們靠三條不同的
+    // 這 4 具就是第 3 組量到的「變身態穿共用替身」的那 4 個。它們靠三條不同的
     // 路拿到真模型,所以這個清單同時是那三條路各自還活著的證據:
     //   · o02o —— 自己就在 BLIZZARD_MODEL_CHAMPIONS 裡(直接命中);
-    //   · h00w / o030 / n01b / e010 —— `SHARED_MODEL_COUNTERPART`(w3u 同模型路徑);
+    //   · h00w / n01b —— `SHARED_MODEL_COUNTERPART`(w3u 同模型路徑);
     //   · u011 —— 只剩 `resolve(…, inheritFrom)` 這一張,少了它就進上面的 `worse`。
+    // ⭐ 2026-09-15 6→4：o030（b1a939f7c）與 e010（0c2446749）換上了自己的模型,
+    //   不再需要保底。⚠️ 三條路仍然各有至少一具樣本 —— 哪天 h00w 與 n01b 也畢業,
+    //   `SHARED_MODEL_COUNTERPART` 這條路就沒有活體證據了,這一行會先紅。
     expect(
       rescued.sort(),
       "沒有任何一具穿替身的變身身體拿到真模型 —— 保底整條沒生效",
-    ).toEqual([
-      "godie-e010",
-      "godie-h00w",
-      "godie-n01b",
-      "godie-o02o",
-      "godie-o030",
-      "godie-u011",
-    ]);
+    ).toEqual(["godie-h00w", "godie-n01b", "godie-o02o", "godie-u011"]);
   });
 });

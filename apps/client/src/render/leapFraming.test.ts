@@ -108,6 +108,10 @@ interface ContentLeap {
   durationSec: number;
   /** how far the body travels: 0 for inPlace, else the ability's reach */
   travel: number;
+  /** the ability doc's `provenance` ladder rung (CLAUDE.md 第〇·六), or null when unstated */
+  provenance: string | null;
+  /** `template.params.apexHeight` —— the value the author typed on the WC3 ruler, or null */
+  authoredApexWc3: number | null;
 }
 
 type Json = Record<string, unknown>;
@@ -117,8 +121,26 @@ function num(o: Json, key: string): number | null {
   return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
 
+/** Where a doc's leaps came from — read off the RAW doc, before template expansion. */
+function originOf(doc: Json): Pick<ContentLeap, "provenance" | "authoredApexWc3"> {
+  const tpl = doc["template"];
+  const params =
+    typeof tpl === "object" && tpl !== null ? (tpl as Json)["params"] : undefined;
+  return {
+    provenance: typeof doc["provenance"] === "string" ? (doc["provenance"] as string) : null,
+    authoredApexWc3:
+      typeof params === "object" && params !== null ? num(params as Json, "apexHeight") : null,
+  };
+}
+
 /** Walk an effect tree (leaps nest their payload under `onLand`). */
-function collectLeaps(effects: unknown, where: string, reach: number, out: ContentLeap[]): void {
+function collectLeaps(
+  effects: unknown,
+  where: string,
+  reach: number,
+  origin: Pick<ContentLeap, "provenance" | "authoredApexWc3">,
+  out: ContentLeap[],
+): void {
   if (!Array.isArray(effects)) return;
   for (const raw of effects) {
     if (typeof raw !== "object" || raw === null) continue;
@@ -129,10 +151,10 @@ function collectLeaps(effects: unknown, where: string, reach: number, out: Conte
       if (apexHeight === null || durationSec === null) continue;
       const travel =
         e["mode"] === "inPlace" ? 0 : (num(e, "throwDistance") ?? reach);
-      out.push({ where, apexHeight, durationSec, travel });
+      out.push({ where, apexHeight, durationSec, travel, ...origin });
     }
-    collectLeaps(e["onLand"], where, reach, out);
-    collectLeaps(e["effects"], where, reach, out);
+    collectLeaps(e["onLand"], where, reach, origin, out);
+    collectLeaps(e["effects"], where, reach, origin, out);
   }
 }
 
@@ -192,9 +214,10 @@ function harvestContentLeaps(): ContentLeap[] {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
     // `godie-hpb1.e` → owner `godie-hpb1`. No champion doc ⇒ nobody follows it.
     if (!champs.has(f.replace(/\.json$/, "").split(".")[0]!)) continue;
-    const doc = expandForScan(JSON.parse(readFileSync(`${abilityDir}/${f}`, "utf8")) as Json);
+    const rawDoc = JSON.parse(readFileSync(`${abilityDir}/${f}`, "utf8")) as Json;
+    const doc = expandForScan(rawDoc);
     const reach = num(doc, "range") ?? num(doc, "radius") ?? 0;
-    collectLeaps(doc["effects"], f.replace(/\.json$/, ""), reach, out);
+    collectLeaps(doc["effects"], f.replace(/\.json$/, ""), reach, originOf(rawDoc), out);
   }
   const champDir = contentDir("champions");
   for (const f of readdirSync(champDir)) {
@@ -210,6 +233,7 @@ function harvestContentLeaps(): ContentLeap[] {
         ab["effects"],
         `${f.replace(/\.json$/, "")} [${slot}, embedded]`,
         reach,
+        originOf(a as Json),
         out,
       );
     }
@@ -470,9 +494,48 @@ describe("#247b leap framing — every leap in content stays on screen", () => {
     //    one factor — ⛔ not a second, already-multiplied copy of it. A copy is a
     //    fourth home for the same number and it rots the moment the factor moves.
     const JASS_FAMILY = [0, 250, 300, 400, 600, 1000].map(toApex);
-    const shipped = harvestContentLeaps().map((l) => l.apexHeight);
-    for (const a of shipped) {
-      expect(JASS_FAMILY, `apex ${a} is not a JASS-family value`).toContain(a);
+    // ⭐ 2026-09-15 —— 「每一支都在 JASS 家族裡」這個前提寫在名單只有 w3x 英雄的時候。
+    //   09-10 起上架的第二批／社群英雄（503dd557b · 4b5713641，GH#1165）是 **`editor-json`**
+    //   —— 第〇·六守則的**第 2 層**，排在 JASS（第 3 層）**前面**：它們的弧頂是作者在編輯器裡
+    //   打的 WC3 值（b2-touka.w 的 100 → 0.4），⛔ 本來就不必是原作 6 個值之一。
+    //   ⛔ 但放行**不是**「editor-json 什麼都行」—— 它們仍然要走**同一把尺**，而且要驗兩件事：
+    //     ① 弧頂落在 WC3 那把尺的**整數**刻度上（`toApex(整數)`）。一個小數（1.2）＝GGD 值漏進了
+    //        wc3h 槽再被換算一次 ⇒ 0.005 ＝ 貼地滑行 —— GH#1060 的指紋，同一條判準見
+    //        `packages/shared/src/content/templates/pullThrowApex.test.ts` ②。
+    //     ② 有模板參數的，出貨節點 === `toApex(參數)` —— ONE factor，⛔ 不是第二份手抄的值。
+    const offenders: string[] = [];
+    let familyChecked = 0;
+    let rulerChecked = 0;
+    for (const l of harvestContentLeaps()) {
+      if (l.provenance !== "editor-json") {
+        familyChecked++;
+        if (!JASS_FAMILY.includes(l.apexHeight)) {
+          offenders.push(`${l.where}: apex ${l.apexHeight} is not a JASS-family value (${l.provenance ?? "no provenance"})`);
+        }
+        continue;
+      }
+      rulerChecked++;
+      const onRuler = toApex(Math.round(l.apexHeight / GGD_APEX_PER_WC3)) === l.apexHeight;
+      if (!onRuler) {
+        offenders.push(
+          `${l.where}: apex ${l.apexHeight} = ${l.apexHeight / GGD_APEX_PER_WC3} wc3 —— 不在 WC3 尺的整數刻度上（GH#1060 指紋）`,
+        );
+      }
+      if (l.authoredApexWc3 !== null) {
+        if (!Number.isInteger(l.authoredApexWc3)) {
+          offenders.push(
+            `${l.where}: template.params.apexHeight = ${l.authoredApexWc3} 不是整數 —— wc3h 槽填了 GGD 值`,
+          );
+        } else if (toApex(l.authoredApexWc3) !== l.apexHeight) {
+          offenders.push(
+            `${l.where}: 出貨節點 ${l.apexHeight} ≠ toApex(${l.authoredApexWc3}) = ${toApex(l.authoredApexWc3)} —— 展開過期或換算走了第二個係數`,
+          );
+        }
+      }
     }
+    // 兩半都要真的有東西量，否則其中一半是空跑。
+    expect(familyChecked, "no JASS-rung leap left in content — the family half is vacuous").toBeGreaterThan(0);
+    expect(rulerChecked, "no editor-json leap in content — the ruler half is vacuous").toBeGreaterThan(0);
+    expect(offenders, `apex values off the authored ruler:\n  ${offenders.join("\n  ")}`).toEqual([]);
   });
 });
