@@ -15,9 +15,9 @@ START = "<!-- generated:asset-review-portal:start -->"
 END = "<!-- generated:asset-review-portal:end -->"
 INSERT_BEFORE = "\n## 八、限制與自動化工具"
 
-OWNER_DECISION_OVERLAYS = {
-    "原作技能 VFX、技能 SFX、叫聲與動作語意核准皆未完成；正式站 0/3":
-        "原作技能 VFX、技能 SFX 尚未完成；18 個叫聲與 18 個動作語意候選已由 owner 核准，runtime 事件綁定仍為 0；正式站 0/3",
+LEGACY_OWNER_DECISION_OVERLAYS = {
+    "原作獨立技能 VFX 0、技能專用 SFX 0；不可把技能設定中的程序化演出寫成已取得的原作特效。":
+        "原作獨立技能 VFX 0、技能專用 SFX 0；18 個叫聲與 18 個動作語意候選已由 owner 核准，runtime 事件綁定仍為 0；不可把技能設定中的程序化演出寫成已取得的原作特效。",
     "剩餘／`pending-user-listening-review` | 每個採用檔案的語言、說話者、事件語意及 SHA-256 已核實；所有採用配對均有 owner 逐項播放決策；只將核准配對寫入 runtime，並通過音訊與事件檢查 | 36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。":
         "剩餘／`owner-approved-pending-runtime-binding` | 每個採用檔案的語言、說話者、事件語意及 SHA-256 已核實；所有採用配對均有 owner 逐項播放決策；只將核准配對寫入 runtime，並通過音訊與事件檢查 | 36 個事件音訊候選已由 owner 核准；runtime 綁定與事件回歸仍未完成。",
     "可用但未核准的材料：GGD VFX 候選 12 個，視覺核准 0；其中 7 個已依來源名稱整理成 Q/W/R 審查提案，另 5 個保留未配對。事件音訊候選 36 個，逐項聽審 0。本流程新增 runtime 綁定 0。":
@@ -86,11 +86,12 @@ def render() -> str:
 
 
 def expected(original: str) -> str:
-    for old, new in OWNER_DECISION_OVERLAYS.items():
-        if old in original:
-            original = original.replace(old, new)
-        elif new not in original:
-            raise ValueError("owner-decision report overlay boundary is missing: " + old[:80])
+    # Source workflows own their own readiness wording.  This report adds the
+    # portal's SHA-pinned owner decision as a separate generated section;
+    # rewriting source sections here made the final report depend on script
+    # order and could misstate a source authority as a runtime decision.
+    # Keep the former replacements as a named historical compatibility map
+    # for traceability, but never apply them during a rebuild.
     block = render()
     if START in original or END in original:
         if original.count(START) != 1 or original.count(END) != 1:
