@@ -85,11 +85,39 @@ export const zConfigRosterDoc = z
         "殭屍/小兵的外觀池要不要包含隱藏英雄。⛔ 出貨關（彩蛋的價值在第一次遇到，" +
           "而殭屍每回合都在刷）。⚠️ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到。",
       ),
+    /**
+     * 大廳英靈殿要不要展示隱藏英雄（GH#1251）。**出貨 `"show"`（＝展示）。**
+     *
+     * ⭐ owner 2026-09-14 02:20（逐字，看完英靈殿稽核之後）：「隱藏角色要顯示 黑化Saber可以上架」。
+     * 在此之前英靈殿**無條件**排除隱藏英雄，理由（`valhalla.ts` 舊註解「把彩蛋公告出去」）
+     * 是開發者自己推的，⛔ 找不到 owner 原話、也沒有測試。
+     *
+     * ⛔ 這一格**只管英靈殿**。選人畫面／🎲／商店照舊排除隱藏英雄 ——
+     * owner 2026-08-17「隱藏角色可以隨機到 但不能選到」**沒有被推翻**
+     * （範圍判讀是 Claude 的推論，寫在 GH#1251 body；owner 意思更廣要他明說）。
+     *
+     * `"exclude"` 是一鍵 rollback（回到 #336 的舊行為）。
+     * ⚠️ **必須 `.optional()`**：理由同 `hiddenChampions`（線上已有耐久覆蓋層）；
+     * 缺席時的退路是 {@link DEFAULT_HIDDEN_IN_VALHALLA}。
+     */
+    hiddenInValhalla: z
+      .enum(["exclude", "show"])
+      .optional()
+      .describe(
+        "大廳英靈殿要不要展示隱藏英雄。show＝展示（出貨，owner 2026-09-14「隱藏角色要顯示」）；" +
+          "exclude＝排除（回到舊行為）。⛔ 只管英靈殿：選人畫面、🎲、商店照舊排除隱藏英雄。",
+      ),
   })
   .strict();
 
 /** 出貨值：殭屍**不**穿隱藏英雄的皮（GH#348）。 */
 export const DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL = false;
+
+/** 英靈殿對隱藏英雄的兩種處理（GH#1251）。 */
+export type HiddenInValhallaMode = "exclude" | "show";
+
+/** 出貨值：英靈殿**展示**隱藏英雄（owner 2026-09-14「隱藏角色要顯示」，GH#1251）。 */
+export const DEFAULT_HIDDEN_IN_VALHALLA: HiddenInValhallaMode = "show";
 
 /**
  * 出貨的隱藏名單 —— **空的**。

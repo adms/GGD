@@ -55,7 +55,7 @@
  * makes the "no duplicate inside one pass" rule provable.
  */
 import { Champions } from "@ggd/shared/sim/content/registry";
-import { hiddenChampionIds, retiredChampionIds } from "@ggd/shared/content/championRetirement";
+import { retiredChampionIds, valhallaExcludedHiddenIds } from "@ggd/shared/content/championRetirement";
 import { whitelistedChampionIds, type Whitelist } from "../panels/champSelectFilter";
 
 /** How long one champion holds the stage (owner: 「每過1分鐘就會輪播隨機下一個」). */
@@ -74,9 +74,13 @@ export function valhallaRoster(wl: Whitelist): string[] {
   // 下架的英雄連展示櫃都不上 —— 它是內容事實,不是營運狀態,所以跟 registry 一樣
   // 在 CALL TIME 讀（`retiredChampionIds` 讀 Configs registry;內容還沒載完時是空集合,
   // 而那時 `Champions.ids()` 也是空的,兩者同步）。
-  // 隱藏英雄（彩蛋）也不上展示櫃 —— 大廳英靈殿是玩家最容易「先看到、再去選人畫面
-  // 找」的地方，把它擺在這裡等於把彩蛋公告出去。同樣在 CALL TIME 讀。
-  return whitelistedChampionIds(Champions.ids(), wl, retiredChampionIds(), hiddenChampionIds());
+  // ⭐ 隱藏英雄（彩蛋）**上**展示櫃 —— GH#1251，owner 2026-09-14 02:20（逐字）：
+  //   「隱藏角色要顯示 黑化Saber可以上架」。
+  // ⚠️ 這一行在此之前無條件傳 `hiddenChampionIds()`，理由寫著「把它擺在這裡等於把彩蛋
+  //   公告出去」—— 那是 #336 開發者自己推的（⛔ 沒有 owner 原話、也沒有測試），已作廢。
+  // ⭐ 現在讀 `config.roster@1.hiddenInValhalla`（出貨 "show" ＝空集合；後台切 "exclude"
+  //   一鍵回到舊行為）。⛔ 選人畫面／🎲／商店照舊傳整份隱藏清單 —— 那三處不經過這裡。
+  return whitelistedChampionIds(Champions.ids(), wl, retiredChampionIds(), valhallaExcludedHiddenIds());
 }
 
 // ---------------------------------------------------------------------------

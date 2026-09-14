@@ -13,6 +13,7 @@ import { Panel, Btn } from "./widgets";
 import { ChampionIdList, useChampionLabelIndex } from "./ChampionIdList";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
+import { DEFAULT_HIDDEN_IN_VALHALLA, type HiddenInValhallaMode } from "@ggd/shared/content/schema/config";
 import {
   ROSTER_COLLECTION,
   ROSTER_DOC_ID,
@@ -48,6 +49,8 @@ export function RosterPage(): JSX.Element {
   const [retiredText, setRetiredText] = useState("");
   const [hiddenText, setHiddenText] = useState("");
   const [hiddenInMobPool, setHiddenInMobPool] = useState(false);
+  /** GH#1251 —— 英靈殿要不要展示隱藏英雄；初值與 SHIPPED 同一份（`DEFAULT_HIDDEN_IN_VALHALLA`）。 */
+  const [hiddenInValhalla, setHiddenInValhalla] = useState<HiddenInValhallaMode>(DEFAULT_HIDDEN_IN_VALHALLA);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -67,6 +70,7 @@ export function RosterPage(): JSX.Element {
           setRetiredText(idListText(lists.retired));
           setHiddenText(idListText(lists.hidden));
           setHiddenInMobPool(lists.hiddenInMobPool);
+          setHiddenInValhalla(lists.hiddenInValhalla);
         }
       } catch (err) {
         setApiErr(errText(err));
@@ -98,6 +102,7 @@ export function RosterPage(): JSX.Element {
         retired: retired.ids,
         hidden: hidden.ids,
         hiddenInMobPool,
+        hiddenInValhalla,
         ...(loaded.note !== undefined ? { note: loaded.note } : {}),
       }
     : null;
@@ -108,7 +113,8 @@ export function RosterPage(): JSX.Element {
       hidden.ids.join("\n") !== idListText(loaded.hidden) ||
       // ⭐ 少了這一項，勾了 checkbox 之後「儲存」是**灰的** —— 一格存不下去的開關
       //    與沒有那格開關**在畫面上一模一樣**（GH#348 的第一守則那一半）。
-      hiddenInMobPool !== loaded.hiddenInMobPool);
+      hiddenInMobPool !== loaded.hiddenInMobPool ||
+      hiddenInValhalla !== loaded.hiddenInValhalla);
 
   const save = async (): Promise<void> => {
     if (!preview || conflicts.length > 0) return;
@@ -122,6 +128,7 @@ export function RosterPage(): JSX.Element {
       setRetiredText(idListText(preview.retired));
       setHiddenText(idListText(preview.hidden));
       setHiddenInMobPool(preview.hiddenInMobPool);
+      setHiddenInValhalla(preview.hiddenInValhalla);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
     } catch (err) {
       setFlash(null);
@@ -137,6 +144,7 @@ export function RosterPage(): JSX.Element {
     setHiddenText(idListText(shipped.hidden));
     // ⭐「回到出貨值」漏掉一格 = 那一格**回不到出貨值**，而按鈕看起來成功了。
     setHiddenInMobPool(shipped.hiddenInMobPool);
+    setHiddenInValhalla(shipped.hiddenInValhalla);
     setFlash(null);
   };
 
@@ -233,6 +241,23 @@ export function RosterPage(): JSX.Element {
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>
           ⛔ 出貨關（GH#348）。打開的話，玩家在自己抽到彩蛋英雄之前就會在雜兵臉上看到他。
           ⚠️ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到。
+        </span>
+      </label>
+
+      <label
+        style={{ display: "flex", alignItems: "center", gap: 8, margin: "10px 0 0", cursor: "pointer" }}
+      >
+        <input
+          type="checkbox"
+          aria-label="大廳英靈殿展示隱藏英雄"
+          data-field="hiddenInValhalla"
+          checked={hiddenInValhalla === "show"}
+          onChange={(e) => setHiddenInValhalla(e.target.checked ? "show" : "exclude")}
+        />
+        <span style={{ color: TEXT_MAIN, fontSize: 13 }}>大廳英靈殿展示隱藏英雄</span>
+        <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+          ⭐ 出貨開（GH#1251，owner 2026-09-14「隱藏角色要顯示」）。取消勾選＝英靈殿不再輪播隱藏英雄（回到舊行為）。
+          ⛔ 只管英靈殿 —— 選人畫面、🎲、商店照舊看不到隱藏英雄。
         </span>
       </label>
 
