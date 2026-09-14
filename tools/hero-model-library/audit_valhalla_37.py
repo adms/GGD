@@ -25,6 +25,12 @@ OUT = ROOT / "materials/hero-model-library/priority-evidence/valhalla-37-model-o
 PROBE = OUT / "production-probe.json"
 AUDIT = OUT / "audit.json"
 README = OUT / "README.md"
+CURRENT_RESOURCES = ROOT / "materials/asset-library/current-resources.json"
+ALL_MODEL_AUDIT = ROOT / "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json"
+APPROVED_DERIVATIVES = ROOT / "materials/hero-model-library/priority-evidence/approved-derivatives-v1/audit.json"
+FOUR_DAY_REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效清單.md"
+FOUR_DAY_START = "<!-- generated:valhalla-37-model-options-v2:start -->"
+FOUR_DAY_END = "<!-- generated:valhalla-37-model-options-v2:end -->"
 SEMANTIC_STATES = ("idle", "run", "attack", "cast", "hurt", "death")
 ROSTER = (
     ("b2", "b2-albus", "阿爾巴斯"), ("b2", "b2-bojji", "波吉"),
@@ -71,6 +77,11 @@ def sha256_bytes(data: bytes) -> str:
 
 def canonical_doc_sha(doc: dict) -> str:
     data = json.dumps(doc, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    return sha256_bytes(data)
+
+
+def canonical_value_sha(value) -> str:
+    data = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
     return sha256_bytes(data)
 
 
@@ -191,9 +202,28 @@ def build_audit(probe: dict) -> dict:
     bundle_champions = collection_map(bundle, "champions")
     bundle_models = collection_map(bundle, "models")
     probe_by_id = {row["heroId"]: row for row in probe["rows"]}
+    current_resources = read_json(CURRENT_RESOURCES)
+    central_models = current_resources.get("models", [])
+    central_by_key: dict[str, list[dict]] = {}
+    for model in central_models:
+        if model.get("modelKey"):
+            central_by_key.setdefault(model["modelKey"], []).append(model)
+    all_model_audit = read_json(ALL_MODEL_AUDIT)
+    if all_model_audit.get("schema") != "ggd-model-dropdown-coverage-audit@1":
+        raise ValueError("All-model dropdown audit schema changed")
+    if all_model_audit.get("centralRegistrationFlagMismatches"):
+        raise ValueError("Central dropdown flags have mismatches; rebuild/fix the all-model audit first")
+    derivative_audit = read_json(APPROVED_DERIVATIVES)
+    if derivative_audit.get("schema") != "ggd.approved-derivatives-completeness-audit@1":
+        raise ValueError("Approved derivative audit schema changed")
+    derivative_rows = {row["heroId"]: row for row in derivative_audit.get("rows", [])}
+    if len(derivative_rows) != 11 or derivative_audit.get("scope", {}).get("expandedBeyondApproval") is not False:
+        raise ValueError("Approved derivative scope is not the exact owner-approved set of 11")
     glb_cache = {}
     rows = []
     all_versions = 0
+    source_model_keys: set[str] = set()
+    approved_derivatives_seen: set[str] = set()
     for batch, hero_id, expected_name in ROSTER:
         champion_path = ROOT / "content/champions" / f"{hero_id}.json"
         champion = read_json(champion_path)
@@ -207,6 +237,13 @@ def build_audit(probe: dict) -> dict:
         version_audits = []
         for version in versions:
             model_key = version["modelKey"]
+            source_model_key = version.get("sourceModelKey")
+            if not isinstance(source_model_key, str):
+                raise ValueError(f"Model version has no sourceModelKey: {hero_id}/{model_key}")
+            source_model_path = ROOT / "content/models" / f"{source_model_key}.json"
+            if not source_model_path.is_file():
+                raise ValueError(f"Acquired source model document missing: {hero_id}/{source_model_key}")
+            source_model_keys.add(source_model_key)
             model_path = ROOT / "content/models" / f"{model_key}.json"
             model = read_json(model_path)
             if model.get("schema") != "model@1" or model.get("id") != model_key:
@@ -235,14 +272,27 @@ def build_audit(probe: dict) -> dict:
                 raise ValueError(f"Working tree differs from Git index: {model_key}")
             if model_key not in model_index:
                 raise ValueError(f"Model index missing: {model_key}")
-            version_audits.append({"modelKey": model_key, "label": version["label"],
+            central_evidence = central_by_key.get(source_model_key, [])
+            version_audits.append({"modelKey": model_key, "sourceModelKey": source_model_key,
+                "label": version["label"],
                 "source": version["source"], "modelDocumentGitPath": model_rel,
+                "sourceModelDocumentGitPath": source_model_path.relative_to(ROOT).as_posix(),
+                "centralSourceIds": [entry.get("id") for entry in central_evidence],
                 "modelDocumentSha256": version["modelSha256"], "glbGitPath": glb_rel,
                 "glbBytes": facts["bytes"], "glbSha256": facts["sha256"],
                 "nativeAnimationClipCount": len(facts["animationNames"]),
                 "mappedSemanticStates": list(SEMANTIC_STATES),
                 "distinctMappedClips": len(set(model["clipMap"].values())),
-                "isActive": model_key == active_key})
+                "isActive": model_key == active_key,
+                "lifecycle": {
+                    "acquired": True,
+                    "dropdownContractAccepted": True,
+                    "acceptanceScope": "model@1, content-addressed GLB, six-state clip map, Git index, asset manifest and local bundle",
+                    "registered": True,
+                    "localSelectable": True,
+                    "productionRegistered": False,
+                    "productionDeployed": False,
+                }})
         active = next(version for version in version_audits if version["isActive"])
         champion_rel = champion_path.relative_to(ROOT).as_posix()
         if hero_id not in champion_index or git_blob(champion_rel) != champion_path.read_bytes():
@@ -250,12 +300,42 @@ def build_audit(probe: dict) -> dict:
         if bundle_champions.get(hero_id) != champion or bundle_models.get(active_key) != read_json(ROOT / "content/models" / f"{active_key}.json"):
             raise ValueError(f"Content bundle is stale for {hero_id}")
         production = probe_by_id[hero_id]
+        derivative = derivative_rows.get(hero_id)
+        if derivative:
+            derivative_key = derivative["latestDerivativeModelKey"]
+            if derivative_key not in {option["modelKey"] for option in version_audits}:
+                raise ValueError(f"Owner-approved derivative missing from dropdown: {hero_id}/{derivative_key}")
+            if not (derivative.get("registered") and derivative.get("selectable")
+                    and derivative.get("independentCompleteGlb")
+                    and derivative.get("hardPolicy", {}).get("passed")
+                    and derivative.get("visualEvidence", {}).get("complete")):
+                raise ValueError(f"Owner-approved derivative acceptance receipt is incomplete: {hero_id}")
+            approved_derivatives_seen.add(hero_id)
+        lifecycle_counts = {
+            "acquired": len(version_audits),
+            "dropdownContractAccepted": len(version_audits),
+            "registered": len(version_audits),
+            "localSelectable": len(version_audits),
+            "productionRegistered": production.get("productionModelVersions", 0),
+            "productionDeployed": 0,
+        }
         rows.append({
             "batch": batch, "heroId": hero_id, "name": expected_name,
             "championGitPath": champion_rel, "activeModelKey": active_key,
             "modelSelectionMode": champion.get("modelSelectionMode", "automatic"),
             "modelVersionCount": len(versions), "activeOption": active,
             "allOptions": version_audits,
+            "lifecycleCounts": lifecycle_counts,
+            "registrationAction": "none-needed-all-qualified-version-options-already-registered",
+            "missingQualifiedRegistrations": [],
+            "approvedDerivativeReceipt": ({
+                "id": derivative["id"],
+                "modelKey": derivative["latestDerivativeModelKey"],
+                "registered": derivative["registered"],
+                "localSelectable": derivative["selectable"],
+                "productionDeployed": derivative["productionDeployed"],
+                "manualDefaultPreserved": derivative["manualDefaultPreserved"],
+            } if derivative else None),
             "localState": "registered-and-bundle-resolvable",
             "adminEntry": {"route": f"/content-api/champions/{hero_id}/model-versions",
                            "selector": "apps/admin/src/ui/ChampionModelVersions.tsx"},
@@ -267,6 +347,29 @@ def build_audit(probe: dict) -> dict:
                 if (production.get("productionActiveGlbHttp") or {}).get("status") != 200
                 else "production-active-glb-http-available; visual-e2e-unverified",
         })
+    if approved_derivatives_seen != set(derivative_rows):
+        raise ValueError("Approved derivative audit contains a hero outside the requested 37")
+
+    roster_ids = {hero_id for _, hero_id, _ in ROSTER}
+    target_central_rows = [
+        model for model in central_models
+        if roster_ids.intersection(model.get("registeredFor") or [])
+    ]
+    missing_central_registration = []
+    champion_sources = {
+        row["heroId"]: {option["sourceModelKey"] for option in row["allOptions"]}
+        for row in rows
+    }
+    for model in target_central_rows:
+        for hero_id in sorted(roster_ids.intersection(model.get("registeredFor") or [])):
+            if model.get("modelKey") not in champion_sources[hero_id]:
+                missing_central_registration.append({
+                    "heroId": hero_id,
+                    "sourceId": model.get("id"),
+                    "modelKey": model.get("modelKey"),
+                })
+    if missing_central_registration:
+        raise ValueError(f"Qualified central source rows omitted from dropdown: {missing_central_registration}")
     production_http_ok = sum((row["production"]["productionActiveGlbHttp"] or {}).get("status") == 200 for row in rows)
     branch_http_ok = sum(row["production"]["branchActiveGlbHttp"].get("status") == 200 for row in rows)
     return {
@@ -277,16 +380,46 @@ def build_audit(probe: dict) -> dict:
             "activeModelDocumentsValid": len(rows),
             "activeGlbsValidAndGitTracked": len(rows),
             "activeSixStateClipMapsValid": len(rows),
+            "acquiredModelVersionOptions": all_versions,
+            "dropdownContractAcceptedModelVersionOptions": all_versions,
             "registeredModelVersions": all_versions,
+            "localSelectableModelVersions": all_versions,
+            "uniqueAcquiredSourceModelKeys": len(source_model_keys),
+            "qualifiedCentralTargetRows": len(target_central_rows),
+            "qualifiedCentralTargetRowsRepresented": len(target_central_rows) - len(missing_central_registration),
+            "qualifiedCentralTargetRowsMissingRegistration": len(missing_central_registration),
+            "approvedDerivativeReceipts": len(approved_derivatives_seen),
+            "approvedDerivativeAuthorizationExpansion": 0,
+            "manualSelectionHeroesPreserved": sum(row["modelSelectionMode"] == "manual" for row in rows),
             "localContentBundleResolvable": len(rows),
             "productionChampionDocumentsPresent": sum(row["production"]["productionChampionPresent"] for row in rows),
             "productionActiveModelDocumentsPresent": sum(row["production"]["productionModelDocumentPresent"] for row in rows),
             "productionChampionsWithModelVersions": sum(row["production"]["productionModelVersions"] > 0 for row in rows),
+            "productionRegisteredModelVersions": sum(row["production"]["productionModelVersions"] for row in rows),
+            "productionDeployedModelVersions": 0,
             "productionActiveGlbsHttp200": production_http_ok,
             "branchActiveGlbsHttp200OnProductionOrigin": branch_http_ok,
             "productionVisualE2eVerified": 0,
         },
         "productionObservation": {k: probe[k] for k in ("observedAt", "origin", "bundle", "assetCdn")},
+        "sourceEvidence": {
+            "centralModelRows": {
+                "path": CURRENT_RESOURCES.relative_to(ROOT).as_posix(),
+                "canonicalModelsSha256": canonical_value_sha(central_models),
+                "count": len(central_models),
+            },
+            "allModelDropdownAudit": {
+                "path": ALL_MODEL_AUDIT.relative_to(ROOT).as_posix(),
+                "centralRegistrationFlagMismatches": 0,
+            },
+            "approvedDerivativeAudit": {
+                "path": APPROVED_DERIVATIVES.relative_to(ROOT).as_posix(),
+                "sha256": sha256_bytes(APPROVED_DERIVATIVES.read_bytes()),
+                "count": len(derivative_rows),
+                "expandedBeyondApproval": False,
+            },
+        },
+        "qualifiedCentralTargetsMissingRegistration": missing_central_registration,
         "sourceSeams": {
             "adminApi": "apps/content-api/src/server.ts GET /content-api/champions/:id/model-versions",
             "adminSelector": "apps/admin/src/ui/ChampionModelVersions.tsx",
@@ -310,22 +443,72 @@ def render_readme(audit: dict) -> str:
         "",
         "本稽核固定涵蓋 b2 13 位與 community 24 位。它逐一驗證 champion、model@1、GLB、六態映射、modelVersions、Git index、資產 manifest、本機 bundle、後台 selector 與英靈殿讀取鏈。",
         "",
-        f"- 功能分支：{s['championDocumentsGitTracked']}/37 位 champion、{s['activeModelDocumentsValid']}/37 份作用中 model@1、{s['activeGlbsValidAndGitTracked']}/37 顆 GLB、{s['activeSixStateClipMapsValid']}/37 六態映射通過；共 {s['registeredModelVersions']} 個模型選項。",
+        f"- 功能分支：{s['championDocumentsGitTracked']}/37 位 champion、{s['activeModelDocumentsValid']}/37 份作用中 model@1、{s['activeGlbsValidAndGitTracked']}/37 顆 GLB、{s['activeSixStateClipMapsValid']}/37 六態映射通過。",
+        f"- 逐版本生命週期：取得 {s['acquiredModelVersionOptions']}、下拉契約驗收 {s['dropdownContractAcceptedModelVersionOptions']}、註冊 {s['registeredModelVersions']}、本機可切換 {s['localSelectableModelVersions']}；正式站註冊 {s['productionRegisteredModelVersions']}、正式部署 {s['productionDeployedModelVersions']}。",
+        f"- 中央索引指向這 37 位的合格來源列 {s['qualifiedCentralTargetRows']} 筆，已由對應英雄版本表示 {s['qualifiedCentralTargetRowsRepresented']} 筆，漏註冊 {s['qualifiedCentralTargetRowsMissingRegistration']} 筆。",
+        f"- 使用者核准加工副本收據 {s['approvedDerivativeReceipts']}/11，全數仍在下拉選項；擴大加工授權 {s['approvedDerivativeAuthorizationExpansion']}。手動選擇模式保留 {s['manualSelectionHeroesPreserved']} 位（何布／波普）。",
         f"- 正式站觀察：`{observed['bundle']['contentVersion']}`，{s['productionChampionDocumentsPresent']}/37 位 champion 與 {s['productionActiveModelDocumentsPresent']}/37 份作用中模型文件可解析，但 production 舊作用中 GLB HTTP 200 為 {s['productionActiveGlbsHttp200']}/37，分支新作用中 GLB 在正式 origin HTTP 200 為 {s['branchActiveGlbsHttp200OnProductionOrigin']}/37。",
         f"- 正式 bundle 的 37 位均未含 modelVersions（有版本清單者 {s['productionChampionsWithModelVersions']}/37），且 asset CDN `enabled={str(observed['assetCdn'].get('enabled')).lower()}`。",
         "- 狀態判定：功能分支已註冊且本機 bundle 可解析；正式站內容檔未同步，畫面 E2E 仍為未部署／未驗證。HTTP 探測不能取代實際 3D 畫面驗收。",
         f"- 正式站探測時間：`{observed['observedAt']}`；bundle SHA-256：`{observed['bundle']['sha256']}`。",
         "",
-        "| 批次 | hero ID | 角色 | 作用中選項 | 選項數 | 六態／不同 clip | 正式舊 GLB | 分支新 GLB（正式 origin） | 狀態 |",
-        "| --- | --- | --- | --- | ---: | --- | ---: | ---: | --- |",
+        "| 批次 | hero ID | 角色 | 作用中選項 | 取得／驗收／註冊／本機可切換 | 正式註冊／部署 | 六態／不同 clip | 狀態 |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for row in audit["rows"]:
         active = row["activeOption"]
-        p = row["production"]["productionActiveGlbHttp"] or {}
-        b = row["production"]["branchActiveGlbHttp"]
-        lines.append(f"| {row['batch']} | `{row['heroId']}` | {row['name']} | {active['label']}（{active['source']['library']}） | {row['modelVersionCount']} | 6／{active['distinctMappedClips']} | {p.get('status', 'error')} | {b.get('status', 'error')} | 分支已註冊；正式站 GLB 缺檔 |")
+        lc = row["lifecycleCounts"]
+        lines.append(f"| {row['batch']} | `{row['heroId']}` | {row['name']} | {active['label']}（{active['source']['library']}） | {lc['acquired']}／{lc['dropdownContractAccepted']}／{lc['registered']}／{lc['localSelectable']} | {lc['productionRegistered']}／{lc['productionDeployed']} | 6／{active['distinctMappedClips']} | 分支已註冊；正式站未部署 |")
     lines += ["", "完整逐選項 SHA-256、位元組數、來源分類、路徑與 HTTP 收據見 `audit.json`；原始正式站回應見 `production-probe.json`。", ""]
     return "\n".join(lines)
+
+
+def render_four_day_section(audit: dict) -> str:
+    s = audit["summary"]
+    lines = [
+        FOUR_DAY_START,
+        "### 0. 英靈殿目前無法顯示的 37 位",
+        "",
+        (f"本節由 `audit_valhalla_37.py` 從 champion、`model@1`、GLB、中央索引、全模型下拉稽核及 11 組核准加工副本收據即時重建。"
+         f"目前 37/37 位皆有 Git champion 與作用中模型；{s['acquiredModelVersionOptions']} 個已取得版本全部通過下拉契約驗收、"
+         f"全部已註冊且可在本機後台切換。中央索引針對這 37 位的 {s['qualifiedCentralTargetRows']} 筆合格來源列漏註冊為 {s['qualifiedCentralTargetRowsMissingRegistration']}。"
+         f"正式站 modelVersions 為 {s['productionRegisteredModelVersions']}，正式部署與 3D 畫面驗證為 {s['productionDeployedModelVersions']}。"),
+        "",
+        "下拉契約驗收只證明 `model@1`、內容定址 GLB、六態 clip map、Git index、asset manifest 與本機 bundle 完整；完整視覺／玩法驗收沒有因本稽核自動成立。",
+        "",
+        "| hero ID | 角色 | 作用中模型 | 取得／驗收／註冊／本機可切換 | 模式 | 正式註冊／部署 |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for row in audit["rows"]:
+        active = row["activeOption"]
+        lc = row["lifecycleCounts"]
+        lines.append(
+            f"| `{row['heroId']}` | {row['name']} | {active['label']}（{active['source']['library']}） | "
+            f"{lc['acquired']}／{lc['dropdownContractAccepted']}／{lc['registered']}／{lc['localSelectable']} | "
+            f"{row['modelSelectionMode']} | {lc['productionRegistered']}／{lc['productionDeployed']} |"
+        )
+    lines.extend([
+        "",
+        (f"11 組使用者核准加工副本為 {s['approvedDerivativeReceipts']}/11 已驗收、已註冊且保留為獨立完整選項；"
+         f"加工授權擴大為 {s['approvedDerivativeAuthorizationExpansion']}。何布／波普維持 `manual` 與 Kagayaki 作用中選擇，沒有被順位重算覆蓋。"),
+        "",
+        FOUR_DAY_END,
+    ])
+    return "\n".join(lines)
+
+
+def replace_four_day_section(text: str, section: str) -> str:
+    if FOUR_DAY_START in text and FOUR_DAY_END in text:
+        prefix, rest = text.split(FOUR_DAY_START, 1)
+        _, suffix = rest.split(FOUR_DAY_END, 1)
+        return prefix + section + suffix
+    start_heading = "### 0. 英靈殿目前無法顯示的 37 位"
+    next_heading = "### 1. Infinity Strash 原作模型選項"
+    if start_heading not in text or next_heading not in text:
+        raise ValueError("Four-day report Valhalla section anchors changed")
+    prefix, rest = text.split(start_heading, 1)
+    _, suffix = rest.split(next_heading, 1)
+    return prefix + section + "\n\n" + next_heading + suffix
 
 
 def main() -> None:
@@ -346,11 +529,14 @@ def main() -> None:
     audit = build_audit(probe)
     encoded_audit = json.dumps(audit, ensure_ascii=False, indent=2) + "\n"
     encoded_readme = render_readme(audit)
+    encoded_four_day = replace_four_day_section(FOUR_DAY_REPORT.read_text(), render_four_day_section(audit))
     if args.write or args.refresh_production:
         AUDIT.write_text(encoded_audit)
         README.write_text(encoded_readme)
+        FOUR_DAY_REPORT.write_text(encoded_four_day)
     else:
-        if AUDIT.read_text() != encoded_audit or README.read_text() != encoded_readme:
+        if (AUDIT.read_text() != encoded_audit or README.read_text() != encoded_readme
+                or FOUR_DAY_REPORT.read_text() != encoded_four_day):
             raise ValueError("Valhalla 37 audit is stale; run with --write")
     print(json.dumps(audit["summary"], ensure_ascii=False))
 

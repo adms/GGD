@@ -6181,18 +6181,30 @@
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "valhalla37ModelOptionAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
-    "sha256": "b7dfb57b59fc0ca7b6eb16d14aa263517304c763669522f8017ba462741515c8",
+    "sha256": "b9be39434a38a2a6e55e86f8ed5b0701f5039b581d661a85d01cd509186ea6fd",
     "status": "feature-branch-registered-and-bundle-resolvable; production-glbs-http-404; visual-e2e-unverified",
     "summary": {
       "championDocumentsGitTracked": 37,
       "activeModelDocumentsValid": 37,
       "activeGlbsValidAndGitTracked": 37,
       "activeSixStateClipMapsValid": 37,
-      "registeredModelVersions": 139,
+      "acquiredModelVersionOptions": 140,
+      "dropdownContractAcceptedModelVersionOptions": 140,
+      "registeredModelVersions": 140,
+      "localSelectableModelVersions": 140,
+      "uniqueAcquiredSourceModelKeys": 55,
+      "qualifiedCentralTargetRows": 55,
+      "qualifiedCentralTargetRowsRepresented": 55,
+      "qualifiedCentralTargetRowsMissingRegistration": 0,
+      "approvedDerivativeReceipts": 11,
+      "approvedDerivativeAuthorizationExpansion": 0,
+      "manualSelectionHeroesPreserved": 1,
       "localContentBundleResolvable": 37,
       "productionChampionDocumentsPresent": 37,
       "productionActiveModelDocumentsPresent": 37,
       "productionChampionsWithModelVersions": 0,
+      "productionRegisteredModelVersions": 0,
+      "productionDeployedModelVersions": 0,
       "productionActiveGlbsHttp200": 0,
       "branchActiveGlbsHttp200OnProductionOrigin": 0,
       "productionVisualE2eVerified": 0
@@ -7999,7 +8011,7 @@
       "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-jetragon"
@@ -8184,7 +8196,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
       "ggdHeroImplemented": true,
       "registrationEvidence": {
         "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -8242,7 +8254,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     },
@@ -8327,7 +8339,7 @@
       "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-cattiva"
@@ -8425,7 +8437,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
       "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -8521,7 +8533,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-rigid-props-20260911-v1/latest-receipt.json",
       "backupReceiptSha256": "f35c4a3ba64f577eead7066185f77c61b449743a5116cfe7478eb8ceee53e95e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -8650,7 +8662,7 @@
       "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -8779,7 +8791,7 @@
       "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -8913,7 +8925,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9045,7 +9057,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9178,7 +9190,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9310,7 +9322,7 @@
       "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
       "sourceAnimatorComponentCount": 6,
       "sourceAnimationClipCount": 0,
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9441,7 +9453,7 @@
         "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
       },
       "auditEvidence": "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions.",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9596,7 +9608,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9741,7 +9753,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -9886,7 +9898,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10069,7 +10081,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-steve-c00-blender4513-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "7d1fe25b0bb63461a71797cd232bc6ed2f139600e3c6cd5dcc11a419fe5225f3",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10251,7 +10263,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-alex-c01-blender4513-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "4f6eee04184442587bb9a3a2cb5ad9fbeb8c47c5d8578d8a0b955422b26cc131",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10460,7 +10472,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10669,7 +10681,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10786,7 +10798,7 @@
         "fullGetVerified": true,
         "allMemberSha256Verified": true
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -10903,7 +10915,7 @@
         "bytes": 11477,
         "sha256": "e9af7058b7b0c8cb6f7be19b5d5ee1d3faae52f0c3b67c2f1cfecbfa2663eaad"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11026,7 +11038,7 @@
         "bytes": 649,
         "sha256": "906f625085ea7467e76684f676692c7843780a3e1e0e80bae446df8eecbef091"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11144,7 +11156,7 @@
         "bytes": 14195,
         "sha256": "956796b480cd2eb2068c99416e33fafc5e19a98630e390aa048e3f982f0a7773"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11286,7 +11298,7 @@
         "bytes": 11790,
         "sha256": "105e779c1a556fd281b97c1f4deb3a7060f02229522bb565a3b8758d700e070e"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11428,7 +11440,7 @@
         "bytes": 12790,
         "sha256": "5f7c72c0f3a86fdda7a08ab81e1389891fef33ea2375310f012d9575cade5903"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11571,7 +11583,7 @@
         "bytes": 15742,
         "sha256": "f676610c8a9a8bef483f60f9b2905401e3c689eaa09af3399dad7b0b5012ef3e"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11714,7 +11726,7 @@
         "bytes": 15037,
         "sha256": "7bbd6aff356e5e21897e41cd1b08c7414b93cbafd539b967897d85e148bcdace"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -11861,7 +11873,7 @@
         "bytes": 1734,
         "sha256": "5b2f52554ac50db668ea9360d97b41e82763cb8ac009043327bc06a8b966401d"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12010,7 +12022,7 @@
         "bytes": 1744,
         "sha256": "fba142ee1a2e251f73a946998b120b74cff390ca85c11afb3ae91fbc8f09d8f3"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12117,7 +12129,7 @@
         "bytes": 1483,
         "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12306,7 +12318,7 @@
         "status": "s3-full-readback-verified",
         "scope": "source conversion only; does not include this new decimation stage"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12495,7 +12507,7 @@
         "status": "s3-full-readback-verified",
         "scope": "source conversion only; does not include this new decimation stage"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12620,7 +12632,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12745,7 +12757,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12867,7 +12879,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
       "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -12995,7 +13007,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
       "backupReceiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13120,7 +13132,7 @@
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/receipt.json",
       "backupReceiptSha256": "d4dd56a6a67525b06c9581dfa513e9b389835d32fc20127c2962afd613f3f33c",
       "backupStatus": "s3-full-readback-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13247,7 +13259,7 @@
         "sha256": "40f08fd3a6145f3d12fddf670d2a7cb6e84dc5dbeb9dd84f7100af364c647913"
       },
       "backupStatus": "full-get-and-all-member-sha256-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13378,7 +13390,7 @@
         "sha256": "6fc42ec9d895a7c720e0786440a744177da36c69da0f4af77c715469b5b2a9fd"
       },
       "backupStatus": "full-get-and-all-member-sha256-verified",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13519,7 +13531,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
       "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13653,7 +13665,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
       "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13818,7 +13830,7 @@
         "allMemberSha256Verified": true,
         "localUnchanged": true
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -13948,7 +13960,7 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
       "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -14103,7 +14115,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -14258,7 +14270,7 @@
         "bytes": 14624,
         "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 68505,
@@ -14303,7 +14315,7 @@
       "bytes": 373464,
       "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
       "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
       "recoveredFromGitCommit": "7bc2fa3f8",
       "normalizedReplacementSha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
       "normalizedReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
@@ -14349,7 +14361,7 @@
       "bytes": 695600,
       "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
       "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-b2-community-dropdown/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
       "recoveredFromGitCommit": "7bc2fa3f8",
       "normalizedReplacementSha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
       "normalizedReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
