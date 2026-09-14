@@ -3,88 +3,106 @@
  * 2026-09-10 又來四個：#1135／#1153 各倒 269／443 個 CI log 進 `materials/`（12.7／16.9 MB），
  * #1144 一個 commit 4,318 檔／+309 萬行。全部靠人看出來。
  *
- * > owner 2026-09-10：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」
+ * > owner 2026-09-10：「成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3」
  *
  * ⭐ 這一條是**棘輪**，⛔ 不是白名單：`tools/git-hygiene/baseline.json` 記每一類的 files/bytes，
- * 只准變**少**；> 5 MB 的 blob 逐檔列出並寫理由。⭐ 反方向也走（形態⑫）：列了而樹裡已經沒有 ⇒ 那一列該退休。
- * ⭐ 輸入是 `git ls-tree -r -l HEAD` —— **commit 進去的樹**，⛔ 不是工作區。
+ * 只准變**少**；≥ bigBlobBytes 的 blob 逐檔列出並寫理由。⭐ 反方向也走（形態⑫）：列了而樹裡已經沒有 ⇒ 那一列該退休。
+ * ⭐ 真樹的輸入是 `git ls-tree -r -l HEAD` —— **commit 進去的樹**，⛔ 不是工作區。
+ * ⭐ 合成夾具（#1112 的 34 段、邊界、13 KB 圖示）走**同一支**純函式 —— 兩個方向都跑（⛔ 單邊校準的尺會沉默）。
  *
- * MUTATION（落地前跑過）：把 baseline 的 materials.files 改小 1 ⇒ 「materials 不可以長」紅。
+ * MUTATION（落地前跑過）：
+ *   · baseline 的 materials.files 改小 1 ⇒ 「materials 不可以長」紅。
+ *   · GH#1160：baseline 的 bigBlobBytes 5 MiB → 5 GiB ⇒ 「#1112 的 34 段」紅（見 commit 訊息）。
  */
 import { describe, it, expect } from "vitest";
-import { existsSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { REPO_ROOT, hasGit } from "./gitTreeExport";
-import { categoryOf, HYGIENE_CATS, isFinishedAssetPath, measureHygiene, treeBlobs, type HygieneCat as Cat } from "./gitHygiene";
+import {
+  bigBlobViolations, categoryGrowth, categoryOf, hashOnlyBytes, measureCategories, measureHygiene,
+  rowsWithoutReason, treeBlobs, type HygieneBaseline, type TreeBlob,
+} from "./gitHygiene";
 
-interface Baseline {
-  bigBlobBytes: number;
-  legacyPerFileBytes: number;
-  legacyOverFiles: Array<{ path: string; bytes: number; why: string }>;
-  categories: Record<Cat, { files: number; bytes: number }>;
-  bigBlobs: Array<{ path: string; bytes: number; why: string }>;
-}
 const BASELINE_PATH = join(REPO_ROOT, "tools/git-hygiene/baseline.json");
 /** 要量哪個 rev —— 預設 HEAD；CI 或探針可設 GGD_HYGIENE_REV=origin/main。 */
 const REV = process.env.GGD_HYGIENE_REV || "HEAD";
-const measure = () => measureHygiene(REV);
-
+/** ⭐ rollback 開關（AC④ 爭議）：設了才跑總量棘輪。只有 CI／作者會轉 ⇒ 環境變數。 */
+const TOTAL_CAP = Number(process.env.GGD_HYGIENE_TOTAL_CAP_BYTES || 0);
 const SKIP = !hasGit() || !existsSync(BASELINE_PATH);
+const MiB = 1024 * 1024;
 
 describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
-  const base = SKIP ? null : (JSON.parse(readFileSync(BASELINE_PATH, "utf8")) as Baseline);
+  const base = SKIP ? null : (JSON.parse(readFileSync(BASELINE_PATH, "utf8")) as HygieneBaseline);
+  const real = SKIP ? null : measureHygiene(REV);
 
   it("固定中央索引屬於正式 Git 查詢入口，不算準備材料", () => {
-    expect(categoryOf("materials/hero-model-library/inventory.json", 8 * 1024 * 1024)).toBeNull();
-    expect(categoryOf("materials/hero-model-library/source-dump.json", 8 * 1024 * 1024)).toBe("materials");
+    expect(categoryOf("materials/hero-model-library/inventory.json", 8 * MiB)).toBeNull();
+    expect(categoryOf("materials/hero-model-library/source-dump.json", 8 * MiB)).toBe("materials");
   });
 
-  it("★ 每一類（materials / legacy-overwrites / archives / logs）的 files 與 bytes **只准變少**", (ctx) => {
-    if (!base) { console.warn("⚠️ 沒有 .git 或 baseline ⇒ 這條閘**沒驗到**（不是綠）"); ctx.skip(); return; }
-    const { cats } = measure();
-    const grew: string[] = [];
-    for (const k of HYGIENE_CATS) {
-      // ⭐ legacy-overwrites 是留底 hook 的落點（owner 2026-08-20：備份到 legacy 資料夾沒關係）
-      //   ⇒ 它**會**長，⛔ 不能用「只准變少」；改用下面那條**單檔上限**（GH#1192）。
-      if (k === "legacy-overwrites") continue;
-      const now = cats[k], was = base.categories[k];
-      if (now.files > was.files || now.bytes > was.bytes) {
-        grew.push(`${k}：files ${was.files}→${now.files}，bytes ${was.bytes}→${now.bytes} —— ⛔ 這一類不准長（owner 2026-09-10：準備材料進 S3，⭐ git 只留 manifest/SHA-256）`);
-      }
-    }
-    expect(grew).toEqual([]);
-    console.log(Object.entries(cats).map(([k, v]) => `   ${k}: ${v.files} 檔 / ${(v.bytes / 1048576).toFixed(1)} MB`).join("\n"));
+  it("★ #1112 重演：34 段分段 ⇒ 大檔與 archives 兩條都紅並逐檔指名；⭐ 反方向：成品 GLB 與 13 KB 圖示 ⛔ 不紅", (ctx) => {
+    if (!base || !real) { ctx.skip(); return; }
+    // aa24208cc 的真形狀：33 × 32 MiB ＋ 最後一段 17.9 MB
+    const parts: TreeBlob[] = Array.from({ length: 34 }, (_, i) => ({
+      path: `materials/community-hero-forge/payload.tar.gz.part${String(i).padStart(3, "0")}`, bytes: i < 33 ? 32 * MiB : 18735826,
+    }));
+    const hits = bigBlobViolations(parts, base);
+    expect(hits).toHaveLength(parts.length);
+    parts.forEach((p, i) => expect(hits[i]).toContain(`${(p.bytes / MiB).toFixed(1)} MB  ${p.path}`));
+    // 切得比上限小 1 byte ⇒ 大檔檢查量不到，⭐ 類別棘輪要接住（原路徑是 materials；搬到別處也還有 archives）
+    const small = parts.map((p) => ({ ...p, bytes: base.bigBlobBytes - 1 }));
+    const grows = (bs: TreeBlob[]) => categoryGrowth(measureCategories([...real.blobs, ...bs]), base).join();
+    expect(bigBlobViolations(small, base)).toEqual([]);
+    expect(grows(small)).toContain("materials");
+    expect(grows(small.map((p) => ({ ...p, path: p.path.replace("materials/", "tools/") })))).toContain("archives");
+    // 偽裝進成品目錄：非媒體副檔名／.bin ⇒ 紅；真的出貨媒體 ⇒ 不紅
+    const disguised = ["content/assets/models/payload.part000", "content/assets/models/payload.bin", "content/assets/audio/x.tar.gz.aa"];
+    expect(bigBlobViolations(disguised.map((path) => ({ path, bytes: 32 * MiB })), base)).toHaveLength(disguised.length);
+    expect(bigBlobViolations([{ path: "content/assets/models/big.glb", bytes: 32 * MiB }, { path: "content/assets/icons/x.webp", bytes: 13 * 1024 }], base)).toEqual([]);
+  });
+
+  it("★ 邊界走真的 git：`git add` 剛好 bigBlobBytes 的二進位 ⇒ 紅並指名；少 1 byte 與 13 KB 圖示 ⇒ ⛔ 不紅", (ctx) => {
+    if (!base) { ctx.skip(); return; }
+    const dir = mkdtempSync(join(tmpdir(), "ggd-hygiene-"));
+    try {
+      const git = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf8" }).trim();
+      git("init", "-q");
+      writeFileSync(join(dir, "at-cap.bin"), Buffer.alloc(base.bigBlobBytes));
+      writeFileSync(join(dir, "under-cap.bin"), Buffer.alloc(base.bigBlobBytes - 1));
+      writeFileSync(join(dir, "icon.webp"), Buffer.alloc(13 * 1024));
+      git("add", "--", "at-cap.bin", "under-cap.bin", "icon.webp");
+      const hits = bigBlobViolations(treeBlobs(git("write-tree"), dir), base);
+      expect(hits).toEqual([expect.stringContaining(`${(base.bigBlobBytes / MiB).toFixed(1)} MB  at-cap.bin`)]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  it("★ 每一類（materials / archives / logs）的 files 與 bytes **只准變少**", (ctx) => {
+    if (!base || !real) { console.warn("⚠️ 沒有 .git 或 baseline ⇒ 這條閘**沒驗到**（不是綠）"); ctx.skip(); return; }
+    expect(categoryGrowth(real.cats, base)).toEqual([]);
+    console.log(Object.entries(real.cats).map(([k, v]) => `   ${k}: ${v.files} 檔 / ${(v.bytes / MiB).toFixed(1)} MB`).join("\n"));
   });
 
   it("⭐ docs/legacy/_overwrites/ 單檔不可超過 legacyPerFileBytes（GH#1192：留底 hook 的上限要和這裡同一個數）", (ctx) => {
-    if (!base) { ctx.skip(); return; }
+    if (!base || !real) { ctx.skip(); return; }
     const cap = base.legacyPerFileBytes;
     const known = new Set(base.legacyOverFiles.map((f) => f.path));
-    const blobs = measure().blobs;
     // ⭐ 正向：新的超限留底 ⇒ 紅（既有的列在 legacyOverFiles，那是 8 MB 時代的債）
-    const over = blobs.filter((b) => b.path.startsWith("docs/legacy/_overwrites/") && b.bytes > cap && !known.has(b.path))
-      .map((b) => `${(b.bytes / 1048576).toFixed(2)} MB  ${b.path} —— ⛔ 超過留底單檔上限 ${(cap / 1048576).toFixed(2)} MB（preserve-before-overwrite.py 的 MAX_BYTES）`);
+    const over = real.blobs.filter((b) => b.path.startsWith("docs/legacy/_overwrites/") && b.bytes > cap && !known.has(b.path))
+      .map((b) => `${(b.bytes / MiB).toFixed(2)} MB  ${b.path} —— ⛔ 超過留底單檔上限 ${(cap / MiB).toFixed(2)} MB（preserve-before-overwrite.py 的 MAX_BYTES）`);
     expect(over).toEqual([]);
-    // ⭐ 反向（形態⑫）：列了而樹裡已經沒有 ⇒ 那一列該退休
-    const present = new Set(blobs.map((b) => b.path));
-    expect(base.legacyOverFiles.filter((f) => !present.has(f.path)).map((f) => `${f.path} —— 樹裡沒有了 ⇒ 從 legacyOverFiles 刪掉`)).toEqual([]);
   });
 
-  it("> 5 MB 的 blob 每一個都要列在 baseline.bigBlobs 並寫得出理由（⛔ 新的大檔 = 紅）", (ctx) => {
-    if (!base) { ctx.skip(); return; }
-    const { blobs } = measure();
-    const listed = new Set(base.bigBlobs.map((b) => b.path));
-    const unlisted = blobs.filter((b) => b.bytes > base.bigBlobBytes && !isFinishedAssetPath(b.path) && !listed.has(b.path))
-      .map((b) => `${(b.bytes / 1048576).toFixed(1)} MB  ${b.path} —— ⛔ 沒列在 tools/git-hygiene/baseline.json 的 bigBlobs（要留就寫理由；否則走 S3）`);
-    expect(unlisted).toEqual([]);
-    const noWhy = base.bigBlobs.filter((b) => !b.why || b.why.trim().length < 4).map((b) => b.path);
-    expect(noWhy, "bigBlobs 每一列都要有 why").toEqual([]);
+  it("≥ bigBlobBytes 的 blob 每一個都要列在 baseline.bigBlobs；⭐ 每一列（含 legacyOverFiles）寫得出理由；⭐ 反方向：列了而樹裡沒有 ⇒ 退休", (ctx) => {
+    if (!base || !real) { ctx.skip(); return; }
+    expect(bigBlobViolations(real.blobs, base)).toEqual([]);
+    expect(rowsWithoutReason(base)).toEqual([]);
+    const present = new Set(real.blobs.map((b) => b.path));
+    expect([...base.bigBlobs, ...base.legacyOverFiles].filter((r) => !present.has(r.path)).map((r) => `${r.path} —— 樹裡沒有了 ⇒ 刪掉那一列`)).toEqual([]);
   });
 
-  it("⭐ 反方向：baseline 列的大檔，樹裡已經沒有了 ⇒ 那一列該退休（⛔ 過期的散文）", (ctx) => {
-    if (!base) { ctx.skip(); return; }
-    const present = new Set(treeBlobs(REV).map((b) => b.path));
-    const stale = base.bigBlobs.filter((b) => !present.has(b.path)).map((b) => `${b.path} —— 樹裡沒有了 ⇒ 從 bigBlobs 刪掉那一列`);
-    expect(stale).toEqual([]);
+  it.skipIf(!TOTAL_CAP)("rollback 開關 GGD_HYGIENE_TOTAL_CAP_BYTES：只能靠雜湊驗的位元組總量 ≤ 上限（原票 AC④）", () => {
+    expect(hashOnlyBytes(real?.blobs ?? [])).toBeLessThanOrEqual(TOTAL_CAP);
   });
 });

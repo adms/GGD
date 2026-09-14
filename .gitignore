@@ -90,6 +90,8 @@ backup-*/
 __pycache__/
 *.pyc
 apps/platform/platform
+# `go build ./cmd/opstate` 的產物（Makefile 走 `go run`、映像在 docker/platform.Dockerfile 內建）—— GH#1160 從樹裡退休
+apps/platform/opstate
 
 # Full local voice manifest. The deterministic gzip copy is the Git entry point;
 # voice_index.py keeps this 200MB uncompressed copy locally for direct inspection.
