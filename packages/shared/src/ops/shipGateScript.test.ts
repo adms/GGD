@@ -172,6 +172,24 @@ describe("pnpm ship:check", () => {
     expect(/不知道這一次改了哪些路徑 ⇒ 全包/.test(code)).toBe(true);
   });
 
+  it("★ 0 包／0 支的綠燈要在結論旁邊說出來（GH#1166）—— 兩個方向＋真的接到 ✅ 那一行", async () => {
+    // ⚠️ 非字面值 specifier ⇒ TS ⛔ 不去找 .d.mts（同 syncPlan.test.ts）。
+    const { emptyGateNote } = (await import(new URL("../../../../tools/parallel-gates/shipEmptyGate.mjs", import.meta.url).href)) as {
+      emptyGateNote: (a: Record<string, unknown>) => string;
+    };
+    const base = { onlySync: false, noSync: false, allSuites: 8, baseLabel: "origin/main", pathCount: 0 };
+    const empty = emptyGateNote({ ...base, suites: 0, syncSteps: 0 });
+    expect(empty).toContain("0/8");
+    expect(empty).toContain("skills:sync 產生器");
+    expect(empty).toContain("不證明 base 本身被全跑驗過");
+    // 反方向：真的跑了東西 ⇒ ⛔ 不可以喊（喊太多的警示沒有人讀）；syncSteps undefined ＝ 沒裁 ⇒ 也不算 0 支
+    expect(emptyGateNote({ ...base, suites: 3, syncSteps: 5, pathCount: 7 })).toBe("");
+    expect(emptyGateNote({ ...base, suites: 3, syncSteps: undefined, pathCount: 7 })).toBe("");
+    // 接線：ship.mjs 從這支算出 emptyNote，⭐ 而且綠燈那一行真的印它（刪掉 ⇒ 警示整個消失而其餘全綠）
+    expect(/const emptyNote = emptyGateNote\(/.test(code), "ship.mjs 沒有用 emptyGateNote —— 又內嵌回去就沒有守衛").toBe(true);
+    expect(/console\.log\(`\\n✅ 四閘全綠。\$\{emptyNote\}`\)/.test(code), "✅ 那一行沒有接 emptyNote ⇒ 0 包的綠燈不會說出來").toBe(true);
+  });
+
   it("`pnpm ship:check` 這個入口真的存在", () => {
     const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as {
       scripts?: Record<string, string>;

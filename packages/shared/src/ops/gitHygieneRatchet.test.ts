@@ -13,6 +13,8 @@
  * MUTATION（落地前跑過）：
  *   · baseline 的 materials.files 改小 1 ⇒ 「materials 不可以長」紅。
  *   · GH#1160：baseline 的 bigBlobBytes 5 MiB → 5 GiB ⇒ 「#1112 的 34 段」紅（見 commit 訊息）。
+ *   · GH#1160 審查者：大檔比較 `>=` 改 `>` ⇒「邊界走真的 git」紅；isFinishedAssetPath 退回 startsWith ⇒ 偽裝段紅。
+ *   · GH#1160 審查補洞：segmentSeriesViolations 的門檻 `sum >= bigBlobBytes` 改成永遠 false ⇒「改名 .bin／.dat 的分段」紅。
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
@@ -22,14 +24,18 @@ import { join } from "node:path";
 import { REPO_ROOT, hasGit } from "./gitTreeExport";
 import {
   bigBlobViolations, categoryGrowth, categoryOf, hashOnlyBytes, measureCategories, measureHygiene,
-  rowsWithoutReason, treeBlobs, type HygieneBaseline, type TreeBlob,
+  rowsWithoutReason, segmentSeriesViolations, treeBlobs, type HygieneBaseline, type TreeBlob,
 } from "./gitHygiene";
 
 const BASELINE_PATH = join(REPO_ROOT, "tools/git-hygiene/baseline.json");
 /** 要量哪個 rev —— 預設 HEAD；CI 或探針可設 GGD_HYGIENE_REV=origin/main。 */
 const REV = process.env.GGD_HYGIENE_REV || "HEAD";
-/** ⭐ rollback 開關（AC④ 爭議）：設了才跑總量棘輪。只有 CI／作者會轉 ⇒ 環境變數。 */
-const TOTAL_CAP = Number(process.env.GGD_HYGIENE_TOTAL_CAP_BYTES || 0);
+/**
+ * ⭐ rollback 開關（AC④ 爭議）：設了才跑總量上限。只有 CI／作者會轉 ⇒ 環境變數。
+ * ⚠️ 分母是「非 diff 可讀」位元組，⛔ 不是原票 AC④ 的「二進位總位元組」（見 gitHygiene.ts 的 hashOnlyBytes）。
+ */
+const TOTAL_CAP_RAW = process.env.GGD_HYGIENE_TOTAL_CAP_BYTES ?? "";
+const TOTAL_CAP = Number(TOTAL_CAP_RAW);
 const SKIP = !hasGit() || !existsSync(BASELINE_PATH);
 const MiB = 1024 * 1024;
 
@@ -61,6 +67,14 @@ describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
     const disguised = ["content/assets/models/payload.part000", "content/assets/models/payload.bin", "content/assets/audio/x.tar.gz.aa"];
     expect(bigBlobViolations(disguised.map((path) => ({ path, bytes: 32 * MiB })), base)).toHaveLength(disguised.length);
     expect(bigBlobViolations([{ path: "content/assets/models/big.glb", bytes: 32 * MiB }, { path: "content/assets/icons/x.webp", bytes: 13 * 1024 }], base)).toEqual([]);
+    // ⭐ GH#1160 審查的反例：切到上限以下、改名 .bin／.dat、放在四類以外 ⇒ 大檔與類別棘輪都 0 條 ⇒ 同骨架那一組要紅
+    for (const tpl of ["tools/cache/payload-N.bin", "content/assets/models/payload-N.bin", "docs/_reports/blob/pN.dat", "tools/cache/payload.bin.N"]) {
+      const segs = parts.map((p, i) => ({ path: tpl.replace("N", tpl.endsWith(".N") ? `a${String.fromCharCode(97 + (i % 26))}${String.fromCharCode(97 + Math.floor(i / 26))}` : String(i)), bytes: base.bigBlobBytes - 1 }));
+      expect(bigBlobViolations(segs, base).concat(categoryGrowth(measureCategories([...real.blobs, ...segs]), base)), tpl).toEqual([]);
+      expect(segmentSeriesViolations(segs, base), `${tpl}：改名的分段沒被抓到`).toEqual([expect.stringContaining(`${segs.length} 段`)]);
+    }
+    expect(grows(small.map((p, i) => ({ ...p, path: `tools/x.tar.gz.a${String.fromCharCode(97 + (i % 26))}${String.fromCharCode(97 + Math.floor(i / 26))}` })))).toContain("archives");
+    // ⚠️ 管不到（揭露，見 segmentSeriesViolations）：改名成 .glb、內容雜湊當檔名、分散到不同目錄
   });
 
   it("★ 邊界走真的 git：`git add` 剛好 bigBlobBytes 的二進位 ⇒ 紅並指名；少 1 byte 與 13 KB 圖示 ⇒ ⛔ 不紅", (ctx) => {
@@ -97,12 +111,16 @@ describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
   it("≥ bigBlobBytes 的 blob 每一個都要列在 baseline.bigBlobs；⭐ 每一列（含 legacyOverFiles）寫得出理由；⭐ 反方向：列了而樹裡沒有 ⇒ 退休", (ctx) => {
     if (!base || !real) { ctx.skip(); return; }
     expect(bigBlobViolations(real.blobs, base)).toEqual([]);
+    expect(segmentSeriesViolations(real.blobs, base)).toEqual([]);
     expect(rowsWithoutReason(base)).toEqual([]);
     const present = new Set(real.blobs.map((b) => b.path));
     expect([...base.bigBlobs, ...base.legacyOverFiles].filter((r) => !present.has(r.path)).map((r) => `${r.path} —— 樹裡沒有了 ⇒ 刪掉那一列`)).toEqual([]);
   });
 
-  it.skipIf(!TOTAL_CAP)("rollback 開關 GGD_HYGIENE_TOTAL_CAP_BYTES：只能靠雜湊驗的位元組總量 ≤ 上限（原票 AC④）", () => {
+  it.skipIf(!TOTAL_CAP_RAW)("rollback 開關 GGD_HYGIENE_TOTAL_CAP_BYTES：「非 diff 可讀」位元組總量 ≤ 上限（近似原票 AC④，分母不同）", () => {
+    // ⛔ 設了卻量不到不可以長得像綠燈（審查：NaN 會被 `!NaN` 靜默跳過；沒有 .git 會拿 [] 算出 0 ⇒ 永遠過）
+    expect(Number.isFinite(TOTAL_CAP) && TOTAL_CAP > 0, `GGD_HYGIENE_TOTAL_CAP_BYTES=「${TOTAL_CAP_RAW}」不是正數`).toBe(true);
+    expect(real, "開關設了，但沒有 .git 或 baseline ⇒ 這一趟量不到（⛔ 不是綠）").not.toBeNull();
     expect(hashOnlyBytes(real?.blobs ?? [])).toBeLessThanOrEqual(TOTAL_CAP);
   });
 });
