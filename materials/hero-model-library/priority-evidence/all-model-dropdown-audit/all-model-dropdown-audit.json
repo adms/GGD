@@ -9,12 +9,12 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "70a99567c0aaa428d5d48eeed481801f1c68e6962ebe57032dd8b79729a2c124",
+      "sha256": "e2ba70e1545f1577f51e4ce1610f98b24899009dddbab3f11ba888d31846c89e",
       "fileCount": 1009
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "70e7ed06b3188439ecd877d1194733ede5afaa0386cfb8fdf2dea9bb53792834",
+      "sha256": "f10448aa4655a652fb31120aaf803a4b1d7a33106e059d1b9c1d8bcb805f25ed",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "7696535f7f364f1e02c7a5d197f6ff46013b37bf4b342aaf1e3e2fe6ee75c68e"
+      "sha256": "22bf319bce6faaa4069badfdb05f969159f64339048270324be86e2c2e2deac8"
     }
   },
   "summary": {

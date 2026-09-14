@@ -10,7 +10,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/workflow-model-options.json",
-      "sha256": "4c7a2512a84a20f0cee0a77e18edcd555038e6059b7cdb072808be142710f352"
+      "sha256": "ea69f5e60b845c1b4805205e3cf4f42a1414f9d1a7646d328642d4dc06105212"
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
@@ -4042,7 +4042,7 @@
       "glbPath": "assets/models/ou99/ou99_472035.glb",
       "sha256": "565d459f7fe263e8e72fbb92929269109830b25808fc12a5b3f35c59008cf067",
       "bytes": 1074316,
-      "documentSha256": "e7a08617681808af4f62b1a1318df23c368cb3cd1d0c0f2f77bd8e2fe1cc9d01",
+      "documentSha256": "8aebb629342228bf21e13b1080a4323617bc81ad10ec832755118e76c34bae2d",
       "sourceCharacter": "WOW兽人祭祀法师",
       "sourceWork": "來源作品待核；論壇標題：WOW兽人祭祀法师",
       "sourceAssetId": "https://www.ou99.com/thread-472035-1-1.html",
@@ -4071,6 +4071,16 @@
         "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false,
+      "documentCorrections": [
+        {
+          "field": "yawOffsetDeg",
+          "from": null,
+          "to": 90,
+          "previousDocumentSha256": "e7a08617681808af4f62b1a1318df23c368cb3cd1d0c0f2f77bd8e2fe1cc9d01",
+          "documentSha256": "8aebb629342228bf21e13b1080a4323617bc81ad10ec832755118e76c34bae2d",
+          "measuredBy": "apps/client/src/render/views/modelFacing.test.ts（GH#216 chirality census）"
+        }
+      ],
       "registeredFor": [],
       "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/ou99.472035.json"
@@ -4451,7 +4461,7 @@
       "glbPath": "assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
       "sha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
       "bytes": 1004748,
-      "documentSha256": "31ca4a1283407f098893a86f66a4989c7a86a936dd7e478363cc7c34fb9589b6",
+      "documentSha256": "dc3ed2921aefc58c3be43404bbfcfcb6b40b261705f663640a2942729522374d",
       "sourceCharacter": "银发动漫正装男",
       "sourceWork": "來源作品待核；論壇標題：银发动漫正装男",
       "sourceAssetId": "https://www.ou99.com/thread-487487-1-1.html",
@@ -4481,6 +4491,16 @@
       },
       "boundsRepaired": true,
       "standardization": {},
+      "documentCorrections": [
+        {
+          "field": "yawOffsetDeg",
+          "from": null,
+          "to": 90,
+          "previousDocumentSha256": "31ca4a1283407f098893a86f66a4989c7a86a936dd7e478363cc7c34fb9589b6",
+          "documentSha256": "dc3ed2921aefc58c3be43404bbfcfcb6b40b261705f663640a2942729522374d",
+          "measuredBy": "apps/client/src/render/views/modelFacing.test.ts（GH#216 chirality census）"
+        }
+      ],
       "registeredFor": [
         "b2-klaus"
       ],
@@ -4546,7 +4566,7 @@
       "glbPath": "assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
       "sha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378",
       "bytes": 5463692,
-      "documentSha256": "3dcbe353b57912a8fdc8fce629a4b1ff177d3119da98be2f6d7563589eb96dfd",
+      "documentSha256": "29394bd0f286e490158dab88af09539eba29ea7a179c6ca80dc96f669281c87a",
       "sourceCharacter": "遥远救世主拳皇",
       "sourceWork": "來源作品待核；論壇標題：遥远救世主拳皇",
       "sourceAssetId": "https://www.ou99.com/thread-491497-1-1.html",
@@ -4576,6 +4596,16 @@
       },
       "boundsRepaired": true,
       "standardization": {},
+      "documentCorrections": [
+        {
+          "field": "yawOffsetDeg",
+          "from": null,
+          "to": 90,
+          "previousDocumentSha256": "3dcbe353b57912a8fdc8fce629a4b1ff177d3119da98be2f6d7563589eb96dfd",
+          "documentSha256": "29394bd0f286e490158dab88af09539eba29ea7a179c6ca80dc96f669281c87a",
+          "measuredBy": "apps/client/src/render/views/modelFacing.test.ts（GH#216 chirality census）"
+        }
+      ],
       "registeredFor": [
         "b2-sinbad"
       ],
