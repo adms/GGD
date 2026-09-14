@@ -46,6 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from gen import (ICON_AB, ICON_CH, ICONS, OUT_AB, OUT_CH, attach_ability_icon,  # noqa: E402
                  backfill_status_mechanics, drop_baked_values, shipped_status_mechanics)
 from model_map import catalog_titles, entry_for_model_key, parse_inventory, resolve, stale_blockers  # noqa: E402
+from gen import strip_dev_notes  # noqa: E402  ⭐ GH#1258 ②：同一條剝除（住 tools/valhalla-intro/strip_dev_notes.py）
 
 REPO = Path(__file__).resolve().parents[2]
 OUT_VFX = REPO / "content/vfx-scripts"
@@ -136,6 +137,11 @@ def main() -> None:
     for pack in packs:
         placeholders: list[dict] = []
         champion = drop_baked_values(pack["champion"])
+        # ⭐ GH#1258 ②：Hero Forge 範本（communityExamples.ts）的草稿句「外觀為驗收用替身」在草稿裡是對的，
+        #   ⛔ 上架成卡面就不是 ⇒ 在「草稿 → 出貨內容」這一步剝（範本與它的測試刻意保留草稿原文）。
+        clean = strip_dev_notes(champion)
+        if clean is not None:
+            champion["description"] = clean
         from model_map import preserve_model_history
         previous_path = OUT_CH / f"{champion['id']}.json"
         if previous_path.exists():

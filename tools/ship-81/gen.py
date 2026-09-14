@@ -31,6 +31,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from model_map import parse_inventory, catalog_titles, resolve, stale_blockers  # noqa: E402
+# ⭐ GH#1258 ② —— 卡面的開發流程樣板在**組裝處**剝掉（⛔ 不是只靠一次性改卡：重跑這支字就回來）。
+#   判準住 `tools/valhalla-intro/strip_dev_notes.py` 一處（逐字樣板、剝一半就擲錯），⛔ 這裡不抄第二份。
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "valhalla-intro"))
+from strip_dev_notes import stripped as strip_dev_notes  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[2]
 RECIPES = REPO / "materials/community-hero-forge/recipes"
@@ -439,6 +443,9 @@ def main() -> None:
             placeholders.append({"field": "icon", "state": "no-generated-icon",
                                  "why": f"⛔ 沒有產好的頭圖（找過 {src.relative_to(REPO)}）—— 暫用骨架的圖"})
         drop_baked_values(c)
+        clean = strip_dev_notes(c)
+        if clean is not None:
+            c["description"] = clean
         rows.append({"id": hid, "name": c.get("name"), "modelKey": c.get("modelKey"),
                      "icon": c.get("icon"), "modelState": m["state"], "why": m["why"],
                      "placeholders": placeholders, "doc": c,

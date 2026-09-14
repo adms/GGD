@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """🏛 英雄卡描述裡的**開發流程樣板**剝掉（GH#1258 ②）—— 一次性、欄位級、原文另存。
 
-> owner 2026-09-10 02:49（逐字，節錄；全文 `docs/_daily/2026-09-10.md:19`）：
+> owner 2026-09-10 02:49（逐字，節錄；全文 `docs/_daily/2026-09-10.md:18`
+>  —— ⚠️ 2026-09-15 更正：原寫 `:19`，那是另一棵工作樹長出一列之後的行號；帳本會長，行號會漂）：
 >  「⋯並且已經取得審查授權可以直接上架，被認定為預設官方角色⋯」
 
 ⇒ 卡面上仍寫「社群英雄功能驗收稿」「這是待審查稿」「外觀為驗收用替身」＝第一·五守則的形狀
@@ -17,7 +18,12 @@
 ⚠️ 為什麼改卡而不是改上游：卡的作者是 `tools/ship-81/gen.py`／`lol7.py`（一次性匯入器，
   吃 repo 外輸入、不在 sync-io 作者表），整份重跑會蓋掉之後的模型版本與平衡欄位；
   `materials/community-hero-forge/recipes/*` 被 S3 proof 釘雜湊，⛔ 不可改。
-  ⇒ 防再匯入的是**閘**：`apps/client/src/ui/platform/valhallaShippedRoster.test.ts`。
+  ⭐ 防再匯入（2026-09-15 補，GH#1258 審查）：
+    · 兩支匯入器在組裝處 import 這裡的 `stripped()`（⛔ 不抄第二份）⇒ 重跑出來的卡本來就是乾淨的
+    · Hero Forge 範本 `communityExamples.ts` 的「外觀為驗收用替身」**刻意不動**：在草稿裡它是真話，
+      而 `communityRecipe.test.ts` 釘著草稿原文；剝在「草稿 → 出貨內容」那一步（`lol7.py`）
+    · 閘兩條：內容閘 `packages/shared/src/ops/championDevNotesStripped.test.ts`（全部卡）＋
+      `apps/client/src/ui/platform/valhallaShippedRoster.test.ts`（英靈殿名單上印出來的字）
 
 原文另存：`docs/legacy/_valhalla-card-dev-notes-full.md`（第一·五守則：另存，⛔ 不是壓縮取代）。
 
