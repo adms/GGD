@@ -6483,11 +6483,41 @@
     "documentSha256": "279d477d577ea9ef55942e8c199461942f5b709f1e73c620d29b93970df6d88a",
     "vfxTextureCandidateGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json",
     "vfxTextureCandidateSha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
+    "effectMappingGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json",
+    "effectMappingSha256": "72200a00a36a4e65b7cfe5fefbf1a2d2aa7c0189177e16391c3f8373c0837af7",
+    "effectReviewGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html",
+    "effectReviewSha256": "295e0d67101af6dc1d5bf9739bb2b9e54f1a0ff4fb5186f94e4a5858903afe6f",
+    "effectContactSheets": [
+      {
+        "nativeCharacterId": "MAI",
+        "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png",
+        "bytes": 201924,
+        "sha256": "4497edb77c318771fe5641170dddee63c3b627110988baf825fb077c56d54796"
+      },
+      {
+        "nativeCharacterId": "IOR",
+        "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png",
+        "bytes": 450816,
+        "sha256": "3431f8eea4161d98baf9d2ac36e98e520c04766963258ccc17091a1c5a5cf5c0"
+      },
+      {
+        "nativeCharacterId": "KYO",
+        "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png",
+        "bytes": 432035,
+        "sha256": "0156c126c78784712ffae39a210f209081530a997f24505234d35805b8a66ecc"
+      }
+    ],
     "queryToolGitPath": "tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/query.py",
     "queryToolSha256": "f7b07594e0e8e46799045fda89a9476719faf7cce20e584f79d23e8066e97134",
+    "effectProbeToolGitPath": "tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/probe_kof_xiv_effects.py",
+    "effectProbeToolSha256": "bb83eb1a750b950f31239ce4ab143ef24b58549c9ba682667a919cb90bb4d7d5",
     "jumpForceNativeIdTokens": 224,
     "kofXivNativeDirectoryTokens": 80,
     "kofXivVfxTextureCandidates": 55,
+    "kofXivSourceNativeEffectGroups": 71,
+    "kofXivEffGroupsWithConvertedTexture": 64,
+    "kofXivConvertedTexturesDirectlyReferenced": 48,
+    "kofXivRuntimeVfxCandidates": 0,
     "automaticAudioBindings": 0,
     "runtimeSelectableAssetsAdded": 0,
     "productionDeploymentVerified": false

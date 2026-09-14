@@ -358,9 +358,14 @@ def build(git_link_root=ROOT):
     kof_jump_coverage_path=base/'source-inventories/kof-jump-container-coverage-v1/inventory.json'
     kof_jump_coverage_doc_path=base/'source-inventories/kof-jump-container-coverage-v1/README.md'
     kof_xiv_vfx_textures_path=base/'source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json'
+    kof_xiv_effect_mapping_path=base/'source-inventories/kof-jump-container-coverage-v1/effect-mapping.json'
+    kof_xiv_effect_review_path=base/'source-inventories/kof-jump-container-coverage-v1/effect-review.html'
+    kof_xiv_effect_sheets=[base/f'source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/{native_id}.png' for native_id in ('MAI','IOR','KYO')]
     kof_jump_query_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/query.py'
+    kof_xiv_effect_probe_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/probe_kof_xiv_effects.py'
     kof_jump_coverage=read(kof_jump_coverage_path)
     kof_xiv_vfx_textures=read(kof_xiv_vfx_textures_path)
+    kof_xiv_effect_mapping=read(kof_xiv_effect_mapping_path)
     if (kof_jump_coverage.get('schema')!='ggd.kof-jump-container-coverage@1'
         or kof_jump_coverage.get('jumpForce',{}).get('inferredNativeCharacterIdTokens')!=224
         or kof_jump_coverage.get('kofXiv',{}).get('nativeDirectoryTokens')!=80
@@ -370,7 +375,15 @@ def build(git_link_root=ROOT):
         or kof_xiv_vfx_textures.get('summary',{}).get('convertedPngFiles')!=55
         or kof_xiv_vfx_textures.get('summary',{}).get('overTextureLimit')!=0
         or kof_xiv_vfx_textures.get('runtimeVfxDocuments')!=0
-        or kof_xiv_vfx_textures.get('backendSelectable') is not False):
+        or kof_xiv_vfx_textures.get('backendSelectable') is not False
+        or kof_xiv_effect_mapping.get('schema')!='ggd.kof-xiv-eff-reference-mapping@1'
+        or kof_xiv_effect_mapping.get('summary',{}).get('sourceNativeEffectGroups')!=71
+        or kof_xiv_effect_mapping.get('summary',{}).get('groupsWithConvertedTexture')!=64
+        or kof_xiv_effect_mapping.get('summary',{}).get('convertedTexturesDirectlyReferenced')!=48
+        or kof_xiv_effect_mapping.get('summary',{}).get('allEffectDirectoryFilesSha256Covered') is not True
+        or kof_xiv_effect_mapping.get('summary',{}).get('ggdRuntimeVfxCandidates')!=0
+        or kof_xiv_effect_mapping.get('summary',{}).get('skillBindingsCreated')!=0
+        or kof_xiv_effect_mapping.get('policy',{}).get('materialBlendTimingAttachmentValidated') is not False):
         raise ValueError('KOF/JUMP container coverage is absent, stale or overclaims runtime readiness')
     ssbu_ultimate_roster_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/inventory.json'
     ssbu_ultimate_roster_doc_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/README.md'
@@ -541,11 +554,26 @@ def build(git_link_root=ROOT):
             documentSha256=hashlib.sha256(kof_jump_coverage_doc_path.read_bytes()).hexdigest(),
             vfxTextureCandidateGitPath=str(kof_xiv_vfx_textures_path.relative_to(ROOT)),
             vfxTextureCandidateSha256=hashlib.sha256(kof_xiv_vfx_textures_path.read_bytes()).hexdigest(),
+            effectMappingGitPath=str(kof_xiv_effect_mapping_path.relative_to(ROOT)),
+            effectMappingSha256=hashlib.sha256(kof_xiv_effect_mapping_path.read_bytes()).hexdigest(),
+            effectReviewGitPath=str(kof_xiv_effect_review_path.relative_to(ROOT)),
+            effectReviewSha256=hashlib.sha256(kof_xiv_effect_review_path.read_bytes()).hexdigest(),
+            effectContactSheets=[dict(
+                nativeCharacterId=path.stem,
+                gitPath=str(path.relative_to(ROOT)),
+                bytes=path.stat().st_size,
+                sha256=hashlib.sha256(path.read_bytes()).hexdigest()) for path in kof_xiv_effect_sheets],
             queryToolGitPath=str(kof_jump_query_path.relative_to(ROOT)),
             queryToolSha256=hashlib.sha256(kof_jump_query_path.read_bytes()).hexdigest(),
+            effectProbeToolGitPath=str(kof_xiv_effect_probe_path.relative_to(ROOT)),
+            effectProbeToolSha256=hashlib.sha256(kof_xiv_effect_probe_path.read_bytes()).hexdigest(),
             jumpForceNativeIdTokens=224,
             kofXivNativeDirectoryTokens=80,
             kofXivVfxTextureCandidates=55,
+            kofXivSourceNativeEffectGroups=kof_xiv_effect_mapping['summary']['sourceNativeEffectGroups'],
+            kofXivEffGroupsWithConvertedTexture=kof_xiv_effect_mapping['summary']['groupsWithConvertedTexture'],
+            kofXivConvertedTexturesDirectlyReferenced=kof_xiv_effect_mapping['summary']['convertedTexturesDirectlyReferenced'],
+            kofXivRuntimeVfxCandidates=kof_xiv_effect_mapping['summary']['ggdRuntimeVfxCandidates'],
             automaticAudioBindings=0,
             runtimeSelectableAssetsAdded=0,
             productionDeploymentVerified=False),
@@ -878,8 +906,21 @@ def main():
                     'sha256': result['kofJumpContainerCoverage']['vfxTextureCandidateSha256'],
                 },
                 {
+                    'gitPath': result['kofJumpContainerCoverage']['effectMappingGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['effectMappingSha256'],
+                },
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['effectReviewGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['effectReviewSha256'],
+                },
+                *result['kofJumpContainerCoverage']['effectContactSheets'],
+                {
                     'gitPath': result['kofJumpContainerCoverage']['queryToolGitPath'],
                     'sha256': result['kofJumpContainerCoverage']['queryToolSha256'],
+                },
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['effectProbeToolGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['effectProbeToolSha256'],
                 },
                 {
                     'gitPath': result['ssbuUltimateLocalRoster']['gitPath'],
