@@ -132,6 +132,18 @@ function no(brick: EditorBrick, reason: string): EditorFormReceipt {
 }
 
 /**
+ * ⭐ GH#1024 AC⑦ —— 「沒有編輯器表單」而**帶一個能被反駁的理由**的積木（key＝`layer/id`）。
+ * ⛔ 豁免只換掉**理由**，⛔ 不會把 `renderable` 翻成 true。
+ * ⭐ 每一列的前提由 `editorFormReceipts.test.ts` 從普查產物逐條驗 —— 前提一消失就紅，表只能變短。
+ */
+export const NO_FORM_EXEMPTIONS: Readonly<Record<string, string>> = Object.freeze({
+  "model-preset/tpl-dragon-shockwave":
+    "豁免（GH#1024 AC⑦）：status=draft · 引擎不認得 family=dragon-shockwave（expand.ts 的 FAMILIES 沒有條目；" +
+    "模板自陳缺「沿路生 model@1」的 trailModelKey 機制）· 出貨 0 採用 ⇒ 給它表單＝讓作者挑一個展不開的 preset。" +
+    "三個前提任一不成立（轉 enabled／引擎接上／有人採用）就刪掉這一列",
+});
+
+/**
  * Measure one Main brick against the Editor controls that ship today.
  *
  * This deliberately does not read `brick.editorForm`: that field is the proxy
@@ -140,6 +152,12 @@ function no(brick: EditorBrick, reason: string): EditorFormReceipt {
  * reported false instead of treating a raw JSON escape hatch as a form.
  */
 export function editorFormReceiptFor(brick: EditorBrick): EditorFormReceipt {
+  const receipt = measureEditorForm(brick);
+  const exemption = NO_FORM_EXEMPTIONS[`${brick.layer}/${brick.id}`];
+  return exemption !== undefined && !receipt.renderable ? { ...receipt, reason: exemption } : receipt;
+}
+
+function measureEditorForm(brick: EditorBrick): EditorFormReceipt {
   switch (brick.layer) {
     case "effect":
       return EFFECT_KINDS.has(brick.id)
