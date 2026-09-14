@@ -11,7 +11,10 @@
  * (w3xlib.models._find_texture_png), so SECONDARY materials — the flames, glows
  * and cloud billboards that skin themselves with stock Blizzard art — resolve
  * too. The guard is therefore tightened from "the body is painted" to "no
- * ACTIVE champion/skin glb embeds a placeholder image AT ALL".
+ * champion/skin glb embeds a placeholder image AT ALL".
+ *
+ * ⭐ GH#1242：「champion/skin glb」＝**現役 `modelKey` ＋ 後台下拉選得到的 `modelVersions[].modelKey`**。
+ * ⛔ 在此之前只掃現役 ⇒ 一顆被換下來的身體（仍是一鍵 rollback 的選項）帶什麼都不會紅。
  *
  * This suite reads the shipped .glb bytes directly (GLB container + JSON chunk +
  * PNG IHDR — no Babylon needed, the geometry is tiny), plus a per-model pin on
@@ -100,18 +103,22 @@ function readGlb(path: string): Glb {
 const isReal = (img: Img | null): boolean =>
   !!img && (img.width > PLACEHOLDER_MAX || img.height > PLACEHOLDER_MAX);
 
-/** every model key actually worn by a champion or skin */
-function activeModelKeys(): string[] {
-  const keys = new Set<string>();
+/** modelKey → 現役？ —— 英雄卡/造型穿著的（true），加上後台版本下拉選得到的（false） */
+function bodyKeys(): [string, boolean][] {
+  const keys = new Map<string, boolean>();
   for (const collection of ["champions", "skins"]) {
     const dir = join(CONTENT_DIR, collection);
     for (const f of readdirSync(dir)) {
       if (!f.endsWith(".json") || f === "_index.json") continue;
-      const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { modelKey?: string };
-      if (doc.modelKey) keys.add(doc.modelKey);
+      const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+        modelKey?: string;
+        modelVersions?: { modelKey: string }[];
+      };
+      if (doc.modelKey) keys.set(doc.modelKey, true);
+      for (const v of doc.modelVersions ?? []) if (!keys.has(v.modelKey)) keys.set(v.modelKey, false);
     }
   }
-  return [...keys].sort();
+  return [...keys].sort(([a], [b]) => a.localeCompare(b));
 }
 
 /**
@@ -134,43 +141,54 @@ const OFFDISK: ReadonlySet<string> = new Set(
 );
 
 /**
- * ⭐ **今天還帶著佔位貼圖的模型** —— ⛔ 這張名單**只能變短**。
+ * ⭐ **帶著佔位貼圖的身體** —— ⛔ 這張名單**只能變短**，⛔ 而且**只豁免後台版本**（現役身體帶佔位，名單救不了它）。
  *
  * ⚠️ 每一列都要寫得出**是哪一塊、多大、為什麼還沒修**（⛔ 不是「還沒排到」）。
  *
- * ⭐ 這條缺陷在此之前是**看不見的**：這個測試檔整支
- * 因為讀一顆宣告在 `assets-offdisk.json` 的模型而 ENOENT 崩掉
- * ⇒ 下面每一條斷言**一次都沒跑過**（假綠燈⑨：一條從來沒人看它綠過的閘，
- *   與一個不存在的閘沒有差別）。修好載入之後它第一次開口，就指出了這一顆。
+ * ⚠️ GH#1242：這裡曾經列著 `version.body.75e3f6c8…`，註解寫「馬提亞斯的**現役**身體、image1 是 8×8 灰佔位」。
+ * ⛔ 兩個前提都不成立（2026-09-15 實測）：① 現役早在 818566183（PR #1152）換成 `f91fa769…`，
+ * 75e3f6c8 只剩後台版本 —— ⛔ 而舊的反方向檢查寫的是 `m !== undefined && …` ⇒ 一列不再被掃到的**永遠綠**
+ * （假綠燈⑫）；② 那張 8×8 是**白**的、而且是原作 `Textures\white.blp`（證據見 {@link INTENTIONAL_TINY_TEXTURE}）。
  */
-const KNOWN_PLACEHOLDER: ReadonlySet<string> = new Set([
-  // b2-matthias（馬提亞斯）的**現役**身體。3 張貼圖裡的 image1 是 8×8 灰
-  // ⇒ 掛在一塊 **16 個三角**的小配件上（本體 9,716 三角／512² 是好的）。
-  // ⛔ 修法是**重轉檔**（來源 .blp 當時查不到 —— `w3xlib/models.py` STOCK_MPQS），
-  //    ⛔ 不是在這裡改數字。票：GH#1242。
-  "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
-]);
+const KNOWN_PLACEHOLDER: ReadonlySet<string> = new Set<string>();
 
 /**
- * ⭐ **原作本身就是極小單色的貼圖** —— 以內嵌 PNG 的**逐位元組 sha256** 為鍵（⛔ 不是以模型或尺寸）。
+ * ⭐ **刻意的極小貼圖** —— 以內嵌 PNG 的**逐位元組 sha256** 為鍵（⛔ 不是以模型或尺寸）。
  *
- * ⚠️ 這條閘的判準是尺寸（≤ 8×8 ＝ 查不到 .blp 時退回的佔位），⛔ 而 Unreal 來源的卡通材質會把
- * **單色底色**存成 8×8 —— 那不是查不到，是原作就長這樣。⇒ 只放行**證據指得到的那一張位元組**：
+ * ⚠️ 這條閘的判準是尺寸（≤ 8×8 ＝ 查不到 .blp 時退回的佔位），⛔ 而有兩種 ≤8×8 是對的：
+ * 原作本身就把**單色**存成極小圖、或第 3 階自製替身用一張**調色盤圖集**。⇒ 只放行**證據指得到的那一張位元組**：
  * 換了任何一個位元組、或另一顆模型帶進別的 8×8，照樣紅。
- * ⭐ 每一列要寫得出**原件在哪、怎麼比過**；名單上的位元組不再出現在任何作用中模型 ⇒ 下面那條會紅（幽靈列）。
+ * ⭐ 每一列要寫得出**原件在哪、怎麼比過**；名單上的位元組不再出現在任何可選身體上 ⇒ 下面那條會紅（幽靈列）。
  */
-const ORIGINAL_TINY_TEXTURE: Readonly<Record<string, string>> = {
+const INTENTIONAL_TINY_TEXTURE: Readonly<Record<string, string>> = {
   // PR #1152 合併準備（2026-09-14）—— b2-popp 作用中的 Infinity Strash PN020/02＋Kagayaki（owner 裁決的手動預設）
   "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40":
     "Infinity Strash `T_PN020_00_Hair_Base`（波普髮色底色）原作就是 8×8 單色 (70,73,78)：" +
     "UModel 匯出的 `GGD-Asset-Library/conversions/infinity-strash-popp-pn020-00-delivery-v1/textures-v1/" +
     "Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Base.png` 與內嵌這一張 sha256 相同（2026-09-14 實比）。" +
     "髮絲明暗在原作由 `T_PN020_00_Hair_Bundle`（1024²，G 通道遮罩）＋ `_Shade`（8×8）在卡通材質裡合成 —— " +
-    "⚠️ GGD 的 PBR 材質只取了底色，那是**保真度缺口**（要補的是烘焙 Bundle），⛔ 不是換掉這一張。",
+    "⚠️ GGD 的 PBR 材質只取了底色，那是**保真度缺口**（要補的是烘焙 Bundle），⛔ 不是換掉這一張。" +
+    "⭐ 同一張位元組也在 godie-nbbc（達伊）現役 ee41ff0f／版本 d3f99e89 上：`infinity-strash-dai-pn010-05-daino-tsurugi-" +
+    "delivery-v1/stages/body/textures-v1/Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Base.png` 與它 sha256 相同（2026-09-15 實比）。",
+  // GH#1242 —— b2-matthias 三個後台版本 75e3f6c8／eb4aebd7／581a61a4（都是 ou99.465884 `qiye345.mdx`）的 mat1（16 三角）
+  "47c0b232b83e0aaf92d46f39b9066c67528fc4c31fc88bc50d7d8e2291137145":
+    "ou99 465884 `qiye345.mdx` 的 texture[1] 是 `Textures\\white.blp`（material 1 → 16 三角那個 geoset），" +
+    "而原始壓縮檔自己就帶著這張 `textures/white.blp`（1,350 B，sha256 df5b9778…）：解出來 8×8 全白 (255,255,255)，" +
+    "用 `w3xlib.models._encode(decode_blp(…))` 重編碼後與內嵌這一張 sha256 相同（2026-09-15 實比）。" +
+    "⇒ ⛔ 不是查不到 .blp 的佔位，是原作用一張 8×8 白圖。現役 f91fa769（0b547fe6….glb）把同一塊改成無貼圖＋baseColorFactor [1,1,1,1]，畫面等價。",
+  // GH#1242 —— community-review-14-20260907（殺老師）後台版本 b5d66346「GGD 黃色觸手教師替身」
+  "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25":
+    "第 3 階自製替身的**調色盤圖集**：glb `asset.generator` = `GGD original cartoon proxy generator`、材質 `Cartoon palette`、" +
+    "取樣器 NEAREST＋CLAMP（9728／33071），4×2 八個像素八種顏色（UV 指到格子取色）。" +
+    "同一支英雄較新的 a8ced1f9／1649f8ff（d54eacf8….glb）是同一張調色盤放大成 16×8。",
 };
 
+/** 量尺：≤ 8×8 而**不是**名單上那幾張刻意的位元組 */
+const greyImages = (glb: Glb): Img[] =>
+  glb.images.filter((im) => !isReal(im) && !(im.sha256 in INTENTIONAL_TINY_TEXTURE));
+
 const skippedOffdisk: string[] = [];
-const models = activeModelKeys().flatMap((modelKey) => {
+const models = bodyKeys().flatMap(([modelKey, active]) => {
   const doc = JSON.parse(
     readFileSync(join(CONTENT_DIR, `models/${modelKey}.json`), "utf8"),
   ) as { glbPath: string; scale: number };
@@ -178,7 +196,7 @@ const models = activeModelKeys().flatMap((modelKey) => {
     skippedOffdisk.push(modelKey);
     return [];
   }
-  return [{ modelKey, doc, glb: readGlb(join(CONTENT_DIR, doc.glbPath)) }];
+  return [{ modelKey, active, doc, glb: readGlb(join(CONTENT_DIR, doc.glbPath)) }];
 });
 // imported.collision is an empty glb (procedural fallback), nothing to texture
 const painted = models.filter((m) => m.glb.images.length > 0 || m.glb.body !== null);
@@ -188,6 +206,14 @@ describe("no champion ships untextured (model-body-texture)", () => {
     // ⛔ 沒有這一條，一個把全部模型都跳掉的 bug 會讓下面那條**結構上永遠綠**
     //   （它的迴圈會一次都不跑）——⭐ 而那正是「壞掉跟正常長得一樣」。
     expect(models.length, "⛔ 一顆模型都沒掃到 —— 偵測壞了").toBeGreaterThan(40);
+    // ⭐ 分母要印出來（⛔ 不是只回一個「綠」）：現役幾顆、後台版本幾顆、跳過幾顆
+    const versionOnly = models.filter((m) => !m.active).length;
+    console.info(
+      `[modelTexture] 掃 ${models.length} 顆身體：現役 ${models.length - versionOnly}、` +
+        `只在後台版本 ${versionOnly}；offdisk 跳過 ${skippedOffdisk.length}`,
+    );
+    // ⛔ 沒有這一條，一個讀不到 modelVersions 的 bug 會讓「後台選得到的身體」整批靜默出界（GH#1242）
+    expect(versionOnly, "⛔ 一顆後台版本身體都沒掃到 —— modelVersions 沒被讀").toBeGreaterThan(0);
     // ⭐ 把跳過的數量印出來：⛔ 一個安靜的 skip 與「驗過而且全過」長得一模一樣。
     expect(
       skippedOffdisk.length,
@@ -199,7 +225,7 @@ describe("no champion ships untextured (model-body-texture)", () => {
     ).toBeLessThan(models.length);
   });
 
-  it("paints every active champion/skin body with a real embedded texture", () => {
+  it("paints every champion/skin body (active + admin versions) with a real embedded texture", () => {
     cover("model-body-texture");
     expect(painted.length).toBeGreaterThan(40);
     for (const { modelKey, glb } of painted) {
@@ -208,7 +234,7 @@ describe("no champion ships untextured (model-body-texture)", () => {
       expect(mat, `${modelKey} body primitive has no material`).not.toBeNull();
       const img = glb.materialImages[mat!] ?? null;
       expect(
-        isReal(img),
+        isReal(img) || (img !== null && img.sha256 in INTENTIONAL_TINY_TEXTURE),
         `${modelKey} body material paints with the ${PLACEHOLDER_MAX}x${PLACEHOLDER_MAX} ` +
           `grey placeholder (unresolved .blp — see w3xlib/models.py STOCK_MPQS)`,
       ).toBe(true);
@@ -221,33 +247,34 @@ describe("no champion ships untextured (model-body-texture)", () => {
     // with stock Blizzard art, which the importer now resolves from the retail
     // MPQs. A placeholder here means an unresolved .blp slipped back in — see
     // tools/w3x-import/rebake_textures.py.
-    for (const { modelKey, glb } of painted) {
-      if (KNOWN_PLACEHOLDER.has(modelKey)) continue;
-      const grey = glb.images.filter((im) => !isReal(im) && !(im.sha256 in ORIGINAL_TINY_TEXTURE));
+    for (const { modelKey, active, glb } of painted) {
+      if (KNOWN_PLACEHOLDER.has(modelKey) && !active) continue;
+      const grey = greyImages(glb);
       expect(
         grey.length,
-        `${modelKey} embeds ${grey.length}/${glb.images.length} ` +
+        `${modelKey}（${active ? "現役" : "後台版本"}）embeds ${grey.length}/${glb.images.length} ` +
           `${PLACEHOLDER_MAX}x${PLACEHOLDER_MAX} grey placeholder image(s)`,
       ).toBe(0);
     }
   });
 
-  it("⭐ 原作極小貼圖的名單沒有幽靈列（⛔ 那張位元組已經不在任何作用中模型上 ⇒ 刪掉那一列）", () => {
-    const embedded = new Set(painted.flatMap((m) => m.glb.images.map((im) => im.sha256)));
-    expect(Object.keys(ORIGINAL_TINY_TEXTURE).filter((sha) => !embedded.has(sha))).toEqual([]);
+  it("⭐ 刻意極小貼圖的名單沒有幽靈列 —— 每一列都還在某顆可選身體上，⭐ 而且量尺真的把它量成 ≤8×8", () => {
+    // ⭐ 量尺的「已知極小的量得到」這一邊（「已知正常的量不到」是上面的 body 那條＋妙蛙種子那條）：
+    //   isReal 若壞成永遠 true，這裡的集合是空的 ⇒ 每一列都變幽靈 ⇒ 紅。
+    const tiny = new Set(painted.flatMap((m) => m.glb.images.filter((im) => !isReal(im)).map((im) => im.sha256)));
+    expect(Object.keys(INTENTIONAL_TINY_TEXTURE).filter((sha) => !tiny.has(sha))).toEqual([]);
   });
 
-  it("⭐ 豁免名單只能變短（⛔ 修好了卻留在名單上 ⇒ 紅）", () => {
-    // ⛔ 一張只會變長的豁免名單，與把斷言刪掉沒有差別。
-    // ⇒ 這一條從**反方向**問：名單上的還在壞嗎？不壞了就要把它拿掉。
-    const healed = [...KNOWN_PLACEHOLDER].filter((k) => {
+  it("⭐ 佔位名單只能變短、沒有幽靈列（⛔ 修好了、或已經沒有英雄卡引用它 ⇒ 紅）", () => {
+    // ⛔ 舊版是 `m !== undefined && …` ⇒ 一列不再被任何英雄卡引用時**結構上永遠綠**（假綠燈⑫，GH#1242 的 75e3f6c8）。
+    const stale = [...KNOWN_PLACEHOLDER].filter((k) => {
       const m = painted.find((p) => p.modelKey === k);
-      return m !== undefined && m.glb.images.every((im) => isReal(im));
+      return m === undefined || greyImages(m.glb).length === 0;
     });
     expect(
-      healed,
-      "⭐ 這幾顆模型的佔位貼圖**已經補好了** —— 把 id 從 `KNOWN_PLACEHOLDER` 拿掉，" +
-        "⛔ 否則這張名單會慢慢把真的缺陷一起放行。",
+      stale,
+      "⭐ 這幾顆的佔位貼圖**已經補好**、或已經**沒有英雄卡/版本引用**（也可能位元組搬去 offdisk 驗不到）—— " +
+        "把 id 從 `KNOWN_PLACEHOLDER` 拿掉，⛔ 否則這張名單會慢慢把真的缺陷一起放行。",
     ).toEqual([]);
   });
 
