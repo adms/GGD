@@ -1,0 +1,17 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "components": [
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "acceptedAt": "2026-09-15",
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain missing.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+        "Unity custom shader behavior remains reduced to portable base-color PBR material."
+      ]
+    }
+  ]
+}

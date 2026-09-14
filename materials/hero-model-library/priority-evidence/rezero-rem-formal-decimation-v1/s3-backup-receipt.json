@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+  "archiveSha256": "b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88",
+  "archiveBytes": 2307133,
+  "fileCount": 24,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/d4c9d79004c85f86b590744970182c3c45d7e1e0544d391bc3084f952ff06336/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/d4c9d79004c85f86b590744970182c3c45d7e1e0544d391bc3084f952ff06336/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/d4c9d79004c85f86b590744970182c3c45d7e1e0544d391bc3084f952ff06336/manifest.json",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789424830"
+}

@@ -75,6 +75,20 @@ def validate_component(candidate, repo):
                 'SSBU structural or finite-accessor validation failed')
         require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
                 'SSBU component validation cannot claim runtime readiness')
+    elif schema == 'ggd.rezero-rem-material-preserving-decimation-validation@1':
+        glb=validation.get('candidate',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'Re:Zero Rem decimation output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')], 'Unexpected Re:Zero Rem skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'), 'Every Rem primitive must remain skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0 and inspection.get('budget',{}).get('errors') == [], 'Rem static decimation invalid')
+        issues=validation.get('khronosIssues',{})
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False, 'Rem Khronos validation failed')
+        require(validation.get('finiteFloatAccessors',{}).get('passed') is True and validation.get('structuralValidationPassed') is True, 'Rem finite/structural validation failed')
+        require(validation.get('policy',{}).get('satisfiesFormalDecimationTarget') is True and candidate.get('triangles',0) <= 8000, 'Rem misses formal <=8000 target')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False, 'Rem validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.rezero-rem-formal-decimation-rebuild@1' and rebuild.get('componentId') == candidate['id'] and rebuild.get('byteIdenticalRebuild') is True, 'Unexpected Rem rebuild proof')
     elif schema == 'ggd.rezero-static-component-validation@1':
         require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'Re:Zero conversion candidate mismatch')
         glb=validation.get('glb',{})

@@ -1,0 +1,25 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+  "modelSha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-15",
+  "method": "fixed three-view Blender A/B with owner-authorized resource intake",
+  "comparison": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/visual-comparison.json",
+    "bytes": 2529,
+    "sha256": "ebff801a59309352909efea51ab5340554035c40a2f26116b455efaeefb43cbe"
+  },
+  "contactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/contact-sheet.png",
+    "bytes": 370133,
+    "sha256": "b13f576a151bf710b4bb08e0b3bf40955c03de9ab2cc77a1b3fb142ecbf9d0c8"
+  },
+  "findings": [
+    "No facial, clothing, limb or material loss in the three fixed views.",
+    "Maximum silhouette XOR/union 4.7482% is within the 5% review threshold."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T06:41:56+08:00",
-  "inputsSha256": "a0314eaf5548e3ea2b185a24caeb51a331afa064c08a71b178e72bce29325de3",
+  "generatedAt": "2026-09-15T06:52:18+08:00",
+  "inputsSha256": "f65528736e3c2f4a2359db06e8b2a002dacd0eaa10d3b9e294d355a20bf07f53",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -79471,6 +79471,110 @@
                 "bytes": 1988,
                 "sha256": "75012aa08e36957217bfa83f4393bba79dd78f4b1cf767932e958e211cca5874"
               }
+            },
+            {
+              "id": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+              "conversionCandidateId": "rezero-rem-material-preserving-decimation-v1",
+              "revisionOfComponentId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+              "sourceId": "thunderstore-rezero",
+              "sourceClass": "community-mod",
+              "selectionClass": "community-mod",
+              "nameZh": "蕾姆",
+              "originalName": "Rem",
+              "workZh": "Re:Zero",
+              "sourceGame": "Lethal Company community model replacement",
+              "sourceGameReleasedAt": null,
+              "platform": "PC / Unity AssetBundle",
+              "nativeId": "remPrefab",
+              "sourceVersion": "0.1.1",
+              "resourceRole": "independent-static-skinned-model-component",
+              "assetKinds": [
+                "model-component",
+                "skeleton",
+                "texture"
+              ],
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+              "bytes": 1041264,
+              "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+              "gitPath": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+              "componentReady": true,
+              "converted": true,
+              "structuralValidationPassed": true,
+              "visualValidationPassed": true,
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "defaultEligible": false,
+              "automaticEligible": false,
+              "fullHeroModel": false,
+              "runtimeDropdownRegistered": false,
+              "heroIds": [],
+              "relatedHeroIds": [],
+              "identityIds": [
+                "rem"
+              ],
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "triangles": 7986,
+              "drawPrimitives": 1,
+              "skinCount": 1,
+              "jointCount": 151,
+              "jointCounts": [
+                151
+              ],
+              "textureCount": 1,
+              "readiness": "accepted-independent-static-skinned-component-actions-missing",
+              "limitations": [
+                "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain missing.",
+                "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+                "Unity custom shader behavior remains reduced to portable base-color PBR material."
+              ],
+              "deliveryEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/delivery.json",
+                "bytes": 2995,
+                "sha256": "4974b156e9a7bc802cddd47df41b7827f18949b8c6cd7abda42317f7480c6b3c"
+              },
+              "acceptanceEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/acceptance.json",
+                "bytes": 730,
+                "sha256": "e9707dded6570106c5e9ae3d87bd9a9a479fa2110cd8ec3d00fea969f0f6a68f"
+              },
+              "validationEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/validation.json",
+                "bytes": 2110,
+                "sha256": "ebde6551891b00ce13be39cb9d3fa03ac15a7a790d66aa5e27875b2d93c7c6bb"
+              },
+              "visualEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/visual-review.json",
+                "bytes": 1128,
+                "sha256": "c516222e89768db42f9d6c6142dde48d29337e75e3eadeb184cd135e7aed2fbb"
+              },
+              "sourceRebuildEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/source-rebuild.json",
+                "bytes": 1059,
+                "sha256": "7d5139528edad2091d74932167a2257e8e581088ddde01b60d7cfbfd665ce80e"
+              },
+              "backupStatus": "s3-full-readback-verified",
+              "backupLocations": [
+                {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+                  "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+                  "s3Use": "backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+                  "fileCount": 24,
+                  "fullReadbackVerified": true
+                }
+              ],
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+              "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+              "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+              "fileCount": 24,
+              "fullReadbackVerified": true
             }
           ],
           "conversionAttempts": [
@@ -79593,6 +79697,25 @@
               "s3Use": "backup-only-not-runtime-entry",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
               "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+            },
+            {
+              "id": "rezero-rem-material-preserving-decimation-v1",
+              "status": "accepted-independent-static-skinned-component-actions-missing",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1",
+              "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+              "outputSha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+              "componentId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+              "accepted": true,
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+              "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+              "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+              "fileCount": 24,
+              "fullReadbackVerified": true
             }
           ],
           "sourceClass": "community-mod"
@@ -134907,6 +135030,110 @@
               "bytes": 1988,
               "sha256": "75012aa08e36957217bfa83f4393bba79dd78f4b1cf767932e958e211cca5874"
             }
+          },
+          {
+            "id": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+            "conversionCandidateId": "rezero-rem-material-preserving-decimation-v1",
+            "revisionOfComponentId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+            "sourceId": "thunderstore-rezero",
+            "sourceClass": "community-mod",
+            "selectionClass": "community-mod",
+            "nameZh": "蕾姆",
+            "originalName": "Rem",
+            "workZh": "Re:Zero",
+            "sourceGame": "Lethal Company community model replacement",
+            "sourceGameReleasedAt": null,
+            "platform": "PC / Unity AssetBundle",
+            "nativeId": "remPrefab",
+            "sourceVersion": "0.1.1",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+            "bytes": 1041264,
+            "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+            "gitPath": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "rem"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 7986,
+            "drawPrimitives": 1,
+            "skinCount": 1,
+            "jointCount": 151,
+            "jointCounts": [
+              151
+            ],
+            "textureCount": 1,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "limitations": [
+              "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain missing.",
+              "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+              "Unity custom shader behavior remains reduced to portable base-color PBR material."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/delivery.json",
+              "bytes": 2995,
+              "sha256": "4974b156e9a7bc802cddd47df41b7827f18949b8c6cd7abda42317f7480c6b3c"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/acceptance.json",
+              "bytes": 730,
+              "sha256": "e9707dded6570106c5e9ae3d87bd9a9a479fa2110cd8ec3d00fea969f0f6a68f"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/validation.json",
+              "bytes": 2110,
+              "sha256": "ebde6551891b00ce13be39cb9d3fa03ac15a7a790d66aa5e27875b2d93c7c6bb"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/visual-review.json",
+              "bytes": 1128,
+              "sha256": "c516222e89768db42f9d6c6142dde48d29337e75e3eadeb184cd135e7aed2fbb"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/source-rebuild.json",
+              "bytes": 1059,
+              "sha256": "7d5139528edad2091d74932167a2257e8e581088ddde01b60d7cfbfd665ce80e"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+                "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+                "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+                "fileCount": 24,
+                "fullReadbackVerified": true
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+            "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+            "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+            "fileCount": 24,
+            "fullReadbackVerified": true
           }
         ],
         "conversionAttempts": [
@@ -135029,6 +135256,25 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
             "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+          },
+          {
+            "id": "rezero-rem-material-preserving-decimation-v1",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+            "outputSha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+            "componentId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+            "accepted": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+            "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+            "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+            "fileCount": 24,
+            "fullReadbackVerified": true
           }
         ],
         "sourceClass": "community-mod"
