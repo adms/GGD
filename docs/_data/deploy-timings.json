@@ -2,100 +2,6 @@
   "schema": "ggd-deploy-timings@1",
   "runs": [
     {
-      "id": "2026-08-24/v0.26.3-6-g1eadb100-dirty",
-      "at": "2026-08-24T11:46",
-      "ref": "v0.26.3-6-g1eadb100-dirty",
-      "stages": [
-        {
-          "name": "ship:content:build",
-          "ms": 10881,
-          "code": 0,
-          "phase": "serial"
-        },
-        {
-          "name": "ship:skills:sync",
-          "ms": 62405,
-          "code": 0,
-          "phase": "serial"
-        },
-        {
-          "name": "ship:visual-proof",
-          "ms": 4544,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/test-dashboard",
-          "ms": 5668,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest tools/deploy-timing",
-          "ms": 7894,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/content-api",
-          "ms": 14177,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:skills:check",
-          "ms": 16696,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:typecheck",
-          "ms": 41621,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/admin",
-          "ms": 53074,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/editor",
-          "ms": 80567,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/game-server",
-          "ms": 143983,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest packages/shared",
-          "ms": 215738,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/client",
-          "ms": 228543,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:total",
-          "ms": 301839,
-          "code": 0,
-          "phase": "summary",
-          "serialSec": 73.3,
-          "parallelCpuSec": 812.5,
-          "forksPerSuite": 5
-        }
-      ]
-    },
-    {
       "id": "2026-08-24/v0.26.3-9-g57bad55d-dirty",
       "at": "2026-08-24T12:15",
       "ref": "v0.26.3-9-g57bad55d-dirty",
@@ -8401,6 +8307,82 @@
           "serialSec": 555.6,
           "parallelCpuSec": 3067.2,
           "forksPerSuite": 4
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14/v0.44.1-443-ged7311d92-dirty",
+      "at": "2026-09-14T18:57",
+      "ref": "v0.44.1-443-ged7311d92-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 59007,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:commit-ref-lint",
+          "ms": 4190,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 7696,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:coord:check",
+          "ms": 9723,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 18288,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 79303,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:model-intake",
+          "ms": 95171,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 122847,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 150016,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:lint",
+          "ms": 210333,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 269676,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 59,
+          "parallelCpuSec": 697.6,
+          "forksPerSuite": 36
         }
       ]
     }
