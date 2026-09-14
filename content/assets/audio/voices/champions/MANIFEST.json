@@ -28,10 +28,10 @@
       "defeat"
     ]
   },
-  "generatedCount": 132,
+  "generatedCount": 135,
   "partialCount": 81,
   "sharedCount": 19,
-  "championCount": 151,
+  "championCount": 154,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
     {
@@ -150,6 +150,444 @@
     }
   ],
   "champions": {
+    "acquired-astralym": {
+      "engine": "original-game-audio",
+      "variant": "palworld-owner-approved-v1",
+      "lines": {
+        "hum": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/normal-f9949315b5d2.mp3",
+            "text": "Normal",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/joy-5da4f560d3d3.mp3",
+            "text": "Joy",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "crit": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+          }
+        ],
+        "retreat": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/sorrow-51bcb37280e8.mp3",
+            "text": "Sorrow",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/pain-9c981c73e979.mp3",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/pain-9c981c73e979.mp3",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/palworld/astralym/death-814242c5ae71.mp3",
+            "text": "Death",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab"
+          }
+        ]
+      }
+    },
+    "acquired-cattiva": {
+      "engine": "original-game-audio",
+      "variant": "palworld-owner-approved-v1",
+      "lines": {
+        "hum": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.wav",
+            "text": "Normal",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.wav",
+            "text": "Joy",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "crit": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+          }
+        ],
+        "retreat": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.wav",
+            "text": "Sorrow",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/palworld/cattiva/death-cfb643854222.wav",
+            "text": "Death",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a"
+          }
+        ]
+      }
+    },
+    "acquired-jetragon": {
+      "engine": "original-game-audio",
+      "variant": "palworld-owner-approved-v1",
+      "lines": {
+        "hum": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/normal-4a207cb88f48.mp3",
+            "text": "Normal",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/joy-03253d18585f.mp3",
+            "text": "Joy",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "crit": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+            "text": "Anger",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+          }
+        ],
+        "retreat": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/sorrow-5638ed8f9fe2.mp3",
+            "text": "Sorrow",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/pain-e28698306de8.mp3",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/pain-e28698306de8.mp3",
+            "text": "Pain",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/palworld/jetragon/death-64114cec12d8.mp3",
+            "text": "Death",
+            "lang": "zxx",
+            "durationSec": 0,
+            "speakerSim": null,
+            "hash": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358"
+          }
+        ]
+      }
+    },
     "b2-aladdin": {
       "engine": "cosyvoice3",
       "variant": "cv3-0.5b",

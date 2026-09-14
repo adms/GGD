@@ -68,8 +68,13 @@ def model_components(data, repo=ROOT, git_link_root=None):
 def build(workspace, git_link_root=ROOT):
     paths = [BASE / 'download-sources.json', BASE / 'public-source-files.json',
              BASE / 'design-backlog/sources-supplemental.json', BASE / 'palworld/character-settings.json',
-             BASE / 'priority-evidence/palworld-hero-integration/receipt.json']
-    downloads, archives, supplemental, settings, integration_receipt = [read(path) for path in paths]
+             BASE / 'priority-evidence/palworld-hero-integration/receipt.json',
+             BASE / 'priority-evidence/palworld-approved-runtime-v1/approved-components.json',
+             BASE / 'priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json']
+    (downloads, archives, supplemental, settings, integration_receipt,
+     approved_components, runtime_bindings) = [read(path) for path in paths]
+    assert approved_components['schema'] == 'ggd.palworld-approved-components@1'
+    assert runtime_bindings['schema'] == 'ggd.palworld-approved-runtime-bindings@1'
     integrations = {row['identityId']: row for row in integration_receipt['integrations']}
     sources = {row['id']: row for row in downloads['publicSources']}
     archived = {row['id']: row for row in archives['sources']}
@@ -114,6 +119,15 @@ def build(workspace, git_link_root=ROOT):
         forms = [form for form in settings['forms'] if form['character'] == english]
         assert forms and forms[0]['factualFields']['Stats']['Code'] == code
         integration = integrations[identity['id']]
+        approved_cries = [row for row in approved_components['cries'] if row['characterId'] == key]
+        approved_motions = [row for row in approved_components['motions'] if row['characterId'] == key]
+        approved_overlays = [
+            row for row in runtime_bindings['motionOverlays']
+            if row['heroId'] == integration['heroId']
+        ]
+        assert len(approved_cries) == 6 and len(approved_motions) == 6
+        assert all(row['runtimeBindingCreated'] and row['runtimeSelectable'] for row in approved_cries)
+        assert all(row['approvedBindingReachable'] and row['runtimeSelectable'] for row in approved_motions)
         assert integration['heroId'] in identity.get('mappedHeroIds', [])
         assert integration['backendDropdownRegistered'] is True
         assert integration['ggdHeroAuthoringComplete'] is True
@@ -141,6 +155,14 @@ def build(workspace, git_link_root=ROOT):
             backendDropdownRegistered=True, productionDeploymentVerified=False,
             ggdHeroAuthoringComplete=True, localHeroForgeModelSelectable=True,
             sourceFaithfulAudiovisualComplete=False,
+            approvedRuntime=dict(
+                crySourceBindings=len(approved_cries),
+                voiceCategoryRoutes=sum(len(row['runtimeCategories']) for row in approved_cries),
+                motionSemanticBindings=len(approved_motions),
+                genericMotionBindings=sum(not row['runtimeBindingChanged'] for row in approved_motions),
+                skillMotionOverlays=len(approved_overlays),
+                productionDeploymentVerified=False,
+            ),
             formalModelAdoption=integration['formalModelAdoption'],
             productionRuntimeSelectableVerified=False,
             status=('ggd-authoring-complete-source-av-review-pending-production-unverified'
@@ -153,12 +175,18 @@ def build(workspace, git_link_root=ROOT):
         distinctCryCount=sum(len(c['audioFiles']) for c in characters),
         characterSettingsGitPath='materials/hero-model-library/palworld/character-settings.json',
         heroIntegrationReceipt='materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json',
+        approvedRuntimeReceipt='materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json',
+        approvedRuntimeBindings='materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json',
+        approvedRuntimeSummary=approved_components['summary'],
         characters=characters,
         limitations=['Source copies and intermediate models require manual use from S3 legacy.',
             'Creature cries are sound effects, not Japanese or English spoken dialogue.',
             'PalDB settings are community snapshots, not original game DataTables or GGD abilities.',
         'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.',
         'The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym has a separately validated 7,996-triangle historical five-motion candidate and a 7,896-triangle 256px full-58-motion candidate registered as non-default options; production deployment remains unverified.',
+        f"The {approved_components['summary']['approvedCryRuntimeBindings']} owner-approved creature cries and "
+        f"{approved_components['summary']['motionSemanticStatesRuntimeSelectable']} motion semantic candidates are locally runtime-bound; "
+        'this does not supply original standalone skill VFX or skill-specific SFX and does not prove production deployment.',
         'Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.',
         'Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified.'])
     components = model_components(result, ROOT, git_link_root)
@@ -168,9 +196,11 @@ def build(workspace, git_link_root=ROOT):
 
 
 def render(data):
+    runtime = data['approvedRuntimeSummary']
+    voice_routes = sum(row['approvedRuntime']['voiceCategoryRoutes'] for row in data['characters'])
     lines = ['# ' + TITLE, '',
         '固定入口；模型、動作、叫聲與角色／技能設定可由同名 JSON 查詢。三位均已列入 [已取得模型待設計英雄](../已取得模型待設計英雄.md)。', '',
-        '來源與半成品已保留本機並備份 S3 `legacy/`。三名均已是完整的 GGD Hero Forge authoring：六技能配方、六態模型文件、精確來源套件與 acquired-model 後台下拉選項已通過本機驗證。「尚未成為完整英雄」是過期標示；仍未完成的是原作獨立 VFX、招式專屬 SFX、叫聲與動作逐項審查，以及正式站部署驗證。', '',
+        f"來源與半成品已保留本機並備份 S3 `legacy/`。三名均已是完整的 GGD Hero Forge authoring：六技能配方、六態模型文件、精確來源套件與 acquired-model 後台下拉選項已通過本機驗證。{runtime['approvedCryRuntimeBindings']} 個 owner 核准非語言叫聲與 {runtime['motionSemanticStatesRuntimeSelectable']} 個動作語意候選也已由 manifest 產生器綁定本機 runtime。「尚未成為完整英雄」是過期標示；仍未完成的是原作獨立 VFX、招式專屬 SFX 以及正式站部署驗證。", '',
         '| 角色 | 模型來源 | 動作 | 叫聲 | 設定資料 |',
         '|---|---|---|---|---|']
     for c in data['characters']:
@@ -226,7 +256,7 @@ def render(data):
         lines += ['', 'S3 音訊來源備份：`' + c['audioBackup']['s3Uri'] + '`。', '']
     lines += ['## 設定與待完成項目', '',
         '[角色與技能設定 JSON](character-settings.json) 保留 5 份資料頁、34 條技能與空渦龍／搗蛋貓各 5 階夥伴技能。枯星龍一般資料沒有學習技能列；兩個首領形態各 8 條，分別保存。', '',
-        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。因此三名在 GGD authoring 層已是完整英雄。空渦龍與搗蛋貓的現行模型符合正式採用幾何政策；枯星龍有 7,996 面五動作歷史候選，以及由完整 23,928 面來源重建的 7,896 面、256px、58 動作候選。後者逐動作 accessor 取樣、骨架、蒙皮、方向、Khronos、現行 budget 及五段三視角 A/B 驗證通過，兩者都已登記為非預設選項。另一份枯星龍元件只有 Idle／Walk，仍獨立保留。原作影音保真仍未完成：未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；18 段叫聲與 18 個現行动作語意候選仍待使用者逐項審查。正式站尚未驗證部署。', '',
+        f"三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。因此三名在 GGD authoring 層已是完整英雄。空渦龍與搗蛋貓的現行模型符合正式採用幾何政策；枯星龍有 7,996 面五動作歷史候選，以及由完整 23,928 面來源重建的 7,896 面、256px、58 動作候選。後者逐動作 accessor 取樣、骨架、蒙皮、方向、Khronos、現行 budget 及五段三視角 A/B 驗證通過，兩者都已登記為非預設選項。另一份枯星龍元件只有 Idle／Walk，仍獨立保留。owner 已核准 {runtime['approvedCryRuntimeBindings']} 段非語言叫聲與 {runtime['motionSemanticStatesRuntimeSelectable']} 個現行動作語意；本機 runtime 已建立 {runtime['approvedCryRuntimeBindings']} 個叫聲來源綁定、{voice_routes} 條可到達語音 category route、{runtime['approvedGenericMotionBindingsReachable']} 個通用動作綁定與 {runtime['approvedPerSkillMotionOverlaysRuntimeBound']} 個逐技能動作 overlay。原作影音保真仍未完成：未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句。正式站尚未驗證部署。", '',
         '維護：更新來源與補充身份索引後，執行 `python3 tools/hero-model-library/build_palworld_index.py --workspace ..`；加 `--check` 檢查文件是否與來源一致。', '']
     return '\n'.join(lines)
 

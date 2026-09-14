@@ -20,6 +20,14 @@
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
       "sha256": "dbc695de66c2256f2212545bf99cdfcfbb2cafc945d70ed7c9d695e20d482658"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
+      "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+      "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
     }
   ],
   "characterCount": 3,
@@ -28,6 +36,22 @@
   "distinctCryCount": 18,
   "characterSettingsGitPath": "materials/hero-model-library/palworld/character-settings.json",
   "heroIntegrationReceipt": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+  "approvedRuntimeReceipt": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json",
+  "approvedRuntimeBindings": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+  "approvedRuntimeSummary": {
+    "characters": 3,
+    "ownerApprovedCandidates": 36,
+    "motionSemanticStatesRuntimeSelectable": 18,
+    "approvedGenericMotionBindingsReachable": 14,
+    "approvedPerSkillMotionOverlaysPendingRouter": 0,
+    "approvedPerSkillMotionOverlaysRuntimeBound": 4,
+    "approvedCryProductsInGit": 18,
+    "approvedCryRuntimeBindings": 18,
+    "backendDropdownRegisteredHeroes": 3,
+    "standaloneOriginalVfx": 0,
+    "skillSpecificOriginalSfx": 0,
+    "productionDeploymentVerifiedHeroes": 0
+  },
   "characters": [
     {
       "id": "jetragon",
@@ -926,6 +950,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 4,
+        "skillMotionOverlays": 2,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 8468,
         "triggerTrianglesAbove": 10000,
@@ -2574,6 +2606,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 5,
+        "skillMotionOverlays": 1,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 23928,
         "triggerTrianglesAbove": 10000,
@@ -3775,6 +3815,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 5,
+        "skillMotionOverlays": 1,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 5798,
         "triggerTrianglesAbove": 10000,
@@ -3799,6 +3847,7 @@
     "PalDB settings are community snapshots, not original game DataTables or GGD abilities.",
     "Khronos structural validation does not prove material fidelity or GGD runtime acceptance.",
     "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym has a separately validated 7,996-triangle historical five-motion candidate and a 7,896-triangle 256px full-58-motion candidate registered as non-default options; production deployment remains unverified.",
+    "The 18 owner-approved creature cries and 18 motion semantic candidates are locally runtime-bound; this does not supply original standalone skill VFX or skill-specific SFX and does not prove production deployment.",
     "Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.",
     "Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified."
   ],

@@ -521,33 +521,47 @@ def build(git_link_root=ROOT):
         raise ValueError('Palworld preserved-source current-resource pointer is stale: '+str(palworld_av_preserved_audit_path))
     palworld_approved_manifest_path=base/'priority-evidence/palworld-approved-runtime-v1/approved-components.json'
     palworld_approved_receipt_path=base/'priority-evidence/palworld-approved-runtime-v1/receipt.json'
+    palworld_runtime_bindings_path=base/'priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json'
     palworld_approved_manifest=read(palworld_approved_manifest_path)
     palworld_approved_receipt=read(palworld_approved_receipt_path)
+    palworld_runtime_bindings=read(palworld_runtime_bindings_path)
     palworld_approved_summary=palworld_approved_manifest.get('summary',{})
     if (palworld_approved_manifest.get('schema')!='ggd.palworld-approved-components@1'
         or palworld_approved_receipt.get('schema')!='ggd.palworld-approved-runtime-integration-receipt@1'
         or palworld_approved_summary.get('ownerApprovedCandidates')!=36
         or palworld_approved_summary.get('motionSemanticStatesRuntimeSelectable')!=18
         or palworld_approved_summary.get('approvedGenericMotionBindingsReachable')!=14
-        or palworld_approved_summary.get('approvedPerSkillMotionOverlaysPendingRouter')!=4
+        or palworld_approved_summary.get('approvedPerSkillMotionOverlaysPendingRouter')!=0
+        or palworld_approved_summary.get('approvedPerSkillMotionOverlaysRuntimeBound')!=4
         or palworld_approved_summary.get('approvedCryProductsInGit')!=18
-        or palworld_approved_summary.get('approvedCryRuntimeBindings')!=0
+        or palworld_approved_summary.get('approvedCryRuntimeBindings')!=18
         or palworld_approved_summary.get('backendDropdownRegisteredHeroes')!=3
         or palworld_approved_summary.get('standaloneOriginalVfx')!=0
         or palworld_approved_summary.get('skillSpecificOriginalSfx')!=0
         or palworld_approved_summary.get('productionDeploymentVerifiedHeroes')!=0
         or palworld_approved_receipt.get('summary')!=palworld_approved_summary
+        or palworld_approved_receipt.get('states',{}).get('approvedCryRuntimeBindingCreated') is not True
+        or palworld_approved_receipt.get('states',{}).get('approvedPerSkillMotionOverlayCreated') is not True
         or palworld_approved_receipt.get('states',{}).get('sourceFaithfulAudiovisualComplete') is not False
         or palworld_approved_receipt.get('states',{}).get('productionDeploymentVerified') is not False):
         raise ValueError('Palworld approved-component integration is absent, stale or overclaims readiness')
     if palworld_approved_receipt.get('manifest',{}).get('sha256')!=hashlib.sha256(palworld_approved_manifest_path.read_bytes()).hexdigest():
         raise ValueError('Palworld approved-component manifest pointer is stale')
+    if (palworld_runtime_bindings.get('schema')!='ggd.palworld-approved-runtime-bindings@1'
+        or palworld_runtime_bindings.get('summary',{}).get('approvedCrySourceBindings')!=18
+        or palworld_runtime_bindings.get('summary',{}).get('runtimeVoiceCategoryRoutes')!=42
+        or palworld_runtime_bindings.get('summary',{}).get('approvedSkillMotionOverlays')!=4
+        or palworld_approved_receipt.get('runtimeBindings',{}).get('sha256')!=hashlib.sha256(palworld_runtime_bindings_path.read_bytes()).hexdigest()):
+        raise ValueError('Palworld runtime binding manifest is absent or stale')
     for row in palworld_approved_manifest.get('cries',[]):
         product=row['gitProduct'];path=ROOT/product['gitPath']
+        runtime_product=row['runtimeProduct'];runtime_path=ROOT/runtime_product['gitPath']
         if (not path.is_file() or path.stat().st_size!=product['bytes']
             or hashlib.sha256(path.read_bytes()).hexdigest()!=product['sha256']
-            or row.get('runtimeBindingCreated') is not False
-            or row.get('runtimeSelectable') is not False):
+            or not runtime_path.is_file() or runtime_path.stat().st_size!=runtime_product['bytes']
+            or hashlib.sha256(runtime_path.read_bytes()).hexdigest()!=runtime_product['sha256']
+            or row.get('runtimeBindingCreated') is not True
+            or row.get('runtimeSelectable') is not True):
             raise ValueError('Palworld approved cry product is absent, changed or overclaims runtime: '+row.get('candidateId','unknown'))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
@@ -1129,10 +1143,14 @@ def build(git_link_root=ROOT):
             manifestSha256=hashlib.sha256(palworld_approved_manifest_path.read_bytes()).hexdigest(),
             receiptGitPath=str(palworld_approved_receipt_path.relative_to(ROOT)),
             receiptSha256=hashlib.sha256(palworld_approved_receipt_path.read_bytes()).hexdigest(),
+            runtimeBindingsGitPath=str(palworld_runtime_bindings_path.relative_to(ROOT)),
+            runtimeBindingsSha256=hashlib.sha256(palworld_runtime_bindings_path.read_bytes()).hexdigest(),
             summary=palworld_approved_summary,
             audioProducts=[row['gitProduct'] for row in palworld_approved_manifest['cries']],
+            runtimeAudioProducts=[row['runtimeProduct'] for row in palworld_approved_manifest['cries']],
             localHeroForgeMotionSelectable=True,
-            approvedCryRuntimeBindingCreated=False,
+            approvedCryRuntimeBindingCreated=True,
+            approvedPerSkillMotionOverlayCreated=True,
             sourceFaithfulAudiovisualComplete=False,
             productionDeploymentVerified=False),
         poppVfxDependencySupport=dict(
@@ -1623,7 +1641,12 @@ def main():
                     'gitPath': result['palworldApprovedComponentIntegration']['receiptGitPath'],
                     'sha256': result['palworldApprovedComponentIntegration']['receiptSha256'],
                 },
+                {
+                    'gitPath': result['palworldApprovedComponentIntegration']['runtimeBindingsGitPath'],
+                    'sha256': result['palworldApprovedComponentIntegration']['runtimeBindingsSha256'],
+                },
                 *result['palworldApprovedComponentIntegration']['audioProducts'],
+                *result['palworldApprovedComponentIntegration']['runtimeAudioProducts'],
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
                     'sha256': result['fateubwMotionReserve']['nativeMotionCompletion']['sha256'],

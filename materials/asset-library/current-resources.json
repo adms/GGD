@@ -7859,19 +7859,22 @@
   },
   "palworldApprovedComponentIntegration": {
     "schema": "ggd.palworld-approved-runtime-integration-receipt@1",
-    "status": "three-local-hero-forge-dropdowns-and-18-motion-states-verified; 18-approved-cries-git-preserved-runtime-unbound",
+    "status": "three-local-hero-forge-dropdowns; 18-motion-states-and-18-approved-cries-runtime-bound",
     "manifestGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
-    "manifestSha256": "3998c27ac5450d236707cb7a4fb7fcd27d3fe5011155560619ff81736e2e1410",
+    "manifestSha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f",
     "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json",
-    "receiptSha256": "e48f4e158a6302b2057655ced4e14bca8fbd7dedf531839e960314cd1a6970a8",
+    "receiptSha256": "3358f89a343664d3ded9b9ae869a4691c1eed5593ae2f150dc6485cf00593ba6",
+    "runtimeBindingsGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+    "runtimeBindingsSha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b",
     "summary": {
       "characters": 3,
       "ownerApprovedCandidates": 36,
       "motionSemanticStatesRuntimeSelectable": 18,
       "approvedGenericMotionBindingsReachable": 14,
-      "approvedPerSkillMotionOverlaysPendingRouter": 4,
+      "approvedPerSkillMotionOverlaysPendingRouter": 0,
+      "approvedPerSkillMotionOverlaysRuntimeBound": 4,
       "approvedCryProductsInGit": 18,
-      "approvedCryRuntimeBindings": 0,
+      "approvedCryRuntimeBindings": 18,
       "backendDropdownRegisteredHeroes": 3,
       "standaloneOriginalVfx": 0,
       "skillSpecificOriginalSfx": 0,
@@ -7987,8 +7990,119 @@
         "container": "wav"
       }
     ],
+    "runtimeAudioProducts": [
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/normal-4a207cb88f48.mp3",
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/joy-03253d18585f.mp3",
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/sorrow-5638ed8f9fe2.mp3",
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/pain-e28698306de8.mp3",
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/death-64114cec12d8.mp3",
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/normal-f9949315b5d2.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/joy-5da4f560d3d3.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/sorrow-51bcb37280e8.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/pain-9c981c73e979.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/death-814242c5ae71.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "container": "mp3"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.wav",
+        "bytes": 103576,
+        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "container": "wav"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.wav",
+        "bytes": 131896,
+        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "container": "wav"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+        "bytes": 147040,
+        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "container": "wav"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.wav",
+        "bytes": 223052,
+        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "container": "wav"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+        "bytes": 107200,
+        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "container": "wav"
+      },
+      {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/death-cfb643854222.wav",
+        "bytes": 165196,
+        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "container": "wav"
+      }
+    ],
     "localHeroForgeMotionSelectable": true,
-    "approvedCryRuntimeBindingCreated": false,
+    "approvedCryRuntimeBindingCreated": true,
+    "approvedPerSkillMotionOverlayCreated": true,
     "sourceFaithfulAudiovisualComplete": false,
     "productionDeploymentVerified": false
   },
@@ -15112,7 +15226,7 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "07573f071fe5fd8e240965554beadc7fe06ce94e543394f6bf15906339d969ad"
+    "sha256": "8089ac4703edfcd0686c750abc90931a9dd9112271753751f1c32aba15d9eb36"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",

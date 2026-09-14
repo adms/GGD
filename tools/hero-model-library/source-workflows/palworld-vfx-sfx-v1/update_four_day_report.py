@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[4]
 REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 INVENTORY = ROOT / "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json"
 PRESERVED_AUDIT = ROOT / "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/preserved-source-audit.json"
+APPROVED_RUNTIME = ROOT / "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json"
 BEGIN = "<!-- generated:palworld-vfx-sfx-v1:start -->"
 END = "<!-- generated:palworld-vfx-sfx-v1:end -->"
 
@@ -19,6 +20,10 @@ def render():
     data = json.loads(INVENTORY.read_text())
     summary = data["summary"]
     audit = json.loads(PRESERVED_AUDIT.read_text())
+    runtime = json.loads(APPROVED_RUNTIME.read_text())
+    if runtime.get("schema") != "ggd.palworld-approved-runtime-bindings@1":
+        raise ValueError("unexpected Palworld runtime binding schema")
+    runtime_summary = runtime["summary"]
     a = audit["summary"]
     return "\n".join([
         BEGIN,
@@ -30,7 +35,11 @@ def render():
         "",
         f"三顆目前審查用 component 都有既有政策收據：{a['currentReviewComponentsPolicyClean']} 顆無警告、{a['currentReviewComponentsPolicyWarningOnly']} 顆只有警告、硬阻擋 {a['currentReviewComponentsPolicyHardBlocked']}。警告是枯星龍單段 435 通道，高於動態警戒 {audit['currentReviewComponentPolicy']['dynamicLimits']['channels']['warn']}、低於硬上限 {audit['currentReviewComponentPolicy']['dynamicLimits']['channels']['limit']}；沒有把警告改寫成無條件合格。",
         "",
-        f"獨立原作 VFX {summary['acquiredStandaloneVfx']}、技能專屬 SFX {summary['acquiredSkillSpecificSfx']}、轉換 VFX {summary['convertedVfx']}、核准音訊 {summary['approvedAudio']}、runtime 新增綁定 {summary['runtimeBindingsAdded']}、正式部署 {summary['productionDeployed']}。模型貼圖、發光材質、Ring 動作名稱不能代替特效資產，一般叫聲也不能代替技能音效。",
+        f"獨立原作 VFX {summary['acquiredStandaloneVfx']}、技能專屬 SFX {summary['acquiredSkillSpecificSfx']}、轉換 VFX {summary['convertedVfx']}。"
+        f"一般非語言叫聲已 owner 核准 {runtime_summary['approvedCrySourceBindings']}個來源綁定，"
+        f"展開為 {runtime_summary['runtimeVoiceCategoryRoutes']} 條 runtime category route；"
+        f"技能動作 overlay {runtime_summary['approvedSkillMotionOverlays']} 條；正式部署 {summary['productionDeployed']}。"
+        "模型貼圖、發光材質、Ring 動作名稱不能代替特效資產，一般叫聲也不能代替技能音效。",
         "",
         "已新增唯讀 Windows 容器 probe 與解包目錄／package-list 掃描器；後續取得清單時會按 JetDragon、WorldTreeDragon、PinkCat 及精確技能代碼產生 UE/Wwise 待審候選，不會嘗試金鑰或繞過容器權限。",
         END,

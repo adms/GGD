@@ -16,6 +16,8 @@ DROPDOWN = ROOT / "materials/hero-model-library/priority-evidence/all-model-drop
 HISTORICAL = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
 LOL_RUNTIME = ROOT / "materials/hero-model-library/lol-project-seven/runtime-registration.json"
 VALHALLA_37 = ROOT / "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json"
+APPROVED_RUNTIME = ROOT / "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json"
+RUNTIME_BINDINGS = ROOT / "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json"
 
 
 def render() -> str:
@@ -26,6 +28,20 @@ def render() -> str:
     historical = json.loads(HISTORICAL.read_text())
     lol_runtime = json.loads(LOL_RUNTIME.read_text())
     valhalla = json.loads(VALHALLA_37.read_text())
+    approved_runtime = json.loads(APPROVED_RUNTIME.read_text())
+    runtime_bindings = json.loads(RUNTIME_BINDINGS.read_text())
+    runtime = approved_runtime["summary"]
+    if approved_runtime.get("schema") != "ggd.palworld-approved-runtime-integration-receipt@1":
+        raise ValueError("unexpected approved Palworld runtime receipt schema")
+    if runtime_bindings.get("schema") != "ggd.palworld-approved-runtime-bindings@1":
+        raise ValueError("unexpected approved Palworld runtime binding schema")
+    runtime_routes = runtime_bindings["summary"]["runtimeVoiceCategoryRoutes"]
+    if (runtime["ownerApprovedCandidates"] != 36
+            or runtime["approvedCryRuntimeBindings"] != 18
+            or runtime["approvedGenericMotionBindingsReachable"] != 14
+            or runtime["approvedPerSkillMotionOverlaysRuntimeBound"] != 4
+            or runtime["productionDeploymentVerifiedHeroes"] != 0):
+        raise ValueError("approved Palworld runtime receipt is incomplete or overclaims deployment")
     by_hero = {row["heroId"]: row for row in integration["integrations"]}
     complete_motion_entries = registration["summary"]["newNativeMotionEntriesExposed"] + astralym_full58["measured"]["clipCount"]
     summary = dropdown["summary"]
@@ -63,7 +79,18 @@ def render() -> str:
         "| 帕魯三名 |": (
             "| 帕魯三名 | 3/3 Hero Forge 六技能槽套件通過，3/3 本機下拉可選；"
             f"空渦龍、枯星龍與搗蛋貓共 {complete_motion_entries} 條原生動作條目的完整庫非預設選項 | "
-            "原作技能 VFX、技能 SFX、叫聲與動作語意核准皆未完成；正式站 0/3 |"
+            f"owner 核准 36/36；{runtime['approvedCryRuntimeBindings']} 個叫聲來源綁定、"
+            f"{runtime['approvedGenericMotionBindingsReachable']} 個通用動作綁定與 "
+            f"{runtime['approvedPerSkillMotionOverlaysRuntimeBound']} 個技能動作 overlay 已進 runtime；"
+            "原作獨立技能 VFX／技能專屬 SFX 仍為 0；正式站 0/3 |"
+        ),
+        "本批審查佇列有 18 個叫聲候選、18 個動作語意候選，": (
+            f"本批審查佇列有 18 個叫聲候選、18 個動作語意候選，owner 核准 "
+            f"{runtime['ownerApprovedCandidates']}/{runtime['ownerApprovedCandidates']}。"
+            f"已產生 {runtime['approvedCryRuntimeBindings']} 個叫聲來源綁定（展開為 {runtime_routes} 條 runtime category route），"
+            f"{runtime['approvedGenericMotionBindingsReachable']} 個通用動作語意可由 `model@1.clipMap` 到達，"
+            f"{runtime['approvedPerSkillMotionOverlaysRuntimeBound']} 個逐技能動作 overlay 已由 manifest 產生器綁定。"
+            "原作獨立技能 VFX 0、技能專用 SFX 0；不可把技能設定中的程序化演出寫成已取得的原作特效。"
         ),
         "| 空渦龍 | PASSIVE/Q/W/E/R/EX": (
             f"| 空渦龍 | PASSIVE/Q/W/E/R/EX 六槽編譯與來源套件驗證通過 | "
@@ -77,7 +104,14 @@ def render() -> str:
         ),
         "| 帕魯完整動作庫候選 |": (
             f"| 帕魯完整動作庫候選 | 空渦龍 29＋枯星龍 58＋搗蛋貓 33，共 {complete_motion_entries} 條 | "
-            "原生（枯星龍其中 1 條為固定姿勢） | 已註冊非預設模型選項；技能事件綁定待審查 |"
+            f"原生（枯星龍其中 1 條為固定姿勢） | 已註冊非預設模型選項；"
+            f"{runtime['approvedGenericMotionBindingsReachable']} 個通用語意與 "
+            f"{runtime['approvedPerSkillMotionOverlaysRuntimeBound']} 個逐技能 overlay 已本機 runtime 綁定 |"
+        ),
+        "| 帕魯三名審查佇列 |": (
+            f"| 帕魯三名審查佇列 | 18 個語意候選 | 原生動作候選 | owner 核准 18/18；"
+            f"{runtime['approvedGenericMotionBindingsReachable']} 個通用綁定可到達＋"
+            f"{runtime['approvedPerSkillMotionOverlaysRuntimeBound']} 個技能 overlay 已綁定 |"
         ),
         "| 搗蛋貓 | PASSIVE/Q/W/E/R/EX": (
             f"| 搗蛋貓 | PASSIVE/Q/W/E/R/EX 六槽編譯與來源套件驗證通過 | "
@@ -124,16 +158,36 @@ def render() -> str:
             "功能分支已註冊；本機 bundle、後台 route 與英靈殿資料入口可解析 | "
             f"正式舊 GLB HTTP {production_http}；分支新 GLB HTTP {branch_http}；未部署／畫面未驗證 |"
         )
-    found = {key: False for key in replacements}
+    # This source workflow owns only the Palworld rows. Other workflows also
+    # write this rolling report, so refreshing Palworld must not rewrite their
+    # Valhalla, historical-model, or LOL sections from a potentially older
+    # snapshot loaded above.
+    required = {
+        "| 帕魯三名 |",
+        "本批審查佇列有 18 個叫聲候選、18 個動作語意候選，",
+        "| 空渦龍 | PASSIVE/Q/W/E/R/EX",
+        "| 枯星龍 | PASSIVE/Q/W/E/R/EX",
+        "| 搗蛋貓 | PASSIVE/Q/W/E/R/EX",
+        "| 帕魯完整動作庫候選 |",
+        "| 帕魯三名審查佇列 |",
+    }
+    active_replacements = {key: replacements[key] for key in required}
+    found = {key: False for key in active_replacements}
     output = []
     for line in lines:
-        hit = next((key for key in replacements if line.startswith(key)), None)
+        hit = next((key for key in active_replacements if line.startswith(key)), None)
         if hit:
-            output.append(replacements[hit]); found[hit] = True
+            output.append(active_replacements[hit]); found[hit] = True
         else:
             output.append(line)
-    if not all(found.values()):
-        raise ValueError("Four-day report markers changed: " + repr([key for key, value in found.items() if not value]))
+    # The rolling report is assembled by several source workflows. Older
+    # Valhalla prose can be removed by its newer generator, so only require the
+    # Palworld rows owned by this workflow. Optional legacy rows are refreshed
+    # when they still exist without making an unrelated removal fail the
+    # Palworld gate.
+    missing = sorted(key for key in required if not found[key])
+    if missing:
+        raise ValueError("Palworld report markers changed: " + repr(missing))
     evidence = "- 帕魯完整動作選項：`materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/registration.json`"
     if evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- 帕魯影音審查：")) + 1
@@ -154,6 +208,10 @@ def render() -> str:
     if valhalla_evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("## 九、主要證據入口")) + 2
         output.insert(position, valhalla_evidence)
+    runtime_evidence = "- 帕魯 owner 核准 runtime 綁定：`materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json`"
+    if runtime_evidence not in output:
+        position = next(index for index, line in enumerate(output) if line.startswith("- 帕魯完整動作選項：")) + 1
+        output.insert(position, runtime_evidence)
     return "\n".join(output) + "\n"
 
 
