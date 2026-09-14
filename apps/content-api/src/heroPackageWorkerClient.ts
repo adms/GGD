@@ -42,7 +42,12 @@ export class HeroWorkerUnavailable extends Error { readonly statusCode = 503; }
  */
 export const HERO_WORKER_BUDGET = Object.freeze({ setupMs: 60_000, compileMs: 20_000 });
 
-/** worker 交出結果之後，把 ZIP／結構化錯誤寫回 socket 的餘裕。 */
+/**
+ * worker 交出結果之後，把 ZIP／結構化錯誤寫回 socket 的餘裕。
+ * 出處：2ac612f97（「英雄 worker 的 20 秒只算『送來的包』那一段」）推導 `setupMs` 時用的 10 秒回應餘裕。
+ * ⚠️ 2026-09-15 更正 f64f3c2ea 的 commit 訊息：那裡兩處寫成 `c3e0326ff` —— 那是 lane/red-contentapi 上**同標題**的 commit，
+ *   ⛔ 不是本分支的祖先（`git merge-base --is-ancestor c3e0326ff 6cfbc4104` 回 1）；本分支上對應的是 2ac612f97。
+ */
 export const HERO_IMPORT_RESPONSE_MARGIN_MS = 10_000;
 
 /**
