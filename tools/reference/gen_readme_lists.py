@@ -1242,6 +1242,29 @@ def gen_tiers(ctx):
     num, den = wc3_per_unit()
     env = (load_config("combat-env").get("multipliers") or {})
     cdrules = load_config("cooldown-rules")
+    # ⭐ 錨點血量「固定值 or 名單中位」看 `balance-anchors.json` 的 `enabled` —— ⛔ 不寫死成「固定值」
+    #   （2026-09-15 #1260 審查：上一版寫死，⛔ 沒顧到 `enabled:false` 會退回取中位）。
+    #   讀不到檔時照 `tools/balance-anchors/gen.ts` 的 `shippedAnchors()` 一樣退回中位（明說，⛔ 不是 sys.exit）。
+    anchors_path = os.path.join(G.CONTENT, "config", "balance-anchors.json")
+    anchors_fixed = False
+    if os.path.exists(anchors_path):
+        with open(anchors_path, encoding="utf-8") as f:
+            anchors_fixed = json.load(f).get("enabled") is not False
+    if anchors_fixed:
+        anchor_src = (
+            "錨點血量是 `content/config/balance-anchors.json` 的**固定值**"
+            "（owner 2026-09-12「以後固定數值 别再取中位數了」），⛔ 不再取名單中位"
+            "（⚠️ 那一份的 `enabled` 翻成 `false` ＝ 一鍵退回取中位）。")
+        pop_role = (
+            f"⚠️ 錨點是固定值時，這 {pop} 位**⛔ 不進**級距推導 —— `anchors:build` 仍量名單中位，"
+            "只用來印「固定值 vs 今天的名單中位」的偏差（⛔ 不改值）。")
+    else:
+        anchor_src = (
+            "⚠️ `content/config/balance-anchors.json` 目前**沒有生效**（`enabled:false` 或檔案不在）"
+            f" ⇒ 錨點血量退回取這 {pop} 位的**純基礎中位**（刻度會隨上架名單漂）。")
+        pop_role = (
+            f"⚠️ 錨點目前取名單中位 ⇒ 這 {pop} 位**直接決定**級距刻度"
+            "（owner 2026-09-12「以後固定數值 别再取中位數了」—— 翻回 `enabled:true` 就回到固定值）。")
 
     L = [
         f"#### ⭐ 技能五級距（{len(tables)} 張表 · {rows} 條梯子 · 母體 **{pop} 位對戰可選英雄**）",
@@ -1377,9 +1400,8 @@ def gen_tiers(ctx):
         "不在格點上的走 `tierSnap` 靠攏 |",
         "| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：（純基礎血量錨點 ＋ 初始加成）"
         "÷ owner 的「20 發要能殺死」→ 進位 = 極小。⛔ 推導鏈裡**沒有** HP 系統倍率"
-        "（owner 2026-08-22「不能把系統倍率乘進去再反推」）；錨點血量是 "
-        "`content/config/balance-anchors.json` 的**固定值**（owner 2026-09-12「以後固定數值 别再取中位數了」），"
-        "⛔ 不再取名單中位。其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** "
+        "（owner 2026-08-22「不能把系統倍率乘進去再反推」）；" + anchor_src
+        + "其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** "
         "`flat`/`perRank`（⛔ 不是相加） |",
     ]
     L.append("")
@@ -1388,6 +1410,8 @@ def gen_tiers(ctx):
         "那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。"
         "定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`："
         "對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。",
+        "",
+        pop_role,
         "",
         f"逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、"
         f"以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 "
