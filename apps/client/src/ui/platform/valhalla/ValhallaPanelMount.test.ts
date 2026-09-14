@@ -27,6 +27,8 @@
  * ---------------------------------------------------------------------------
  *   · `StorePreviewCanvas` → 一個 stub div。它是 Babylon/WebGL，jsdom 裡開不起來，
  *     而且這個檔案要驗的不是 3D（那一層由 #129 的守衛與瀏覽器截圖負責）。
+ *     ⭐ GH#1250：stub 可以（非同步地，跟真的畫布一樣）回報「舞台真的載入的那份模型文件」，
+ *     用來驗 🎭 替身徽章有沒有接上 `onModelDoc`。
  *   · `audio/championVoice` → 一個 spy。真的播聲音會違反 #62（背景 agent 不准
  *     在使用者機器上出聲），而 spy 正好是「宣言帶的是哪一隻的 id」的量尺。
  *
@@ -42,7 +44,8 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createElement, act } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { HttpContentSource } from "@ggd/shared/content";
+import { HttpContentSource, Models } from "@ggd/shared/content";
+import { readShippedModelDocs } from "@ggd/shared/testkit/shippedModelDocs";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { registerChampion, type AbilityDef, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId, ItemId } from "@ggd/shared/ids";
@@ -51,11 +54,29 @@ import type { AbilityId, ChampionId, ItemId } from "@ggd/shared/ids";
 (globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
 // ── 被換掉的那兩樣 ──────────────────────────────────────────────────────────
+/** GH#1250：stub 要回報的「已載入模型文件」；null ＝ 不回報（舞台停在 loading，與改動前一樣）。 */
+let stubLoadedDoc: { glbPath: string } | null = null;
 vi.mock("../StorePreviewCanvas", async () => {
   const react = await import("react");
   return {
-    StorePreviewCanvas: (p: { modelKey: string | null }) =>
-      react.createElement("div", { "data-ggd-stub-preview": p.modelKey ?? "none" }),
+    StorePreviewCanvas: (p: {
+      modelKey: string | null;
+      onStatus?: (s: "ready") => void;
+      onModelDoc?: (doc: { glbPath: string }) => void;
+    }) => {
+      const { onStatus, onModelDoc } = p;
+      react.useEffect(() => {
+        const doc = stubLoadedDoc;
+        if (doc === null) return;
+        // 非同步 —— 真的畫布是 fetch 之後才回報；同步回報會被父層「換人就重設」的 effect 蓋掉
+        const t = setTimeout(() => {
+          onModelDoc?.(doc);
+          onStatus?.("ready");
+        }, 0);
+        return () => clearTimeout(t);
+      }, [p.modelKey, onStatus, onModelDoc]);
+      return react.createElement("div", { "data-ggd-stub-preview": p.modelKey ?? "none" });
+    },
   };
 });
 
@@ -65,6 +86,7 @@ vi.mock("../../../audio/championVoice", () => ({
 }));
 
 const { ValhallaPanel } = await import("../ValhallaPanel");
+const { ChampionProfile } = await import("../../panels/champselect/ProfileBlock");
 const { ensureContentLoaded, __resetContentBoot } = await import("../../../content/bootContent");
 const { __resetWhitelistCache } = await import("../../panels/whitelist");
 const { __resetLobbyCombatEnv } = await import("../lobbyCombatEnv");
@@ -77,7 +99,8 @@ const ID_B = "test-valhalla-panel-b" as ChampionId;
 function nuke(owner: string): AbilityDef {
   return {
     id: `test.valhallaPanel.${owner}.q` as AbilityId,
-    name: "試放用單體技",
+    // GH#1258：帶 `NN-0X` 編號 —— 卡片的技能列要印去編號的名字（下面的 DOM 守衛讀它）
+    name: "90-01 試放用單體技",
     slot: "Q",
     castType: "targeted",
     maxRank: 4,
@@ -130,6 +153,8 @@ function champ(id: ChampionId, owner: string): ChampionDef {
     },
     growth: {},
     skillOrder: ["Q", "W", "E", "R"],
+    // GH#1258：舊式天生技區塊（帶編號）⇒ 技能列第一格要印「天生」而不是字面 PASSIVE
+    passive: { name: "90-00 試放天生" },
     buildPriority: [] as ItemId[],
     abilities: {
       Q: nuke(owner),
@@ -154,11 +179,15 @@ beforeAll(async () => {
     source: new HttpContentSource({ baseUrl: "/content", fetchFn: notFound }),
   });
   Champions.clear();
+  // GH#1250：兩位測試英雄穿 `champ.thorne` —— 出貨的那份模型文件（通用身體包）灌進 registry，
+  //   徽章在「舞台還沒回報」時的退路才有真的資料可讀。
+  Models.register(readShippedModelDocs().get("champ.thorne")!);
   registerChampion(champ(ID_A, "a"), { overrideAbilities: true });
   registerChampion(champ(ID_B, "b"), { overrideAbilities: true });
 });
 
 beforeEach(() => {
+  stubLoadedDoc = null;
   voiceSpy.mockReset();
   voiceSpy.mockResolvedValue(true);
   __resetWhitelistCache();
@@ -317,5 +346,63 @@ describe("GH#256 英靈殿展示的時候發出該角色自己的語音宣言", 
     await settle();
     click("[data-ggd-valhalla-next]");
     expect(voiceSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe("GH#1258 / GH#1250 卡片上印的字與徽章真的接到畫面（DOM 級，⛔ 不是只驗純函式）", () => {
+  // 審查 2026-09-15：四個接線點（出身行 render 條件、技能列印 chip.key、兩處 onModelDoc）改壞，
+  // 純函式閘 45/45 全綠。這一組讀的是**畫出來的 DOM**。
+  const OVERLAY = { glbPath: "assets/blizzard-local/H000.glb" };
+  const STOCK = { glbPath: "assets/models/champions/blocky-knight.glb" };
+
+  it("★ 出身行在沒填 playstyle／pitch 的英雄上照樣畫", async () => {
+    render();
+    await settle();
+    const pitch = host.querySelector("[data-ggd-valhalla-pitch]");
+    // ⛔ 把 render 條件改回「playstyle 或 pitch 有值才畫」⇒ 這一行紅（夾具兩者都沒填，下一行是前提）
+    expect(pitch, "出身行沒有畫出來").not.toBeNull();
+    expect(pitch!.children.length, "夾具前提：playstyle／pitch 都沒填").toBe(1);
+    expect(pitch!.textContent!.trim()).not.toBe("");
+  });
+
+  it("★ 技能列印「天生」與去編號的名字", async () => {
+    render();
+    await settle();
+    const chips = [...host.querySelectorAll("[data-ggd-valhalla-skill]")].map((el) => [
+      el.querySelector("b")?.textContent,
+      el.querySelector("span")?.textContent,
+    ]);
+    // ⛔ 技能列改印 chip.key（`PASSIVE-90-00 …`）或 rawName ⇒ 這一行紅
+    expect(chips).toEqual([["天生", "試放天生"], ["Q", "試放用單體技"], ["W", "W"], ["E", "E"], ["R", "R"]]);
+  });
+
+  it("★ 英靈殿徽章看舞台回報的那份模型文件：通用身體 ⇒ 亮；overlay 換成原作 ⇒ 熄", async () => {
+    stubLoadedDoc = STOCK;
+    render();
+    await settle();
+    await pump(20);
+    expect(host.querySelector("[data-ggd-valhalla-standin]"), "量尺自證：徽章亮得起來").not.toBeNull();
+    act(() => root.unmount());
+    root = createRoot(host);
+    stubLoadedDoc = OVERLAY;
+    render();
+    await settle();
+    await pump(20);
+    // ⛔ 拿掉 ValhallaStage 的 onModelDoc ⇒ 退回出貨 modelKey（通用身體）⇒ 徽章照亮 ⇒ 這一行紅
+    expect(host.querySelector("[data-ggd-valhalla-standin]")).toBeNull();
+  });
+
+  it("★ 選人畫面徽章同一條：overlay 換成原作 ⇒ 熄；通用身體 ⇒ 亮", async () => {
+    stubLoadedDoc = OVERLAY;
+    act(() => root.render(createElement(ChampionProfile, { championId: ID_A })));
+    await pump(20);
+    // ⛔ 拿掉 ProfileStageModel 的 onModelDoc ⇒ 這一行紅
+    expect(host.querySelector("[data-ggd-profile-standin]")).toBeNull();
+    act(() => root.unmount());
+    root = createRoot(host);
+    stubLoadedDoc = STOCK;
+    act(() => root.render(createElement(ChampionProfile, { championId: ID_A })));
+    await pump(20);
+    expect(host.querySelector("[data-ggd-profile-standin]"), "量尺自證：徽章亮得起來").not.toBeNull();
   });
 });

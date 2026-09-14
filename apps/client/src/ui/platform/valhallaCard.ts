@@ -1,10 +1,14 @@
 /**
  * valhallaCard —— 英靈殿卡片上**要印的字**，抽成純函式（GH#1258）。
  *
- * ⭐ 為什麼抽出來：卡片的完整版只在 `advance()`（一個 useEffect）跑過之後才畫得出來，
- * `renderToStaticMarkup` 只拿得到骨架 ⇒ 閘要驗「英靈殿名單上每一位印出來的字」就得跑
- * **出貨的**這幾支，⛔ 不是在測試裡再抄一份判斷（失敗形態⑤／⑥）。
+ * ⭐ 為什麼抽出來：閘要對**出貨名單上每一位**（上百位、讀磁碟內容）驗「印出來的字」，
+ * 逐位掛一次完整卡片太貴 ⇒ 名單閘跑**出貨的**這幾支純函式，⛔ 不是在測試裡再抄一份判斷（失敗形態⑤／⑥）。
  * `ValhallaPanel.tsx` 與 `valhallaShippedRoster.test.ts` 讀的是同一份。
+ *
+ * ⚠️ 2026-09-15 更正（GH#1258 審查）：這裡以前寫「`renderToStaticMarkup` 只拿得到骨架，所以只能抽純函式」——
+ * ⛔ 理由不成立：`valhalla/ValhallaPanelMount.test.ts` 早就用 jsdom `createRoot` 掛出完整卡片。
+ * 而**只**驗純函式正是那個洞：出身行的 render 條件、技能列印哪一格、徽章的 `onModelDoc` 接線
+ * 四處改壞，純函式閘全綠。⇒ 接線那一半由 `ValhallaPanelMount.test.ts` 讀真的 DOM 釘住。
  *
  * ── 三個被修掉的病（2026-09-14 英靈殿稽核，GH#1258）──────────────────────
  *  ① 出身／距離行被 tooltip 的 `empty` 判準連帶藏掉 —— `empty` 問的是「內容那兩行都沒填」，
