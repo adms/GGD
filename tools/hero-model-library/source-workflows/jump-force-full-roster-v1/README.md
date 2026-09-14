@@ -87,6 +87,18 @@ Git evidence 為 `materials/hero-model-library/source-inventories/jump-force-ful
 
 此遊戲的 PAK index 加密。腳本不搜尋、推導、保存或輸出金鑰；只接受使用者有權使用且明確放入 `UNREAL_PAK_AES_KEY` 的 32-byte hexadecimal key，並只比對既有 authority 的 key SHA-256。缺 key、key identity 不符、PAK SHA 不符或 repak 拒絕時，該批停止。
 
+正式解密前，可先產生只讀就緒收據。它重新驗證六顆 authority PAK、batch 的 patch-winner 關係與 `repak`，但**不讀加密 member、不建立 raw 檔、不搜尋或保留金鑰**。收據只會記錄 `not-supplied`、`supplied-but-authority-mismatch` 或 `supplied-and-authority-verified`，方便區分來源問題與權限前提：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py \
+  --repak /absolute/path/to/repak \
+  --batch 1 \
+  --preflight \
+  --receipt materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/batch-01-readiness.json
+```
+
+`blocked-awaiting-owner-or-runtime-key-injection` 不代表已抽取、已轉換或可切換。唯一下一步是由擁有者或受控 runtime 對**該次程序**注入已授權 key，然後移除 `--preflight` 重跑原命令；不可改由工作流嘗試取回或推導 key。
+
 ```bash
 UNREAL_PAK_AES_KEY='<authorized-key>' \
 python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py \

@@ -60,6 +60,13 @@ def block(plan: dict) -> str:
         "| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |",
         "|---|---:|---:|---:|---|",
     ]
+    readiness = plan.get("batchOneReadiness")
+    if readiness is not None:
+        table_start = lines.index("| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |")
+        lines[table_start:table_start] = [
+            f"第一批（Goku、Vegeta、Trunks、Frieza、Piccolo、Cell、Luffy）已重跑**六顆 PAK live SHA**與 **{readiness['plannedMemberRelations']:,} 筆** patch-winner member 前置檢查；收據 `{readiness['gitPath']}`。AES key 狀態為 `{readiness['keyState']}`，因此 extraction 是 `{readiness['extraction']}`。這是只讀就緒證據，**不是**已抽取／已轉換／已註冊／可切換。",
+            "",
+        ]
     for key in PRIMARY_CLASSES:
         row = summary["assetClasses"][key]
         lines.append(

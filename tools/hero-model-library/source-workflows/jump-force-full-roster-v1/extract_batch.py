@@ -268,6 +268,89 @@ def extract(
     }
 
 
+def preflight(
+    repak: Path,
+    authority: dict,
+    paks: dict[str, Path],
+    rows: list[dict],
+    output_root: Path,
+    aes_key_env: str,
+) -> dict:
+    """Record extraction readiness without reading encrypted package members.
+
+    This deliberately does not search for, derive, print, or persist an AES
+    value.  It only says whether the owner/runtime injected a value that passes
+    the pinned key-identity check, after the six source PAKs and selected
+    patch-winner relations have already been verified.
+    """
+    unique_members = {(str(row["container"]), safe_member_path(row["path"])) for row in rows}
+    planned_containers = sorted({container for container, _ in unique_members})
+    missing_containers = sorted(set(planned_containers) - set(paks))
+    if missing_containers:
+        raise ValueError(f"planned members reference unavailable authority PAKs: {', '.join(missing_containers)}")
+
+    key_state = "not-supplied"
+    if os.environ.get(aes_key_env):
+        try:
+            validate_key(authority, aes_key_env)
+        except ValueError:
+            key_state = "supplied-but-authority-mismatch"
+        else:
+            key_state = "supplied-and-authority-verified"
+
+    existing_output_members = sum(
+        (output_root / "raw" / container / member).is_file()
+        for container, member in unique_members
+    )
+    extraction_state = (
+        "ready-for-authorized-extraction"
+        if key_state == "supplied-and-authority-verified"
+        else "blocked-awaiting-owner-or-runtime-key-injection"
+    )
+    return {
+        "schema": "ggd.jumpforce-full-roster-extraction-readiness@1",
+        "sourceId": SOURCE_ID,
+        "filters": {
+            "batches": sorted({row["batch"] for row in rows}),
+            "nativeCharacterIds": sorted({row["nativeCharacterId"] for row in rows}),
+            "characterNames": sorted({row["characterName"] for row in rows}),
+        },
+        "source": {
+            "authorityPakCount": len(paks),
+            "authorityPakSha256LiveVerified": True,
+            "plannedContainerCount": len(planned_containers),
+            "plannedMemberRelations": len(rows),
+            "uniqueContainerMembers": len(unique_members),
+            "existingOutputMembersNotCountedAsNewExtraction": existing_output_members,
+        },
+        "tool": {
+            "repakAbsolutePath": str(repak),
+            "repakBytes": repak.stat().st_size,
+            "repakSha256": sha256(repak),
+        },
+        "authorization": {
+            "requiredEnvironmentVariable": aes_key_env,
+            "keyState": key_state,
+            "keyValueStored": False,
+            "keyValuePrinted": False,
+            "keyDiscoveryAttempted": False,
+            "keyDerivationAttempted": False,
+            "nextAuthorizedAction": "owner/runtime injects the already-authorized key only; rerun extract_batch.py without --preflight",
+        },
+        "stages": {
+            "pakMirror": "verified-local-6-of-6-authority-paks",
+            "selectedPathRelations": "verified-patch-winner-plan",
+            "extraction": extraction_state,
+            "dependencyClosure": "not-started",
+            "conversion": "not-started",
+            "validation": "not-started",
+            "registration": "not-started",
+            "runtimeSelectable": False,
+            "productionDeployed": False,
+        },
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repak", type=Path, required=True)
@@ -279,6 +362,11 @@ def main() -> int:
     group.add_argument("--native-id", action="append", default=[])
     parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument("--receipt", type=Path, required=True)
+    parser.add_argument(
+        "--preflight",
+        action="store_true",
+        help="write a source/key-injection readiness receipt without decrypting or extracting members",
+    )
     parser.add_argument("--aes-key-env", default="UNREAL_PAK_AES_KEY")
     parser.add_argument(
         "--max-command-bytes",
@@ -294,6 +382,11 @@ def main() -> int:
     manifest = load_json(args.mirror_manifest.resolve())
     paks = verify_mirror(manifest, authority)
     rows = selected_rows(args.plan_paths.resolve(), args.batch, set(args.native_id))
+    if args.preflight:
+        receipt = preflight(repak, authority, paks, rows, args.output_root.resolve(), args.aes_key_env)
+        write_json(args.receipt.resolve(), receipt)
+        print(f"JUMP FORCE extraction readiness: {receipt['stages']['extraction']}")
+        return 0
     key = validate_key(authority, args.aes_key_env)
     receipt = extract(repak, key, paks, rows, args.output_root.resolve(), args.max_command_bytes)
     write_json(args.receipt.resolve(), receipt)

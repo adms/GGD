@@ -168,6 +168,32 @@ class ExtractBatchTest(unittest.TestCase):
             )
         self.assertFalse(self.log.exists())
 
+    def test_preflight_records_missing_key_without_extracting_or_retaining_a_key(self):
+        output = self.root / "preflight-output"
+        rows = [
+            row("pak0.pak", "Character/chr0430/body.uasset"),
+            row("pak1.pak", "Character/chr0430/face.uasset"),
+        ]
+
+        receipt = extract_batch.preflight(
+            self.repak,
+            self.authority,
+            self.verified,
+            rows,
+            output,
+            "MISSING_OWNER_INJECTED_KEY",
+        )
+
+        self.assertEqual(receipt["source"]["authorityPakCount"], 6)
+        self.assertEqual(receipt["source"]["uniqueContainerMembers"], 2)
+        self.assertEqual(receipt["authorization"]["keyState"], "not-supplied")
+        self.assertEqual(
+            receipt["stages"]["extraction"],
+            "blocked-awaiting-owner-or-runtime-key-injection",
+        )
+        self.assertFalse((output / "raw").exists())
+        self.assertNotIn(self.key, json.dumps(receipt))
+
 
 if __name__ == "__main__":
     unittest.main()

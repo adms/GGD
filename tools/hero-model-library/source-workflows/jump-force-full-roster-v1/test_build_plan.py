@@ -108,6 +108,13 @@ class BuildPlanTest(unittest.TestCase):
         self.assertEqual(plan["summary"]["backendOptionsAdded"], 0)
         self.assertEqual(plan["summary"]["productionDeployments"], 0)
 
+    def test_repository_plan_tracks_batch_one_key_injection_blocker_without_claiming_extraction(self):
+        readiness = build_plan.load_readiness(HERE.parents[3] / build_plan.READINESS_GIT_PATH)
+        self.assertIsNotNone(readiness)
+        self.assertEqual(readiness["authorization"]["keyState"], "not-supplied")
+        self.assertEqual(readiness["stages"]["extraction"], "blocked-awaiting-owner-or-runtime-key-injection")
+        self.assertEqual(readiness["source"]["plannedMemberRelations"], 14031)
+
 
 if __name__ == "__main__":
     unittest.main()

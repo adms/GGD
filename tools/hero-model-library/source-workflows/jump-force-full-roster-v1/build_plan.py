@@ -26,6 +26,7 @@ from record_local_mirror import validate_evidence
 
 PLAN_GIT_ROOT = "materials/hero-model-library/source-inventories/jump-force-full-roster-v1"
 MIRROR_EVIDENCE_NAME = "local-mirror-evidence.json"
+READINESS_GIT_PATH = "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/batch-01-readiness.json"
 
 
 def read_selected_relations(path: Path) -> list[dict]:
@@ -40,6 +41,24 @@ def read_selected_relations(path: Path) -> list[dict]:
     return rows
 
 
+def load_readiness(path: Path) -> dict | None:
+    """Return the optional batch-1 proof without turning blocked into extracted."""
+    if not path.is_file():
+        return None
+    readiness = load_json(path)
+    if (
+        readiness.get("schema") != "ggd.jumpforce-full-roster-extraction-readiness@1"
+        or readiness.get("sourceId") != SOURCE_ID
+        or readiness.get("filters", {}).get("batches") != [1]
+        or readiness.get("source", {}).get("authorityPakCount") != 6
+        or readiness.get("source", {}).get("authorityPakSha256LiveVerified") is not True
+        or readiness.get("stages", {}).get("runtimeSelectable") is not False
+        or readiness.get("stages", {}).get("productionDeployed") is not False
+    ):
+        raise ValueError("batch-1 readiness receipt is invalid or overclaims readiness")
+    return readiness
+
+
 def build(
     identity_path: Path,
     authority_path: Path,
@@ -47,6 +66,7 @@ def build(
     batch_size: int,
     repo: Path | None = None,
     mirror_evidence_path: Path | None = None,
+    readiness_evidence_path: Path | None = None,
 ) -> tuple[dict, list[dict]]:
     repo = (repo or Path(__file__).resolve().parents[4]).resolve()
 
@@ -65,6 +85,8 @@ def build(
     mirror_evidence = load_json(mirror_evidence_path) if mirror_evidence_path.is_file() else None
     if mirror_evidence is not None:
         validate_evidence(mirror_evidence, authority)
+    readiness_evidence_path = readiness_evidence_path or (repo / READINESS_GIT_PATH)
+    readiness = load_readiness(readiness_evidence_path)
     if identity.get("inputs", {}).get("pakPathIndex", {}).get("sha256") != sha256(path_index):
         raise ValueError("full path index differs from identity-map authority")
     if identity.get("inputs", {}).get("pakAuthority", {}).get("sha256") != sha256(authority_path):
@@ -257,6 +279,18 @@ def build(
             "authenticationBypassImplemented": False,
             "runnerRequiresAuthorizedKeyEnvironment": "UNREAL_PAK_AES_KEY",
         },
+        "batchOneReadiness": (
+            {
+                "gitPath": repo_path(readiness_evidence_path),
+                "sha256": sha256(readiness_evidence_path),
+                "extraction": readiness["stages"]["extraction"],
+                "keyState": readiness["authorization"]["keyState"],
+                "authorityPakSha256LiveVerified": readiness["source"]["authorityPakSha256LiveVerified"],
+                "plannedMemberRelations": readiness["source"]["plannedMemberRelations"],
+            }
+            if readiness is not None
+            else None
+        ),
         "states": {
             "source": "path-indexed-and-container-sha-authority-pinned",
             "mirror": "verified-local-6-of-6-authority-paks" if mirror_evidence else "not-created-by-this-plan",
@@ -319,6 +353,11 @@ def render_markdown(plan: dict, detail_path: Path) -> str:
         "完整命令、AES 權限界線及重跑方式見 `tools/hero-model-library/source-workflows/jump-force-full-roster-v1/README.md`。",
         "",
     ])
+    readiness = plan.get("batchOneReadiness")
+    if readiness is not None:
+        lines[5:5] = [
+            f"- 第一批就緒收據：六顆 authority PAK 已再次 live SHA 驗證，{readiness['plannedMemberRelations']:,} 筆 member 關係待抽；狀態 `{readiness['extraction']}`（key `{readiness['keyState']}`），不可算作已抽取。",
+        ]
     return "\n".join(lines)
 
 
@@ -409,6 +448,7 @@ def build_current_resource_entry(repo: Path, plan_path: Path, detail_path: Path,
         "verifiedPakCount": plan["localMirrorTarget"]["verifiedPakCount"],
         "s3Status": plan["localMirrorTarget"]["s3Status"],
         "lv99ShareRequired": plan["localMirrorTarget"]["lv99ShareRequired"],
+        "batchOneReadiness": plan["batchOneReadiness"],
         "summary": plan["summary"],
         "runtimeSelectable": False,
         "productionDeploymentVerified": False,

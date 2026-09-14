@@ -3,6 +3,7 @@
 這份計畫使用已固定的完整 PAK path index 與 63 個高信度原生角色 ID。六顆 authority-pinned PAK 已完整鏡像並驗證留存在本機素材庫，後續抽取不再需要 LV99 分享。
 
 - 高信度原生 ID：63 個，分 9 批。
+- 第一批就緒收據：六顆 authority PAK 已再次 live SHA 驗證，14,031 筆 member 關係待抽；狀態 `blocked-awaiting-owner-or-runtime-key-injection`（key `not-supplied`），不可算作已抽取。
 - 選定檔案關係：86,238 筆；逐檔計畫在 `selected-paths.jsonl.gz`。
 - 本機留底：3,466 files／23,856,777,652 bytes；PAK authority 6/6，S3 pending。
 - 目前狀態：鏡像已驗證；尚未抽取角色 payload、轉換、建立後台選項或部署。

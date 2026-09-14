@@ -6677,11 +6677,11 @@
     "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
     "status": "63-high-confidence-character-families-path-indexed; local mirror verified 3466 files and 6/6 authority PAKs; extraction/conversion/validation/registration/deployment pending",
     "planGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json",
-    "planSha256": "e21d4c3aabc94e33c0ab7b3c4d081ad87e736d5d257869f1f9a87c6678c46b42",
+    "planSha256": "0cddefb5e9d006e5914a7a5b6b84d78fafa3f168a749678b8926d0706e3a4199",
     "detailIndexGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
     "detailIndexSha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
     "documentGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/README.md",
-    "documentSha256": "240ff9b93b4da81daf1972d15a7e0b03da606790d78038418979dabe9b57d799",
+    "documentSha256": "fc6cc8549d21c70768edc36179ec2f4ad0f0092d3e183c5b96d5fc8344133ff4",
     "localMirrorEvidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
     "localMirrorEvidenceSha256": "b63f440fc5fef7e4355f6dd38ab932cb92f8cbdd1eff0c25a1f29d8add2e5754",
     "localMirrorAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
@@ -6690,6 +6690,14 @@
     "verifiedPakCount": 6,
     "s3Status": "pending",
     "lv99ShareRequired": false,
+    "batchOneReadiness": {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/batch-01-readiness.json",
+      "sha256": "7d03b0aa76a54d5e664e3626874dd9cc8615ce9c0302b595d10ff9fa7d6158f5",
+      "extraction": "blocked-awaiting-owner-or-runtime-key-injection",
+      "keyState": "not-supplied",
+      "authorityPakSha256LiveVerified": true,
+      "plannedMemberRelations": 14031
+    },
     "summary": {
       "characters": 63,
       "highConfidenceIdentities": 63,
@@ -6752,7 +6760,7 @@
     "runtimeSelectable": false,
     "productionDeploymentVerified": false,
     "entryGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/current-resource-entry.json",
-    "entrySha256": "29ccf3a134d7029e0c4ef82071e7954a892c98a55f30387fc6bcc8530f503c60"
+    "entrySha256": "e12850ccf4c4d2add9b55b7a18d7bec6a97a2cd7a3993893398a8dc83416d8bb"
   },
   "ssbuUltimateLocalRoster": {
     "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
