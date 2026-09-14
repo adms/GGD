@@ -558,9 +558,17 @@ def build(git_link_root=ROOT):
     dai_vfx_receipt_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/receipt.json'
     dai_vfx_page_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-components.html'
     dai_vfx_sheet_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-components.png'
+    dai_vfx_review_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json'
+    dai_vfx_unused_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/unused-assets.json'
+    dai_vfx_review_receipt_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/receipt.json'
+    dai_vfx_review_page_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-review-candidates.html'
+    dai_vfx_review_sheet_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-review-candidates.png'
     dai_vfx_candidates=read(dai_vfx_candidates_path)
     dai_vfx_policy=read(dai_vfx_policy_path)
     dai_vfx_receipt=read(dai_vfx_receipt_path)
+    dai_vfx_review=read(dai_vfx_review_path)
+    dai_vfx_unused=read(dai_vfx_unused_path)
+    dai_vfx_review_receipt=read(dai_vfx_review_receipt_path)
     if (dai_vfx_candidates.get('schema')!='ggd.infinity-strash-dai-vfx-component-candidates@1'
         or dai_vfx_candidates.get('summary',{}).get('textureComponents')!=18
         or dai_vfx_candidates.get('summary',{}).get('meshComponentsConverted')!=8
@@ -570,6 +578,24 @@ def build(git_link_root=ROOT):
         or dai_vfx_policy.get('summary',{}).get('meshesHardPass')!=8
         or dai_vfx_receipt.get('allGitCandidateBytesVerified') is not True):
         raise ValueError('Dai VFX support components are absent, stale or overclaim runtime readiness')
+    if (dai_vfx_review.get('schema')!='ggd.infinity-strash-dai-vfx-review-candidates@1'
+        or dai_vfx_review.get('summary',{}).get('reviewCandidatesBuilt')!=6
+        or dai_vfx_review.get('summary',{}).get('fixedPreviewFrames')!=18
+        or dai_vfx_review.get('summary',{}).get('textureComponentsCovered')!=18
+        or dai_vfx_review.get('summary',{}).get('meshComponentsCovered')!=8
+        or dai_vfx_review.get('summary',{}).get('ownerApproved')!=0
+        or dai_vfx_review.get('summary',{}).get('approvedBindings')!=0
+        or dai_vfx_review.get('summary',{}).get('runtimeMutations')!=0
+        or dai_vfx_review.get('approvedBindings')!=[]
+        or dai_vfx_review.get('boundary',{}).get('runtimeMutationAllowed') is not False
+        or any(row.get('ownerDecision')!='pending' for row in dai_vfx_review.get('candidates',[]))
+        or dai_vfx_unused.get('schema')!='ggd.infinity-strash-dai-vfx-unbound-components@1'
+        or dai_vfx_unused.get('summary',{}).get('unboundTextureComponents')!=18
+        or dai_vfx_unused.get('summary',{}).get('unboundMeshComponents')!=8
+        or dai_vfx_unused.get('summary',{}).get('runtimeBindings')!=0
+        or dai_vfx_review_receipt.get('allGeneratedBytesVerified') is not True
+        or dai_vfx_review_receipt.get('runtimeMutationAllowed') is not False):
+        raise ValueError('Dai VFX review candidates are absent, stale or overclaim approval/runtime readiness')
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -855,6 +881,22 @@ def build(git_link_root=ROOT):
             contactSheetSha256=hashlib.sha256(dai_vfx_sheet_path.read_bytes()).hexdigest(),
             summary=dai_vfx_candidates['summary'],
             s3=dai_vfx_candidates['s3'],
+            reviewCandidates=dict(
+                schema=dai_vfx_review['schema'],
+                authorityGitPath=str(dai_vfx_review_path.relative_to(ROOT)),
+                authoritySha256=hashlib.sha256(dai_vfx_review_path.read_bytes()).hexdigest(),
+                unusedAssetsGitPath=str(dai_vfx_unused_path.relative_to(ROOT)),
+                unusedAssetsSha256=hashlib.sha256(dai_vfx_unused_path.read_bytes()).hexdigest(),
+                receiptGitPath=str(dai_vfx_review_receipt_path.relative_to(ROOT)),
+                receiptSha256=hashlib.sha256(dai_vfx_review_receipt_path.read_bytes()).hexdigest(),
+                reviewPageGitPath=str(dai_vfx_review_page_path.relative_to(ROOT)),
+                reviewPageSha256=hashlib.sha256(dai_vfx_review_page_path.read_bytes()).hexdigest(),
+                contactSheetGitPath=str(dai_vfx_review_sheet_path.relative_to(ROOT)),
+                contactSheetSha256=hashlib.sha256(dai_vfx_review_sheet_path.read_bytes()).hexdigest(),
+                summary=dai_vfx_review['summary'],
+                approvedBindings=dai_vfx_review['approvedBindings'],
+                defaultDecision='pending',
+                runtimeMutationAllowed=False),
             runtimeBindingsCreated=0,
             productionDeploymentVerified=False),
         fateAssetInventory=dict(

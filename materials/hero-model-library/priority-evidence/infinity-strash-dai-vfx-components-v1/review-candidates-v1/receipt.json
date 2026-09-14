@@ -1,0 +1,133 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-review-candidate-receipt@1",
+  "manifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json",
+    "bytes": 31977,
+    "sha256": "d21a184709eed47be4b709a58f6ba4de12dc8bfa32a2f52ca08bfd4a7087c5fc"
+  },
+  "unusedAssets": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/unused-assets.json",
+    "bytes": 13647,
+    "sha256": "b7ad291cfac878e483a084a0c546cc361bf5de0a4ead1b61c688fc8671cb4610"
+  },
+  "document": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/README.md",
+    "bytes": 1150,
+    "sha256": "3c00f47bd1791956b572aad870bab9018a0e93c5867d8ff5e30d12da96c554b5"
+  },
+  "reviewPage": {
+    "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-candidates.html",
+    "bytes": 6432,
+    "sha256": "9046e5c0e709aa7c003ac6d0c10fd2d42ca131118f92d7f73c29efb0b65a01a4"
+  },
+  "contactSheet": {
+    "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-candidates.png",
+    "bytes": 394696,
+    "sha256": "e0d16c52ac9d4100d6b6a3410e72bd5cfb4acfe6c4ac47a4820cc2a96bb6213c"
+  },
+  "previewFiles": [
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t00.png",
+      "bytes": 14008,
+      "sha256": "52e71a51b4213fd17e21400e9b85dbad738d8e2ded94460c200e98aaa2e6a5f2"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t05.png",
+      "bytes": 15649,
+      "sha256": "c660fe68d22f0b04a99747d859ea44c2be36a715afddc56b46a7cc59ec7462c3"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t10.png",
+      "bytes": 16381,
+      "sha256": "73a343cc71ac94d663e7d8e3b2441fa340b3506e8510ad87746c7f0107a96c22"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t00.png",
+      "bytes": 6982,
+      "sha256": "00fcd0bd4bf099229c6af102eb816b96df287c467f364133e34aeae7f1a9d0a8"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t05.png",
+      "bytes": 8121,
+      "sha256": "8f499f29bba4c3ba9c42589d02bb405e1bcfb6dba540c6c423e39c6496b679e3"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t10.png",
+      "bytes": 7011,
+      "sha256": "474b4bada6961a98695fe79b8fb6334364e27894ace026d82ec5b79e9cda5a37"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t00.png",
+      "bytes": 6483,
+      "sha256": "1f01e49a66ed3671364dd2742919dabe8fa61ebcb72e70fec60edc54f8bf5cf0"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t05.png",
+      "bytes": 6772,
+      "sha256": "32a276e52ab29d808460d4215446ab851775f4dbb81613b8e58c7d72e1c29038"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t10.png",
+      "bytes": 6793,
+      "sha256": "3998f41581d5b17906c0c665b5a622fe17f3a1030622eb4b3a84f850b532b140"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t00.png",
+      "bytes": 9376,
+      "sha256": "895583b2d2f788198b80fb5a55cd0d958fa571992a58369d6fbae8acfc44673f"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t05.png",
+      "bytes": 9825,
+      "sha256": "990012edb292a2d7b7c5de404403fd28df373d71bf24b396d063c40f9ca7a03a"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t10.png",
+      "bytes": 9515,
+      "sha256": "12682a5152510a8b86eb95481e008740c80ec21ed063aacf20591e9fc47e2864"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t00.png",
+      "bytes": 7061,
+      "sha256": "1cb1913b277d9d481e51ad23a0b7fff63db72d7eb68bb45649a4b8ae6bcb3e58"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t05.png",
+      "bytes": 7498,
+      "sha256": "cf6eb4f62b2c6f25d6dda0b1e695a843204512f5453fc85984f0197766d7b890"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t10.png",
+      "bytes": 7120,
+      "sha256": "0ba7c9c2ac88910fafe169fdfc504da1f62c0babc94606dea8d8fee1d15c004d"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t00.png",
+      "bytes": 8032,
+      "sha256": "1e4aa6962e8d4f9b32b2223ec42336478b3d304acb405cfbe22d9d9480f764f2"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t05.png",
+      "bytes": 9302,
+      "sha256": "50ce55824e58960d9796bf3a0761eb0d1b5d5c780d7142fbc104b22fc318175b"
+    },
+    {
+      "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t10.png",
+      "bytes": 8836,
+      "sha256": "bea33ac15f622c184b79aafed5bb0a9917ce9169c60f1e8e69b57ccd87238736"
+    }
+  ],
+  "summary": {
+    "sourceRoots": 6,
+    "reviewCandidatesBuilt": 6,
+    "fixedPreviewFrames": 18,
+    "textureComponentsCovered": 18,
+    "meshComponentsCovered": 8,
+    "ownerApproved": 0,
+    "approvedBindings": 0,
+    "runtimeMutations": 0,
+    "productionDeployed": 0
+  },
+  "allGeneratedBytesVerified": true,
+  "runtimeMutationAllowed": false
+}

@@ -12,6 +12,17 @@ node --import tsx tools/hero-model-library/source-workflows/infinity-strash-dai-
 python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/test_workflow.py
 ```
 
+已固定的 18 張貼圖與 8 顆 mesh 可再組成六項「作者工具預覽候選」。這一步只建立可重現的視覺審查配方與 t=0.0／0.5／1.0 固定視圖，不寫入 `content/vfx`、不選技能事件，也不建立 runtime 綁定：
+
+```sh
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/build_review_candidates.py
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/build_review_candidates.py --check
+python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/test_review_candidates.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/update_four_day_report.py --write
+```
+
+後續統一審查頁產生器的權威輸入是 `materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json`；本流程本身不修改統一 portal 產生器。所有 `ownerDecision` 維持 `pending`，`approvedBindings` 維持空陣列。
+
 要從已保存的原始 package 重建低體積成品與證據，執行：
 
 ```sh
