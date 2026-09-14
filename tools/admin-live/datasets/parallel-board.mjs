@@ -83,6 +83,12 @@ function fetchOpenIssues(repoRoot) {
   });
 }
 
+/**
+ * 帳本列原話格尾的**身分標記**（GH#1255）—— 定義住 `scripts/ledger_table.py` 的 `_ID_MARK`，
+ * 這裡只為了**不渲染**它（React 會把它當字面文字印出來）。⚠️ 那邊改格式要連這一行一起改。
+ */
+const ID_MARK = /\s*<!-- id:[0-9a-f]{8} -->/g;
+
 /** 一份日期帳本 md → 逐則對票 rows。 */
 function parseDailyFile(repoRoot, file) {
   const year = file.slice(0, 4);
@@ -118,7 +124,7 @@ function parseDailyFile(repoRoot, file) {
     rows.push({
       date,
       time,
-      quote: clamp(quote, QUOTE_MAX),
+      quote: clamp(quote.replace(ID_MARK, ""), QUOTE_MAX),
       tickets,
       note: clamp(ticketCell, NOTE_MAX),
     });

@@ -151,6 +151,51 @@ describe("逐則對票 scripts/message-ledger.sh", () => {
   });
 });
 
+/**
+ * ⭐ GH#1255 —— 一則訊息的**身分**＝transcript uuid（queued_command 取 source_uuid）。
+ * 三種夾具一次跑：① owner 在助手忙碌時打的 `queued_command`（在此之前整類不在分母裡）
+ * ② `task-notification`（⛔ 不是 owner 的話）③ 同一分鐘逐字相同、uuid 不同的兩則（owner 2026-09-12「詳實記錄不會合併」）
+ * ④ 沒有身分的舊列 ⇒ 認領並蓋上身分，⛔ 不多一列。再驗 `--map` 以身分只改一列、以 HH:MM 遇到兩列就拒絕。
+ * 突變（跑過，commit 訊息記）：`owner_message()` 收 queued 的分支改成 `and False` ⇒ ① 紅。
+ */
+describe("GH#1255 帳本以身分成列", () => {
+  it("收 queued_command、排除 task-notification、同分同字不同 uuid 各一列、舊列補身分；--map 以身分只改一列", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ggd-msgledger-id-"));
+    const at = (hm: string) => `${DAY}T${String(Number(hm.slice(0, 2)) - 8).padStart(2, "0")}:${hm.slice(3)}:00.000Z`;
+    const user = (hm: string, uuid: string, content: string) => ({ type: "user", uuid, timestamp: at(hm), message: { role: "user", content } });
+    const queued = (hm: string, uuid: string, prompt: string, commandMode: string, kind?: string) => ({
+      type: "attachment", uuid: "ffffffff-0000", timestamp: at(hm),
+      attachment: { type: "queued_command", prompt, source_uuid: uuid, commandMode, ...(kind ? { origin: { kind } } : {}), timestamp: at(hm) },
+    });
+    const OK = "好 照這個順序做 先 B 再 A 然後回報給我看結果";
+    writeFileSync(join(dir, "s.jsonl"), [
+      queued("10:30", "aaaaaaaa-1111", "我在你忙的時候打的這一句 也要進帳本 不可以漏", "prompt", "human"),
+      queued("10:31", "eeeeeeee-1111", "背景任務完成的通知 這不是 owner 說的話", "task-notification"),
+      user("10:40", "bbbbbbbb-1111", OK), user("10:40", "cccccccc-1111", OK),
+      user("09:00", "dddddddd-1111", "先前那一則"),
+    ].map((r) => JSON.stringify(r)).join("\n") + "\n");
+    writeFileSync(join(dir, `${DAY}.md`), LEDGER.replace(`\n\n${TAIL}\n\n尾巴。\n`, "\n"));
+    const E = { ...process.env, GGD_LEDGER_DIR: dir, GGD_TRANSCRIPT_DIR: dir, GGD_LEDGER_NO_REGEN: "1" };
+    const build = () => spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--date", DAY], { cwd: REPO, encoding: "utf8", env: E });
+    const rows = () => readFileSync(join(dir, `${DAY}.md`), "utf8").split("\n").filter((l) => /^\| \d{1,2}:\d{2} \|/.test(l));
+
+    expect(build().status).toBe(0);
+    const r = rows();
+    expect(r.find((l) => l.includes("id:aaaaaaaa")) ?? "（沒有這一列）", `① 忙碌時打的 queued_command 沒進帳本：\n${r.join("\n")}`).toMatch(/^\| 10:30 \| 我在你忙的時候/);
+    expect(r.some((l) => l.includes("背景任務")), "② task-notification 被當成 owner 的話").toBe(false);
+    expect(r.filter((l) => l.startsWith("| 10:40 |")).map((l) => /id:(\w{8})/.exec(l)?.[1]).sort(), "③ 同分同字不同 uuid 要各一列").toEqual(["bbbbbbbb", "cccccccc"]);
+    expect(r.filter((l) => l.startsWith("| 09:00 |")), "④ 舊列要被認領（蓋上身分、票號不動），⛔ 不多一列").toEqual(["| 09:00 | 先前那一則 <!-- id:dddddddd --> | #111 |"]);
+    expect(readFileSync(join(dir, "ledger-source_temp_20200102.md"), "utf8")).toContain("## 10:30 · aaaaaaaa");
+    expect(build().status).toBe(0);
+    expect(rows(), "再跑一次不可以多列（身分已在）").toHaveLength(r.length);
+
+    const map = (key: string) => spawnSync("python3", [join(REPO, "scripts/ledger_table.py"), "--map", join(dir, `${DAY}.md`), key, "#1255"], { cwd: REPO, encoding: "utf8", env: E });
+    expect(map("10:40").status, "同一分鐘兩列還用 HH:MM ⇒ 要拒絕（在此之前兩列被填成同一段）").not.toBe(0);
+    expect(map("bbbbbbbb").status).toBe(0);
+    expect(rows().filter((l) => l.startsWith("| 10:40 |")).map((l) => l.endsWith("| #1255 |"))).toEqual([true, false]);
+  });
+});
+
 // ⭐ GH#1163 —— build 沒指定 --date 也要補**昨天**（`--check` 硬檢查的正是昨天）。
 //   夾具用真實的「昨天」日期：昨天的帳本少一列、存檔裡有那一則；transcript 目錄空 ⇒ 走存檔那條。
 describe("GH#1163 build 補昨天", () => {

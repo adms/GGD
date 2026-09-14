@@ -29,6 +29,8 @@ import html, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+from ledger_table import strip_id  # noqa: E402 —— ⭐ GH#1255：帳本列的身分標記 `<!-- id:… -->` 只有一個住處，⛔ 不渲染
 OUT = ROOT / "docs/_release/ggd-board.html"
 
 
@@ -83,7 +85,7 @@ INLINE = [
 
 
 def inline(s: str) -> str:
-    s = html.escape(s.strip())
+    s = html.escape(strip_id(s).strip())
     for pat, rep in INLINE:
         s = pat.sub(rep, s)
     return s

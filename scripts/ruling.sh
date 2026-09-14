@@ -40,12 +40,13 @@ TEXT="$(cat)"
 #   ⇒ 建置器補列時逐字對不上 ⇒ 同一則兩列、一列永遠 ⏸ 未對票（`rulingScript.test.ts` 量到）。
 #   ⇒ 找得到那一則 ⇒ 帳本那一格寫 **transcript 的逐字原話**（欄名本來就是「owner 說了什麼（逐字）」）；
 #   票（留言／body）仍然貼 `$TEXT` 全文 —— 我接的註記只該住票裡。
-MSG_DAY=""; MSG_HHMM=""; MSG_TEXT=""
+MSG_DAY=""; MSG_HHMM=""; MSG_TEXT=""; MSG_ID=""
 if [ "${GGD_RULING_MSGTIME_OFF:-0}" != "1" ] && { [ -n "${GGD_TRANSCRIPT_DIR:-}" ] || [ -z "${GGD_LEDGER_DIR:-}" ]; }; then
   FOUND="$(bash scripts/message-ledger.sh --find-time "$TEXT" --with-text 2>/dev/null)" || FOUND=""
   FOUND_HEAD="${FOUND%%$'\n'*}"
-  if [[ "$FOUND_HEAD" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})\ ([0-9]{2}:[0-9]{2})$ ]]; then
-    MSG_DAY="${BASH_REMATCH[1]}"; MSG_HHMM="${BASH_REMATCH[2]}"
+  # ⭐ GH#1255：第一行多一個**身分**（transcript uuid 前 8 碼）⇒ 帳本列帶著它，建置器以身分認列，⛔ 不再靠 HH:MM＋文字猜。
+  if [[ "$FOUND_HEAD" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})\ ([0-9]{2}:[0-9]{2})(\ ([0-9a-f]{8}))?$ ]]; then
+    MSG_DAY="${BASH_REMATCH[1]}"; MSG_HHMM="${BASH_REMATCH[2]}"; MSG_ID="${BASH_REMATCH[4]}"
     [ "$FOUND" != "$FOUND_HEAD" ] && MSG_TEXT="${FOUND#*$'\n'}"
   fi
 fi
@@ -132,7 +133,7 @@ done
 #   ledger_table.py 只認**逐字同一則**（同一分鐘 ＋ 同一段文字）—— 建置器先補過列 ⇒ 這裡只併票號，⛔ 不多一列；
 #   ⛔ 其餘一律新增一列（owner 2026-09-12「詳實記錄不會合併」）。
 printf '%s' "$LEDGER_TEXT" | python3 scripts/ledger_table.py \
-  "$DAY" "$ROW_TIME" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
+  "$DAY" "$ROW_TIME" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')" ${MSG_ID:+--id "$MSG_ID"}
 
 # ③ ⭐ 帳本是 `board:roll` 與 `board:build` 的**輸入** —— 寫入端自己重生成（GH#1026 ①）。
 #

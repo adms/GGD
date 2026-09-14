@@ -20,8 +20,8 @@ owner 2026-08-20：
 ⇒ `ruling.sh`（裁決）與 `message-ledger.sh`（每一則訊息）**共用這一支**，
 ⛔ 不各寫一份會各自腐爛的插入邏輯（第零守則⑨：第二個只差參數就先抽模板）。
 
-    python3 scripts/ledger_table.py <帳本.md> <HH:MM> <票號>   # 逐字原話走 stdin
-    python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> <票號>   # 填某一列的票號
+    python3 scripts/ledger_table.py <帳本.md> <HH:MM> <票號> [--id <身分>]   # 逐字原話走 stdin
+    python3 scripts/ledger_table.py --map <帳本.md> <HH:MM 或 身分> <票號>   # 填某一列的票號
     python3 scripts/ledger_table.py --dedupe <帳本.md>              # 併掉重複列
     python3 scripts/ledger_table.py --regen <帳本.md>               # 只重生成吃帳本的兩支產生器
 
@@ -154,9 +154,42 @@ def _unlock(path: Path) -> None:
         pass  # 唯讀檔案系統／別人的檔 —— 讓下面的 write 用它自己的錯誤說話
 
 
+# ── ⭐ 一則訊息的**身分**（GH#1255）────────────────────────────────────────────
+#
+# ⛔ 在此之前「兩列是不是同一則」有四個住處、各自用 `HH:MM`＋文字**猜**：建置去重鍵
+#   `(day, HH:MM, t[:80])`、`_find_row`、`map_ticket` 的 `c[0] != when`、存檔標題 `## HH:MM`
+#   ⇒ 同一分鐘兩則分不開（`--map` 把兩列填成同一段票欄）、同一分鐘逐字相同的兩則塌成一則。
+# ⭐ 而 transcript 早就給了唯一身分：`"type": "user"` 的 `uuid`、`queued_command` 的 `source_uuid`。
+#   ⇒ 身分＝那個 uuid 的前 8 碼；帳本列把它放在原話格尾**不渲染**的 `<!-- id:… -->`，
+#     全文存檔放在 `## HH:MM · <身分>`。⛔ 帳本與存檔只**引用**它，不另算。
+# ⚠️ 舊列（沒有身分）照舊用「同一分鐘 ＋ 同一段文字」認；建置器認到之後把身分蓋上去。
+ID_LEN = 8
+_ID_MARK = re.compile(r"\s*<!-- id:([0-9a-f]{8}) -->")
+
+
+def short_id(uuid: str | None) -> str | None:
+    """transcript 的 uuid → 帳本用的身分（前 8 碼）；沒有 uuid 回 None。"""
+    s = re.sub(r"[^0-9a-f]", "", (uuid or "").lower())
+    return s[:ID_LEN] if len(s) >= ID_LEN else None
+
+
+def row_id(text: str) -> str | None:
+    m = _ID_MARK.search(text or "")
+    return m.group(1) if m else None
+
+
+def strip_id(text: str) -> str:
+    return _ID_MARK.sub("", text or "")
+
+
+def with_id(text: str, mid: str | None) -> str:
+    """原話格尾掛上身分（已經有就換掉）；沒有身分就原樣。"""
+    return f"{strip_id(text).rstrip()} <!-- id:{mid} -->" if mid else text
+
+
 def _norm(text: str) -> str:
     """同一句話在兩個寫入端手上可能長得不一樣（截斷位置、空白）—— 比對前先正規化。"""
-    return re.sub(r"\s+", "", text).replace(r"\|", "|").rstrip("…")
+    return re.sub(r"\s+", "", strip_id(text)).replace(r"\|", "|").rstrip("…")
 
 
 #: 文字鑰匙的視窗 —— 與 `message-ledger.sh` 判「這則有沒有列」的 `WINDOW`（24）**同一個數字**，
@@ -216,7 +249,13 @@ def _same_entry(a_when: str, a_text: str, b_when: str, b_text: str) -> bool:
     ⭐ 兩個寫入端記同一則時，**鍵要由寫入端自己對齊**，⛔ 不是靠這裡猜：
     `ruling.sh` 在 transcript 找到那一則 ⇒ 列鍵＝**訊息時間**、文字＝**transcript 的逐字原話**
     ⇒ 建置器補列時逐字命中，只併票號。找不到 ⇒ 各留一列（多一列無害，⭐ 少一列是把他的話弄丟）。
+
+    ⭐ GH#1255：兩邊都帶**身分**（`<!-- id:… -->`）⇒ **身分說了算** —— 同一分鐘逐字相同而 uuid 不同
+    （owner 在兩個 session 各貼一次）是兩則；任一邊沒有身分（舊列、`ruling.sh` 找不到訊息）才退回上面的判準。
     """
+    ia, ib = row_id(a_text), row_id(b_text)
+    if ia and ib:
+        return ia == ib
     return a_when == b_when and _same_text(a_text, b_text)
 
 
@@ -302,7 +341,7 @@ def insert(
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
             keep = text if prefer_incoming_text else _pick_text(_raw_cell(ln, 1), text)
-            lines[hit] = _set_cell(ln, 1, keep)
+            lines[hit] = _set_cell(ln, 1, with_id(keep, row_id(text) or row_id(_raw_cell(ln, 1))))
             continue
         at = _table_end(lines)
         assert at is not None  # ensure() 保證有表格
@@ -311,6 +350,22 @@ def insert(
     _unlock(path)
     path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
     return added
+
+
+def stamp_ids(path: Path, adopt: dict[int, str]) -> int:
+    """把身分蓋到**舊列**上（`{行號(1 起): 身分}`，由 `message-ledger.sh` 的認領算出來）。
+
+    ⭐ 只動原話那一格的**格尾**，文字與票號一個位元組都不碰（⛔ 不把手補的節錄換成 transcript 全文）。
+    """
+    if not adopt:
+        return 0
+    lines = path.read_text(encoding="utf-8").split("\n")
+    for n, mid in adopt.items():
+        ln = lines[n - 1]
+        lines[n - 1] = _set_cell(ln, 1, with_id(_raw_cell(ln, 1), mid))
+    _unlock(path)
+    path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+    return len(adopt)
 
 
 def dedupe(path: Path) -> int:
@@ -345,7 +400,8 @@ def dedupe(path: Path) -> int:
             # transcript(它不會忘)」）⇒ ⭐ 多一列無害，⛔ 少一列要靠重建才回得來。
             if _same_entry(kc[0], kc[1], c[0], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
-                lines[k] = _set_cell(merged, 1, _pick_text(_raw_cell(lines[k], 1), _raw_cell(ln, 1)))
+                a, b = _raw_cell(lines[k], 1), _raw_cell(ln, 1)
+                lines[k] = _set_cell(merged, 1, with_id(_pick_text(a, b), row_id(a) or row_id(b)))
                 drop.append(i)
                 break
         else:
@@ -388,7 +444,12 @@ def _pipes(line: str) -> list[int]:
 
 
 def map_ticket(path: Path, when: str, ticket: str) -> int:
-    """把某一列的**票號那一格**填掉。回傳改到的列數（0 ＝ 找不到那個時間戳）。
+    """把某一列的**票號那一格**填掉。回傳改到的列數（0 ＝ 找不到那一列）。
+
+    ⭐ GH#1255：`when` 是 `HH:MM` **或身分**（8 碼）。
+    · 身分 ⇒ 只改帶那個身分的那一列。
+    · `HH:MM` 而那一分鐘有**兩列以上** ⇒ ⛔ 拒絕並列出候選的身分 —— 在此之前它把同一分鐘的
+      **每一列**都填成同一段票欄（帳本裡 09-11 13:44／14:55、09-14 02:44 被迫寫成長句說明）。
 
     ⭐ 為什麼非有這支不可（GH#876）：帳本平時 chmod **444**，而 genguard 也擋
     Write／Edit ⇒ 在此之前 `--check` 印的那句修法指示（「再把每一列的票號填上」）
@@ -403,18 +464,21 @@ def map_ticket(path: Path, when: str, ticket: str) -> int:
             f"⛔ `{ticket}` 填了也還是「未對票」—— 票號那一格只有兩種合法值："
             f"票號（`#877` 或 `877`）或 `— <為什麼不需要開票>`")
     lines = path.read_text(encoding="utf-8").split("\n")
-    hit = 0
-    for i, ln in enumerate(lines):
-        if not ln.startswith("|"):
-            continue
-        c = cells(ln)
-        if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]) or c[0] != when:
-            continue
-        p = _pipes(ln)
-        if len(p) < 2:
-            continue
-        lines[i] = ln[:p[-2] + 1] + f" {cell(ticket)} " + ln[p[-1]:]
-        hit += 1
+    by_id = bool(re.fullmatch(r"[0-9a-f]{%d}" % ID_LEN, when))
+    targets = [
+        i for i, ln in enumerate(lines)
+        if ln.startswith("|") and len(c := cells(ln)) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0])
+        and (row_id(c[1]) == when if by_id else c[0] == when) and len(_pipes(ln)) >= 2
+    ]
+    if not by_id and len(targets) > 1:
+        cands = "\n".join(
+            f"   · {row_id(cells(lines[i])[1]) or '（沒有身分 —— 先跑 `pnpm msgledger:build -- --date <日>` 補上）'}"
+            f"  {strip_id(cells(lines[i])[1])[:50]}…" for i in targets)
+        raise SystemExit(f"⛔ {path} 的 {when} 有 {len(targets)} 列 —— 用**身分**指定是哪一列：\n{cands}")
+    for i in targets:
+        p = _pipes(lines[i])
+        lines[i] = lines[i][:p[-2] + 1] + f" {cell(ticket)} " + lines[i][p[-1]:]
+    hit = len(targets)
     if hit:
         _unlock(path)
         path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
@@ -501,7 +565,7 @@ if __name__ == "__main__":
         sys.exit(0)
     if len(sys.argv) >= 2 and sys.argv[1] == "--map":
         if len(sys.argv) < 5:
-            sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
+            sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM 或 身分> <票號 或 「— 理由」>")
         p, when, tk = Path(sys.argv[2]), sys.argv[3], " ".join(sys.argv[4:])
         n = map_ticket(p, when, tk)
         if not n:
@@ -509,10 +573,16 @@ if __name__ == "__main__":
         print(f"  ✓ {p} {when} → `{tk}`（{n} 列）")
         regenerate_boards(p)
         sys.exit(0)
-    if len(sys.argv) < 4:
-        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號>  # 原話走 stdin\n"
-                 f"      {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
-    day, when, tickets = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
-    body = cell(sys.stdin.read(), limit=int(sys.argv[4]) if len(sys.argv) > 4 else 0)
+    argv = sys.argv[1:]
+    mid = None
+    if "--id" in argv:                       # ⭐ GH#1255：`ruling.sh` 在 transcript 找到那一則時帶身分
+        i = argv.index("--id")
+        mid = short_id(argv[i + 1] if i + 1 < len(argv) else "")
+        del argv[i:i + 2]
+    if len(argv) < 3:
+        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號> [截斷字數] [--id <身分>]  # 原話走 stdin\n"
+                 f"      {sys.argv[0]} --map <帳本.md> <HH:MM 或 身分> <票號 或 「— 理由」>")
+    day, when, tickets = Path(argv[0]), argv[1], argv[2]
+    body = with_id(cell(sys.stdin.read(), limit=int(argv[3]) if len(argv) > 3 else 0), mid)
     insert(day, [(when, body, tickets or UNMAPPED)])
     print(f"  ✓ {day}（插進「逐則對票」表格，⛔ 不是檔尾）")
