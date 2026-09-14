@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "47141e575491",
+  "hash": "11de8537220c",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -359,8 +359,8 @@
     {
       "id": "one-shot-clamp",
       "path": "config/one-shot-clamp.json",
-      "hash": "18be96faf9c3",
-      "size": 1256
+      "hash": "840256a8643e",
+      "size": 1517
     },
     {
       "id": "origin-routes",
@@ -371,8 +371,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "041b5cb4590b",
-      "size": 15437
+      "hash": "02b05e6fd3c1",
+      "size": 14700
     },
     {
       "id": "per-level-bonus",
