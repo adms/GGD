@@ -28,17 +28,22 @@ def sha256(path: Path) -> str:
 
 def media_map(queue_path: Path = QUEUE) -> dict[str, tuple[Path, str]]:
     queue = json.loads(queue_path.read_text(encoding="utf-8"))
-    if queue.get("schema") != "ggd.asset-review-portal@1":
+    schema = queue.get("schema")
+    if schema not in {
+        "ggd.asset-review-portal@1",
+        "ggd.kof-xv-ash-audio-review-portal@1",
+    }:
         raise ValueError("unexpected asset review queue schema")
     if queue["policy"].get("runtimeMutationAllowed") is not False:
         raise ValueError("review queue cannot have runtime authority")
     result = {}
     for row in queue["audioCandidates"]:
         candidate_id = row["candidateId"]
-        path = Path(row["file"]["absolutePath"])
+        file_record = row["reviewMp3"] if schema == "ggd.kof-xv-ash-audio-review-portal@1" else row["file"]
+        path = Path(file_record["absolutePath"])
         if not path.is_absolute() or not path.is_file():
             raise ValueError(f"missing allowlisted media: {path}")
-        if path.stat().st_size != row["file"]["bytes"] or sha256(path) != row["file"]["sha256"]:
+        if path.stat().st_size != file_record["bytes"] or sha256(path) != file_record["sha256"]:
             raise ValueError(f"changed allowlisted media: {path}")
         if candidate_id in result:
             raise ValueError(f"duplicate candidate id: {candidate_id}")
@@ -58,7 +63,10 @@ def media_map(queue_path: Path = QUEUE) -> dict[str, tuple[Path, str]]:
             if not content_type.startswith("image/"):
                 raise ValueError(f"visual preview is not an image: {path}")
             result[media_id] = (path, content_type)
-    expected_count = queue["summary"]["audioCandidateCount"] + queue["summary"].get("visualPreviewFileCount", 0)
+    expected_count = queue["summary"].get("audioCandidateCount", queue["summary"].get("candidateCount"))
+    if expected_count is None:
+        raise ValueError("review queue summary has no audio candidate count")
+    expected_count += queue["summary"].get("visualPreviewFileCount", 0)
     if len(result) != expected_count:
         raise ValueError("allowlist size does not match queue summary")
     return result
@@ -174,9 +182,16 @@ def main() -> int:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8767)
     parser.add_argument("--vite-origin", default="http://127.0.0.1:5173")
+    parser.add_argument(
+        "--queue",
+        type=Path,
+        default=QUEUE,
+        help="generated review queue; only its SHA-pinned media becomes readable",
+    )
     args = parser.parse_args()
-    files = media_map()
-    print(f"Verified {len(files)} media files; review page: {args.vite_origin}/asset-review-portal.html")
+    files = media_map(args.queue)
+    print(f"Verified {len(files)} media files from {args.queue}")
+    print("Open the review HTML documented by that queue's source workflow.")
     print(f"Media server: http://{args.host}:{args.port}/media/<candidateId>")
     ThreadingHTTPServer((args.host, args.port), handler_class(files, args.vite_origin)).serve_forever()
     return 0
