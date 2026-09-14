@@ -1,0 +1,1184 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-component-policy-check@1",
+  "sources": {
+    "limits": {
+      "path": "tools/model-budget/limits.ts",
+      "sha256": "09fb1ac4341108c2ce593838d9305febf06c3b679859d13efe7fa58c74d3e1b1"
+    },
+    "roles": {
+      "path": "tools/model-budget/roles.ts",
+      "sha256": "0a064e7381df15d8df50a99afaecc67b3c59f3f65efefbdc30a1a7676edf6258"
+    },
+    "glb": {
+      "path": "tools/model-budget/glb.ts",
+      "sha256": "aea1f9d648bc5306e9a01c7f71accaf12bac45e41e4086e1a49817c71f1316ce"
+    },
+    "report": {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json",
+      "sha256": "0239ad58543fa7ddea43b8f178b47c99f7a48e36f101456f41dd71eff8e949d7"
+    }
+  },
+  "role": "vfx-model",
+  "liveGate": {
+    "role": "vfx-model",
+    "label": "技能／特效模型",
+    "simultaneous": 8,
+    "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+    "tris": {
+      "warn": 1000,
+      "limit": 2000
+    },
+    "meshes": {
+      "warn": 2,
+      "limit": 3
+    },
+    "texEdge": {
+      "warn": 256,
+      "limit": 256
+    },
+    "channels": {
+      "warn": 20,
+      "limit": 40
+    },
+    "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+  },
+  "textureRows": [
+    {
+      "componentId": "dai-vfx-texture-3334415bf1cf",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+      "bytes": 316,
+      "sha256": "3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6",
+      "width": 256,
+      "height": 1,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-b4a7e4c1252b",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+      "bytes": 302,
+      "sha256": "b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572",
+      "width": 256,
+      "height": 2,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-760908689aab",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+      "bytes": 357,
+      "sha256": "760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b",
+      "width": 2,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-caa730676994",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+      "bytes": 424,
+      "sha256": "caa730676994504155500df2228813205ac9304d435334e0257c04075decba44",
+      "width": 2,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-5e9552e7cdb1",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+      "bytes": 9797,
+      "sha256": "5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289",
+      "width": 128,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-9f7867d7fa2a",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+      "bytes": 17088,
+      "sha256": "9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-278d1511f567",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+      "bytes": 6739,
+      "sha256": "278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e",
+      "width": 128,
+      "height": 128,
+      "maxEdge": 128,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-aa307baadef6",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+      "bytes": 3837,
+      "sha256": "aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06",
+      "width": 256,
+      "height": 128,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-d3f0cfbb0fe1",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+      "bytes": 27825,
+      "sha256": "d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-b660aa73e684",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+      "bytes": 37723,
+      "sha256": "b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-c6d05cb7cfc8",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+      "bytes": 37716,
+      "sha256": "c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-71e658468dee",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+      "bytes": 46838,
+      "sha256": "71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-1d983aca2c50",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+      "bytes": 22223,
+      "sha256": "1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-79adb82807ab",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+      "bytes": 28292,
+      "sha256": "79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-723415b1eff0",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+      "bytes": 16309,
+      "sha256": "723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62",
+      "width": 256,
+      "height": 128,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-b3c703088417",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+      "bytes": 25203,
+      "sha256": "b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-35027d881f17",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+      "bytes": 43862,
+      "sha256": "35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    },
+    {
+      "componentId": "dai-vfx-texture-e3cf25c6edcd",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+      "bytes": 61350,
+      "sha256": "e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118",
+      "width": 256,
+      "height": 256,
+      "maxEdge": 256,
+      "limit": 256,
+      "verdict": "ok"
+    }
+  ],
+  "meshRows": [
+    {
+      "componentId": "dai-vfx-mesh-1afaff4e7a06",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394.glb",
+      "bytes": 2456,
+      "sha256": "1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394",
+      "metrics": {
+        "fileBytes": 2456,
+        "triangles": 4,
+        "vertices": 8,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 4,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 5,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_1"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-1f03f74da354",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d.glb",
+      "bytes": 9116,
+      "sha256": "1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d",
+      "metrics": {
+        "fileBytes": 9116,
+        "triangles": 48,
+        "vertices": 142,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 48,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-2df98836a4fa",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef.glb",
+      "bytes": 1868,
+      "sha256": "2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef",
+      "metrics": {
+        "fileBytes": 1868,
+        "triangles": 2,
+        "vertices": 4,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 2,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-06d60c9dc509",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795.glb",
+      "bytes": 9652,
+      "sha256": "06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795",
+      "metrics": {
+        "fileBytes": 9652,
+        "triangles": 136,
+        "vertices": 108,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 136,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 5,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_1"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-b9c28ede0f0d",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5.glb",
+      "bytes": 57148,
+      "sha256": "b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5",
+      "metrics": {
+        "fileBytes": 57148,
+        "triangles": 512,
+        "vertices": 1024,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 512,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-16ad660ce7bf",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe.glb",
+      "bytes": 26476,
+      "sha256": "16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe",
+      "metrics": {
+        "fileBytes": 26476,
+        "triangles": 512,
+        "vertices": 387,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 512,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-ae3e9d7e829c",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815.glb",
+      "bytes": 57140,
+      "sha256": "ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815",
+      "metrics": {
+        "fileBytes": 57140,
+        "triangles": 512,
+        "vertices": 1024,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 512,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    },
+    {
+      "componentId": "dai-vfx-mesh-3315cee29bd1",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0.glb",
+      "bytes": 3792,
+      "sha256": "3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0",
+      "metrics": {
+        "fileBytes": 3792,
+        "triangles": 40,
+        "vertices": 33,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "channelsPerFrame": 0,
+        "images": [],
+        "textureDiskBytes": 0,
+        "vramBytes": 0,
+        "maxTextureEdge": 0
+      },
+      "score": {
+        "role": "vfx-model",
+        "gate": {
+          "role": "vfx-model",
+          "label": "技能／特效模型",
+          "simultaneous": 8,
+          "simultaneousWhy": "12 人混戰時同時存活的特效實例，取 8 為工作假設（尚未實測，標示為假設）。",
+          "tris": {
+            "warn": 1000,
+            "limit": 2000
+          },
+          "meshes": {
+            "warn": 2,
+            "limit": 3
+          },
+          "texEdge": {
+            "warn": 256,
+            "limit": 256
+          },
+          "channels": {
+            "warn": 20,
+            "limit": 40
+          },
+          "why": "特效是加在最忙的一幀上的，所以額度最小。注意：目前沒有任何一支 imported 特效模型真的被 vfx doc 引用（#79），所以這條閘門現在守的是未來。"
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 40,
+            "warn": 1000,
+            "limit": 2000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 1,
+            "warn": 2,
+            "limit": 3,
+            "verdict": "ok"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 0,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 0,
+            "warn": 20,
+            "limit": 40,
+            "verdict": "ok"
+          }
+        ],
+        "worst": "ok"
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 4,
+        "messages": [
+          {
+            "code": "UNSUPPORTED_EXTENSION",
+            "message": "Cannot validate an extension as it is not supported by the validator: 'FB_ngon_encoding'.",
+            "severity": 2,
+            "pointer": "/extensionsUsed/1"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/materials/1"
+          }
+        ]
+      },
+      "hardPass": true
+    }
+  ],
+  "summary": {
+    "texturesChecked": 18,
+    "texturesHardPass": 18,
+    "meshesChecked": 8,
+    "meshesHardPass": 8,
+    "meshesBlocked": 0
+  },
+  "states": {
+    "completeVfx": false,
+    "skillBindingsCreated": 0,
+    "runtimeSelectable": false,
+    "deployed": false
+  }
+}
