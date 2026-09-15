@@ -543,6 +543,12 @@ export const DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT = false;
  */
 export const LIVE_SCORE_PERIOD_TICKS = TICK_HZ;
 
+/**
+ * AI 座位的三選一卡開出來之後，等幾個 tick 才代選（中場迴圈的 `age > AI_OFFER_PICK_DELAY_TICKS`）。
+ * ⭐ 具名是為了讓測試**推導**它（GH#1110 審查：`offerSwap.test.ts` 曾經抄一份字面值 11）—— ⛔ 值沒有動。
+ */
+export const AI_OFFER_PICK_DELAY_TICKS = 10;
+
 /** `config.match@1` 的文件 id（`phaseConfig` 的三支 resolve* 讀的是同一份）。 */
 const MATCH_CONFIG_DOC_ID = "config.match";
 
@@ -5641,7 +5647,7 @@ export class MatchController {
           // ⚠️ `|| earlyDue` 那一項只可能碰到**非真人**的卡（早退成立時,真人的卡
           // 依定義已經是空的）—— 它在的理由是「⛔ 不可以把一張沒收掉的卡帶進
           // combat」:今天 `expired` 那條路也是先把每一張卡收乾淨才推進相位。
-          if ((seat?.driverKind === "ai" && age > 10) || expired || earlyDue) {
+          if ((seat?.driverKind === "ai" && age > AI_OFFER_PICK_DELAY_TICKS) || expired || earlyDue) {
             // auto = true —— 系統代選(AI 座位的延遲自動選,或 #207 的過期
             // 安全網)。`aggregateOfferChoices` 把它算進 `autoPicked` 而不是
             // `picked`,所以取捨率不會被代選稀釋。

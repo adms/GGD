@@ -737,7 +737,7 @@ export class SimWorld {
     //   ⭐ 而 `itemAcquisition.test.ts` / `legendaryShelf.test.ts` 的漂移斷言
     //   在 2026-09-09 真的抓到我漏了它 —— ⛔ 沒有那兩條,沒有 host 接線的路會靜靜地用空表。
     randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
-    // ⭐ GH#1110 B —— 引擎常數（owner 2026-09-08「A ＋ B」），見 shopShelf.ts。
+    // ⭐ GH#1110 B —— 引擎常數（出處與「預設開是 Claude 的推論」見 shopShelf.ts）。
     swapWhenFull: SWAP_WHEN_FULL,
   };
 

@@ -1,7 +1,11 @@
 /**
  * 🎒 GH#1110 B 的**承重守衛**：背包滿的免費三選一，玩家指定一格 ⇒ 賣掉它、換上新的。
  *
- * > owner 2026-09-08：「隨機選寶具的時候 道具欄已滿 怎麼辦 => A ＋ B 開票」
+ * > 「隨機選寶具的時候 道具欄已滿 怎麼辦」
+ * > 「A ＋ B 開票」
+ * —— owner 2026-09-08 02:28（前一句：`docs/_daily/ledger-source_temp_20260908.md:13`；後一句：裁決紀錄
+ *    `docs/_daily/2026-09-08.md:13` 與 GH#1110 body 第 3 行）。⚠️ 裁決紀錄裡跟在後面的括號
+ *    「A＝…；B＝讓玩家挑一件丟掉/賣掉再換上。⛔ 不做 C「事前不發卡」」是 Claude 補的註解，⛔ 不是原話。
  *
  * ⭐ 走**出貨的整條路**，⛔ 不直接呼叫 `applyPick`（上一輪 sim 那一半做完了，
  * ⛔ 而 `MatchController` 呼叫它時沒傳 `swapSlot`、`validateInput` 也只收 `offerId`
@@ -25,7 +29,7 @@ import { Items } from "@ggd/shared/sim/content/registry";
 import { grantItemFree, slotRefund } from "@ggd/shared/sim/economy/shop";
 import { offerItems } from "@ggd/shared/sim/economy/draft";
 import { asSeatId, type EntityId, type ItemId } from "@ggd/shared/ids";
-import { MatchController, type SeatSpec } from "./MatchController";
+import { AI_OFFER_PICK_DELAY_TICKS, MatchController, type SeatSpec } from "./MatchController";
 import { rulesFromDoc, type ArenaRules } from "./arenaRules";
 import { HumanDriver } from "../seat/HumanDriver";
 import { sanitizeCommand } from "../net/validateInput";
@@ -58,7 +62,9 @@ function fullBagWithCard(seatNo: number, human: boolean) {
   const offer = offerItems(ctl.world, entity, "round-reward");
   expect(offer.choices.length, "卡片開不出來，前提不成立").toBeGreaterThan(0);
   const offerId = `test:1110b:${seatNo}`;
-  ctl.offers.set(offerId, { kind: "item", ...offer, seatId: seat.seatId, createdTick: ctl.world.tick - (human ? 0 : 11) });
+  // AI 座位：把卡片的年齡推過代選延遲（⭐ 從出貨常數推導，⛔ 不抄字面值）。
+  const age = human ? 0 : AI_OFFER_PICK_DELAY_TICKS + 1;
+  ctl.offers.set(offerId, { kind: "item", ...offer, seatId: seat.seatId, createdTick: ctl.world.tick - age });
   const itemOffers = () => ctl.ledger.snapshot().offers.filter((o) => o.seatId === seat.seatId && o.kind === "item");
   const press = (raw: Record<string, unknown>) => {
     driver.mailbox.push({ seq: 1, commands: [sanitizeCommand({ kind: "pickOffer", offerId: `${offerId}#0`, ...raw })!] });
