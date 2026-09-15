@@ -83,6 +83,15 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
   template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['小', '中', '中'], 'ratios': [{'stat': 'ad', 'coeff': 0.6}]}, 'radius': 3.0, 'radiusTier': '極小', 'includeOrigin': True, 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-strike', 'modelKey': 'w3x.stock.monsoonbolttarget'}, 'castTimeSec': 1.0}})
 
+# ⭐ rollback 作者開關（GH#1239 修正輪，2026-09-15）—— 77-002 御雷劍那條 40% 落雷 hook：
+#    False（預設）＝ 移除（下面 2026-08-13 的逐層診斷 ＋ 規格第 1 層「其雷鳴劍發動[機率]上升至50%」）。
+#    True        ＝ 產生器輸出 334a6d88a 之前的 passive（onBasicAttack 40% 落雷；場上約 70%、兩發可同時落）。
+#    轉法：改這一格 → `bash scripts/genrun.sh skillremake:json`（它自己跑 content:build）→ commit 產物。
+#    ⚠️ 轉成 True 之後 `declaredFieldMatchesShape.test.ts` 的「onBasicAttack 上卡」閘會紅 —— 那條紅是誠實的
+#       （卡面沒寫「攻擊時」的 40%）：要嘛同一個 commit 補卡面，要嘛把紅燈原樣回報，⛔ 不要放寬閘。
+#    ⛔ 不做成後台一格：那等於為一支技能寫 if（第〇·五守則）；這是產生器來源的作者開關。
+KEEP_LEGACY_40PCT_BOLT_HOOK = False
+
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
   # ⭐ 規格的兩句話第一次真的實作：`ability-augment@1`。
@@ -122,4 +131,7 @@ A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   #    `[被動]` 標籤閘也照舊由它滿足（`doc.get("passive") is not None`）。
   # ⭐ 順帶：gap 報告說「augment.targets 少了 condition」的那一條**已經被上面
   #    owner 2026-08-13 的裁決取代**（御雷劍就是這支 EX 自己），⛔ 不要再補回去。
-  passive={"name": "77-002 御雷劍", "ranks": [{"modifiers": [], "hooks": []}]})
+  passive={"name": "77-002 御雷劍", "ranks": [
+      {"hooks": [{"on": "onBasicAttack", "chance": 0.4, "target": "event",
+                  "effects": [area("magic", tier="極小", ap=0.1)]}]}
+      if KEEP_LEGACY_40PCT_BOLT_HOOK else {"modifiers": [], "hooks": []}]})
