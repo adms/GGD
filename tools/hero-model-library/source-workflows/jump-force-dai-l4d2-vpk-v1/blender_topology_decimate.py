@@ -2,7 +2,7 @@
 """Blender-side, material-budgeted decimation for the JUMP FORCE Dai Workshop GLB.
 
 Run only through Blender in factory-startup mode:
-  Blender --background --factory-startup --python blender_topology_decimate.py -- INPUT OUTPUT RECEIPT
+  Blender --background --factory-startup --python-exit-code 1 --python blender_topology_decimate.py -- INPUT OUTPUT RECEIPT
 
 The target allocations intentionally protect face, eye and hair topology.  UV
 seams delimit collapse operations.  This is a candidate-preparation step only:
@@ -20,16 +20,16 @@ import bpy
 
 
 # The shape-key face mesh alone has 5,494 triangles and preserves 29 source
-# expression keys.  It is retained exactly.  All remaining material targets
-# sum to 1,875, leaving a safe margin under the 8,000-triangle hard limit.
+# expression keys.  It is retained exactly.  The remaining 2,220 target budget
+# favours body, trousers and skin over lower-impact hair overlays.
 TARGETS = {
-    "Face": 100, "Face2": 60, "face1": 40, "eyes": 200,
+    "Face": 50, "Face2": 40, "face1": 30, "eyes": 200,
     "EyeShadow": 20, "EyesHighlight": 20,
-    "Hair": 400, "Hair1": 100, "Hair2": 45, "Hair3": 150,
-    "Skin": 100, "Skin 1": 150,
-    "Body": 200, "Body3": 30, "Body4": 70,
-    "Pants": 100, "Pants1": 20, "PantsRip": 60,
-    "Weapon": 150, "Glass": 20, "effect": 10, "<unassigned>": 30,
+    "Hair": 200, "Hair1": 40, "Hair2": 20, "Hair3": 40,
+    "Skin": 150, "Skin 1": 250,
+    "Body": 450, "Body3": 50, "Body4": 110,
+    "Pants": 300, "Pants1": 30, "PantsRip": 70,
+    "Weapon": 120, "Glass": 10, "effect": 5, "<unassigned>": 30,
 }
 EXPECTED_INPUT_SHA256 = "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
 
