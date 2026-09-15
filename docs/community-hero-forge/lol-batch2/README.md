@@ -24,7 +24,7 @@
 | [#1189](https://github.com/adms/GGD/issues/1189) | 瑟雷西 W | 隊友自主點燈接受位移與護盾 |
 | [#1190](https://github.com/adms/GGD/issues/1190) | 鄂爾 Q、E | ⭐ 已接回配方：Q 裂地終點生暫時柱、E 被柱／牆擋停才震波擊飛並撞碎柱（模擬守衛通過；⛔ 畫面與編輯器往返未實機驗收） |
 | [#1191](https://github.com/adms/GGD/issues/1191) | 稻草人 W、威寇茲 R | ⭐ 已接回配方：`channel` 持續引導 —— 移動／攻擊指令、暈眩、沉默、擊倒、死亡打斷後排好的波次作廢且不收割；稻草人 W 每打中一人才回血、撐滿才收割；威寇茲 R 引導中再按或推搖桿即轉向（模擬守衛通過；⛔ 畫面、吟唱條與編輯器往返未實機驗收） |
-| [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | 法球返航／魅惑、觸碰破牆、當前彈體分裂／固定裂痕與充能、僅解除既有減速 |
+| [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | ⏳ Main 契約已齊、⛔ 配方未綁：阿璃 Q 用出貨回程彈 `imported.wave.arcane.return`、威寇茲 Q 用出貨分裂彈 `imported.bolt.void.split`（再按分裂走 `abilityOverrides.recast`）、威寇茲 W 兩段 `damageLine.aim:"cast"`（第二段凍在施放那一刻）、阿璃 E `applyStatus.charmed`、瑟雷西 R `spawnThresholds`、蓋倫 Q `dispel.statusKinds:["slow"]`；「兩次充能」是假前提（沒有彈藥機制），綁定時寫成 GGD 差異。逐槽寫法見 main-requirements.json 的 `contract` |
 
 共 5 張票、14 槽，核對基準 Main `6da992509`；見 [main-requirements.json](./main-requirements.json)。這個數字不是其餘 52 槽均已取得完整來源驗收的宣稱。總票 [#1185](https://github.com/adms/GGD/issues/1185) 保持開啟；核心接回、必要驗證、投稿與管理員發布完成後才記錄關票。
 

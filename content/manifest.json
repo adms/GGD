@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_4fa22ba00009",
+  "contentVersion": "cv_9468e894f463",
   "collections": {
     "champions": {
       "hash": "5851bc7d108e",
@@ -22,8 +22,8 @@
       "path": "augments/_index.json"
     },
     "projectiles": {
-      "hash": "952cffc4b28b",
-      "count": 21,
+      "hash": "96d7945c88d3",
+      "count": 23,
       "path": "projectiles/_index.json"
     },
     "status-effects": {

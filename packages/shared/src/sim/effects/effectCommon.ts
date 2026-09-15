@@ -55,6 +55,20 @@ export function aimDirection(
   return undefined;
 }
 
+/**
+ * ⭐ GH#1197 威寇茲 W —— 「施放那一刻」的起點與方向：已經凍過（`delayed` 排出來的那一發）就沿用，
+ * 否則現在凍 ＝ 施法者當下身體 ＋ 施放瞄準（`ctx.direction`，沒有就用面向）。
+ * `delayed` 寫、`damageLine.aim:"cast"` 讀 —— 兩個 kind 同一份答案。零向量／施法者已離場 ⇒ undefined。
+ */
+export function castFrameOf(ctx: EffectContext): { origin: Vec2; direction: Vec2 } | undefined {
+  if (ctx.castFrame !== undefined) return ctx.castFrame;
+  const t = ctx.world.transform.get(ctx.caster);
+  if (!t) return undefined;
+  const d = ctx.direction ?? t.facing;
+  if (len(d) <= 1e-6) return undefined;
+  return { origin: { x: t.pos.x, z: t.pos.z }, direction: normalize(d) };
+}
+
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
 }

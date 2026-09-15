@@ -105,57 +105,75 @@
     },
     {
       "id": "remaining-core-ahri-q",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "ahri.Q"
       ],
-      "requiredOriginalCore": "同一法球去程／回程與追身"
+      "requiredOriginalCore": "同一法球去程／回程與追身",
+      "contract": "spawnProjectile{projectileId:\"imported.wave.arcane.return\", onHit:[…]}（出貨 content/projectiles：穿透、returns）—— 去程穿過每人一次、射程盡頭掉頭追施法者當下位置、回程命中分開記錄再一次、回到身上消失",
+      "verification": "packages/shared/src/sim/systems/projectileReturnSplit.test.ts「returns」—— 發射出貨文件，去程 1 次、從射程盡頭掉頭、回程合計 2 次",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     },
     {
       "id": "remaining-core-ahri-e",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "ahri.E"
       ],
-      "requiredOriginalCore": "迫使命中者朝來源行走"
+      "requiredOriginalCore": "迫使命中者朝來源行走",
+      "contract": "applyStatus{charmed:true, duration}（sim/charm.ts：每 tick 走向施加者、丟掉自己的指令，到期恢復）",
+      "verification": "packages/shared/src/sim/charm.test.ts（機制側；配方未綁）",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     },
     {
       "id": "remaining-core-thresh-r",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "thresh.R"
       ],
-      "requiredOriginalCore": "五段各自觸碰觸發並消失的邊界"
+      "requiredOriginalCore": "五段各自觸碰觸發並消失的邊界",
+      "contract": "spawnThresholds{sides:5, radius, durationSec, onCross:[…]}（每段被穿越那一 tick 觸發並獨立消失，到期整組清）",
+      "verification": "packages/shared/src/sim/systems/ThresholdSystem.test.ts（機制側；配方未綁）",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     },
     {
       "id": "remaining-core-velkoz-q",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "velkoz.Q"
       ],
-      "requiredOriginalCore": "主彈當前位置左右分裂"
+      "requiredOriginalCore": "主彈當前位置左右分裂",
+      "contract": "spawnProjectile{projectileId:\"imported.bolt.void.split\", onHit:[…]} ＋ abilityOverrides.recast{charges:1, windowSec} ＋ recastEffects:[]（出貨主彈 split.on=[hit,recast]、子彈 imported.bolt.void 繼承 onHit）—— 命中或再按從主彈當下位置左右分出，子彈不再打主彈打過的人",
+      "verification": "packages/shared/src/sim/systems/projectileReturnSplit.test.ts「split on hit／split on recast」—— 發射出貨文件，子彈出生點＝撞擊點／主彈當下位置，命中總數 1",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     },
     {
       "id": "remaining-core-velkoz-w",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "velkoz.W"
       ],
-      "requiredOriginalCore": "固定裂痕雙段與槽位充能"
+      "requiredOriginalCore": "固定裂痕雙段與槽位充能",
+      "contract": "兩段 damageLine 都寫 aim:\"cast\"（放在 delayed 裡的第二段，起點與方向凍在施放那一刻；施法者轉身或走開後仍在原處）。⚠️「兩次充能」是假前提：Main 沒有彈藥機制，recast.charges 是後段次數不是彈藥 ⇒ 預設不做，綁定時寫進 adaptations 當 GGD 差異；要彈藥請另開票",
+      "verification": "packages/shared/src/sim/effects/damageLine.test.ts「延遲直線 aim:cast／facing」—— 施法者轉身走開後 cast 只打原線上的人、facing 只打新方向的人",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     },
     {
       "id": "remaining-core-garen-q",
-      "status": "pending-main",
+      "status": "ready-to-bind",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "garen.Q"
       ],
-      "requiredOriginalCore": "僅清除既有減速"
+      "requiredOriginalCore": "僅清除既有減速",
+      "contract": "dispel{statusKinds:[\"slow\"]}（只清減速；帶暈眩的狀態留著）",
+      "verification": "packages/shared/src/sim/effects/dispelStatusKinds.test.ts（機制側；配方未綁）",
+      "notVerified": "六槽綁定要改 Codex 的配方檔 packages/shared/src/content/heroForge/communityLolBatch2.ts（#1185／#1193）；Main 這一側的契約已齊，本輪未綁；⛔ 正常玩家命令驗原操作要等配方綁上"
     }
   ],
   "excluded": [

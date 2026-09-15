@@ -2327,17 +2327,11 @@
     "why": "GH#1197 —— 只清減速 —— 第一份採用者是蓋倫 Q，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
     "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
   },
-  "field:projectiles.returns": {
+  "enum:abilities.effects[]#damageLine.aim=cast": {
     "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 回程彈 —— 第一份採用者是阿璃 Q 的法球 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:projectiles.split": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 分裂彈 —— 第一份採用者是威寇茲 Q 的主彈 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+    "since": "2026-09-15",
+    "why": "GH#1197 —— 威寇茲 W「延遲的第二段仍在原裂痕上」：`damageLine.aim:\"cast\"` 的起點與方向凍在施放那一刻（`delayed` 排程時凍住、每一發原樣帶著）。第一份採用者是 `communityLolBatch2.ts` 的 velkoz.W 配方，由 #1193／#1185 接回（社群英雄草稿，⛔ 還不在 content/）；守衛 `sim/effects/damageLine.test.ts`「延遲直線 aim:cast／facing」兩個方向一起驗。30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-15 #1197 契約層補齊、內容由 LoL lane 接回（landing，30 天到期）"
   },
   "variant:abilities.effects[]#spawnThresholds": {
     "status": "landing",

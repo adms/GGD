@@ -19,6 +19,7 @@ import { describe, it, expect } from "vitest";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { runEffects } from "./effectRunner";
+import { delayedSystem } from "./delayed";
 import type { EffectContext, EffectDef } from "./effect";
 import { asTeamId, asSeatId, type EntityId } from "../../ids";
 
@@ -113,5 +114,19 @@ describe("damageLine — 前方直線上的敵人真的掉血 (do-damage-line)",
     const far = rig([[12, 0]]);
     runEffects([line({ length: 14 })], ctxOf(far));
     expect(hits(far.world).get(far.marks[0]!), "length 14 仍然打不到 12 格外的人").toBe(100);
+  });
+
+  // ⭐ GH#1197 威寇茲 W：延遲的第二段。0 = 施放那一刻的正前方；1 = 施法者轉身走開之後的正前方。
+  //   兩個方向一起驗：aim:"cast" 只打 0，aim:"facing"（舊近似）只打 1 —— ⛔ 量尺不是瞎的。
+  it.each([["cast", 0], ["facing", 1]] as const)("⭐ 延遲直線 aim:%s —— 施法者轉身走開後打到第 %i 個人", (aim, victim) => {
+    const r = rig([[5, 0], [-3, 6]]);
+    const delaySec = 0.5;
+    runEffects([{ kind: "delayed", shape: "single", delaySec, effects: [line({ aim })] }], { ...ctxOf(r), direction: { x: 1, z: 0 } });
+    const t = r.world.transform.get(r.caster)!;
+    t.pos = { x: C.x - 3, z: C.z };
+    t.facing = { x: 0, z: 1 };
+    r.world.tick += Math.round(delaySec / r.world.dt);
+    delayedSystem(r.world);
+    expect([...hits(r.world).keys()], "延遲的那一條線打錯人 —— 起點或方向沒有凍在施放那一刻").toEqual([r.marks[victim]!]);
   });
 });

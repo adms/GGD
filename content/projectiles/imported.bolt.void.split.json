@@ -1,0 +1,16 @@
+{
+  "id": "imported.bolt.void.split",
+  "schema": "projectile@1",
+  "speed": 22,
+  "maxRange": 12,
+  "hitRadius": 0.5,
+  "split": {
+    "projectileId": "imported.bolt.void",
+    "on": [
+      "hit",
+      "recast"
+    ]
+  },
+  "vfxKey": "fx.prim.void.bolt",
+  "meshShape": "bolt"
+}

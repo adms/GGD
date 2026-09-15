@@ -1,0 +1,11 @@
+{
+  "id": "imported.wave.arcane.return",
+  "schema": "projectile@1",
+  "speed": 18,
+  "maxRange": 12,
+  "hitRadius": 0.9,
+  "pierce": true,
+  "returns": true,
+  "vfxKey": "fx.wave.arcane",
+  "meshShape": "orb"
+}

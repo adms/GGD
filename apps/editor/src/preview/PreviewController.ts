@@ -893,7 +893,7 @@ function effectLines(
           kind: e.kind,
           summary:
             `直線 ${e.damageType} 傷害 — 長 ${e.length} × 寬 ${e.width}, ` +
-            `朝向 ${e.aim === "facing" ? "身體面向" : "事件目標"}, ` +
+            `朝向 ${e.aim === "facing" ? "身體面向" : e.aim === "cast" ? "施放那一刻（起點與方向凍結）" : "事件目標"}, ` +
             `最多 ${e.maxTargets ?? "預設"} 人` +
             `${e.includeOrigin ? " (含震央)" : ""}${e.canCrit ? " · 可爆擊" : ""}`,
         });

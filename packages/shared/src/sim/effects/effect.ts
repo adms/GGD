@@ -489,6 +489,12 @@ export interface EffectContext {
   targets: EntityId[];
   point?: Vec2;
   direction?: Vec2;
+  /**
+   * ⭐ GH#1197 —— 施放那一刻凍住的**起點＋方向**（RUNTIME、從不 authored、無 Zod）。
+   * 唯一填寫者：`delayed`（排程那一刻凍住、每一發原樣帶著）；唯一讀者：`damageLine.aim:"cast"`。
+   * 缺席 ＝ 這一次執行就是施放那一刻 ⇒ 讀者用施法者當下身體＋`direction`（同一 tick 的同一個答案）。
+   */
+  castFrame?: { origin: Vec2; direction: Vec2 };
   /** provenance, e.g. "ability:sela.q", "item:serrated-edge" */
   origin: string;
   /** slot of the casting ability (threads through projectiles into hooks) */

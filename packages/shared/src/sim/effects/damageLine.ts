@@ -71,7 +71,7 @@ import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
 import { distSq, type Vec2 } from "../math/vec2";
-import { aimDirection, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
+import { aimDirection, castFrameOf, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
@@ -86,8 +86,8 @@ import { scalingOracle } from "../content/condition";
  * `delayed.advance.dir` 需要**同一個**答案，而本檔案原本那份私有 `lineDir` 一旦
  * 被抄第二份，兩份分岔的那一天沒有人會發現（第零守則⑨）。這裡只留一個轉呼叫。
  */
-function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | undefined {
-  return aimDirection(e.aim, ctx);
+function lineDir(e: { aim?: "facing" | "target" | "cast" }, ctx: EffectContext): Vec2 | undefined {
+  return e.aim === "cast" ? castFrameOf(ctx)?.direction : aimDirection(e.aim, ctx);
 }
 
 export const damageLineEffect: EffectKindSpec<"damageLine"> = {
@@ -97,6 +97,8 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     if (!from) return;
     const dir = lineDir(e, ctx);
     if (!dir) return;
+    // ⭐ GH#1197 威寇茲 W：`aim:"cast"` 的起點也凍在施放那一刻（`delayed` 排出來的第二段不跟著施法者走）。
+    const frozenStart = e.aim === "cast" ? castFrameOf(ctx)?.origin : undefined;
 
     // Both bounded by the SAME ceiling a spread radius is (`SPREAD_MAX_RADIUS`,
     // 24 today — ⛔ 不要在這裡抄一個字面值，這句話寫「12」的時候常數已經是 24 了): the
@@ -111,7 +113,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
 
     // WHERE THE LINE STARTS. Default = the caster's own body ("面前"); the
     // victim-anchored form is the lash that carries on past what it caught.
-    let start = from.pos;
+    let start = frozenStart ?? from.pos;
     if (e.fromCaster === false) {
       const tid = ctx.targets[0];
       const tt = tid !== undefined ? world.transform.get(tid) : undefined;
