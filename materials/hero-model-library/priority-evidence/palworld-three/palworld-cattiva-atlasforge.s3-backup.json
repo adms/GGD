@@ -1,0 +1,225 @@
+{
+  "schema": "ggd.source-legacy-backup@1",
+  "sourceId": "palworld-cattiva-atlasforge",
+  "verifiedAt": "2026-09-10T17:49:59.463230+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "expectedRoleVerified": true,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-atlasforge-20260911/ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006.tar.gz",
+  "actions": [
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-atlasforge.tar.gz",
+  "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-atlasforge.readback.tar.gz",
+  "archiveSha256": "ba67f0671cd375f3c84245806c668fc46e7c105d933af914c14a116f8f812006",
+  "archiveBytes": 2142465,
+  "memberCount": 29,
+  "fullGetAndMemberShaVerified": true,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 706,
+      "sha256": "c67df63d3a68bbb72f5a26df742cd72774382aee276eb0d896c2f5d394edfba5",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 497,
+      "sha256": "cf2ce91b803c3c750126d1dff90b8355ddf7bb63ea0561da55c7a745450fc4d9",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/assimp-info.txt",
+      "bytes": 316,
+      "sha256": "5023c2f8de7ccb774660528571efe89c57e5da0f3b4b8d3d44ff4aed552fad74",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/blender-import.json",
+      "bytes": 1512,
+      "sha256": "dbda36853f82d4ee3aa438c39dbfbe93107c6fb4c1d60150d5d1b899a87b2077",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/blender-library-path.log",
+      "bytes": 2875,
+      "sha256": "579e25ae0715d3a0f70efd5a98523d156544e797bd61363a38f377826ab54824",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/blender.log",
+      "bytes": 29296,
+      "sha256": "e1a3f9be78b3ec3824398c04761b0184a718ab513692d2bd72462c3fb1790004",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/gltf-validation.json",
+      "bytes": 2127,
+      "sha256": "663cec7eefec81f4dc835139ba3d51d74e4defc5cad936f54744f09f9ff917b0",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "bytes": 3990,
+      "sha256": "2a03984f7ec78b8240b95e618130c08a51d508d4bb148aff4f32ac2272d5109b",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "audio-index.json",
+      "bytes": 182,
+      "sha256": "b9d73001009443f30dd3198cb65dd1150e559a8cabe2cfb56ee4bc388c2de826",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/cattiva-atlasforge.glb",
+      "bytes": 327652,
+      "sha256": "1afbc1b2122d3e05a49e6fe12775b4d3eb6d2f3e14cfda51388559e52c79707a",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/115-fedb784198be8aa4.js",
+      "bytes": 2235924,
+      "sha256": "8ccade6e4b16d40f48dcb4855626cb84643268e2ca4de7fcddcb44bf5e588f10",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/79-fc5d22b6a0c5fc46.js",
+      "bytes": 71117,
+      "sha256": "f50a199815e94cf104fca8c670a80c011194d0ad1940ee83aaf63c538ec4bc73",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/_app-7928c993b6b92aa7.js",
+      "bytes": 118128,
+      "sha256": "d4fa6024025863fd6adf1161c5c19573ca8959a0f211fa3da4f07ba2c3650da1",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/atlasforge-cattiva.html",
+      "bytes": 153841,
+      "sha256": "2084f5e21dc1c369cdda215ca3b3cd44ee26b094cf14853ef12eae5f0f724f7c",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/discovery-and-limits.json",
+      "bytes": 804,
+      "sha256": "8eb0682b357b6522ff8eafb00cda53e39a9d43a3c0a3dd37dd9537c2f18be437",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/viewer.js",
+      "bytes": 14640,
+      "sha256": "a912b7164a537e1ca0e537ba045186be28b0366753e198a0d228a6e3d913e0f0",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "extracted/textures/image-0.webp",
+      "bytes": 16452,
+      "sha256": "7b72978b4bd2fb8b9eb25c6236df1c46efaf1ab5f522a10cf3d4a005ab91c19e",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "extracted/textures/image-1.webp",
+      "bytes": 31816,
+      "sha256": "c35ed416e63b8a39d6bcaf9b61433f22eedc2ccd8379c7a7cdbe94abcd0f7e67",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "extracted/textures/image-2.webp",
+      "bytes": 177318,
+      "sha256": "b49db76f150069602fafbbc6b818fcdf66933709008e3f9a5aa10fbbd4683da2",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 4650,
+      "sha256": "dd558a92974a69215c764b591deecb8c54b73630eed519e751cbca7716b7b6d7",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 1880,
+      "sha256": "944029907575c178fa6cb660ad724d1bb35af5f97223d770dc0be0db2ffc6908",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/PinkCat.viewer-model",
+      "bytes": 327652,
+      "sha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "source-entry.json",
+      "bytes": 4236,
+      "sha256": "c51a573b4517695fdb5587d646bbfedc206db4f23b054616b68b69b861ae86b7",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "standardized/cattiva.glb",
+      "bytes": 502344,
+      "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/inspect_model.py",
+      "bytes": 3865,
+      "sha256": "41bb81c6aa63df4e32b474705ceef21a615dc419291467bad68aa6f8eead9aeb",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/standardize.py",
+      "bytes": 1878,
+      "sha256": "c26dcf6bb43b8bac27a664e46d0e10df04a2a0be92f3939b4758ce486e995550",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/validate.cjs",
+      "bytes": 527,
+      "sha256": "b794c4d7312645a5429976111c499bd2a6890205faa986d7f2ddf8953bf5c95e",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    }
+  ],
+  "policy": "legacy source reserve only; no automatic production selection; local all preserved"
+}

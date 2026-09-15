@@ -12,14 +12,14 @@
  *「fail-open 沒錯，**靜默**才是缺陷⋯選擇 fail-open 的同時，必須有一個**會回非零、
  * 或畫面上擋不掉**的東西說出來 —— 一行沒有人讀的 log 不算。」
  *
- * ⇒ 今天量到的：**45 支英雄長得都不是本人**，而且**每一條既有的閘都是綠的** ——
+ * ⇒ 2026-09-10 量到的：**45 支英雄長得都不是本人**，而且**每一條既有的閘都是綠的** ——
  * `content:build` 與 `shippedBundleIsCurrent` 驗的是**文件與索引**，
  * ⛔ 它們從來不問「`glbPath` 指到的那顆檔案在不在」。
  *
  * ═══════════════════════════════════════════════════════════════════════════
  *  ⭐ 它為什麼是**棘輪**而不是一條硬斷言
  * ═══════════════════════════════════════════════════════════════════════════
- * 今天就有 45 支缺席 ⇒ 一條硬斷言會是「**一個永遠不會綠的閘**」，
+ * 2026-09-10 有 45 支缺席（⭐ 2026-09-11 起名單已清空，見下）⇒ 當時一條硬斷言會是「**一個永遠不會綠的閘**」，
  * 而 CLAUDE.md 把那個形狀記成一種**假綠燈的來源**（⑨）：
  *「⚠️ 一個從來沒人看它綠過的閘，與一個不存在的閘**沒有差別**。」
  *
@@ -39,63 +39,16 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..
 const CONTENT = join(ROOT, "content");
 
 /**
- * ⭐ GH#1181 —— 今天 `modelKey` 指到一顆**不存在的 GLB** 的 45 支英雄。
+ * ⭐ GH#1181 —— 2026-09-10 `modelKey` 指到一顆**不存在的 GLB** 的 45 支英雄。
  *
  * ⚠️ 它們**不會壞掉**，玩家看到的是程序化體素替身 ⇒ ⛔ 沒有人會回報。
- * ⭐ 那些 GLB **從來沒有進過版控** —— `content/assets/models/community/` 這個目錄
- * 根本不存在（⛔ 不是被 `.gitignore` 擋掉，`git check-ignore` 沒有命中）。
+ * ⭐ 七名 LoL 由 4f8ded427 找回、其餘 38 支（37 顆 GLB）由 45bc70def 從 S3 撈回進 git；
+ * 2026-09-15 以 `git ls-tree HEAD` 重量：153 支現役 ＋ 563 筆 modelVersions 的 GLB 全部在 git。
  *
- * ⭐ 三群，⛔ 而它們缺席的理由不一樣：
- *   · `b2-*`（14）· `community-review-*`（24）—— 社群投稿的上傳模型，⭐ 檔案沒跟著進 repo
- *   · `lol-*`（7）—— GH#1158 自己的收尾逐字寫過：「⑤ 正式發布 ⛔ **0/7** —— S3 零顆、repo 零引用」
- *
- * ⛔ **這張名單只能變短。** 找回一顆就刪掉那一行（⭐ 沒刪會紅 —— 見第三條測試）。
+ * ⛔ 若日後出現暫時無法修復的新缺口，才可在這裡加入有原因的例外；
+ * 找回檔案後必須立即刪除（第三條測試會防止名單成為過期散文）。
  */
-const KNOWN_MISSING_GLB: readonly string[] = [
-  // ── b2-*（第二批 37 名裡的 14 支）
-  "b2-albus",
-  "b2-bojji",
-  "b2-goblin",
-  "b2-kisaragi",
-  "b2-kumoko",
-  "b2-maple",
-  "b2-maple-alt-9769eb88b85b",
-  "b2-misery",
-  "b2-popp",
-  "b2-rem",
-  "b2-rin",
-  "b2-takopi",
-  "b2-yogiri",
-  "b2-zenitsu",
-  // ── community-review-*（社群 37 名裡的 24 支）
-  "community-review-01-20260907",
-  "community-review-03-20260907",
-  "community-review-04-20260907",
-  "community-review-06-20260907",
-  "community-review-08-20260907",
-  "community-review-10-20260907",
-  "community-review-12-20260907",
-  "community-review-13-20260907",
-  "community-review-16-20260907",
-  "community-review-17-20260907",
-  "community-review-18-20260907",
-  "community-review-19-20260907",
-  "community-review-20-20260907",
-  "community-review-21-20260907",
-  "community-review-23-20260907",
-  "community-review-24-20260907",
-  "community-review-25-20260907",
-  "community-review-26-20260907",
-  "community-review-27-20260907",
-  "community-review-28-20260907",
-  "community-review-29-20260907",
-  "community-review-31-20260907",
-  "community-review-32-20260907",
-  "community-review-35-20260907",
-  // ── lol-* —— ⭐ **2026-09-11 七名全部找回來了**（合併 `codex/community-acquired-heroes`：
-  //   那條分支帶的 34 顆 GLB 裡有 7 顆正好是他們缺的）⇒ ⛔ 這一群已經空了。
-  //   ⭐ 而這條閘**正確地叫了**：它要求修好的那幾支從名單上劃掉，⛔ 不是留著變成過期的散文。
-];
+const KNOWN_MISSING_GLB: readonly string[] = [];
 
 interface HeroModel {
   readonly id: string;

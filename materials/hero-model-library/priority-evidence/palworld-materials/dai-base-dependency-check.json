@@ -1,0 +1,25 @@
+{
+  "schema": "ggd-dai-base-dependency-check@1",
+  "source": "https://www.daz3d.com/genesis-8-starter-essentials",
+  "officialSku": "42071",
+  "officialListedPriceUsd": 0,
+  "includesGenesis8Male": true,
+  "anonymousDirectArchiveAcquired": false,
+  "completeBodiesAcquired": 0,
+  "checkedLocalRoots": [
+    {
+      "path": "/Users/Shared/My DAZ 3D Library",
+      "exists": false
+    },
+    {
+      "path": "/Users/Takuro/Documents/DAZ 3D/Studio/My Library",
+      "exists": false
+    },
+    {
+      "path": "/Users/Takuro/Library/Application Support/DAZ 3D",
+      "exists": false
+    }
+  ],
+  "scope": "Public product-page verification and three normal content roots only; no credentials or profile inspected.",
+  "currentDependencyIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/dependency-index.json"
+}

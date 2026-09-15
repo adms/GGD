@@ -1,0 +1,31 @@
+{
+  "schema": "ggd.infinity-strash-babylon-static-load@1",
+  "modelSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+  "babylonVersion": "7.54.3",
+  "meshes": [
+    {
+      "name": "SK_EN653_01_model_primitive0",
+      "vertices": 1283,
+      "positionCoordinates": 3849
+    },
+    {
+      "name": "SK_EN653_01_model_primitive1",
+      "vertices": 4185,
+      "positionCoordinates": 12555
+    },
+    {
+      "name": "SK_EN653_01_model_primitive2",
+      "vertices": 6383,
+      "positionCoordinates": 19149
+    }
+  ],
+  "skeletonBoneCounts": [
+    175
+  ],
+  "animationGroups": [],
+  "finiteRestPosePositions": true,
+  "materialsSkippedForCpuValidation": true,
+  "webglVisualReview": "pending-test-mechanism-recovery",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

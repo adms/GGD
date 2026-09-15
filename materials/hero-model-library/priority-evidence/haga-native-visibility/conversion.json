@@ -1,0 +1,207 @@
+{
+  "schema": "ggd-native-geoset-visibility-conversion@1",
+  "sourceGlbSha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+  "outputSha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+  "bytes": 658700,
+  "proofSha256": "cd71018917f47c72d2908aef1377e557e686da8c3dfa4a6bccf8ffee7b872e11",
+  "node": 0,
+  "primitive": 2,
+  "nativeAnimationCount": 13,
+  "originalBinaryPrefixUnchanged": true,
+  "allOriginalMotionChannelsUnchanged": true,
+  "allOriginalGeometryMaterialsTexturesAndSkinUnchanged": true,
+  "clips": [
+    {
+      "name": "Stand",
+      "seconds": 1.234,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.568,
+          0.0
+        ],
+        [
+          1.234,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Stand 2",
+      "seconds": 2.533,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.533,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Stand 3",
+      "seconds": 1.734,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.734,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Spell",
+      "seconds": 1.167,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.167,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Stand Ready",
+      "seconds": 1.067,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.067,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Attack",
+      "seconds": 1.0,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Attack 2",
+      "seconds": 1.0,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Spell Slam",
+      "seconds": 1.2,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.2,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Sleep",
+      "seconds": 1.667,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.667,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Death",
+      "seconds": 2.0,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "Decay Flesh",
+      "seconds": 60.0,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          3.767,
+          1.0
+        ],
+        [
+          60.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Decay Bone",
+      "seconds": 60.0,
+      "scaleKeys": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          60.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Walk",
+      "seconds": 1.0,
+      "scaleKeys": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    }
+  ],
+  "method": "STEP scale of an exclusive fully weighted leaf joint; binary alpha only",
+  "limitation": "Animation blending can transiently scale this geoset; sampled direct playback requires renderer validation."
+}

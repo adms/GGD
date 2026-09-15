@@ -130,6 +130,9 @@ CURATED: dict[str, tuple[str, str]] = {
         "`validate_glb.mts` 的 tsc 編譯產物（同上）", "⛔ **`.mts` 是活的出貨工具**（`package.json` 的 `validate:glb` 真的在跑它），這裡歸檔的只有編譯殘留"),
     "docs/legacy/code/tools/w3x-import/validate_glb.mjs.map": (
         "上一項的 sourcemap", "同上"),
+    "docs/legacy/code/packages/shared/src/content/castTimeFormula.ts": (
+        "20 階吟唱公式（原 `packages/shared/src/content/`，commit `a12ffab93` 搬入，#1243 · #1260）",
+        "⛔ 已被吟唱五級距（`content/config/cast-time-tiers.json`，GH#943）取代，而它的階梯仍爬到 4 秒 —— 2026-09-12 拿它比照級距寫的內容，報出 182 支假「不一致」。owner 2026-09-12：「移到 legacy 區不要再被看到了」。規則說明在 `docs/legacy/_cast-time-20-step-ladder.md`"),
 }
 
 # `content/_legacy` 的整批語意（逐檔簡介由 JSON 推導，見 describe_content_doc）
@@ -144,6 +147,115 @@ CONTENT_LEGACY_NOTE = (
     "與後台的道具清單**全部自動看不到它們** —— ⛔ 沒有任何一份「要跳過哪些 id」的硬編名單，"
     "那會是第四個住處，必然過期。"
 )
+
+
+# ---------------------------------------------------------------------------
+# ⭐ 退休英雄卡的「狀態」欄（C13 / GH#1227）—— 從**兩個既有住處**推導
+# ---------------------------------------------------------------------------
+# owner 2026-09-15 02:44（`docs/_daily/2026-09-15.md:13`，逐字）：「你解說阿 是不是應該修一個段落 BMPNDD」
+#   ⚠️ 他那一則的 `=>` 前面是**貼回來的 Claude 條目**「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態」
+#   （出處是 Claude 寫的 valhalla 稽核頁），⛔ 不是 owner 的話；「約 35」也是 Claude 少扣了變身態的數字（實為 48 張、三群）。
+#   ⭐ 更正 ef326ac70：那一版把整句連 `=>` 前面一起標成 owner 逐字。
+#
+# 在此之前 `describe_content_doc()` 對每一張卡都算出同一句「下架，不再出貨」，
+# 而 `render()` 在 `content/_legacy` 那一段連那一句都沒印 ⇒ 待重上架的黑化Saber 與
+# 空殼 Sakuya 在索引上寫法一模一樣。
+#
+# 三條規則，照順序（變身態看卡上 `transform.counterpartId` 指的本體）：
+#   ① 它或本體在 roster.json 的 `retiredChampions`          ⇒ 已下架
+#   ② 它或本體在 `COMMUNITY_ACQUIRED_LEGACY`（#1205 那一批） ⇒ 待重上架
+#   ③ 其他                                                ⇒ 從未開放（回收桶）
+#
+# ⛔ 這裡**不抄任何 id**（CONTENT_LEGACY_NOTE 自己說過：硬編名單是第四個住處）。
+# ⚠️ ② 的住處是 TS，所以這裡用 regex 讀 —— ⭐ 而 `legacyIndexFresh.test.ts` 用**真的 import**
+#    對同一份陣列比對索引的每一列，regex 讀漏一筆就紅（⛔ 不是只信 regex）。
+# ⚠️ 這支自己的 fail-loud **只管「一筆都讀不到」**：regex 要 `id:` 在行首，所以一筆寫成單行
+#    `{ ...x, id: "…" }` 的條目會被**靜默少讀**，而 `--check` 照樣回 0（2026-09-15 突變實跑）。
+#    ⇒ 那一筆只有上面那條 import 守衛會紅；⛔ 不要以為 `--check` 綠就代表名單讀全了。
+ROSTER_SRC = "content/config/roster.json"
+REOPEN_SRC = "packages/shared/src/content/heroForge/communityAcquiredLegacy.ts"
+REOPEN_EXPORT = "COMMUNITY_ACQUIRED_LEGACY"
+STATUS_RETIRED, STATUS_REOPEN, STATUS_NEVER = "已下架", "待重上架（#1205）", "從未開放（回收桶）"
+
+
+def _retired_ids() -> set[str]:
+    ids = json.load(open(os.path.join(ROOT, ROSTER_SRC), encoding="utf-8")).get("retiredChampions")
+    if not isinstance(ids, list):
+        raise SystemExit(f"⛔ {ROSTER_SRC} 沒有 retiredChampions 陣列 —— 退休卡的狀態推導不出來")
+    return set(ids)
+
+
+def _reopen_ids() -> set[str]:
+    src = open(os.path.join(ROOT, REOPEN_SRC), encoding="utf-8").read()
+    m = re.search(rf"export const {REOPEN_EXPORT}\b.*?\n\];", src, re.S)
+    ids = re.findall(r'^\s*id:\s*"([^"]+)"', m.group(0), re.M) if m else []
+    # ⛔ 讀不到就停 —— 靜默地讀到 0 筆，會把要回來的卡全部印成「從未開放」，
+    #    而那一份索引看起來完全正常（fail-open 沒錯，靜默才是缺陷）。
+    if not ids:
+        raise SystemExit(f"⛔ 在 {REOPEN_SRC} 讀不到 {REOPEN_EXPORT} 的 id —— 退休卡的狀態推導不出來")
+    return set(ids)
+
+
+def legacy_champion_status(d: dict, retired: set[str], reopen: set[str]) -> tuple[str, str]:
+    """一張退休英雄卡 → (狀態, 一句為什麼)。⛔ 不查表，只讀兩個住處＋卡上的 transform。"""
+    cid = str(d.get("id", ""))
+    t = d.get("transform") or {}
+    base = t.get("counterpartId") if t.get("role") == "alternate" else None
+    via = f"變身態，本體 `{base}` " if base else "它"
+
+    def hit(s: set[str]) -> bool:
+        return cid in s or (base is not None and base in s)
+
+    if hit(retired):
+        return STATUS_RETIRED, f"{via}在 `{ROSTER_SRC}` 的 `retiredChampions`（下架原因寫在同一份的 `note`）"
+    if hit(reopen):
+        return STATUS_REOPEN, f"{via}在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}`"
+    tail = f"；變身態，本體 `{base}`" if base else ""
+    return STATUS_NEVER, f"不在 `retiredChampions`、也不在 `{REOPEN_EXPORT}` ⇒ 預設歸回收桶{tail}"
+
+
+def render_legacy_champions(rows: list[tuple[str, str, str]]) -> list[str]:
+    """`content/_legacy/champions/` 那一段：規則說明 ＋ 逐張的狀態與為什麼。"""
+    retired, reopen = _retired_ids(), _reopen_ids()
+    table, count, seen = [], {STATUS_RETIRED: 0, STATUS_REOPEN: 0, STATUS_NEVER: 0}, set()
+    for rel, what, _ in rows:
+        d = json.load(open(os.path.join(ROOT, rel), encoding="utf-8"))
+        status, why = legacy_champion_status(d, retired, reopen)
+        count[status] += 1
+        seen.add(d.get("id"))
+        table.append(f"| `{os.path.basename(rel)}` | {esc(what)} | {status} | {esc(why)} |")
+    L = [
+        "⭐ **每張卡的狀態由產生器照三條規則算出來**（⛔ 不是手寫，也⛔ 不抄名單）：",
+        "",
+        "| 順序 | 規則（變身態看卡上 `transform.counterpartId` 的本體） | 狀態 | 張數 |",
+        "|---:|---|---|---:|",
+        f"| 1 | 它或本體在 `{ROSTER_SRC}` 的 `retiredChampions` | {STATUS_RETIRED} | {count[STATUS_RETIRED]} |",
+        f"| 2 | 它或本體在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}` | {STATUS_REOPEN} | {count[STATUS_REOPEN]} |",
+        f"| 3 | 其他 | {STATUS_NEVER} | {count[STATUS_NEVER]} |",
+        "",
+        "「沒開放的英雄搬進退休區」的**裁決** —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：",
+        "「你可不可以把沒開放的英雄資料包含技能都放到一個 leagcy 區 預設不要再被讀取到了 不然我已經重複講了好幾次"
+        " 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」。",
+        "",
+        "「回收桶」這個**詞**取自 owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）："
+        "「你應該知道我們有個 leagcy 資料夾可以運用 但留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」"
+        " —— ⚠️ 帳本那一列標的是**純討論**（legacy 索引概念），⛔ 不是裁決。",
+        "",
+    ]
+    missing = sorted(i for i in reopen if i not in seen)
+    if missing:
+        where = lambda i: "`content/champions/` 有卡" if os.path.exists(
+            os.path.join(ROOT, "content", "champions", f"{i}.json")) else "兩棵樹都沒有卡"
+        L.append(f"⚠️ `{REOPEN_EXPORT}` 裡**沒有退休卡**的：" + " · ".join(f"`{i}`（{where(i)}）" for i in missing) + "。")
+        L.append("")
+    L.append(
+        "⚠️ **待重上架 ≠ 選得到**（Claude 的推論，讀碼得來）：`apps/platform/internal/curation/legacyevict.go` "
+        "只看檔名在不在 `_legacy/`，同一個 id 勾進白名單會被自動剔除 ⇒ 卡還躺在這裡時它回不來；"
+        "舊卡怎麼離開退休區屬於 #1205 的範圍。"
+    )
+    L.append("")
+    L += ["| 檔案 | 是什麼 | 狀態 | 為什麼 |", "|---|---|---|---|", *table, ""]
+    return L
 
 
 def first_para(path: str) -> str:
@@ -347,6 +459,9 @@ def render() -> str:
             for seg in sorted(by):
                 L.append(f"### `{seg}/` （{len(by[seg])} 檔）")
                 L.append("")
+                if seg == "champions":
+                    L.extend(render_legacy_champions(by[seg]))
+                    continue
                 L.append("| 檔案 | 是什麼 |")
                 L.append("|---|---|")
                 for rel, what, why in by[seg]:

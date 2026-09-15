@@ -1,0 +1,77 @@
+[
+  {
+    "geometrySkinAnimationBinaryPrefixIdentical": true,
+    "imageIndex": 0,
+    "input": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
+    "inputImageSha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+    "inputSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+    "inputSize": [
+      4,
+      2
+    ],
+    "output": "/private/tmp/kirby-source-rebuild.glb",
+    "outputBytes": 199612,
+    "outputImageSha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
+    "outputSha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+    "outputSize": [
+      16,
+      8
+    ],
+    "pillowVersion": "12.3.0",
+    "resampling": "nearest",
+    "scale": 4,
+    "uniqueRgbaColors": 8,
+    "label": "kirby-source",
+    "matchesAcceptedOutput": true
+  },
+  {
+    "geometrySkinAnimationBinaryPrefixIdentical": true,
+    "imageIndex": 0,
+    "input": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+    "inputImageSha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+    "inputSha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+    "inputSize": [
+      4,
+      2
+    ],
+    "output": "/private/tmp/kirby-derivative-rebuild.glb",
+    "outputBytes": 199920,
+    "outputImageSha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
+    "outputSha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+    "outputSize": [
+      16,
+      8
+    ],
+    "pillowVersion": "12.3.0",
+    "resampling": "nearest",
+    "scale": 4,
+    "uniqueRgbaColors": 8,
+    "label": "kirby-derivative",
+    "matchesAcceptedOutput": true
+  },
+  {
+    "geometrySkinAnimationBinaryPrefixIdentical": true,
+    "imageIndex": 0,
+    "input": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+    "inputImageSha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+    "inputSha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+    "inputSize": [
+      4,
+      2
+    ],
+    "output": "/private/tmp/koro-proxy-rebuild.glb",
+    "outputBytes": 312016,
+    "outputImageSha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
+    "outputSha256": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
+    "outputSize": [
+      16,
+      8
+    ],
+    "pillowVersion": "12.3.0",
+    "resampling": "nearest",
+    "scale": 4,
+    "uniqueRgbaColors": 8,
+    "label": "koro-proxy",
+    "matchesAcceptedOutput": true
+  }
+]

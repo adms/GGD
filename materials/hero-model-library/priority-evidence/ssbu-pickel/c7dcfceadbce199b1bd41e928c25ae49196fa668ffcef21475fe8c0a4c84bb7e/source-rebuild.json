@@ -1,0 +1,59 @@
+{
+  "schema": "ggd.ssbu-pickel-alex-source-rebuild@1",
+  "componentId": "ssbu-pickel-alex-c01-static-skinned-v1",
+  "sourceSha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445",
+  "outputSha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+    "bytes": 51960,
+    "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177"
+  },
+  "secondBuild": {
+    "absolutePath": "/private/tmp/ssbu-pickel-alex-c01-rebuild-v1/body.glb",
+    "bytes": 51960,
+    "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177"
+  },
+  "firstBlenderExport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/blender-export.glb",
+    "bytes": 51896,
+    "sha256": "5005d54578aeb53dc15c7cb0b98df957b516e1de57f87af2e501d717009c6cdf"
+  },
+  "secondBlenderExport": {
+    "absolutePath": "/private/tmp/ssbu-pickel-alex-c01-rebuild-v1/blender-export.glb",
+    "bytes": 51896,
+    "sha256": "5005d54578aeb53dc15c7cb0b98df957b516e1de57f87af2e501d717009c6cdf"
+  },
+  "byteIdenticalRebuild": true,
+  "blenderExportByteIdenticalRebuild": true,
+  "bothValidationsPassed": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/normalize_static_component.mts",
+      "sha256": "3bcd8d978034cd77013deb8e21f123056c9872ff9dfacecc1093d43747aafe34"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.py",
+      "sha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.mjs",
+      "sha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
+    }
+  ],
+  "limitations": [
+    "Absolute paths differ; GLB bytes are identical.",
+    "Deterministic static output does not establish gameplay animation readiness."
+  ]
+}

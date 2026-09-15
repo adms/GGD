@@ -1,5 +1,5 @@
 {
-  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 逐字：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，大於 5 MB 的 blob 要逐檔列在 bigBlobs 並寫理由。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/（成品）。 ⭐ legacy-overwrites 不走「只准變少」（留底 hook 會往那裡寫，owner 08-20 允許）——改走單檔上限 legacyPerFileBytes（= hook 的 MAX_BYTES，GH#1192）。 ⭐ 2026-09-11 重量（GH#1220）：`materials/` 底下**靠 diff 讀得動的來源**（腳本一律算；`.json`/`.csv` 等結構化資料在 256 KB 以內算）⛔ 不再計入 —— owner 2026-09-08 逐字把「解析／轉換程式」與「版本清單、SHA-256、文件」點名進 git。超過 256 KB 的結構化資料仍算材料（CLAUDE.md 把 96,429 行的 OBJECTS.json 歸到 S3）。⇒ materials 554→82 個檔，⭐ 棘輪因此**更緊**。",
+  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 17:45 逐字（docs/_daily/2026-09-10.md:54）：「成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，≥ bigBlobBytes（5 MiB，剛好等於也算）的 blob 要逐檔列在 bigBlobs 並寫**能被反駁的理由**（佔位字會紅，GH#1160 2026-09-15）。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/ 底下的**出貨媒體型別**（BINARY_ASSET_TYPES；⛔ 不含 .bin —— 分段改名 .bin／.part000 丟進去照樣紅，GH#1160 2026-09-15）。 ⚠️ 切到上限以下、改名 .bin／.dat 放在四類以外的分段：同目錄同骨架一組合計 ≥ bigBlobBytes 才由 segmentSeriesViolations 接住；⛔ 改名成 .glb 等媒體副檔名、內容雜湊當檔名、分散到不同目錄 **管不到**（GH#1160 審查，2026-09-15）。 ⭐ legacy-overwrites 不走「只准變少」（留底 hook 會往那裡寫，owner 08-20 允許）——改走單檔上限 legacyPerFileBytes（= hook 的 MAX_BYTES，GH#1192）。 ⭐ 2026-09-11 重量（GH#1220）：`materials/` 底下**靠 diff 讀得動的來源**（腳本一律算；`.json`/`.csv` 等結構化資料在 256 KB 以內算）⛔ 不再計入 —— owner 2026-09-08 逐字把「解析／轉換程式」與「版本清單、SHA-256、文件」點名進 git。超過 256 KB 的結構化資料仍算材料（CLAUDE.md 把 96,429 行的 OBJECTS.json 歸到 S3）。⇒ materials 554→82 個檔，⭐ 棘輪因此**更緊**。",
   "bigBlobBytes": 5242880,
   "categories": {
     "archives": {
@@ -15,30 +15,55 @@
       "bytes": 1472329
     },
     "materials": {
-      "files": 82,
-      "bytes": 55452611
+      "files": 107,
+      "bytes": 87028224
     }
   },
   "bigBlobs": [
     {
       "path": "tools/bgm-gen/sf/MuseScore_General.sf3",
       "bytes": 39900972,
-      "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
+      "why": "bgm-gen 每一首曲子的決定性輸入：tools/bgm-gen/src/ggd/sampler.py 與 voices.py 讀它，content/assets/audio/bgm/MANIFEST.json 記它的 sha256；同一份譜換一個音色庫就產出不同位元組 ⇒ 出貨 BGM 能不能重現取決於它（MIT，授權檔同目錄）。FETCH.sh 可自上游 osuosl 驗 sha256 重抓 —— 若判定上游夠可靠，這一列就該搬出 git。"
     },
     {
       "path": "materials/community-hero-forge/manifest.json",
       "bytes": 14641926,
-      "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
-    },
-    {
-      "path": "apps/platform/opstate",
-      "bytes": 6948432,
-      "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
+      "why": "S3 封存包（ggd-community-materials-archive@1）的逐檔 SHA-256 清單，含 34 段 parts —— 正是 PR #1112 那 34 段，本體已在 S3。owner 2026-09-08 逐字把「版本清單、SHA-256」歸 git。⛔ 只准變少（也計入 materials 棘輪）。"
     },
     {
       "path": "materials/community-hero-forge/supplements/workspace-assets-20260908/inventory.json",
       "bytes": 5505405,
-      "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
+      "why": "workspace-assets-20260908 補充包的逐檔 SHA-256 普查（同目錄 manifest.json／s3-location.json 指向 S3 本體）。owner 2026-09-08 逐字把「版本清單、SHA-256」歸 git。⛔ 只准變少（也計入 materials 棘輪）。"
+    },
+    {
+      "path": "materials/hero-model-library/inventory.json",
+      "bytes": 7206371,
+      "why": "素材庫固定中央索引；其他工作流以此查詢本機、Git、S3、雜湊與驗收狀態"
+    },
+    {
+      "path": "materials/hero-model-library/public-source-files.json",
+      "bytes": 30058389,
+      "why": "素材庫固定公開來源逐檔索引；保留來源與版本關係及 SHA-256，供共編查詢"
+    },
+    {
+      "path": "materials/hero-model-library/voice-files.jsonl.gz",
+      "bytes": 27295931,
+      "why": "素材庫固定語音逐檔壓縮索引；供聽審、轉錄與角色事件查詢，不含音訊母檔"
+    },
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+      "bytes": 11237910,
+      "why": "素材庫固定待設計英雄索引；保存未綁定原生角色 ID、來源版本與缺口狀態"
+    },
+    {
+      "path": "materials/hero-model-library/priority-81-handoff.json",
+      "bytes": 7816018,
+      "why": "優先 81 名英雄的模型／動作／語音交接總表（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/main-81-handoff/current-branch-audio/overlay.json",
+      "bytes": 6313764,
+      "why": "優先 81 名的分支語音疊加稽核（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
     }
   ],
   "legacyPerFileBytes": 1048576,

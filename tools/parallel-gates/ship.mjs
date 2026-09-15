@@ -50,6 +50,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { cpus, tmpdir } from "node:os";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
+import { emptyGateNote } from "./shipEmptyGate.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
 const HERE = new URL(".", import.meta.url).pathname;
@@ -257,6 +258,23 @@ const FORKS_PER_SUITE = Math.max(
   Math.floor((cpus().length * 2) / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
 );
 
+/**
+ * ③ **獨佔段** —— ⭐ 「時鐘敏感」的包在並行段跑完之後**一包一包**跑（整台機器給它）。
+ *
+ * 2026-09-15 量到：並行段在 18 核上把 load 推到 **90+**，`apps/content-api` 兩條真的建英雄包的
+ * 測試（heroContentSnapshot／takeover，單條約 33–48 秒）撞 60 秒時鐘；⭐ **同一棵樹單獨跑 39/39 綠**。
+ * ⛔ 解法**不是**加大 timeout（那會把「機器很忙」永久靜音，下一個真的變慢的東西就沒人發現）——
+ *   跟上面 FORKS_PER_SUITE 同一個理由；⭐ 是讓它**不要跟別人搶核**。
+ * ⭐ 判準、斷言、timeout 一個字都沒動，只改「誰跟誰同時跑」。
+ * 名單覆寫：環境變數 `GGD_SHIP_ISOLATED`（逗號分隔；設成空字串＝全部回到並行段 ⇒ 一鍵回頭）。
+ */
+const ISOLATED = new Set(
+  (process.env.GGD_SHIP_ISOLATED ?? "apps/content-api").split(",").map((x) => x.trim()).filter(Boolean),
+);
+const ISOLATED_JOBS = wantSuites
+  .filter((r) => ISOLATED.has(r))
+  .map((r) => ({ name: `vitest ${r}`, cmd: ["npx", ["vitest", "run", "--root", r]] }));
+
 /** 序列段:全域鎖。⛔ 順序有意義（`contract:numbers` 在 `content:build` 之後）。 */
 // ⚠️⚠️ ⛔ **不可以**把計畫裡的 `content:build` 濾掉再靠開頭那一支頂替 ——
 //    開頭那一支跑在 `tiers:apply`／`skillremake:json` **之前**,它讀到的是**還沒被重寫**
@@ -298,6 +316,17 @@ const PARALLEL = [
   //    ⭐ 2026-09-09 它抓到一個真的 `no-undef`（合併 PR 1118 時帶進來的),
   //    而我在本機宣告「全綠」之後被 CI 打回。~秒級,⛔ 不動地板（地板是 vitest ~220s）。
   { name: "lint", cmd: ["pnpm", ["lint"]] },
+  // 🗿 GH#1230 —— owner 2026-09-11 逐字:「請你更新 script **每次上架跟啟動自動化處理**」。
+  //    ⭐ 「每次上架」的住處就是這裡（部署前的閘）。
+  //    ⚠️ ⛔ 刻意**不是**直接跑 `model:intake:check`:641 顆裡 285 顆有存量問題
+  //    ⇒ 硬擋會讓每一次部署都紅 ⇒ 下一個人把它關掉 ⇒ ⭐ 等於沒有閘
+  //    （本 repo 已記錄過:一條永遠不會綠的閘與一個不存在的閘沒有差別）。
+  //    ⇒ 包成**棘輪**:顆數變多才紅,變少要求收緊基準線,持平印警示行放行。
+  //    突變驗過（#1230 當時的單一數字）:基準線 284(變多)⇒exit 1 · 286(變少)⇒exit 1 · 285(持平)⇒exit 0。
+  //    ⚠️ GH#1263 起不再是單一數字 285:分母以關係判定,`intake-ratchet.txt` 有三格
+  //    a（玩家預設拿得到）· b（可切換、非預設）· a_body_tex（預設身體貼圖超過上限的格數）。
+  //    ⛔ a／b 設在 2026-09-15 現況,含 #1230 之後新進的 40 顆 ⇒ 見那個檔的誠實說明。
+  { name: "model-intake", cmd: ["bash", ["scripts/model-intake-or-warn.sh"]] },
   // 🚦 GH#1122 —— 這兩支也在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過。
   //    ⭐ 是新的閘 `shipCheckCoversCI.test.ts` **當場抓到的**,⛔ 不是我想起來的。
   //    兩支都是秒級的靜態檢查 ⇒ ⛔ 不動地板。
@@ -309,7 +338,7 @@ const PARALLEL = [
   //    只有人手打 `npx vitest run` 時才跑。一支決定「哪些閘可以不跑」的程式
   //    自己沒有閘,是這整條路上最不能接受的洞。
   { name: "vitest tools/deploy-timing", cmd: ["npx", ["vitest", "run", "tools/deploy-timing"]] },
-  ...wantSuites.map((r) => ({
+  ...wantSuites.filter((r) => !ISOLATED.has(r)).map((r) => ({
     name: `vitest ${r}`,
     // ⛔⛔ **分核預算,⛔ 不是「每一包都開 16 forks」。**
     //
@@ -345,7 +374,7 @@ if (argv.includes("--list")) {
   // ⭐ 裁剪的決定印到 **stderr** —— stdout 是給機器逐行 parse 的名單
   //   （`shipPlan.test.mjs` 就在讀它),⛔ 不可以混進去。
   if (!noSync) console.error(`# skills:sync 裁剪: ${syncTrim.why}`);
-  console.log([...(noSync ? [] : SERIAL), ...(onlySync ? [] : PARALLEL.map((j) => j.name))].join("\n"));
+  console.log([...(noSync ? [] : SERIAL), ...(onlySync ? [] : [...PARALLEL, ...ISOLATED_JOBS].map((j) => j.name))].join("\n"));
   process.exit(0);
 }
 
@@ -555,6 +584,16 @@ if (!onlySync) {
   await Promise.all(workers);
 }
 
+// ── ③ 獨佔段（見 ISOLATED 的註解）─────────────────────────────
+if (!onlySync && ISOLATED_JOBS.length) {
+  console.log(`🔒 獨佔段 ${ISOLATED_JOBS.length} 支（並行段跑完才跑、一包一包、不跟別人搶核）: ${ISOLATED_JOBS.map((j) => j.name).join(" · ")}`);
+  for (const job of ISOLATED_JOBS) {
+    const r = await run(job.name, job.cmd[0], job.cmd[1], estimateMs(job.name));
+    results.push({ ...r, phase: "isolated" });
+    process.stdout.write(`   ${r.code === 0 ? "✓" : "✗"} ${job.name} ${(r.ms / 1000).toFixed(1)}s（獨佔）\n`);
+  }
+}
+
 // ── 帳本 ───────────────────────────────────────────────────────────────
 // ⭐ 寫進**同一份** `docs/_data/deploy-timings.json`,用 `tools/deploy-timing`
 //    的 `ggd-deploy-timings@1` schema —— ⛔ 不是自己再開一份。
@@ -587,10 +626,22 @@ console.log(
     `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 tools/deploy-timing 同一份）`,
 );
 
+// ⭐ GH#1166：一張「幾乎什麼都沒跑」的綠燈，限定詞要寫在**結論旁邊**（見 shipEmptyGate.mjs；
+//   守衛 shipGateScript.test.ts 驗兩個方向＋這一行真的接到 ✅ 那一行）。
+const emptyNote = emptyGateNote({
+  onlySync,
+  noSync,
+  suites: wantSuites.length,
+  allSuites: ALL_SUITES.length,
+  syncSteps: syncTrim.steps?.length,
+  baseLabel: syncBase.label,
+  pathCount: syncPaths?.length,
+});
 if (failed.length === 0) {
-  console.log("\n✅ 四閘全綠。");
+  console.log(`\n✅ 四閘全綠。${emptyNote}`);
   process.exit(0);
 }
+if (emptyNote) console.error(emptyNote);
 // ⭐ 一次列完（⛔ 不是「修一個再跑一次」）—— 而且指名 log 檔,不截斷。
 console.error(`\n⛔ ${failed.length} 支紅了 —— ⭐ 一次列完:`);
 for (const f of failed) console.error(`   ✗ ${f.name}（exit ${f.code}） → ${f.log}`);

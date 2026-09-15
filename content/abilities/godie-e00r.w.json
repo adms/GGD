@@ -112,5 +112,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00r.w.webp",
-  "vfxKey": "fx.prim.physical.slash"
+  "vfxKey": "fx.prim.physical.slash",
+  "castTimeTier": "極小"
 }

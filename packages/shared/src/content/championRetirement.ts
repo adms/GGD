@@ -28,6 +28,7 @@
  * 收的是**算好的 Set**，不是這個模組 —— 見那邊的檔頭。
  */
 import { Configs } from "./registries";
+import { DEFAULT_HIDDEN_IN_VALHALLA, type HiddenInValhallaMode } from "./schema/config/roster";
 
 /** `content/config/roster.json` 的 doc id。 */
 export const ROSTER_DOC_ID = "roster";
@@ -109,4 +110,39 @@ export function hiddenChampionIds(): ReadonlySet<string> {
 /** 這一隻是不是隱藏英雄（＝隨機抽得到、手動選不到）。 */
 export function isHiddenChampionId(id: string): boolean {
   return hiddenChampionIds().has(id);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * 英靈殿對隱藏英雄的處理 —— GH#1251，owner 2026-09-14「隱藏角色要顯示」
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * ⚠️ 隱藏的語意（上面那一組）**一個字都沒動**：選人格子、玩家自己按的 🎲、商店照舊排除；
+ * 伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到（owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。
+ * 這一格只決定**英靈殿**要不要把隱藏清單當成排除名單傳下去 ——
+ * 修法放在呼叫端（`valhalla.ts`），⛔ 不改 `champSelectFilter.resolveToPickable`
+ * 的共用語意（它同時餵選人畫面與商店）。
+ */
+
+/**
+ * 從一份 `config.roster@1` 讀出英靈殿的隱藏英雄處理方式。
+ * ⚠️ 缺文件 / 缺欄位 / 值不認得 → 出貨預設 {@link DEFAULT_HIDDEN_IN_VALHALLA}（`"show"`）：
+ * 這一格是 owner 明說的那一側（高優先層預設啟動，第〇·六守則），
+ * 舊覆蓋層沒有這一格是**正常狀態**。
+ */
+export function hiddenInValhallaFromDoc(doc: unknown): HiddenInValhallaMode {
+  if (!doc || typeof doc !== "object") return DEFAULT_HIDDEN_IN_VALHALLA;
+  const d = doc as { schema?: unknown; hiddenInValhalla?: unknown };
+  if (d.schema !== ROSTER_SCHEMA) return DEFAULT_HIDDEN_IN_VALHALLA;
+  return d.hiddenInValhalla === "exclude" || d.hiddenInValhalla === "show"
+    ? d.hiddenInValhalla
+    : DEFAULT_HIDDEN_IN_VALHALLA;
+}
+
+/**
+ * 英靈殿要排除的隱藏英雄 —— `"show"` 時是空集合，`"exclude"` 時是整份隱藏清單。
+ * ⭐ 消費端：`apps/client/src/ui/platform/valhalla.ts` 的 `valhallaRoster()`。
+ */
+export function valhallaExcludedHiddenIds(): ReadonlySet<string> {
+  const doc = Configs.tryGet(ROSTER_DOC_ID);
+  return hiddenInValhallaFromDoc(doc) === "exclude" ? hiddenChampionIdsFromDoc(doc) : EMPTY;
 }

@@ -1,0 +1,342 @@
+{
+  "schema": "ggd.infinity-strash-blender-assembly@1",
+  "candidate": "vearn-en801-pre-transformation",
+  "meshFormat": "psk",
+  "createdAt": "2026-09-13T11:13:58.719805+00:00",
+  "blender": "5.2.1 LTS",
+  "inputs": [
+    {
+      "role": "body",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-psk-v1/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.psk",
+      "sha256": "b92cfa7ee6fa6f4eaa9491bca1a8ce07b9a3cf1663d51aa4f3201b5d26a522c6"
+    },
+    {
+      "role": "body",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/00/T_EN801_00_Body_Base.png",
+      "sha256": "eb4e08d4d30b2d261d74fc9b31eb60665a87f77d32f9189ecce94badf1295b6b"
+    },
+    {
+      "role": "body-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-material-context-v1/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.gltf",
+      "sha256": "92da8e605207d369b0c465ce69ca4a023a246132c73408b1aa966126d1ba23e6"
+    },
+    {
+      "role": "bodyNormal",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/00/T_EN801_00_Body_N.png",
+      "sha256": "07e759ae525db726327ad94fe38c9d9e69f14808e2506ec9978d41370b5c440a"
+    },
+    {
+      "role": "face",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-psk-v1/Strash/Chara/Monster/EN801/Face/SK_EN801_00_Face.psk",
+      "sha256": "b806f1a0edd6a9ef1e76978faf83f8c455f4ba0b8a895c9cb3aec6ee703e9099"
+    },
+    {
+      "role": "face",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Face/T_EN801_00_Face_Base.png",
+      "sha256": "9a229de45105cc6ef7d555a1b6606457af72b23cd89352464cc467fcdf5e7362"
+    },
+    {
+      "role": "face-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-material-context-v1/Strash/Chara/Monster/EN801/Face/SK_EN801_00_Face.gltf",
+      "sha256": "ee89d9f1ad916b7d2fe4dcda001af3dc4bb7bbd01b1d9402ce70ff368da5380a"
+    },
+    {
+      "role": "faceDecal1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Face/T_EN801_00_Face_CelDecal.png",
+      "sha256": "33fcb3b4efb71be9963cfc3275884c7bf193084354e75d454ae65d13d04ecc37"
+    },
+    {
+      "role": "faceDecal2",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Face/T_EN801_00_Face_Cell_Decal2.png",
+      "sha256": "b99bde248a0cb76b687880e761191da371ee0b72885697d701138f1c2f22a664"
+    },
+    {
+      "role": "faceDecal3",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Face/T_EN801_00_Face_Cell_Decal3.png",
+      "sha256": "062dd89e444aca95f029e979c1c53a7d5e9b22f5e7f862879d4d24b66c735e36"
+    },
+    {
+      "role": "faceNormal",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Face/T_EN801_00_Face_N.png",
+      "sha256": "a9b038a2f71ada605b638ee7c4a0aa7c8bc599ecdcf83f7c0a9ad2f3b67278c1"
+    },
+    {
+      "role": "hair",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-psk-v1/Strash/Chara/Monster/EN801/Hair/SK_EN801_00_Hair.psk",
+      "sha256": "fa89d92cba5649caf9de60057b431a53bb7c0f173fe14401c6d932860bef7103"
+    },
+    {
+      "role": "hair",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/Strash/Chara/Monster/EN801/Hair/T_EN801_00_Hair_Base.png",
+      "sha256": "d91b920345ac75121e2e2d947fdd70efd5457d7fe30d26ca1ebac9bad6f452a3"
+    },
+    {
+      "role": "hair-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-material-context-v1/Strash/Chara/Monster/EN801/Hair/SK_EN801_00_Hair.gltf",
+      "sha256": "f0ce33cdc94af79e78ffa47cb6f004378fbeda663781da82705a4a94704b894b"
+    },
+    {
+      "role": "native-animation-attack",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Atk01.psa",
+      "sha256": "083b810d24baa8db9ec67a12ea3acf9178a26552a38036e7a3408af983497ccd"
+    },
+    {
+      "role": "native-animation-death",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Dead01.psa",
+      "sha256": "a3a8117583ff94f12040f78fa67e109d41fac75d51c6b6d06e2c82562b1ebc06"
+    },
+    {
+      "role": "native-animation-idle",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Idle01_Lp.psa",
+      "sha256": "4097259cd17e1d2004c155ad88462dfe6403d8f03ed95c7e44da761f4ed13956"
+    },
+    {
+      "role": "native-animation-kaizer_phoenix",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Special01_01_KaizerPhoenix.psa",
+      "sha256": "a268d7cefaed5855f4404e16edaab4e92fc0127e922216c4a1c8df04022b3cc6"
+    },
+    {
+      "role": "native-animation-run",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Run01_F_Lp.psa",
+      "sha256": "458b09bc1e9d614d394dde3b87effd0e0efb6365b6a6232b057537b58270db20"
+    },
+    {
+      "role": "native-animation-special01",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Special01_01.psa",
+      "sha256": "08c6c06ddc278fcb3ef4b8eececc2348c940cd0dba8cc4258f2762baa80b5cb2"
+    }
+  ],
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-final-v2/vearn-en801-pre-transformation/vearn-en801-pre-transformation.glb",
+    "bytes": 4620692,
+    "sha256": "cd443a1f9f82679009b26e7508fac5e1c8305cc679b52bcd457f444f44d034fe"
+  },
+  "blend": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-final-v2/vearn-en801-pre-transformation/vearn-en801-pre-transformation.blend",
+    "bytes": 3380725,
+    "sha256": "d3b96e12ec9790d5d22cc080e45a1cffa7ac43e5d88fe9858f177a91629c4890"
+  },
+  "parts": [
+    {
+      "role": "body",
+      "sourceObject": "vearn-en801-pre-transformation-body",
+      "vertices": 7686,
+      "polygons": 12030
+    },
+    {
+      "role": "face",
+      "sourceObject": "vearn-en801-pre-transformation-face",
+      "vertices": 1923,
+      "polygons": 3186
+    },
+    {
+      "role": "hair",
+      "sourceObject": "vearn-en801-pre-transformation-hair",
+      "vertices": 883,
+      "polygons": 1544
+    }
+  ],
+  "combined": {
+    "object": "vearn-en801-pre-transformation-combined",
+    "vertices": 10492,
+    "polygons": 16760,
+    "materialRoles": [
+      "GGD_body",
+      "GGD_faceDecal1",
+      "GGD_faceDecal2",
+      "GGD_face",
+      "GGD_hair",
+      "GGD_faceDecal3"
+    ]
+  },
+  "bones": 292,
+  "animations": [
+    {
+      "role": "idle",
+      "clip": "GGD_native_idle",
+      "sourceSequence": "AS_EN801_00_B_Idle01_Lp",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Idle01_Lp.psa",
+      "sourceSha256": "4097259cd17e1d2004c155ad88462dfe6403d8f03ed95c7e44da761f4ed13956",
+      "frameRange": [
+        0.0,
+        80.0
+      ],
+      "removedRestPoseChannels": 31,
+      "retainedChannels": 553
+    },
+    {
+      "role": "run",
+      "clip": "GGD_native_run",
+      "sourceSequence": "AS_EN801_00_B_Run01_F_Lp",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Run01_F_Lp.psa",
+      "sourceSha256": "458b09bc1e9d614d394dde3b87effd0e0efb6365b6a6232b057537b58270db20",
+      "frameRange": [
+        0.0,
+        13.0
+      ],
+      "removedRestPoseChannels": 27,
+      "retainedChannels": 557
+    },
+    {
+      "role": "attack",
+      "clip": "GGD_native_attack",
+      "sourceSequence": "AS_EN801_00_B_Atk01",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Atk01.psa",
+      "sourceSha256": "083b810d24baa8db9ec67a12ea3acf9178a26552a38036e7a3408af983497ccd",
+      "frameRange": [
+        0.0,
+        60.0
+      ],
+      "removedRestPoseChannels": 29,
+      "retainedChannels": 555
+    },
+    {
+      "role": "death",
+      "clip": "GGD_native_death",
+      "sourceSequence": "AS_EN801_00_B_Dead01",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Dead01.psa",
+      "sourceSha256": "a3a8117583ff94f12040f78fa67e109d41fac75d51c6b6d06e2c82562b1ebc06",
+      "frameRange": [
+        0.0,
+        120.0
+      ],
+      "removedRestPoseChannels": 25,
+      "retainedChannels": 559
+    },
+    {
+      "role": "special01",
+      "clip": "GGD_native_special01",
+      "sourceSequence": "AS_EN801_00_B_Special01_01",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Special01_01.psa",
+      "sourceSha256": "08c6c06ddc278fcb3ef4b8eececc2348c940cd0dba8cc4258f2762baa80b5cb2",
+      "frameRange": [
+        0.0,
+        139.0
+      ],
+      "removedRestPoseChannels": 27,
+      "retainedChannels": 557
+    },
+    {
+      "role": "kaizer_phoenix",
+      "clip": "GGD_native_kaizer_phoenix",
+      "sourceSequence": "AS_EN801_00_B_Special01_01_KaizerPhoenix",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Special01_01_KaizerPhoenix.psa",
+      "sourceSha256": "a268d7cefaed5855f4404e16edaab4e92fc0127e922216c4a1c8df04022b3cc6",
+      "frameRange": [
+        0.0,
+        139.0
+      ],
+      "removedRestPoseChannels": 5,
+      "retainedChannels": 57
+    }
+  ],
+  "nativeAnimationCount": 6,
+  "proceduralAnimationCount": 0,
+  "embeddedAnimationNames": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_death",
+    "GGD_native_special01",
+    "GGD_native_kaizer_phoenix"
+  ],
+  "animationOptimization": {
+    "strategy": "preserve-bind-pose-baseline",
+    "preservedOriginalNodeBaselines": true,
+    "secondaryModeEnabled": false,
+    "secondaryBonePattern": "Cape|Hair|Skirt|Robe|Ribbon|Cloth|Face|Eye|Mouth|Cheek|Brow|Lip|Decal|Attach|Weapon|Sheath",
+    "tolerances": {
+      "translation": 0.003,
+      "rotation": 0.0003,
+      "scale": 0.0003
+    },
+    "clipToleranceOverrides": {},
+    "maximumRemovedComponentDelta": {
+      "translation": 0.0029518604278564453,
+      "rotation": 0.00027389079332351685,
+      "scale": 4.172325134277344e-07
+    },
+    "shiftedSecondaryNodePaths": [],
+    "clips": [
+      {
+        "clip": "GGD_native_idle",
+        "channelsBefore": 876,
+        "channelsAfter": 197,
+        "removed": 679
+      },
+      {
+        "clip": "GGD_native_run",
+        "channelsBefore": 876,
+        "channelsAfter": 184,
+        "removed": 692
+      },
+      {
+        "clip": "GGD_native_attack",
+        "channelsBefore": 876,
+        "channelsAfter": 215,
+        "removed": 661
+      },
+      {
+        "clip": "GGD_native_death",
+        "channelsBefore": 876,
+        "channelsAfter": 281,
+        "removed": 595
+      },
+      {
+        "clip": "GGD_native_special01",
+        "channelsBefore": 876,
+        "channelsAfter": 223,
+        "removed": 653
+      },
+      {
+        "clip": "GGD_native_kaizer_phoenix",
+        "channelsBefore": 876,
+        "channelsAfter": 45,
+        "removed": 831
+      }
+    ]
+  },
+  "filteredMaterials": [
+    {
+      "part": "body",
+      "material": "MI_EN801_00_Body_Outline"
+    },
+    {
+      "part": "body",
+      "material": "MI_EN801_00_Body_Outline"
+    },
+    {
+      "part": "body",
+      "material": "dummy_material_4"
+    },
+    {
+      "part": "face",
+      "material": "MI_EN801_01_Hair_Outline"
+    },
+    {
+      "part": "face",
+      "material": "MI_EN801_00_Face_Outline"
+    },
+    {
+      "part": "face",
+      "material": "MI_EN801_00_Face_Outline"
+    },
+    {
+      "part": "face",
+      "material": "MI_EN801_00_Face_Outline"
+    },
+    {
+      "part": "hair",
+      "material": "MI_EN801_01_Hair_Outline"
+    }
+  ],
+  "readiness": "textured-multipart-native-animation-candidate",
+  "limitations": [
+    "toon-shader-parity-pending",
+    "animation-event-semantic-review-pending",
+    "weapon-switching-and-attachment-behavior-pending",
+    "GGD-validation-pending",
+    "runtime-registration-pending",
+    "deployment-pending"
+  ]
+}

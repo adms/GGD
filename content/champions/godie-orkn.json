@@ -25,9 +25,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 78.1041,
+    "maxHealth": 80,
     "healthRegen": 0.1633,
-    "maxMana": 47.0969,
+    "maxMana": 50,
     "manaRegen": 0.1667,
     "ad": 1.9592,
     "armor": 0.6681,
@@ -69,17 +69,17 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 6.0,
+      "range": 6,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "cooldownTier": "小",
       "rangeTier": "中",
       "targetsEnemies": true,
@@ -88,12 +88,13 @@
         "params": {
           "status": {
             "statusId": "root",
-            "duration": 1.0,
+            "duration": 1,
             "root": true
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-orkn.w",
@@ -111,15 +112,15 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -139,12 +140,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "alcohol-enema",
-            "duration": 8.0,
+            "duration": 8,
             "moveSpeedMult": 0.9
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-orkn.e",
@@ -162,15 +164,15 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -181,12 +183,13 @@
           "damageTier": "小",
           "apRatio": 0.6,
           "damageType": "magic",
-          "intervalSec": 1.0,
-          "durationSec": 7.0,
+          "intervalSec": 1,
+          "durationSec": 7,
           "stacking": "refresh",
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-orkn.r",
@@ -203,13 +206,13 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -227,9 +230,10 @@
             "duration": 1.2,
             "stun": true
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

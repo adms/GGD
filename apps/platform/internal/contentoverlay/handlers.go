@@ -102,6 +102,8 @@ func (h *Handlers) community(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) Mount(r chi.Router) {
 	r.Group(func(ar chi.Router) {
 		ar.Use(h.adminOnly)
+		ar.Get("/content-overlay/champions/{id}/model-versions", h.modelSelection)
+		ar.Post("/content-overlay/champions/{id}/model-versions", h.modelSelection)
 		ar.Put("/content-overlay/docs/{collection}/{id}", h.put)
 		ar.Delete("/content-overlay/docs/{collection}/{id}", h.delete)
 		ar.Delete("/content-overlay/entries/{collection}/{id}", h.revert)

@@ -6,144 +6,144 @@
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
     "cooldownArrayAlongsideTier": 739,
-    "basicAttackHookNotOnCard": 34
+    "basicAttackHookNotOnCard": 29
   },
   "passiveWithCastTime": [
     {
       "id": "godie-e001.passive",
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     },
     {
       "id": "godie-e00n.passive",
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     },
     {
       "id": "godie-e00s.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-e00x.passive",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     },
     {
       "id": "godie-e010.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-emns.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-etyr.passive",
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     },
     {
       "id": "godie-h02r.passive",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     },
     {
       "id": "godie-hgam.passive",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     },
     {
       "id": "godie-hvsh.passive",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     },
     {
       "id": "godie-hvwd.passive",
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     },
     {
       "id": "godie-n003.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-n00b.passive",
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     },
     {
       "id": "godie-n01g.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-o00k.passive",
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     },
     {
       "id": "godie-o00l.passive",
-      "castTimeSec": 0.233
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-o02l.passive",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     },
     {
       "id": "godie-o030.passive",
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     },
     {
       "id": "godie-ofar.passive",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     },
     {
       "id": "godie-orkn.passive",
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     },
     {
       "id": "godie-osam.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u00h.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u00l.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u00n.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u00o.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u010.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u01u.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-u034.passive",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     },
     {
       "id": "godie-ubal.passive",
-      "castTimeSec": 1.433
+      "castTimeSec": 1
     },
     {
       "id": "godie-ucrl.passive",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     },
     {
       "id": "godie-udre.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-umal.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-uvng.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     },
     {
       "id": "godie-zombieking.passive",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   ],
   "cardSaysWideButTierIsNot": [
@@ -198,10 +198,6 @@
   },
   "basicAttackHookNotOnCard": [
     {
-      "id": "b2-guts.passive",
-      "name": "工傷先別打卡"
-    },
-    {
       "id": "community-review-01-20260907.passive",
       "name": "〔決鬥者的布局〕"
     },
@@ -220,10 +216,6 @@
     {
       "id": "community-review-07-20260907.passive",
       "name": "〔魔術師的節奏〕"
-    },
-    {
-      "id": "community-review-08-20260907.passive",
-      "name": "〔阿卡曼戰鬥直覺〕"
     },
     {
       "id": "community-review-09-20260907.passive",
@@ -274,10 +266,6 @@
       "name": "〔電力儲備〕"
     },
     {
-      "id": "community-review-25-20260907.passive",
-      "name": "〔興趣使然的英雄〕"
-    },
-    {
       "id": "community-review-26-20260907.passive",
       "name": "〔線索整理〕"
     },
@@ -298,20 +286,12 @@
       "name": "〔拖延症〕"
     },
     {
-      "id": "community-review-31-20260907.passive",
-      "name": "〔糞作獵人的讀招〕"
-    },
-    {
       "id": "community-review-32-20260907.passive",
       "name": "淫奔"
     },
     {
       "id": "community-review-34-20260907.passive",
       "name": "〔追上你了〕"
-    },
-    {
-      "id": "community-review-35-20260907.passive",
-      "name": "〔嗅覺・破綻辨識〕"
     },
     {
       "id": "community-review-36-20260907.passive",

@@ -116,13 +116,23 @@ describe("M5 紮根 / 主屬性覆寫（來源授予，⛔ 不換英雄卡）", 
     expect(w.health.get(foe)!.hp, "紮根的人應該仍然打得到人").toBeLessThan(hpBefore);
 
     // ② 施法 —— 技能真的落地(敵人身上多出那一格【定身】)。
+    // ⭐ 2026-09-15 —— 等多久由 **sim 自己**說（按下那一 tick 寫進 `cast.ticksLeft` 的吟唱 tick 數），
+    //    量的是「窗口內**任何一 tick** 敵人身上有【定身】」。⛔ 在此之前是寫死「40 tick 後看一次」＝
+    //    同時替吟唱時間（1.0 秒＝30 tick）與 1 階定身時長（0.6 秒＝18 tick）抄了字面值：
+    //    b2573ae03（GH#1260 B1-A）把 70-03 吟唱 1.0→0.5 之後，定身在第 ~33 tick 就已經結束，
+    //    40 tick 時才看 ⇒ 紅 —— 紅的訊息指向紮根，真相是吟唱變短（同 championFormAdoption 的 pressAndSettle）。
     w.abilities.get(me)!.slots.E.rank = 1;
     expect(castAbility(w, me, "E", { type: "self" })).toBe("ok");
-    for (let i = 0; i < 40; i++) w.step(NO_INTENTS);
-    const rooted = (w.status.get(foe)?.effects ?? []).some(
-      (e) => e.statusId === "root" && e.expiresAtTick > w.tick,
-    );
-    expect(rooted, "紮根的人施放的 70-03 應該真的把敵人綁住").toBe(true);
+    const castTicks = w.abilities.get(me)!.cast?.ticksLeft ?? 0;
+    let rootedAt = -1;
+    for (let i = 0; i < castTicks + 20; i++) {
+      w.step(NO_INTENTS);
+      const held = (w.status.get(foe)?.effects ?? []).some(
+        (e) => e.statusId === "root" && e.expiresAtTick > w.tick,
+      );
+      if (held && rootedAt < 0) rootedAt = i;
+    }
+    expect(rootedAt, `紮根的人施放的 70-03 應該真的把敵人綁住（吟唱 ${castTicks} tick ＋ 20 tick 內一次都沒綁到）`).toBeGreaterThanOrEqual(0);
   });
 
   it("⭐ primaryAttribute 覆寫掉英雄卡上的主屬性（每級加成因此換邊）", () => {

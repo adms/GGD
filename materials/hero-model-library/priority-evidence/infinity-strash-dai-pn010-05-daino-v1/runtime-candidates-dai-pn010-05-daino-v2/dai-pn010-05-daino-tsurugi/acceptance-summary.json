@@ -1,0 +1,135 @@
+{
+  "schema": "ggd.infinity-strash-single-runtime-acceptance@1",
+  "createdAt": "2026-09-13T14:33:59.836086+00:00",
+  "candidateId": "dai-pn010-05-daino-tsurugi",
+  "runtime": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/body.glb",
+    "bytes": 2206692,
+    "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+    "document": {
+      "id": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+      "schema": "model@1",
+      "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "byteSize": 2206692,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    }
+  },
+  "automatedValidation": {
+    "currentGgdContractAccepted": true,
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "三角面 16882 高於警戒值 16000，送審時需檢查演出負載。",
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    },
+    "khronosErrors": 0,
+    "webglImages": 18,
+    "webglComplete": true
+  },
+  "manualVisualReview": {
+    "status": "accepted-with-recorded-limitations",
+    "scope": "all 18 state samples at contact-sheet scale plus idle/run/attack/cast/death selected samples at original resolution",
+    "observation": "18 張 WebGL 六狀態取樣均可見完整 PN010/05 身體、臉、Hair/01、右手達伊之劍與背部劍鞘；idle/run/attack/cast 動作中未見爆模、蒙皮分離、武器脫離或舊帕布尼卡幾何，hurt/death 正確呈現共用 down 姿勢。簡化 PBR 與 atlas 已可辨識原作配色；toon shader、特效、動畫事件與實戰效能仍待後續驗收。",
+    "limitations": [
+      "This independent original-game option uses the PN010/05 body, PN010 Hair/01 and Dai no Tsurugi selected by CB_PN010_05.",
+      "The source body sheath is retained; the separately exported sword is rigid-skinned to the source-configured Weapon1_R socket.",
+      "Dormant Papunica and weapon-case switch faces are excluded from this option only; their source files remain preserved.",
+      "GGD hurt and death both reuse the acquired one-frame native down pose.",
+      "Native Special01 stays in the preserved conversion/archive set but is not referenced by the six-state runtime document.",
+      "Animation events, original effects, toon shader parity, gameplay acceptance and deployment remain pending."
+    ]
+  },
+  "registration": {
+    "heroId": "godie-nbbc",
+    "modelSelectionMode": "automatic",
+    "activeModelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+    "registeredVersion": {
+      "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+      "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+      "modelSha256": "0713cb62a180e45373831f8da1401cedb6a549be11c41086f2fa1e8eb3f20b2e",
+      "binarySha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "registeredAt": "2026-09-13T14:33:42.246Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/05，達伊之劍）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    "backendDropdownOptionPresentOnFeatureBranch": true,
+    "productionDeployed": false
+  },
+  "evidence": {
+    "assembly-receipt.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/assembly-receipt.json",
+      "bytes": 18910,
+      "sha256": "e0a64539aaf8f3805a7ef4014d56d15f798efd620dce18091b982644a6400835"
+    },
+    "normalization-receipt.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/normalization-receipt.json",
+      "bytes": 15797,
+      "sha256": "a9fe2e46de1f40058863a6c860d57c55dc262a3074f75b2a75a6b8429dcd33a5"
+    },
+    "khronos-input.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/khronos-input.json",
+      "bytes": 710913,
+      "sha256": "12a9469ceefc27a7e0cbc2a5a08f66aad6cdd5dd15129b0f05c221ff7a613120"
+    },
+    "babylon-nullengine.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/babylon-nullengine.json",
+      "bytes": 1413,
+      "sha256": "91f443c4a7209d330b49cf0b53151ede69d85dfc7fcf37819cb7009d1d3b0263"
+    },
+    "runtime-preparation.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/runtime-preparation.json",
+      "bytes": 19057,
+      "sha256": "c328c5112b2ecf08238dacbfa58bea4930c5b953dea871d8f79da60bdfb21adc"
+    },
+    "runtime-webgl-proof.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/runtime-webgl-proof.json",
+      "bytes": 10514,
+      "sha256": "bc19bc43e041c91a7edb02188a2501ebdf81b095ebd8c2e4309f68a680925780"
+    },
+    "runtime-webgl-run.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/runtime-webgl-run.json",
+      "bytes": 758,
+      "sha256": "2171c427151d13a09b2f336450889f0a1461c7354862eb03b99c4eb630ee64a7"
+    },
+    "contact-sheet.png": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/contact-sheet.png",
+      "bytes": 264725,
+      "sha256": "55f4c4d90f54dbc655dd469aee764c6d6ebac4f9f8c3ac73649e9e0d7b4b465e"
+    }
+  }
+}

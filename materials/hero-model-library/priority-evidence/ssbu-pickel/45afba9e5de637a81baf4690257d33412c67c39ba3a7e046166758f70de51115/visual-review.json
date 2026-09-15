@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-pickel-steve-c00-static-skinned-v1",
+  "modelSha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Steve head, torso, arms and legs.",
+    "The visible skin and clothing match Steve and remain distinct from the other Pickel identity.",
+    "No detached part, missing primary material, opaque facial card or bind-pose collapse is visible.",
+    "Review covers the static bind pose only because source and output contain no clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/front.png",
+      "bytes": 17409,
+      "sha256": "f1a9fe9b6af13ed15a6655e3bb35b8a62393a4ded26a98b325e5f6650405fb6a"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/back.png",
+      "bytes": 17213,
+      "sha256": "35c0f4719801633308667fb84bfaa8e27eec15fe25179e9f062e4ec2032b4ad5"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/isometric.png",
+      "bytes": 37657,
+      "sha256": "6a5ab574f9c96001093cf650c49c2e5257ee4c1f805415ad7a4ad08fcee92207"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/contact-sheet.png",
+      "bytes": 24685,
+      "sha256": "ca0153d80a8796f9fe5e21edd76f6482afa0a946ea65a710352c04db137bf5c6"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/webgl-proof.json",
+    "bytes": 4537,
+    "sha256": "b67bc1393cbc17daaaf0b40dd7dc81e6a44a8d42cde15bf8d7cce7ceec5972ab"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

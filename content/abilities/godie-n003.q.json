@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -37,17 +37,18 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "statusId": "slow40",
       "statusDurationSec": 1.5
     }
   },
   "vfxKey": "fx.prim.ice.shockwave",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "極大",
   "range": 12,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

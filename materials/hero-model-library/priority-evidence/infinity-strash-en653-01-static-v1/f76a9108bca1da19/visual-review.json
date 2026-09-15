@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "modelSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-13",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric WebGL renders show the complete hooded head, torso, arms, hands, legs, feet, robe and necklace.",
+    "No exploded skin, detached primary geometry, bind-pose collapse or opaque face card is visible.",
+    "Portable base-colour PBR makes the source palette visible but does not reproduce the Unreal toon shader.",
+    "Review covers only the bind pose because this component export contains zero animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/front.png",
+      "bytes": 177990,
+      "sha256": "f3c4b02189d9bc118b5e331bf05c6e55e86c2443331709e7b9454d6dccb03775"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/back.png",
+      "bytes": 115860,
+      "sha256": "8029bd6a8396778eae0c7ea4790bf0f5faf73c6842ebbeae1e053e0ab749b308"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/isometric.png",
+      "bytes": 158799,
+      "sha256": "e1c8e277bfc39474114471b6f8fa42c24ded2854be1954dc6dd93936bfb0ef77"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/contact-sheet.png",
+      "bytes": 289242,
+      "sha256": "630911b42cd9d24810ba7b59f39221d0424c9a46d2b9947232a5f9864b078f08"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/webgl-proof.json",
+    "bytes": 2514,
+    "sha256": "8c54aea5bcb48163312ed0e66d9c6be45251598b02fe3376367b28954c9e5a0e"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen-bounded-batch",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+  "source": {
+    "schemaVersion": 1,
+    "sourceId": "infinity-strash-sorcerer-popp-tellah9-20240613",
+    "title": "Sorcerer Popp / MasterWizardPopp",
+    "author": "Tellah9",
+    "game": "Infinity Strash: DRAGON QUEST The Adventure of Dai",
+    "aliases": [
+      "インフィニティ ストラッシュ ドラゴンクエスト ダイの大冒険",
+      "Infinity Strash Dragon Quest Dai no Daibouken",
+      "無限神速斬 勇者鬥惡龍 達伊的大冒險",
+      "无限神速斩勇者斗恶龙达伊的大冒险",
+      "無限神速劍（使用者原稱）"
+    ],
+    "platform": "PC mod; UE4.26 cooked Unreal assets",
+    "sourceURL": "https://patch.ali213.net/showpatch/263685.html",
+    "upstreamURL": "https://www.nexusmods.com/infinitystrashdragonquesttheadventureofdai/mods/21",
+    "upstreamURLBasis": "Nexus top list identifies Sorcerer Popp by Tellah9; archive filename includes mod number 21; individual source fetch returned Cache miss",
+    "downloadURL": "https://patch1.ventacorius.com/2024/AL213-Sorcerer%20Popp-21-0-1-1718317608-263685.zip",
+    "downloadDiscovery": [
+      "Ali213 source page normal download iframe",
+      "https://so.ventacorius.com:4433/search?key=2cafAgQDCQBUBVZSVFMCUQAKAgVWUVEJVwZTVgABDgNVWlc",
+      "https://patch.ventacorius.com:4433/down/263685.html"
+    ],
+    "downloaded": true,
+    "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+    "archiveBytes": 877392,
+    "archiveSha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
+    "sourceConditions": "Public mirror download; original mod author credited Tellah9; no explicit redistribution/conversion grant established in inspected mirror. Preserve provenance; do not treat acquisition as license grant.",
+    "resourceRole": "community-mod-animation-and-spell-reserve",
+    "heroIds": [
+      "b2-popp"
+    ],
+    "sourceCharacterId": "PN020",
+    "readiness": "reserve-extracted-missing-original-game-dependencies",
+    "ggdRuntimeReady": false,
+    "nativeGameOriginal": false,
+    "sourceBodyModelCount": 0,
+    "exportedSkeletonCount": 0,
+    "animationSequenceCount": 1,
+    "animationMontageCount": 5,
+    "playableStandardAnimationCount": 0,
+    "skillIconTexture2DCount": 2,
+    "audioFileCount": 0,
+    "audioBankCount": 0,
+    "externalPackageDependencyCount": 77,
+    "limitations": [
+      "Not the complete base game or full character package.",
+      "Original game files unavailable for byte-equivalence comparison; this package is a community modification.",
+      "AnimSequence compressed bone tracks not decoded; source skeleton absent; no GLB conversion attempted.",
+      "Five AnimMontages contain playback/event data, not five proven independent skeletal clips.",
+      "NiagaraComponent and NiagaraDataInterfaceCurve exports are component/configuration data; full NiagaraSystem/particle/texture dependencies absent.",
+      "15 AnimNotify_AkEvent_C exports are external event references, not voice/audio files.",
+      "Vearn young/old transformations and Dai dragon form were not verified from this package.",
+      "URL shortcut files and mirror promotional text preserved but never executed."
+    ]
+  },
+  "verifiedCounts": {
+    "downloadedArchives": 1,
+    "pakEntries": 111,
+    "uassetPackages": 53,
+    "animationSequences": 1,
+    "animationMontages": 5,
+    "bodyModels": 0,
+    "skeletons": 0,
+    "playableGlbClips": 0,
+    "audioFiles": 0,
+    "audioBanks": 0,
+    "skillIconTextures": 2
+  },
+  "analysisFiles": {
+    "source.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/source.json",
+    "README.md": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/README.md",
+    "archive-manifest.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/archive-manifest.json",
+    "pak-extracted.manifest.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted.manifest.json",
+    "uasset-export-analysis.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/uasset-export-analysis.json",
+    "animation-candidates.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/animation-candidates.json",
+    "audio-file-index.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/audio-file-index.json",
+    "dependency-index.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/dependency-index.json",
+    "other-source-leads.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/other-source-leads.json",
+    "file-manifest.json": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/file-manifest.json"
+  },
+  "leadCount": 6,
+  "totalLocalFilesExcludingManifest": 131,
+  "totalLocalBytesExcludingManifest": 29544393,
+  "centralIndexesModified": false,
+  "gitModified": false,
+  "s3Modified": false,
+  "nextAction": "Keep as model/action-source reserve; obtain missing original Popp skeleton/body/dependencies normally before conversion; no playable GGD default change."
+}

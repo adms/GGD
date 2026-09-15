@@ -13,9 +13,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    600.0,
+    600.0,
+    600.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
@@ -50,7 +50,7 @@
       ]
     }
   ],
-  "castTimeSec": 1.433,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-28-20260907.r.webp",
   "template": {
@@ -69,7 +69,7 @@
       "pushSpeed": 872,
       "pushFrom": "facing",
       "pushLaunchHeight": 0,
-      "castTimeSec": 1.433
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

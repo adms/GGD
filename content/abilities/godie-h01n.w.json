@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "range": 4.5,
   "targetsEnemies": true,
@@ -108,7 +108,8 @@
   "icon": "assets/icons/abilities/godie-h01n.w.webp",
   "vfxKey": "fx.prim.physical.slash",
   "cooldownTier": "極大",
-  "manaCostTier": "極小",
+  "castTimeTier": "大",
   "rangeTier": "小",
-  "castTimeSec": 0.667
+  "manaCostTier": "極小",
+  "castTimeSec": 0.5
 }

@@ -1,0 +1,101 @@
+{
+  "schema": "ggd-ssbu-static-component-normalization@1",
+  "candidateId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend",
+    "bytes": 5646396,
+    "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19"
+  },
+  "sourceActionCount": 0,
+  "blenderExport": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/blender-export.glb",
+    "bytes": 834264,
+    "sha256": "927308cfc3307f8d9c6d8818541c5ff7cc8c3cf83926de40f8deb2cac3cad4f3",
+    "conversionReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/conversion.json",
+      "bytes": 10897,
+      "sha256": "8e50efd14b1d97daf9f2a56dab01d7f64ed6d1966f0956818daac0c5cc4ff926"
+    },
+    "drawPrimitives": 13,
+    "triangles": 11086,
+    "skins": 1
+  },
+  "structuralCoalescing": {
+    "meshNodesBefore": 13,
+    "meshNodesAfter": 1,
+    "primitivesBefore": 13,
+    "primitivesAfter": 13,
+    "sharedSkinIndex": 0,
+    "sourceTransformsRequired": "identity",
+    "geometryBinaryReencoded": false
+  },
+  "officialNormalization": {
+    "drawCalls": {
+      "before": 13,
+      "after": 6
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+    "bytes": 1373696,
+    "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+    "drawPrimitives": 6,
+    "triangles": 11086,
+    "skins": 1,
+    "skinnedPrimitives": 6,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 96363,
+        "sha256": "e06697b09ee50f5e9826f720979d62a89a88e3fdb71edd1380b1ab965a896d1e"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 34996,
+        "sha256": "c1522f8e11657f658672500d8a54d6d6ad0d66b0ecaf18c9a5ec7e6d7487df87"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 63773,
+        "sha256": "de251a7b50c8e046784d53123319522c80de5680dd7203ce54f2cf33f5b254a0"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 37995,
+        "sha256": "d0b1ad7702fb1fffe628f74d8303a773766aa5b0508fa042e0b9a5b25558f6ed"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 19319,
+        "sha256": "0dca0cc0fc9ed66e7a357037e8804c89817d9214aa988e6a9b0c80301fd6e02b"
+      }
+    ],
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This applies GGD normalization to an independent static skinned component; it does not create a complete hero model.",
+    "The source and output contain zero animation clips, so six-state gameplay readiness is not established.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

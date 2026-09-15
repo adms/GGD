@@ -12,7 +12,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, readdirSync, existsSync, readFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readdirSync, existsSync, readFileSync, realpathSync, copyFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -85,5 +85,41 @@ describe("規則快照 scripts/backup-rules.sh", () => {
     expect(readdirSync(join(snap, "memory")).sort()).toEqual(["a.md", "b.md"]);
     // 記憶自己的 git（真的能看 diff 的那個版本控制）
     expect(existsSync(join(home, "memory", ".git"))).toBe(true);
+  });
+
+  /**
+   * ⭐ GH#1254：上面那條用 `GGD_RULES_HOME` 繞過了路徑推導 ⇒ **結構上測不到**「在 worktree 裡推錯 slug」
+   * （失敗形態⑤：被測的不是出貨的那個）。這一條 ⛔ 不設它：臨時主 repo ＋ 它的 worktree，`HOME` 指到暫存目錄，
+   * 從 **worktree** 跑 ⇒ 快照要落在**主 repo** 的 slug 底下；反方向：記憶目錄不存在 ⇒ 非零且 stderr 說出來
+   * （⛔ 在此之前是「exit 1、一個字都沒印」）。
+   */
+  it("在 worktree 裡跑：快照落在主工作樹的 slug；記憶不存在 ⇒ 非零並說出路徑", () => {
+    const box = realpathSync(mkdtempSync(join(tmpdir(), "ggd-1254-wt-")));
+    const main = join(box, "main");
+    const git = (cwd: string, ...a: string[]) =>
+      execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...a], { cwd, stdio: "pipe" });
+    mkdirSync(join(main, "scripts"), { recursive: true });
+    for (const f of ["backup-rules.sh", "claude_project_dir.py"]) copyFileSync(join(REPO, "scripts", f), join(main, "scripts", f));
+    writeFileSync(join(main, "CLAUDE.md"), "rules\n");
+    git(main, "init", "-q"); git(main, "add", "."); git(main, "commit", "-qm", "init");
+    git(main, "worktree", "add", "-q", join(box, "wt"));
+
+    const home = join(box, "home");
+    const slugDir = join(home, ".claude/projects", main.replace(/[^A-Za-z0-9]/g, "-"));  // Claude Code 的 slug 規則
+    mkdirSync(join(slugDir, "memory"), { recursive: true });
+    for (const f of ["a.md", "b.md"]) writeFileSync(join(slugDir, "memory", f), f);
+    const { GGD_RULES_HOME: _drop, ...env } = process.env;
+    const run = () => spawnSync("bash", [join(box, "wt/scripts/backup-rules.sh")], { encoding: "utf8", env: { ...env, HOME: home } });
+
+    const ok = run();
+    expect(ok.status, ok.stdout + ok.stderr).toBe(0);
+    const snaps = readdirSync(join(slugDir, "rules-backup"));
+    expect(snaps, "快照沒有落在主工作樹的 slug 底下（⇒ 又用 worktree 路徑推了）").toHaveLength(1);
+    expect(readdirSync(join(slugDir, "rules-backup", snaps[0]!, "memory")).sort()).toEqual(["a.md", "b.md"]);
+
+    rmSync(join(slugDir, "memory"), { recursive: true });
+    const bad = run();
+    expect(bad.status, "記憶目錄不存在卻回 0").not.toBe(0);
+    expect(bad.stderr, "⛔ 靜默失敗：沒有說出嘗試過的路徑").toContain(join(slugDir, "memory"));
   });
 });

@@ -1,16 +1,16 @@
 {
   "id": "lol-karthus",
   "name": "卡爾瑟斯",
-  "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+  "modelKey": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 45.833673469387755,
+    "maxHealth": 80,
     "healthRegen": 0.10673469387755102,
-    "maxMana": 0.9581632653061187,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -62,10 +62,10 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -83,7 +83,7 @@
           }
         }
       ],
-      "castTimeSec": 1.133,
+      "castTimeSec": 0.3,
       "castTimeTier": "中",
       "template": {
         "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -94,7 +94,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 0.3
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
@@ -117,10 +117,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -144,7 +144,7 @@
           "moveSpeedMult": 0.65
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -154,7 +154,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -176,10 +176,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 0.0,
@@ -209,7 +209,7 @@
           "anchor": "caster"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -221,7 +221,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.1,
           "radius": 4.5
         },
         "inheritDefaults": true,
@@ -243,9 +243,9 @@
         120.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 12,
@@ -263,7 +263,7 @@
           }
         }
       ],
-      "castTimeSec": 3.4,
+      "castTimeSec": 1,
       "castTimeTier": "極大",
       "template": {
         "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -274,7 +274,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 3.4
+          "castTimeSec": 1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
@@ -296,5 +296,138 @@
     "magic"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-karthus.webp"
+  "icon": "assets/icons/champions/lol-karthus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0c5df87ee0f8b37a38897e2b5bc903c681d8250dbe156c75",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "60876c7c7df2efd1181dd5c8b5c1a2a4f12e40d8c8d7be1c8314cb183d777667",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.581Z",
+      "source": {
+        "kind": "previous",
+        "character": "卡爾瑟斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.0cb6555ccbf4b9e95eb4bc18071445cebafcf75d5675eb00",
+      "label": "卡爾瑟斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "4e43af5943de4d7703d21e96260f0f8c081b77dfc70f2f65ab1ccf517b2d1932",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.597Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-karthus.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
+      "label": "卡爾瑟斯",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "a5decad4c5ece0d1a79e3d6ccbd1d01fd2436f002b6c49b12d2299fd03e2c206",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.711Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:karthus",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.80c676912c0c63a47519b75f49821316bb6d80cc335f3801",
+      "label": "卡爾瑟斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "6523a690dd250730a5062daf27dca2b40ef051d8c3be88393fa50eefa2c41e40",
+      "binarySha256": "d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972",
+      "registeredAt": "2026-09-12T23:12:03.735Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-karthus.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e2db418dc4431b5e5ccdcc50ca8ecc33946efeb840296340",
+      "label": "卡爾瑟斯",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "f7339afd7f876e3f94e25b855e5351d87b37cdffea7af8690999f290005a470c",
+      "binarySha256": "d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972",
+      "registeredAt": "2026-09-12T23:12:03.866Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:karthus",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8c7d9c17a45eacbf0463ad09896708d85b8a8602f16344c5",
+      "label": "卡爾瑟斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "280468a24f80fdc718f0c103d416ac719ef2f387591466b688ca6664c416c4f9",
+      "binarySha256": "d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972",
+      "registeredAt": "2026-09-13T00:09:07.750Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-karthus.json",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
+      "label": "卡爾瑟斯",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "8d8ecfb9b0b8269e8873080f01003f4dc14a4e122268c286fc8818cf7c60d535",
+      "binarySha256": "d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972",
+      "registeredAt": "2026-09-13T00:09:07.882Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:karthus",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

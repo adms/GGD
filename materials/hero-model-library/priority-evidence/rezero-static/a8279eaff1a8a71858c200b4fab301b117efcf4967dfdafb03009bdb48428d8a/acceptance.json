@@ -1,0 +1,28 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+      "nativeId": "subaruPrefab",
+      "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "The source face renderer contains no bones, bind poses, joint indices or weights; it is preserved as a one-joint hierarchy-rigid skin below the native head.",
+        "The rejected Z-up conversion is retained in the S3 archive; Subaru is visually verified as Y-up."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
+  "bytes": 340132357,
+  "sha256": "a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167",
+  "readbackVerified": true,
+  "reusedExisting": false,
+  "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+  "type": "zip",
+  "originalLocalArchive": "outputs/model-source-backups/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
+  "contentKind": "complete-intake"
+}

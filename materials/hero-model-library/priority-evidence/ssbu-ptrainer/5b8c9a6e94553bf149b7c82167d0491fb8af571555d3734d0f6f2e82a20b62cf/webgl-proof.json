@@ -1,0 +1,355 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.8841024502029455,
+      -1.288197419130853e-07,
+      -0.2701794594509429
+    ],
+    "max": [
+      0.8841025475573971,
+      1.7999994777516888,
+      0.2701798185671855
+    ],
+    "extent": [
+      1.7682049977603427,
+      1.7999996065714308,
+      0.5403592780181283
+    ]
+  },
+  "geometry": [
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive0",
+      "vertices": 3007,
+      "indices": 13446,
+      "worldBounds": {
+        "min": [
+          -0.6431078332782576,
+          -1.288197419130853e-07,
+          -0.2701794594509429
+        ],
+        "max": [
+          0.6431079306327092,
+          1.7999994777516888,
+          0.2701798185671855
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive1",
+      "vertices": 286,
+      "indices": 1296,
+      "worldBounds": {
+        "min": [
+          0.03141621156148955,
+          0.9775345931301958,
+          -0.20010982228456128
+        ],
+        "max": [
+          0.14453396436421695,
+          1.1696284442602918,
+          0.15286579578817114
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive2",
+      "vertices": 1430,
+      "indices": 6534,
+      "worldBounds": {
+        "min": [
+          -0.24035563098153645,
+          1.0096234123918508,
+          -0.25433212840242286
+        ],
+        "max": [
+          0.24035665320327837,
+          1.6493805197914215,
+          0.17439931549813492
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive3",
+      "vertices": 2616,
+      "indices": 11886,
+      "worldBounds": {
+        "min": [
+          -0.8841024502029455,
+          0.24680368118456858,
+          -0.10998625318832009
+        ],
+        "max": [
+          0.8841025475573971,
+          1.6369844783338106,
+          0.18840176093213282
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive4",
+      "vertices": 15,
+      "indices": 48,
+      "worldBounds": {
+        "min": [
+          0.03888557061806441,
+          1.5068202351902646,
+          0.13685368108179352
+        ],
+        "max": [
+          0.0810324849418449,
+          1.5905568354160384,
+          0.15369531756821025
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "_Gamemodel_bagAsc5_Quadrangle2Shape_primitive5",
+      "vertices": 15,
+      "indices": 48,
+      "worldBounds": {
+        "min": [
+          -0.08103266748144167,
+          1.506820137835824,
+          0.13685366891248796
+        ],
+        "max": [
+          -0.03888584442745957,
+          1.590556835416042,
+          0.15369530539887521
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 72,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "def_ptrainer_female_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_ptrainer_female_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "metal_ptrainer_female_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "metal_ptrainer_female_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "alp_ptrainer_female_001",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "alp_ptrainer_female_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "skin_ptrainer_female_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "skin_ptrainer_female_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 292,
+        "height": 1
+      }
+    },
+    {
+      "name": "def_ptrainer_female_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "metal_ptrainer_female_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "alp_ptrainer_female_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "skin_ptrainer_female_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

@@ -16,6 +16,11 @@ STEP="${1:?用法: scripts/genrun.sh <pnpm step,例 shapes:build> [要跑的 scr
 #   `content:build:raw`；`--step` 仍然用**公開名**去查 sync-io.json 的 writes。
 #   ⛔ 少了這個分離，wrapper 會呼叫自己 ⇒ 無窮遞迴。
 RUN="${2:-$STEP}"
+# ⭐ GH#1255 —— 第三個以後的參數**原樣轉發**給 `pnpm "$RUN"`。
+#   ⛔ 在此之前它們被丟掉 ⇒ `pnpm msgledger:build --date 2026-09-11` 的 `--date` 消失、只重建今天
+#   ⇒ 09-11／09-12 的缺列只能手動 insert 補（commit d935cfc98）。把參數塞進 `$2` 也不行
+#   （`pnpm "msgledger:check --date …"` ⇒ Command not found）。
+EXTRA=("${@:3}")
 
 # ⭐⭐ GH#950 —— **內容樹的獨佔鎖**。
 #
@@ -34,10 +39,8 @@ if [ "${GGD_QUARANTINE_UNLOCKED:-0}" != "1" ] && [ "${GGD_CONTENT_LOCK_HELD:-0}"
   export GGD_CONTENT_LOCK_HELD=1
   # ⚠️ ⛔ 不可以寫 `"$0" "$STEP" "${2:-}"` —— `$2` 沒給時那會傳一個**空字串**，
   #   而下面的 `RUN="${2:-$STEP}"` 對空字串**不會**套預設 ⇒ `pnpm ""`。
-  if [ "$#" -ge 2 ]; then
-    exec python3 scripts/content-tree-lock.py write -- bash "$0" "$STEP" "$2"
-  fi
-  exec python3 scripts/content-tree-lock.py write -- bash "$0" "$STEP"
+  #   ⭐ `"$@"` 原樣轉發（沒給 `$2` 時就不會有那個空字串；第三個以後的參數也一起過去）。
+  exec python3 scripts/content-tree-lock.py write -- bash "$0" "$@"
 fi
 
 # ⭐⭐ GH#815 —— **巢狀防護**。`sync.mjs`（skills:sync）一開始就把整個隔離區解鎖，
@@ -46,7 +49,7 @@ fi
 #   ⭐ 而那是一個「只在鏈裡發生、單獨跑永遠是綠的」的缺陷（本 repo 最難查的那一種）。
 #   ⇒ 已經在解鎖上下文裡時，這支腳本**只負責跑**，⛔ 不碰鎖。
 if [ "${GGD_QUARANTINE_UNLOCKED:-0}" = "1" ]; then
-  pnpm "$RUN"
+  pnpm "$RUN" ${EXTRA[@]+"${EXTRA[@]}"}
   RC=$?
   [ "$RC" -eq 0 ] || echo "✗✗ genrun: \`pnpm $RUN\` 失敗（exit ${RC}）" >&2
   exit "$RC"
@@ -86,7 +89,7 @@ if [ "${GGD_RECONCILE_OFF:-0}" != "1" ]; then
     { echo "⚠️ 對帳快照拍不出來 —— 這一輪**沒有對帳**（⛔ 不是通過）。" >&2; rm -f "$SNAP"; SNAP=""; }
 fi
 
-GGD_QUARANTINE_UNLOCKED=1 pnpm "$RUN"
+GGD_QUARANTINE_UNLOCKED=1 pnpm "$RUN" ${EXTRA[@]+"${EXTRA[@]}"}
 RC=$?
 
 # ⭐ 在**重新上鎖之前**對帳（chmod 只動權限位，⛔ 不動 mtime/size，兩邊順序都安全，

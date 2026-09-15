@@ -11,9 +11,14 @@ import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import { defaultPrefersVoxelBody } from "@ggd/shared/content/voxelSkin";
+import { registerShippedModelDocs } from "@ggd/shared/testkit/shippedModelDocs";
 import { isStandInModel, STAND_IN_MODEL_KEYS, STAND_IN_NOTE_ZH } from "./standIn";
 
-beforeAll(() => registerSkeletonContent());
+// GH#1250：判準讀模型文件的 glb（⛔ 沒有種子退路）⇒ 離線也要有出貨的模型文件，走跟瀏覽器同一條 registry 查法。
+beforeAll(() => {
+  registerSkeletonContent();
+  registerShippedModelDocs();
+});
 
 describe("stand-in model detection", () => {
   it("flags every known generic KayKit fallback key", () => {

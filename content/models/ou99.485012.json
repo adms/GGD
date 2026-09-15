@@ -12,5 +12,6 @@
   "hurt": "stand",
   "death": "death"
  },
- "heroBody": true
+ "heroBody": true,
+ "yawOffsetDeg": 270
 }

@@ -150,7 +150,9 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // ⭐ 2026-09-11：`generated` 125 → **132**、`name` 15 → **8** —— LOL 7 位的原作日文語音
     //   （Riot ja_JP WAD，owner 的素材工作流解碼）落地成純原檔語音包 ⇒ 他們從「只有呼名」
     //   升到「有語音包」那一階。剩下的 8 位沒有語音包，⛔ 也沒有 map quip。
-    expect(byTier).toEqual({ authored: 13, generated: 132, name: 8 });
+    // ⭐ 2026-09-14（PR #1152）：`generated` 132 → **133**、`name` 8 → **7** —— b2-kisaragi 的原作
+    //   列車廣播（「ドアが閉まります」）進了 select 池（3c85197b8），它從呼名那一階升上來。
+    expect(byTier).toEqual({ authored: 13, generated: 133, name: 7 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -242,7 +244,8 @@ describe("the generated voice pack, as shipped today", () => {
     // (owner「我們合成不講中文 只講日文」), so its click falls to the name rung until the
     // owner supplies Japanese text or an original clip. Anyone else missing a pool is a
     // regression; kisaragi gaining one must be removed from here.
-    const SELECT_PENDING = ["b2-kisaragi"];
+    // ⭐ 2026-09-14（PR #1152）：kisaragi 的原作列車廣播進了 select 池 ⇒ 名單清空（⛔ 誰再掉進來就是回歸）。
+    const SELECT_PENDING: string[] = [];
     const noPool = Object.entries(PACK?.champions ?? {})
       .filter(([, entry]) => (entry.lines["select"]?.length ?? 0) === 0)
       .map(([id]) => id)
@@ -278,6 +281,6 @@ describe("the generated voice pack, as shipped today", () => {
     expect(generated.sort()).toEqual(packedNonAuthored.sort());
     // 57 → 52 for the same reason as the tier table above: the 48 retired
     // champions left the measured roster on 2026-08-27, not the pack.
-    expect(generated.length).toBe(132) // 2026-09-10: 52 + 73 new heroes whose select pool landed (b2-kisaragi pending, see SELECT_PENDING); + LOL 7（2026-09-11 原作日文包）
+    expect(generated.length).toBe(133) // 2026-09-10: 52 + 73 new heroes whose select pool landed; + LOL 7（2026-09-11 原作日文包）; + b2-kisaragi（2026-09-14 原作列車廣播）
   });
 });

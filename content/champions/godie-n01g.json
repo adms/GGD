@@ -25,9 +25,9 @@
     "range": 7.3
   },
   "growth": {
-    "maxHealth": 28,
+    "maxHealth": 80,
     "healthRegen": 0.07,
-    "maxMana": 22,
+    "maxMana": 50,
     "manaRegen": 0.07,
     "ad": 1.08,
     "armor": 0.5,
@@ -66,10 +66,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -94,13 +94,14 @@
       ],
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.133,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-n01g.w",
@@ -118,15 +119,15 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.blood.pulse-sm",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-heal",
@@ -134,21 +135,22 @@
           "target": "self",
           "amount": {
             "perRank": [
-              200.0,
-              360.0,
-              520.0,
-              680.0
+              200,
+              360,
+              520,
+              680
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-n01g.e",
@@ -166,14 +168,14 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.ice.bolt",
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -186,9 +188,10 @@
             "damageTier": "大"
           },
           "damageType": "magic",
-          "castTimeSec": 1.7
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-n01g.r",
@@ -206,9 +209,9 @@
       ],
       "cooldownTier": "極大",
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "effects": [
@@ -229,7 +232,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 0.35,
+          "delaySec": 0.3,
           "effects": [
             {
               "kind": "floatingText",
@@ -250,7 +253,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 0.7,
+          "delaySec": 0.6,
           "effects": [
             {
               "kind": "floatingText",
@@ -271,7 +274,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 1.05,
+          "delaySec": 0.9,
           "effects": [
             {
               "kind": "floatingText",
@@ -303,7 +306,7 @@
               "kind": "screenShake",
               "shape": "single",
               "amplitude": 0.8,
-              "durationSec": 1.0,
+              "durationSec": 1,
               "applyTo": "all"
             }
           ],
@@ -318,7 +321,7 @@
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 2.0,
+              "duration": 2,
               "moveSpeedMult": 0.5
             }
           ],
@@ -328,7 +331,7 @@
       ],
       "targetsEnemies": true,
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -359,9 +362,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

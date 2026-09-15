@@ -1,0 +1,166 @@
+{
+  "schema": "ggd-kofxiv-priority-extraction@1",
+  "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+  "sourceGame": "THE KING OF FIGHTERS XIV",
+  "platform": "Windows (Steam)",
+  "installedReleaseMarker": "Release_ver_1.26.txt present",
+  "source": {
+    "absolutePath": "/Volumes/common/THE KING OF FIGHTERS XIV/assets.wad",
+    "bytes": 17873349716,
+    "sha256": "96a14e2b0bd5a4de829e7b468b43909cc96a72d2ae3babcc3ef5d5d6249091f0",
+    "access": "read-only SMB"
+  },
+  "decoder": {
+    "name": "QuickBMS 0.12.0 64-bit test binary under Rosetta",
+    "executablePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-complete-mirror/prebuilt-macos-0.12.0/quickbms_4gb_files",
+    "executableSha256": "53f7a42ce35a68acf21a247b291032abe29b07246188f73df8eed776abca0af7",
+    "scriptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-0.12.0/kofxiv.bms",
+    "scriptSha256": "ede3b47205d8fd92caceb9bcb96450ac7a03139359564dadfd8529c2d1b5bd13",
+    "scriptVersion": "kofxiv.bms 0.2"
+  },
+  "wadIndex": {
+    "totalEntries": 39889,
+    "pathSafetyVerified": true,
+    "priorityEntries": 1088
+  },
+  "characters": [
+    {
+      "nativeCharacterId": "IOR",
+      "nameZh": "八神庵",
+      "originalName": "Iori Yagami",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "fileCount": 365,
+      "bytes": 150154256,
+      "assetKindCounts": {
+        "animation": 3,
+        "audio": 154,
+        "audio-metadata": 7,
+        "configuration": 33,
+        "model": 27,
+        "skeleton": 2,
+        "texture": 110,
+        "vfx": 29
+      },
+      "designStatus": "existing-ggd-hero-definition",
+      "identityConfidence": "native-character-directory-exact"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "nameZh": "草薙京",
+      "originalName": "Kyo Kusanagi",
+      "heroIds": [],
+      "fileCount": 354,
+      "bytes": 140968470,
+      "assetKindCounts": {
+        "animation": 3,
+        "audio": 170,
+        "audio-metadata": 7,
+        "configuration": 32,
+        "model": 20,
+        "skeleton": 2,
+        "texture": 93,
+        "vfx": 27
+      },
+      "designStatus": "acquired-model-awaiting-hero-design",
+      "identityConfidence": "native-character-directory-exact"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "nameZh": "不知火舞",
+      "originalName": "Mai Shiranui",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "fileCount": 369,
+      "bytes": 133417084,
+      "assetKindCounts": {
+        "animation": 3,
+        "audio": 150,
+        "audio-metadata": 7,
+        "configuration": 25,
+        "model": 31,
+        "skeleton": 16,
+        "texture": 116,
+        "vfx": 21
+      },
+      "designStatus": "existing-ggd-hero-definition",
+      "identityConfidence": "native-character-directory-exact"
+    }
+  ],
+  "extensionCounts": {
+    ".cact": 3,
+    ".cast": 3,
+    ".catk": 3,
+    ".cbas": 3,
+    ".ccmd": 3,
+    ".cdmg": 3,
+    ".ceff": 3,
+    ".cmtr": 3,
+    ".comb": 3,
+    ".crct": 3,
+    ".cseq": 3,
+    ".csv": 21,
+    ".dat": 15,
+    ".dds": 271,
+    ".eff": 71,
+    ".leff": 3,
+    ".obac": 78,
+    ".ocam": 3,
+    ".ogg": 474,
+    ".omir": 10,
+    ".onc": 21,
+    ".osec": 10,
+    ".otra": 9,
+    ".png": 48,
+    ".sbnk": 12,
+    ".sgrp": 3,
+    ".slst": 6
+  },
+  "totalExtractedBytes": 424539810,
+  "filesIndex": {
+    "path": "files.jsonl.gz",
+    "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+  },
+  "audioFilesIndex": {
+    "path": "audio-files.jsonl.gz",
+    "sha256": "c7ae294a46e1917b9d3b7dc039de8079d1b6f35e0147c1dad03e603ad6031577",
+    "fileCount": 474
+  },
+  "audioFileIndex": {
+    "path": "audio-analysis-v2.json",
+    "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2",
+    "fileCount": 474
+  },
+  "states": {
+    "sourceFound": true,
+    "sourceRead": true,
+    "extracted": true,
+    "hashed": true,
+    "converted": false,
+    "visuallyAccepted": false,
+    "registeredAsBackendOption": false,
+    "backendSelectable": false,
+    "deployed": false,
+    "audioDecodeVerified": true
+  },
+  "limitations": [
+    "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
+    "All OGG files are extracted, hashed and FFmpeg-decoded. Native Sound/voice versus Sound/se directory roles are retained; language, speaker, transcript and skill-event binding remain pending listening review.",
+    "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
+    "This extraction is source preservation and does not establish a backend model option or deployment."
+  ],
+  "audioValidation": {
+    "decodedFiles": 474,
+    "totalDurationSeconds": 1057.5713541666669,
+    "sourceCategoryCounts": {
+      "sfx": 82,
+      "voice": 392
+    },
+    "decodeToNullPassed": true,
+    "languageReviewed": false,
+    "speakerReviewed": false,
+    "eventReviewed": false
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.rezero-static-component-source-rebuild@1",
+  "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "outputSha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+  "sourceConversionByteIdentical": true,
+  "normalizedGlbByteIdentical": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "c68ec3f4defa87ce5ca570ce7a3eca304825f2cba397c0c143f12a146ccc072c"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f"
+    }
+  ],
+  "rebuildReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/rebuild.json",
+    "bytes": 6331,
+    "sha256": "0da15e7c42a30bd7fd7d870b02521d6e0533f5b825283b85c7db34bfa5c6e327"
+  },
+  "limitations": [
+    "Receipt JSON contains run-specific absolute paths; both GLB stages are byte-identical.",
+    "Static deterministic output does not establish gameplay animation readiness."
+  ]
+}

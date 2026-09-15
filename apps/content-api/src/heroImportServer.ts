@@ -4,6 +4,7 @@ import { HERO_IMPORT_PREFIX, heroImportBodyDigest, verifyHeroImport } from "@ggd
 import { registerImportRoutes } from "./importRoutes";
 import { readHeroOverlay, type HeroOverlayReader } from "./heroContentSnapshot";
 import { CatalogOverlayService } from "./catalogOverlay";
+import { heroImportSocketIdleMs } from "./heroPackageWorkerClient";
 
 export interface HeroImportServerOptions { contentDir: string; repoRoot: string; importDir: string; gameVersion: string; secret: string; logger?: boolean; platformUrl?: string; readOverlay?: HeroOverlayReader }
 /** Production entry to the existing importer, scoped to immutable hero works.
@@ -12,7 +13,8 @@ export interface HeroImportServerOptions { contentDir: string; repoRoot: string;
 export function buildHeroImportServer(opts: HeroImportServerOptions): FastifyInstance {
   if (opts.secret.length < 32 || !opts.gameVersion.trim()) throw new Error("Private hero import requires a secret of at least 32 characters and GGD_BUILD_STAMP.");
   buildAuthoringProcessor(opts.repoRoot); // Refuse incomplete deployment source trees.
-  const app = Fastify({ logger: opts.logger ?? false, requestTimeout: 90000, connectionTimeout: 10000 });
+  // ⭐ GH#1249：socket 閒置上限從 worker 預算推導（heroPackageWorkerClient.ts）；requestTimeout 只管收完請求。
+  const app = Fastify({ logger: opts.logger ?? false, requestTimeout: 90000, connectionTimeout: heroImportSocketIdleMs() });
   app.removeContentTypeParser("application/json");
   app.addContentTypeParser("application/json", {parseAs:"buffer", bodyLimit:8*1024*1024}, (_req, body, done)=>done(null,body));
   app.addHook("onRequest", async (req, reply) => {

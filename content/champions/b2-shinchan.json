@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -22,10 +22,10 @@
       ],
       "id": "b2-shinchan.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "小白帶我換條路",
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -46,10 +46,11 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shinchan.e.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -71,10 +72,10 @@
       ],
       "id": "b2-shinchan.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "春日部接力棒快傳",
@@ -86,7 +87,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -110,10 +111,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shinchan.q.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -148,9 +150,9 @@
       ],
       "id": "b2-shinchan.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -162,7 +164,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -199,10 +201,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shinchan.r.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -223,10 +226,10 @@
       ],
       "id": "b2-shinchan.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "玩具散落請勿奔跑",
@@ -237,7 +240,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "status": {
             "duration": 2.5,
             "root": true,
@@ -253,7 +256,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shinchan.w.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",
@@ -279,8 +283,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 8.2
@@ -295,13 +299,13 @@
     "as": 0,
     "healthRegen": 0.1168285714285714,
     "manaRegen": 0,
-    "maxHealth": 10.305102040816323,
-    "maxMana": 6.564285714285716,
+    "maxHealth": 60,
+    "maxMana": 35,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",
   "id": "b2-shinchan",
-  "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+  "modelKey": "version.body.7b795f169f6491619c9410c3a158fc23b48dcee19fb59f55",
   "name": "野原新之助",
   "origin": "軟輔",
   "passiveAbility": "b2-shinchan.passive",
@@ -347,6 +351,121 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457874-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.587a970891bb54dac6c4e7103fe361631acf9025b5fc8797",
+      "label": "小桐人寵物",
+      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
+      "modelSha256": "7269501ae8f96597104726d65a70a616ede1d56e9eb2a800e26e3b6417a00089",
+      "binarySha256": "fbef5afebc8c71a76eeb3caa7e546d6557874430c3015f6063269e70f35c377a",
+      "registeredAt": "2026-09-12T23:12:02.865Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小桐人寵物",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "300heroes:752d81a9fe2da27b368dadee",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7578397be1d47e0299949187887fe94c6197e9a0e7162217",
+      "label": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
+      "sourceModelKey": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+      "modelSha256": "892c619266e0ea00832da589dd81d39466803d56fb5b0a30f5e9f1adb0bf6165",
+      "binarySha256": "2a441c911494f75afbe381b683139b37b2b1d2dcc196fdba38e80b53821d0d7f",
+      "registeredAt": "2026-09-12T23:12:02.981Z",
+      "source": {
+        "kind": "exact",
+        "character": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
+        "work": "蠟筆小新",
+        "library": "GTA V MOD／GTA5OPMOD",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f54b62db70ae62f7747226b019deee0128335ba4a55f4b5f",
+      "label": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
+      "sourceModelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+      "modelSha256": "91b7cec69cd151f406766b1d33c9150ea751c42ec4433db996d5d45e1deb194c",
+      "binarySha256": "6bdfc6166c36cd6554285cde127c665ac455fcf4420c9358a1d7c6a3b1e88769",
+      "registeredAt": "2026-09-12T23:12:03.095Z",
+      "source": {
+        "kind": "exact",
+        "character": "野原新之助（normal outfit 紅衣／黃褲）",
+        "work": "蠟筆小新",
+        "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.43e6ed5f2cd3eda153f310f13967f27c67bcd5f0579c9c89",
+      "label": "小桐人寵物",
+      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
+      "modelSha256": "dd64e4a211c66fee51bbb6054b392fb9acca035f83c5c42141387836527da208",
+      "binarySha256": "fbef5afebc8c71a76eeb3caa7e546d6557874430c3015f6063269e70f35c377a",
+      "registeredAt": "2026-09-13T00:09:06.854Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小桐人寵物",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "300heroes:752d81a9fe2da27b368dadee",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.43575e087476c8726f894f8dd25c266707c2350db41d0235",
+      "label": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
+      "sourceModelKey": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+      "modelSha256": "d29639c847934972492f7e970c4ae32b29f76d4ada2ca4fcc2d6a69be446018c",
+      "binarySha256": "2a441c911494f75afbe381b683139b37b2b1d2dcc196fdba38e80b53821d0d7f",
+      "registeredAt": "2026-09-13T00:09:06.972Z",
+      "source": {
+        "kind": "exact",
+        "character": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
+        "work": "蠟筆小新",
+        "library": "GTA V MOD／GTA5OPMOD",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Grand Theft Auto V",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7b795f169f6491619c9410c3a158fc23b48dcee19fb59f55",
+      "label": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
+      "sourceModelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+      "modelSha256": "c33a229c762af8cd7d32b620887ccf15c1e6574ee6d7f34a11abead584512872",
+      "binarySha256": "6bdfc6166c36cd6554285cde127c665ac455fcf4420c9358a1d7c6a3b1e88769",
+      "registeredAt": "2026-09-13T00:09:07.082Z",
+      "source": {
+        "kind": "exact",
+        "character": "野原新之助（normal outfit 紅衣／黃褲）",
+        "work": "蠟筆小新",
+        "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Grand Theft Auto V",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

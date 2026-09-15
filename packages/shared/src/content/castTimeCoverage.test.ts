@@ -40,7 +40,13 @@ import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll } from "./registries";
 import { Abilities } from "../sim/content/registry";
 import type { AbilityDef } from "../sim/content/defs";
-import { CAST_CAP, CAST_FLOOR, deriveCastTime } from "./castTimeFormula";
+import {
+  DEFAULT_CAST_TIME_TIERS,
+  castTimeTierOf,
+  resolveCastTimeTier,
+  type CastTimeTiers,
+} from "./castTimeTiers";
+import { SKILL_TIER_NAMES } from "./skillTiers";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -53,36 +59,36 @@ function shippedAbilityDocCount(): number {
 }
 
 let all: AbilityDef[];
-let cdMult: number;
+let tiers: CastTimeTiers;
 
 beforeAll(async () => {
   const result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   registerAll(result.store);
   all = Abilities.all();
-  const env = result.store.tryGet<{ multipliers: Record<string, number> }>("config", "combat-env");
-  cdMult = env?.multipliers.cooldown ?? 1;
+  tiers = result.store.tryGet<CastTimeTiers>("config", "cast-time-tiers") ?? DEFAULT_CAST_TIME_TIERS;
 });
 
-describe("吟唱普查（owner 2026-08-13 的 0.06–4.00）", () => {
-  it("⭐ 每一支出貨技能帶的正是公式算出來的值 —— 內容是推導資料，不是手寫數字", () => {
-    // `deriveCastTime` 從不讀 `castTimeSec`，所以這不是循環論證。
+describe("吟唱五級距普查", () => {
+  it("⭐ 每一支出貨技能的 runtime 秒數都等於 castTimeTier", () => {
     const wrong = all
-      .map((d) => ({ d, want: deriveCastTime(d, cdMult).castTimeSec }))
-      .filter((r) => r.d.castTimeSec !== r.want)
-      .map((r) => `${r.d.id}: 內容 ${String(r.d.castTimeSec)} != 公式 ${String(r.want)}`);
-    expect(wrong).toEqual([]);
+      .map((d) => ({ d, want: resolveCastTimeTier(d.castTimeTier, tiers) }))
+      .filter((r) => r.want === null || r.d.castTimeSec !== r.want)
+      .map(
+        (r) =>
+          `${r.d.id}: tier ${String(r.d.castTimeTier)} → ${String(r.want)}，runtime ${String(r.d.castTimeSec)}`,
+      );
+
+    expect(wrong, "castTimeTier 是唯一作者來源；runtime 不可再由其他公式覆寫").toEqual([]);
     // 守衛的守衛：母體要真的是整份註冊表，⛔ 不是 3 份文件。
     // 跟磁碟對帳而不是釘一個規模常數 —— 常數擋不住「有 50 份載入失敗」。
     expect(shippedAbilityDocCount()).toBeGreaterThan(0);
     expect(all.length).toBeGreaterThanOrEqual(shippedAbilityDocCount());
   });
 
-  it("⭐ 沒有任何技能低於下限或超過上限 —— owner「最低 0.06 秒，讓 tick 一定可以處理」", () => {
-    // ⚠️ 界線從 `castTimeFormula` 的匯出讀，⛔ 不抄字面值：0.06 / 4.00 住在
-    //    `DEFAULT_CAST_TIME_RULES` + `content/config/cast-time.json` + 後台三處。
+  it("⭐ 沒有任何技能落在五級距之外", () => {
+    const allowed = new Set(Object.values(tiers.seconds));
     const out = all
-      .filter((d) => (d.castTimeSec ?? 0) > 0)
-      .filter((d) => d.castTimeSec! < CAST_FLOOR || d.castTimeSec! > CAST_CAP)
+      .filter((d) => !allowed.has(d.castTimeSec ?? Number.NaN))
       .map((d) => `${d.id}: ${String(d.castTimeSec)}`);
     expect(out).toEqual([]);
   });
@@ -108,15 +114,30 @@ describe("吟唱普查（owner 2026-08-13 的 0.06–4.00）", () => {
       if (typeof raw !== "string") continue;
       const m = /(?:吟唱|施展時間|詠唱)\s*([\d.]+)\s*秒/.exec(raw.replace(/「[^」]*」/gs, ""));
       if (!m) continue;
-      const want = Math.min(CAST_CAP, Math.max(CAST_FLOOR, Number(m[1])));
-      if (Math.abs((d.castTimeSec ?? 0) - want) > 0.05) {
-        missed.push(`${d.id}: 規格 ${m[1]}s → 出貨 ${String(d.castTimeSec)}s`);
+      // ⭐⭐ 【五級距**取代**了 0.06–4.00 的自由值】（owner 2026-09-02 ／ 09-12）
+      //
+      // ⛔ 在此之前這一行夾的是 `[CAST_FLOOR 0.06, CAST_CAP 4.00]` ——
+      // ⭐ 那是 owner 2026-08-13「請你照我的 0.06~4.00 秒」的區間，
+      // ⚠️ 而 **2026-09-02 他用五級距取代了它**（`0, 0.1, 0.3, 0.5, 1`），
+      // ⭐ 2026-09-12 又逐字確認：「照五級距 **最高就是1秒 有什麼好爭議的**」。
+      //
+      // ⇒ ⭐ 規格文字寫「吟唱 2 秒」時，**上界是 1.0，⛔ 不是 4.00** ——
+      //   而那 1.0 同時是 `castTimeMaxSec`（引擎真的夾得住的值）
+      //   ⇒ ⭐ 寫 2 秒的技能，玩家**從來就只吟唱 1 秒**。
+      //
+      // ⚠️ ⛔ 這不是把斷言放寬：它仍然要求「規格說了就要照做」，
+      //   ⭐ 只是「照做」的上界改成 owner 今天的那一個。
+      const tierCap = Math.max(...SKILL_TIER_NAMES.map((n) => tiers.seconds[n]));
+      const requested = Math.min(tierCap, Math.max(0, Number(m[1])));
+      const tier = castTimeTierOf(requested, tiers);
+      const want = tiers.seconds[tier];
+      if (d.castTimeSec !== want) {
+        missed.push(`${d.id}: 規格 ${m[1]}s → ${tier}/${want}s，出貨 ${String(d.castTimeSec)}s`);
       }
     }
     expect(
       missed,
-      "規格寫了吟唱秒數但出貨值不同。⛔ 不要改這條測試 —— 去看 `castTimeFormula.ts`\n" +
-        "的 `authoredCastSec` 是不是又被某個夾子蓋過去了（2026-08-13 就是 `cooldownCeiling`）。",
+      "規格寫了吟唱秒數但出貨級距不同。請修 castTimeTier；不要接回舊公式。",
     ).toEqual([]);
   });
 });

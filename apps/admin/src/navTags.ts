@@ -166,6 +166,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   damageTiers: ["數值", "技能", "可調"], // 尺之四
   manaTiers: ["數值", "技能", "可調"], // 尺之五
   castTimeTiers: ["數值", "技能", "可調"], // 尺之六（GH#943 —— owner 逐字給的 0/0.1/0.3/0.5/1）
+  balanceAnchors: ["數值", "可調"], // ⭐ 五級距與屬性上限的**分母**（owner 2026-09-12：固定數值，別再取中位）
   apCoefficient: ["數值", "技能", "可調"],
   rankGrowth: ["數值", "技能", "可調"],
   // ⭐ GH#1116 —— 素材從哪裡載（維運類，⛔ 不是數值）。
@@ -215,6 +216,9 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   // 📥 投稿批核 —— ⛔ **不是** dev 限定：它是出貨環境的硬閘（owner 2026-09-01
   //    「通過才能套用」）。⭐ 沒有「可調」是刻意的：這一頁不改設定，它做決定。
   submissionsReview: ["營運", "內容", "可調"],
+  // 🧍 新英雄上架檢核（owner 2026-09-11「上架檢核 模型 每個音效 等都應該分開選項接受或拒絕」）——
+  //    與投稿批核同族：逐項接受／退回（退回必填原因），⛔ 不改設定，它做決定。
+  heroIntake: ["營運", "內容", "可調"],
   // 💨 移速加成五級距（GH#789）：與其他五級距頁同族 —— 數值的形狀，一格一格可調。
   moveSpeedTiers: ["數值", "技能", "可調"],
   formVisuals: ["演出", "內容", "可調"], // 變身看不看得出來

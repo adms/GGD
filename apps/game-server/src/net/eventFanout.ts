@@ -632,6 +632,21 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
  * classified; a name here is a decision, not an oversight.
  */
 export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
+  // ── GH#1203／#1211（2026-09-11）—— `cooldownModified` ────────────────────
+  // ⭐ 它是**給施放可行性普查看的訊號**（`sim/castabilityVerdict.ts:322` 的
+  //   `cooldown` 頻道靠它判斷「那一格按鈕提早亮起來」），⛔ 不是一個畫面事件。
+  //
+  // ⛔ 為什麼**不外送**：客戶端的冷卻**本來就有來源** —— 它讀 `SeatView` 的
+  //   逐格冷卻狀態（每一幀都是最新的），⭐ 而那是**狀態**，⛔ 不是事件。
+  //   ⇒ 再送一則事件會是同一件事的第二個住處：兩者不同步時畫面會閃回舊值，
+  //   ⚠️ 而「按鈕亮了又暗」比「晚亮半幀」難查得多。
+  //
+  // ⚠️ ⭐ 而它的頻率是**每一次冷卻被改動**（減 CD、重置、EX 退款…）⇒ 連段技能
+  //   一次施放可能改好幾格 —— ⛔ 外送它等於替一個已經有狀態通道的東西開一條流。
+  //
+  // ⭐ 哪天真的要畫「冷卻被縮短」的表現：正確做法是讓客戶端**比較兩幀的 SeatView**，
+  //   ⛔ 不是把這一則放出去。
+  "cooldownModified",
   // ── GH#354（2026-08-17）—— 四則**只餵 hook** 的事件 ────────────────────
   // ⚠️ 四則都刻意不外送：它們沒有任何客戶端表現，而且每一則都與一個**已經在
   // 外送**的事件講同一件事（送出去就是同一件事在線上出現兩次，浮動數字與特效

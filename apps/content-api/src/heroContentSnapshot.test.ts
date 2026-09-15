@@ -1,4 +1,5 @@
 import { afterEach, expect, it } from "vitest";
+import type { FastifyInstance } from "fastify";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -20,7 +21,13 @@ const repo = resolve(import.meta.dirname, "../../..");
 const contentDir = join(repo, "content");
 const secret = "private-hero-overlay-fixture-20260906";
 const dirs: string[] = [];
-afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
+const apps: FastifyInstance[] = [];
+// ⭐ 先 close（它等匯入處理器寫完，見 importRoutes.ts 的 onRoute／onClose）再刪目錄。
+// ⚠️ 原本 close 在測試本體的 finally：測試逾時時 finally 還沒跑，afterEach 的 rm 就與還在寫的 worker 賽跑。
+afterEach(async () => {
+  for (const app of apps.splice(0)) await app.close();
+  for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true });
+});
 
 it("publishes against the captured Platform overlay and loads the exact package into the game's merged room", async () => {
   const ui = JSON.parse(readFileSync(join(contentDir, "config/ui-cues.json"), "utf8"));
@@ -29,10 +36,10 @@ it("publishes against the captured Platform overlay and loads the exact package 
   let unavailable = false;
   let reads = 0;
   const dir = mkdtempSync(join(tmpdir(), "ggd-overlay-import-")); dirs.push(dir);
-  const app = buildHeroImportServer({ repoRoot: repo, contentDir, importDir: dir, secret, gameVersion: "overlay-fixture", readOverlay: async () => { reads++; if (unavailable) throw new Error("Platform offline"); return structuredClone(overlay); } });
+  const app = buildHeroImportServer({ repoRoot: repo, contentDir, importDir: dir, secret, gameVersion: "overlay-fixture", readOverlay: async () => { reads++; if (unavailable) throw new Error("Platform offline"); return structuredClone(overlay); } }); apps.push(app);
   const get = (path: string) => app.inject({ method: "GET", url: prefix + path, headers: heroImportHeaders(secret, "GET", prefix + path) });
   const post = (path: string, bytes: Uint8Array) => app.inject({ method: "POST", url: prefix + path, headers: { ...heroImportHeaders(secret, "POST", prefix + path, Uint8Array.from(bytes)), "content-type": "application/zip" }, payload: Buffer.from(bytes) });
-  try {
+  {
     await app.ready();
     const profileResponse = await get("/active/target-profile");
     expect(profileResponse.statusCode, profileResponse.body).toBe(200);
@@ -66,7 +73,7 @@ it("publishes against the captured Platform overlay and loads the exact package 
     expect((await post("/hero-package", sourceZip.bytes)).statusCode).toBe(503);
     expect((await post("/inspect-hero-package", built.rawPayload)).statusCode).toBe(503);
     expect(room.manifest.heroes[0]!.packageDigest).toBe(pin.packageDigest);
-  } finally { await app.close(); }
+  }
 }, 60_000);
 
 it("rejects malformed overlay input instead of issuing a shipped target profile", async () => {

@@ -33,7 +33,6 @@ import { ContentLoader, registerAll } from "../src/content/index";
 import { FsContentSource } from "../src/content/node/index";
 import { Abilities, Champions } from "../src/sim/content/registry";
 import { isPassiveOnly } from "../src/sim/abilities/abilityPassives";
-import { deriveCastTime } from "../src/content/castTimeFormula";
 import { SimWorld } from "../src/sim/SimWorld";
 import { SKELETON_ARENA } from "../src/sim/world/ArenaDef";
 import { spawnChampion } from "../src/sim/spawnChampion";
@@ -48,12 +47,6 @@ const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
 registerAll(result.store);
 
 const all = Abilities.all();
-
-/** content/config/combat-env.json `cooldown` — the multiplier the match uses. */
-function envCooldownMult(): number {
-  const d = result.store.tryGet<{ multipliers: Record<string, number> }>("config", "combat-env");
-  return d?.multipliers.cooldown ?? 1;
-}
 
 console.log(`contentVersion:       ${result.manifest.contentVersion}`);
 console.log(`champions registered: ${Champions.ids().length}`);
@@ -76,30 +69,12 @@ console.log(
   `  of ${withCt.length} that cast: MEDIAN ${withCt[Math.floor(withCt.length / 2)]}s  mean ${(withCt.reduce((s, v) => s + v, 0) / withCt.length).toFixed(3)}s`,
 );
 
-// Which EXEMPTION each unset ability fell into. Under the revised (tiered)
-// rule an unset castTimeSec is not automatically a violation: passive-only
-// abilities can never reach the cast branch, and `rapid-fire` abilities have a
-// post-multiplier cooldown too short to afford even the 0.3 s floor (a 0.5 s
-// cooldown ability comes up every 0.13 s — that is what produced the seven
-// statues). Anything else unset IS a violation.
-const cdMultForClass = envCooldownMult();
+// The 907/907 migration gives every registered ability a tier. Even
+// passive-only abilities resolve `極小` to 0, so an unset value is now a real
+// coverage failure rather than an old-formula exemption class.
 const unset = all.filter((a) => a.castTimeSec === undefined);
-const cls = new Map<string, string[]>();
-for (const a of unset) {
-  const c = deriveCastTime(a, cdMultForClass).cls;
-  (cls.get(c) ?? cls.set(c, []).get(c)!).push(`${a.id} ${a.name}`);
-}
-console.log(`  unset: ${unset.length} — by exemption class:`);
-for (const [c, list] of cls) {
-  console.log(`    ${c.padEnd(13)} ${String(list.length).padStart(3)}`);
-  for (const x of list) console.log(`       ${x}`);
-}
-const violations = unset.filter((a) => {
-  const c = deriveCastTime(a, cdMultForClass).cls;
-  return c !== "passive-only" && c !== "rapid-fire";
-});
-console.log(`  UNEXPLAINED (real rule violations): ${violations.length}`);
-for (const a of violations) console.log(`    ! ${a.id} ${a.name}`);
+console.log(`  unset (real coverage failures): ${unset.length}`);
+for (const a of unset) console.log(`    ! ${a.id} ${a.name}`);
 
 // ---- 2. embedded-copy mirror check ---------------------------------------
 let slots = 0;

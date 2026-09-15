@@ -1,16 +1,16 @@
 {
   "id": "community-review-14-20260907",
   "name": "殺老師",
-  "description": "殺老師 社群英雄功能驗收稿。作品：《暗殺教室》  \n定位：高速移動、觸手多工、限時防禦。\n\n視覺方向：黄色觸手弧、三段殘像、白金防禦球；球體不得藏掉可受擊位置。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《暗殺教室》  \n定位：高速移動、觸手多工、限時防禦。\n\n視覺方向：黄色觸手弧、三段殘像、白金防禦球；球體不得藏掉可受擊位置。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
+  "modelKey": "version.body.d0dc70e5443939df78aefa8d675b42099b02d517a3ae1b6e",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 31.047346938775508,
+    "maxHealth": 40,
     "healthRegen": 0.07555510204081634,
-    "maxMana": 11.026530612244898,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 3.4382040816326525,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.733,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.wind.slash",
       "vfxLayers": [
         {
@@ -149,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -188,7 +188,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-14-20260907.w.webp",
       "template": {
@@ -207,7 +207,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -257,7 +257,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-14-20260907.e.webp",
       "template": {
@@ -265,7 +265,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -315,7 +315,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-14-20260907.r.webp",
       "template": {
@@ -323,7 +323,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -380,6 +380,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-472112-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.28f1ec9f19e95808015c6545b9fc1ce938dad71499e82c1f",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.472112",
+      "modelSha256": "df761e7eb54474493e713c1b4a0c563ddffcb381238dcf1999f867c4ca495ac7",
+      "binarySha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
+      "registeredAt": "2026-09-10T14:45:30.486Z",
+      "source": {
+        "kind": "previous",
+        "character": "殺老師",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.472112.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b5d663466cbefc8b01e2b04157a000918abbe1e1854960ec",
+      "label": "GGD 黃色觸手教師替身",
+      "sourceModelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+      "modelSha256": "73f7f7b0af6dc593d5f512ef8d3c3d9ccf32c0abdec7c1bf90f0d884b1528ae5",
+      "binarySha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "registeredAt": "2026-09-10T14:45:30.489Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 黃色觸手教師替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "tier": "original",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
+      "label": "殺老師（論壇模型）",
+      "sourceModelKey": "ou99.472112-standard-v2",
+      "modelSha256": "acedb2b5126e022bed5ed31d2213c6ff54bd981ea791faf0861ebf9334bc84ca",
+      "binarySha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+      "registeredAt": "2026-09-10T14:48:47.798Z",
+      "source": {
+        "kind": "exact",
+        "character": "殺老師",
+        "work": "暗殺教室",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.680764d3292e9832f69adc64d54518ae2a089d9030f9a353",
+      "label": "殺老師（論壇模型）",
+      "sourceModelKey": "ou99.472112-standard-v2",
+      "modelSha256": "47d473c72e522e87c3e5020b8f8c5ed783db2364985cb91a07f069ebbb6e790d",
+      "binarySha256": "1c2d04b9c7e961d9c02bf8412aaa2b664bdc52c27ef6fa228e64211c993564c8",
+      "registeredAt": "2026-09-12T23:02:31.145Z",
+      "source": {
+        "kind": "exact",
+        "character": "殺老師",
+        "work": "暗殺教室",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a8ced1f9b0848bd41b9a17b3c11852efae047cd9d91f0f1d",
+      "label": "GGD 黃色觸手教師替身",
+      "sourceModelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+      "modelSha256": "d4b5db7d3372c5c75b3ea5a02f3bb543f4b10d42876bb32a4501f59608778f7d",
+      "binarySha256": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
+      "registeredAt": "2026-09-12T23:18:17.417Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 黃色觸手教師替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "tier": "original",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.1649f8ff86bc5a488300749459fc50380dd84250aa391721",
+      "label": "GGD 黃色觸手教師替身",
+      "sourceModelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+      "modelSha256": "3bbc899976f354e5c82ad57c345ceeaeeb3ae4905a030429af3a37b565ab7c64",
+      "binarySha256": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
+      "registeredAt": "2026-09-13T00:08:47.119Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 黃色觸手教師替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "tier": "original",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "GGD procedural asset",
+        "sourcePlatform": "GGD runtime"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.d0dc70e5443939df78aefa8d675b42099b02d517a3ae1b6e",
+      "label": "殺老師（論壇模型）",
+      "sourceModelKey": "ou99.472112-standard-v2",
+      "modelSha256": "184311f79b77b1d638e72b63f42d53de8ec828a2f69828716fb9f323fe993b25",
+      "binarySha256": "1c2d04b9c7e961d9c02bf8412aaa2b664bdc52c27ef6fa228e64211c993564c8",
+      "registeredAt": "2026-09-13T00:08:47.238Z",
+      "source": {
+        "kind": "exact",
+        "character": "殺老師",
+        "work": "暗殺教室",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

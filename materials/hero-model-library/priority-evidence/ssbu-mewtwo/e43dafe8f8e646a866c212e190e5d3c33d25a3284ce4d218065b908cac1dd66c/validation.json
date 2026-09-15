@@ -1,0 +1,652 @@
+{
+  "schema": "ggd-ssbu-blend-component-validation@1",
+  "candidateId": "ssbu-mewtwo-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+    "bytes": 3463792,
+    "sha256": "a75e399676876d88bcb8ae48f08d6d1efd4d6ae9e3dd224479a6e5b15a3a4a74"
+  },
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+    "bytes": 667840,
+    "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0"
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/normalization.json",
+    "sha256": "c977e81287413ee40d602de3fbc85972cd42e2a45d2955385066b380402fbc4b"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 26,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_2"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_2"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/76"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/77"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/78"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/79"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/1"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/2"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/4"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/5"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/27"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/28"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/29"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/30"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/31"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/32"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/33"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/34"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/35"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/36"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/37"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/38"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 6972,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "joints": [
+      75
+    ],
+    "textureCount": 2,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 72073,
+        "sha256": "09bb4be9f0633485be8da2a65423c3e67a8ec3e72a77e2c79cd9f348cbc0e7e3"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 28446,
+        "sha256": "f461da1984e6583e005549b51de33cd607e17dd3992f6bfe574cf918aa7bb854"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    },
+    "uploadReport": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 4,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/76"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/77"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/78"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/79"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "GGD normalize_static_component.mts",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 640964
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 3,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 3,
+        "totalVertexCount": 4360,
+        "totalTriangleCount": 6972,
+        "maxUVs": 3,
+        "maxInfluences": 4,
+        "maxAttributes": 9
+      }
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 29,
+    "valueCount": 105456,
+    "accessors": [
+      {
+        "index": 0,
+        "type": "VEC3",
+        "count": 3780,
+        "values": 11340,
+        "minimum": -1.2919769287109375,
+        "maximum": 1.7999998331069946
+      },
+      {
+        "index": 1,
+        "type": "VEC3",
+        "count": 3780,
+        "values": 11340,
+        "minimum": -0.9999918937683105,
+        "maximum": 0.9999918937683105
+      },
+      {
+        "index": 2,
+        "type": "VEC2",
+        "count": 3780,
+        "values": 7560,
+        "minimum": -0.9931640625,
+        "maximum": 0.99365234375
+      },
+      {
+        "index": 4,
+        "type": "VEC4",
+        "count": 3780,
+        "values": 15120,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 6,
+        "type": "MAT4",
+        "count": 75,
+        "values": 1200,
+        "minimum": -16.502243041992188,
+        "maximum": 19.380908966064453
+      },
+      {
+        "index": 7,
+        "type": "VEC3",
+        "count": 24,
+        "values": 72,
+        "minimum": 0.04956831783056259,
+        "maximum": 1.5344560146331787
+      },
+      {
+        "index": 8,
+        "type": "VEC3",
+        "count": 24,
+        "values": 72,
+        "minimum": -0.5451802611351013,
+        "maximum": 0.9814687371253967
+      },
+      {
+        "index": 9,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": 0.019134521484375,
+        "maximum": 0.986328125
+      },
+      {
+        "index": 10,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": 0.214111328125,
+        "maximum": 1.1806640625
+      },
+      {
+        "index": 11,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": 0.214111328125,
+        "maximum": 1.1806640625
+      },
+      {
+        "index": 15,
+        "type": "VEC4",
+        "count": 24,
+        "values": 96,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 17,
+        "type": "VEC3",
+        "count": 24,
+        "values": 72,
+        "minimum": -0.1265687495470047,
+        "maximum": 1.5344560146331787
+      },
+      {
+        "index": 18,
+        "type": "VEC3",
+        "count": 24,
+        "values": 72,
+        "minimum": -0.9814687371253967,
+        "maximum": 0.6628137230873108
+      },
+      {
+        "index": 19,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": -0.98046875,
+        "maximum": 0.73779296875
+      },
+      {
+        "index": 20,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": 0.214111328125,
+        "maximum": 1.1806640625
+      },
+      {
+        "index": 21,
+        "type": "VEC2",
+        "count": 24,
+        "values": 48,
+        "minimum": 0.214111328125,
+        "maximum": 1.1806640625
+      },
+      {
+        "index": 25,
+        "type": "VEC4",
+        "count": 24,
+        "values": 96,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 27,
+        "type": "VEC3",
+        "count": 348,
+        "values": 1044,
+        "minimum": -0.14391835033893585,
+        "maximum": 1.4352437257766724
+      },
+      {
+        "index": 28,
+        "type": "VEC3",
+        "count": 348,
+        "values": 1044,
+        "minimum": -0.9963683485984802,
+        "maximum": 0.999188244342804
+      },
+      {
+        "index": 29,
+        "type": "VEC2",
+        "count": 348,
+        "values": 696,
+        "minimum": -0.87744140625,
+        "maximum": 0.986328125
+      },
+      {
+        "index": 31,
+        "type": "VEC4",
+        "count": 348,
+        "values": 1392,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 33,
+        "type": "VEC3",
+        "count": 184,
+        "values": 552,
+        "minimum": -0.1603248119354248,
+        "maximum": 1.6258807182312012
+      },
+      {
+        "index": 34,
+        "type": "VEC3",
+        "count": 184,
+        "values": 552,
+        "minimum": -0.9668660759925842,
+        "maximum": 0.9999771118164062
+      },
+      {
+        "index": 35,
+        "type": "VEC2",
+        "count": 184,
+        "values": 368,
+        "minimum": -0.75830078125,
+        "maximum": 0.377197265625
+      },
+      {
+        "index": 37,
+        "type": "VEC4",
+        "count": 184,
+        "values": 736,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 40,
+        "type": "VEC3",
+        "count": 4312,
+        "values": 12936,
+        "minimum": -0.9999918937683105,
+        "maximum": 0.9999918937683105
+      },
+      {
+        "index": 41,
+        "type": "VEC3",
+        "count": 4312,
+        "values": 12936,
+        "minimum": -1.2919769287109375,
+        "maximum": 1.7999998331069946
+      },
+      {
+        "index": 42,
+        "type": "VEC2",
+        "count": 4312,
+        "values": 8624,
+        "minimum": -0.9931640625,
+        "maximum": 0.99365234375
+      },
+      {
+        "index": 43,
+        "type": "VEC4",
+        "count": 4312,
+        "values": 17248,
+        "minimum": 0,
+        "maximum": 1
+      }
+    ]
+  },
+  "materials": [
+    {
+      "index": 0,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "def_mewtwo_001",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 1,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeL",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1,
+          "texCoord": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 2,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeR",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2,
+          "texCoord": 1
+        },
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "primitives": [
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 0,
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 0
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 1,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "TEXCOORD_2",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 1
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 2,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "TEXCOORD_2",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 2
+    }
+  ],
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Structural validation does not establish visual identity or source-game shader parity.",
+    "The source contains no actions; no native, procedural, or retargeted action was added.",
+    "Backend registration and runtime switching were not performed."
+  ]
+}

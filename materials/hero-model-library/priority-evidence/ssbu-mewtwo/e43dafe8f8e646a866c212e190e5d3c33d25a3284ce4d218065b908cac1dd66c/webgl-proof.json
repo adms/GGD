@@ -1,0 +1,211 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.97979189915673,
+      -4.314639376308896e-07,
+      -1.2919761884499472
+    ],
+    "max": [
+      0.97979189915673,
+      1.7999996563900442,
+      1.2919781073265744
+    ],
+    "extent": [
+      1.95958379831346,
+      1.800000087853982,
+      2.583954295776522
+    ]
+  },
+  "geometry": [
+    {
+      "name": "GamemodelShape_primitive0",
+      "vertices": 4312,
+      "indices": 20760,
+      "worldBounds": {
+        "min": [
+          -0.97979189915673,
+          -4.314639376308896e-07,
+          -1.2919761884499472
+        ],
+        "max": [
+          0.97979189915673,
+          1.7999996563900442,
+          1.2919781073265744
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 75,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive1",
+      "vertices": 24,
+      "indices": 78,
+      "worldBounds": {
+        "min": [
+          0.049568328998379485,
+          1.4237442265466693,
+          1.1289557200110139
+        ],
+        "max": [
+          0.1265687513663849,
+          1.5344559000420797,
+          1.21135743883332
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 75,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive2",
+      "vertices": 24,
+      "indices": 78,
+      "worldBounds": {
+        "min": [
+          -0.1265686997920623,
+          1.4237442265466693,
+          1.1289557200110139
+        ],
+        "max": [
+          -0.049568282581489154,
+          1.5344559000420797,
+          1.21135743883332
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 75,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "def_mewtwo_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_mewtwo_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 304,
+        "height": 1
+      }
+    },
+    {
+      "name": "def_mewtwo_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

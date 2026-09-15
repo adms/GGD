@@ -16,9 +16,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "rangeUnlimited": true,
   "effects": [
     {
@@ -26,19 +26,19 @@
       "shape": "single",
       "applyTo": "all",
       "colorRgb": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "peakAlpha": 1.0,
-      "durationSec": 1.0,
+      "peakAlpha": 1,
+      "durationSec": 1,
       "scripted": true
     },
     {
       "kind": "leap",
       "applyTo": "self",
       "mode": "toPoint",
-      "apexHeight": 5.0,
+      "apexHeight": 5,
       "durationSec": 0.5,
       "landRadius": 2.5,
       "onLand": [
@@ -58,14 +58,14 @@
           },
           "refund": {
             "resource": "health",
-            "pct": 1.0
+            "pct": 1
           }
         },
         {
           "kind": "spawnVfx",
           "vfxId": "fx.prim.blood.nova-lg",
           "at": "point",
-          "durationSec": 3.0
+          "durationSec": 3
         }
       ]
     }
@@ -97,5 +97,6 @@
     ]
   },
   "vfxKey": "fx.prim.blood.nova",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

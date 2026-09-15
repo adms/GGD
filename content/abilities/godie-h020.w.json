@@ -15,18 +15,18 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "中",
@@ -40,7 +40,8 @@
       "applyTo": "enemies",
       "damageTier": "小",
       "damageType": "magic",
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     }
-  }
+  },
+  "castTimeTier": "極大"
 }

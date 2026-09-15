@@ -1,0 +1,32 @@
+{
+  "id": "parallel-dai-vearn-local-followup-02-20260911",
+  "target": "小呆／達伊與巴恩前後形態：本機來源及公開附件續查",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c",
+    "godie-ubal"
+  ],
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02",
+  "sourceReport": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02/source-report.json",
+  "sourceReportSha256": "ff92e8818f07a9e176cb0aea2bb1b380813bc33611aefb5bb59ca7a4c4fb101e",
+  "verification": "本輪未找到可用目標 Steam 安裝/原生包；兩個新附件為付費雕像，未購買；模型/動作/音訊新增0。研究資料含備份程式已完整S3 Get核對。",
+  "modelCandidates": [],
+  "audioFileIndex": [],
+  "sourceKind": "research-only",
+  "acquisitionStatus": "research-only-no-asset-package",
+  "acquiredAssetPayloadCount": 0,
+  "defaultEligible": false,
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/dai-vearn-local-followup-02/4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf.tar.gz",
+    "sha256": "4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf",
+    "bytes": 8106,
+    "archiveFormat": "tar-gzip",
+    "archiveMemberRoot": "parallel-dai-vearn-local-followup-02",
+    "verified": true,
+    "fullGetAndEveryFileVerified": true,
+    "inventoryUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/dai-vearn-local-followup-02/4de0cb5cbe22f7603b1a2a06bebf7222a7281f1851b76a20847e1f42446799cf.files.json",
+    "inventorySha256": "a99af6d5a80e52e918ff713a395d4515197f5756020e4e5b3b674ac6b2546e8b",
+    "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dai-vearn-local-followup-02-20260911/s3-backup-receipt.json",
+    "receiptSha256": "5ef04e6212f4cf06ba6d956961b50f94cb43ecda8da6242a0438260db2b670a2"
+  }
+}

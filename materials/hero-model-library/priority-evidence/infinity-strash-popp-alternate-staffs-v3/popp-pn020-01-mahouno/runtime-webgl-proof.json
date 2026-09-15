@@ -1,0 +1,451 @@
+{
+  "schema": "ggd.infinity-strash-babylon-webgl-motion@1",
+  "babylonVersion": "7.54.3",
+  "method": "Actual Babylon WebGL glTF loader; three rendered samples for each source clip or each of six mapped runtime states",
+  "meshCount": 4,
+  "bones": [
+    331
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "size": {
+        "width": 1328,
+        "height": 1
+      }
+    },
+    {
+      "name": "GGD_body (Normal)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_body (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_face (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_hair (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 8,
+        "height": 8
+      }
+    },
+    {
+      "name": "GGD_weapon-mahouno (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "ggd-state-idle-0.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -88.39177703857422,
+          -0.6622933149337769,
+          -32.89479064941406
+        ],
+        "max": [
+          49.07220458984375,
+          184.49917602539062,
+          52.15281295776367
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-idle-50.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 0.5,
+      "frame": 75,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -85.49083709716797,
+          -0.8992750644683838,
+          -33.29112243652344
+        ],
+        "max": [
+          49.07080078125,
+          185.42491149902344,
+          52.78567123413086
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-idle-100.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 1,
+      "frame": 150,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -88.39177703857422,
+          -0.6622933149337769,
+          -32.89479064941406
+        ],
+        "max": [
+          49.07220458984375,
+          184.49917602539062,
+          52.15281295776367
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-0.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -91.03621673583984,
+          16.203746795654297,
+          -72.90020751953125
+        ],
+        "max": [
+          29.861303329467773,
+          188.53553771972656,
+          79.9977035522461
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-50.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 0.5,
+      "frame": 22.5,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -78.99652862548828,
+          18.76312828063965,
+          -81.37226104736328
+        ],
+        "max": [
+          50.63304901123047,
+          179.0746612548828,
+          96.75997924804688
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-100.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 1,
+      "frame": 45,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -91.03621673583984,
+          16.198810577392578,
+          -72.90020751953125
+        ],
+        "max": [
+          29.861303329467773,
+          188.53553771972656,
+          79.9977035522461
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-0.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -88.39661407470703,
+          -0.6494947671890259,
+          -32.894596099853516
+        ],
+        "max": [
+          49.06788635253906,
+          184.51014709472656,
+          52.134254455566406
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-50.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 0.5,
+      "frame": 49.999998807907104,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -68.299072265625,
+          0.0033372517209500074,
+          -26.661874771118164
+        ],
+        "max": [
+          51.72140884399414,
+          179.93434143066406,
+          140.4733428955078
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-100.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 1,
+      "frame": 99.99999761581421,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -88.3973617553711,
+          -0.6495023965835571,
+          17.103477478027344
+        ],
+        "max": [
+          49.06789016723633,
+          184.51011657714844,
+          102.13123321533203
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-0.png",
+      "state": "cast",
+      "clip": "GGD_native_special03",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -52.47840881347656,
+          3.538508415222168,
+          -41.210792541503906
+        ],
+        "max": [
+          50.14714050292969,
+          200.08201599121094,
+          78.6075210571289
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-50.png",
+      "state": "cast",
+      "clip": "GGD_native_special03",
+      "fraction": 0.5,
+      "frame": 187.5,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -60.64093780517578,
+          0.606986939907074,
+          -82.60055541992188
+        ],
+        "max": [
+          56.15294647216797,
+          147.525390625,
+          76.24400329589844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-100.png",
+      "state": "cast",
+      "clip": "GGD_native_special03",
+      "fraction": 1,
+      "frame": 375,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -69.2837142944336,
+          -3.870112657546997,
+          -104.8229751586914
+        ],
+        "max": [
+          75.51822662353516,
+          188.32205200195312,
+          57.14999771118164
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-0.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-50.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 0.5,
+      "frame": 87.50000238418579,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-100.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 1,
+      "frame": 175.00000476837158,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-0.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-50.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 0.5,
+      "frame": 87.50000238418579,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-100.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 1,
+      "frame": 175.00000476837158,
+      "vertexCount": 10905,
+      "bounds": {
+        "min": [
+          -75.1383056640625,
+          -40.12870788574219,
+          -98.84270477294922
+        ],
+        "max": [
+          33.82601547241211,
+          66.57276916503906,
+          121.10093688964844
+        ]
+      },
+      "finite": true
+    }
+  ],
+  "nativeMotion": true,
+  "humanReview": "pending",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

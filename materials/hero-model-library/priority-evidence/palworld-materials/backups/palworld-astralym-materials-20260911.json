@@ -1,0 +1,40 @@
+{
+  "schema": "ggd-source-deterministic-backup@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911",
+  "localArchive": "/private/tmp/ggd-astralym-materials-backup/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+  "bytes": 56052298,
+  "sha256": "f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "palworld-astralym-materials-20260911",
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/file-manifest.json",
+    "bytes": 11126,
+    "sha256": "eba999010a2e2dd704f30b7d0a1272336d89fd05d8b5c938f2a8b69ba84c5409"
+  },
+  "archiveFiles": 64,
+  "fileContentVerified": true,
+  "frozen": true,
+  "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+  "readbackPath": "/private/tmp/ggd-astralym-materials-backup/readback.tar.gz",
+  "readbackSha256": "f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allMembersSha256Verified": true,
+  "memberCount": 64,
+  "allLocalFilesStillMatchFrozenManifest": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "identityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789062208",
+  "identityMatchesExpectedRole": true,
+  "sourceDelivery": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/delivery.json",
+  "sourceDeliverySha256": "eadc2cc4e950f7e6a28baf9e52824ed579b0e8f7a0aab97b20a9f5aee63c052e",
+  "conversionDeliveryFrozenBeforeThisStoragePublication": true,
+  "frozenConversionModified": false,
+  "centralContentGitChanges": false,
+  "operations": [
+    "sts:GetCallerIdentity",
+    "s3:PutObject",
+    "s3:GetObject"
+  ]
+}

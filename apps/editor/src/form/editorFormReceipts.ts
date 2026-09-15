@@ -138,6 +138,12 @@ function no(brick: EditorBrick, reason: string): EditorFormReceipt {
  * this receipt is meant to replace. Every positive answer comes from the same
  * schema walk or picker decision the UI consumes; an unavailable template is
  * reported false instead of treating a raw JSON escape hatch as a form.
+ *
+ * ⛔ 2026-09-15：不要在這裡加「無表單豁免理由」。d7f993498 加過一張 `NO_FORM_EXEMPTIONS`
+ * （tpl-dragon-shockwave），已撤回 —— 這支模組在出貨路徑上**沒有讀者**（只有自己的測試），
+ * 進 ggd-bricks 的收據由 editorFormInteractions.test.tsx 另外量；作者在編輯器裡看到的理由住
+ * forge/typeCatalog.ts 的 `templateSelectionDecision()`（對每一個 analysedButUnwired 回同一句泛用話，
+ * 而型別目錄其實已帶逐顆的 `expandError`）。
  */
 export function editorFormReceiptFor(brick: EditorBrick): EditorFormReceipt {
   switch (brick.layer) {

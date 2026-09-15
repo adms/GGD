@@ -1,0 +1,85 @@
+{
+  "schema": "ggd.model-solid-placeholder-repair@1",
+  "heroId": "b2-matthias",
+  "sourceModelKey": "ou99.465884-standard",
+  "versionModelKey": "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851",
+  "input": {
+    "gitPath": "content/assets/models/community/versions/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+    "bytes": 2738508,
+    "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06"
+  },
+  "output": {
+    "activeGitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+    "immutableVersionGitPath": "content/assets/models/community/versions/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+    "bytes": 2738480,
+    "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d"
+  },
+  "conversion": {
+    "tool": "tools/w3x-import/solid_placeholder_to_factor.py",
+    "arguments": {
+      "imageIndex": 1,
+      "expectedImageSha256": "47c0b232b83e0aaf92d46f39b9066c67528fc4c31fc88bc50d7d8e2291137145",
+      "rgba": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "removedTextureIndices": [
+      1
+    ],
+    "changedMaterialCount": 1,
+    "affectedMaterialIndex": 1,
+    "affectedPrimitiveIndex": 1,
+    "affectedPrimitiveTriangles": 16,
+    "affectedPrimitiveVertices": 26,
+    "proof": {
+      "solidImageColorFoldedIntoBaseColorFactor": true,
+      "binaryChunkPreserved": true,
+      "twoIndependentBuildsByteIdentical": true,
+      "activeAndImmutableOutputsByteIdentical": true
+    }
+  },
+  "validator": {
+    "name": "gltf-validator",
+    "version": "2.0.0-dev.3.10",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 2,
+    "hints": 0,
+    "truncated": false
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "registered": true,
+    "selectable": true,
+    "active": true,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "The original source texture was not available and was not recovered.",
+    "The verified 8x8 solid-white placeholder was removed and its exact RGBA value was folded into the material baseColorFactor, preserving the previous rendered color for that material.",
+    "This receipt proves conversion, backend registration and current branch selection; it does not claim original-work texture fidelity or production deployment."
+  ],
+  "registration": {
+    "heroId": "b2-matthias",
+    "activeModelKey": "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851",
+    "modelSelectionMode": "automatic",
+    "versionModelKey": "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851",
+    "sourceModelKey": "ou99.465884-standard",
+    "modelSha256": "aba2d6880cadbd49b39b429db9d32c639595f9d44e9ffaf65b100c967fea45b5",
+    "binarySha256": "0b547fe6b46eee9671457b16fd6862dbe8d08be9bce62b0f8cda6e128a736717",
+    "registeredAt": "2026-09-12T23:04:52.301Z",
+    "versionDocumentPath": "content/models/version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851.json",
+    "versionDocumentSha256": "ec44745f1242c6321b4494b99abc7c32b90186800ea71c85c2ced9aaf19de95f",
+    "frozenGlbPath": "content/assets/models/community/versions/0b547fe6b46eee9671457b16fd6862dbe8d08be9bce62b0f8cda6e128a736717.glb",
+    "frozenGlbBytes": 2532676,
+    "sourceConvertedGlbSha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
+    "backendTextureNormalizationChangedBytes": true,
+    "automaticEligible": true,
+    "oldVersionModelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
+    "oldVersionPreserved": true
+  }
+}

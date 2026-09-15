@@ -1,0 +1,139 @@
+{
+  "schema": "ggd.zero-lancer-current-validation@1",
+  "sourceId": "gamebanana-zero-lancer-493444",
+  "variant": "P2",
+  "sourcePlatform": "unknown",
+  "role": "independent-skinned-model-component",
+  "inputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/replay-main-50f3d8ab/raw/source/converted/diarmuid-p2-textured/body.glb",
+  "inputSha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+  "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/replay-main-50f3d8ab/outputs/p2/component.glb",
+  "outputSha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+  "outputBytes": 337856,
+  "outputByteIdenticalToAcquiredCandidate": true,
+  "triangles": 4984,
+  "drawPrimitives": 1,
+  "nodeCount": 85,
+  "skinCount": 1,
+  "joints": 59,
+  "clips": [],
+  "textures": [
+    {
+      "width": 256,
+      "height": 256,
+      "bytes": 37657,
+      "sha256": "aba292e0dcaa6784fd7a436ffe28a4553641e2f61ada5c09c68bbc1d5cc0452a"
+    }
+  ],
+  "uploadReport": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD Unity prefab converter",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 316172
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 0,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 3838,
+      "totalTriangleCount": 4984,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "budget": {
+    "errors": [],
+    "warnings": []
+  },
+  "limits": {
+    "upload": {
+      "fileBytes": 33554432,
+      "jsonBytes": 4194304,
+      "jsonValues": 500000,
+      "depth": 64,
+      "nodes": 1024,
+      "clips": 256,
+      "accessors": 32768,
+      "accessorValues": 8000000,
+      "channels": 32768,
+      "clipChannels": 2048,
+      "clipSeconds": 300
+    },
+    "hero": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "contractPins": [
+    {
+      "path": "packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "95f15b3098d4baaad45e282f927978476b685a1a2116dc032838eb7c8215e0ad"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "be545dddd055d1674bfec7123ce923951105170984a511d4f467474b2791b38c"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a"
+    }
+  ],
+  "contractRepository": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "contractCommit": "09c18187fcfe9a0e855dbddf1ab92e092efc868a",
+  "nodeVersion": "v25.9.0",
+  "heroModelPreparationPerformed": false,
+  "backendRegistrationPerformed": false,
+  "gameplayAcceptance": false,
+  "missingNativeAnimations": true,
+  "sourceIrayOrToonParityEstablished": false
+}

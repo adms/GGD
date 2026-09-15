@@ -1,0 +1,25 @@
+{
+  "schema": "ggd.source-search-audit@1",
+  "checkedAt": "2026-09-10T13:50:18.347045+00:00",
+  "deduplication": "Central download-sources.json inspected before download; source IDs 291438 and 492607 not present; existing Shirou/Rin/Zero-Lancer avoided.",
+  "acquiredSources": [
+    "https://gamebanana.com/mods/291438",
+    "https://gamebanana.com/mods/492607"
+  ],
+  "otherRoutes": [
+    {
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2223113301",
+      "status": "public listing states removed; no download attempted"
+    },
+    {
+      "url": "https://www.nexusmods.com/honkaistarrail/mods/6?tab=description",
+      "status": "search describes composite Illya/FGO Arcade mod; page open failed, not acquired"
+    },
+    {
+      "url": "https://paradoxmodding.blogspot.com",
+      "status": "linked in actual Kirei Readme; web tool non-retryable URL rejection; stopped, no alternate access"
+    }
+  ],
+  "priorRejectedSourcesRetried": false,
+  "newNativePspProof": false
+}

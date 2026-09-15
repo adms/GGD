@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.833,
+  "castTimeSec": 1,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -31,10 +31,10 @@
   ],
   "id": "b2-ned.q",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
@@ -50,7 +50,7 @@
     "params": {
       "apexHeight": 250,
       "applyTo": "self",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "damage": {
         "damageTier": "極小"
       },
@@ -68,5 +68,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-ned.q.webp"
+  "icon": "assets/icons/abilities/b2-ned.q.webp",
+  "castTimeTier": "極大"
 }

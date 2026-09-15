@@ -1,0 +1,123 @@
+{
+  "schema": "ggd.infinity-strash-en653-source-fidelity@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "identity": {
+    "nameZh": "密斯特巴恩",
+    "originalName": "MystVearn",
+    "nativeId": "EN653/01",
+    "sourceWorkZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+    "classification": "confirmed-separate-character-do-not-merge-with-vearn-or-baran",
+    "notVearnPostTransformation": true,
+    "notBaran": true
+  },
+  "source": {
+    "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/mesh-gltf-textured-en653-01",
+    "gltf": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.gltf",
+      "bytes": 44442,
+      "sha256": "403c0dbfb97acc645c7e9b9cee3587dbedea49537629911e4aeea089b8526756",
+      "relativePath": "Strash/Chara/Monster/EN653/01/SK_EN653_01_model.gltf"
+    },
+    "binary": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.bin",
+      "bytes": 943244,
+      "sha256": "88275473418c4fc072d578aa4059c8eaf76a24a297d442eb623bded3d9238894",
+      "relativePath": "Strash/Chara/Monster/EN653/01/SK_EN653_01_model.bin"
+    },
+    "textures": {
+      "body": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_Base.tga",
+        "bytes": 259560,
+        "sha256": "01f6d1bc1ad8780403cd022638bc8df527c919d8213217b65a9bd3606be76b70",
+        "relativePath": "Strash/Chara/Monster/EN653/00/T_EN653_00_Base.tga"
+      },
+      "face": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/T_EN653_01_Face_Base.tga",
+        "bytes": 1627668,
+        "sha256": "1e86e16649a07f888d5009e0038c26dc5cdc805dd97f63018e2e1a7613586cfe",
+        "relativePath": "Strash/Chara/Monster/EN653/01/T_EN653_01_Face_Base.tga"
+      }
+    }
+  },
+  "sourceContractRepair": {
+    "bufferViewTargets": 36,
+    "positionAccessors": [
+      {
+        "accessor": 2,
+        "count": 1283,
+        "min": [
+          -0.26012274622917175,
+          2.0439682006835938,
+          -0.19683273136615753
+        ],
+        "max": [
+          0.26012274622917175,
+          2.546649932861328,
+          0.15934988856315613
+        ]
+      },
+      {
+        "accessor": 11,
+        "count": 3313,
+        "min": [
+          -1.2828260660171509,
+          0.017522379755973816,
+          -1.062969446182251
+        ],
+        "max": [
+          1.2828260660171509,
+          2.8536016941070557,
+          0.6097932457923889
+        ]
+      },
+      {
+        "accessor": 20,
+        "count": 6383,
+        "min": [
+          -1.517236351966858,
+          -2.515911910450086e-05,
+          -0.20457135140895844
+        ],
+        "max": [
+          1.517236351966858,
+          2.652557373046875,
+          0.3703993260860443
+        ]
+      },
+      {
+        "accessor": 29,
+        "count": 872,
+        "min": [
+          -1.0053263902664185,
+          0.017522379755973816,
+          -1.062969446182251
+        ],
+        "max": [
+          1.0053257942199707,
+          2.623936414718628,
+          0.48015984892845154
+        ]
+      }
+    ]
+  },
+  "materialMapping": {
+    "MI_EN653_01_Face": "face",
+    "MI_EN653_00_Body": "body",
+    "MI_EN653_00_Metal": "body",
+    "MI_EN653_00_BodySphere": "body"
+  },
+  "sourceConversionSha256": "a0d777a38fccd39b59686bf9b0a98062c15f19110606e0cb3ff7deaef99b59ed",
+  "normalizedSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+  "meshSkinUvAccessorBytesPreservedBySourcePackaging": true,
+  "shaderParityVerified": false,
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/conversion.json",
+    "bytes": 6819,
+    "sha256": "e8654d7303a32c56e92cca06807212bacf0e273e8e89e9da0be019187566e8ee"
+  },
+  "normalizationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/ggd-upload.json",
+    "bytes": 7258,
+    "sha256": "eccf900e688048fca477150098610b5c23d3708ee724a2598a4f89721b720110"
+  }
+}

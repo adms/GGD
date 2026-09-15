@@ -1,0 +1,47 @@
+{
+  "schema": "ggd.dai-rigid-props-source-geometry-proof@1",
+  "props": [
+    {
+      "prop": "handheld",
+      "path": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+      "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+      "sourceTriangles": 1854,
+      "verifiedTriangles": 1854,
+      "positionMaximumAbsoluteErrorMeters": 4.08782960814591e-08,
+      "uvMaximumAbsoluteError": 4.754638673887257e-07,
+      "allOriginalFacesPreserved": true,
+      "normalLengthRange": [
+        0.9999999403953552,
+        1.0
+      ],
+      "tangentsFiniteUnitOrthogonal": true,
+      "rightHandedYUp": true,
+      "sourcePivotRelativeCmToMeters": true,
+      "nativeBoneAndAnimationCount": 0,
+      "transparentMaterials": 0,
+      "sourceDazRenderParity": false,
+      "attachmentFitVerified": false
+    },
+    {
+      "prop": "back",
+      "path": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/back/component.glb",
+      "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+      "sourceTriangles": 1854,
+      "verifiedTriangles": 1854,
+      "positionMaximumAbsoluteErrorMeters": 5.947113046467223e-08,
+      "uvMaximumAbsoluteError": 4.754638673887257e-07,
+      "allOriginalFacesPreserved": true,
+      "normalLengthRange": [
+        0.9999999403953552,
+        1.0
+      ],
+      "tangentsFiniteUnitOrthogonal": true,
+      "rightHandedYUp": true,
+      "sourcePivotRelativeCmToMeters": true,
+      "nativeBoneAndAnimationCount": 0,
+      "transparentMaterials": 0,
+      "sourceDazRenderParity": false,
+      "attachmentFitVerified": false
+    }
+  ]
+}

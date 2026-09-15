@@ -1,0 +1,55 @@
+{
+  "schema": "ggd.procedural-six-state-source-rebuild@1",
+  "componentId": "ssbu-ryu-c00-procedural-six-state-v1",
+  "source": {
+    "absolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+    "bytes": 1005808,
+    "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c"
+  },
+  "firstOutput": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+  },
+  "secondOutput": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-rebuild-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+  },
+  "finalGlbByteIdenticalRebuild": true,
+  "outputSha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/ggd-procedural-six-state.py",
+      "sha256": "4fe882fe5bbc2e1d10dd6c31881c68a3881805f91ec96f9996664605a00fbf06"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/configs/ssbu-ryu-c00-v1.json",
+      "sha256": "a22e1f6e8a6e0e595ea97e3b46b08a8fefdeea7145ac64fbe4f9925a8464f2d1"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/render_motion_glb.py",
+      "sha256": "056f6417d482d4da33ccde2647d2eeb3bc1ce159940f2a17aba5af3f0df87b08"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/render_motion_glb.mjs",
+      "sha256": "8f409a8f088523619f1d8fa8c8f89bb9ee5cd974709eb5d46c57ffc959900901"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/make_contact_sheet.py",
+      "sha256": "5d560196afba74d0c52d74733cabcb7921744ef755712062d34d8b6ea3a36a0b"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/validate_procedural_component.mts",
+      "sha256": "31d17546e30768d5668387b4d75246ad05b006d3e7ce955929ae9c41addeb841"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/test_procedural_six_state.py",
+      "sha256": "856169e7fa73499c8bdf906db04f3782e07fb4eeb95485e30b0c0172436a96d8"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/integrate_ryu.py",
+      "sha256": "75aa29bfb4016d538ee62c0fdd33507915b3528f09bd523b51cae164b5d450f8"
+    }
+  ]
+}

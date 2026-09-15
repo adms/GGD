@@ -2,7 +2,8 @@ import type { CommunityHeroExample, Move } from "./communityExamples";
 import { HERO_SLOTS } from "./constants";
 import type { VfxScriptEntry, VfxScriptSegment } from "../schema/vfxScript";
 
-type Theme = "arcane" | "ice" | "fire" | "physical" | "holy" | "void" | "nature" | "lightning" | "earth";
+export type CommunityCueTheme = "arcane" | "ice" | "fire" | "physical" | "holy" | "void" | "nature" | "lightning" | "earth";
+type Theme = CommunityCueTheme;
 const themes: Record<string, Theme> = {
   "acquired-jetragon": "arcane", "acquired-astralym": "void", "acquired-cattiva": "physical", "acquired-dio": "holy",
   "acquired-morgiana": "fire", "acquired-zero": "lightning", "acquired-emilia": "ice", "acquired-ram": "nature", "acquired-beatrice": "arcane",
@@ -30,7 +31,20 @@ const findKinds = (value: unknown, out = new Set<string>()): Set<string> => {
   }
   return out;
 };
-function cue(move: Move, theme: Theme): Extract<VfxScriptSegment, { kind: "vfx" }> {
+/** 一名社群英雄的主題；表裡沒有這一名 ⇒ `arcane`（⭐ 與 `withAcquiredPresentation` 同一個退路，⛔ 不是第二份）。 */
+export function communityThemeFor(heroId: string): Theme {
+  return themes[heroId] ?? "arcane";
+}
+/** 學到的被動佔在主動格：沒有施法事件 ⇒ 不給施法提示（⭐ `withAcquiredPresentation` 與執行期退路共用）。 */
+export function isCastlessCommunityMove(move: Pick<Move, "ref" | "abilityOverrides">): boolean {
+  return /event-passive|on-attack|on-hit-react|growth-charge|mark-stacks/.test(move.ref) || move.abilityOverrides?.isPassiveOnly === true;
+}
+/**
+ * ⭐ 社群英雄「沒有作者特效時施法畫什麼」的**唯一**規則 —— 依模板家族（ref）與參數挑已出貨的 `fx.prim.*`。
+ * 兩個消費端：`withAcquiredPresentation`（編輯器範例的演出腳本）與
+ * `../communityCueFallback.ts`（載入時替沒有 `vfxKey` 的出貨技能補施法特效）。⛔ 不要抄第二份。
+ */
+export function communityCastCue(move: Pick<Move, "ref" | "params">, theme: Theme): Extract<VfxScriptSegment, { kind: "vfx" }> {
   const kinds = findKinds(move.params);
   const ref = move.ref;
   const self = move.params.castType === "self" || /buff-self|instant-blast|orbit-array/.test(ref);
@@ -47,16 +61,16 @@ function cue(move: Move, theme: Theme): Extract<VfxScriptSegment, { kind: "vfx" 
   };
 }
 export function withAcquiredPresentation(recipe: CommunityHeroExample): CommunityHeroExample {
-  const theme = themes[recipe.id] ?? "arcane";
+  const theme = communityThemeFor(recipe.id);
   const authoredPresentation = { ...recipe.authoredPresentation };
   for (const slot of HERO_SLOTS) {
     if (slot === "PASSIVE" || authoredPresentation[slot]) continue;
     const move = recipe.moves[slot];
     // Learned passives in active slots have no cast event; retain that fact.
-    if (/event-passive|on-attack|on-hit-react|growth-charge|mark-stacks/.test(move.ref) || move.abilityOverrides?.isPassiveOnly === true) continue;
+    if (isCastlessCommunityMove(move)) continue;
     const segments: VfxScriptEntry[] = [
       { kind: "anim", on: "castStart", at: "caster", pulse: "cast", replaces: "caster.action" },
-      cue(move, theme), { kind: "sound", on: "castEffect", soundKey: sound[theme] },
+      communityCastCue(move, theme), { kind: "sound", on: "castEffect", soundKey: sound[theme] },
     ];
     authoredPresentation[slot] = { yields: ["caster.castFx"], segments,
       notes: "採用已出貨 GGD 特效與音效。施法提示不代表傷害或資源消耗成功；判定依技能資料。非原作特效與語音還原。" };

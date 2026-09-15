@@ -12,11 +12,11 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    448.0
+    600.0
   ],
   "manaCostTier": "大",
   "range": 8,
-  "castTimeSec": 1.333,
+  "castTimeSec": 1,
   "effects": [
     {
       "kind": "dot",
@@ -38,5 +38,6 @@
     }
   ],
   "icon": "assets/icons/abilities/community-review-18-20260907.ex.webp",
-  "rangeTier": "大"
+  "rangeTier": "大",
+  "castTimeTier": "極大"
 }

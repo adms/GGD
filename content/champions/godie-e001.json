@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 61.0037,
+    "maxHealth": 60,
     "healthRegen": 0.3344,
-    "maxMana": 21.3546,
+    "maxMana": 20,
     "manaRegen": 0.0593,
     "ad": 3.0196,
     "armor": 0.665,
@@ -69,21 +69,21 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 12.0,
+          "duration": 12,
           "modifiers": [
             {
               "stat": "ms",
@@ -100,7 +100,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -110,7 +110,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -120,7 +120,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -130,22 +130,23 @@
                   "value": 1.5
                 }
               ],
-              "duration": 45.0
+              "duration": 45
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 3.0
+                  "value": 3
                 }
               ],
-              "duration": 45.0
+              "duration": 45
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-e001.w",
@@ -157,16 +158,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -198,7 +199,7 @@
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2.0
+                "value": 2
               }
             ]
           },
@@ -231,7 +232,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e001.e",
@@ -249,15 +251,15 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -277,12 +279,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "slow60",
-            "duration": 5.0,
+            "duration": 5,
             "moveSpeedMult": 0.4
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-e001.r",
@@ -299,20 +302,20 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.blood.nova-lg",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-transform",
         "params": {
           "to": "alternate",
-          "durationSec": 7.0,
+          "durationSec": 7,
           "modifiers": [
             {
               "stat": "ad",
@@ -321,9 +324,10 @@
             }
           ],
           "buffDurationSec": 7,
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

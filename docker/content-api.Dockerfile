@@ -29,8 +29,18 @@ FROM node:22-alpine
 #      症狀一模一樣（build 過、跑起來 ENOENT）。
 #   ⭐ `cwebp -version` 是**會回非零**的自證（CLAUDE.md：選 fail-open 就要有東西喊）——
 #      套件改名／被拿掉 ⇒ **build 當場紅**，⛔ 不是等到第一次轉檔才靜默失敗。
-RUN apk add --no-cache tini libwebp-tools \
- && cwebp -version > /dev/null
+#   ⭐ 2026-09-11（GH#1211）：加上 **ffmpeg** —— `resizeImage.node.ts` 直接呼叫它，
+#      而它 fail-open（找不到就回 null）⇒ ⛔ 少裝的症狀是**貼圖悄悄沒縮**，
+#      ⛔ 不是一個會喊的錯。而那正是 256 貼圖上限那條路在用的。
+#   ⭐ 2026-09-15（#1178 合入後）：加上 **git** —— `catalogAddressedAssets.ts` 用
+#      `git ls-tree HEAD` 認出「檔名即內容雜湊」的 GLB 只記雜湊；沒有 git 就 fail-open 回全量複製
+#      （撞 512 MiB 上限 ⇒ 存檔 503，`capHint()` 會說「讀不到 git HEAD」）。
+#      ⚠️ 光裝 git 還不夠：compose 只掛 `../content`，容器看不到 `.git` ⇒ 仍會退回全量複製。
+#      掛 `.git` 是另一個決定（唯讀掛載 / safe.directory），⛔ 不在這一行裡偷做。
+RUN apk add --no-cache tini libwebp-tools ffmpeg git \
+ && cwebp -version > /dev/null \
+ && ffmpeg -version > /dev/null \
+ && git --version > /dev/null
 ENV NODE_ENV=development \
     CONTENT_DIR=/srv/content
 WORKDIR /app

@@ -31,7 +31,7 @@
       "duration": 3
     }
   ],
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-34-20260907.r.webp",
   "template": {
@@ -45,7 +45,7 @@
           "msBonusTier": "極小"
         }
       ],
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

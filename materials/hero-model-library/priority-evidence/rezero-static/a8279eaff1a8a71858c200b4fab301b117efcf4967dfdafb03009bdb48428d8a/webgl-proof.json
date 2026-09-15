@@ -1,0 +1,220 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.8035049162800476,
+      -8.62802274070873e-08,
+      -0.16389393791167706
+    ],
+    "max": [
+      0.8035049040596931,
+      1.8000001080924335,
+      0.1638939904744845
+    ],
+    "extent": [
+      1.6070098203397407,
+      1.800000194372661,
+      0.32778792838616155
+    ]
+  },
+  "geometry": [
+    {
+      "name": "ZHS002_Natsuki_Subaru renderer",
+      "vertices": 4098,
+      "indices": 18144,
+      "worldBounds": {
+        "min": [
+          -0.8035049162800476,
+          -8.62802274070873e-08,
+          -0.16389393791167706
+        ],
+        "max": [
+          0.8035049040596931,
+          1.8000001080924335,
+          0.1638939904744845
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 45,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "face renderer_primitive0",
+      "vertices": 1760,
+      "indices": 4914,
+      "worldBounds": {
+        "min": [
+          -0.09755643909085876,
+          1.5286368942079491,
+          -0.053945175946406465
+        ],
+        "max": [
+          0.09756047587776884,
+          1.7057928654187435,
+          0.09046119472399283
+        ]
+      },
+      "skeleton": "skeleton1",
+      "bones": 10,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "face renderer_primitive1",
+      "vertices": 1760,
+      "indices": 1308,
+      "worldBounds": {
+        "min": [
+          -0.09755643909085876,
+          1.5286368942079491,
+          -0.053945175946406465
+        ],
+        "max": [
+          0.09756047587776884,
+          1.7057928654187435,
+          0.09046119472399283
+        ]
+      },
+      "skeleton": "skeleton1",
+      "bones": 10,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 2,
+  "materials": [
+    {
+      "name": "ZHS002_Natsuki_Subaru",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 0.5527864098548889,
+      "albedoTexture": {
+        "name": "ZHS002_Natsuki_Subaru (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 128
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "ZHS002_Natsuki_Subaru_face",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 0.5527864098548889,
+      "albedoTexture": {
+        "name": "ZHS002_Natsuki_Subaru_face (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 128
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "ZHS002_Natsuki_Subaru_eye",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 0.5527864098548889,
+      "albedoTexture": {
+        "name": "ZHS002_Natsuki_Subaru_eye (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 128
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 184,
+        "height": 1
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 44,
+        "height": 1
+      }
+    },
+    {
+      "name": "ZHS002_Natsuki_Subaru (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    },
+    {
+      "name": "ZHS002_Natsuki_Subaru_face (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    },
+    {
+      "name": "ZHS002_Natsuki_Subaru_eye (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

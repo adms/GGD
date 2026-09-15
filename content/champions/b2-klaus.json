@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -22,10 +22,10 @@
       ],
       "id": "b2-klaus.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "更改辦公室位置",
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -46,10 +46,11 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-klaus.e.webp"
+      "icon": "assets/icons/abilities/b2-klaus.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -71,10 +72,10 @@
       ],
       "id": "b2-klaus.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "已加入工作佇列",
@@ -85,7 +86,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -109,10 +110,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-klaus.q.webp"
+      "icon": "assets/icons/abilities/b2-klaus.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -148,9 +150,9 @@
       ],
       "id": "b2-klaus.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -163,7 +165,7 @@
         "params": {
           "anchor": "caster",
           "applyTo": "enemies",
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "damageTier": "中",
           "damageType": "physical",
           "durationSec": 3,
@@ -180,10 +182,11 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "icon": "assets/icons/abilities/b2-klaus.r.webp"
+      "icon": "assets/icons/abilities/b2-klaus.r.webp",
+      "castTimeTier": "大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -220,10 +223,10 @@
       ],
       "id": "b2-klaus.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -236,7 +239,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -275,7 +278,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-klaus.w.webp"
+      "icon": "assets/icons/abilities/b2-klaus.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "marksman",
@@ -301,8 +305,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 8.2
@@ -317,13 +321,13 @@
     "as": 0,
     "healthRegen": 0.07234693877551021,
     "manaRegen": 0,
-    "maxHealth": 29.202653061224485,
-    "maxMana": 19.291836734693877,
+    "maxHealth": 60,
+    "maxMana": 50,
     "mr": 1.3198979591836735
   },
   "msGrowthTier": "極小",
   "id": "b2-klaus",
-  "modelKey": "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556",
+  "modelKey": "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184",
   "name": "克勞斯",
   "origin": "射手",
   "passiveAbility": "b2-klaus.passive",
@@ -369,6 +373,193 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-487487-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487487-7yzc0mtk",
+      "modelSha256": "95da0de26da496ff347279390d42a26c823814f4e9a77959dc29e44c60fff43d",
+      "binarySha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+      "registeredAt": "2026-09-10T14:45:41.760Z",
+      "source": {
+        "kind": "previous",
+        "character": "克勞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487487-7yzc0mtk.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.24c681b07af5092a882abc56c1bbd4ff4f402a20931bebb8",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+      "modelSha256": "d5641b8fdbac487e431dae87ee90dd5c9c4eacc4bbd5cd1cf6c4f3058c9a769e",
+      "binarySha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "registeredAt": "2026-09-10T14:45:41.769Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:41.878Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "modelSha256": "9735cdf294928758aeefcdda1f0f91743eb32c8066ff05637a1b550d739db0b3",
+      "binarySha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "registeredAt": "2026-09-10T14:48:57.173Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2eb3c103151b3afbad614e875e2d0648da7994e10d86287c",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+      "modelSha256": "12e2913b00bf23f2b6c6a3a6f681f4387aa20baea24c0f6e7dd5fb098e72ebbd",
+      "binarySha256": "4ecb0e4a9918817b3be0d2bd4fba5413ddcfc44df401da97d6fea7df683613d6",
+      "registeredAt": "2026-09-12T23:12:01.333Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2a62bf437a4de27aeb05ddc5233dbfbe2937c332e302b435",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "modelSha256": "8ac5a23c424d275729eaec4c74da60392c042d8c52cf1b9cda7dc97910ea81f5",
+      "binarySha256": "ef3e552823cbb52b03bd9ae414706cecf966e6a8f512264e9ae0789c1acaaeab",
+      "registeredAt": "2026-09-12T23:12:01.370Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5eb9ddbdb654ce21bdf7e33d8a804ab054f153c99bf9a60b",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "0caa69a4335850445a05b733ae574252904175c1e9ce6e1223f2009283549f4f",
+      "binarySha256": "7966bfb6ab8a40d6bb47d6537a30a88f1a5d403760d0b6e453e41e404172efc3",
+      "registeredAt": "2026-09-12T23:12:01.479Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.dfd31286d6f3a4246db1798a23e801adcf9030217ade2e81",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+      "modelSha256": "a7e6924430da111734affb9ffc10c043ee3f2006fdd2fb38e1334c142b3807c1",
+      "binarySha256": "4ecb0e4a9918817b3be0d2bd4fba5413ddcfc44df401da97d6fea7df683613d6",
+      "registeredAt": "2026-09-13T00:09:05.338Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "modelSha256": "d9aa5a252230c76278d37e652a5fcb622bea84162081ca30e59e84d2a6a48c2c",
+      "binarySha256": "ef3e552823cbb52b03bd9ae414706cecf966e6a8f512264e9ae0789c1acaaeab",
+      "registeredAt": "2026-09-13T00:09:05.376Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8969f24e8d72db2e53db22dcdd9622313e6d1dfa75a39a2b",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "c12c12f2f91428fe9e095567ceaf20801c5f7809aaf03f778d79a4deb91c8b82",
+      "binarySha256": "7966bfb6ab8a40d6bb47d6537a30a88f1a5d403760d0b6e453e41e404172efc3",
+      "registeredAt": "2026-09-13T00:09:05.483Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

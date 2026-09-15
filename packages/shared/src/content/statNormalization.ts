@@ -58,6 +58,7 @@
  */
 import type { ChampionDef } from "../sim/content/defs";
 import { Stat } from "../sim/stats/statTypes";
+import { contentFormPairs } from "./voiceFormSharing";
 
 /** `content/config/stat-normalization.json` 的文件 id。 */
 export const STAT_NORMALIZATION_DOC_ID = "stat-normalization";
@@ -1099,6 +1100,10 @@ export function championRoster(docs: readonly Record<string, unknown>[]): Roster
  *
  * ⛔ 不遞迴：只讀本體自己的 `origin`／三圍。本體的 `counterpartId` 指回變身態，
  * 遞迴下去就是一個無窮迴圈，而它會長得像「載入卡住了」。
+ *
+ * ⭐ 2026-09-15（GH#1258 審查）：「這是不是一對」讀 `voiceFormSharing.contentFormPairs`
+ * （兩張卡互相指著對方）—— ⛔ 不在這裡再判一次單邊 `role`。出貨 21 對全部雙向互指，答案不變；
+ * 單邊宣告是資料錯誤，⛔ 不是替它繼承出身的理由。
  */
 export function withInheritedOrigin<T extends Record<string, unknown>>(
   def: T,
@@ -1110,6 +1115,9 @@ export function withInheritedOrigin<T extends Record<string, unknown>>(
   if (xf?.role !== "alternate" || typeof xf.counterpartId !== "string") return def;
   const base = roster?.championById(xf.counterpartId);
   if (base === undefined) return def;
+  type FormDoc = Parameters<typeof contentFormPairs>[0] extends Iterable<infer D> ? D : never;
+  const pair = contentFormPairs([def as FormDoc, base as FormDoc])[0];
+  if (pair?.alternateId !== def["id"]) return def;
   const org = originOf(base as never);
   if (def["origin"] === org) return def;
   return { ...def, origin: org };

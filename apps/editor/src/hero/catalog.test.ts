@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { bundledHeroCatalog } from "./catalog";
+import { bundledHeroCatalog, createHeroCatalog } from "./catalog";
 import { pickableTemplateIds } from "../forge/typeCatalog";
 import { createHeroSimulationBaseline, HERO_SIMULATION_COLLECTIONS } from "@ggd/shared/content/heroForge/simulationBaseline";
 
@@ -14,8 +14,8 @@ it("bundles every pickable document template plus the offline preview inputs", (
   const baseline = createHeroSimulationBaseline(new Map(bundledHeroCatalog.simulationDocuments));
   for (const collection of HERO_SIMULATION_COLLECTIONS) expect(baseline.counts[collection], collection).toBeGreaterThan(0);
   const bodies = new Set(bundledHeroCatalog.simulationDocuments.filter(([key]) => key.startsWith("champions/")).map(([, doc]) => doc.modelKey));
-  // ⭐ owner 2026-09-11（逐字）：「如果你遇到該角色**還沒有實作** 卻下載了模型
-  //    你**還是要放在後台跟編輯器的模型庫列表** **等待認領實作**」
+  // ⭐ owner 2026-09-10 23:54（+0800；transcript 564b17ca 的 2026-09-10T15:54:57Z —— ⚠️ 2026-09-15 更正：這裡原本標 09-11）逐字：
+  //    「如果你遇到該角色**還沒有實作** 卻下載了模型 你**還是要放在後台跟編輯器的模型庫列表** **等待認領實作**」
   //
   // ⛔ 在此之前這一行斷言的正是**相反**的事（`modelIds ⊆ bodies`）——
   //    也就是把「**未認領的模型不可以出現**」寫死成了不變量，而
@@ -43,4 +43,11 @@ it("bundles every pickable document template plus the offline preview inputs", (
   //    ⭐ 後台下拉早就濾掉了（`contentApi.ts` 的 `!entry.id.startsWith("version.body.")`）
   //    ⇒ 這一條讓**兩個面對同一個問題給同一個答案**。
   expect(bundledHeroCatalog.modelIds.filter((id) => id.startsWith("version.body."))).toEqual([]);
+  // ⭐ GH#1188（2026-09-15 更正 991b02ed6）：離線 bundle 看不到 `_legacy`／skins／owner 下載清單 ⇒ ⛔ 不自己算待認領
+  //    （那一版在這裡算，量到 112 顆裡 45 顆是設計過的英雄在用）。答案只從 content-api 的判準來；
+  //    判準與每一種證據的守衛在 `apps/content-api/src/modelClaims.test.ts`。
+  expect(bundledHeroCatalog.unclaimedModelIds).toBeUndefined();
+  const loose = { id: "loose", schema: "model@1", glbPath: "assets/models/loose.glb", scale: 1, collisionRadius: 0.5, heroBody: true, clipMap: { idle: "i", run: "r", attack: "a", cast: "c", hurt: "h", death: "d" } };
+  const claimed = createHeroCatalog(bundledHeroCatalog.simulationDocuments, [loose], "local-api", { unclaimed: ["loose", "not-pickable"], evidence: { missing: [] } });
+  expect(claimed.unclaimedModelIds).toEqual(["loose"]); // ⊆ 可挑清單，⛔ 不會多出選不到的
 });

@@ -1,0 +1,227 @@
+{
+  "schema": "ggd.seven-voice-git-handoff@1",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
+  "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "allowedContent": "scripts, settings, immutable index manifests, SHA-256 and docs only",
+  "files": [
+    {
+      "path": "project-seven-config.json",
+      "bytes": 1110,
+      "sha256": "41d2d88d36b8362735b41002b9de3d3b4436cc3810cc99816bf9f508fa5f6dfc"
+    },
+    {
+      "path": "control/allowlist.json",
+      "bytes": 1772,
+      "sha256": "457e2ac08f4130e4fc043d28900f91458957d97e06ca066ebaa5c6b167859ba0"
+    },
+    {
+      "path": "control/shared-event-metadata.json",
+      "bytes": 3856,
+      "sha256": "857d263d1e32e5e21877ec8b6bfd96a10ea25c73a88bb52d5fec21d2b3765650"
+    },
+    {
+      "path": "guard-validation.json",
+      "bytes": 396,
+      "sha256": "9cd0c5a425d1158998961c2f64b28c0124c6423ad78d6cfe18a400b3a82d7597"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6012,
+      "sha256": "2fccfbdd89c7c8b323956e8065ab068e20f896a950f2c7e12753a7084ab43331"
+    },
+    {
+      "path": "seven-voice-index.json",
+      "bytes": 20429,
+      "sha256": "59634ae593408206c7e6eb0c85e05566a5a9ad1c221e5e755a7ad17d9f070d0a"
+    },
+    {
+      "path": "latest-seven-delivery-receipt.json",
+      "bytes": 862,
+      "sha256": "6735ade96148c515d456bf99bb560863e80da96109b697a9fe0480410c2e4807"
+    },
+    {
+      "path": "event-bindings/karthus-base.json",
+      "bytes": 184827,
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
+    },
+    {
+      "path": "event-bindings/leesin-base.json",
+      "bytes": 205301,
+      "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735"
+    },
+    {
+      "path": "event-bindings/lux-base.json",
+      "bytes": 142674,
+      "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3"
+    },
+    {
+      "path": "event-bindings/missfortune-base.json",
+      "bytes": 50569,
+      "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9"
+    },
+    {
+      "path": "event-bindings/warwick-base.json",
+      "bytes": 235760,
+      "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a"
+    },
+    {
+      "path": "event-bindings/xerath-base.json",
+      "bytes": 109927,
+      "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36"
+    },
+    {
+      "path": "event-bindings/yasuo-base.json",
+      "bytes": 131384,
+      "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
+    },
+    {
+      "path": "listening-review-decisions.json",
+      "bytes": 173295,
+      "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
+    },
+    {
+      "path": "listening-review-queue.json",
+      "bytes": 1609180,
+      "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
+    },
+    {
+      "path": "listening-review-queue.md",
+      "bytes": 2407,
+      "sha256": "4809b73ea787a7d3b5bf467d78d04e99addaa8a72ffb21251c435267dc50a341"
+    },
+    {
+      "path": "listening-review-receipt.json",
+      "bytes": 7418,
+      "sha256": "efd6396776043e921d2d4fe3b77d38ca3f9e226c4af9d9abd7d8078cdc01bcfe"
+    },
+    {
+      "path": "listening-review.html",
+      "bytes": 9671,
+      "sha256": "a2cec5fff684a63f8a3e84cd96a80803f8eb0a83632093675ebc5942ebb6af9e"
+    },
+    {
+      "path": "runtime-registration.json",
+      "bytes": 333557,
+      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
+    },
+    {
+      "path": "tools/acquire_project_ja.py",
+      "bytes": 6009,
+      "sha256": "42599afa9f640bac92aeb0c08c3d5f3cef56c3aad6ce4ff741465bdcb3908db0"
+    },
+    {
+      "path": "tools/acquire_shared_event_metadata.py",
+      "bytes": 16567,
+      "sha256": "3d1ae14a4ec9d496b7332f5b8dd52a972370c0e3163c350748f66b69c8a5b558"
+    },
+    {
+      "path": "tools/apply_approved_battle_runtime.py",
+      "bytes": 12312,
+      "sha256": "e1287f885e9d46c493a3001438d5e0e4bf97c39c3855ed080ea80396cf0025af"
+    },
+    {
+      "path": "tools/build_event_bindings.py",
+      "bytes": 12286,
+      "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
+    },
+    {
+      "path": "tools/build_listening_review_queue.py",
+      "bytes": 30859,
+      "sha256": "5ef8054d279af6427dc954285c3cdba0fda82ef9662714a17547ea495f7a1ee2"
+    },
+    {
+      "path": "tools/bundle_event_bindings.py",
+      "bytes": 9536,
+      "sha256": "64c95aa04435c3376d706462ea804e49df9047651f7584585438e3530f95a376"
+    },
+    {
+      "path": "tools/decode_project_ja.py",
+      "bytes": 3354,
+      "sha256": "be6440d4f84dccc97f2ffafe6f389aea60ec98959ff8d014705e510e59e48262"
+    },
+    {
+      "path": "tools/decode_wwise_intake.py",
+      "bytes": 9839,
+      "sha256": "589285a0a614bf89457bbf89c10754739076603b82166609b25fcebfc4702b20"
+    },
+    {
+      "path": "tools/embedded_resources.py",
+      "bytes": 3949,
+      "sha256": "65106da52e2677c95e0e60e337da7533466eab58ffe4694b88a9ae65a5c54fe6"
+    },
+    {
+      "path": "tools/extract_project_ja.py",
+      "bytes": 9471,
+      "sha256": "cfa1b1d299c334cb3c1099f190ceeaa3e5ad338fcdaa9de597843cfc8fa510eb"
+    },
+    {
+      "path": "tools/freeze_project_ja.py",
+      "bytes": 9703,
+      "sha256": "e8362f56fc5befad3a04235a469f29fbac095e1c694ef304c0dd1bf3c2de07c0"
+    },
+    {
+      "path": "tools/make_seven_handoff.py",
+      "bytes": 8638,
+      "sha256": "921622f7143be60750b70264ce8706babe12b5bd0119c6b653945ac091a8bca9"
+    },
+    {
+      "path": "tools/recover_project_ja.py",
+      "bytes": 5933,
+      "sha256": "8cc32953b1d637ab6b81646d36b7262fb6f3ac3ec3dbaedb2d53b92b6879956c"
+    },
+    {
+      "path": "tools/run_project_ja.py",
+      "bytes": 1764,
+      "sha256": "dca40d9d73d34488deb051d8bb2dacf6120098b35816136fed6beb5beb351d4b"
+    },
+    {
+      "path": "tools/scope_guard.py",
+      "bytes": 882,
+      "sha256": "6d71f7e1d0d5d03409f08b57b238ff1f7e3f54426fcc75253fadca15ee55ac0c"
+    },
+    {
+      "path": "tools/serve_listening_review.py",
+      "bytes": 6798,
+      "sha256": "89b3b19067aec788e4519d8934a258b42017ee6200a22d1587e1a3ed6de7b669"
+    },
+    {
+      "path": "tools/sync_event_binding_evidence.py",
+      "bytes": 6050,
+      "sha256": "4079d40b6618a946f6892dfa4bc8687d9b55bb964e897e4484426b9bafc15b8d"
+    },
+    {
+      "path": "tools/test_acquire_shared_event_metadata.py",
+      "bytes": 2164,
+      "sha256": "d4487aa3168f636fb1db90e721fc156952077e86534733de60069849f5469ae0"
+    },
+    {
+      "path": "tools/test_apply_approved_battle_runtime.py",
+      "bytes": 1787,
+      "sha256": "b82ebff9411183e9addfc88d64111891ffa33664defacb4cb2e85c53292de5c6"
+    },
+    {
+      "path": "tools/test_build_event_bindings.py",
+      "bytes": 1446,
+      "sha256": "edce557a1c02e140b59e6b25dfde5ba5ae3b357865f22b4262ba33f0c63e8444"
+    },
+    {
+      "path": "tools/test_build_listening_review_queue.py",
+      "bytes": 2355,
+      "sha256": "b09669d3884d76fe8b559ddc56ca6d6b7483b366c9768e5e15c75c0c6ddf7104"
+    },
+    {
+      "path": "tools/test_serve_listening_review.py",
+      "bytes": 2363,
+      "sha256": "78e6ba386825f4118d070e813926b471e8ae37bbaa7ffbb785eb6f57d5ac36d5"
+    }
+  ],
+  "audioBinaryCount": 0,
+  "nativeBinaryCount": 0,
+  "largeNativeDeliveryIndex": {
+    "path": "deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "bytes": 7853255,
+    "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+    "storage": "keep local; root may archive separately; compact Git index references this receipt"
+  }
+}

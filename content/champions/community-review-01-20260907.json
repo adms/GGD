@@ -1,16 +1,16 @@
 {
   "id": "community-review-01-20260907",
   "name": "武藤遊戲",
-  "description": "武藤遊戲 社群英雄功能驗收稿。作品：《遊戲王》  \n採用：武藤遊戲／闇遊戲的黑魔導牌組意象。  \n定位：召喚、陷阱、協同施法。\n\n視覺方向：卡片框光、紫色法陣；R 使用金色雷電，召喚代理保持可受擊輪廓。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《遊戲王》  \n採用：武藤遊戲／闇遊戲的黑魔導牌組意象。  \n定位：召喚、陷阱、協同施法。\n\n視覺方向：卡片框光、紫色法陣；R 使用金色雷電，召喚代理保持可受擊輪廓。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+  "modelKey": "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 80,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 13.676326530612242,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -84,7 +84,7 @@
           "damageMult": 0.25
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-01-20260907.q.webp",
       "template": {
@@ -101,7 +101,7 @@
           "maxAlive": 1,
           "onOwnerDeath": "despawn",
           "cleanse": "none",
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -150,7 +150,7 @@
           "damageMult": 0.25
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-01-20260907.w.webp",
       "template": {
@@ -167,7 +167,7 @@
           "maxAlive": 1,
           "onOwnerDeath": "despawn",
           "cleanse": "none",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -220,7 +220,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-01-20260907.e.webp",
       "template": {
@@ -228,7 +228,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -254,9 +254,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -274,7 +274,7 @@
           }
         }
       ],
-      "castTimeSec": 3.367,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-01-20260907.r.webp",
       "template": {
@@ -286,7 +286,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 3.367
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -313,5 +313,61 @@
   "tags": [
     "thrown"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.92dda28e20450b2854bb3f4e66351f7490c050989536dee6",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "modelSha256": "0f3119460e5cec7f219c820214bb82ebf3dddf63e48d4159ae2de6c3fb971861",
+      "binarySha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "registeredAt": "2026-09-12T23:02:26.968Z",
+      "source": {
+        "kind": "previous",
+        "character": "武藤遊戲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.d5117873dd7c2b981b21a1d1641f93ffded7feb485b4bb7f",
+      "label": "法老王",
+      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "modelSha256": "577b86b19afe80aec0f8cbd3f72e999e75d5039a01e98a5d990c9e4e065961fc",
+      "binarySha256": "c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67",
+      "registeredAt": "2026-09-12T23:02:26.979Z",
+      "source": {
+        "kind": "exact",
+        "character": "法老王",
+        "work": "遊戲王／遊戲王 怪獸之決鬥",
+        "library": "300heroes",
+        "reference": "300heroes:70521f248a94658c5d1ed26c",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34",
+      "label": "法老王",
+      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "modelSha256": "c98ae3c9e2a7bbe9cf36231dfbc5d9592f5941394b97cdd7c5588d64421f6e65",
+      "binarySha256": "c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67",
+      "registeredAt": "2026-09-13T00:08:43.078Z",
+      "source": {
+        "kind": "exact",
+        "character": "法老王",
+        "work": "遊戲王／遊戲王 怪獸之決鬥",
+        "library": "300heroes",
+        "reference": "300heroes:70521f248a94658c5d1ed26c",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

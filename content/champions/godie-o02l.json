@@ -7,9 +7,9 @@
   "modelKey": "imported.picacugy",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 6.0,
     "ap": 0,
@@ -24,9 +24,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 32,
+    "maxHealth": 60,
     "healthRegen": 0.08,
-    "maxMana": 18,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 0.96,
     "armor": 0.9,
@@ -66,16 +66,16 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -94,11 +94,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
       },
       "radiusTier": "中",
-      "radius": 6.0
+      "radius": 6,
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o02l.w",
@@ -117,16 +118,16 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "cooldownTier": "極小",
       "passive": {
         "name": "58-02 鋼鐵尾巴",
@@ -141,7 +142,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 75.0
+                      "flat": 75
                     }
                   },
                   {
@@ -164,7 +165,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 150.0
+                      "flat": 150
                     }
                   },
                   {
@@ -187,7 +188,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 225.0
+                      "flat": 225
                     }
                   },
                   {
@@ -210,7 +211,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300.0
+                      "flat": 300
                     }
                   },
                   {
@@ -233,7 +234,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300.0
+                      "flat": 300
                     }
                   },
                   {
@@ -251,7 +252,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 3.0,
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -259,9 +260,10 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-o02l.e",
@@ -279,10 +281,10 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.nova",
@@ -312,7 +314,8 @@
           },
           "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-o02l.r",
@@ -329,14 +332,14 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -354,9 +357,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

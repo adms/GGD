@@ -13,12 +13,13 @@
     60.0
   ],
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 12.0,
   "radiusTier": "極小",
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -74,13 +75,13 @@
         "preset": "tpl-locust-strike",
         "modelKey": "w3x.stock.monsoonbolttarget"
       },
-      "castTimeSec": 2
+      "castTimeSec": 1
     }
   },
   "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "中",
-  "manaCostTier": "小",
   "rangeTier": "極大",
-  "castTimeSec": 2
+  "manaCostTier": "小",
+  "castTimeSec": 1
 }

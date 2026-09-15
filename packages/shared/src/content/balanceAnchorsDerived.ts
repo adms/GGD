@@ -19,16 +19,16 @@
 
 /** 純基礎空間的中位**最大生命** —— ⛔ 無系統倍率、⛔ 無初始加成、⛔ 無魔抗。 */
 export const MEDIAN_BASE_HP: Readonly<Record<number, number>> = Object.freeze({
-  30: 2010.6,
-  50: 2670,
-  99: 4385,
+  30: 2838,
+  50: 4438,
+  99: 8358,
 });
 
 /** 純基礎空間的中位**最大魔力** —— 同上三個⛔。 */
 export const MEDIAN_BASE_MANA: Readonly<Record<number, number>> = Object.freeze({
-  30: 1201.6,
-  50: 1585.3,
-  99: 2530.6,
+  30: 1745,
+  50: 2745,
+  99: 5195,
 });
 
 /** `combat-env` 在最大生命上的 env 鏈乘積（出貨值的快照）。 */

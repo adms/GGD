@@ -33,6 +33,7 @@ import { zVfxPrimitiveKind, zVfxPresentation } from "@ggd/shared/content/schema/
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxSubtypeDoc } from "@ggd/shared/content/schema/vfxSubtype";
 import { vfxScriptCallRefs } from "@ggd/shared/content/vfxSubtypes/expand";
+import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import { PRESET_FIELDS } from "@ggd/shared/content/modelFxPreset";
 import { CONFIG_DOC_SPECS } from "../../apps/admin/src/configForms";
 import { readSchema } from "../../apps/admin/src/configForms/engine";
@@ -300,16 +301,13 @@ function hookEventsOf(doc: unknown): Set<string> {
   return out;
 }
 
-/** 文件級 `template` 的三種寫法（字串／`{ref}`／`{stack:[…]}`）。 */
+/**
+ * 文件級 `template` → 模板 id。⭐ 走出貨的 `normalizeTemplateBinding()`（三種寫法收斂的唯一地方）。
+ * ⛔ 2026-09-15 之前這裡手寫「字串／`{ref}`／`{stack}`」，⛔ 認不得 `{cards,onConflict}`
+ * ⇒ `b2-*` 11 支的卡片堆疊引用全部漏算（GH#993，與 `gen.ts::refsOf` 同一個洞）。
+ */
 function docTemplateRefs(t: unknown): string[] {
-  if (typeof t === "string") return [t];
-  if (Array.isArray(t)) return t.flatMap(docTemplateRefs);
-  if (t && typeof t === "object") {
-    const o = t as { ref?: unknown; stack?: unknown };
-    if (typeof o.ref === "string") return [o.ref];
-    if (Array.isArray(o.stack)) return o.stack.flatMap(docTemplateRefs);
-  }
-  return [];
+  return t === undefined ? [] : normalizeTemplateBinding(t).cards.map((c) => c.ref);
 }
 
 export function scanContent(root: string): ContentScan {
@@ -592,7 +590,7 @@ export function buildBricks(root: string): BricksDoc {
    * ⛔ 所以這裡**不是**「兩個住處」：量值只有一個來源（他們的收據），
    * ⭐ 而代理值是**收據還沒到**時的誠實退路（`editorFormSource` 會說出用的是哪一個）。
    */
-  const receiptName = "claim.editor-form-receipts-spawn-obstacle.json";
+  const receiptName = "claim.editor-form-receipts-spawn-obstacle-landed.json";
   const receiptPath = join(root, "docs/editor-contract/coordination", receiptName);
   const receipts = ((): Map<string, boolean> | null => {
     if (!existsSync(receiptPath)) return null;

@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -39,18 +39,19 @@
       "dot": {
         "damageType": "magic",
         "amountPerTick": {
-          "flat": 60.0
+          "flat": 60
         },
-        "intervalSec": 1.0,
-        "durationSec": 2.0,
+        "intervalSec": 1,
+        "durationSec": 2,
         "stacking": "refresh"
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.nature.bolt",
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

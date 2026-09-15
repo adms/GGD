@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6fbc4aae62ba",
+    "contentVersion": "cv_8e53cfc05d69",
     "collections": {
       "champions": {
-        "hash": "f031b135eb22",
+        "hash": "5851bc7d108e",
         "count": 153
       },
       "abilities": {
-        "hash": "849c081263f8",
+        "hash": "0cf535753e2c",
         "count": 907
       },
       "items": {
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "95a0e0a7be39",
-        "count": 103
+        "hash": "f057f8bcc755",
+        "count": 104
       },
       "models": {
-        "hash": "a4bfc6ef85a1",
-        "count": 416
+        "hash": "94c711dc8b56",
+        "count": 1012
       },
       "vfx": {
         "hash": "7df129081586",
@@ -58,11 +58,11 @@
         "count": 14
       },
       "ability-templates": {
-        "hash": "48fcf2ce8923",
+        "hash": "a28a14aad4f4",
         "count": 82
       },
       "vfx-scripts": {
-        "hash": "20b5e06e9013",
+        "hash": "15ff12a31066",
         "count": 45
       },
       "vfx-subtypes": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "e9023124",
+    "fingerprint": "fb8d3eb8",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1306,6 +1306,7 @@
         "immobile",
         "missileSpeed",
         "modelKey",
+        "modelSelectionMode",
         "modelVersions",
         "msGrowthTier",
         "name",
@@ -6936,7 +6937,7 @@
               "min": 0.5,
               "max": 600,
               "unit": "s",
-              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
+              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「無時限」（原作 0 秒的那種；⚠️ 仍在回合結算時收走，⛔ 不是整場永久 —— GH#1241）。"
             },
             "damageMult": {
               "type": "number",
@@ -7545,12 +7546,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "e9023124",
+    "engineFingerprint": "fb8d3eb8",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e9023124 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fb8d3eb8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8077,12 +8078,12 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 402129,
-            "unlocked": 402129
+            "base": 567600,
+            "unlocked": 567600
           },
           "maxMana": {
-            "base": 240323,
-            "unlocked": 240323
+            "base": 349000,
+            "unlocked": 349000
           },
           "healthRegen": {
             "base": 929,
@@ -8271,7 +8272,7 @@
         {
           "rule": "low-damage-cell",
           "zh": "傷害相對冷卻偏低",
-          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 33.3/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝200 傷害 × 2 人 ÷ 30 卡面秒 = 13.3/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝500 傷害 × 2 人 ÷ 45 卡面秒 = 22.2/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
+          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 41.7/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝250 傷害 × 2 人 ÷ 30 卡面秒 = 16.7/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝625 傷害 × 2 人 ÷ 45 卡面秒 = 27.8/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
           "enabled": true
         }
       ],
@@ -8280,23 +8281,23 @@
           "shape": "範圍",
           "cooldownTier": "極小",
           "cooldownSec": 30,
-          "ratePerCardSecond": 13.333333333333334,
-          "anchorRate": 33.333333333333336,
+          "ratePerCardSecond": 16.666666666666668,
+          "anchorRate": 41.666666666666664,
           "deficitPct": -60,
           "diagonalDamageTier": "極小",
           "requiredDamageTier": "小",
-          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 13.3。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 16.7。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         },
         {
           "shape": "範圍",
           "cooldownTier": "小",
           "cooldownSec": 45,
-          "ratePerCardSecond": 22.22222222222222,
-          "anchorRate": 33.333333333333336,
+          "ratePerCardSecond": 27.77777777777778,
+          "anchorRate": 41.666666666666664,
           "deficitPct": -33,
           "diagonalDamageTier": "小",
           "requiredDamageTier": "中",
-          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 22.2。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 27.8。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         }
       ],
       "derivedFrom": [
@@ -8396,11 +8397,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c429a8e670dc",
+  "assetManifestDigest": "99bc53c61730",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2474,
-    "totalBytes": 557955002
+    "entries": 2871,
+    "totalBytes": 1108018602
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8418,15 +8419,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "89649af8b23c",
+    "fingerprint": "99148d5ca9dc",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "3dd1f3d12fdf"
+        "digest": "c11b83625d05"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "639da5369f6d"
+        "digest": "c9fd1a54a388"
       },
       {
         "surface": "exact-ref-collector",
@@ -8474,7 +8475,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "adb0cce4c6f9",
+  "migrationFingerprint": "5214d5735563",
   "supportedModes": [
     "bootstrap"
   ],
@@ -8488,5 +8489,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "5a448161ffd4"
+  "profileDigest": "6c547bf5f960"
 }

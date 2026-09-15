@@ -51,6 +51,7 @@ import {
   type ResetKind,
   type ResetPlan,
 } from "../curationReset";
+import { contentFormPairs } from "@ggd/shared/content/voiceFormSharing";
 import { Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import { DANGER, GOLD, OK, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
@@ -121,6 +122,12 @@ export function CurationResetPanel(props: {
         const n = (raw as { name?: unknown } | null)?.name;
         if (typeof n === "string" && n !== "") names.set(id, n);
       }
+      // GH#1258 —— 內容卡宣告的變身配對要兩張卡都在手上才判得了（互相指著對方）⇒ 補抓它們指到的那一半。
+      const counterparts = [...docs.values()]
+        .map((raw) => (raw as { transform?: { counterpartId?: unknown } } | null)?.transform?.counterpartId)
+        .filter((id): id is string => typeof id === "string" && !docs.has(id));
+      const pairDocs = [...docs.values(), ...(await loadDocsByIds("champions", counterparts)).values()];
+      const contentPairs = contentFormPairs(pairDocs as Parameters<typeof contentFormPairs>[0]);
       let legendaryPool: string[] = [];
       try {
         const resp = await fetch(`${CONTENT_BASE}/loot-tables/legendary-weapons.json`);
@@ -131,7 +138,7 @@ export function CurationResetPanel(props: {
       setLoaded({
         live,
         starter,
-        plan: buildResetPlan({ live, starter, championNames: names }),
+        plan: buildResetPlan({ live, starter, championNames: names, contentPairs }),
         legendaryPool,
       });
     } catch (e) {

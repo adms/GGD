@@ -1,0 +1,4209 @@
+{
+  "schema": "ggd-lol-native-event-bindings@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "sourceGame": "League of Legends",
+  "heroId": "example:karthus",
+  "nativeId": "Karthus",
+  "skinId": "skin0",
+  "reportedLocale": "ja_JP",
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "sourcePackage": "DATA/FINAL/Champions/Karthus.wad.client",
+  "sourcePackageCompleteLocally": false,
+  "metadataAcquisitionStatus": "partial-extraction-from-official-release-chunks",
+  "inputs": {
+    "bin": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-metadata/Karthus/skin0.bin",
+      "sha256": "7674038254466fdbb6bb2423db5d9ad52dee8d802c6889ba84b6d4698f5dc496"
+    },
+    "eventsBnk": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Karthus.ja_JP/native/40d837e08792cc81.bnk",
+      "sha256": "8e192cd959ef2e985a81d39556eba3a7e369b9a1d717d6b1902771721a125bc0",
+      "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/karthus/skins/base/karthus_base_vo_events.bnk"
+    },
+    "audioBanks": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Karthus.ja_JP/native/44f95fb8bc2a6afa.bnk",
+        "sha256": "a50189afdbce546a15094bab1093d9fd7a15575971ed389d5f6d4ba4d5dc271c",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/karthus/skins/base/karthus_base_vo_audio.bnk"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Karthus.ja_JP/native/bd0bbe780346402b.wpk",
+        "sha256": "ed09f1d5defa94cab36edf716c7ffda9da09f2156279c527621e91eec645c049",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/karthus/skins/base/karthus_base_vo_audio.wpk"
+      }
+    ],
+    "extraction": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Karthus.ja_JP/extraction.json",
+      "sha256": "149d5b3c91b523efc16d09599eee84cd03d7be39008f8351e3c5b02479093774"
+    },
+    "decoding": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/audio-index.json",
+      "sha256": "b02b3bdf8d551cbccfd4ff4b49c5d8ea28eac28420f5e362d2817a83f4267c31"
+    },
+    "metadataReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/receipts/shared-event-metadata/karthus-base-skin0-16.18.8159717-v1.json",
+      "sha256": "1fb7fefbd550dcb51ce412cd8f90d64086ca154e76885e98a7d4a59de9282059"
+    }
+  },
+  "tool": {
+    "name": "league-tools",
+    "commit": "913150dd922e69b18aba519410670fcf017df2ff",
+    "mapping": "BIN event strings -> NativeHIRC event graph -> WEM ID"
+  },
+  "validation": {
+    "binEvents": 83,
+    "hircEvents": 40,
+    "mappedEvents": 35,
+    "mappedWemIds": 135,
+    "exactAudioBankDecodedFiles": 135,
+    "allMappedWemIdsFoundInExactAudioBank": true,
+    "allReferencedWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerified": false,
+    "perClipLanguageVerified": false,
+    "ggdSkillSemanticBindingsVerified": false,
+    "categoryCountsByEvent": {
+      "ability-cast": 4,
+      "attack": 5,
+      "death": 1,
+      "emote": 5,
+      "encounter": 9,
+      "item": 8,
+      "move": 2,
+      "recall": 1
+    },
+    "abilitySlotCountsByEvent": {
+      "E": 1,
+      "R": 2,
+      "W": 1
+    }
+  },
+  "events": [
+    {
+      "eventName": "Play_vo_Karthus_Attack2DGeneral",
+      "eventId": 225198747,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        7588378,
+        37158980,
+        53835911,
+        69540979,
+        232877718,
+        490216102,
+        547094060,
+        589054289,
+        747369372,
+        896251736,
+        936447463,
+        1192902300,
+        1202429617,
+        1215865335,
+        1345697710,
+        1604427546
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DArchangelsStaff",
+      "eventId": 2702848502,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        126113555,
+        1478988453
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DMejaisSoulstealer",
+      "eventId": 2245572750,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        309896209,
+        1095309175
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DRabadonsDeathcap",
+      "eventId": 1744983122,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        72366169,
+        95220486,
+        243347315,
+        1050161197
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DRylaisCrystalScepter",
+      "eventId": 666603716,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        856162536,
+        1394735666,
+        1485786596
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DTearOfTheGoddess",
+      "eventId": 642948379,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1279641925
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DVoidStaff",
+      "eventId": 3462789910,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        752352659,
+        813480496,
+        1678182094
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_BuyItem2DZhonyasHourglass",
+      "eventId": 2462514766,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        615583535,
+        1339954838,
+        1984674946
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Dance3DGeneral",
+      "eventId": 286067835,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1779718765
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Death3D",
+      "eventId": 3177021502,
+      "category": "death",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        68491262,
+        486027448,
+        550966778,
+        983759516,
+        1370805138,
+        1530322693,
+        1961588277,
+        2029459995,
+        2116495908
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DElise",
+      "eventId": 872406781,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        2015676443
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DHecarim",
+      "eventId": 743587786,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        540638981,
+        1090865893
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DLeona",
+      "eventId": 418107934,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        206292254
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DLucian",
+      "eventId": 4138850535,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        58804660,
+        550016789,
+        575619670
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DMordekaiser",
+      "eventId": 4030607579,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        324275980,
+        1958056450
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DSion",
+      "eventId": 4007937656,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        390046536,
+        1154709670
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DThresh",
+      "eventId": 2432512577,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        300761619,
+        1509053542
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DUrgot",
+      "eventId": 2013789868,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        54162713
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_FirstEncounter3DVarus",
+      "eventId": 953671758,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        2129415037
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Joke3DGeneral",
+      "eventId": 3958646845,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        265697042,
+        1005327131,
+        1621527270,
+        1907470331,
+        1973238171,
+        1983764479
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Joke3DUrgot",
+      "eventId": 1040326124,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1606171314
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusBasicAttack2_cast3D",
+      "eventId": 2579646778,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        245081313,
+        795972548,
+        1979552009,
+        2017292951
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusBasicAttack_cast3D",
+      "eventId": 3234121714,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        245081313,
+        795972548,
+        1979552009,
+        2017292951
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusCritAttack2_cast3D",
+      "eventId": 1912451386,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        245081313,
+        795972548,
+        1979552009,
+        2017292951
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusCritAttack_cast3D",
+      "eventId": 3562848242,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        245081313,
+        795972548,
+        1979552009,
+        2017292951
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+      "eventId": 1921929106,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "E",
+      "wemIds": [
+        88861438,
+        759212078,
+        763068959,
+        1153685384,
+        1363037426,
+        1369814102,
+        1565210146
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+      "eventId": 3997046933,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        38110785,
+        148537959,
+        310197368,
+        543887434,
+        720440282,
+        1291955195,
+        1317130603,
+        1370953311,
+        1536835850
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+      "eventId": 879619350,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        38110785,
+        148537959,
+        310197368,
+        543887434,
+        720440282,
+        1291955195,
+        1317130603,
+        1370953311,
+        1536835850
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+      "eventId": 1727123767,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        561635869,
+        910151417,
+        1536898112,
+        1645583294,
+        1802460570,
+        1820362580,
+        1991053761
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Laugh3DGeneral",
+      "eventId": 955173973,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        230968685,
+        355597537,
+        847826315,
+        2105621206
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Move2DFirst",
+      "eventId": 3431407960,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        309841034,
+        656182803,
+        1522915078
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Move2DStandard",
+      "eventId": 3963628193,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        21129483,
+        31441050,
+        84422970,
+        157583185,
+        160798905,
+        252508018,
+        313909037,
+        320249592,
+        434441896,
+        496896832,
+        514869820,
+        655150890,
+        735105578,
+        923988693,
+        940314714,
+        1019184869,
+        1026959763,
+        1154122962,
+        1159882155,
+        1220324455,
+        1503892539,
+        1553067908,
+        1571115544,
+        1804908157
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Recall3DGeneral",
+      "eventId": 1460032895,
+      "category": "recall",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1207163039,
+        1656919280,
+        1893767592
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+      "eventId": 237340156,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        223931521,
+        803097418,
+        1135841464,
+        1498264856,
+        1645427546
+      ]
+    },
+    {
+      "eventName": "Play_vo_Karthus_UseItem2DWard",
+      "eventId": 3546836185,
+      "category": "item",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        199217997,
+        1287400702,
+        1522221069
+      ]
+    }
+  ],
+  "files": [
+    {
+      "wemId": 7588378,
+      "sourceWem": "bd0bbe780346402b/00000-7588378.wem",
+      "sourceWemSha256": "8df195ec0ea4cd85bf2281e88505e3eb9a182d997104f0785c6b299363a56f89",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00000-7588378.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00000-7588378.wav",
+      "bytes": 1820132,
+      "sha256": "63ccd52417e04336579fc3b1accbefaf955f1ab7db9f511176b82f11547116c7",
+      "seconds": 5.158979591836735,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 21129483,
+      "sourceWem": "bd0bbe780346402b/00001-21129483.wem",
+      "sourceWemSha256": "eb302b54f8f67873fc312fd67c52b8d9af541bd224f4b4aac303994db0abf918",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00001-21129483.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00001-21129483.wav",
+      "bytes": 1787596,
+      "sha256": "354a325b18948536091abf51a3b17dbe3bcc458d4dee65b012bd0e97c74a3ebb",
+      "seconds": 5.066757369614512,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 31441050,
+      "sourceWem": "bd0bbe780346402b/00002-31441050.wem",
+      "sourceWemSha256": "6e85b9cf21660132ba3aa89f9ee2ad5fe6a55901bcf137f51d1184798b40869a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00002-31441050.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00002-31441050.wav",
+      "bytes": 1465692,
+      "sha256": "9ee1d4285c60e0e97d20457fb8314db386590902618f232da7d017ac458cee56",
+      "seconds": 4.154331065759637,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 37158980,
+      "sourceWem": "bd0bbe780346402b/00003-37158980.wem",
+      "sourceWemSha256": "4dc36f5f8aa423eddfb89cc080a39fc98280752ba23a48ba711064247ad30064",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00003-37158980.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00003-37158980.wav",
+      "bytes": 1693004,
+      "sha256": "1e05a9149539e8769994c59a2ee94cb63267b7e9fcde96e92ec9028212caab89",
+      "seconds": 4.798639455782313,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 38110785,
+      "sourceWem": "bd0bbe780346402b/00004-38110785.wem",
+      "sourceWemSha256": "504c3b739061f33cc98c317788307d5ac6e06551d32262740b551cfb5de53c3c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00004-38110785.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00004-38110785.wav",
+      "bytes": 793220,
+      "sha256": "7f9f09900dd4edee18d513c209f0cbae486d622a74eaecd5cf257ccbde2a6e37",
+      "seconds": 4.496462585034013,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 53835911,
+      "sourceWem": "bd0bbe780346402b/00005-53835911.wem",
+      "sourceWemSha256": "6b33b2c2f14c1076c6ee37982b63c84695c818f75016d2e6f99c88b240b34547",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00005-53835911.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00005-53835911.wav",
+      "bytes": 1252396,
+      "sha256": "37ad56dd47117a487f270847e9a3d0dcce9647b8a7ffbbed0b20eee97cfc9a6b",
+      "seconds": 3.549750566893424,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 54162713,
+      "sourceWem": "bd0bbe780346402b/00006-54162713.wem",
+      "sourceWemSha256": "5f599728a6ff15829a4df72afdfedcb5b092c089e153159b4bd7fce78f623cbb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00006-54162713.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00006-54162713.wav",
+      "bytes": 1022016,
+      "sha256": "5a2c2fbeba9f4f2e66f27fd45cb23bd5c0e5aa6b5a695f8a860b8ffdfa2651ba",
+      "seconds": 5.793492063492064,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DUrgot",
+          "eventId": 2013789868,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 58804660,
+      "sourceWem": "bd0bbe780346402b/00007-58804660.wem",
+      "sourceWemSha256": "9a43cd88858972beaf999ec5a7dbd0c7f60400a00f7f40e3d7dfb17d01f83dd4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00007-58804660.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00007-58804660.wav",
+      "bytes": 1065756,
+      "sha256": "7102ce580b87d398f183c4ea83f5f7e04587912bb3f65cd69baf787ecf4f49dc",
+      "seconds": 6.041451247165533,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DLucian",
+          "eventId": 4138850535,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 68491262,
+      "sourceWem": "bd0bbe780346402b/00008-68491262.wem",
+      "sourceWemSha256": "2ddf6e3bf7f1440864f1a013f93ee85ae96917273951c0ff57d6799e066eab9c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00008-68491262.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00008-68491262.wav",
+      "bytes": 800992,
+      "sha256": "decdcd59e92f4018b577cabb3412853f25671f70e6b5ba9a251e3c5a433c7a24",
+      "seconds": 4.540521541950113,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 69540979,
+      "sourceWem": "bd0bbe780346402b/00009-69540979.wem",
+      "sourceWemSha256": "33c65d53d8080fc863669dc92fa99300486c57465d45b324ad750a4d87635844",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00009-69540979.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00009-69540979.wav",
+      "bytes": 1444948,
+      "sha256": "7fcccd6e95a82062c279e97c1dc8627371f94d631c3d769b0ca1d0656a47a9c3",
+      "seconds": 4.095532879818594,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 72366169,
+      "sourceWem": "bd0bbe780346402b/00010-72366169.wem",
+      "sourceWemSha256": "478c0d344ad7acf7f3da67b13c56693ba4bc4ecbd6740020d425f2a54886cd94",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00010-72366169.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00010-72366169.wav",
+      "bytes": 2401804,
+      "sha256": "dbd4e043d965f01476f2eef5c0c209a8ef8e82f73add12eebd5fd58988116179",
+      "seconds": 6.807709750566893,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRabadonsDeathcap",
+          "eventId": 1744983122,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 84422970,
+      "sourceWem": "bd0bbe780346402b/00011-84422970.wem",
+      "sourceWemSha256": "7af18fb188b0a1714b9799edc22e10107293719564dfc679797ff4525682edbc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00011-84422970.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00011-84422970.wav",
+      "bytes": 3074868,
+      "sha256": "cf4fcc06796c4666d20040ad03eeb28ce3c39a32165c0a22ba89a46faceb6f60",
+      "seconds": 8.71548752834467,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 88861438,
+      "sourceWem": "bd0bbe780346402b/00012-88861438.wem",
+      "sourceWemSha256": "dcfcd7e4970f90e4f25b5a7558e7fbbf6fb8086602dd8b60db719520af67f873",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00012-88861438.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00012-88861438.wav",
+      "bytes": 818888,
+      "sha256": "713375ec42b3004645af031f0203a6fe83e088f8429840dcb860070ed57960b3",
+      "seconds": 4.641972789115647,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 95220486,
+      "sourceWem": "bd0bbe780346402b/00013-95220486.wem",
+      "sourceWemSha256": "ee49f015f506c58bb8e79e5e8a150520c44e5420478919a0c96dfacf0618bc0c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00013-95220486.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00013-95220486.wav",
+      "bytes": 2081452,
+      "sha256": "73ffb0478950eb093901ba03d20c36e44fb19f528487079864c2071f64508c00",
+      "seconds": 5.89968253968254,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRabadonsDeathcap",
+          "eventId": 1744983122,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 126113555,
+      "sourceWem": "bd0bbe780346402b/00014-126113555.wem",
+      "sourceWemSha256": "4b5221d87cc8ec94d54110767d67a6d3b234e57fef8c2c3853ff9c31f79b3b16",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00014-126113555.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00014-126113555.wav",
+      "bytes": 1714860,
+      "sha256": "151a06b3f7fd5856fb4f340f03b97718904ef7ec60da109ef77a4d9f86a92aaf",
+      "seconds": 4.8605895691609975,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DArchangelsStaff",
+          "eventId": 2702848502,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 148537959,
+      "sourceWem": "bd0bbe780346402b/00015-148537959.wem",
+      "sourceWemSha256": "8239c3e5997da08d300b73f0b63f5e36e5b28fbd424a1d4c4f533890b3e230fd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00015-148537959.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00015-148537959.wav",
+      "bytes": 937616,
+      "sha256": "ae41d780b4b062c1bdf47b11165e316bc60509466e69a885ec1643eab58d8a0f",
+      "seconds": 5.315034013605442,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 157583185,
+      "sourceWem": "bd0bbe780346402b/00016-157583185.wem",
+      "sourceWemSha256": "f1f11582f011caa95c2d50f33380e043fcf6f4800d141559b90ad055e211e734",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00016-157583185.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00016-157583185.wav",
+      "bytes": 2113836,
+      "sha256": "88afa0d2428df29b677556a4978cd0c53a2e758ba5f3f1a2bd46f67a6337f74a",
+      "seconds": 5.991473922902494,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 160798905,
+      "sourceWem": "bd0bbe780346402b/00017-160798905.wem",
+      "sourceWemSha256": "d442071309ee15d6ff759c5b3bc4acb5cf20e8279b89cd2ee4e15cc4780a3776",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00017-160798905.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00017-160798905.wav",
+      "bytes": 1780708,
+      "sha256": "39c2f3af10ad96c2daf038386f80062a3d1299559ce345cf6027f36b4e5a256c",
+      "seconds": 5.047233560090703,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 199217997,
+      "sourceWem": "bd0bbe780346402b/00018-199217997.wem",
+      "sourceWemSha256": "ee7b9b7ba52cd71af968b65ce243bb113f50da7e19452232a7ad1333a694ad21",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00018-199217997.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00018-199217997.wav",
+      "bytes": 1246348,
+      "sha256": "d4e744df4186c8c20a11c490541a1d5c3791ddd2e78de6a753917e3d73071871",
+      "seconds": 3.532607709750567,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_UseItem2DWard",
+          "eventId": 3546836185,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 206292254,
+      "sourceWem": "bd0bbe780346402b/00019-206292254.wem",
+      "sourceWemSha256": "4c52087b49df93fa7fb91dcde8f991b4473a1d5251e6d85c96b63282a49673e4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00019-206292254.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00019-206292254.wav",
+      "bytes": 1132952,
+      "sha256": "98fdb7e63f1af1ce15921576e2b42d81d1f1dc1c14b8cfda096b82a6f677c1ca",
+      "seconds": 6.422380952380952,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DLeona",
+          "eventId": 418107934,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 223931521,
+      "sourceWem": "bd0bbe780346402b/00020-223931521.wem",
+      "sourceWemSha256": "316807b047b2d6c020e096b1b62ab92a1670f80507e653694005a6aed401bb4a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00020-223931521.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00020-223931521.wav",
+      "bytes": 1165828,
+      "sha256": "7fd5b27c16bcf56c8fc106c3bf49eb070f410205bb3426d50e6d6804818a7444",
+      "seconds": 6.60875283446712,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+          "eventId": 237340156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 230968685,
+      "sourceWem": "bd0bbe780346402b/00021-230968685.wem",
+      "sourceWemSha256": "b3275309dc3af9149b782c25639c1695fd57eebfe7693de8e4ee9f82193e5475",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00021-230968685.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00021-230968685.wav",
+      "bytes": 744596,
+      "sha256": "59a722d83a823fcb4327c49c9b3554e9915bc4560e75d6711d4154e20620a1a9",
+      "seconds": 4.2208163265306125,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Laugh3DGeneral",
+          "eventId": 955173973,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 232877718,
+      "sourceWem": "bd0bbe780346402b/00022-232877718.wem",
+      "sourceWemSha256": "4bd0fc94a92af2967e0cbf187375aba4a871f2fb498be4e406104ab5a7d67d0b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00022-232877718.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00022-232877718.wav",
+      "bytes": 1502396,
+      "sha256": "db07ffefd73c66520543bef4f3ef12fb56df669d07f92a9032abbe33c65b0dc1",
+      "seconds": 4.258367346938775,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 243347315,
+      "sourceWem": "bd0bbe780346402b/00023-243347315.wem",
+      "sourceWemSha256": "50c2fe7deb36d35c27afd3e1281c42829932b80111cd5684d99e3896d79c918b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00023-243347315.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00023-243347315.wav",
+      "bytes": 2417452,
+      "sha256": "e1bc332a0229e932448d1dd3257eed32b8dc3374be604541cd436e7ae933ccf9",
+      "seconds": 6.852063492063492,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRabadonsDeathcap",
+          "eventId": 1744983122,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 245081313,
+      "sourceWem": "bd0bbe780346402b/00024-245081313.wem",
+      "sourceWemSha256": "f0fa64008b2f3f03f2fe7184414ca810dc309fa7dd0aa302267e810fa22251e7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00024-245081313.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00024-245081313.wav",
+      "bytes": 598900,
+      "sha256": "5ccad87f8f46caee7f150af0c2e17c22b67ccd87ba259bb8441e4cf792ae3992",
+      "seconds": 3.394875283446712,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack2_cast3D",
+          "eventId": 2579646778,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack_cast3D",
+          "eventId": 3234121714,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack2_cast3D",
+          "eventId": 1912451386,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack_cast3D",
+          "eventId": 3562848242,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 252508018,
+      "sourceWem": "bd0bbe780346402b/00025-252508018.wem",
+      "sourceWemSha256": "90bcd4821914bf6db2211c7591795270b5b9bfe7a2c8ffc82a6b06b9cdd92966",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00025-252508018.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00025-252508018.wav",
+      "bytes": 1623276,
+      "sha256": "41293a64a79cd6553b789deeae3ec3bba79a5a91ce7b907426708b6831bd7f08",
+      "seconds": 4.600997732426304,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 265697042,
+      "sourceWem": "bd0bbe780346402b/00026-265697042.wem",
+      "sourceWemSha256": "029ccff48208f74f11d205f5a381070094a19b355e7d5e469105c5aeecfe9394",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00026-265697042.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00026-265697042.wav",
+      "bytes": 1297716,
+      "sha256": "0afb42f34da5561d5e1cc2e6cc920eee6e452e1eaca8ee23a4f1c3aa6f4c3437",
+      "seconds": 7.356417233560091,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 300761619,
+      "sourceWem": "bd0bbe780346402b/00027-300761619.wem",
+      "sourceWemSha256": "ff5f46a90c8eb0f9388e9ecf36c3a813ecf3f18e8d2ba7ed5b4cc0c3718be631",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00027-300761619.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00027-300761619.wav",
+      "bytes": 1130832,
+      "sha256": "5aa45edd69aa9b7821eef01907bc6af06af47823854a3ca3aad2a4546aa43adf",
+      "seconds": 6.410362811791384,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DThresh",
+          "eventId": 2432512577,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 309841034,
+      "sourceWem": "bd0bbe780346402b/00028-309841034.wem",
+      "sourceWemSha256": "3dd8eda765c87a19eaaef66376ac89ceb86df34bd1e659e4f0d7f221ee4d96a5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00028-309841034.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00028-309841034.wav",
+      "bytes": 1491948,
+      "sha256": "a9c1034362dcd3e8f5c11f4c825e05be8847488fbd29734ed03f7d8991c3a59a",
+      "seconds": 4.22875283446712,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DFirst",
+          "eventId": 3431407960,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 309896209,
+      "sourceWem": "bd0bbe780346402b/00029-309896209.wem",
+      "sourceWemSha256": "0ff949974f00df90d9a7a4673bc7c1fa4b5c4d957c18af1f5f6fe852a5b474bc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00029-309896209.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00029-309896209.wav",
+      "bytes": 2141540,
+      "sha256": "e80f64f7d1ae154700ea1884a372370de3c3c209cc3e0c456e5a9ed03d864256",
+      "seconds": 6.07,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DMejaisSoulstealer",
+          "eventId": 2245572750,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 310197368,
+      "sourceWem": "bd0bbe780346402b/00030-310197368.wem",
+      "sourceWemSha256": "d265c42446ed8dbb4aac94c4ef6321a1b3978511d5e20b721340614c95415c88",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00030-310197368.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00030-310197368.wav",
+      "bytes": 658356,
+      "sha256": "265eb8aa9bb999fe99e260356f11e08fee7e9e6b5029b846d20f472c8074af56",
+      "seconds": 3.7319274376417235,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 313909037,
+      "sourceWem": "bd0bbe780346402b/00031-313909037.wem",
+      "sourceWemSha256": "bc9631bf52d29b25f5aa2cdfd9e9456d9281a8a2eb9f6cdc8df1a26ea4dad728",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00031-313909037.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00031-313909037.wav",
+      "bytes": 2009548,
+      "sha256": "bcafc86cb137a1a79c12daabcd9cefa78440b9262452d5939e8015531bd26468",
+      "seconds": 5.6958730158730155,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 320249592,
+      "sourceWem": "bd0bbe780346402b/00032-320249592.wem",
+      "sourceWemSha256": "2e160720a8c987f9252da0f50b27807c2508deb6d85a994cd25003d3161081dc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00032-320249592.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00032-320249592.wav",
+      "bytes": 2288308,
+      "sha256": "ee1540fb8002824ad6e4e76518fee49698ad7821f75dda5bcd33d594da175dc7",
+      "seconds": 6.486009070294784,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 324275980,
+      "sourceWem": "bd0bbe780346402b/00033-324275980.wem",
+      "sourceWemSha256": "5ccc15d658ad4b001c067ad6d42b3957be4d09f37471b908d9ee565d7acadf39",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00033-324275980.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00033-324275980.wav",
+      "bytes": 1218244,
+      "sha256": "03197ca6f6b26c857242ab9d4a0727b7c8d900956d0f02ba8cc5f19905d577c2",
+      "seconds": 6.905895691609977,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DMordekaiser",
+          "eventId": 4030607579,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 355597537,
+      "sourceWem": "bd0bbe780346402b/00034-355597537.wem",
+      "sourceWemSha256": "ff15c17a7540fc900f54934118a29655351e0986f1fdb5d9720c051492b31e50",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00034-355597537.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00034-355597537.wav",
+      "bytes": 751612,
+      "sha256": "fd32915176ca17d0c9388d5ba424a9087119e602e86a3507ccd66741d18bc8c2",
+      "seconds": 4.260589569160998,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Laugh3DGeneral",
+          "eventId": 955173973,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 390046536,
+      "sourceWem": "bd0bbe780346402b/00035-390046536.wem",
+      "sourceWemSha256": "c020e675c4224ad571e1fbf4db692ffc1b5e86bd06622232f8e6d2c55d3f6eaf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00035-390046536.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00035-390046536.wav",
+      "bytes": 1287280,
+      "sha256": "5211bb46277e4e31891864ca67c58967ab7880feea3783c0613ffd7bd317e97c",
+      "seconds": 7.297256235827664,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DSion",
+          "eventId": 4007937656,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 434441896,
+      "sourceWem": "bd0bbe780346402b/00036-434441896.wem",
+      "sourceWemSha256": "a5357dfe7668fbf05f919aef60f14ab3f930738dc38ce60883a3d025f1736593",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00036-434441896.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00036-434441896.wav",
+      "bytes": 1709748,
+      "sha256": "98b77cae4725d26fa3cee167e2d97595ea37e5020c2701fc0224b4f0024633dd",
+      "seconds": 4.8460997732426305,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 486027448,
+      "sourceWem": "bd0bbe780346402b/00037-486027448.wem",
+      "sourceWemSha256": "31753a7d717cdf0fa256722d348692657cb1a2c148b982911f76a9ef3a1c43f2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00037-486027448.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00037-486027448.wav",
+      "bytes": 807708,
+      "sha256": "564ccea5ee9855fb4efd6cfa4c9d3a0329835766d483f4e2227c3d5f53130a95",
+      "seconds": 4.57859410430839,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 490216102,
+      "sourceWem": "bd0bbe780346402b/00038-490216102.wem",
+      "sourceWemSha256": "2b1b916e4339b1a7599dcf887dec51e29d6b2b2b7938c8147cc5af00a64bb78f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00038-490216102.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00038-490216102.wav",
+      "bytes": 1552428,
+      "sha256": "7ec5251408b252152450920c63485965aea0648d406a724edffd263379695c31",
+      "seconds": 4.400181405895691,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 496896832,
+      "sourceWem": "bd0bbe780346402b/00039-496896832.wem",
+      "sourceWemSha256": "5366e1fa5547fc5372f037165796550045bb0a570c2fdd6540260121bacc8a40",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00039-496896832.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00039-496896832.wav",
+      "bytes": 1895308,
+      "sha256": "26f48ef6ab673e1b2ae8527bb54f6f868b496a397cac39b02fa5c09e3ad55718",
+      "seconds": 5.372063492063492,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 514869820,
+      "sourceWem": "bd0bbe780346402b/00040-514869820.wem",
+      "sourceWemSha256": "49a1e83c9de3e1115d288cfbab7373dd51c3b79b092344811711eb300aca494c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00040-514869820.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00040-514869820.wav",
+      "bytes": 1704780,
+      "sha256": "27bc16dc766dede425a20bb2e1884df9970bf6a31cae95dc269127432b76ecdd",
+      "seconds": 4.832018140589569,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 540638981,
+      "sourceWem": "bd0bbe780346402b/00041-540638981.wem",
+      "sourceWemSha256": "83fc7d70b2b5a5d10a164c28d60b01e90455f9fd340cd21da0d4822301fb8a4b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00041-540638981.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00041-540638981.wav",
+      "bytes": 898972,
+      "sha256": "5f9e39174c6de0d8b4da85e622940937b050a1d73671b2e3d379a8a091535b98",
+      "seconds": 5.095963718820862,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DHecarim",
+          "eventId": 743587786,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 543887434,
+      "sourceWem": "bd0bbe780346402b/00042-543887434.wem",
+      "sourceWemSha256": "e91b3af183e8017f79855bd86ce3b7d8829d28560837b14f6f48f3ed2ad80920",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00042-543887434.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00042-543887434.wav",
+      "bytes": 677044,
+      "sha256": "45263b8b008eaa9f21222a92a90604883fe06e511d373a4c1f1d5c4b1c06bb88",
+      "seconds": 3.8378684807256236,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 547094060,
+      "sourceWem": "bd0bbe780346402b/00043-547094060.wem",
+      "sourceWemSha256": "ea4eb4fd6de370034b1fb89b8593370945b41396d1be6a98b1729b1dcafdfc1d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00043-547094060.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00043-547094060.wav",
+      "bytes": 1570228,
+      "sha256": "8ee42f4622472f81001c6eff3ccff22be5ebbfea7c6909d901aafda1513500ff",
+      "seconds": 4.45063492063492,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 550016789,
+      "sourceWem": "bd0bbe780346402b/00044-550016789.wem",
+      "sourceWemSha256": "2dfb1b53a47b5b9719628cf7b78ef389c14f86a0e7bc164c84b2e31fc86a8355",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00044-550016789.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00044-550016789.wav",
+      "bytes": 1256568,
+      "sha256": "33a08e322da7e70e0059e9aac7749b733322a323db627773b41d5895e92b5761",
+      "seconds": 7.123151927437641,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DLucian",
+          "eventId": 4138850535,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 550966778,
+      "sourceWem": "bd0bbe780346402b/00045-550966778.wem",
+      "sourceWemSha256": "97145b35057043e4fed5a25d31776e1e227c583bd317f330ee3ed3eb11490dc1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00045-550966778.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00045-550966778.wav",
+      "bytes": 899372,
+      "sha256": "b31e1b6856c0df1e1ac889573dbc753e51036e0ef3296bd00febbbc349dd5702",
+      "seconds": 5.098231292517007,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 561635869,
+      "sourceWem": "bd0bbe780346402b/00046-561635869.wem",
+      "sourceWemSha256": "ac718966de2a3ab2b6f8a551382482f298ce7bcb9d91b44fbfb8fbe403b5cbfe",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00046-561635869.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00046-561635869.wav",
+      "bytes": 621804,
+      "sha256": "cde55d83aa451d662d50545006047a7d6e41fb637509a08452947469ae9f1bd9",
+      "seconds": 3.524716553287982,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 575619670,
+      "sourceWem": "bd0bbe780346402b/00047-575619670.wem",
+      "sourceWemSha256": "333b5b9e63552d115edd4b8d44221d9fed5c7a93ad9869529d464f5c1e24b6af",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00047-575619670.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00047-575619670.wav",
+      "bytes": 742476,
+      "sha256": "855737473fe28851c8ebc88adfdaf6a907c0b835fcb10ea2f96e56ed8b4f498e",
+      "seconds": 4.208798185941043,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DLucian",
+          "eventId": 4138850535,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 589054289,
+      "sourceWem": "bd0bbe780346402b/00048-589054289.wem",
+      "sourceWemSha256": "f3d2fded56c641ef538dcc0dde3bb87daf0ce1d37ec12130e6e8470afc041a1f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00048-589054289.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00048-589054289.wav",
+      "bytes": 1428868,
+      "sha256": "a92025d5a789f16271c5f35d7c7a8009e0ad3db2e67f63624f475b6a2bd79ad1",
+      "seconds": 4.049954648526077,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 615583535,
+      "sourceWem": "bd0bbe780346402b/00049-615583535.wem",
+      "sourceWemSha256": "61844eeb70558447c1f874ded117a75ee884357ddef67af22f4ec137622221cf",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00049-615583535.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00049-615583535.wav",
+      "bytes": 1888204,
+      "sha256": "3bfe00089e2fb9ea32771c449ff770f946655eb522056013d4730cb57a262767",
+      "seconds": 5.351927437641724,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DZhonyasHourglass",
+          "eventId": 2462514766,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 655150890,
+      "sourceWem": "bd0bbe780346402b/00050-655150890.wem",
+      "sourceWemSha256": "a4080e356e44c639c835e18c584ec3a7776d4e134a63de70cbb2d020809bba0f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00050-655150890.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00050-655150890.wav",
+      "bytes": 1464036,
+      "sha256": "457b73e2c8b5545f1e0e0612e1f3de243f15c8f03c59148b5a460ac773c38450",
+      "seconds": 4.149637188208617,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 656182803,
+      "sourceWem": "bd0bbe780346402b/00051-656182803.wem",
+      "sourceWemSha256": "4c9e5bf9d0bca1742a9fa2e8ce1edfd02e902ef04121e552a939c2d8b4b0a036",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00051-656182803.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00051-656182803.wav",
+      "bytes": 2339916,
+      "sha256": "49ff661805aaceefb3faf3a34e3663baf172aac2b77c7af4fb0aae254f611638",
+      "seconds": 6.632290249433106,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DFirst",
+          "eventId": 3431407960,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 720440282,
+      "sourceWem": "bd0bbe780346402b/00052-720440282.wem",
+      "sourceWemSha256": "bb6b40b84919c035279ff635332f98f5f4cfe16fa2cf13690715766491b426d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00052-720440282.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00052-720440282.wav",
+      "bytes": 865588,
+      "sha256": "4cff6ab83c4d85b107c588f7229fc38b0358f8dcfb8e037110cea0ee53776608",
+      "seconds": 4.906712018140589,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 735105578,
+      "sourceWem": "bd0bbe780346402b/00053-735105578.wem",
+      "sourceWemSha256": "28e112d402f6a1f2b2bd0ecca0305ed9bde8c2d6c55d9db9b82070a92977ee23",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00053-735105578.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00053-735105578.wav",
+      "bytes": 1760540,
+      "sha256": "2a714e4b9d8857f9349980436813403d99b549491fa64ef4ebaf3bf8626dec7f",
+      "seconds": 4.990068027210884,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 747369372,
+      "sourceWem": "bd0bbe780346402b/00054-747369372.wem",
+      "sourceWemSha256": "867aced5d7ac21bf5a41060ec06f597b1033c9741db25c0b105f791562589ef9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00054-747369372.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00054-747369372.wav",
+      "bytes": 1694236,
+      "sha256": "3b6ed70876885336b5856c5ab3c98f9d9ce9e4940f64028870beb3f41abb338a",
+      "seconds": 4.8021315192743765,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 752352659,
+      "sourceWem": "bd0bbe780346402b/00055-752352659.wem",
+      "sourceWemSha256": "0ca9c05d150ec057727ea16cca7ab34d696b085bce379509e89bdb7a45577f09",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00055-752352659.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00055-752352659.wav",
+      "bytes": 1873172,
+      "sha256": "19b0646e60049da30f4124b96a69ba71ed2f7db44bcca93911244f74071cecdb",
+      "seconds": 5.309319727891157,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DVoidStaff",
+          "eventId": 3462789910,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 759212078,
+      "sourceWem": "bd0bbe780346402b/00056-759212078.wem",
+      "sourceWemSha256": "d1c32638ca669d5ef8d08c567aeaf65c7e80e349c5a595f1f81992042726675f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00056-759212078.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00056-759212078.wav",
+      "bytes": 722324,
+      "sha256": "4b5c2e90eb6653b82a5853d5b7ce1cffe4d0593aef9a770ede4d9b67348d45b8",
+      "seconds": 4.094557823129252,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 763068959,
+      "sourceWem": "bd0bbe780346402b/00057-763068959.wem",
+      "sourceWemSha256": "abb0b2c3a670bd782b8b4061d177a5001c38b874a4c54ca533ad43dc242af680",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00057-763068959.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00057-763068959.wav",
+      "bytes": 626708,
+      "sha256": "dfa573e1a470d4591fb747448ad861ba60daa739c7b16e10c54b2bfad8bfacc4",
+      "seconds": 3.552517006802721,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 795972548,
+      "sourceWem": "bd0bbe780346402b/00058-795972548.wem",
+      "sourceWemSha256": "73f6ec426b6124bac35a9f5a6a0bc6e73f38fe7575916833cfe0584ad6197303",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00058-795972548.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00058-795972548.wav",
+      "bytes": 539404,
+      "sha256": "0439809dda585eb101dc799426ba126cc7c48a4b25133e319ee3f390ad96566d",
+      "seconds": 3.057596371882086,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack2_cast3D",
+          "eventId": 2579646778,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack_cast3D",
+          "eventId": 3234121714,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack2_cast3D",
+          "eventId": 1912451386,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack_cast3D",
+          "eventId": 3562848242,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 803097418,
+      "sourceWem": "bd0bbe780346402b/00059-803097418.wem",
+      "sourceWemSha256": "457b61ba29b965f6033f300004a6a20e393181cf44900764cb5bd1f93c173cb9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00059-803097418.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00059-803097418.wav",
+      "bytes": 930104,
+      "sha256": "0f5fc03f6ad08756592ada8f69860096b14097ff818d5a5a285f04161ea2dba7",
+      "seconds": 5.272448979591837,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+          "eventId": 237340156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 813480496,
+      "sourceWem": "bd0bbe780346402b/00060-813480496.wem",
+      "sourceWemSha256": "0ed461eb998eaad0449bfab659a80701430fee9dae70267125eabd34b5ce75d3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00060-813480496.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00060-813480496.wav",
+      "bytes": 1818164,
+      "sha256": "bce4b26d8638b3ee5800413d1383b6d8ea5669e487593fcfd55f49eec778a645",
+      "seconds": 5.153401360544217,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DVoidStaff",
+          "eventId": 3462789910,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 847826315,
+      "sourceWem": "bd0bbe780346402b/00061-847826315.wem",
+      "sourceWemSha256": "7b36f54c5ebf89f05b23633a550ec12c3731de2827de0fdd69c20832eb2a284b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00061-847826315.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00061-847826315.wav",
+      "bytes": 679412,
+      "sha256": "1461a2adfb4b60bff2c7441c2dff3a1351515323c11a6dd4bbcb49a7768331dd",
+      "seconds": 3.8512925170068026,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Laugh3DGeneral",
+          "eventId": 955173973,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 856162536,
+      "sourceWem": "bd0bbe780346402b/00062-856162536.wem",
+      "sourceWemSha256": "aa147c13288187a1b4accc459991a829e47e60ee09e488adbb5c1b1a7f207677",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00062-856162536.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00062-856162536.wav",
+      "bytes": 1834140,
+      "sha256": "5f003f45db5d3426b3d99907f9b3fb2741537cc0cdd2404eb3e402b26a4f6b23",
+      "seconds": 5.198684807256236,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRylaisCrystalScepter",
+          "eventId": 666603716,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 896251736,
+      "sourceWem": "bd0bbe780346402b/00063-896251736.wem",
+      "sourceWemSha256": "926ed2013bd2d9508c85b66f3dc546b73e7568aa084e863efcdb8f84a04e9743",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00063-896251736.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00063-896251736.wav",
+      "bytes": 1548172,
+      "sha256": "22ea32ac0b0291369f70283fc32b51a45fb68f89e36be756cc85b8bae08d0577",
+      "seconds": 4.3881179138321995,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 910151417,
+      "sourceWem": "bd0bbe780346402b/00064-910151417.wem",
+      "sourceWemSha256": "c0d83e6a75184386bc40a0782360500597061b024799619cd0e672e2a0481823",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00064-910151417.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00064-910151417.wav",
+      "bytes": 765876,
+      "sha256": "48a33eeb2bf88201ca8a9ba512b32858699a027350cfc74e27577297f3780d27",
+      "seconds": 4.341451247165533,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 923988693,
+      "sourceWem": "bd0bbe780346402b/00065-923988693.wem",
+      "sourceWemSha256": "731f8b417c5ef29fe7d9e1b1f1ae01ada5396dee495db5cf3aab8ec91601ab1e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00065-923988693.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00065-923988693.wav",
+      "bytes": 2256348,
+      "sha256": "67aeda23bdf3dea8e63148c8d4a2190f63e9c92b9362690dd1b32ad18b78ef7a",
+      "seconds": 6.395419501133786,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 936447463,
+      "sourceWem": "bd0bbe780346402b/00066-936447463.wem",
+      "sourceWemSha256": "28d291cf6da444b8d0cc7fbf0c418d0924af84ef73c0bbba982088441645dc9c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00066-936447463.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00066-936447463.wav",
+      "bytes": 1583428,
+      "sha256": "10c41ac15bf98494bbdff8db7032d2a67137b8d32317dabe9e178e6d0c17d765",
+      "seconds": 4.488049886621315,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 940314714,
+      "sourceWem": "bd0bbe780346402b/00067-940314714.wem",
+      "sourceWemSha256": "f85bfaba1ee64dacefc9be65cb3f330cf97c56c6fd15c8c74a417a983812bc58",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00067-940314714.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00067-940314714.wav",
+      "bytes": 2113772,
+      "sha256": "3a861aab58749f386eac9dad1ff0bcb998ad73c686d6b49281c89897716efd58",
+      "seconds": 5.991292517006802,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 983759516,
+      "sourceWem": "bd0bbe780346402b/00068-983759516.wem",
+      "sourceWemSha256": "9ef213027663e4ff15b53fd79d076ac4fe9f5b20b8e6cd12458556c874f58420",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00068-983759516.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00068-983759516.wav",
+      "bytes": 685784,
+      "sha256": "5ce954efa188dab3aee69d47d8ca6a3dd03085a884fb6441f8f44087313fd142",
+      "seconds": 3.8874149659863946,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1005327131,
+      "sourceWem": "bd0bbe780346402b/00069-1005327131.wem",
+      "sourceWemSha256": "7d1db39a0e584d9deedd5b1982c4f8fc262c6ab4a2d8547965f9e6842dbcbf2d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00069-1005327131.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00069-1005327131.wav",
+      "bytes": 838664,
+      "sha256": "f7be25347d28c87a9a064669117567ca707e271b8c5282cc01f1408818e1eb90",
+      "seconds": 4.754081632653061,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1019184869,
+      "sourceWem": "bd0bbe780346402b/00070-1019184869.wem",
+      "sourceWemSha256": "dac57a154ee15441578cc5ac08216c9db24b7899affc2f5b2c991546e4bc6167",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00070-1019184869.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00070-1019184869.wav",
+      "bytes": 1655420,
+      "sha256": "0d6709fc3b8ac759b52206bf270445f539c6593c75cb14f6c1be2678cfef8873",
+      "seconds": 4.692108843537415,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1026959763,
+      "sourceWem": "bd0bbe780346402b/00071-1026959763.wem",
+      "sourceWemSha256": "0ebdae0f10886a84f34665296f2cde75a0b71474fa5e97b0b36a83ac02c0c9b8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00071-1026959763.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00071-1026959763.wav",
+      "bytes": 1704252,
+      "sha256": "c7f94d7526f7e154f7939eee747a54eabbbb2c9e73e60f00886713b4e24367b5",
+      "seconds": 4.830521541950113,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1050161197,
+      "sourceWem": "bd0bbe780346402b/00072-1050161197.wem",
+      "sourceWemSha256": "feb59d719e827c26ad57da5f522f7210f9fb3bc70bc045dd8afbe1f45452205b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00072-1050161197.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00072-1050161197.wav",
+      "bytes": 1581220,
+      "sha256": "0f362b5c6c4d56a2e79ca526beb5443eeee5b6ef2358c964ae3c9c6c6b1e3dcb",
+      "seconds": 4.481791383219955,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRabadonsDeathcap",
+          "eventId": 1744983122,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1090865893,
+      "sourceWem": "bd0bbe780346402b/00073-1090865893.wem",
+      "sourceWemSha256": "8641a3ce4084a084a843df8b7a86071594746a437a31e86135093adf1035b50c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00073-1090865893.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00073-1090865893.wav",
+      "bytes": 1217196,
+      "sha256": "56d131e1b1e5c20dcf9681af5aeb812c7bcc046fcdc69669e58df159eeacb1e4",
+      "seconds": 6.899954648526077,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DHecarim",
+          "eventId": 743587786,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1095309175,
+      "sourceWem": "bd0bbe780346402b/00074-1095309175.wem",
+      "sourceWemSha256": "03a1b6322b232f6ec345f326a808dd80461114d44c18488880c8e3a09c075667",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00074-1095309175.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00074-1095309175.wav",
+      "bytes": 1525164,
+      "sha256": "5f275e545844b0509a7eb6a644e0592657911102423cbc5de8569de5eeaf3045",
+      "seconds": 4.322902494331066,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DMejaisSoulstealer",
+          "eventId": 2245572750,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1135841464,
+      "sourceWem": "bd0bbe780346402b/00075-1135841464.wem",
+      "sourceWemSha256": "2afc2036b30ce8e607e379b0192246aceb23371b13d77a0832659cdb12c362fb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00075-1135841464.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00075-1135841464.wav",
+      "bytes": 1282936,
+      "sha256": "b084fbd00252caad62f62e825c4bd36a821b928bacdc5555169a5b9b491cabec",
+      "seconds": 7.2726303854875285,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+          "eventId": 237340156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1153685384,
+      "sourceWem": "bd0bbe780346402b/00076-1153685384.wem",
+      "sourceWemSha256": "bc6daf429e9a941b143ca2479086ff09e129646e66d4e2f03b5471186293dc1b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00076-1153685384.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00076-1153685384.wav",
+      "bytes": 779792,
+      "sha256": "18c16da2610e295b45f014d364ceb28396b42f0372c550f0188e3cf67109fe71",
+      "seconds": 4.420340136054421,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1154122962,
+      "sourceWem": "bd0bbe780346402b/00077-1154122962.wem",
+      "sourceWemSha256": "df8ba68f329ff52498004e454ed3d5573ad875e1aca922379dec4648d0cabb62",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00077-1154122962.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00077-1154122962.wav",
+      "bytes": 1585972,
+      "sha256": "34b0d798bd980319a5cec5c2ee7768e47313ea7fa31252e54cd4ddaf5a6b6bc3",
+      "seconds": 4.495260770975056,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1154709670,
+      "sourceWem": "bd0bbe780346402b/00078-1154709670.wem",
+      "sourceWemSha256": "65c871cc73d07586457686beaf5bc9d15de778e8814d63c06456ecbd85a5d58d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00078-1154709670.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00078-1154709670.wav",
+      "bytes": 1057288,
+      "sha256": "870d7ce529f1237233c6ab3b43880b230dd8dbc3dcd5cf974f52def01f3054d5",
+      "seconds": 5.993446712018141,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DSion",
+          "eventId": 4007937656,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1159882155,
+      "sourceWem": "bd0bbe780346402b/00079-1159882155.wem",
+      "sourceWemSha256": "6a92a1e9d2e621f731eca450ffce548061aec8076637056a3004f9bbacb6a4f1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00079-1159882155.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00079-1159882155.wav",
+      "bytes": 1741492,
+      "sha256": "cea429343a2ac68dafaa27b55b3efb2e5fd93adc9a25c3814080a30c0ffbcb74",
+      "seconds": 4.936077097505669,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1192902300,
+      "sourceWem": "bd0bbe780346402b/00080-1192902300.wem",
+      "sourceWemSha256": "e818b1fded6cc7a6b5a7fca0cdce7dbe32507821de4fac9a68f8b67523a7851d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00080-1192902300.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00080-1192902300.wav",
+      "bytes": 1086372,
+      "sha256": "8439a9a5488dc75231a9346ca0a571f1c38656535264dbdd1a2de84a8ec21d25",
+      "seconds": 3.0791609977324264,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1202429617,
+      "sourceWem": "bd0bbe780346402b/00081-1202429617.wem",
+      "sourceWemSha256": "20de57ef076ca790becbe99756b38939a96996eb964f9de2019555e7e247a79f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00081-1202429617.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00081-1202429617.wav",
+      "bytes": 1478428,
+      "sha256": "6fe56ff284beaaa45cbb542ccef21dd27e1579134bf8bc78465382ff2436572c",
+      "seconds": 4.190430839002268,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1207163039,
+      "sourceWem": "bd0bbe780346402b/00082-1207163039.wem",
+      "sourceWemSha256": "1d0623926f1fb99699ea49ae4aedf63f842285feb1f8a8e25e8c5b1262e5a99b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00082-1207163039.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00082-1207163039.wav",
+      "bytes": 711028,
+      "sha256": "16670cc1cd83c6d7957caf18ea28d047d9efe9212ed45083192b6a8c9c4eb7c0",
+      "seconds": 4.0305215419501135,
+      "categories": [
+        "recall"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Recall3DGeneral",
+          "eventId": 1460032895,
+          "category": "recall",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1215865335,
+      "sourceWem": "bd0bbe780346402b/00083-1215865335.wem",
+      "sourceWemSha256": "312eb02c65d3c53c38d4e2a37205cce4bb346fa4c494a1b0c386fa747b677f1d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00083-1215865335.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00083-1215865335.wav",
+      "bytes": 1739436,
+      "sha256": "da9fc8e57a3a05fe0c70ea555870384627796188c41416eea2a5d9df196ad368",
+      "seconds": 4.930249433106576,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1220324455,
+      "sourceWem": "bd0bbe780346402b/00084-1220324455.wem",
+      "sourceWemSha256": "cf2b1c8f88d353cb6058b7f833037f36dff28334e5aabe07cec1f3f5fe3e61cc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00084-1220324455.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00084-1220324455.wav",
+      "bytes": 2109708,
+      "sha256": "5f139d694a80271053564e0938f5518e889dd01394a5b55141e0d7d0b89e75af",
+      "seconds": 5.979773242630386,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1279641925,
+      "sourceWem": "bd0bbe780346402b/00085-1279641925.wem",
+      "sourceWemSha256": "6ec490c272798526177910476caf04025dd8a7a899fb858148d720402803a645",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00085-1279641925.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00085-1279641925.wav",
+      "bytes": 1966092,
+      "sha256": "f6283fa5303dfa74475f49647eaa9934f241ce585171513057566b822fcd2a82",
+      "seconds": 5.572698412698412,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DTearOfTheGoddess",
+          "eventId": 642948379,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1287400702,
+      "sourceWem": "bd0bbe780346402b/00086-1287400702.wem",
+      "sourceWemSha256": "c8ccfee547ea61b0742102c73eb29477b931275d939bf96c65703e1f30ff8fe8",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00086-1287400702.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00086-1287400702.wav",
+      "bytes": 986180,
+      "sha256": "fe58f46fa3758702dd1182dfe0131f01213827802a55375fcf57d62a93a865d6",
+      "seconds": 2.7951700680272107,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_UseItem2DWard",
+          "eventId": 3546836185,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1291955195,
+      "sourceWem": "bd0bbe780346402b/00087-1291955195.wem",
+      "sourceWemSha256": "de7dcf1ced4a502f40a1cd4e9c9a488e9696c8b5c1e3a4e44832fe35dcac0432",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00087-1291955195.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00087-1291955195.wav",
+      "bytes": 655460,
+      "sha256": "e52a4b4991a3a83859ef115080be01d34c411968513871c01049cef838d6323e",
+      "seconds": 3.7155102040816326,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1317130603,
+      "sourceWem": "bd0bbe780346402b/00088-1317130603.wem",
+      "sourceWemSha256": "3c553a339d7a2302803244dcbd177eab7c5db88ec49fcb24e6782aaa4b474a67",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00088-1317130603.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00088-1317130603.wav",
+      "bytes": 870052,
+      "sha256": "aa91657b9b1899d4edf9a9d8afa2b293106870774ec78c091a53e304a7e34e0f",
+      "seconds": 4.9320181405895696,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1339954838,
+      "sourceWem": "bd0bbe780346402b/00089-1339954838.wem",
+      "sourceWemSha256": "222c531b984e9a7dbb751e32ce4643a2a4e943120ac9742a938a612b11f65cbb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00089-1339954838.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00089-1339954838.wav",
+      "bytes": 2290380,
+      "sha256": "1bec182a45631306f5db177c8eb9ba1ac5ab7e4dac11d5ba570ac48c0a21acc6",
+      "seconds": 6.4918820861678,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DZhonyasHourglass",
+          "eventId": 2462514766,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1345697710,
+      "sourceWem": "bd0bbe780346402b/00090-1345697710.wem",
+      "sourceWemSha256": "14b3755ed014ddac879cbeb43bc9a9cd5c8932fbc297a5890cc32cfe4b0b86cd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00090-1345697710.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00090-1345697710.wav",
+      "bytes": 1238292,
+      "sha256": "e7c26cfef33fcba4d7516e911b5d7175e273cbafa7bc735ec88b0d655ddfbe97",
+      "seconds": 3.5097732426303856,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1363037426,
+      "sourceWem": "bd0bbe780346402b/00091-1363037426.wem",
+      "sourceWemSha256": "608f843477975ea164a2f548de78c25b27cb0035a93c7b790fa17c94385407ab",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00091-1363037426.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00091-1363037426.wav",
+      "bytes": 635556,
+      "sha256": "16db6747ab48a106339e065c6b73ec54d4bbe08ea01d33dad8e2a2b28da41cd2",
+      "seconds": 3.602675736961451,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1369814102,
+      "sourceWem": "bd0bbe780346402b/00092-1369814102.wem",
+      "sourceWemSha256": "81abd3385cb274cc724f595c0728a8cab6f44ba400e38850e8f9f94ac29912fd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00092-1369814102.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00092-1369814102.wav",
+      "bytes": 767080,
+      "sha256": "a8eebacb532b610ff26e5c63b228e69796c82af734c14ba1ab1217aed48a08ec",
+      "seconds": 4.348276643990929,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1370805138,
+      "sourceWem": "bd0bbe780346402b/00093-1370805138.wem",
+      "sourceWemSha256": "9d4f62ffc47ae230d11f6e311a660eb46a6afc629d6b3f7150e3e35a2744bcda",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00093-1370805138.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00093-1370805138.wav",
+      "bytes": 879504,
+      "sha256": "8c3e4ca9112be221eea52c5f19bb2b9ac72bbcaf60e04e27a013866225c94246",
+      "seconds": 4.985600907029479,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1370953311,
+      "sourceWem": "bd0bbe780346402b/00094-1370953311.wem",
+      "sourceWemSha256": "f4ee39255f7e5182ad759e5e94d4d973e442cd2036d8b0c3788036212e83fb07",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00094-1370953311.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00094-1370953311.wav",
+      "bytes": 584676,
+      "sha256": "70b28e17b60e0c55a2672a96282428d3665a5d0d720e7dd82e0fe66bce3a61ed",
+      "seconds": 3.3142403628117916,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1394735666,
+      "sourceWem": "bd0bbe780346402b/00095-1394735666.wem",
+      "sourceWemSha256": "fc366cf2ca996b716621af10a6d7104053870f7c0f706b379aa4b100a76c62b2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00095-1394735666.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00095-1394735666.wav",
+      "bytes": 2302692,
+      "sha256": "2c9af9969bbe9d19ba91000b0e95eab5d5f06b9c1151a926e30779cc3cc84df4",
+      "seconds": 6.526780045351474,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRylaisCrystalScepter",
+          "eventId": 666603716,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1478988453,
+      "sourceWem": "bd0bbe780346402b/00096-1478988453.wem",
+      "sourceWemSha256": "cf91d788ab3206d42cd20fd42ba618f9cb0cdd182e0bb02df5cb4c53a564a675",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00096-1478988453.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00096-1478988453.wav",
+      "bytes": 2089044,
+      "sha256": "b22ab908984fc205ee20d0d2dbdf09f018ccc46aaa7f2fc59237537a989a1acc",
+      "seconds": 5.921201814058957,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DArchangelsStaff",
+          "eventId": 2702848502,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1485786596,
+      "sourceWem": "bd0bbe780346402b/00097-1485786596.wem",
+      "sourceWemSha256": "25388fc0df8b70873c3879c1f92769fbd404c7b2327e0fd9fac61854fb1f04fd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00097-1485786596.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00097-1485786596.wav",
+      "bytes": 1423740,
+      "sha256": "d12d5673a25f918576c1a3e85102247900577144141b905e55b6ccaae4aeb316",
+      "seconds": 4.035419501133787,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DRylaisCrystalScepter",
+          "eventId": 666603716,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1498264856,
+      "sourceWem": "bd0bbe780346402b/00098-1498264856.wem",
+      "sourceWemSha256": "54b5024e01b9b54cfde09560c787b35dabeb750798fa3b52034b47d51850ba1a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00098-1498264856.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00098-1498264856.wav",
+      "bytes": 1206216,
+      "sha256": "a8754f0ac1be3cf853a27eb36d98f4df96a8cee343670fea13d9efb934dae0f7",
+      "seconds": 6.837709750566893,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+          "eventId": 237340156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1503892539,
+      "sourceWem": "bd0bbe780346402b/00099-1503892539.wem",
+      "sourceWemSha256": "bc4f4f513f490a89191339dad76b65c40532690e4373ff4cde90d36a12f5b131",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00099-1503892539.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00099-1503892539.wav",
+      "bytes": 1575028,
+      "sha256": "8e0890bde69835dd5303afd1ea70a07c68b6525c0f762f88fda1524dcb5091c9",
+      "seconds": 4.4642403628117915,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1509053542,
+      "sourceWem": "bd0bbe780346402b/00100-1509053542.wem",
+      "sourceWemSha256": "585e97932c4a78009118a61c70eca3b2ff85392fa40d12408fa0d50dc2a7ceb6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00100-1509053542.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00100-1509053542.wav",
+      "bytes": 1281400,
+      "sha256": "fae36b7cb0090887e81cd58999244b4faa0a76128ba46f76903a11b1e9e85653",
+      "seconds": 7.263922902494331,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DThresh",
+          "eventId": 2432512577,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1522221069,
+      "sourceWem": "bd0bbe780346402b/00101-1522221069.wem",
+      "sourceWemSha256": "1be6853a2ccd169b46c4bbe1392fa96143ccf51b316f2f0178f1f9508915cfe2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00101-1522221069.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00101-1522221069.wav",
+      "bytes": 1491148,
+      "sha256": "61d2a412062754c10641fd0bee3dcdfcd33b50e2741caf34bbfb202e88207eae",
+      "seconds": 4.226485260770975,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_UseItem2DWard",
+          "eventId": 3546836185,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1522915078,
+      "sourceWem": "bd0bbe780346402b/00102-1522915078.wem",
+      "sourceWemSha256": "85be7aca232545c432c572fe929b41ecabe1d4992e552993f4d012c3132c4882",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00102-1522915078.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00102-1522915078.wav",
+      "bytes": 1713052,
+      "sha256": "ca855cb30f1a5c3ed57bbcfe834edcdd374e3d93c0daa8a951b866e1e8d15b5e",
+      "seconds": 4.855464852607709,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DFirst",
+          "eventId": 3431407960,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1530322693,
+      "sourceWem": "bd0bbe780346402b/00103-1530322693.wem",
+      "sourceWemSha256": "eaaa970dc980f514e8c3ca830f0194d02aae0df6218dc855e6a254fdd1822f3a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00103-1530322693.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00103-1530322693.wav",
+      "bytes": 659696,
+      "sha256": "bf7f5812999305db8be5d968720e780eb6c2b09e8617600bd87149c4f4d61fd7",
+      "seconds": 3.7395238095238095,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1536835850,
+      "sourceWem": "bd0bbe780346402b/00104-1536835850.wem",
+      "sourceWemSha256": "9c624abe18c3db9b959dd03c837c47fd471a97e987cbb8b5beda14593f584f83",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00104-1536835850.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00104-1536835850.wav",
+      "bytes": 733452,
+      "sha256": "ac837bd29f03ac62f136b7dfb1831664fc0ce01b3d94675868b6b80279862c45",
+      "seconds": 4.157641723356009,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast2DSelfOnly",
+          "eventId": 3997046933,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusFallenOne_cast3D",
+          "eventId": 879619350,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1536898112,
+      "sourceWem": "bd0bbe780346402b/00105-1536898112.wem",
+      "sourceWemSha256": "d42587bccfc97bdc50ca99e8529841ec5631a5380d5987983c5759eca8d03ef7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00105-1536898112.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00105-1536898112.wav",
+      "bytes": 449876,
+      "sha256": "912243e307713456a36fd443444c18080951ebe41554fdfbc61db55844c46202",
+      "seconds": 2.550068027210884,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1553067908,
+      "sourceWem": "bd0bbe780346402b/00106-1553067908.wem",
+      "sourceWemSha256": "3a8427aa11ae7ab19a3069ca62c5c8518be41b12e3b792127734bf2595594aa6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00106-1553067908.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00106-1553067908.wav",
+      "bytes": 1597380,
+      "sha256": "41ff90a576cd7eee772b58693df9443a060dc93a347c97b6f03c18bba1b77a1b",
+      "seconds": 4.527596371882086,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1565210146,
+      "sourceWem": "bd0bbe780346402b/00107-1565210146.wem",
+      "sourceWemSha256": "c002e1bdc6e700053ccbc229060ef27c381947c6716267c005f2236ed4f4362f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00107-1565210146.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00107-1565210146.wav",
+      "bytes": 728528,
+      "sha256": "345dcda1af00059c5cd44f7c9f9b07b2a92704b54c61797b26a4679a23d2eccb",
+      "seconds": 4.129727891156462,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusDefileSoundDummy2_cast3D",
+          "eventId": 1921929106,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1571115544,
+      "sourceWem": "bd0bbe780346402b/00108-1571115544.wem",
+      "sourceWemSha256": "f994210efd15bd7b7000ba9a226e6a3fe2da424d91b22a62babc657d13ecd639",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00108-1571115544.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00108-1571115544.wav",
+      "bytes": 1675420,
+      "sha256": "922dcc02810f7f9dd3e3e8b4d977a05400da358474b61cce72aa40327b81131f",
+      "seconds": 4.748798185941043,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1604427546,
+      "sourceWem": "bd0bbe780346402b/00109-1604427546.wem",
+      "sourceWemSha256": "5ba0079ad166909b9cbd1dbfbf8ee2a22ff23acf82453430f5a0a55c48abf1cd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00109-1604427546.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00109-1604427546.wav",
+      "bytes": 1101860,
+      "sha256": "45a1a77023c0c83c5bd6250e0a472ea01b5e02c07b6f1051b71fab20b64720cb",
+      "seconds": 3.123061224489796,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Attack2DGeneral",
+          "eventId": 225198747,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1606171314,
+      "sourceWem": "bd0bbe780346402b/00110-1606171314.wem",
+      "sourceWemSha256": "d7f764590f510653abcf365b40c0ad7119499b5f7085801c873f7a1c747436f1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00110-1606171314.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00110-1606171314.wav",
+      "bytes": 1055328,
+      "sha256": "ef82255bb35d46297b3bcd6e74f00364f721e325b45f129e53814e990f5ade7c",
+      "seconds": 5.98233560090703,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DUrgot",
+          "eventId": 1040326124,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1621527270,
+      "sourceWem": "bd0bbe780346402b/00111-1621527270.wem",
+      "sourceWemSha256": "613d6f93755552aab0a5d74148e9efcb89fb171a9effb4e1630f3908b57ba2d4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00111-1621527270.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00111-1621527270.wav",
+      "bytes": 1479984,
+      "sha256": "b5050e52600ffbf0eea86bc4d2168f6d75a958a71d0c20bd13ad0055308eab0c",
+      "seconds": 8.38968253968254,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1645427546,
+      "sourceWem": "bd0bbe780346402b/00112-1645427546.wem",
+      "sourceWemSha256": "bbda7beae7158c7cf3c49544c402f0b62499ed65c088b4154254a340d89411c7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00112-1645427546.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00112-1645427546.wav",
+      "bytes": 877468,
+      "sha256": "1f3b7c8a280fdb19f1c8925845bd12cbc34514fe8be28f3f8a1dfc95275c76ec",
+      "seconds": 4.9740589569161,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Taunt3DGeneral",
+          "eventId": 237340156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1645583294,
+      "sourceWem": "bd0bbe780346402b/00113-1645583294.wem",
+      "sourceWemSha256": "d5e5a6d17a3219165350d3ebd0daab098057bda959642523dd3306ec28af608b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00113-1645583294.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00113-1645583294.wav",
+      "bytes": 728360,
+      "sha256": "4ff30a3257c5b0d4f01484c3b552b81e3b5c663b4ec815d3c08ea6510578441e",
+      "seconds": 4.128775510204082,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1656919280,
+      "sourceWem": "bd0bbe780346402b/00114-1656919280.wem",
+      "sourceWemSha256": "971ffa61e3519619d10a2fbbfbbc14482117ec44a2dd3b026bc3ea623f033c44",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00114-1656919280.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00114-1656919280.wav",
+      "bytes": 717864,
+      "sha256": "6d2be6c07e134992f3b5e85cdab66f264d9d620cc418940806558d607b4cf3f1",
+      "seconds": 4.069274376417233,
+      "categories": [
+        "recall"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Recall3DGeneral",
+          "eventId": 1460032895,
+          "category": "recall",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1678182094,
+      "sourceWem": "bd0bbe780346402b/00115-1678182094.wem",
+      "sourceWemSha256": "25de0264a4a143e39d2993022f9a3b41979a3bc00c7a34e65129396b3da8bc52",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00115-1678182094.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00115-1678182094.wav",
+      "bytes": 2390300,
+      "sha256": "0ecc0587b09c794b5635e27efe5485f62397d9235702cc97c4cb1e2a7788732f",
+      "seconds": 6.775102040816327,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DVoidStaff",
+          "eventId": 3462789910,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1779718765,
+      "sourceWem": "bd0bbe780346402b/00116-1779718765.wem",
+      "sourceWemSha256": "9230fa502ec41100f5187f8f476e9fd31c49f9c954d472cf9670df126ca9ca36",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00116-1779718765.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00116-1779718765.wav",
+      "bytes": 584168,
+      "sha256": "1843b04c27829d690137f81eecb0f656bdb6bf907adf53da03b512d96856ba13",
+      "seconds": 3.311360544217687,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Dance3DGeneral",
+          "eventId": 286067835,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1802460570,
+      "sourceWem": "bd0bbe780346402b/00117-1802460570.wem",
+      "sourceWemSha256": "f745a3f57981e5f87cb700870e58f604e983996ff0c7ad18d446cd0299e56800",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00117-1802460570.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00117-1802460570.wav",
+      "bytes": 803084,
+      "sha256": "c2ddcc03ddcb211dc5929ad73ff8656b7d32ea0f3a4968d2a5167c6d59dee7cf",
+      "seconds": 4.552380952380952,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1804908157,
+      "sourceWem": "bd0bbe780346402b/00118-1804908157.wem",
+      "sourceWemSha256": "71d74ad74bf934bd395ae3f83e8b145fe2e340cb85a5cb351bd3830038ff3497",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00118-1804908157.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00118-1804908157.wav",
+      "bytes": 1481028,
+      "sha256": "692a8f8129d924f7e7d7e220e805bde446cd1d181517e54afd3c4fb8d5e189ee",
+      "seconds": 4.1978004535147395,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Move2DStandard",
+          "eventId": 3963628193,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1820362580,
+      "sourceWem": "bd0bbe780346402b/00119-1820362580.wem",
+      "sourceWemSha256": "64518006ad2565f224782c261491ee6abf6ade83a3339774b8ed5e92a40f111e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00119-1820362580.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00119-1820362580.wav",
+      "bytes": 503596,
+      "sha256": "b4aa0f85e9338db600fca226ff44ed260961795421e65adb41491d67aede678b",
+      "seconds": 2.8546031746031746,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1893767592,
+      "sourceWem": "bd0bbe780346402b/00120-1893767592.wem",
+      "sourceWemSha256": "a8a5e5746f21994c8ef4a3135957a9f1579eef914be3a72cefe16f366e5069cd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00120-1893767592.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00120-1893767592.wav",
+      "bytes": 1070724,
+      "sha256": "cf2d8e8bf9bb5ac6d202a6b3809bfe7034674ca5888aba1d03296662edccd65f",
+      "seconds": 6.069614512471655,
+      "categories": [
+        "recall"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Recall3DGeneral",
+          "eventId": 1460032895,
+          "category": "recall",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1907470331,
+      "sourceWem": "bd0bbe780346402b/00121-1907470331.wem",
+      "sourceWemSha256": "d102fe6c2611a287ae60c9240614d19e7958228e112cb1576a8440d9ba2ecd59",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00121-1907470331.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00121-1907470331.wav",
+      "bytes": 1311076,
+      "sha256": "afd0726632721b421a05818fcd562bcbe24cf6493a23d5934778a35cf37a4362",
+      "seconds": 7.4321541950113374,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1958056450,
+      "sourceWem": "bd0bbe780346402b/00122-1958056450.wem",
+      "sourceWemSha256": "6b2403077be25e31dbcdf74beac90eed48152e75bcb480b51f674b907edc8b6a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00122-1958056450.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00122-1958056450.wav",
+      "bytes": 1763316,
+      "sha256": "fd43d1916eeff543ce6e2edca9facff9e1c66d964abfbfa04dd1ac8c527fca01",
+      "seconds": 9.995873015873016,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DMordekaiser",
+          "eventId": 4030607579,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1961588277,
+      "sourceWem": "bd0bbe780346402b/00123-1961588277.wem",
+      "sourceWemSha256": "baf1593ca29190231ef08250a06b2146cf144915c5e9f65496462f581934e0ca",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00123-1961588277.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00123-1961588277.wav",
+      "bytes": 858740,
+      "sha256": "aea054275bfbbda4f2fb737db5ff97a997cd2d7c572fad1d553d0509cb40a283",
+      "seconds": 4.867891156462585,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1973238171,
+      "sourceWem": "bd0bbe780346402b/00124-1973238171.wem",
+      "sourceWemSha256": "67eb4eb87a9377af57259046b6149722af051928aaf13f261b48e65aa0d35a6a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00124-1973238171.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00124-1973238171.wav",
+      "bytes": 1018804,
+      "sha256": "f152ddce35f63b3eddaeb1f63e640351002b6e900c1b7bbec7392c780f7cb7cf",
+      "seconds": 5.775283446712018,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1979552009,
+      "sourceWem": "bd0bbe780346402b/00125-1979552009.wem",
+      "sourceWemSha256": "d7010ca6d767f96bb8e7313436592350ef5763fd18aa5f7af02ad35f1ac1c824",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00125-1979552009.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00125-1979552009.wav",
+      "bytes": 593204,
+      "sha256": "2a16075414d8634f3072c5e5807c58c128daee7dc6a14950656aa726dc97e66f",
+      "seconds": 3.3625850340136054,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack2_cast3D",
+          "eventId": 2579646778,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack_cast3D",
+          "eventId": 3234121714,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack2_cast3D",
+          "eventId": 1912451386,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack_cast3D",
+          "eventId": 3562848242,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1983764479,
+      "sourceWem": "bd0bbe780346402b/00126-1983764479.wem",
+      "sourceWemSha256": "693e8cb03f2d40902431b681bb4877fc419de91cd2efc6aa50e6b157cb1885c5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00126-1983764479.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00126-1983764479.wav",
+      "bytes": 1157796,
+      "sha256": "a8fbd860d7e804061b3fdfe00fb887d0ac77695798c9a13cfbc6f1fbe1e3a8c6",
+      "seconds": 6.563219954648526,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Joke3DGeneral",
+          "eventId": 3958646845,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1984674946,
+      "sourceWem": "bd0bbe780346402b/00127-1984674946.wem",
+      "sourceWemSha256": "e80fd97062a8f9d93d83c51930af0ea93b21f7c0d71a4655231daa7a1d41450f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00127-1984674946.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00127-1984674946.wav",
+      "bytes": 2344748,
+      "sha256": "c5a58f5f36682824b674883bb9d5328772d173c984e7fcc5b6bd6685f3778ef9",
+      "seconds": 6.6459863945578235,
+      "categories": [
+        "item"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_BuyItem2DZhonyasHourglass",
+          "eventId": 2462514766,
+          "category": "item",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1991053761,
+      "sourceWem": "bd0bbe780346402b/00128-1991053761.wem",
+      "sourceWemSha256": "b553f03a85fc51e98095ab93cf9740ff46af0bd57879e0d47db493a767d8276f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00128-1991053761.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00128-1991053761.wav",
+      "bytes": 559224,
+      "sha256": "89094deb4f80ce6de1326bc5ae74ee7d3877f763faea4123c2752beb78373f66",
+      "seconds": 3.169954648526077,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusWallOfPain_cast3D",
+          "eventId": 1727123767,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2015676443,
+      "sourceWem": "bd0bbe780346402b/00129-2015676443.wem",
+      "sourceWemSha256": "642e1a0c39080694981d91c4504ce22eba8b97bdc095c219d035fc7f266df713",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00129-2015676443.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00129-2015676443.wav",
+      "bytes": 1118144,
+      "sha256": "016f591b9b5916848ad8789f0c0dbbd8ece4a29f6e17c5970f56bedf0e8f79f9",
+      "seconds": 6.33843537414966,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DElise",
+          "eventId": 872406781,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2017292951,
+      "sourceWem": "bd0bbe780346402b/00130-2017292951.wem",
+      "sourceWemSha256": "7dd3df48bf3db3d79691b1b74c6cfbf7d92296ec1f4bfe918016b6694edec007",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00130-2017292951.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00130-2017292951.wav",
+      "bytes": 484472,
+      "sha256": "5f30e85068cd7d302abd88c4214e6736c2de02bdaf105e4513c3de3a3be70efc",
+      "seconds": 2.7461904761904763,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack2_cast3D",
+          "eventId": 2579646778,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusBasicAttack_cast3D",
+          "eventId": 3234121714,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack2_cast3D",
+          "eventId": 1912451386,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Karthus_KarthusCritAttack_cast3D",
+          "eventId": 3562848242,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2029459995,
+      "sourceWem": "bd0bbe780346402b/00131-2029459995.wem",
+      "sourceWemSha256": "5600598ce87f0e52a0b4df7fedd4d17165172d84e5571ef8ac92fece31feb232",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00131-2029459995.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00131-2029459995.wav",
+      "bytes": 1090096,
+      "sha256": "f56cf01ac7c2cc096443aeaf267c25f88439a17eb2ee19d4751a4607d2f5ff3a",
+      "seconds": 6.179433106575964,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2105621206,
+      "sourceWem": "bd0bbe780346402b/00132-2105621206.wem",
+      "sourceWemSha256": "41d559c085c634c208349af397ec38c1480065e262be7e3df4cf8bcbd9b48253",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00132-2105621206.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00132-2105621206.wav",
+      "bytes": 684352,
+      "sha256": "e9a1a5f591c8b1f8cebfbc43224a6eaf60f0ff7b9ffa6d95670811de502b63e6",
+      "seconds": 3.879297052154195,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Laugh3DGeneral",
+          "eventId": 955173973,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2116495908,
+      "sourceWem": "bd0bbe780346402b/00133-2116495908.wem",
+      "sourceWemSha256": "74c2143eabb2131d2db2383f0c3da6da538cd9d9d80c31a1d8aa472be319679b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00133-2116495908.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00133-2116495908.wav",
+      "bytes": 872964,
+      "sha256": "0e78e42a8140773674da639bc43f4b5aeb485b613bb0bb7de93766a0a36a0ab0",
+      "seconds": 4.9485260770975055,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_Death3D",
+          "eventId": 3177021502,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2129415037,
+      "sourceWem": "bd0bbe780346402b/00134-2129415037.wem",
+      "sourceWemSha256": "e93390d20a4c0d9af3e8ff241dc7cdb42794b17fbaa473a18bb0570751ab150f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00134-2129415037.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00134-2129415037.wav",
+      "bytes": 810468,
+      "sha256": "3d385c7cb7934c785f3ee979c2d1b3160737221d38bdf93913290b81964db50e",
+      "seconds": 4.594240362811791,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Karthus_FirstEncounter3DVarus",
+          "eventId": 953671758,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    }
+  ],
+  "gaps": [
+    "Per-clip listening, speaker, language and transcript review are pending.",
+    "Ability slots are candidates derived from native event-name tokens; GGD runtime binding is pending.",
+    "The complete non-localized champion WAD has not been reconstructed or archived."
+  ]
+}

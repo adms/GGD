@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "self",
   "cooldown": [
     15.0,
@@ -30,10 +30,10 @@
   ],
   "id": "b2-kaede.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "安裝魔劍套件",
@@ -43,7 +43,7 @@
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "duration": 4,
       "modifiers": [
         {
@@ -66,5 +66,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kaede.q.webp"
+  "icon": "assets/icons/abilities/b2-kaede.q.webp",
+  "castTimeTier": "小"
 }

@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "effects": [],
@@ -33,12 +33,13 @@
         "duration": 1.2,
         "stun": true
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

@@ -24,9 +24,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 36,
+    "maxHealth": 80,
     "healthRegen": 0.09,
-    "maxMana": 20,
+    "maxMana": 50,
     "manaRegen": 0.07,
     "ad": 1.68,
     "armor": 0.9,
@@ -65,12 +65,12 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "spawnModelFx",
@@ -83,8 +83,8 @@
       "vfxKey": "fx.prim.nature.slash",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.8,
+      "radius": 6,
+      "castTimeSec": 0.5,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "radiusTier": "中",
@@ -110,9 +110,10 @@
           "damageType": "physical",
           "statusId": "burnstun",
           "statusDurationSec": 0.8,
-          "castTimeSec": 0.8
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-e00x.w",
@@ -124,16 +125,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -145,7 +146,7 @@
             "critStrike": {
               "chance": 0.1,
               "damageMult": 1.5,
-              "lifestealFraction": 0.0
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -162,7 +163,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -173,7 +174,8 @@
           }
         ]
       },
-      "targetsEnemies": false
+      "targetsEnemies": false,
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00x.e",
@@ -191,21 +193,21 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
           "kind": "applyBuff",
           "applyTo": "self",
-          "duration": 6.0,
+          "duration": 6,
           "modifiers": [
             {
               "stat": "armor",
               "op": "flat",
-              "value": -3.0
+              "value": -3
             }
           ],
           "hooks": [
@@ -233,10 +235,11 @@
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": false,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "range": 0.0,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-e00x.r",
@@ -253,9 +256,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -273,7 +276,7 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -295,9 +298,10 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.233
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

@@ -13,9 +13,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    600.0,
+    600.0,
+    600.0
   ],
   "manaCostTier": "大",
   "range": 3,
@@ -75,7 +75,7 @@
     },
     "inheritDefaults": true
   },
-  "castTimeSec": 0.733,
+  "castTimeSec": 0.5,
   "schema": "ability@1",
   "vfxKey": "fx.prim.fire.slash",
   "vfxLayers": [

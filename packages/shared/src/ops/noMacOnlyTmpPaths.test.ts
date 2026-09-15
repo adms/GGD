@@ -12,8 +12,10 @@
  */
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
-import { join, dirname, relative } from "node:path";
+import { join, dirname, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SKIP_DIRS = new Set(["node_modules", ".venv", "venv", "out", ".optvendor", "__pycache__", ".git"]);
@@ -24,6 +26,35 @@ const COMMENT = /^\s*(?:#|\/\/|\*(?:\s|$)|\/\*)/;
 const EXEMPT: Record<string, string> = {
   // 2026-09-06：`preserve-before-overwrite.py` 那一列已拿掉（docstring 改成 ${TMPDIR:-/tmp} 形狀）—— 目前零豁免。
 };
+
+/**
+ * ⭐ **凍結的轉換出處**（PR #1152 合併準備，2026-09-15）—— 這一族⛔ 不是可以隨手改的腳本：
+ * owner 2026-09-08 五道界線④「模型／動作／特效轉換要保留**可重跑腳本**、依賴、參數、來源與輸出雜湊」
+ * ⇒ `materials/` 裡的收據逐字記著**那一次執行的腳本位元組**（sha256）與它的路徑。
+ * ⇒ 改掉裡面的 `/private/tmp`，收據就變成在描述一支**不存在的腳本**（偽造出處）。
+ *
+ * ⛔ 判準不是「在哪個資料夾」，是**關係**：這支腳本的 sha256 **和**它的檔名，同時出現在同一份
+ * `materials/` 收據裡。兩個條件缺一個就照舊紅 —— 收據拿掉、腳本被改過一個位元組、或只是雜湊巧合，都擋得住。
+ * ⚠️ 它們在 Linux 上一樣跑不起來；要重跑就換一份新腳本＋新收據，⛔ 不是改舊的。
+ */
+function frozenProvenance(candidates: readonly { rel: string; sha: string }[]): Set<string> {
+  const frozen = new Set<string>();
+  if (candidates.length === 0) return frozen;
+  const wanted = new Map<string, string[]>();
+  for (const c of candidates) (wanted.get(c.sha) ?? wanted.set(c.sha, []).get(c.sha)!).push(c.rel);
+  // ⚡ 只讀**文字收據**（json／md／txt），每份掃一遍 64-hex 再查表 ——
+  //   ⛔ 不用 `git grep -e <117 個樣式>`：量過 119 秒（多樣式逐一掃過含 GLB 在內的 materials/）。
+  const receipts = execFileSync("git", ["ls-files", "-z", "--", "materials"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+    .split("\0")
+    .filter((f) => /\.(json|jsonl|md|txt)$/.test(f));
+  for (const r of receipts) {
+    const t = readFileSync(join(REPO, r), "utf8");
+    for (const m of t.matchAll(/[0-9a-f]{64}/g)) {
+      for (const rel of wanted.get(m[0]) ?? []) if (!frozen.has(rel) && t.includes(basename(rel))) frozen.add(rel);
+    }
+  }
+  return frozen;
+}
 
 function* walk(dir: string): Generator<string> {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
@@ -44,14 +75,24 @@ describe("scripts/ tools/：⛔ 不可以寫死 macOS 專屬的暫存路徑（GH
   it("★★ `/private/tmp` 與 `mktemp -t` 在可執行的行上零命中；豁免要還命中", () => {
     const bad: string[] = [];
     const exemptHit = new Set<string>();
+    const flagged: { rel: string; sha: string; hits: { line: string; i: number }[] }[] = [];
     for (const f of files) {
       const rel = relative(REPO, f);
-      readFileSync(f, "utf8").split("\n").forEach((line, i) => {
-        if (COMMENT.test(line) || !TRAP.test(line)) return;
-        if (rel in EXEMPT) exemptHit.add(rel);
-        else bad.push(`${rel}:${i + 1}  ${line.trim().slice(0, 90)}`);
-      });
+      const bytes = readFileSync(f);
+      const hits = bytes.toString("utf8").split("\n")
+        .map((line, i) => ({ line, i }))
+        .filter(({ line }) => !COMMENT.test(line) && TRAP.test(line));
+      if (hits.length === 0) continue;
+      if (rel in EXEMPT) { exemptHit.add(rel); continue; }
+      flagged.push({ rel, sha: createHash("sha256").update(bytes).digest("hex"), hits });
     }
+    const frozen = frozenProvenance(flagged);
+    for (const { rel, hits } of flagged) {
+      if (frozen.has(rel)) continue;
+      for (const { line, i } of hits) bad.push(`${rel}:${i + 1}  ${line.trim().slice(0, 90)}`);
+    }
+    // ⭐ 跳過幾支要說出來（⛔ 一個安靜的跳過與「全部通過」長得一模一樣）
+    console.log(`   ⏭ 凍結出處（sha256＋檔名同時被 materials/ 收據記著）${frozen.size} 支，⛔ 不改`);
     expect(
       bad,
       "⛔ 這幾行在 Linux 上會靜默失敗（/private 建不出來 · mktemp -t 回空字串）：\n" +

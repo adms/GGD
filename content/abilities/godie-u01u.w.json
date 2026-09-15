@@ -15,13 +15,13 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "template": {
     "ref": "tpl-proxy-fanout",
@@ -42,13 +42,14 @@
         "duration": 0.8,
         "stun": true
       },
-      "castTimeSec": 0.8
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
-  "radius": 3.0,
+  "radius": 3,
   "schema": "ability@1",
-  "castTimeSec": 0.8,
-  "radiusTier": "極小"
+  "castTimeSec": 1,
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

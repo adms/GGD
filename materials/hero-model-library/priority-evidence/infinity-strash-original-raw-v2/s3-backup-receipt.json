@@ -1,0 +1,11 @@
+{
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
+  "bytes": 240447329,
+  "sha256": "57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229",
+  "readbackVerified": true,
+  "reusedExisting": false,
+  "id": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+  "type": "zip",
+  "originalLocalArchive": "outputs/model-source-backups/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
+  "contentKind": "complete-intake"
+}

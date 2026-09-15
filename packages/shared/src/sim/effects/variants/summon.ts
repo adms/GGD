@@ -22,7 +22,10 @@
  *     a rect. → `count` / `formation` / `spread` / `at`.
  *   · LIFETIME       — 18-04 億年樹 lives `9s × level`, 96-04 lives 10s,
  *     35-00 召喚佩 is a PET that persists until replaced. → `durationSec`
- *     ABSENT = permanent, which is WC3's own 0-duration form.
+ *     ABSENT = no deadline, which is WC3's own 0-duration form. ⚠️ In GGD that
+ *     still ends at 回合結算: `endCombatSummons` collects EVERY summon when the
+ *     round is settled (GH#1241, owner 2026-08-19 on GH#429「除非有特別寫跨回合」),
+ *     so ABSENT means "the rest of this round", ⛔ not "the rest of the match".
  *   · CAP            — 37-02 黑核晶 caps concurrent crystals at 7 and 「超過殺
  *     最舊」. That is where BOTH `maxAlive` and `onCap: "replaceOldest"` come
  *     from; they are not invented ceilings.
@@ -60,7 +63,7 @@ export interface SummonVariant {
   championId?: string;
   /** how many bodies this cast creates */
   count: number;
-  /** seconds before despawn; ABSENT = permanent (the WC3 0-duration form) */
+  /** seconds before despawn; ABSENT = no deadline, but still collected at 回合結算 (GH#1241) — ⛔ not match-long */
   durationSec?: number;
   /** level of the summoned body (WC3 summons scale off the ability level) */
   level?: number;

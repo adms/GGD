@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -22,10 +22,10 @@
       ],
       "id": "b2-nube.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "符咒貼上禁止聊天",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -52,10 +52,11 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-nube.e.webp"
+      "icon": "assets/icons/abilities/b2-nube.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -85,10 +86,10 @@
       ],
       "id": "b2-nube.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -101,7 +102,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -133,10 +134,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-nube.q.webp"
+      "icon": "assets/icons/abilities/b2-nube.q.webp",
+      "castTimeTier": "極大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -165,15 +167,15 @@
             }
           ],
           "onHitTargetsMode": "perTarget",
-          "radius": 3.0,
+          "radius": 3,
           "radiusTier": "極小"
         }
       ],
       "id": "b2-nube.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -185,7 +187,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -222,10 +224,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-nube.r.webp"
+      "icon": "assets/icons/abilities/b2-nube.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -256,10 +259,10 @@
       ],
       "id": "b2-nube.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "老師先幫你擋著",
@@ -271,7 +274,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -304,7 +307,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-nube.w.webp"
+      "icon": "assets/icons/abilities/b2-nube.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",
@@ -330,8 +334,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -346,13 +350,13 @@
     "as": 2.9226239784265093e-05,
     "healthRegen": 0.023048979591836743,
     "manaRegen": 0,
-    "maxHealth": 38.2761224489796,
-    "maxMana": 0.8520408163265306,
+    "maxHealth": 100,
+    "maxMana": 35,
     "mr": 3.299795918367347
   },
   "msGrowthTier": "極小",
   "id": "b2-nube",
-  "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
+  "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
   "name": "鵺野鳴介",
   "origin": "硬輔",
   "passiveAbility": "b2-nube.passive",
@@ -398,6 +402,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-487484-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.04ac799e4dec3187128088349514230154549edad278c191",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487484",
+      "modelSha256": "53f1b2dcefa76fe5566886ea6de0da0ea534cf2575291b95a864c0ac1ba0e0da",
+      "binarySha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
+      "registeredAt": "2026-09-10T14:45:42.552Z",
+      "source": {
+        "kind": "previous",
+        "character": "鵺野鳴介",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487484.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "30da6ecaa7ae9a17f1e845ca917eb0d5ce9f09b5db8b04e1b1433251786eb230",
+      "binarySha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "registeredAt": "2026-09-10T14:45:42.565Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:42.708Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.4387bdae07e49eadb81dff74dfa2da89962fbf353972d5a4",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "9e55cbd1b8264445f1281638ac02e19725ae817663db81b049238068c5a0c515",
+      "binarySha256": "fdaf9dc376538d4f0fcb5ed906e76dd7cb0d65548db66b17bdf528cf7db4812b",
+      "registeredAt": "2026-09-12T23:12:02.302Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:12:02.637Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "8981d7a44ddd28ee290c4a2abda09cc44d6c83d5441debd3eb2105f1613ac461",
+      "binarySha256": "fdaf9dc376538d4f0fcb5ed906e76dd7cb0d65548db66b17bdf528cf7db4812b",
+      "registeredAt": "2026-09-13T00:09:06.293Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:09:06.618Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

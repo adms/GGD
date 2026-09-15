@@ -34,6 +34,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { HERO_MODEL_ADOPTION_POLICY } from "../../packages/shared/src/content/modelUpload/budget";
 
 import { measureGlb, type GlbMetrics } from "./glb";
 import {
@@ -119,6 +120,9 @@ function actionFor(axis: AxisScore, gate: ReturnType<typeof gateFor>): string {
       return `optimise 貼圖 ${axis.value}→${target}px (VRAM ↓${(1 - (target * target) / (axis.value * axis.value)).toLocaleString(undefined, { style: "percent" })})`;
     }
     case "triangles":
+      if (gate?.role === "champion") {
+        return `正式採用前抽面到 ≤${HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax}（來源 >${HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove} 時強制；skin-aware，需 --geometry）`;
+      }
       return `optimise 幾何抽面 ${axis.value}→≤${gate!.tris.warn} (skin-aware，需 --geometry)`;
     case "drawCalls":
       return `manual：合併同材質 primitive / 減少節點（批次工具不會自動改 draw call，見 playbook 步驟 1）`;
@@ -135,6 +139,12 @@ interface FileResult {
   roleSource: "flag" | "report" | "unresolved";
   metrics: GlbMetrics;
   scored: Scored | null;
+  adoption: {
+    status: "eligible" | "needs-decimation";
+    triggerTrianglesAbove: number;
+    targetTrianglesMax: number;
+    visualLitPixelDeltaPctMax: number;
+  } | null;
   broken: string;
 }
 
@@ -164,6 +174,14 @@ function evaluate(file: string, args: Args): FileResult {
     roleSource,
     metrics: m,
     scored: gate ? scoreAgainst(m, gate) : null,
+    adoption: role === "champion" ? {
+      status: m.triangles > HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove
+        ? "needs-decimation"
+        : "eligible",
+      triggerTrianglesAbove: HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove,
+      targetTrianglesMax: HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax,
+      visualLitPixelDeltaPctMax: HERO_MODEL_ADOPTION_POLICY.visualLitPixelDeltaPctMax,
+    } : null,
     broken,
   };
 }
@@ -195,6 +213,12 @@ function printHuman(r: FileResult, args: Args): void {
     const act = actionFor(a, r.scored.gate);
     process.stdout.write(
       `  ${V_MARK[a.verdict]} ${a.label.padEnd(20)} ${String(a.value).padStart(7)}  warn ${a.warn} / limit ${a.limit}${act ? `   → ${act}` : ""}\n`,
+    );
+  }
+  if (r.adoption?.status === "needs-decimation") {
+    process.stdout.write(
+      `  BLOCK 正式採用政策         ${r.metrics.triangles} > ${r.adoption.triggerTrianglesAbove}` +
+      `   → 另產生 ≤${r.adoption.targetTrianglesMax} 面候選；原檔保留本機/S3，通過骨架與視覺 A/B 才能進 Git\n`,
     );
   }
 }
@@ -238,6 +262,7 @@ function main(): void {
             roleSource: r.roleSource,
             broken: r.broken || undefined,
             worst: r.scored?.worst ?? null,
+            adoption: r.adoption,
             metrics: {
               triangles: r.metrics.triangles,
               meshes: r.metrics.meshes,
@@ -256,7 +281,8 @@ function main(): void {
     for (const r of results) printHuman(r, args);
   }
 
-  const breached = results.filter((r) => r.scored?.worst === "over" || r.broken).length;
+  const breached = results.filter((r) =>
+    r.scored?.worst === "over" || r.broken || r.adoption?.status === "needs-decimation").length;
   const warned = results.filter((r) => r.scored?.worst === "warn").length;
   const unresolved = results.filter((r) => !r.scored && !r.broken).length;
 

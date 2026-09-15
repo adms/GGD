@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -29,9 +29,9 @@
   ],
   "id": "b2-fushi.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "耐用形狀保固四秒",
@@ -41,7 +41,7 @@
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "duration": 4,
       "modifiers": [
         {
@@ -65,5 +65,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-fushi.r.webp"
+  "icon": "assets/icons/abilities/b2-fushi.r.webp",
+  "castTimeTier": "大"
 }

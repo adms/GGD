@@ -20,6 +20,7 @@ import {
   type SkinRow,
   type SkinSheetStats,
 } from "./voxelSkinSheet";
+import { loadDocsByIds } from "../content";
 
 async function getJson(url: string): Promise<unknown | null> {
   try {
@@ -69,15 +70,26 @@ export function useVoxelSkinSheet(): SheetState {
         await Promise.all(entries.map((e) => getJson(`/content/${e.path}`)))
       ).filter((d): d is Record<string, unknown> => !!d && typeof d === "object");
       if (cancelled) return;
+      // GH#1250 —— 「共用替身」看模型文件的 glb ⇒ 只抓英雄真的指到的那幾份模型文件。
+      const modelKeys = [
+        ...new Set(docs.map((d) => d["modelKey"]).filter((k): k is string => typeof k === "string")),
+      ];
+      // ⚠️ 讀不到 ⇒ 那一欄一律「不是替身」而畫面長得完全正常 ⇒ 一定要說出來（fail-open 沒錯，靜默才是缺陷）。
+      const modelDocs = await loadDocsByIds("models", modelKeys).catch(() => null);
+      if (cancelled) return;
+      const missingModels = modelDocs === null ? modelKeys.length : modelKeys.filter((k) => !modelDocs.has(k)).length;
       const built = buildSheet(
         docs as never,
         parseOverrides(overridesRaw),
+        modelDocs ?? new Map(),
       );
       setRows(built.rows);
       setStats(built.stats);
-      if (docs.length < entries.length) {
-        setError(`${entries.length - docs.length} 份英雄文件讀取失敗，對照表不完整。`);
-      }
+      const problems = [
+        ...(docs.length < entries.length ? [`${entries.length - docs.length} 份英雄文件讀取失敗，對照表不完整。`] : []),
+        ...(missingModels > 0 ? [`${missingModels} 份模型文件讀取失敗，「共用替身」一欄不完整。`] : []),
+      ];
+      if (problems.length > 0) setError(problems.join(" "));
       setLoading(false);
     })();
     return () => {

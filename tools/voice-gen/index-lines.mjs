@@ -47,12 +47,13 @@
  * stable and reviewable. Run before `pnpm content:build`.
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   applyFormVoiceShares,
   planFormVoiceShares,
+  contentFormPairs,
 } from "../../packages/shared/src/content/voiceFormSharing.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -242,7 +243,7 @@ function main() {
       // ⭐ owner 2026-09-10「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」:
       // a category may carry extra takes as `<cat>.2`, `<cat>.3`, … (status key + mp3
       // name); they ride along in the same array and the client picks at random.
-      for (let n = 2; n <= 9; n++) {
+      for (let n = 2; ; n++) {
         const key = `${cat}.${n}`;
         const mp3 = join(dir, `${key}.mp3`);
         const entry = statusLines[key];
@@ -269,7 +270,14 @@ function main() {
   // is the donor's, stamped `sharedFrom`, so its clip paths still point at the
   // donor's files — nothing is copied. A champion that owns a pack is never
   // named, so a real recorded asset can never be shadowed by a borrowed one.
-  const shares = planFormVoiceShares(Object.keys(champions));
+  // ⭐ 2026-09-15：內容檔宣告的變身對（b2／社群）也借 —— 與執行期 `resolveVoicePackId` 同一張表。
+  const championDir = join(REPO, "content/champions");
+  const contentPairs = contentFormPairs(
+    readdirSync(championDir)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => JSON.parse(readFileSync(join(championDir, f), "utf8"))),
+  );
+  const shares = planFormVoiceShares(Object.keys(champions), contentPairs);
   const withShares = applyFormVoiceShares(champions, shares);
   const landed = shares.filter((s) => withShares[s.championId]);
 

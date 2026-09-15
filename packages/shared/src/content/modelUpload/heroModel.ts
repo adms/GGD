@@ -3,7 +3,7 @@ import { contentSha256 } from "../import/jcs";
 import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
 import { selectModelAnimations } from "./compose";
 import { normalizeUploadedModel, type ResizeImage } from "./normalize";
-import { HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
 import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
 export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
   const model = zUploadedHeroModel.parse(raw);
@@ -18,8 +18,16 @@ export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
 
 export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: string[]; warnings: string[] } {
   const errors: string[] = [], warnings: string[] = [];
+  if (model.triangles > HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove) {
+    errors.push(
+      `三角面 ${model.triangles} 超過素材正式採用門檻 ${HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove}；` +
+      `請從保留的原始檔另產生不超過 ${HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax} 面的減面候選，並完成視覺與骨架驗收。`,
+    );
+  }
   const rows = [
-    ["三角面", model.triangles, HERO_MODEL_BUDGET.tris],
+    // The formal adoption policy above is the effective intake gate. Keep this
+    // wider runtime budget row for capacity diagnostics, but do not emit a
+    // duplicate error for the same triangle count.
     ["繪製網格", model.meshes, HERO_MODEL_BUDGET.meshes],
     ["貼圖邊長", Math.max(0, ...model.textures.flatMap((texture) => [texture.width, texture.height])), HERO_MODEL_BUDGET.texEdge],
     ["單段動作通道", Math.max(0, ...model.clips.map((clip) => clip.channels)), HERO_MODEL_BUDGET.channels],
@@ -28,19 +36,44 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
     if (value > limit.limit) errors.push(`${label} ${value} 超過英雄模型上限 ${limit.limit}。`);
     else if (value > limit.warn) warnings.push(`${label} ${value} 高於警戒值 ${limit.warn}，送審時需檢查演出負載。`);
   }
+  // ⭐ GH#1230 ——「綁好骨架」（owner 2026-09-11 逐字）。
+  // ⚠️ 一顆沒綁骨架的英雄**畫得出來**：一具不會動的 T-pose ⇒ ⛔ 它跟正常的長得很像，
+  //    而六段 clipMap 仍然「有」——動的是節點，⛔ 不是網格。
+  // ⇒ 兩件都要問：有沒有 skin，以及**每一塊網格**是不是都吃得到權重。
+  if (model.skins === 0) {
+    errors.push("模型沒有骨架綁定（glTF 沒有 skins）—— 進場會是一具不會動的 T-pose。");
+  } else if (model.skinnedPrimitives < model.meshes) {
+    errors.push(
+      `有 ${model.meshes - model.skinnedPrimitives}/${model.meshes} 塊網格沒有蒙皮權重（缺 JOINTS_0）—— 那幾塊會留在原地不跟著動作走。`,
+    );
+  }
+  // ⭐ GH#1230 ④ —— 貼圖整組掉成佔位圖（BLP 住在子目錄時查不到 ⇒ 靜默退回 8×8）。
+  // ⚠️ 它與「這顆本來就沒貼圖」量起來一模一樣 ⇒ 所以只在**有**貼圖時問。
+  if (model.textures.length > 0) {
+    const maxEdge = Math.max(...model.textures.flatMap((t) => [t.width, t.height]));
+    if (maxEdge <= 8) {
+      errors.push(`貼圖整組只有 ${maxEdge}×${maxEdge} —— 那是佔位圖，八成是來源貼圖沒查到。`);
+    }
+  }
   return { errors, warnings };
 }
 
 /** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */
 export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0, options: { resizeImage?: ResizeImage } = {}) {
+  const originalIndices = HERO_MODEL_STATES.map((state) => selections[state]);
+  if (originalIndices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
   // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
   // ⇒ 合併「畫起來一樣」的 primitive ＋ 丟掉長度為零的署名片段，⛔ 不要求作者自己先修。
   const { bytes: source, report: normalized } = await normalizeUploadedModel(rawSource, { resizeImage: options.resizeImage });
-  const indices = HERO_MODEL_STATES.map((state) => selections[state]);
-  if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
+  const indices = originalIndices.map((index) => {
+    const retained = normalized.clipIndexMap[index];
+    if (retained === null) throw new Error("選定的動作片段已因長度為零被移除，請重新選擇可播放片段。");
+    if (retained === undefined) throw new Error("動作選擇不在模型片段範圍內。");
+    return retained;
+  });
   const chosen = [...new Set(indices)];
   const prepared = await selectModelAnimations(source, chosen);
-  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, prepared.inspected.clips[chosen.indexOf(selections[state])]!.name]));
+  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state, index) => [state, prepared.inspected.clips[chosen.indexOf(indices[index]!)]!.name]));
   const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });
   const budget = heroModelBudgetIssues(prepared.inspected);
   if (budget.errors.length) throw new Error(budget.errors.join("\n"));

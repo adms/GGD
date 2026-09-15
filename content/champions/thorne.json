@@ -80,10 +80,11 @@
         }
       ],
       "vfxKey": "fx.thorn-lash",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "castTimeTier": "小"
     },
     "W": {
       "id": "thorne.w",
@@ -141,8 +142,9 @@
         }
       ],
       "vfxKey": "fx.barkskin",
-      "castTimeSec": 0.067,
-      "provenance": "w3x-import"
+      "castTimeSec": 0.1,
+      "provenance": "w3x-import",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "thorne.e",
@@ -167,7 +169,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.root-snare",
-      "castTimeSec": 0.333,
+      "castTimeSec": 0.3,
       "provenance": "w3x-import",
       "rangeTier": "大",
       "range": 8,
@@ -197,9 +199,10 @@
             "duration": 1.25,
             "root": true
           },
-          "castTimeSec": 0.333
+          "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "R": {
       "id": "thorne.r",
@@ -221,7 +224,7 @@
       "range": 1,
       "radius": 4.5,
       "targetsEnemies": true,
-      "castTimeSec": 1.833,
+      "castTimeSec": 1,
       "effects": [],
       "vfxKey": "fx.bramble-burst",
       "provenance": "w3x-import",
@@ -246,9 +249,10 @@
           "damageType": "physical",
           "statusId": "slow40",
           "statusDurationSec": 2,
-          "castTimeSec": 1.833
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "passive": {

@@ -4,7 +4,8 @@
 > 衝突時的優先序：**閘（CI／測試）＞ 本檔 ＞ `docs/editor-contract/*.json` ＞ 任何手寫 `.md`**。
 > ⛔ 本檔以外的五份「先讀」文件（`CODEX_TYPE_HANDOFF` / `GOAL_CODEX_*` / `README_CODEX_開工清單` /
 > `MAIN_TO_EDITOR_RESPONSE_*` / `VFX_FORGE_SPEC_FOR_CODEX`）與它打架時，**以本檔為準**。
-> 記於 2026-09-06 · 上次校對的 `origin/main` = `78ecc838e`（⭐ 基準永遠是 `origin/main` 的 HEAD；這個 sha 只記「本檔上次對著哪一版校對」，由 `packages/shared/src/ops/agentsMdIsHonest.test.ts` 守著：它必須在 HEAD 的歷史上、落後 ≤ 1000 個 commit）
+> 記於 2026-09-15 · 上次校對的 `origin/main` = `ed7311d92`（⭐ 基準永遠是 `origin/main` 的 HEAD；這個 sha 只記「本檔上次對著哪一版校對」，由 `packages/shared/src/ops/agentsMdIsHonest.test.ts` 守著：它必須在 HEAD 的歷史上、落後 ≤ 1000 個 commit）
+> 2026-09-15 這一次校對的範圍：§2 積木清冊的顆數與 `editorForm` 來源（對 `docs/editor-contract/ggd-bricks.json` 與 `tools/skill-forge/build-editor-form-receipts.mjs`）、§3 `coord:check` 的真實行為（對 `tools/coord/check.mjs` 與 `.github/workflows/ci.yml`）、§6 五件、§7 的 CI 與本檔閘兩列。⚠️ 需要讀 GitHub 設定／票況／遠端分支的（branch protection、GH#979–981 的 CI 基線、§1 的 `feat/vfx-forge-codex` 落後數）**沒重查**。
 
 ---
 
@@ -57,20 +58,22 @@
 
 ### ⭐ 「引擎今天有哪些積木」只有一份答案：`docs/editor-contract/ggd-bricks.json`（GH#989）
 
-**153 顆**（effect 47 · hook 33 · template 35 · model-preset 15 · vfx-prim 13 · leaf 6 · vfx-subtype 4），
+顆數與逐層分布看產物自己的 `counts`（⛔ 本檔不抄數字 —— 2026-09-06 寫的「153 顆」到 09-15 已經是另一個數，而沒有任何東西變紅），
 每一顆帶 `params[]`（含級距欄位、`inert` 理由、`default` 的出處）· `adminForm` · `editorForm` · `usedBy`。
 ⭐ 它與 `ggd-runtime-capabilities` 走**同一個** `buildCapabilityManifest()`（指紋寫在 `capabilityFingerprint`）
 ⇒ 名詞那一層不可能互相矛盾。⛔ 手改它會被 `pnpm bricks:check` 逐位元組打回。
 
-⚠️ ⭐ **`editorForm` 那一欄今天是代理值**（用 `ggd-editor-coverage.json` 的 `required` 推的，
-產物自己逐字標了 `editorFormSource`）—— ⛔ 不要把它讀成「量到的」。要換成真的收據，見 §6-F。
+⭐ **`editorForm` 那一欄是量值**：讀你的表單收據（`docs/editor-contract/coordination/` 裡由
+`node tools/skill-forge/build-editor-form-receipts.mjs` 產生、產物的 `editorFormSource` 逐字指名的那一份，`pnpm formreceipts:check` 驗）；
+收據裡沒有的積木才退回代理值（`ggd-editor-coverage.json` 的 `required`）。
+⚠️ 已合併的收據是**歷史**：量測輸入與量到的值都沒變時，產生器保留 `origin/main` 那一份的位元組（連同當時抄進去的清冊欄位），⛔ 不因契約指紋變了就改寫。
 
 ---
 
 ## 3. Packet：一則訊息 ＝ 一個 JSON 檔
 
 路徑 **`docs/editor-contract/coordination/<dedupeKey>.json`**，跟著 PR 一起送。
-⛔ 不要再寫日期戳的 handoff `.md`（`docs/editor-contract/` 已有 10 份，全部過期，沒有任何東西會告訴你哪一份還算數）。
+⛔ 不要再寫日期戳的 handoff `.md`（`docs/editor-contract/` 底下那一疊 `CODEX_*` / `GOAL_*` / `MAIN_*` 全部過期，沒有任何東西會告訴你哪一份還算數；⛔ 本檔不抄份數 —— 09-06 寫的「10 份」與 09-15 數到的對不上）。
 ⛔ 不要建 inbox / outbox / `state.json` / heartbeat —— PR 就是這四樣。
 
 schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
@@ -107,10 +110,10 @@ schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
 | 欄位 | 規則 |
 |---|---|
 | `kind` | `brick-request` · `claim` · `question` · `advisory-refresh` · `owner-decision` |
-| `dedupeKey` | `<kind>.<主題-kebab>`。同 key 的 packet **已 merge 且 `contractFingerprint` 沒變** ⇒ 不准再送（＝同一題重問） |
+| `dedupeKey` | `<kind>.<主題-kebab>`。同 key 的 packet **已 merge 且 `contractFingerprint` 沒變而內容改了** ⇒ 紅（＝同一題重問）。與 `origin/main` 那一份**逐位元組相同**的是歷史收據：放行、不要求指紋跟上、不重跑 repro。⭐ 要改內容就換一個 key（前例：表單收據 `claim.editor-form-receipts` → `…-spawn-obstacle` → `…-spawn-obstacle-landed`） |
 | `contractFingerprint` | `shasum -a 256 docs/editor-contract/ggd-type-catalog.json \| cut -c1-16`。契約沒變就不要重開舊題 |
 | `baseCommit` | 你分支出來的 `origin/main` sha。不是 `origin/main` 的祖先 ⇒ 紅 |
-| `claims[]` | 每一條要有 `kind`（`confirmed` / `refuted` / `inferred` / `owner-decision`）＋ `repro.command` ＋ `repro.expectedExit` ＋ `commit`。⭐ **CI 會真的跑那條指令，離開碼對不上就紅。** 指令只准這幾種前綴：`pnpm ` · `npx vitest run ` · `bash scripts/` · `node tools/` · `python3 tools/` |
+| `claims[]` | 每一條要有 `kind`（`confirmed` / `refuted` / `inferred` / `owner-decision`）＋ `repro.command` ＋ `repro.expectedExit` ＋ `commit`。⭐ `node tools/coord/check.mjs --run-repro` **會真的跑那條指令，離開碼對不上就紅**；⚠️ 但 CI（`.github/workflows/ci.yml` 的 contract job）今天跑的是**不帶** `--run-repro` 的 `pnpm coord:check` ⇒ 重跑要靠接收方自己（§4）。指令只准這幾種前綴：`pnpm ` · `npx vitest run ` · `bash scripts/` · `node tools/` · `python3 tools/` |
 | `evidence[]` | 路徑必須存在於這張 PR 的樹裡。寫「缺 X」要同時寫**哪一行程式會讀它**（`a/b.ts:NN`），否則「缺席」驗證不了 |
 | `unblocks[]` | `brick-request` 必填：至少 **2** 個 `docs/_reports/editor-skill-acceptance-42x46.json` 的 row id，且那些 row 的 `machineIssues` 帶 `MISSING_VISUAL_BRICK` 與**同一個 `brickId`**。⭐ 這就是「擋住幾支」：它現在是驗收包裡機器發的計數，⛔ 不是口頭說的支數。**1 支 ＝ 專屬積木，不做**（GH#916 的判準） |
 | `ownerQuotes[]` | owner 說過的話**只能**住這裡，逐字＋日期。其他任何句子一律視為**你的推測** |
@@ -134,7 +137,11 @@ schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
 
 ---
 
-## 6. 現在就做的五件（你的第一張 PR）
+## 6. 第一張 PR 的五件（⭐ 2026-09-15 校對：全部已落地，這張表留作歷史）
+
+A：`pnpm skillforge:visual-advisory:check` 在 `skills:check` 裡是綠的 · B：`build-visual-review-packet.mjs` 逐份 `sourceDigest` ·
+C：`build-codex-visual-advisory.mjs` 要求 `MISSING_VISUAL_BRICK` 帶 `brickId` · D：`brick-request.solid-beam.json` 在 coordination 目錄 ·
+F：表單收據已接進 `ggd-bricks.json`（§2）。
 
 | | 做什麼 | 為什麼 |
 |---|---|---|
@@ -154,10 +161,10 @@ schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
 | 閘 | 票 | 上線之前靠什麼 |
 |---|---|---|
 | branch protection ＋ `CODEOWNERS` | GH#983 | Main 的 PR review |
-| CI 補 `skills:check` / `editor:accept:release` / `docker build` / `coord:check` | GH#984 | 你本機跑 §1 第 3 步 |
+| ~~CI 補 `skills:check` / `editor:accept:release` / `docker build` / `coord:check`~~ | ✅ GH#984 | **已上線** —— `.github/workflows/ci.yml` 的 contract job 四步都在。⚠️ `coord:check` 沒帶 `--run-repro`（§3） |
 | ~~`pnpm coord:check`~~ | ✅ GH#985 | **已上線** —— `d47f00b00` ＋ `476a0f200`（`NO_ARTIFACT` 那一列，進 `skills:check`） |
 | CI 基線綠（`unit` / `go-platform` / `vuln`） | GH#979 · GH#980 · GH#981 | ⛔ 現在 main 的 CI 是紅的（42 天），PR 的紅分不出新舊 —— 先看 CI 的**第一個**紅是不是你造成的 |
-| `AGENTS.md` 本身有閘（引用的每一條指令都存在） | GH#988 | —— |
+| ~~`AGENTS.md` 本身有閘（引用的每一條指令都存在）~~ | ✅ GH#988 | **已上線** —— `packages/shared/src/ops/agentsMdIsHonest.test.ts`（指令／腳本／欄位存在 ＋ 檔頭校對 sha 落後 ≤ 1000） |
 
 ---
 

@@ -72,5 +72,7 @@
     "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
   },
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/lol-karthus.passive.webp"
+  "icon": "assets/icons/abilities/lol-karthus.passive.webp",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

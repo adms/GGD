@@ -1,0 +1,236 @@
+{
+  "schema": "ggd.infinity-strash-vearn-form-audit@1",
+  "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
+  "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+  "platform": "Windows Steam build 2024-03-28",
+  "sourceBuildDate": "2024-03-28",
+  "tools": {
+    "repak": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/repak-src-v0.2.3/target/release/repak",
+      "bytes": 4836032,
+      "sha256": "593a799487b940259d62d29b27ed38364d3a4344d6b71a12f2fc93bf74d31ee2"
+    }
+  },
+  "primaryPaks": [
+    {
+      "label": "pakchunk0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+      "bytes": 8332792957,
+      "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+      "indexedEntries": 181304
+    },
+    {
+      "label": "pakchunk1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+      "bytes": 4382548320,
+      "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+      "indexedEntries": 12254
+    }
+  ],
+  "index": {
+    "totalEntries": 193558,
+    "uniqueEntries": 193558,
+    "monsterBodyAssetCount": 54,
+    "monsterBodyNativeIds": [
+      "EN001",
+      "EN002",
+      "EN102",
+      "EN103",
+      "EN105",
+      "EN200",
+      "EN203",
+      "EN204",
+      "EN205",
+      "EN206",
+      "EN207",
+      "EN208",
+      "EN209",
+      "EN302",
+      "EN305",
+      "EN400",
+      "EN401",
+      "EN402",
+      "EN403",
+      "EN452",
+      "EN453",
+      "EN456",
+      "EN457",
+      "EN458",
+      "EN459",
+      "EN460",
+      "EN461",
+      "EN500",
+      "EN503",
+      "EN506",
+      "EN507",
+      "EN508",
+      "EN509",
+      "EN510",
+      "EN511",
+      "EN512",
+      "EN551",
+      "EN552",
+      "EN553",
+      "EN554",
+      "EN620",
+      "EN650",
+      "EN653",
+      "EN680",
+      "EN681",
+      "EN691",
+      "EN700",
+      "EN703",
+      "EN704",
+      "EN801"
+    ],
+    "directVearnOrEN801PathCount": 1094
+  },
+  "en801": {
+    "bodyAssets": [
+      "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uasset"
+    ],
+    "characterBlueprint": "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a",
+    "blueprintCharacterReferences": [
+      "/Game/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body",
+      "/Game/Strash/Chara/Monster/EN801/AI/AIC_EN801_00_a",
+      "/Game/Strash/Chara/Monster/EN801/AI/AIP_EN801_00_a",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AB_EN801_00",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AB_EN801_00_Face",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AB_EN801_00_Hair",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AM_EN801_00_B_Dead01",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AM_EN801_00_B_KnockBack01",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AM_EN801_00_B_Knockout01",
+      "/Game/Strash/Chara/Monster/EN801/Animations/AM_EN801_00_B_Stun01",
+      "/Game/Strash/Chara/Monster/EN801/CB_EN801_00_a",
+      "/Game/Strash/Chara/Monster/EN801/Face/SK_EN801_00_Face",
+      "/Game/Strash/Chara/Monster/EN801/Hair/SK_EN801_00_Hair",
+      "/Game/Strash/Chara/Monster/EN801/Weapon/SK_EN801_00_Weapon"
+    ],
+    "blueprintBodyReferences": [
+      "/Game/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body"
+    ],
+    "blueprintNativeIds": [
+      "EN801"
+    ],
+    "formKeywordPaths": [],
+    "enemyMasterNativeIds": [
+      "EN001",
+      "EN002",
+      "EN102",
+      "EN103",
+      "EN105",
+      "EN200",
+      "EN202",
+      "EN203",
+      "EN205",
+      "EN206",
+      "EN207",
+      "EN208",
+      "EN302",
+      "EN305",
+      "EN400",
+      "EN401",
+      "EN402",
+      "EN403",
+      "EN452",
+      "EN453",
+      "EN456",
+      "EN457",
+      "EN458",
+      "EN459",
+      "EN500",
+      "EN501",
+      "EN503",
+      "EN506",
+      "EN507",
+      "EN508",
+      "EN509",
+      "EN510",
+      "EN511",
+      "EN551",
+      "EN552",
+      "EN553",
+      "EN554",
+      "EN600",
+      "EN601",
+      "EN620",
+      "EN650",
+      "EN653",
+      "EN680",
+      "EN681",
+      "EN691",
+      "EN700",
+      "EN703",
+      "EN704",
+      "EN801"
+    ],
+    "enemyMasterContainsEN801": true
+  },
+  "identityExclusions": [
+    {
+      "nativeId": "EN653",
+      "identity": "MystVearn",
+      "isVearnForm": false
+    },
+    {
+      "nativeId": "EN680",
+      "identity": "Baran",
+      "isVearnForm": false
+    },
+    {
+      "nativeId": "EN681",
+      "identity": "Baran form",
+      "isVearnForm": false
+    }
+  ],
+  "officialStoryScope": {
+    "url": "https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now",
+    "statement": "Square Enix describes story mode as covering the full Sovereign Rock Castle arc.",
+    "use": "corroborating scope evidence; local package evidence remains authoritative for this asset audit"
+  },
+  "result": {
+    "preTransformationOldVearnBodyLocated": true,
+    "postTransformationVearnFullBodyLocated": false,
+    "status": "post-transformation-full-body-absent-from-both-primary-pak-indexes",
+    "nextAction": "retain the gap and acquire a separately licensed post-transformation Vearn source"
+  },
+  "limitations": [
+    "Path and serialized blueprint references prove the shipped EN801 asset linkage; they do not assign identities to unrelated native IDs.",
+    "EN653 MystVearn and EN680/EN681 Baran remain separate identities and cannot fill the post-transformation Vearn gap.",
+    "The Kaizer Phoenix skeletal mesh is a skill effect/helper mesh, not a second Vearn body.",
+    "Absence from these two PAK indexes does not prove that no separately licensed community model exists.",
+    "This audit does not claim conversion, backend registration, runtime selection, Main merge or deployment."
+  ],
+  "preservedEvidence": [
+    {
+      "path": "pakchunk0-paths.txt.gz",
+      "bytes": 709860,
+      "sha256": "943a2f97c712ca731d77013be7beb431009dfaebcc4d88c1e6e1ebe14b8560b0"
+    },
+    {
+      "path": "pakchunk1-paths.txt.gz",
+      "bytes": 37359,
+      "sha256": "b9fed31d80f7d34125a2db23182b60e5cda01c65337302d521b246b668171d65"
+    },
+    {
+      "path": "serialized-probes/CB_EN801_00_a.uasset",
+      "bytes": 12254,
+      "sha256": "a326c34ed56d50333e89da8b8a8ed1057f257f90ee5c890b36da550767b18058"
+    },
+    {
+      "path": "serialized-probes/CB_EN801_00_a.uexp",
+      "bytes": 3886,
+      "sha256": "1cf9f33fa172f8e16931e3f0a2252002b707d4695540b28fe02ba18bd2456844"
+    },
+    {
+      "path": "serialized-probes/EnemyMaster_Enemy.uasset",
+      "bytes": 5714,
+      "sha256": "85e7e1d13e7477e29d5ed7b3e74be0b126e6342f980e4033a6f532022ba49c7d"
+    },
+    {
+      "path": "serialized-probes/EnemyMaster_Enemy.uexp",
+      "bytes": 1911332,
+      "sha256": "974fe0dc01b64da8b4cd5e8f383f904ad4592a5ab36eadb62ed7f35f1c3bcf93"
+    }
+  ]
+}

@@ -33,6 +33,7 @@ import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubty
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { createRuntimeResolver } from "./runtimeResolver";
+import { communityCueFallbackEnabled, withCommunityCueFallback } from "./communityCueFallback";
 import { withLiteralApCoeffs } from "./apCoefficient";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
 // 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
@@ -202,14 +203,17 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const expandStandalone = (d: AbilityDef): AbilityDef => {
     if (options.representation === "verified-runtime") return d;
     const authored = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
-    return withProse(withTiers(authored), authored);
+    // ⭐ 社群施法提示退路（`communityCueFallback.ts`）—— 只補「作者沒有挑施法特效」的那幾支。
+    //   ⚠️ 讀的是**磁碟那一份** `d`（帶 `template`），⛔ 不是展開後的。開關關掉 ⇒ 同一個物件。
+    return withCommunityCueFallback(withProse(withTiers(authored), authored), d as never, templates, cueFallbackOn);
   };
   const expandEmbedded =
     (championId: string, slot: string) =>
     (d: AbilityDef): AbilityDef => {
       if (options.representation === "verified-runtime") return d;
       const authored = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
-      return withProse(withTiers(authored), authored);
+      // ⭐ 內嵌那一份走同一條規則（⛔ 只接 standalone ＝ 兩條路兩個答案）。
+      return withCommunityCueFallback(withProse(withTiers(authored), authored), d as never, templates, cueFallbackOn, slot);
     };
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
@@ -221,6 +225,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const configDocs = store.all<{ schema?: string }>("config");
   const { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers, apCoeff } =
     createRuntimeResolver(templates, configDocs);
+  // ⭐ rollback 那一格：`config.vfx-scripts@1.communityCueFallback`（缺席＝開）。
+  const cueFallbackOn = communityCueFallbackEnabled(configDocs);
 
   /**
    * ⭐【技能說明的**唯一**算繪處】說明推導（票號待開） —— `{{cd}}` / `{{dmg}}` / `{{range}}`…

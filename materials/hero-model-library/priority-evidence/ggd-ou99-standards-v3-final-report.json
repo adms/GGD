@@ -1,0 +1,32 @@
+{
+  "schema": "ggd-ou99-standardization-handoff@3",
+  "frozen": true,
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/manifest.json",
+  "manifestSha256": "631a8d03f9b0903b4adade3639a7b76c5c28ba792ead66978faf5b58caed44c4",
+  "count": 3,
+  "backendPreparePassed": 3,
+  "realBackdropCheckerPassed": 3,
+  "khronosErrors": 0,
+  "khronosWarnings": 0,
+  "khronosTruncated": false,
+  "modelBytes": 4432916,
+  "sourceZipCopies": 3,
+  "visualScreenshotPairsByteExact": 6,
+  "centralWrites": false,
+  "modelKeys": [
+    "ou99.458777-standard-v3",
+    "ou99.473324-standard-v3",
+    "ou99.491448-standard-v3"
+  ],
+  "supersedesModelKeys": [
+    "ou99.458777-standard-v2",
+    "ou99.473324-standard-v2",
+    "ou99.491448-standard-v2"
+  ],
+  "scope": "Only3v2atlas candidates superseded; all native source retained; no checker changes",
+  "handoffSha256": "cc8193fdb1cccd589487fff0dc8bc32fc2c4ee6a244b49e096cb6866995ed755",
+  "fileManifestSha256": "db0b477f30d66d2ad809fff30339d9d24cb6963de4940271c2e4bda4e0f55525",
+  "filesIncludingFileManifest": 137,
+  "allFilesVerified": true
+}

@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-09-10T16:09:09.355Z",
+  "scope": "in-memory authored fixtures; no content/index writes",
+  "tests": {
+    "jpegResizeMime": {
+      "before": {
+        "ok": true,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Motion",
+            "duration": 1,
+            "channels": 1
+          },
+          {
+            "index": 1,
+            "name": "Cast",
+            "duration": 1,
+            "channels": 1
+          }
+        ],
+        "textureCount": 1
+      },
+      "report": {
+        "drawCalls": {
+          "before": 1,
+          "after": 1
+        },
+        "droppedZeroClips": [],
+        "resizedTextures": [
+          [
+            512,
+            256
+          ]
+        ],
+        "texturesOverCap": [],
+        "changed": true
+      },
+      "after": {
+        "ok": false,
+        "error": "Error: GLB 格式檢查未通過：IMAGE_MIME_TYPE_INVALID"
+      },
+      "declaredMime": "image/jpeg",
+      "actualHeaderHex": "89504e470d0a1a0a",
+      "expectedPngHeader": "89504e470d0a1a0a"
+    },
+    "zeroClipInspectorAndIndex": {
+      "originalNames": [
+        "ZeroAuthoredPose",
+        "Motion",
+        "Cast"
+      ],
+      "selectedOriginalIndex": 1,
+      "selectedOriginalName": "Motion",
+      "before": {
+        "ok": false,
+        "error": "Error: 動作長度必須大於零且不超過 300 秒。"
+      },
+      "normalizationReport": {
+        "drawCalls": {
+          "before": 1,
+          "after": 1
+        },
+        "droppedZeroClips": [
+          "ZeroAuthoredPose"
+        ],
+        "resizedTextures": [],
+        "texturesOverCap": [],
+        "changed": true
+      },
+      "after": {
+        "ok": true,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Motion",
+            "duration": 1,
+            "channels": 1
+          },
+          {
+            "index": 1,
+            "name": "Cast",
+            "duration": 1,
+            "channels": 1
+          }
+        ],
+        "textureCount": 0
+      },
+      "prepared": {
+        "ok": true,
+        "clipMap": {
+          "idle": "Cast",
+          "run": "Cast",
+          "attack": "Cast",
+          "cast": "Cast",
+          "hurt": "Cast",
+          "death": "Cast"
+        }
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "ba3e04b97b842dae271ef7f1a03db3db66e967a8af6e246e28f70280c3bb1ee2"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "7d0d44689a22b22cb7e5845f9087b7b8a2e4d1a663b1828840fca68e388b30ae"
+    },
+    {
+      "path": "apps/editor/src/hero/modelUpload.worker.ts",
+      "sha256": "a9c36f864fbe6289ca3c373fde65d37993d7945077e09dd44cc85b6413eddb51"
+    },
+    {
+      "path": "apps/content-api/src/resizeImage.node.ts",
+      "sha256": "86b0c83272b377ba2a70618e88b0c618a84fa4e2d2c70bf30e9ef9bf14ae28b7"
+    }
+  ]
+}

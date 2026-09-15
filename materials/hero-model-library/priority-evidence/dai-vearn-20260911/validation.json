@@ -1,0 +1,97 @@
+{
+  "schema": "ggd.dai-vearn-integration-validation@1",
+  "validatedAt": "2026-09-10T19:07:31.353102+00:00",
+  "parentCommit": "1267de2e9b9c8d9da0ab30873d141228ab9dffe6",
+  "mergedMainCommit": "e36a5acda3522ab0bb2677891a367e56eefb05a1",
+  "contentBuildVersion": "cv_dc97f8aa6fdd",
+  "sourceIdentities": 731,
+  "allCharacterRowsExactlyPreserved": true,
+  "modelCandidateReferences": 4126,
+  "counts": {
+    "not-defined": 387,
+    "definitions-incomplete": 11,
+    "identity-review": 247,
+    "designed": 86,
+    "source-unavailable": 0
+  },
+  "audioFileIndexByteIdentical": true,
+  "audioFiles": 278994,
+  "audioMissingOrSizeChanged": 0,
+  "reserveRows": 66,
+  "newDaiCompleteBodies": 0,
+  "newVearnCompleteBodies": 0,
+  "newNativeAudioFiles": 0,
+  "sourceArchivesVerifiedMembers": 154,
+  "designAuditSourceFiles": 8,
+  "mergeIntermediateArchiveFiles": 39,
+  "followupResearchArchiveFiles": 5,
+  "sourceIndexTestsPassed": 5,
+  "formReceiptHistoryRegressionTestsPassed": 20,
+  "actualReactReceipts": 178,
+  "releaseChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "log": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/checks/skills-check.txt",
+      "logSha256": "db8b45b417360d3d71c944e2ba49bd2606777aa9c8c06b70249e7477394be372"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "log": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/checks/editor-accept-release.txt",
+      "logSha256": "d7ad57663898a49565c97c9b7c29afb0f7e2a77fa722f24c497741ab9d95f886"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "log": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/checks/coord-check.txt",
+      "logSha256": "ec2d8581758a73c18773f806f9dfdd0129df72ef808ce601ae037136e2243d4d"
+    },
+    {
+      "command": "pnpm formreceipts:check",
+      "exitCode": 0,
+      "log": "materials/hero-model-library/priority-evidence/dai-vearn-20260911/checks/formreceipts-check.txt",
+      "logSha256": "8f0689fc5b9a2089dcbb12b9c9532df2866b1c1741241b25308ed984aa469e39"
+    }
+  ],
+  "fullReleaseChecksPassed": false,
+  "productionDeployed": false,
+  "mergeWhitespaceCheck": "Only 5 existing whitespace warnings in verbatim incoming Main ledger; bytes verified equal to Main",
+  "sourceBackupReceipts": [
+    "dai/s3-backup-receipt.json",
+    "vearn/s3-backup-receipt.json",
+    "followup-02/s3-backup-receipt.json",
+    "merge/source-audit-s3-backup.json",
+    "merge/intermediate-s3-backup.json"
+  ],
+  "remainingReleaseFailures": [
+    "message ledger missing/unmapped rows",
+    "two SkillForge capability-only catalog assertions"
+  ],
+  "artifacts": [
+    {
+      "path": "materials/hero-model-library/全角色模型盤點.md",
+      "sha256": "31464679b055a7103e0be55e0a0f78571f01330cebbbb17ebf73f4d44de8b0e7"
+    },
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.md",
+      "sha256": "398e951de16bd7daf2d8b61f62e2349f2a94561e7442700f12bf31a16fa67c73"
+    },
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+      "sha256": "a8e00203dac0999ca1654b09eb8f2443f830d0f0b8f25f59540b71139c854fae"
+    },
+    {
+      "path": "materials/hero-model-library/voice-index.json",
+      "sha256": "6d79ec270ec98b88601e23748639ac07338effcb19eb0501817fd14335d8ad8e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-81-handoff.json",
+      "sha256": "f568e344376d118819738c743a60bbbd3b187ced422e9c78aa980164b1fc0e2f"
+    },
+    {
+      "path": "materials/asset-library/STORAGE_POLICY.json",
+      "sha256": "40a2c58d46805a78571af105bc8204d12ce6acc191c994c5911724342b4ece7c"
+    }
+  ]
+}

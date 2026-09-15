@@ -12,7 +12,7 @@
   "quote": {
    "takes": [],
    "text": "（原檔）bd0bbe/00078-1154709670",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00078-1154709670.wav",
    "state": "generated",
@@ -32,7 +32,7 @@
   "quote.2": {
    "takes": [],
    "text": "（原檔）bd0bbe/00016-157583185",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00016-157583185.wav",
    "state": "generated",
@@ -52,7 +52,7 @@
   "quote.3": {
    "takes": [],
    "text": "（原檔）bd0bbe/00067-940314714",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00067-940314714.wav",
    "state": "generated",
@@ -69,10 +69,470 @@
    },
    "lastError": null
   },
+  "skill-name.w": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/561635869",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00046-561635869.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.524717,
+    "lufs": null,
+    "hash": "476b48f395ed72402001e7f41f03d2db02eb4a5961566b6a50f3ee4b5d991ad1",
+    "at": 1789321167110
+   },
+   "lastError": null
+  },
+  "skill-name.w.2": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/910151417",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00064-910151417.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 70679,
+    "seconds": 4.341451,
+    "lufs": null,
+    "hash": "538fe0af9c6392fcc5c7fb704bb40b2362724e3893d385b0aaadee242e969419",
+    "at": 1789321167161
+   },
+   "lastError": null
+  },
+  "skill-name.w.3": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1536898112",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00105-1536898112.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.550068,
+    "lufs": null,
+    "hash": "51b09146a0b4199fbf95d4b4f08c461344373b061e3face1d8b299674177ce48",
+    "at": 1789321167214
+   },
+   "lastError": null
+  },
+  "skill-name.w.4": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1645583294",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00113-1645583294.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 67335,
+    "seconds": 4.128776,
+    "lufs": null,
+    "hash": "6b4ecd4321f271c50d465120a243f00d74bc1a3e6853463712a75fc038f5e897",
+    "at": 1789321167267
+   },
+   "lastError": null
+  },
+  "skill-name.w.5": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1802460570",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00117-1802460570.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 74022,
+    "seconds": 4.552381,
+    "lufs": null,
+    "hash": "1b8ebe4a0c64f3b9fa316a50d76678e3970e319fa035dc68b7b9e8fda6c045d6",
+    "at": 1789321167319
+   },
+   "lastError": null
+  },
+  "skill-name.w.6": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1820362580",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00119-1820362580.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 46855,
+    "seconds": 2.854603,
+    "lufs": null,
+    "hash": "d6beecf7a4ad1de8f35189e08f26f1d2126e1fcf32031b0129183a37bf3e8a25",
+    "at": 1789321167372
+   },
+   "lastError": null
+  },
+  "skill-name.w.7": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1991053761",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00128-1991053761.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 51871,
+    "seconds": 3.169955,
+    "lufs": null,
+    "hash": "6ab8a605f457e75221a5924d3c5b6ff8bb8cde3ed0a7c1f7aca7d379c42b2784",
+    "at": 1789321167426
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/88861438",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00012-88861438.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 75276,
+    "seconds": 4.641973,
+    "lufs": null,
+    "hash": "f688e80bb95374e5be79ed988ffb83f552004ffecaf5ca4ad0ef5ea2bde920cf",
+    "at": 1789321167478
+   },
+   "lastError": null
+  },
+  "skill-name.e.2": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/759212078",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00056-759212078.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 66499,
+    "seconds": 4.094558,
+    "lufs": null,
+    "hash": "5ee1c41124b1660a0708b5da39659e5ec058b88d0d29b2a51a9fc10029820c66",
+    "at": 1789321167531
+   },
+   "lastError": null
+  },
+  "skill-name.e.3": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/763068959",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00057-763068959.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57722,
+    "seconds": 3.552517,
+    "lufs": null,
+    "hash": "ebd721f1fc0bd3d2a1587763fc343f867dfcaa1fa67e53b49a1a3bc890ba5cd9",
+    "at": 1789321167583
+   },
+   "lastError": null
+  },
+  "skill-name.e.4": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1153685384",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00076-1153685384.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 71933,
+    "seconds": 4.42034,
+    "lufs": null,
+    "hash": "125feb2f58f902e8e75f3dc185d67ae014adf186cbbc9819c46450c22f5fd4f1",
+    "at": 1789321167635
+   },
+   "lastError": null
+  },
+  "skill-name.e.5": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1363037426",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00091-1363037426.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 58558,
+    "seconds": 3.602676,
+    "lufs": null,
+    "hash": "0763efd58afb1bfcd1a776bbe418eb10be94edcbd6917bb01fac40da86152f0b",
+    "at": 1789321167686
+   },
+   "lastError": null
+  },
+  "skill-name.e.6": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1369814102",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00092-1369814102.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 70679,
+    "seconds": 4.348277,
+    "lufs": null,
+    "hash": "0c4e9c8491fc6a193a99871be45a833c34547f786f74b60ab595757afe46b49a",
+    "at": 1789321167741
+   },
+   "lastError": null
+  },
+  "skill-name.e.7": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1565210146",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00107-1565210146.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 67335,
+    "seconds": 4.129728,
+    "lufs": null,
+    "hash": "b7f0641e794e9016b2bb03d2ccc3689ee1bf2ac993905708a85a2d9b41e20094",
+    "at": 1789321167793
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/38110785",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00004-38110785.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 73186,
+    "seconds": 4.496463,
+    "lufs": null,
+    "hash": "b81faa3a66818f3ded193c165cdf443662c6884cb9337556f916bcf9802c7a1b",
+    "at": 1789321167845
+   },
+   "lastError": null
+  },
+  "skill-name.r.2": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/148537959",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00015-148537959.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 86143,
+    "seconds": 5.315034,
+    "lufs": null,
+    "hash": "80caa99ffa93f8a20e4b730994278916d243a1e7fa441616cd65973029677e8e",
+    "at": 1789321167897
+   },
+   "lastError": null
+  },
+  "skill-name.r.3": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/310197368",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00030-310197368.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 60648,
+    "seconds": 3.731927,
+    "lufs": null,
+    "hash": "9cd4190f994ebf8c590d40d1efe2a9f2c70f98dec049f8c188b5a12455e9cb34",
+    "at": 1789321167948
+   },
+   "lastError": null
+  },
+  "skill-name.r.4": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/543887434",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00042-543887434.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 62319,
+    "seconds": 3.837868,
+    "lufs": null,
+    "hash": "6c5398159fe00c790f681e38ceb41d67cc8ea79eee483b5adfce88265cc83784",
+    "at": 1789321168001
+   },
+   "lastError": null
+  },
+  "skill-name.r.5": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/720440282",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00052-720440282.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 79456,
+    "seconds": 4.906712,
+    "lufs": null,
+    "hash": "5b17fee78f7cff30218f5414a239754f1b34d99348fbbc91978d6c35a9f4cdcb",
+    "at": 1789321168054
+   },
+   "lastError": null
+  },
+  "skill-name.r.6": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1291955195",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00087-1291955195.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 60648,
+    "seconds": 3.71551,
+    "lufs": null,
+    "hash": "f7f8b441fea5d6aaab8d905b6dd6bb77735b3778810adaee68434572a4d45ca5",
+    "at": 1789321168105
+   },
+   "lastError": null
+  },
+  "skill-name.r.7": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1317130603",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00088-1317130603.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 79874,
+    "seconds": 4.932018,
+    "lufs": null,
+    "hash": "409d328d888f00594f39a732e584e594af8b986a289376649adb8fc4c22e7e1c",
+    "at": 1789321168157
+   },
+   "lastError": null
+  },
+  "skill-name.r.8": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1370953311",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00094-1370953311.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 53960,
+    "seconds": 3.31424,
+    "lufs": null,
+    "hash": "4998657b33345a1beaea68159dbb55a8ba671fe95a32943c25970ce552da615d",
+    "at": 1789321168209
+   },
+   "lastError": null
+  },
+  "skill-name.r.9": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1536835850",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00104-1536835850.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 67753,
+    "seconds": 4.157642,
+    "lufs": null,
+    "hash": "1f59d1446af5b44c9b651ad82c82ceb5d70882aa43df64742c0c9610b37e8a10",
+    "at": 1789321168261
+   },
+   "lastError": null
+  },
   "victory": {
    "takes": [],
    "text": "（原檔）bd0bbe/00082-1207163039",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00082-1207163039.wav",
    "state": "generated",
@@ -91,28 +551,188 @@
   },
   "defeat": {
    "takes": [],
-   "text": "（原檔）bd0bbe/00053-735105578",
+   "text": "（原檔）Karthus/skin0/68491262",
    "lang": "ja",
    "textSource": "original",
-   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00053-735105578.wav",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00008-68491262.wav",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
-    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
     "stub": false,
-    "bytes": 81128,
-    "seconds": 4.990454,
+    "bytes": 73604,
+    "seconds": 4.540522,
     "lufs": null,
-    "hash": "91b8ff020da3c40067caf2467a371977819c5877be617d975ba9feddaf7a5f7c",
-    "at": 1789058022121
+    "hash": "d08bc3aa2a3ab234fc5d1e22b847cf268bd4f58f4c1a20a79ca1db76af612f98",
+    "at": 1789321168318
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/486027448",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00037-486027448.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 74440,
+    "seconds": 4.578594,
+    "lufs": null,
+    "hash": "bf9b1e0c9cf06756c1a0f3c539b23bb37a2a012e3bbdc535d46b1e9337968f6b",
+    "at": 1789321168370
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/550966778",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00045-550966778.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 82799,
+    "seconds": 5.098231,
+    "lufs": null,
+    "hash": "4dddee71acd1ad22bb985686599c59c67c5d6f4c940710fbfa9099ad8ae51496",
+    "at": 1789321168422
+   },
+   "lastError": null
+  },
+  "defeat.4": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/983759516",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00068-983759516.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 63155,
+    "seconds": 3.887415,
+    "lufs": null,
+    "hash": "bbe24044fc6cddd92f24418d9e7e32c2a2d07fe0b53a67cf06064a41e3c82cd0",
+    "at": 1789321168474
+   },
+   "lastError": null
+  },
+  "defeat.5": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1370805138",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00093-1370805138.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 80710,
+    "seconds": 4.985601,
+    "lufs": null,
+    "hash": "ca5e449fc73d7a6f492d03a61ca31a47e3c932c10a8ac6330075d8b49486565d",
+    "at": 1789321168525
+   },
+   "lastError": null
+  },
+  "defeat.6": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1530322693",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00103-1530322693.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 61066,
+    "seconds": 3.739524,
+    "lufs": null,
+    "hash": "5139dd4cb9231c661aa59354d806b6bdddc2b318ee8984dce9fc8d5886379cb6",
+    "at": 1789321168577
+   },
+   "lastError": null
+  },
+  "defeat.7": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1961588277",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00123-1961588277.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 79038,
+    "seconds": 4.867891,
+    "lufs": null,
+    "hash": "fdac9eb510c81576e931cdb4874ad6c9201da18ed53ded1ce8aca16764d4177e",
+    "at": 1789321168631
+   },
+   "lastError": null
+  },
+  "defeat.8": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/2029459995",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00131-2029459995.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 99936,
+    "seconds": 6.179433,
+    "lufs": null,
+    "hash": "1f8a8296be4f805240b4bc4107230d2d3a8411042ef3e8d0b8566667410cdf4d",
+    "at": 1789321168684
+   },
+   "lastError": null
+  },
+  "defeat.9": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/2116495908",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00133-2116495908.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 80292,
+    "seconds": 4.948526,
+    "lufs": null,
+    "hash": "f3708f8ab866a9c23a2e46eba4d584d7f433a8d1f2f20e311672229dcfc99c22",
+    "at": 1789321168736
    },
    "lastError": null
   },
   "taunt": {
    "takes": [],
    "text": "（原檔）bd0bbe/00110-1606171314",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00110-1606171314.wav",
    "state": "generated",
@@ -132,7 +752,7 @@
   "taunt.2": {
    "takes": [],
    "text": "（原檔）bd0bbe/00084-1220324455",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00084-1220324455.wav",
    "state": "generated",
@@ -152,7 +772,7 @@
   "taunt.3": {
    "takes": [],
    "text": "（原檔）bd0bbe/00096-1478988453",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00096-1478988453.wav",
    "state": "generated",
@@ -166,6 +786,406 @@
     "lufs": null,
     "hash": "9904dd507a7de09ea45743e65656d5c4b13df138039622782ab15d74ee4cdd93",
     "at": 1789058022402
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/7588378",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00000-7588378.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 83635,
+    "seconds": 5.15898,
+    "lufs": null,
+    "hash": "cb36ad4d76acf2e823850140e622e3cc2b962caefd75d6effd9f46c505469e93",
+    "at": 1789321168790
+   },
+   "lastError": null
+  },
+  "attack-light.2": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/37158980",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00003-37158980.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 77784,
+    "seconds": 4.798639,
+    "lufs": null,
+    "hash": "60b4d953c8643ee0ba0d0a72961818fb370941d450d87ab3f3148eb1b229b3f9",
+    "at": 1789321168842
+   },
+   "lastError": null
+  },
+  "attack-light.3": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/53835911",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00005-53835911.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57722,
+    "seconds": 3.549751,
+    "lufs": null,
+    "hash": "4a676c85fd8e30174afce6ce5ad1fb95421b40ec97cb2e0613cf9f0d1cb19467",
+    "at": 1789321168896
+   },
+   "lastError": null
+  },
+  "attack-light.4": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/69540979",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00009-69540979.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 66499,
+    "seconds": 4.095533,
+    "lufs": null,
+    "hash": "d8de058a77cd692bc7568810a89c23b646533ec80ae92fec14be1268bddc04e9",
+    "at": 1789321168951
+   },
+   "lastError": null
+  },
+  "attack-light.5": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/232877718",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00022-232877718.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 69425,
+    "seconds": 4.259025,
+    "lufs": null,
+    "hash": "df6446f9cc9a8d99fecef7dca01d2bbcbf370ff748a40d94166f76e8ae37f103",
+    "at": 1789321169004
+   },
+   "lastError": null
+  },
+  "attack-light.6": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/245081313",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00024-245081313.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 55214,
+    "seconds": 3.394875,
+    "lufs": null,
+    "hash": "08c1d5c4b5f8da4bd81ea7745382257d59dec6de6f7a1ff8c9df450ab1f4e2ab",
+    "at": 1789321169058
+   },
+   "lastError": null
+  },
+  "attack-light.7": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/490216102",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00038-490216102.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 71515,
+    "seconds": 4.400181,
+    "lufs": null,
+    "hash": "8cd53df5573af840389a3f911e3afd92202fdbc34eaaddbabe78539e97ef6eec",
+    "at": 1789321169113
+   },
+   "lastError": null
+  },
+  "attack-light.8": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/547094060",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00043-547094060.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 72351,
+    "seconds": 4.450635,
+    "lufs": null,
+    "hash": "5e90079b563fc577508c4b1f7af85610338d23fddb01741e4a51c3060c88acd4",
+    "at": 1789321169166
+   },
+   "lastError": null
+  },
+  "attack-light.9": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/589054289",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00048-589054289.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 66081,
+    "seconds": 4.050045,
+    "lufs": null,
+    "hash": "486501dc2c02a94dd258311f38a41d7651db4996df2e0dd819d5204a80781fc8",
+    "at": 1789321169218
+   },
+   "lastError": null
+  },
+  "attack-light.10": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/747369372",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00054-747369372.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 77784,
+    "seconds": 4.802132,
+    "lufs": null,
+    "hash": "f30165132d556274dfae595b9070e5fd55ca6ead315101294688868b56607b33",
+    "at": 1789321169271
+   },
+   "lastError": null
+  },
+  "attack-light.11": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/795972548",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00058-795972548.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 50199,
+    "seconds": 3.057596,
+    "lufs": null,
+    "hash": "3ec0393698f07066a0d0675b48d4df5895ec1b7896560105bc7648da1db83965",
+    "at": 1789321169326
+   },
+   "lastError": null
+  },
+  "attack-light.12": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/896251736",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00063-896251736.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 71097,
+    "seconds": 4.388118,
+    "lufs": null,
+    "hash": "600a76f56d256d756a0e63c291ee35620797048319a0dd1986fcce16e8ee997a",
+    "at": 1789321169379
+   },
+   "lastError": null
+  },
+  "attack-light.13": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/936447463",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00066-936447463.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 72768,
+    "seconds": 4.48805,
+    "lufs": null,
+    "hash": "f0c5c19542ba84e8e74295f13ec112b7bbc34c501aa96de2433cafeb04858def",
+    "at": 1789321169430
+   },
+   "lastError": null
+  },
+  "attack-light.14": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1192902300",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00080-1192902300.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 50199,
+    "seconds": 3.079161,
+    "lufs": null,
+    "hash": "8716ce3b5b5a5c3134d7426aba460890ee77adbea5ea0825c03b6d935c504455",
+    "at": 1789321169482
+   },
+   "lastError": null
+  },
+  "attack-light.15": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1202429617",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00081-1202429617.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 68171,
+    "seconds": 4.190431,
+    "lufs": null,
+    "hash": "e1bfc6fcbdaeff183c46ae6d8b885a3ed935bd6418445758391200ef7d4b9b95",
+    "at": 1789321169534
+   },
+   "lastError": null
+  },
+  "attack-light.16": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1215865335",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00083-1215865335.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 79874,
+    "seconds": 4.930249,
+    "lufs": null,
+    "hash": "b0a4a90812c50d07c47e1029c1d7172b71bcf649be4c8e1b362d98e809d43741",
+    "at": 1789321169587
+   },
+   "lastError": null
+  },
+  "attack-light.17": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1345697710",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00090-1345697710.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.509773,
+    "lufs": null,
+    "hash": "ad5fc8b23282b108896e84ac084ec1b05264ebd7a0a2445fbbf62b32b21e4f8f",
+    "at": 1789321169638
+   },
+   "lastError": null
+  },
+  "attack-light.18": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1604427546",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00109-1604427546.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 51035,
+    "seconds": 3.123061,
+    "lufs": null,
+    "hash": "90b19c525e040c9ff7e2a677d658f82e4bb3d4e690336ad4bed929a7811bfbd6",
+    "at": 1789321169690
+   },
+   "lastError": null
+  },
+  "attack-light.19": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/1979552009",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00125-1979552009.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 54796,
+    "seconds": 3.362585,
+    "lufs": null,
+    "hash": "0e2ee215e90d9248ccc8b476762bcb8463a780a9270495274c120683520bf400",
+    "at": 1789321169742
+   },
+   "lastError": null
+  },
+  "attack-light.20": {
+   "takes": [],
+   "text": "（原檔）Karthus/skin0/2017292951",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00130-2017292951.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 45183,
+    "seconds": 2.74619,
+    "lufs": null,
+    "hash": "7bf0402e4bd61b434df834270e54bc0a3ccc367dc9c7122275a725a1513b877d",
+    "at": 1789321169793
    },
    "lastError": null
   }

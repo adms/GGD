@@ -1,0 +1,187 @@
+{
+  "schema": "ggd-historical-model-webgl-proof@1",
+  "candidateId": "existing-tram-rigid-skin-v2",
+  "modelSha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+  "renderer": "Babylon WebGL glTF loader in a right-handed scene; idle or first native clip at 20 percent; CPU-skinned bounds frame three views",
+  "idleClipRequested": "idle",
+  "clipRendered": "idle",
+  "animationGroups": [
+    "idle",
+    "run",
+    "attack",
+    "cast",
+    "hurt",
+    "death"
+  ],
+  "worldSkinnedBounds": {
+    "min": [
+      -0.7310000061988831,
+      0.031999990344047546,
+      -1.6549999713897705
+    ],
+    "max": [
+      0.7310000061988831,
+      1.816999912261963,
+      1.774999976158142
+    ],
+    "extent": [
+      1.4620000123977661,
+      1.7849999219179153,
+      3.4299999475479126
+    ]
+  },
+  "geometry": [
+    {
+      "name": "TramCarriage",
+      "vertices": 972,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          -0.7009999752044678,
+          0.421999990940094,
+          -1.6549999713897705
+        ],
+        "max": [
+          0.7009999752044678,
+          1.816999912261963,
+          1.774999976158142
+        ]
+      },
+      "skeleton": "RigidAnimatedHierarchy",
+      "bones": 6
+    },
+    {
+      "name": "LeftPassengerDoor",
+      "vertices": 108,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          -0.7310000061988831,
+          0.6019999980926514,
+          -0.3050000071525574
+        ],
+        "max": [
+          -0.6884999871253967,
+          1.4570000171661377,
+          0.3050000071525574
+        ]
+      },
+      "skeleton": "RigidAnimatedHierarchy",
+      "bones": 6
+    },
+    {
+      "name": "RightPassengerDoor",
+      "vertices": 108,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          0.6884999871253967,
+          0.6019999980926514,
+          -0.3050000071525574
+        ],
+        "max": [
+          0.7310000061988831,
+          1.4570000171661377,
+          0.3050000071525574
+        ]
+      },
+      "skeleton": "RigidAnimatedHierarchy",
+      "bones": 6
+    },
+    {
+      "name": "RearWheelPair",
+      "vertices": 396,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          -0.6549999713897705,
+          0.031999990344047546,
+          -1.3300000429153442
+        ],
+        "max": [
+          0.6549999713897705,
+          0.492000013589859,
+          -0.8700000047683716
+        ]
+      },
+      "skeleton": "RigidAnimatedHierarchy",
+      "bones": 6
+    },
+    {
+      "name": "FrontWheelPair",
+      "vertices": 396,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          -0.6549999713897705,
+          0.031999990344047546,
+          0.8700000047683716
+        ],
+        "max": [
+          0.6549999713897705,
+          0.492000013589859,
+          1.3300000429153442
+        ]
+      },
+      "skeleton": "RigidAnimatedHierarchy",
+      "bones": 6
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "RigidAnimatedHierarchy",
+      "bones": 6
+    }
+  ],
+  "materials": [
+    {
+      "name": "Original vertex colours",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "albedoTexture": null,
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 28,
+        "height": 1
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.2822827157509358
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "visualIdentityAcceptance": "pending-human-review",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

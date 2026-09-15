@@ -345,7 +345,27 @@ export const NUM_PATTERNS: readonly NumPattern[] = [
   // 45秒冷卻 / 60/50/40/30秒冷卻時間
   { slot: "cd", re: new RegExp(`(${RANKS})(\\s*秒\\s*冷卻(?:時間)?)`, "g"), num: 1 },
   // 冷卻時間30秒 / 冷卻 30/25/20/15 秒
-  { slot: "cd", re: new RegExp(`(冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`, "g"), num: 2 },
+  // ⭐⭐ **「縮短 Q 的冷卻 2 秒」裡的 2 ⛔ 不是這支技能的冷卻** —— 它是 `modifyCooldown`
+  //    的**減量**（住 `effects[0].amount`）。
+  //
+  // ⚠️ 量到的（2026-09-11）：`b2-albus.w`「縮短自己 Q 剩餘冷卻 **1.5** 秒」與
+  //    `b2-orphen.w`「縮短 Q 尚未結束的冷卻 **2** 秒」都被讀成了冷卻軸
+  //    ⇒ 判成「卡面對不上 JSON（45）」⇒ ⭐ 而卡面**是對的**，讀錯軸的是這一條正則。
+  //
+  // ⛔ 這種誤報不是無害的：它會把一句**真的**宣稱推進「卡面與 JSON 不一致」的
+  //    棘輪基準線，而那條基準線的語意是「⛔ 不要綁佔位符」⇒ 正確的卡面被永久標成說謊。
+  //
+  // ⇒ ⭐ 把前面那個動詞**一起吃進比對**，交給 `reject` 擋掉（⛔ 不是事後看上下文 ——
+  //    `reject` 只看得到 `groups[0]`，所以動詞必須在比對範圍內）。
+  {
+    slot: "cd",
+    re: new RegExp(
+      `((?:縮短|減少|降低|返還|扣除|回復)?[^。，、\\n]{0,12}?冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`,
+      "g",
+    ),
+    num: 2,
+    reject: /縮短|減少|降低|返還|扣除|回復/,
+  },
   // 消耗MP150/250/350/450 / 耗[MP] 50
   {
     slot: "mp",
@@ -639,6 +659,30 @@ function damageRanks(v: unknown, tables?: ProseTables): number[] | undefined {
  * `{{msb}}` 裸印、閘紅）。
  * ⛔ 跳過 `template` 子樹：作者填的來源，展開後的 effects 才是出貨行為。
  */
+/**
+ * ⭐ 天生技的**內部冷卻**，逐階。
+ *
+ * ⚠️ 它住在 `passive.ranks[i].hooks[j].internalCooldown` ——
+ * ⛔ 不在 `cooldown[]`（那一格對天生技是 0）。
+ * ⚠️ ⛔ 刻意**不走** `template.params`：那是**同一個值的第二個住處**
+ * （第〇·四守則），而出貨讀的是展開後的 `passive.ranks`。
+ */
+function internalCooldownRanks(d: Record<string, unknown>): number[] {
+  const passive = d["passive"] as { ranks?: unknown[] } | undefined;
+  const ranks = Array.isArray(passive?.ranks) ? passive.ranks : [];
+  const out: number[] = [];
+  for (const r of ranks) {
+    const hooks = (r as { hooks?: unknown[] } | undefined)?.hooks;
+    if (!Array.isArray(hooks)) continue;
+    for (const h of hooks) {
+      const v = (h as { internalCooldown?: unknown }).internalCooldown;
+      if (typeof v === "number" && v > 0) { out.push(v); break; }
+    }
+  }
+  // ⭐ 逐階都有才算得出一條曲線；⛔ 只有部分階有 ⇒ 回空（⛔ 不要猜）。
+  return out.length === ranks.length ? out : [];
+}
+
 function msBonusRanks(
   d: Record<string, unknown>,
   table: Readonly<Record<SkillTierName, number>>,
@@ -795,7 +839,27 @@ export function abilityQuantities(
   ] as const) {
     if (v !== undefined) raw[k] = v;
   }
-  const cdRanks = Array.isArray(d["cooldown"]) ? (d["cooldown"] as number[]) : [];
+  /**
+   * ⭐⭐ **天生技的「冷卻」住在 `internalCooldown`，⛔ 不在 `cooldown[]`。**
+   *
+   * ⚠️ 量到的（2026-09-11）：`b2-boxxo.passive` 卡面逐字「冷卻 4 秒」，
+   * 而 `cooldown` 是 **[0]**、`internalCooldown` 是 **4**
+   * ⇒ 在此之前這一行只讀 `cooldown[]` ⇒ 判成「卡面對不上 JSON」
+   * ⇒ ⭐ 而那是**誤報**：卡面是對的，⛔ 讀錯軸的是抽取器。
+   *
+   * ⛔ 這個誤報不是無害的 —— 它會把一句**真的**宣稱推進
+   * 「卡面與 JSON 不一致」的棘輪基準線，⭐ 而那條基準線的語意是
+   * 「⛔ 不要綁佔位符，綁了等於無聲改掉玩家看到的字」
+   * ⇒ 一個讀錯軸的抽取器，會讓**正確的卡面**被永久標記成說謊。
+   *
+   * ⭐ 主動技的 `cooldown[]` 仍然優先；只有它是空的／全 0 時才退到 ICD
+   *   （⛔ 不是無條件覆蓋 —— 一支同時有兩者的技能，卡面講的是主動那一個）。
+   */
+  const cdActive = Array.isArray(d["cooldown"]) ? (d["cooldown"] as number[]) : [];
+  const cdRanks =
+    cdActive.some((n) => n > 0) || internalCooldownRanks(d).length === 0
+      ? cdActive
+      : internalCooldownRanks(d);
   const mpRanks = Array.isArray(d["manaCost"]) ? (d["manaCost"] as number[]) : [];
   // GH#789 —— 移速加成 %。小數 → 百分比數字（0.5 → 50）。
   const msbRanks = msBonusRanks(d, t.msBonus).map((v) => v * 100);

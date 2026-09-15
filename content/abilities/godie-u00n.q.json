@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -48,5 +48,6 @@
   "schema": "ability@1",
   "castTimeSec": 0.3,
   "rangeTier": "中",
-  "range": 6
+  "range": 6,
+  "castTimeTier": "中"
 }

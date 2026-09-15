@@ -1,0 +1,44 @@
+{
+  "schema": "ggd.infinity-strash-babylon-static-load@1",
+  "modelSha256": "5c254b14f0bbc0b8e4244a1a8ae98bd8c97dfff8a805aba240f2afe9333028c6",
+  "babylonVersion": "7.54.3",
+  "meshes": [
+    {
+      "name": "popp-pn020-02-kagayaki-combined_primitive0",
+      "vertices": 5438,
+      "positionCoordinates": 16314
+    },
+    {
+      "name": "popp-pn020-02-kagayaki-combined_primitive1",
+      "vertices": 2602,
+      "positionCoordinates": 7806
+    },
+    {
+      "name": "popp-pn020-02-kagayaki-combined_primitive2",
+      "vertices": 1699,
+      "positionCoordinates": 5097
+    },
+    {
+      "name": "popp-pn020-02-kagayaki-weapon-kagayaki",
+      "vertices": 3596,
+      "positionCoordinates": 10788
+    }
+  ],
+  "skeletonBoneCounts": [
+    331
+  ],
+  "animationGroups": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_down",
+    "GGD_native_special01",
+    "GGD_native_special02",
+    "GGD_native_special03"
+  ],
+  "finiteRestPosePositions": true,
+  "materialsSkippedForCpuValidation": true,
+  "webglVisualReview": "pending-test-mechanism-recovery",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

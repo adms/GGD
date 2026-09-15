@@ -1,0 +1,440 @@
+{
+  "schema": "ggd-community-reserve-validation@1",
+  "sourceReportSha256": "a144a15d6710858c393b057dbcd011079a20144c0e4b1c3a8da3d142e771bd55",
+  "sources": [
+    {
+      "id": "parallel-community-adult-gon-multiversus",
+      "archiveSha256": "b6c1365daee1f88d62dc1f843aff84ceb398c7465e22c40603591ebdfeb05f77",
+      "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009",
+      "classification": {
+        "resourceRole": "native-game-container-unparsed",
+        "runtimeReady": false,
+        "ggdConverted": false,
+        "bodyModelDescriptors": null,
+        "bodyModelPaths": [],
+        "modelDescriptorFiles": 0,
+        "partModelDescriptorFiles": 0,
+        "modelMeshFiles": null,
+        "nativeSkeletonFiles": null,
+        "nativeMaterialFiles": null,
+        "nativeTextureFiles": null,
+        "nativeAnimationFiles": null,
+        "uniqueAnimationFileHashes": null,
+        "nativeEffectContainers": null,
+        "audioPayloadBanks": null,
+        "audioIndexedEntries": null,
+        "audioBankMetadataFiles": null,
+        "audioDecodedPlayableFiles": 0,
+        "audioSpeakerReview": "not-reviewed",
+        "audioLanguageReview": "not-reviewed",
+        "nativeFormatChecks": {
+          "checked": 0,
+          "invalid": []
+        },
+        "audioBanks": [],
+        "pakContainers": [
+          {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/package/Gon_P.pak",
+            "parsedPayload": false,
+            "status": "container-only-unparsed",
+            "version": 4,
+            "indexEncrypted": false,
+            "indexOffset": 7630397,
+            "indexBytes": 7787,
+            "indexBoundsValid": true,
+            "indexSha1AsDeclared": "631ee98561066d3a1152c3478e0de52197488d43",
+            "individualEntryEncryption": "not-inspected",
+            "formatReference": "https://github.com/panzi/rust-u4pak/blob/main/README.adoc",
+            "indexSha1Matches": true,
+            "mountPoint": "../../../MultiVersus/Content/Panda_Main/Characters/Superman/Mesh/",
+            "declaredEntryCount": 42
+          }
+        ],
+        "formats": {
+          ".pak": 1
+        },
+        "limitations": [
+          "Native formats are reserves requiring format conversion and runtime verification.",
+          "Archive acquisition does not establish redistribution rights.",
+          "File counts do not equal distinct character or animation identity counts.",
+          "PAK inner model, texture, animation and audio payloads have not been parsed; source-page claims are not counted as verified extracted assets."
+        ],
+        "backendDefaultPolicy": "Preserve manual defaults; archive as an additional candidate.",
+        "innerAssetCounts": "not-parsed-unknown"
+      },
+      "audio": null
+    },
+    {
+      "id": "parallel-community-goblin-slayer-ssbu",
+      "archiveSha256": "2519b635a76bf71648565a766b61444415391b1d455e2042373141c0150a13d3",
+      "extractedManifestSha256": "3fa94fd0e557711264b2a8ab83f893d807c9b645210076f0fdb8a2925264ece4",
+      "classification": {
+        "resourceRole": "character-body-mesh-and-textures-native-mod",
+        "runtimeReady": false,
+        "ggdConverted": false,
+        "bodyModelDescriptors": 1,
+        "bodyModelPaths": [
+          "extracted/package/Goblin Slayer Release 1.0.0/fighter/link/model/body/c04/model.numdlb"
+        ],
+        "modelDescriptorFiles": 1,
+        "partModelDescriptorFiles": 0,
+        "modelMeshFiles": 1,
+        "nativeSkeletonFiles": 0,
+        "nativeMaterialFiles": 0,
+        "nativeTextureFiles": 7,
+        "nativeAnimationFiles": 0,
+        "uniqueAnimationFileHashes": 0,
+        "nativeEffectContainers": 0,
+        "audioPayloadBanks": 1,
+        "audioIndexedEntries": 34,
+        "audioBankMetadataFiles": 0,
+        "audioDecodedPlayableFiles": 0,
+        "audioSpeakerReview": "not-reviewed",
+        "audioLanguageReview": "not-reviewed",
+        "nativeFormatChecks": {
+          "checked": 2,
+          "invalid": []
+        },
+        "audioBanks": [
+          {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/extracted/package/Goblin Slayer Release 1.0.0/sound/bank/fighter_voice/vc_link_c04.nus3audio",
+            "bytes": 55376,
+            "decodedPlayableFiles": 0,
+            "speakerReviewed": false,
+            "languageReviewed": false,
+            "type": "AUDI",
+            "declaredSizeMatches": true,
+            "valid": true,
+            "chunks": {
+              "INDX": 4,
+              "TNID": 136,
+              "NMOF": 136,
+              "ADOF": 272,
+              "TNNM": 587,
+              "JUNK": 13,
+              "PACK": 54160
+            },
+            "role": "native-audio-payload-bank",
+            "indexedEntries": 34,
+            "entries": [
+              {
+                "index": 0,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 1,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 2,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack03",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 3,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack04",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 4,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack05",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 5,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack06",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 6,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack07",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 7,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack08",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 8,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_attack09",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 9,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_cliffcatch",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 10,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_damage_twinkle",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 11,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_damage01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 12,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_damage02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 13,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_damagefly01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 14,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_damagefly02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 15,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_furafura",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 16,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_furasleep",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 17,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_wakeup",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 18,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_heavyget",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 19,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_jump01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 20,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_missfoot01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 21,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_missfoot02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 22,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_ottotto",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 23,
+                "offset": 20176,
+                "bytes": 35200,
+                "boundsValid": true,
+                "name": "vc_link_passive",
+                "payloadSha256": "e709a3db5485b5a7aef8c4f8ea1b673312e1ec816bbcceaa48d93be8652bb961"
+              },
+              {
+                "index": 24,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_swimup",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 25,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_special_H01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 26,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_special_H02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 27,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_special_S01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 28,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_final01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 29,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_final02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 30,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_win01",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 31,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_win02",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 32,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_win03",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              },
+              {
+                "index": 33,
+                "offset": 1216,
+                "bytes": 18960,
+                "boundsValid": true,
+                "name": "vc_link_knockout",
+                "payloadSha256": "67630626e3000de22814c759792e14dd1f8507c87910e4d37a71bb8b4793bebb"
+              }
+            ],
+            "allEntryBoundsValid": true,
+            "uniqueAudioEntryPayloadHashes": 2
+          }
+        ],
+        "pakContainers": [],
+        "formats": {
+          ".bntx": 6,
+          ".numdlb": 1,
+          ".numshb": 1,
+          ".nus3audio": 1,
+          ".nutexb": 7
+        },
+        "limitations": [
+          "Native formats are reserves requiring format conversion and runtime verification.",
+          "Archive acquisition does not establish redistribution rights.",
+          "File counts do not equal distinct character or animation identity counts.",
+          "Body mesh and textures are included, but skeleton, material definitions and animations are not packaged; base-game dependencies are required for conversion.",
+          "34 audio index names alias only 2 distinct compressed payloads; neither speaker nor spoken content has been reviewed."
+        ],
+        "backendDefaultPolicy": "Preserve manual defaults; archive as an additional candidate.",
+        "standaloneBodyRigComplete": false,
+        "requiredBaseGameDependencies": [
+          "Link skeleton and material resources referenced by model.numdlb",
+          "Link animations inherited from the base game; none included in this MOD"
+        ],
+        "modelDescriptorReferences": [
+          "model.nusktb",
+          "model.numatb",
+          "model.numshb"
+        ],
+        "missingReferencedFiles": [
+          "model.nusktb",
+          "model.numatb"
+        ],
+        "audioUniqueEntryPayloadHashes": 2,
+        "audioMetadataPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/audio-metadata.json",
+        "audioSynthesisReady": false
+      },
+      "audio": {
+        "decodedWavCount": 34,
+        "uniqueDecodedWavHashes": 2,
+        "audioSeconds": 49.845163265306105,
+        "confirmedVoiceCount": null,
+        "synthesisReady": false
+      }
+    }
+  ]
+}

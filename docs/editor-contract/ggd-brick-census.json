@@ -7,12 +7,12 @@
     "usable": 71,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 24,
+    "zeroAdoption": 23,
     "terminal": 1,
-    "handWritten": 159,
-    "distinctShapes": 87,
-    "singletonShapes": 56,
-    "top8Coverage": 54
+    "handWritten": 148,
+    "distinctShapes": 81,
+    "singletonShapes": 51,
+    "top8Coverage": 51
   },
   "demand": [
     {
@@ -36,16 +36,6 @@
       ]
     },
     {
-      "shape": "applyStatus + damage",
-      "count": 7,
-      "examples": [
-        "b2-rem.w",
-        "community-review-23-20260907.ex",
-        "community-review-27-20260907.ex",
-        "godie-e007.q"
-      ]
-    },
-    {
       "shape": "shield",
       "count": 7,
       "examples": [
@@ -56,6 +46,16 @@
       ]
     },
     {
+      "shape": "applyStatus + damage",
+      "count": 6,
+      "examples": [
+        "community-review-23-20260907.ex",
+        "community-review-27-20260907.ex",
+        "godie-e007.q",
+        "godie-emns.r"
+      ]
+    },
+    {
       "shape": "championForm",
       "count": 6,
       "examples": [
@@ -63,16 +63,6 @@
         "godie-e00l.w",
         "godie-e00s.passive",
         "godie-e010.passive"
-      ]
-    },
-    {
-      "shape": "dispel + heal",
-      "count": 5,
-      "examples": [
-        "b2-keyaru.r",
-        "b2-maomao.w",
-        "b2-nube.ex",
-        "b2-sinbad.ex"
       ]
     },
     {
@@ -223,6 +213,14 @@
         "godie-u010.e",
         "godie-uvng.e"
       ]
+    },
+    {
+      "shape": "damage + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-h01n.w",
+        "godie-h01o.w"
+      ]
     }
   ],
   "engineFamilies": [
@@ -282,7 +280,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 5,
-      "abilities": 113,
+      "abilities": 124,
       "terminal": false
     },
     {
@@ -331,6 +329,15 @@
       "terminal": false
     },
     {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "family": "single-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 19,
+      "terminal": false
+    },
+    {
       "id": "tpl-projectile-strike",
       "family": "projectile-strike",
       "engineKnows": true,
@@ -340,21 +347,21 @@
       "terminal": false
     },
     {
-      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
-      "family": "single-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 6,
-      "abilities": 17,
-      "terminal": false
-    },
-    {
       "id": "tpl-instant-blast",
       "family": "instant-blast",
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
       "abilities": 16,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "family": "heal",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 14,
       "terminal": false
     },
     {
@@ -498,15 +505,6 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
-      "abilities": 6,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
-      "family": "heal",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 4,
       "abilities": 6,
       "terminal": false
     },
@@ -736,6 +734,15 @@
       "terminal": false
     },
     {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "family": "summon-agent",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
       "family": "pull-throw",
       "engineKnows": true,
@@ -787,15 +794,6 @@
       "status": "enabled",
       "params": 6,
       "abilities": 1,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
-      "family": "summon-agent",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 12,
-      "abilities": 0,
       "terminal": false
     },
     {

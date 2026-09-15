@@ -1,0 +1,179 @@
+{
+  "schema": "ggd-goblin-rigid-attachment-skin-acceptance@1",
+  "source": {
+    "id": "derivative:goblin",
+    "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+    "glbPath": "content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+    "bytes": 2361292,
+    "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+    "preserved": true
+  },
+  "convertedCandidate": {
+    "bytes": 2371212,
+    "sha256": "7d9906f451e2e6a0b64797b0c1a52ebd4bfe97f974d23071f25c6d4bd29a773d",
+    "deterministicBuilds": 2,
+    "byteIdentical": true,
+    "originalBinaryPreservedAsExactPrefix": true
+  },
+  "acceptedSource": {
+    "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+    "modelDocumentPath": "content/models/community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916.json",
+    "modelDocumentSha256": "0866e1a9e3fb8b76a000f882f4bece550ea7c19ebd29517deecb61a0d41b2940",
+    "glbPath": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+    "bytes": 1008048,
+    "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+    "textures": [
+      {
+        "count": 4,
+        "width": 256,
+        "height": 128,
+        "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae"
+      }
+    ],
+    "triangles": 8515,
+    "drawPrimitives": 3,
+    "skins": 1,
+    "allPrimitivesSkinned": true,
+    "retainedNamedAnimations": 4,
+    "ggdStateBindings": 6
+  },
+  "bindings": [
+    {
+      "mesh": "goblin-right-small-sword",
+      "vertices": 108,
+      "joint": "Bip001 R Hand",
+      "jointSlot": 34,
+      "weight": 1
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "vertices": 72,
+      "joint": "Bip001 L Hand",
+      "jointSlot": 15,
+      "weight": 1
+    }
+  ],
+  "validation": {
+    "khronos": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 6,
+      "hints": 6,
+      "truncated": false
+    },
+    "sharedUploadPrepare": true,
+    "sharedUploadVerify": true,
+    "runtimeMotion": {
+      "babylonVersion": "7.54.3",
+      "stateSamples": 6,
+      "stationaryClips": []
+    },
+    "equivalence": {
+      "animationCount": 4,
+      "samples": 32,
+      "maxWorldPositionDeltaMetres": 1.5425065184449945e-07,
+      "toleranceMetres": 0.0002,
+      "passed": true
+    },
+    "webgl": {
+      "views": [
+        "front.png",
+        "back.png",
+        "isometric.png"
+      ],
+      "complete": true,
+      "manualInspection": "complete-body-and-textures-visible; added block accessories follow prior reviewed placement; no gross skin corruption observed"
+    }
+  },
+  "limitations": [
+    "This is a user-approved style proxy derived from the 300 Heroes Eugeo model, not an original-game Goblin Slayer model.",
+    "The original Eugeo blade remains visible. Added sword and shield are simple block geometry; this conversion repairs rig binding and texture budget only.",
+    "Idle and hurt share one native clip; attack and cast share one native clip. No claim of six distinct native motions.",
+    "Backend registration is performed by the batch integration step and is recorded separately.",
+    "Production deployment is not verified."
+  ],
+  "tools": [
+    "tools/hero-model-library/build-derivatives.py",
+    "tools/w3x-import/skin_verified_rigid_attachments.py",
+    "tools/w3x-import/compare_rigid_attachment_skin.mjs",
+    "tools/community-hero-forge/finalize-library-body.mts",
+    "tools/hero-model-library/render_historical_model.py"
+  ],
+  "files": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/attachment-conversion.json",
+      "bytes": 1078,
+      "sha256": "1afa64bf94e1bfaa3965b4d6be544524a8c12fb43f1c73b6af0b05d98b7559d6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/back.png",
+      "bytes": 140314,
+      "sha256": "ace0f43259e3ae876296eaa6130a537e1d43e004f391cefbe5b082b4250ce1ae"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/final-motion-equivalence.json",
+      "bytes": 6455,
+      "sha256": "c521572dd6de48d9da2b8673f20236411a353659417411ff0de34250dd10b436"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/front.png",
+      "bytes": 159993,
+      "sha256": "1480df0c8c72c2311d6173e76a9a899618da3096f8b95cba200992ec3bad5dac"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/isometric.png",
+      "bytes": 142715,
+      "sha256": "91964f067195eb78009d58dbfb424d51a52233d0ced7246198a2ce5e1f4a6211"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/khronos.json",
+      "bytes": 4376,
+      "sha256": "b956d9bfc0eb822bb62dad76efdde3faeb3676ecc982eca417cc1920545c8a34"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/pre-normalization-motion-equivalence.json",
+      "bytes": 6447,
+      "sha256": "f8d1e7428da26c8289fc468b38ed40349994672dcf5f7032335ad11feb567fca"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/runtime-motion.json",
+      "bytes": 1870,
+      "sha256": "64368021dd997d319c0eb52bd1d3c01acd249bb6f35a10926e62b2dc42f45776"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/shared-upload-receipt.json",
+      "bytes": 8024,
+      "sha256": "14f9b563363bc32fd9b8f7f3dcaa1c4a40d3884314a36346e0155e72af4f042c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/webgl-proof.json",
+      "bytes": 3911,
+      "sha256": "a1a1ddcd6ec307375af4beab8871d058027851b7a2801c1605b008dd6dbb60ea"
+    }
+  ],
+  "status": {
+    "converted": true,
+    "validated": true,
+    "registered": true,
+    "selectable": true,
+    "productionDeployed": false,
+    "active": true
+  },
+  "registration": {
+    "heroId": "b2-goblin",
+    "activeModelKey": "version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422",
+    "modelSelectionMode": "automatic",
+    "versionModelKey": "version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422",
+    "sourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+    "modelSha256": "e8a535d0e142cd59f8bc70cb0cee50781ee4a00f380d2f922985668c6c9dc013",
+    "binarySha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+    "registeredAt": "2026-09-12T23:29:01.573Z",
+    "versionDocumentPath": "content/models/version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422.json",
+    "versionDocumentSha256": "5b49c6a8ef0a37ff63e368120d678a4f35787f6b5d0ef98e56594032a9f26819",
+    "frozenGlbPath": "content/assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+    "frozenGlbBytes": 1008048,
+    "automaticEligible": true,
+    "retainedVersionCount": 2,
+    "oldVersionsPreserved": true
+  }
+}

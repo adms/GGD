@@ -1,16 +1,16 @@
 {
   "id": "community-review-35-20260907",
   "name": "炭治郎",
-  "description": "炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+  "modelKey": "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 35.000204081632646,
+    "maxHealth": 80,
     "healthRegen": 0.08789387755102042,
-    "maxMana": 26.357142857142858,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 4.289142857142858,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-35-20260907.q.webp",
       "template": {
@@ -114,7 +114,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -140,10 +140,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -171,7 +171,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-35-20260907.w.webp",
       "template": {
@@ -187,7 +187,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -228,7 +228,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-35-20260907.e.webp",
       "template": {
@@ -236,7 +236,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -262,9 +262,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -299,7 +299,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-35-20260907.r.webp",
       "template": {
@@ -313,7 +313,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -338,5 +338,61 @@
   "tags": [
     "katana"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b59d4a8cae81a6863a77c95f7df25cc962a85ece525328d5",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+      "modelSha256": "803c64239ecde02208425dab4c187f3b39efef427b6b410362a28877da16a791",
+      "binarySha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "registeredAt": "2026-09-12T23:02:36.844Z",
+      "source": {
+        "kind": "previous",
+        "character": "炭治郎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.9bac8f3598209b37f020581bcd6139d506936a63ae1068c0",
+      "label": "灶门炭治郎",
+      "sourceModelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+      "modelSha256": "37bc9340007f65641b1e355cefa2cd45d0cea058aafbd2d1e695f391f1322cfb",
+      "binarySha256": "c1d2d01e174034e9923dc44a788f2c735cc99350d81c8ff4ca25605f2ba945ab",
+      "registeredAt": "2026-09-12T23:02:36.847Z",
+      "source": {
+        "kind": "exact",
+        "character": "灶门炭治郎",
+        "work": "鬼滅之刃",
+        "library": "300heroes",
+        "reference": "300heroes:19ab89526d5a6812479cb932",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4",
+      "label": "灶门炭治郎",
+      "sourceModelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+      "modelSha256": "ffcb92a8d8186e200448bba5cd47498ffb3656169914c572f1f9089532b28e7d",
+      "binarySha256": "c1d2d01e174034e9923dc44a788f2c735cc99350d81c8ff4ca25605f2ba945ab",
+      "registeredAt": "2026-09-13T00:08:52.643Z",
+      "source": {
+        "kind": "exact",
+        "character": "灶门炭治郎",
+        "work": "鬼滅之刃",
+        "library": "300heroes",
+        "reference": "300heroes:19ab89526d5a6812479cb932",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

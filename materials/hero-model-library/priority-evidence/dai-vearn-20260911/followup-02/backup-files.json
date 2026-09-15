@@ -1,0 +1,41 @@
+{
+  "schema": "ggd.raw-backup-file-manifest@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-vearn-local-followup-02",
+  "archiveMemberRoot": "parallel-dai-vearn-local-followup-02",
+  "archiveFormat": "tar-gzip",
+  "sourceInventorySha256": "f852d5a1a0e59f3f8ba66077e4a5173652c4c278864fdd81f741ad06243e78cd",
+  "files": [
+    {
+      "path": "delivery-receipt.json",
+      "archiveMember": "parallel-dai-vearn-local-followup-02/delivery-receipt.json",
+      "bytes": 947,
+      "sha256": "ac6357463b1ba465809cf8c0de8a322a6b2367b9e19b64f718a22f5d6dc923e5"
+    },
+    {
+      "path": "file-manifest.json",
+      "archiveMember": "parallel-dai-vearn-local-followup-02/file-manifest.json",
+      "bytes": 629,
+      "sha256": "f852d5a1a0e59f3f8ba66077e4a5173652c4c278864fdd81f741ad06243e78cd"
+    },
+    {
+      "path": "scripts/backup_followup_research.py",
+      "archiveMember": "parallel-dai-vearn-local-followup-02/scripts/backup_followup_research.py",
+      "bytes": 8957,
+      "sha256": "4cb6c31e85e6623da97fe8afb42bd2930d29731ad1e17a5bb2feca214052feef"
+    },
+    {
+      "path": "scripts/build_readonly_followup.py",
+      "archiveMember": "parallel-dai-vearn-local-followup-02/scripts/build_readonly_followup.py",
+      "bytes": 5841,
+      "sha256": "ee483a808a42977698ba444075520290e0b02ddffa445b23024613cb7557f0f9"
+    },
+    {
+      "path": "source-report.json",
+      "archiveMember": "parallel-dai-vearn-local-followup-02/source-report.json",
+      "bytes": 7641,
+      "sha256": "ff92e8818f07a9e176cb0aea2bb1b380813bc33611aefb5bb59ca7a4c4fb101e"
+    }
+  ],
+  "fileCount": 5,
+  "bytes": 24015
+}

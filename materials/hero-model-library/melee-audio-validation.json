@@ -1,0 +1,87 @@
+{
+  "schema": "ggd-melee-audio-intake@1",
+  "packages": [
+    {
+      "id": "parallel-voice-ssbm-kirby",
+      "target": "卡比 Kirby（Melee 語音／音效）",
+      "heroIds": [
+        "community-review-06-20260907"
+      ],
+      "url": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "files": [
+        {
+          "path": "original/SSBM_Characters_Kirby.zip",
+          "bytes": 3796042,
+          "sha256": "1d8270be974546b0fb71f12375b87676476f5f96cd398f922ee94698e04d3de3"
+        }
+      ],
+      "audioFileIndex": {
+        "reportPath": "extraction-validation.json",
+        "reportSha256": "273e82184f30075c846f694808518a7eb96e1b7790a4460b7daf2265626c53d2"
+      },
+      "audioAcquisition": {
+        "audioCount": 101,
+        "audioSeconds": 67.76255824829931,
+        "confirmedVoiceCount": null,
+        "listeningVerified": false,
+        "runtimeReady": false
+      }
+    },
+    {
+      "id": "parallel-voice-ssbm-pikachu",
+      "target": "皮卡丘 Pikachu（Melee 語音／音效）",
+      "heroIds": [
+        "godie-ofar"
+      ],
+      "url": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "files": [
+        {
+          "path": "original/SSBM_Characters_Pikachu.zip",
+          "bytes": 1682977,
+          "sha256": "3c08aff4ba5eb357e2849fc5bfa7e20398855b59f4ab6de195ce71f7396501bb"
+        }
+      ],
+      "audioFileIndex": {
+        "reportPath": "extraction-validation.json",
+        "reportSha256": "4c77c4204e276a4ded5275432cd738b76de86623c0df592bbf1b7899107a5f70"
+      },
+      "audioAcquisition": {
+        "audioCount": 36,
+        "audioSeconds": 29.32466695011337,
+        "confirmedVoiceCount": null,
+        "listeningVerified": false,
+        "runtimeReady": false
+      }
+    },
+    {
+      "id": "parallel-voice-ssbm-marth",
+      "target": "馬爾斯 Marth（Melee 語音／音效）",
+      "heroIds": [],
+      "url": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "files": [
+        {
+          "path": "original/SSBM_Characters_Marth.zip",
+          "bytes": 1531286,
+          "sha256": "3744f49fbc480f07ef0aee89d323db9ac8907adbaca09ebc404bcb39a9ad394c"
+        }
+      ],
+      "audioFileIndex": {
+        "reportPath": "extraction-validation.json",
+        "reportSha256": "8f067f258aed3af42c8095a1bf4ffb31e73dba75356a82c33a2a599b95271b60"
+      },
+      "audioAcquisition": {
+        "audioCount": 45,
+        "audioSeconds": 27.051531250000004,
+        "confirmedVoiceCount": null,
+        "listeningVerified": false,
+        "runtimeReady": false
+      }
+    }
+  ],
+  "completePackages": 3,
+  "pcmWavCount": 182,
+  "audioSeconds": 124.13875644841269,
+  "modelCount": 0,
+  "animationCount": 0,
+  "synthesisReady": false
+}

@@ -7,16 +7,16 @@
   "slot": "W",
   "castType": "self",
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "effects": [],
@@ -37,7 +37,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -60,7 +60,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -83,7 +83,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -106,7 +106,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -120,5 +120,6 @@
   "vfxKey": "fx.prim.ki.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "schema": "ability@1",
-  "range": 0.0
+  "range": 0.0,
+  "castTimeTier": "極小"
 }

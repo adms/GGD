@@ -178,6 +178,12 @@ interface MatchRun {
   runnerUp: number;
 }
 
+/**
+ * 「冠軍本人也曾經把團隊生命打光」的那一場（GH#264 的重現）。OFF／ON 兩條必須跑**同一場**
+ * 才比得出「打開的代價」⇒ 一個住處。換 seed 的紀錄與掃描結果寫在第一條 `it` 裡。
+ */
+const ELIM_SEED = 4201;
+
 /** 跑完一整場，把中途廣播與「誰的血曾經歸零」一起收下來。 */
 function runFullMatch(matchId: string, seed: number, doc: Record<string, unknown>): MatchRun {
   Configs.register(doc as never);
@@ -293,7 +299,18 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    各點一點 ⇒ ⭐ **技能等級變了 ⇒ 傷害變了 ⇒ 誰先被打光變了**，
     //    而 4201 那一場的冠軍不再被打光過。掃 4202 起：**4203 第一個重現**。
     //    ⛔ 這不是把測試調鬆 —— 被守的性質一個字都沒改。
-    const run = runFullMatch("elim1", 4203, matchDocWithCard(false));
+    // ⚠️ ⭐ **2026-09-15 第十一次：4203 → 4201**（main 修綠 lane）。
+    //    `git bisect`（v0.44.1 綠 → 6badf4d67 紅）指到 **e9050d697**（GH#1211）：
+    //    TS 骨架英雄 sela/thorne 補上 owner 2026-08-21「所有角色的力敏智成長都歸 0」。
+    //    ⭐ 這支測試的 `MatchController` 走的正是那份骨架（建構子 `registerSkeletonContent()`，
+    //    沒有載入 bundle）⇒ 每級成長從 3.6/2.0/3、4.4/2.4/2 變成 0 ⇒ 整場血量與傷害軌跡改變，
+    //    4203 那一場 `spent` 是隊伍 0/1、冠軍是隊伍 3 ⇒ 前提消失，⛔ 不是回歸。
+    //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399 共 200 個 seed：**200 個全部**有隊伍歸零、
+    //    其中 **39 個**冠軍本人也歸零過**而且兩個模式的斷言全部成立**，前八個是
+    //    **4201 / 4209 / 4211 / 4212 / 4213 / 4219 / 4228 / 4232**，取最小的。
+    //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
+    //    問題，是**淘汰這條路整個死了**。
+    const run = runFullMatch("elim1", ELIM_SEED, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -320,7 +337,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4203, matchDocWithCard(true));
+    const run = runFullMatch("elim1", ELIM_SEED, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

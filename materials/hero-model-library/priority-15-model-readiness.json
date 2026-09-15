@@ -1,0 +1,1754 @@
+{
+  "schema": "ggd-priority-15-readiness-audit@1",
+  "scope": "Read-only audit of latest main configuration, production snapshot, and local source alternatives; independent conversions continue separately",
+  "originMainCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "productionSnapshot": {
+    "path": "/private/tmp/ggd-priority-production-readback/bundle.json",
+    "exists": true,
+    "bytes": 4077626,
+    "sha256": "19c0ae94a55cd70e94032e4228058a16b40712100d2bc3b2bea531d27c7734d2",
+    "hashEvidence": "actual-local-bytes"
+  },
+  "productionContentVersion": "cv_a5039179a7ff",
+  "counts": {
+    "heroes": 15,
+    "alreadyWiredModelKeys": 11,
+    "placeholders": 4,
+    "heroesWithDropdownVersions": 0
+  },
+  "heroes": [
+    {
+      "heroId": "b2-shadow",
+      "name": "闇影",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/b2-shadow.json",
+      "mainChampionDocSha256": "cbde42fe08640e576dc6a0fa45ff6ea3759506c46ea0cd9adeefb29857ee76c4",
+      "modelKey": "ou99.481732",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.481732",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_481732.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell 2",
+          "death": "Death",
+          "hurt": "Stand"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.481732.json",
+      "mainModelDocSha256": "6cc39fd9c59ea5d9554e8b51618ff0419f559afc799717527e50aedf579af219",
+      "productionModelKey": "ou99.481732",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_481732.glb",
+        "exists": true,
+        "bytes": 1766568,
+        "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          76
+        ],
+        "animationCount": 16,
+        "animationNames": [
+          "Animation EarthxSa",
+          "Stand",
+          "Attack 1",
+          "Attack 2",
+          "Attack 3",
+          "Spell 1-1",
+          "Spell 1-2",
+          "Spell 2",
+          "Spell 3",
+          "Spell 4-1",
+          "Spell 4-2",
+          "Spell 5-1",
+          "Spell 5-2",
+          "Stand 2",
+          "Death",
+          "Walk"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_481732.glb",
+        "sourceManifestClaim": {
+          "path": "assets/models/ou99/ou99_481732.glb",
+          "bytes": 1766568,
+          "sha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+          "evidence": "metadata snapshot, not independently hashed unless local bytes above exist"
+        }
+      },
+      "paidCandidate": {
+        "id": "ou99-481732",
+        "threadUrl": "https://www.ou99.com/thread-481732-1-1.html",
+        "ou99Title": "202511z13",
+        "identityStatus": "intentional-similar-proxy",
+        "rig": {
+          "animationCount": 16,
+          "joints": 76,
+          "meshes": 1,
+          "textures": 4,
+          "clipNames": [
+            "Animation EarthxSa",
+            "Stand",
+            "Attack 1",
+            "Attack 2"
+          ]
+        },
+        "conversionStatus": "converted-unverified-visually"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "gamebanana-shadow",
+          "url": "https://gamebanana.com/mods/662449",
+          "uploader": "MoltiOG／Molti；模型權重與物理 struggling",
+          "format": "Source 2 VPK → skinned GLB／PNG／MP3／VPCF",
+          "verification": "VPK 全部 484 成員 CRC32 通過並完整解包。角色 GLB 含 3 蒙皮網格、842 骨節與 6 段動畫；另有碰撞體／特效模型。295 原生 VPCF、146 MP3（ffprobe 全通過）與 74 PNG 已保存。缺少共用 shader、預設 mask、動畫圖及特效材質，待 GGD 正規化、動作綁定、特效轉換及後台驗收。",
+          "reuseTerms": "作者列非商用與署名要求；發布修改／再散布需先取得作者同意。保留完整條款，備份不等於共享成品已可發布。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/raw/shadow_x_apollo_deadlock_a5ff4.zip",
+              "exists": true,
+              "bytes": 32677176,
+              "sha256": "9f382e299798a492a7a5bbed1aa7113a38df51399ba3b297ded4ec3008d4d566",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/models/heroes_wip/fencer/fencer.glb",
+              "exists": true,
+              "bytes": 21240632,
+              "sha256": "dc894b8b5e0992eab0f20036fad99c125db8bd5b14c72b0de91a65ad31585fc6",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 3,
+              "skinJoints": [
+                842,
+                842,
+                842
+              ],
+              "animationCount": 6,
+              "animationNames": [
+                "melee_hit",
+                "ui_hero_select",
+                "zipline_attached_loop",
+                "ui_hero_mvp",
+                "respawn_countdown_idle",
+                "ui_shop"
+              ]
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/models/heroes_wip/fencer/fencer_physics.glb",
+              "exists": true,
+              "bytes": 737924,
+              "sha256": "9658e5c668a90e3872c524300271266992c33f146d5711ca1ad4646fa11f6424",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [],
+              "animationCount": 0,
+              "animationNames": []
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/models/particle/generic_cylinder_fx_model.glb",
+              "exists": true,
+              "bytes": 43324,
+              "sha256": "d1b37e9ba41b356d2b39ab69c4c04f144fd76201ac9b47a5889e8b63335cb162",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                1
+              ],
+              "animationCount": 0,
+              "animationNames": []
+            }
+          ]
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "b2-maomao",
+      "name": "貓貓",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/b2-maomao.json",
+      "mainChampionDocSha256": "a69b10dda326981101e31b8ba6cfdea6503d1757412f190596f5799ebcd42361",
+      "modelKey": "champ.thorne",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "champ.thorne",
+        "schema": "model@1",
+        "glbPath": "assets/models/champions/blocky-knight.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "attachPoints": {
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          },
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          }
+        },
+        "teamTintMaterials": []
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/champ.thorne.json",
+      "mainModelDocSha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836",
+      "productionModelKey": "champ.thorne",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "placeholder",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/champions/blocky-knight.glb",
+        "exists": true,
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          15
+        ],
+        "animationCount": 7,
+        "animationNames": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death",
+          "cheer"
+        ],
+        "gitPath": "content/assets/models/champions/blocky-knight.glb"
+      },
+      "existingMappingLimits": [],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-maomao",
+          "url": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+          "uploader": "GrogCompany",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、210 Transform、1 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao/raw/thunderstore-maomao.zip",
+              "exists": true,
+              "bytes": 43300328,
+              "sha256": "cb6e2ab1ebf0aec2510dd4caf7b2471ec5c5000a252d55861dff6e5d1bbf2052",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Convert acquired true-character native source into a distinct runtime option; keep fallback until validated integration",
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "b2-naofumi",
+      "name": "岩谷尚文",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/b2-naofumi.json",
+      "mainChampionDocSha256": "ae505e5e9053c6556ce9e6bf5bbeb0c90d7e3c63e37468d28d4cb5ae0ba4d47e",
+      "modelKey": "champ.thorne",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "champ.thorne",
+        "schema": "model@1",
+        "glbPath": "assets/models/champions/blocky-knight.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "attachPoints": {
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          },
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          }
+        },
+        "teamTintMaterials": []
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/champ.thorne.json",
+      "mainModelDocSha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836",
+      "productionModelKey": "champ.thorne",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "placeholder",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/champions/blocky-knight.glb",
+        "exists": true,
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          15
+        ],
+        "animationCount": 7,
+        "animationNames": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death",
+          "cheer"
+        ],
+        "gitPath": "content/assets/models/champions/blocky-knight.glb"
+      },
+      "existingMappingLimits": [],
+      "localAlternatives": [
+        {
+          "id": "gtainside-naofumi",
+          "url": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+          "uploader": "carinhaqualquer；原包署名 justarandomfaggot",
+          "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+          "verification": "已取得 Naofumi.dff／txd，解析 33 Frame、32 骨、57,628 頂點蒙皮與綁定矩陣，轉出 4 張貼圖。包內無 IFP 動作檔；待 GLB、動作綁定與外觀驗收，保留使用者移除刀劍要求。",
+          "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi/raw/gtainside-naofumi.rar",
+              "exists": true,
+              "bytes": 1804687,
+              "sha256": "13cbb515c76771f0d58bfa821e9e88f682bdd70314a374bfb41f897642d2eff6",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Convert acquired true-character native source into a distinct runtime option; keep fallback until validated integration",
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "b2-guts",
+      "name": "凱茲",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/b2-guts.json",
+      "mainChampionDocSha256": "359d505be454b4d582f2dd1eb7631ff031c76f17d0b787ba1f6fa7111c3a8d46",
+      "modelKey": "champ.thorne",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "champ.thorne",
+        "schema": "model@1",
+        "glbPath": "assets/models/champions/blocky-knight.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "attachPoints": {
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          },
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          }
+        },
+        "teamTintMaterials": []
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/champ.thorne.json",
+      "mainModelDocSha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836",
+      "productionModelKey": "champ.thorne",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "placeholder",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/champions/blocky-knight.glb",
+        "exists": true,
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          15
+        ],
+        "animationCount": 7,
+        "animationNames": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death",
+          "cheer"
+        ],
+        "gitPath": "content/assets/models/champions/blocky-knight.glb"
+      },
+      "existingMappingLimits": [],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-guts",
+          "url": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+          "uploader": "RRoD",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、76 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts/raw/thunderstore-guts.zip",
+              "exists": true,
+              "bytes": 3236888,
+              "sha256": "db34b0fcb904f086fdc9da33ca0effd77a89ba7ac68129dcdb300e4faa4cca50",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Convert acquired true-character native source into a distinct runtime option; keep fallback until validated integration",
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "b2-shinchan",
+      "name": "野原新之助",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/b2-shinchan.json",
+      "mainChampionDocSha256": "72e2243226405529d55bc97eb85096ec33d5fbc11506570a544d084e9089dc1d",
+      "modelKey": "champ.thorne",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "champ.thorne",
+        "schema": "model@1",
+        "glbPath": "assets/models/champions/blocky-knight.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "attachPoints": {
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          },
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          }
+        },
+        "teamTintMaterials": []
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/champ.thorne.json",
+      "mainModelDocSha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836",
+      "productionModelKey": "champ.thorne",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "placeholder",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/champions/blocky-knight.glb",
+        "exists": true,
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          15
+        ],
+        "animationCount": 7,
+        "animationNames": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death",
+          "cheer"
+        ],
+        "gitPath": "content/assets/models/champions/blocky-knight.glb"
+      },
+      "existingMappingLimits": [],
+      "localAlternatives": [
+        {
+          "id": "gta5mod-shinchan-sd2",
+          "url": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+          "uploader": "GTA5OPMOD",
+          "format": "GTA V RSC7 YDD／YFT／YMT／YTD",
+          "verification": "ZIP CRC 與 SHA-256 通過；取得 sd2.ydd、yft、ymt、ytd，四檔皆為 RSC7。與 KS PLAY TAMIL 包的 YDD／YFT／YMT 逐位元相同、YTD 不同，因此保留兩個來源與貼圖版本。尚未解析原生骨架或轉 GLB，無独立動作、特效或音效檔。",
+          "reuseTerms": "包內 Copyright Notice.txt 明列限制複製、修改與再散布；完整原文保留。僅作 manual-only legacy 交付紀錄；共享成品使用許可未解決，不能視為已獲授權發布。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-sd2",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-sd2/raw/sd2.zip",
+              "exists": true,
+              "bytes": 1291244,
+              "sha256": "74bfcba4db8ccdcd4a5f9c4e89596b53719bef333fd33ddbfe3dd96fa67b0964",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        },
+        {
+          "id": "gta5mod-shinchan-kstamil",
+          "url": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+          "uploader": "Ksplaytamilyt／KS PLAY TAMIL",
+          "format": "GTA V RSC7 YDD／YFT／YMT／YTD",
+          "verification": "ZIP CRC 與 SHA-256 通過；取得 shinchan1.ydd、yft、ymt、ytd，四檔皆為 RSC7。與 SD2 包的模型／骨架容器相同、貼圖 YTD 不同，全部來源版本保留。尚未解析原生骨架或轉 GLB，無獨立動作、特效或音效檔。",
+          "reuseTerms": "來源作者與包內圖片保留；原生模型與 SD2 包相同，需釐清原作者和使用條件，不能以換來源解除原始限制。共享成品使用許可尚未核實。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-kstamil",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-kstamil/raw/shinchan.zip",
+              "exists": true,
+              "bytes": 3581915,
+              "sha256": "40e95317e88d9e82b5fec10d55703418e871e74878a82855277b2781a9328f8d",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Convert acquired true-character native source into a distinct runtime option; keep fallback until validated integration",
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-02-20260907",
+      "name": "八神庵",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-02-20260907.json",
+      "mainChampionDocSha256": "584a03329e59de1ba116fee383805a38c5db22d0ad8d7898bf1895bb05dc924f",
+      "modelKey": "ou99.313646",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.313646",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_313646.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell one",
+          "death": "Death",
+          "hurt": "Stand ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.313646.json",
+      "mainModelDocSha256": "2a44052fa5438ad71c5469f6c4470182af243bed0431e4ec0845f30520118782",
+      "productionModelKey": "ou99.313646",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_313646.glb",
+        "exists": true,
+        "bytes": 3331596,
+        "sha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          64
+        ],
+        "animationCount": 42,
+        "animationNames": [
+          "Stand",
+          "Stand ready",
+          "Walk",
+          "Walk fast",
+          "Death",
+          "Stand hit 1",
+          "Stand hit 2",
+          "Stand hit 3",
+          "Attack 1",
+          "Attack 2",
+          "Attack 3",
+          "Attack 4",
+          "Spell one",
+          "Spell two",
+          "Spell three",
+          "Spell four",
+          "Spell five",
+          "Spell six",
+          "Spell slam one",
+          "Spell slam two",
+          "Spell slam three",
+          "Spell slam four",
+          "1",
+          "Spell slam five",
+          "Spell six five",
+          "CHAI HUA",
+          "QinYueYin",
+          "¿û»¨ one",
+          "¿û»¨ two",
+          "¿û»¨ three",
+          "°ËÖÉÅ®one",
+          "°ËÖÉÅ®two",
+          "°ËÖÉÅ®three",
+          "°ËÖÉÅ®four",
+          "°ËÖÉÅ®five",
+          "°ËÖÉÅ®six",
+          "°ÂÒåone",
+          "°ÂÒåtwo",
+          "°ÂÒåthree",
+          "ÇÙÔÂÒõboom",
+          "Ð¼·ç",
+          "´ó×¦×Ó"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_313646.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-iori",
+          "url": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+          "uploader": "TonyPizza",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 Iori.IoriKOF bundle：2 Mesh、2 SkinnedMeshRenderer、105 Transform、2 貼圖、1 Avatar；0 AnimationClip。bundle 與模型名為 IoriKOF／bashen；待骨架 GLB 轉換與視覺驗收。",
+          "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/raw/thunderstore-iori.zip",
+              "exists": true,
+              "bytes": 1221569,
+              "sha256": "578687006f6788bc984e7f188582ca63d8ae441c6b93106e8df5c2cb747c0221",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-05-20260907",
+      "name": "洛克人",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-05-20260907.json",
+      "mainChampionDocSha256": "3982ee70269d15e95c12c9abcfc49f826c3781d93b0a33a4c9fa33099f8ea0db",
+      "modelKey": "ou99.287871",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.287871",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_287871.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack -1",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand Ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.287871.json",
+      "mainModelDocSha256": "55c118da15b64db26b41a220599419ec334aeb4f6e4838a6b248a6b7bbe375db",
+      "productionModelKey": "ou99.287871",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_287871.glb",
+        "exists": true,
+        "bytes": 319132,
+        "sha256": "7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          23
+        ],
+        "animationCount": 11,
+        "animationNames": [
+          "Stand",
+          "Stand Ready",
+          "Attack -1",
+          "Spell Channel",
+          "Spell",
+          "Death",
+          "Walk",
+          "Stand 2",
+          "Attack -2",
+          "Spell Throw",
+          "Spell Slam"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_287871.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "hive-megaman-x",
+          "url": "https://www.hiveworkshop.com/threads/megaman-x.48005/",
+          "uploader": "Afronight_76；RDZ；Black_Stan；General Frank",
+          "format": "MDX + BLP",
+          "verification": "本體 55 骨節、9 段動畫；另有肖像 43 骨節、4 段動畫。已轉候選 GLB；原包缺 blue_star.blp 特效貼圖，待補齊。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x/raw/megaman-x.zip",
+              "exists": true,
+              "bytes": 231289,
+              "sha256": "2d9ca293a86438e728f131453894ddbaf8f5cad6ef957b0a95e4cd72392dc7ad",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x/converted/MegamanX_E/models/megamanx-e.glb",
+              "exists": true,
+              "bytes": 391740,
+              "sha256": "3b8470dde451ae8c52abde5766c3308a5f634ee4fac6b9f91acd5bfdbaee30a7",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                55
+              ],
+              "animationCount": 9,
+              "animationNames": [
+                "Stand",
+                "Stand - 2",
+                "Stand Victory",
+                "Walk",
+                "Attack",
+                "Death",
+                "Spell",
+                "Decay Flesh",
+                "Decay Bone"
+              ]
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x/converted/MegamanX_E_Portrait/models/megamanx-e-portrait.glb",
+              "exists": true,
+              "bytes": 927928,
+              "sha256": "99079e45c2b58febe251eded74db7bb70702a8ad1475ea79bb9828e1a195a620",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                43
+              ],
+              "animationCount": 4,
+              "animationNames": [
+                "Portrait",
+                "Portrait - 3",
+                "Portrait Talk",
+                "Portrait Talk - 2"
+              ]
+            }
+          ]
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-07-20260907",
+      "name": "西索",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-07-20260907.json",
+      "mainChampionDocSha256": "ca685f364b9a668f3aa05f641c5b8821119d381a8829b155bb5e8120ccde144a",
+      "modelKey": "ou99.497211",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.497211",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_497211.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack",
+          "cast": "spell one",
+          "death": "death",
+          "hurt": "stand"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.497211.json",
+      "mainModelDocSha256": "48baa1c29c42ec58e2c96822e736f8132de85803de2667ba405e3c50573ec990",
+      "productionModelKey": "ou99.497211",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_497211.glb",
+        "exists": true,
+        "bytes": 8415368,
+        "sha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          74
+        ],
+        "animationCount": 17,
+        "animationNames": [
+          "walk",
+          "stand",
+          "attack",
+          "attack 2",
+          "death",
+          "spell one",
+          "spell two",
+          "spell three",
+          "spell four",
+          "spell five",
+          "spell slam one",
+          "spell slam two",
+          "spell slam three",
+          "spell slam four",
+          "spell six",
+          "spell alternate",
+          "spell alternate two"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_497211.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-hisoka",
+          "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Hisoka3DModel/",
+          "uploader": "Irados69",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 Unity bundle：12 Mesh、12 SkinnedMeshRenderer、151 Transform、6 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka/raw/thunderstore-hisoka.zip",
+              "exists": true,
+              "bytes": 10348234,
+              "sha256": "170bb98c510efa53a0fe3c5964ddb7bb938ca696d631931a3840e96dee09911a",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-09-20260907.json",
+      "mainChampionDocSha256": "f59a111b0dad9be3d2966f749e65dc619c895dd472dc7b66dc02fa9cbfb8b7ae",
+      "modelKey": "ou99.468771",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.468771",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_468771.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell",
+          "death": "death",
+          "hurt": "Stand"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.468771.json",
+      "mainModelDocSha256": "43fab4094982ac9baecdf27289c2b98d1869f6568ebfe721185dcf48af75675b",
+      "productionModelKey": "ou99.468771",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_468771.glb",
+        "exists": true,
+        "bytes": 5255564,
+        "sha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          99
+        ],
+        "animationCount": 12,
+        "animationNames": [
+          "Stand",
+          "stand 2",
+          "walk",
+          "attack 1",
+          "attack 2",
+          "attack slam",
+          "spell",
+          "spell ready",
+          "spell one",
+          "spell channel",
+          "spell four",
+          "death"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_468771.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-holo",
+          "url": "https://thunderstore.io/c/lethal-company/p/GhostsModels/Holo/",
+          "uploader": "GhostsModels",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 Unity bundle：35 Mesh、35 SkinnedMeshRenderer、182 Transform、7 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo/raw/thunderstore-holo.zip",
+              "exists": true,
+              "bytes": 1346456,
+              "sha256": "0d91f99f47fcdd6373b20866aff850903ccbece004fae343840eee8cda6c8bcd",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        },
+        {
+          "id": "hive-anime-team-survival",
+          "url": "https://www.hiveworkshop.com/threads/anime-team-survival-3-7v.248807/",
+          "uploader": "Mindarms；zehs00 上傳",
+          "format": "W3X → MDX + BLP；4 份候選 GLB",
+          "verification": "依單位／技能、腳本與 MDX 引用讀出 84 MDX、164 BLP、18 MP3 檔。初音 36 骨節／18 動畫、犬夜叉 59／22、亞絲娜 88／13、赫蘿 31／14，四者已轉候選 GLB；犬夜叉缺兩張原生特效貼圖。原生粒子／緞帶等仍待轉換；地圖共 584 個引用未找到，不能宣稱封包全部完成。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/raw/hive-anime-team-survival.w3x",
+              "exists": true,
+              "bytes": 8295240,
+              "sha256": "2160245e825985d3c5cf3805fc255a6f5a6b1ebc709a8e50fadd05ab873aa7da",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/converted/models/asuna.glb",
+              "exists": true,
+              "bytes": 1894372,
+              "sha256": "3d7cd184bb049f219fb440c6c4e18e7f365ab8fc2b7c507c707f8e044fd30b92",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                88
+              ],
+              "animationCount": 13,
+              "animationNames": [
+                "stand",
+                "stand 2",
+                "walk low",
+                "walk",
+                "walk fast",
+                "spell one",
+                "stand ready",
+                "attack 1",
+                "attack 2",
+                "spell two",
+                "spell three",
+                "spell four",
+                "death"
+              ]
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/converted/models/hastunemiku-ebony.glb",
+              "exists": true,
+              "bytes": 1317348,
+              "sha256": "c2d8a1c490d4417e86fec197fab1a366ce6f2013df54a80d8b9e82e0f815ec1a",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                36
+              ],
+              "animationCount": 18,
+              "animationNames": [
+                "Stand",
+                "Stand Ready",
+                "Walk",
+                "Attack - 1",
+                "Attack - 2",
+                "Attack - 3",
+                "Attack - 4",
+                "Attack - 5",
+                "Attack - 6",
+                "Attack - 7",
+                "Spell One",
+                "Spell Two",
+                "Spell Channel One",
+                "Spell Channel Two",
+                "Death",
+                "Spell Channel Three",
+                "Attack - 8",
+                "Spell Channel Four"
+              ]
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/converted/models/holo.glb",
+              "exists": true,
+              "bytes": 542988,
+              "sha256": "bb4b62cf6ec2d466d7c72ac389dab6e53b93fd869844cedcacf3044a1dff8023",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                31
+              ],
+              "animationCount": 14,
+              "animationNames": [
+                "Stand",
+                "Stand 2",
+                "Stand 3",
+                "Stand 4",
+                "Stand Ready",
+                "Attack",
+                "Attack 2",
+                "Death",
+                "Walk",
+                "Spell Throw",
+                "Dissipate",
+                "Spell",
+                "Stand Channel",
+                "Portrait"
+              ]
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/converted/models/inuyasha.glb",
+              "exists": true,
+              "bytes": 1128296,
+              "sha256": "bc2742cbc8c147ab939e6f1e4f43cd92d0ca8315187030fddd84e29e957d89a5",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                59
+              ],
+              "animationCount": 22,
+              "animationNames": [
+                "Stand - 1",
+                "Alternate Attack - 1",
+                "Death",
+                "Stand Ready",
+                "Spell One",
+                "Attack - 1",
+                "Attack - 2",
+                "Alternate Spell Throw",
+                "Attack Slam ",
+                "Alternate Stand Channel",
+                "Spell Two",
+                "Spell Slam",
+                "Walk ",
+                "Stand - 2",
+                "Stand Victory",
+                "Alternate Attack - 2",
+                "Alternate Spell One",
+                "Alternate Stand ",
+                "Alternate Death",
+                "Portrait",
+                "Alternate Portrait",
+                "Alternate Walk"
+              ]
+            }
+          ]
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-11-20260907",
+      "name": "利姆路",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-11-20260907.json",
+      "mainChampionDocSha256": "f8bd5036d9e1d37c04fc1fd200df36701ec207420d7d284de3ec10dc22b524ac",
+      "modelKey": "ou99.457280",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.457280",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_457280.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack - 1",
+          "cast": "spell one",
+          "death": "death",
+          "hurt": "stand ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.457280.json",
+      "mainModelDocSha256": "01379043f2533ddb265f6ec709f0a5b0e622788b549a835e7906abd70c5273ea",
+      "productionModelKey": "ou99.457280",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_457280.glb",
+        "exists": true,
+        "bytes": 3457456,
+        "sha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          157
+        ],
+        "animationCount": 20,
+        "animationNames": [
+          "stand",
+          "stand ready",
+          "walk",
+          "Weapon_1",
+          "Weapon_2",
+          "attack - 1",
+          "attack - 2",
+          "spell one",
+          "spell two",
+          "spell two loop",
+          "spell three",
+          "spell four",
+          "spell five",
+          "spell six",
+          "spell seven",
+          "death",
+          "stand alternate",
+          "walk alternate",
+          "attack alternate",
+          "death alternate"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_457280.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-rimuru-ror2",
+          "url": "https://thunderstore.io/c/riskofrain2/p/PopcornFactory/Rimuru_Tempest_Mod/",
+          "uploader": "PopcornFactory / Ethanol10",
+          "format": "Unity AssetBundle in DLL；Wwise BNK／WEM／Float32 WAV",
+          "verification": "已靜態擷取 1 個 Unity bundle：6 Mesh、10 SkinnedMeshRenderer、29 貼圖、3 Avatar、37 AnimationClip、62 ParticleSystem；含 RimuruHumanMesh、RimuruSlimeMesh。另從 DLL 內音效庫取出 13 個 WEM，全部轉為浮點 WAV（23.672 秒），保留原始 BNK／WEM；原取樣率／聲道／取樣數及 FFmpeg 全檔驗證通過。語音／音效分類、事件／技能綁定尚待聽審；骨架 GLB、特效標準化與後台切換仍未完成。",
+          "reuseTerms": "來源署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/raw/thunderstore-rimuru-ror2.zip",
+              "exists": true,
+              "bytes": 4574218,
+              "sha256": "184feb4badfbdd365723a57f7312221fc5f9f4a41086a2fc54b26a7da196b020",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-14-20260907",
+      "name": "殺老師",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-14-20260907.json",
+      "mainChampionDocSha256": "ba42fa830bef847e1b90124e0d6d38ef5486f40945f1309e670a3db14baf6e7c",
+      "modelKey": "ou99.472112",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.472112",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_472112.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack - 1",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.472112.json",
+      "mainModelDocSha256": "a13e574cca48237db977bb47f77c8c48bc44528574e9b42781e47802812c72e7",
+      "productionModelKey": "ou99.472112",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_472112.glb",
+        "exists": true,
+        "bytes": 1832804,
+        "sha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          72
+        ],
+        "animationCount": 16,
+        "animationNames": [
+          "Stand",
+          "Walk",
+          "Attack - 1",
+          "Attack - 2",
+          "Spell Throw",
+          "Stand Channel",
+          "Death",
+          "Spell",
+          "Stand Alternate",
+          "Walk Alternate",
+          "Attack Alternate",
+          "Attack Alternate - 2",
+          "Spell Throw Alternate",
+          "Stand Channel Alternate",
+          "Death Alternate",
+          "Spell Alternate"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_472112.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "steam-korosensei",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=640452938",
+          "uploader": "Lukis（重上傳）；頁面署名 Audrey Belrose；包內標註 Shi~",
+          "format": "LZMA / GMA → Source MDL 48 + VVD/VTX + VMT/VTF",
+          "verification": "Valve 官方公開 API 回傳可下載檔案，已核對大小與 SHA-256；解出 25 個檔案，逐檔 CRC32 通過。含 kuro.mdl／VVD／3 種 VTX、9 VMT、9 VTF；MDL 表頭為 58 骨節、3 本地動作描述、3 序列，另引用包外 models/f_anm.mdl。待骨架 GLB、貼圖轉換與動作依賴整合；未執行 Lua。",
+          "reuseTerms": "工坊頁與包內署名分別記錄；取得公開檔案不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-korosensei",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-korosensei/raw/korosensei.gma.lzma",
+              "exists": true,
+              "bytes": 373658,
+              "sha256": "cf7d52e841f052a5e30a3c8239a46bbd755a1c9979f525ea9a3a2e3ecb6da297",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-15-20260907.json",
+      "mainChampionDocSha256": "2e5ff2e92c2e2d3445eba87650124852e69f7420aa31c3344f7ca41835e559ac",
+      "modelKey": "ou99.457123",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.457123",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_457123.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand 1",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell",
+          "death": "death",
+          "hurt": "stand ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.457123.json",
+      "mainModelDocSha256": "b208d3afdc32b879dad4f92ec506a56899b55f8893714a44e5f115f108ee0952",
+      "productionModelKey": "ou99.457123",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_457123.glb",
+        "exists": true,
+        "bytes": 1011428,
+        "sha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          61
+        ],
+        "animationCount": 19,
+        "animationNames": [
+          "model used: Kichiku Game",
+          "stand 1",
+          "stand 3",
+          "stand 4",
+          "walk",
+          "stand ready",
+          "attack 1",
+          "attack slam",
+          "spell channel",
+          "spell one",
+          "spell two",
+          "spell three",
+          "QQ:5548671",
+          "animeted: Katzura Rin",
+          "spell",
+          "attack 2",
+          "spell four",
+          "spell slam",
+          "death"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_457123.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "steam-billy-herrington",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1422933575",
+          "uploader": "工坊重上傳；來源頁署名 VINRAX",
+          "format": "LZMA / GMA → Source MDL + VVD/VTX + VMT/VTF",
+          "verification": "Valve 官方公開 API 回傳下載網址，實檔 826,691 bytes 與 SHA-256 已核對；GMA 解出 24 個檔案，逐檔 CRC32 通過。含 billy_herrington.mdl、VVD、3 種 VTX、PHY、8 VMT、8 VTF；待骨架 GLB、貼圖與動作轉換，尚未視覺驗收；未執行附帶 Lua。",
+          "reuseTerms": "頁面署名 VINRAX；公開下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington/raw/workshop-1422933575.gma.lzma",
+              "exists": true,
+              "bytes": 826691,
+              "sha256": "546f5ebe04cc282375c9e070aeee2f132aae2163bb38950118e792310a0cce3f",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-22-20260907.json",
+      "mainChampionDocSha256": "63902a428a76d9623162236046faa1482d5f7769d88d73dafb95bf11f67a49c2",
+      "modelKey": "ou99.311294",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.311294",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_311294.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack - 1",
+          "cast": "Spell One",
+          "death": "Death",
+          "hurt": "Stand Ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.311294.json",
+      "mainModelDocSha256": "cf65b7f283ef9055a2e690b5a9c35af21260a54c5dce0514bbd4164985008c0b",
+      "productionModelKey": "ou99.311294",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_311294.glb",
+        "exists": true,
+        "bytes": 2950856,
+        "sha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          156
+        ],
+        "animationCount": 18,
+        "animationNames": [
+          "Stand",
+          "Walk",
+          "Stand Ready",
+          "Death",
+          "Attack - 1",
+          "Attack - 2",
+          "Spell One",
+          "Stand alternate",
+          "Stand Ready alternate",
+          "Walk alternate",
+          "Attack - 1 alternate",
+          "Attack - 2 alternate",
+          "Death alternate",
+          "Birth",
+          "Spell Two",
+          "Spell Three",
+          "Spell Four",
+          "Spell Five"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_311294.glb"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-rezero",
+          "url": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "uploader": "Tacocat12 / Ryan-Brosius",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "已靜態擷取 1 個 Unity bundle：8 Mesh、7 SkinnedMeshRenderer、6 Avatar、6 貼圖；含 Subaru 模型 ZHS002_Natsuki_Subaru，包內 0 AnimationClip。另含 Emilia、Rem、Ram、Felix、Beatrice，尚未各自認列 GGD 角色。作者列出 Emilia 骨架問題；待標準化與逐角外觀驗收。",
+          "reuseTerms": "來源署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/raw/thunderstore-rezero.zip",
+              "exists": true,
+              "bytes": 4895449,
+              "sha256": "e846f2bf183ae9234c9ab675debfe62025e08e3aa2d8fa6871573185f9164a27",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-34-20260907.json",
+      "mainChampionDocSha256": "9147a6e0c51a2d9222b7e409b684a971e09aae6b1c10fbe0c14f632efad221c3",
+      "modelKey": "ou99.458013",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.458013",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_458013.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "Spell",
+          "death": "Death",
+          "hurt": "Stand Ready"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.458013.json",
+      "mainModelDocSha256": "94f99b611bf626e299fafa56b94a70f770e8ca4291efc0a9c1c433fdf24a8594",
+      "productionModelKey": "ou99.458013",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_458013.glb",
+        "exists": true,
+        "bytes": 1336304,
+        "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          47
+        ],
+        "animationCount": 6,
+        "animationNames": [
+          "Spell",
+          "Stand",
+          "Attack",
+          "Death",
+          "Stand Ready",
+          "Walk"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_458013.glb",
+        "sourceManifestClaim": {
+          "path": "assets/models/ou99/ou99_458013.glb",
+          "bytes": 1336304,
+          "sha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
+          "evidence": "metadata snapshot, not independently hashed unless local bytes above exist"
+        }
+      },
+      "paidCandidate": {
+        "id": "ou99-458013",
+        "threadUrl": "https://www.ou99.com/thread-458013-1-1.html",
+        "ou99Title": "人妖喜乐",
+        "identityStatus": "intentional-similar-proxy",
+        "rig": {
+          "animationCount": 6,
+          "joints": 47,
+          "meshes": 1,
+          "textures": 1,
+          "clipNames": [
+            "Spell",
+            "Stand",
+            "Attack",
+            "Death"
+          ]
+        },
+        "conversionStatus": "converted-unverified-visually"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven"
+      ],
+      "localAlternatives": [
+        {
+          "id": "thunderstore-turbo-granny",
+          "url": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+          "uploader": "inkiidonut",
+          "format": "Unity AssetBundle in DLL",
+          "verification": "使用者確認招財貓形態。已保留全部 9,432 三角面，合併至 1 個蒙皮、29 骨節、5 繪製批次；5 張有圖案貼圖維持原生 1024×1024，其餘單色轉線性色彩頂點。Khronos 驗證 0 錯誤／0 警告，瀏覽器三面可載入。原包 0 AnimationClip；仍待動作綁定、六狀態驗證與後台切換，未列成品。",
+          "reuseTerms": "作者署名與原始包保留；跨遊戲再散布權利未核實。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny/raw/Granny_Suit-0.1.0.zip",
+              "exists": true,
+              "bytes": 507560,
+              "sha256": "8de3239cbb57ea36a77235eb69da3c1364fb43d5dacb4463f4f61a629252fedb",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny/compacted-prefab/body.glb",
+              "exists": true,
+              "bytes": 817196,
+              "sha256": "c8a1d6accb1c1fbb892296a5c955d09f84944166db81020ee0e8161a2b1c4141",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 1,
+              "skinJoints": [
+                29
+              ],
+              "animationCount": 0,
+              "animationNames": []
+            },
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-turbo-granny/converted-prefab/body.glb",
+              "exists": true,
+              "bytes": 857616,
+              "sha256": "06c7ec69bfe6c7b47de40566b77b28451f1f79e9b5ee6d1a1243ed52126bf83d",
+              "hashEvidence": "actual-local-bytes",
+              "meshes": 20,
+              "skinJoints": [
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29,
+                29
+              ],
+              "animationCount": 0,
+              "animationNames": []
+            }
+          ]
+        }
+      ],
+      "requiredAction": [
+        "Prioritize confirmed thunderstore lucky-cat form; existing ou99.458013 is owner-listed intentional-similar-proxy, not proof of lucky-cat identity",
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    },
+    {
+      "heroId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "mainChampionDoc": "/private/tmp/ggd-priority15-audit/main/content/champions/community-review-37-20260907.json",
+      "mainChampionDocSha256": "e98e787335bfcfd7492f798f79b557cbb7993359f3e878c7996ed29899cc9695",
+      "modelKey": "ou99.459617",
+      "modelSelectionMode": null,
+      "modelVersions": [],
+      "modelDoc": {
+        "id": "ou99.459617",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/ou99_459617.glb",
+        "scale": 1.0,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "cast": "Spell",
+          "hurt": "Stand",
+          "attack": "Spell",
+          "death": "Stand"
+        }
+      },
+      "mainModelDoc": "/private/tmp/ggd-priority15-audit/main/content/models/ou99.459617.json",
+      "mainModelDocSha256": "399b1a63844f8afa5a1389d53839723d002fe6a3434b8a6139bdccb2e4ceeaaa",
+      "productionModelKey": "ou99.459617",
+      "productionMatchesMain": true,
+      "dropdownVersionCount": 0,
+      "mainConfigurationState": "already-wired-model-key",
+      "activeBinary": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_459617.glb",
+        "exists": true,
+        "bytes": 1346076,
+        "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+        "hashEvidence": "actual-local-bytes",
+        "meshes": 1,
+        "skinJoints": [
+          28
+        ],
+        "animationCount": 4,
+        "animationNames": [
+          "Stand",
+          "Walk",
+          "Stand 2",
+          "Spell"
+        ],
+        "gitPath": "content/assets/models/ou99/ou99_459617.glb",
+        "sourceManifestClaim": {
+          "path": "assets/models/ou99/ou99_459617.glb",
+          "bytes": 1346076,
+          "sha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+          "evidence": "metadata snapshot, not independently hashed unless local bytes above exist"
+        }
+      },
+      "paidCandidate": {
+        "id": "ou99-459617",
+        "threadUrl": "https://www.ou99.com/thread-459617-1-1.html",
+        "ou99Title": "可爱小宠物chii吉伊",
+        "identityStatus": "intentional-similar-proxy",
+        "rig": {
+          "animationCount": 4,
+          "joints": 28,
+          "meshes": 1,
+          "textures": 2,
+          "clipNames": [
+            "Stand",
+            "Walk",
+            "Stand 2",
+            "Spell"
+          ]
+        },
+        "conversionStatus": "converted-unverified-visually"
+      },
+      "existingMappingLimits": [
+        "hurt is mapped to a stand/ready name; native hurt semantics not proven",
+        "death reuses idle; not evidence of a native death motion"
+      ],
+      "localAlternatives": [
+        {
+          "id": "github-chiikawa",
+          "url": "https://github.com/Dwinovo/minecraft-chiikawa",
+          "uploader": "Dwinovo；美術支援 zoe_1000",
+          "format": "Bedrock geometry + animation JSON／PNG／OGG",
+          "verification": "已取得固定 Git 版本的 7 角色原生模型、141 段動畫記錄、25 PNG 與 21 OGG（ffprobe 通過）。吉伊卡哇本體 24 骨節、26 方塊、19 段動畫及 3 個音訊檔；部分動畫通道引用不存在的骨名，已保留缺口。其餘 6 角色完整歸檔但未對應 GGD ID。待 GLB、綁定與後台驗收。",
+          "reuseTerms": "CC-BY-NC-SA-4.0；保留作者與 LICENSE，成品用途／再散布條件需遵循來源。",
+          "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa",
+          "originalPackages": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa/raw/chiikawa-b9ef93b9.zip",
+              "exists": true,
+              "bytes": 1628532,
+              "sha256": "c1d9c551c17693c1ca5fe35bbb572db18a888252e2e95483651481ae2de9fe5f",
+              "hashEvidence": "actual-local-bytes"
+            }
+          ],
+          "convertedGlbs": []
+        }
+      ],
+      "requiredAction": [
+        "Register all retained model alternatives into backend modelVersions; direct modelKey wiring is not dropdown proof",
+        "Validate exact local binary against current GGD prepare and motion inspection; configuration publication alone is not visual playback proof"
+      ]
+    }
+  ],
+  "constraints": [
+    "No central documents, Git state, defaults, S3, or original source bytes modified by this audit.",
+    "Only 33-file earlier paid-source manifest metadata was available; absence from that snapshot is not evidence an asset is missing from latest 41-file main.",
+    "Unknown binary metrics remain unknown; source Transform counts are not skin bone counts."
+  ],
+  "auditPhase": "before-integration",
+  "supersededBy": "priority-release.json"
+}

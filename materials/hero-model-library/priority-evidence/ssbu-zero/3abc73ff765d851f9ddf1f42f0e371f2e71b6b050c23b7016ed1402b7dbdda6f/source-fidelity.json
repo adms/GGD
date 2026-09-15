@@ -1,0 +1,146 @@
+{
+  "schema": "ggd.ssbu-zero-source-fidelity@1",
+  "sourceId": "gitlab-ssbu-models",
+  "componentId": "ssbu-zero-c00-static-skinned-v1",
+  "sourceSha256": "e9ef80e0f910453a09c43d7b42282a65bbe9ecd45a9dae76be0a0c07dae26a21",
+  "outputSha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+  "sourceBytesUnchanged": true,
+  "visibleMeshCount": 6,
+  "outputPrimitiveCount": 6,
+  "sourceVisiblePolygonCount": 5276,
+  "outputTriangleCount": 5276,
+  "sourceBoneCount": 75,
+  "outputJointCount": 75,
+  "sourceActionCount": 0,
+  "outputClipCount": 0,
+  "usedSourceImageCount": 4,
+  "embeddedOutputImageCount": 4,
+  "compatibilityAdjustments": {
+    "material": [
+      {
+        "material": "asf_glass_mat2",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "asf_zer_ani_mat",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "asf_skin_mat",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "asf_zero_body_mat",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "asf_glass_mat",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "asf_sword_mat",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      }
+    ],
+    "texture": [
+      {
+        "sourceImage": "asf_zero_body_col.png",
+        "sourceDimensions": [
+          1024,
+          1024
+        ],
+        "exportDimensions": [
+          256,
+          256
+        ],
+        "method": "Blender Image.scale preserving aspect ratio",
+        "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/derived-textures/asf_zero_body_col.png.ggd-256.png",
+        "derivedBytes": 95963,
+        "derivedSha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316",
+        "reason": "GGD hero model texture edge limit is 256 pixels."
+      }
+    ],
+    "hierarchy": [
+      {
+        "nodeIndex": 75,
+        "nodeName": "GameModelShape",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 76,
+        "nodeName": "GameModelShape.001",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 77,
+        "nodeName": "GameModelShape.002",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 78,
+        "nodeName": "GameModelShape.003",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 79,
+        "nodeName": "GameModelShape.004",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 80,
+        "nodeName": "zero_base_VIS_O_OBJShape",
+        "previousParentIndex": 81,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      }
+    ]
+  },
+  "excludedNativeParts": [
+    "zero_damage_VIS_O_OBJShape"
+  ],
+  "shaderParityVerified": false,
+  "sourceAnalysis": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/source-analysis.json",
+    "bytes": 10842,
+    "sha256": "7df1736b145e99185a4f9f5c85aa42dc0dd5b05959b12d1dbb0fc6d077c8445f"
+  },
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/conversion.json",
+    "bytes": 6826,
+    "sha256": "a1d53c3a4be29f38783e594e3f8b622bf16cfcd9ce3bb09e7ced4b5ba20cec05"
+  }
+}

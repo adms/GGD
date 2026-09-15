@@ -1,16 +1,16 @@
 {
   "id": "community-review-20-20260907",
   "name": "御坂美琴",
-  "description": "御坂美琴 社群英雄功能驗收稿。作品：《科學超電磁砲》  \n定位：電擊連鎖、電磁防禦、直線爆發。\n\n視覺方向：藍白放電、橘白超電磁砲、灰黑鐵砂盾；鏈線不得超出實際目標序列。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《科學超電磁砲》  \n定位：電擊連鎖、電磁防禦、直線爆發。\n\n視覺方向：藍白放電、橘白超電磁砲、灰黑鐵砂盾；鏈線不得超出實際目標序列。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+  "modelKey": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 80,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 13.676326530612242,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-20-20260907.q.webp",
       "template": {
@@ -114,7 +114,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -140,10 +140,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -175,7 +175,7 @@
           "maxTotalJumps": 3
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-20-20260907.w.webp",
       "template": {
@@ -186,7 +186,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -238,7 +238,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-20-20260907.e.webp",
       "template": {
@@ -246,7 +246,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -272,9 +272,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -309,7 +309,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-20-20260907.r.webp",
       "template": {
@@ -323,7 +323,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -348,5 +348,61 @@
   "tags": [
     "thrown"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.bb883822916cba61669fe30f9b3e878ae964367229b7dd45",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+      "modelSha256": "80856ad23c703d23c0aceb3f1c496a96944d032d2e414db121702aae6dbf845b",
+      "binarySha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "registeredAt": "2026-09-12T23:02:32.330Z",
+      "source": {
+        "kind": "previous",
+        "character": "御坂美琴",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.5445d5f3ed9074fc13ccefe062c8d2d41ff8ab9213d17705",
+      "label": "御坂美琴",
+      "sourceModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+      "modelSha256": "ab11c665204b8441a010cb052dc3d4a5f087cefbae378d14e6e3bc2b3619624a",
+      "binarySha256": "26f2013bd53ae0a3eb1af8d8e1855990fab249c6b6a23c59b8afd906031af2ab",
+      "registeredAt": "2026-09-12T23:02:32.334Z",
+      "source": {
+        "kind": "exact",
+        "character": "御坂美琴",
+        "work": "魔法禁書目錄／科學超電磁砲",
+        "library": "300heroes",
+        "reference": "300heroes:d397198ec699d52dbaff951e",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
+      "label": "御坂美琴",
+      "sourceModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+      "modelSha256": "7dc62bfe3afe2592c17dd81b5ea5fb11a93bb2e162e8b0742507e2cd6b6198b9",
+      "binarySha256": "26f2013bd53ae0a3eb1af8d8e1855990fab249c6b6a23c59b8afd906031af2ab",
+      "registeredAt": "2026-09-13T00:08:48.235Z",
+      "source": {
+        "kind": "exact",
+        "character": "御坂美琴",
+        "work": "魔法禁書目錄／科學超電磁砲",
+        "library": "300heroes",
+        "reference": "300heroes:d397198ec699d52dbaff951e",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

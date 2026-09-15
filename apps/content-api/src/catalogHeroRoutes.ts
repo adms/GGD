@@ -8,7 +8,8 @@ import { sha256Bytes } from "@ggd/shared/content/sha256";
 import { assetMediaType } from "@ggd/shared/content/assetReferences";
 import { type HeroCatalogHistory } from "./catalogHistory";
 import { HERO_CATALOG_WORK_ID, readHeroCatalog } from "./catalogVersions";
-import { catalogHeroes } from "./catalogHero";
+import { catalogAddressedAssets, catalogHeroes } from "./catalogHero";
+import { readAddressedAsset } from "./catalogAddressedAssets";
 import { instantiateCatalogHero } from "./catalogHeroInstance";
 import { productOwnershipOf } from "./editorSourceRoutes";
 
@@ -46,14 +47,15 @@ export class CatalogHeroRoutes {
     const journal = JSON.parse(readFileSync(this.journalPath, "utf8")) as Journal;
     const old = this.history.store.readWorkFiles(HERO_CATALOG_WORK_ID, journal.before);
     if (!old || !Array.isArray(journal.paths)) return fail("回復中斷，找不到完整復原版本。", 503);
+    // GH#1178：復原點裡「只記雜湊」的檔 ⇒ 它的內容就是那個雜湊；⛔ 不可當成「原本不存在」而刪掉。
+    const kept = catalogAddressedAssets(old), before = (path: string) => hash(old.get(path)) ?? kept.get(path)?.sha256 ?? null;
     for (const entry of journal.paths) {
       const path = this.sourcePath(entry.path), present = existsSync(path) ? new Uint8Array(readFileSync(path)) : undefined;
-      if (hash(present) !== entry.afterHash && hash(present) !== hash(old.get(entry.path))) fail("回復中斷後檔案另有修改，已保留復原紀錄並停止覆寫。", 503);
+      if (hash(present) !== entry.afterHash && hash(present) !== before(entry.path)) fail("回復中斷後檔案另有修改，已保留復原紀錄並停止覆寫。", 503);
     }
-    for (const entry of journal.paths) {
-      const path = this.sourcePath(entry.path), bytes = old.get(entry.path);
-      if (bytes) this.durable(path, bytes); else rmSync(path, { force: true });
-    }
+    // 先把每一份要寫回的位元組都拿到手（換不回就在寫任何檔之前丟錯），再動工作樹。
+    const restores = journal.paths.map((entry) => [this.sourcePath(entry.path), old.get(entry.path) ?? (kept.has(entry.path) ? readAddressedAsset(this.history.contentDir, kept.get(entry.path)!, kept.values()) : undefined)] as const);
+    for (const [path, bytes] of restores) if (bytes) this.durable(path, bytes); else rmSync(path, { force: true });
     rebuildAllIndexes(this.history.contentDir); deleteContentBundle(this.history.contentDir);
     rmSync(this.journalPath);
   }
@@ -93,7 +95,10 @@ export class CatalogHeroRoutes {
       if (command.expectedCurrentVersion !== plan.current.versionId || command.planDigest !== plan.planDigest) return fail("內容已更新，請重新比較後再回復。");
       if (plan.blockedSources.length) return fail("此回復包含產生器來源管理的檔案，尚不能直接覆写產物；請先從來源編輯流程處理。");
       if (plan.comparison.target.issues.length && plan.comparison.target.hero.catalog !== "legacy") return fail("此歷史版本有缺件或舊格式，不能直接套用至現行英雄。", 422);
-      const writes = new Map(plan.comparison.changes.map(({ path }) => [path, plan.comparison.target.files.get(path)!]));
+      // GH#1178：只記雜湊的素材從工作樹換回位元組（大小＋雜湊都要對上）；換不回 ⇒ 在保存與日誌之前指名失敗，⛔ 不寫空位元組。
+      const { target } = plan.comparison, currentAddressed = [...catalogAddressedAssets(plan.current.files).values()];
+      const bytesOf = (path: string) => target.files.get(path) ?? (target.addressed.has(path) ? readAddressedAsset(this.history.contentDir, target.addressed.get(path)!, currentAddressed) : fail(`回復計畫缺少檔案內容：${path}`, 422));
+      const writes = new Map(plan.comparison.changes.map(({ path }) => [path, bytesOf(path)]));
       const assets = [...writes].filter(([path]) => path.startsWith("assets/"));
       if (assets.length) {
         const manifest = JSON.parse(Buffer.from(plan.current.files.get("catalog/assets-manifest.json") ?? Buffer.from('{"schema":"ggd-assets-manifest@1","entries":[]}')).toString());

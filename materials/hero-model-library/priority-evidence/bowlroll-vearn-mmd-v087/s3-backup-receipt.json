@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "bowlroll-sabakan359-vearn-mmd-v087",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/bowlroll-sabakan359-vearn-mmd-v087/2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/bowlroll-sabakan359-vearn-mmd-v087/2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1.files.json",
+  "sha256": "2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1",
+  "bytes": 18268671,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 24,
+  "manifestSha256": "4ae3d82182313d79400ed03a91f6c7818f3c8bfc2d227af94911c1034b0ff3f8",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/bowlroll-sabakan359-vearn-mmd-v087/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/bowlroll-sabakan359-vearn-mmd-v087/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/bowlroll-sabakan359-vearn-mmd-v087/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

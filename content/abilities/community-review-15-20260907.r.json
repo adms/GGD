@@ -13,9 +13,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    600.0,
+    600.0,
+    600.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
@@ -26,7 +26,7 @@
       "kind": "leap",
       "applyTo": "target",
       "mode": "toPoint",
-      "apexHeight": 0.005,
+      "apexHeight": 1.2,
       "durationSec": 0.45,
       "throwDistance": 7.33,
       "dragToCaster": true,
@@ -48,7 +48,7 @@
       ]
     }
   ],
-  "castTimeSec": 1.633,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
   "template": {
@@ -57,14 +57,14 @@
       "mode": "toPoint",
       "grabMode": "dragToCaster",
       "throwMode": "distance",
-      "apexHeight": 1.2,
+      "apexHeight": 300,
       "durationSec": 0.45,
       "throwDistance": 400,
       "landRadius": 2,
       "landDamageTier": "小",
       "landApRatio": 0,
       "damageType": "physical",
-      "castTimeSec": 1.633
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

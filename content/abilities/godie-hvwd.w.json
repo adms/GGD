@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -33,10 +33,11 @@
           "value": 0.07
         }
       ],
-      "castTimeSec": 0.233
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.holy.pulse",
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

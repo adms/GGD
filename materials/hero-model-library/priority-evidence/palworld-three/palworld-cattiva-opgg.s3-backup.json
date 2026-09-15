@@ -1,0 +1,232 @@
+{
+  "schema": "ggd.source-legacy-backup@1",
+  "sourceId": "palworld-cattiva-opgg",
+  "verifiedAt": "2026-09-10T17:50:06.025705+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "expectedRoleVerified": true,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-cattiva-opgg-20260911/43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f.tar.gz",
+  "actions": [
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-opgg.tar.gz",
+  "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-20260911/palworld-cattiva-opgg.readback.tar.gz",
+  "archiveSha256": "43dda8f5a6ccf8edd02a3793723fe484d9627501b7656723dbe81d3e5e04677f",
+  "archiveBytes": 5316150,
+  "memberCount": 30,
+  "fullGetAndMemberShaVerified": true,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 898,
+      "sha256": "74a966492e75cf9c250b8b21c36be4c82e7ae995ed8d17f00bf6d7623ad36342",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 2508,
+      "sha256": "b40da79f01075ad8a5c2b9754357c3f8e40ba7c55c63e22fbb9daca6daaaabd0",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/assimp-info.txt",
+      "bytes": 3799,
+      "sha256": "e939386e304f16d3a43c8305daa89d9399165d4a9017f455c9866a777b67124f",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/gltf-validation-quantization.json",
+      "bytes": 1775,
+      "sha256": "16ddf158a52767e7c4e39a6cf22dd297fc57ac4fb97df8ce231d0eeedbbddb3b",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/gltf-validation.json",
+      "bytes": 2570,
+      "sha256": "c16eabf8c3abfe0b5c18dcf05db7d161c4cdba576eebef0ceb8920d0fa57a1cf",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/meshopt-inspection.log",
+      "bytes": 4015,
+      "sha256": "cc78e7a6f68d875aeb7cb412ade7c4804e3eecd3d007e7f146e5ce1bfeb79c54",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/quantization-declaration.json",
+      "bytes": 943,
+      "sha256": "5471e149c8639610df5845141cdf21e154ba6b2fc3009285bbaff671b3d29da9",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "bytes": 1618584,
+      "sha256": "33a03524778acb40f37b93bd23554dcacc11e3faad4fad5218e4780fdacd9149",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "audio-index.json",
+      "bytes": 182,
+      "sha256": "b9d73001009443f30dd3198cb65dd1150e559a8cabe2cfb56ee4bc388c2de826",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/cattiva-meshopt-decoded.glb",
+      "bytes": 1788384,
+      "sha256": "3fc40875bfa0e8181b1b644fd6d77a6b9fac6283d617d6beab81c9f3cff85287",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "decoded/cattiva-quantization-declared.glb",
+      "bytes": 1788472,
+      "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/cattiva-page.html",
+      "bytes": 638097,
+      "sha256": "7b410408cfd2e7f9a5a2217e2678fa321b1d874a61170f4b95df010fbe541514",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "evidence/discovery-and-limits.json",
+      "bytes": 796,
+      "sha256": "e3e96b5bd89cf14661a05fb3a68212dd178935de714c1cb7227a2e16a6789608",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 4907,
+      "sha256": "71f0736648d2901444f765463bb8e1222331046003ee4be6555269b0c4e04cba",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 4844,
+      "sha256": "3f90839ce4109ac0b375ae75aca4983e3bd8ff7f132c2743fbd096987e2d6796",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials.json",
+      "bytes": 4430,
+      "sha256": "203f743abbae454cfb3693beacd9e7eb67b221e1d3a393f5164f2ea4d422f1b3",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials/MI_PinkCat_Body.webp",
+      "bytes": 560190,
+      "sha256": "4fcbd5916ca73f1b659dd2eec63b3406a8682a54081cfced74da04a4dbb1e896",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+      "bytes": 731142,
+      "sha256": "72eb6ce098ba36527e89db6a306b08a41f0bf95aa6eaff1c30bc7cc0db3744bb",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials/MI_PinkCat_Body_Normal.webp",
+      "bytes": 1551020,
+      "sha256": "7832eb768a1e0e54439216b90fdd560526e25b191b532dd459862de83c113bb9",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials/MI_PinkCat_Eye.webp",
+      "bytes": 21310,
+      "sha256": "c861e9bf8fd99dfe92b9dfe2adcf32b4f2a73b819de0a383faa067a5b903f4cb",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/materials/MI_PinkCat_Mouth.webp",
+      "bytes": 12516,
+      "sha256": "c6d8c6eb1dc8eec74734877f891ca691392b9267efd1467a54c2de6bb1c5c364",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "original/model.glb",
+      "bytes": 1461560,
+      "sha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "source-entry.json",
+      "bytes": 7380,
+      "sha256": "210416e406ad44e31e71513a8663ad0557ef70c0cfd4f871f7cb2a36db974cd9",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/acquire.py",
+      "bytes": 1450,
+      "sha256": "39b907ad2d1d1485d16e53b9b535b8017e3e1d2278b1ec71ebfe1f5ced233e58",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/declare_quantization.py",
+      "bytes": 1609,
+      "sha256": "06c5dd30f369a9aa6a3fa58707b1a8a71602bab8ce9bf9f9d8c91440d17acd69",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/inspect_glb.py",
+      "bytes": 5296,
+      "sha256": "05895b064d87725d134cebc9924d9d7cc30209b643952b3216023193e2b0e8fd",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/validate-quantization.cjs",
+      "bytes": 557,
+      "sha256": "565a5350d86f065a3d8ecb32d1595967a340a10aafa305e1e9771aa2245d746f",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    },
+    {
+      "path": "tools/validate.cjs",
+      "bytes": 538,
+      "sha256": "e9cb4e5df9ef73c45cb5476e487309b4ad68cab8705aedb09e087f99dd52b69e",
+      "fullGetVerified": true,
+      "localUnchanged": true
+    }
+  ],
+  "policy": "legacy source reserve only; no automatic production selection; local all preserved"
+}

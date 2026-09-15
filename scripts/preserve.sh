@@ -45,10 +45,10 @@ note() {
 }
 
 for f in "$@"; do
-  [ -f "$f" ] || { note "$(date +%Y%m%d-%H%M%S)	preserve.sh	SKIP(不存在)	$f	"; continue; }
+  [ -f "$f" ] || { note "$(date +%Y%m%d-%H%M%S)	preserve.sh	SKIP(不存在)	$f"; continue; }
   # ⭐ 已追蹤且乾淨 ⇒ git 裡有一份救得回來的 ⇒ 只記帳（⛔ 不重複備份，legacy 會爆）
   if git ls-files --error-unmatch "$f" >/dev/null 2>&1 && [ -z "$(git status --porcelain -- "$f")" ]; then
-    note "$(date +%Y%m%d-%H%M%S)	preserve.sh	SKIP(git 有)	$f	"
+    note "$(date +%Y%m%d-%H%M%S)	preserve.sh	SKIP(git 有)	$f"
     echo "  ℹ️ $f —— git 裡有乾淨的一份，只記帳"
     continue
   fi

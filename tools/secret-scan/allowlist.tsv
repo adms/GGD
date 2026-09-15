@@ -1,0 +1,18 @@
+# secret-scan 豁免表 —— ⭐ 每一列都要帶一個**能被反駁**的理由（⛔ 不接受「這是假的」）
+# 欄位: rule_id <TAB> path_regex(ERE，比對 repo 相對路徑) <TAB> 理由
+# ⚠️ rule_id 可用 * 代表全部規則。豁免是**逐檔 × 逐規則**,⛔ 不是整個目錄開天窗。
+*	^tools/secret-scan/rules\.tsv$	規則表自己裝著每一條規則的**校準檢體**（公開範例值／明顯假值）—— 它必然「命中」,那正是它的用途。⭐ 反駁法：檢體換成真憑證就違反本表頭的規定
+*	^tools/secret-scan/allowlist\.tsv$	豁免表自己（本檔）會引用規則名與樣式
+*	^packages/shared/src/ops/secretScan\.test\.ts$	守衛自己要造假檢體餵給腳本才驗得出「尺沒瞎」
+generic-assign	\.(test|spec)\.(ts|tsx|js|mjs|cjs)$	vitest 夾具：測的是 handler 對某個值的**行為**,那些字串在出貨路徑上不存在
+generic-assign	_test\.go$	Go 表格測試夾具：值是 `"anything"` 這種明示假值,測的是 401/403 的分支。⭐ 反駁法：出貨路徑 grep 得到同一個字串就刪掉這一列
+generic-assign	^apps/platform/internal/.*\.go$	Go 後端的欄位名／JSON tag 指派（`json:"password"` 這一族）—— ⭐ 真值一律來自 env,實查 deploySecrets
+generic-assign	^\.env\.example$	範本檔：欄位名 + 佔位值,⭐ 這正是「該有的樣子」
+generic-assign	^docker/\.env\.example$	docker compose 的範本檔：欄位名 + 佔位值,真值由部署時的 .env 提供（已被 .gitignore 擋）
+generic-assign	^deploy/helm/ggd/templates/secret\.yaml$	Helm 模板：值是 `{{ .Values.* }}` 佔位,⛔ 不是字面值
+jwt	\.(test|spec)\.(ts|tsx|js|mjs)$	測試用的合成 JWT（簽章是假的,⛔ 不對應任何簽發者）
+jwt	_test\.go$	Go 測試自己簽的 JWT：簽章金鑰就在同一個檔的夾具裡,⛔ 不對應任何線上簽發者
+twilio-sid	\.(json|md|csv|tsv)$	AC+32hex 與**模型／素材雜湊**的字面形狀相同 —— 這個 repo 沒有任何 Twilio 依賴（實查 package.json／go.mod 皆 0 筆）。⭐ 反駁法：哪天真的接了 Twilio,刪掉這一列
+dotenv	^\.env\.example$	範本檔,刻意追蹤（.gitignore 的 `!.env.example`）
+dotenv	^docker/\.env\.example$	範本檔,刻意追蹤（.gitignore 的 `!.env.example`）——⭐ 它存在就是為了讓人知道要填哪幾格
+slack-webhook	^tools/uptime-probe/src/notify\.test\.ts$	⭐ `notify.ts` 本身就是 webhook **洗掉器**（`replace(/hooks\.slack\.com\/\S*/)` → `***`）,這幾個合成 URL 是**餵給它洗的檢體**;真值走 env。⭐ 反駁法：notify.ts 哪天出現字面 webhook,刪這一列

@@ -116,7 +116,10 @@
  * @see ./championForms.ts — the 26 `Eme1`/`Emeu` pairs the exception reads.
  */
 import { baseFormIdOf, isAlternateForm, isW3xFormPair } from "./championForms";
-import { STAND_IN_MODEL_KEYS } from "./voxelSkin/types";
+// ⭐ GH#1250 —— 替身判準的唯一住處搬到 `./standInBody`（看 glb 住在哪，⛔ 不再只查手寫 4 顆 key）。
+//   這裡 re-export，既有 import 端（`content/index.ts`、`resolvedAppearance`）一個都不用改。
+import { isStandInModel } from "./standInBody";
+export { isStandInModel };
 
 /**
  * `NN-0X` / `NN-00X` ability-name prefix (task #11). The trailing `(?!\d)`
@@ -247,11 +250,6 @@ export function sharesNameComponent(a: string, b: string): boolean {
   return nameComponents(b).some((part) => left.has(part));
 }
 
-/** True when `modelKey` is one of the four shared CC0 stand-in meshes. */
-export function isStandInModel(modelKey: string | null | undefined): boolean {
-  return typeof modelKey === "string" && STAND_IN_MODEL_KEYS.includes(modelKey);
-}
-
 /**
  * **The identity rule.** True only on positive, strong evidence that `a` and
  * `b` are the SAME character — see the file header for the full policy and the
@@ -341,7 +339,10 @@ export const RANDOM_HERO_POOL_IDS: ReadonlySet<string> = new Set([
  *      26 pairs, but that is a coincidence of the map's own pick list, not a
  *      rule, and relying on it is what let 妙蛙花 sit on the roster;
  *   1. then the id the map itself plays (the random-hero pool);
- *   2. then a real imported mesh over a CC0 stand-in;
+ *   2. then a real imported mesh over a CC0 stand-in (GH#1250: `standInBody` — the
+ *      model doc's glb, read from the `Models` registry. ⛔ No seed fallback: an
+ *      offline caller that never loaded model docs gets a thrown error on the first
+ *      comparison instead of a silently different ordering);
  *   3. then the lexicographically first id, so the choice is deterministic.
  */
 function canonicalRank(c: IdentityChampion): [number, number, number, string] {

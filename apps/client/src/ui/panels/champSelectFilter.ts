@@ -15,6 +15,9 @@ import {
   isSplitFormBody,
   isTransformedBody,
 } from "@ggd/shared/content/championForms";
+// ⭐ GH#1258 ⑤ —— 變身態的**內容側**答案（英雄卡互相指著對方的那一對，`voiceFormSharing.contentFormPairs`），
+//   與手寫表取聯集。讀 registry（CALL TIME），registry 沒填時回「不是」⇒ 純單元測試行為不變。
+import { contentAlternateBaseOf, isContentAlternateBody } from "@ggd/shared/content/contentFormBodies";
 import { isShopService, itemHasEffect, legendaryShelfPrice } from "@ggd/shared/sim/economy/itemTiers";
 import {
   LEGENDARY_PRICE_MULTIPLIER,
@@ -158,7 +161,16 @@ export function isPickableChampionId(
   retired: ReadonlySet<string> = NO_RETIRED,
   hidden: ReadonlySet<string> = NO_HIDDEN,
 ): boolean {
-  return !isTransformedBody(id) && !retired.has(id) && !hidden.has(id);
+  return !isTransformedBody(id) && !isContentAlternateBody(id) && !retired.has(id) && !hidden.has(id);
+}
+
+/**
+ * 可選的本體 id —— 手寫表（w3x 26 對）先答，答不出來再問內容卡的 `transform`
+ * （GH#1258：`b2-maple-alt-*` 只宣告在卡上）。兩者都不是變身態 ⇒ 自己。
+ */
+function pickableBaseOf(id: string): string {
+  const w3x = baseFormIdOf(id);
+  return w3x !== id ? w3x : (contentAlternateBaseOf(id) ?? id);
 }
 
 /** 「沒有人下架」。模組級常數而不是每次 `new Set()`，避免在熱路徑配置。 */
@@ -202,7 +214,9 @@ function resolveToPickable(
   hidden: ReadonlySet<string> = NO_HIDDEN,
 ): string | null {
   if (isSplitFormBody(id)) return null;
-  const base = baseFormIdOf(id);
+  // ⚠️ 2026-09-15：內容宣告的變身態一定帶著互指的本體（`contentFormPairs` 的定義），
+  //   所以這裡解析回來的永遠是本體 —— 第一版那行「變身態卻沒有本體 ⇒ 不列」已經不可能成立，拿掉。
+  const base = pickableBaseOf(id);
   // ⚠️ 下架檢查在 baseFormIdOf **之後**：下架的是「這位英雄」，而變身態會被
   // 解析回本體，所以只檢查傳進來的 id 會漏掉「勾了變身態 → 解析回一個已下架的
   // 本體」這條路。兩個 id 都查是刻意的冗餘。
@@ -231,7 +245,7 @@ export function applyChampionWhitelist<T extends RosterChampion>(
   // The whitelist is compared in BASE space too: an operator who ticked only the
   // alternate still gets the hero, as the base. Ticking is about which heroes are
   // open, never about which body is pickable.
-  const allowed = wl.enforced ? new Set([...wl.champions].map((id) => baseFormIdOf(id))) : null;
+  const allowed = wl.enforced ? new Set([...wl.champions].map((id) => pickableBaseOf(id))) : null;
   const out: T[] = [];
   const seen = new Set<string>();
   for (const entry of champs) {

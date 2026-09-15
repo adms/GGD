@@ -12,6 +12,7 @@
 import { describe, expect, it } from "vitest";
 import { isTransformedBody } from "@ggd/shared/content/championForms";
 import type { StarterBundle, WhitelistDoc } from "./curation";
+import { contentFormPairs } from "@ggd/shared/content/voiceFormSharing";
 import {
   baseChampionOf,
   buildExpect,
@@ -93,6 +94,20 @@ describe("buildResetPlan", () => {
     expect(plan.championsOff[0]?.baseId).toBe(ALT_BASE);
     expect(plan.championsOff[0]?.baseStaysEnabled).toBe(true);
     expect(visibleHeroLosses(plan, sel("champions"))).toEqual([]);
+  });
+
+  it("⭐ GH#1258：只宣告在內容卡上的變身態（手寫表不認得）也歸成變身態 —— 讀 contentFormPairs 那一對", () => {
+    const docs = [
+      { id: "b2-maple", transform: { role: "base", counterpartId: "b2-maple-alt" } },
+      { id: "b2-maple-alt", transform: { role: "alternate", counterpartId: "b2-maple" } },
+    ];
+    const plan = buildResetPlan({
+      live: doc(["b2-maple", "b2-maple-alt"], [], []),
+      starter: bundle(["b2-maple"], [], []),
+      contentPairs: contentFormPairs(docs),
+    });
+    // ⛔ 拿掉 buildResetPlan 讀 contentPairs 那兩處 ⇒ 這一列變回 real-hero（重設預覽喊「本體英雄會消失」）
+    expect(plan.championsOff.map((r) => [r.id, r.cls, r.baseId])).toEqual([["b2-maple-alt", "form-base-kept", "b2-maple"]]);
   });
 
   it("classifies a champion the starter does not carry as a REAL HERO LOSS", () => {

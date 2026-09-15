@@ -87,5 +87,7 @@
       }
     }
   ],
-  "icon": "assets/icons/abilities/godie-hapm.passive.webp"
+  "icon": "assets/icons/abilities/godie-hapm.passive.webp",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

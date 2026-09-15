@@ -221,5 +221,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02v.w.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
-  "sfxKey": "wc3.taunt"
+  "sfxKey": "wc3.taunt",
+  "castTimeTier": "極小"
 }

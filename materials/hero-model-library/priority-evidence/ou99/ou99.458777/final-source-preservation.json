@@ -1,0 +1,54 @@
+{
+  "modelKey": "ou99.458777-standard-v2",
+  "finalGlbSha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+  "nodeHierarchyAndInverseBindMatricesUnchanged": true,
+  "nativeMotion": [
+    {
+      "name": "Stand",
+      "channels": 76,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Walk",
+      "channels": 76,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Attack 1",
+      "channels": 76,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Spell One",
+      "channels": 76,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Death",
+      "channels": 76,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    }
+  ],
+  "allOriginalEmbeddedImageBytesRetainedInFinal": true,
+  "originalImageSha256": [
+    "aba39729d9bd8de1a5287ce7a1d31172db008fc73fe9a57e2a87266899e6eca0",
+    "a8de8786a123ac007a9a318801337c36dfb04ba377029d1baa1107eef1a019a6",
+    "94fc8def004ed7382977f6295ec08515c7a69fc3a2f60864ba89f5e19982d968",
+    "a21d19a6a7ba14f6dab2dc953df1d4a0a029d34feea0735e807ce50676eeda78",
+    "43fc8ac83472bdffc06a598bf927dbd4476d4fb9392f471bc3bef823f5a1fdc8",
+    "fa0be06bb3c830b7749f3782a17656ab0981b05e0dfd5e70059999e4481728cc",
+    "31eebf11e786277751adafe715763b7dc7d40da2fa5b8b5e68d633a674983767"
+  ],
+  "finalImageSha256": [
+    "aba39729d9bd8de1a5287ce7a1d31172db008fc73fe9a57e2a87266899e6eca0",
+    "a8de8786a123ac007a9a318801337c36dfb04ba377029d1baa1107eef1a019a6",
+    "94fc8def004ed7382977f6295ec08515c7a69fc3a2f60864ba89f5e19982d968",
+    "a21d19a6a7ba14f6dab2dc953df1d4a0a029d34feea0735e807ce50676eeda78",
+    "43fc8ac83472bdffc06a598bf927dbd4476d4fb9392f471bc3bef823f5a1fdc8",
+    "fa0be06bb3c830b7749f3782a17656ab0981b05e0dfd5e70059999e4481728cc",
+    "31eebf11e786277751adafe715763b7dc7d40da2fa5b8b5e68d633a674983767",
+    "617836ba10cce9b85b8ba6fe92a56caf0c84606c51ac0de24db7e1336fc60912"
+  ],
+  "geometryLod": false,
+  "textureLod": false
+}

@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 77.4,
+    "maxHealth": 80,
     "healthRegen": 0.205,
-    "maxMana": 47.4031,
+    "maxMana": 50,
     "manaRegen": 0.171,
     "ad": 3.109,
     "armor": 0.8458,
@@ -67,13 +67,14 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0.0,
       "radiusTier": "中",
+      "castTimeTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -149,7 +150,7 @@
             "modelKey": "imported.earthtornado2",
             "soundKey": "wc3.blademasterwhirlwind"
           },
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.q.webp",
@@ -157,7 +158,7 @@
       "sfxKey": "wc3.darksummoninglaunch1",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-e00w.w",
@@ -218,7 +219,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-e00w.w.webp",
-      "vfxKey": "fx.prim.lightning.beam"
+      "vfxKey": "fx.prim.lightning.beam",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00w.e",
@@ -316,7 +318,8 @@
       "icon": "assets/icons/abilities/godie-e00w.e.webp",
       "vfxKey": "fx.prim.lightning.nova",
       "cooldownTier": "極大",
-      "castTimeSec": 0.267
+      "castTimeTier": "中",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-e00w.r",
@@ -332,12 +335,13 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "radiusTier": "極小",
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -393,15 +397,15 @@
             "preset": "tpl-locust-strike",
             "modelKey": "w3x.stock.monsoonbolttarget"
           },
-          "castTimeSec": 2
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
       "cooldownTier": "中",
-      "manaCostTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 2
+      "manaCostTier": "小",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

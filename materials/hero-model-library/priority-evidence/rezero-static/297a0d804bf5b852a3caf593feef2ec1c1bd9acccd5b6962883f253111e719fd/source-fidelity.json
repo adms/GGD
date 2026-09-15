@@ -1,0 +1,36 @@
+{
+  "schema": "ggd.rezero-static-component-source-fidelity@1",
+  "sourceId": "thunderstore-rezero",
+  "componentId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "sourceConversionSha256": "b2791d26879151467502f2b62bacfbdc9dfb483682df8fd50e8d71c7bcce4745",
+  "outputSha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+  "sourceRootName": "emiliaPrefab",
+  "sourceUpAxis": "z",
+  "outputUpAxis": "y",
+  "sourceVertexCount": 12902,
+  "outputTriangleCount": 18137,
+  "sourceBoneCounts": [
+    171
+  ],
+  "outputJointCounts": [
+    171
+  ],
+  "sourceAnimatorComponentCount": 6,
+  "sourceAnimationClipCount": 0,
+  "outputClipCount": 0,
+  "allAccessorBytesPreservedDuringNormalization": true,
+  "sourceWeightSumMaxError": 8.940696716308594e-08,
+  "skinPositionMaxError": 0.0,
+  "shaderParityVerified": false,
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/unity-conversion.json",
+    "bytes": 3036,
+    "sha256": "6f157a610d6aa5bec2d88df38da92fa9731d7d2e4fdff2ef6298042eb22b8a09"
+  },
+  "normalizationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/normalization.json",
+    "bytes": 6787,
+    "sha256": "e986fdae09925198ab694c7173c0be68c67456fa28feec807196b0c7da09e325"
+  }
+}

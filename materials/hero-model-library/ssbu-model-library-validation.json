@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-ssbu-lfs-validation@1",
+  "commit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "pathsVerified": 28681,
+  "bytesRead": 16148574001,
+  "hashMismatches": [],
+  "allLfsPathsSizeAndSha256Verified": true,
+  "runtimeReady": false,
+  "sourceId": "gitlab-ssbu-models",
+  "nativeAssetCounts": {
+    "blenderFiles": 1793,
+    "pngTextures": 26885,
+    "ddsTextures": 2,
+    "archiveFiles": 1,
+    "nativePathGroups": 279
+  },
+  "sourceManifestSha256": "484533aad3de43f7b35e2152aa0846878a72c9ba114561875066ef48d5dbd233"
+}

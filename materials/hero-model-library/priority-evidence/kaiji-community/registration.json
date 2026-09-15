@@ -1,0 +1,95 @@
+{
+  "schema": "ggd-model-library-registration@1",
+  "releaseSha256": "0cad3b8ae0b6fe23667b648e8075742359d063889e0430e40ed3f51d2463c016",
+  "heroes": [
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "registered": [
+        "runtime:kaiji-holya-procedural-six-state-v1"
+      ],
+      "pending": [],
+      "state": {
+        "championId": "b2-kaiji",
+        "expectedHash": "sha256:b732d5307e2dd20623b383a5fc24dc04d9baea3261b814f8b8f3505f3d475709",
+        "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+        "versions": [
+          {
+            "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+            "label": "原上線模型",
+            "sourceModelKey": "champ.thorne",
+            "modelSha256": "610dacead69977b19ac9af6a94725eea4cfcebc13753eb5cbe73359aafa7fadd",
+            "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+            "registeredAt": "2026-09-10T14:45:41.128Z",
+            "source": {
+              "kind": "previous",
+              "character": "伊藤開司",
+              "work": "原上線內容",
+              "library": "GGD",
+              "reference": "models/champ.thorne.json",
+              "tier": "original"
+            }
+          },
+          {
+            "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+            "label": "坂本",
+            "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+            "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+            "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+            "registeredAt": "2026-09-10T14:45:41.149Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "坂本",
+              "work": "在下坂本，有何貴幹？",
+              "library": "300heroes",
+              "reference": "300heroes:62413511bf6cb6a428c2821a",
+              "tier": "300heroes",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
+            "label": "黑",
+            "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+            "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
+            "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+            "registeredAt": "2026-09-10T14:45:41.199Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "黑",
+              "work": "DARKER THAN BLACK－黑之契約者",
+              "library": "300heroes",
+              "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+              "tier": "300heroes",
+              "selectionClass": "similar-proxy"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+            "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+            "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+            "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
+            "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+            "registeredAt": "2026-09-10T17:03:36.321Z",
+            "source": {
+              "kind": "exact",
+              "character": "伊藤開司",
+              "work": "賭博默示錄",
+              "library": "Lethal Company MOD／holya",
+              "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+              "tier": "original",
+              "selectionClass": "community-mod"
+            },
+            "automaticEligible": true
+          }
+        ],
+        "selectionMode": "automatic",
+        "preferredModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
+      },
+      "status": "registered"
+    }
+  ],
+  "productionDeployed": false
+}

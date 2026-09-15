@@ -1,0 +1,20 @@
+{
+  "schema": "ggd-ssbu-japanese-audio-validation@1",
+  "sourceId": "parallel-voice-ssbu-japanese",
+  "sourceUrl": "https://gamebanana.com/sounds/67926",
+  "originalSha256": "4cb4e11c4d366bf4d25f291349243632fa84bdce17c478ce67682cd243f3efd5",
+  "originalBytes": 46876330,
+  "originalBankCount": 350,
+  "uniqueDecodedBankCount": 76,
+  "nativeNameGroups": 68,
+  "decodedInputGroups": 65,
+  "aliasMappings": 350,
+  "decodedWavCount": 2512,
+  "uniqueDecodedWavHashes": 2184,
+  "totalSeconds": 1991.2728884637206,
+  "allPcmPayloadsVerified": true,
+  "allNativeBankHashesVerified": true,
+  "confirmedVoiceCount": null,
+  "synthesisReady": false,
+  "reportSha256": "b41b9c9972daa49f22b18a7007657b880cb4d886aadd0de54dcef66912c3ce7d"
+}

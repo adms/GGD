@@ -1,0 +1,2682 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ggd.local/schema/palworld-av-review-decision.schema.json",
+  "title": "GGD Palworld audio and motion review decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "sourceFingerprint",
+    "reviewedAt",
+    "reviewer",
+    "audioDecisions",
+    "motionDecisions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ggd.palworld-av-review-decision@1"
+    },
+    "sourceFingerprint": {
+      "const": "d13ea7a3f9b1b57a32f9d842ea3b3def0db023f5c963178daa3f3ec6dd2e851a"
+    },
+    "reviewedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audioDecisions": {
+      "type": "array",
+      "maxItems": 18,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-normal"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "spawn-or-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-joy"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "victory"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-anger"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-attack-or-cast"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-sorrow"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "low-health-or-retreat"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-pain"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-normal"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "spawn-or-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-joy"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "victory"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-anger"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-attack-or-cast"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-sorrow"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "low-health-or-retreat"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-pain"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-normal"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "spawn-or-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-joy"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "victory"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-anger"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-attack-or-cast"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-sorrow"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "low-health-or-retreat"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-pain"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-normal"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-joy"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-anger"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-sorrow"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-pain"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-cry-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-normal"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-joy"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-anger"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-sorrow"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-pain"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-cry-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-normal"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-joy"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-anger"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-sorrow"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-pain"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-cry-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        }
+      ]
+    },
+    "motionDecisions": {
+      "type": "array",
+      "maxItems": 18,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-idle"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-run"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-run"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-attack"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "acquired-jetragon.q"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-cast"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "acquired-jetragon.r"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-hurt"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-idle"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-run"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-run"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-attack"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-attack"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-cast"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "acquired-astralym.q"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-hurt"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-idle"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-idle"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-run"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-run"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-attack"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "acquired-cattiva.q"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-cast"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-cast"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-hurt"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-hurt"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidateId",
+              "decision",
+              "approvedBindings",
+              "note"
+            ],
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-death"
+              },
+              "decision": {
+                "enum": [
+                  "approve",
+                  "reject",
+                  "needs-follow-up"
+                ]
+              },
+              "approvedBindings": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "generic-death"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "decision": {
+                      "const": "approve"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "approvedBindings": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "approvedBindings": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-idle"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-run"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-attack"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-cast"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-hurt"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-jetragon-motion-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-idle"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-run"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-attack"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-cast"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-hurt"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-astralym-motion-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-idle"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-run"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-attack"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-cast"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-hurt"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "candidateId": {
+                "const": "palworld-cattiva-motion-death"
+              }
+            },
+            "required": [
+              "candidateId"
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        }
+      ]
+    },
+    "note": {
+      "type": "string"
+    }
+  }
+}

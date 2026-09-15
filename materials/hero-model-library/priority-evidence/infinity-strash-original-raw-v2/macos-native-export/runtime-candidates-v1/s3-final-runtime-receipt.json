@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "infinity-strash-final-runtime-delivery-v1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.files.json",
+  "sha256": "e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080",
+  "bytes": 28708018,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 68,
+  "manifestSha256": "4508a5c82323dfa117361ddce7c67e30b203430b4c0585fd26e9cdd8687c353c",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/final-runtime/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/final-runtime/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/final-runtime/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

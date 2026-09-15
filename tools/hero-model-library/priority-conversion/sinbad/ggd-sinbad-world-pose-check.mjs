@@ -1,0 +1,9 @@
+import {createRequire} from 'node:module';import {pathToFileURL} from 'node:url';import{readFileSync,writeFileSync}from'node:fs';
+const root='/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT';const intake=root+'/GGD-Asset-Library/intake/public-models-20260910/sinbad-baal-runtime-option-20260910';
+const req=createRequire(root+'/GGD-hero-model-options/apps/client/package.json');const mod=n=>import(pathToFileURL(req.resolve(n)).href);
+const [{NullEngine},{Scene},{LoadAssetContainerAsync},{Vector3}]=await Promise.all([mod('@babylonjs/core/Engines/nullEngine.js'),mod('@babylonjs/core/scene.js'),mod('@babylonjs/core/Loading/sceneLoader.js'),mod('@babylonjs/core/Maths/math.vector.js')]);await mod('@babylonjs/loaders/glTF/index.js');
+const engine=new NullEngine();const out={schema:'ggd-babylon-rest-world-positions@1',method:'Actual Babylon CPU skinned vertices then mesh world transform, native T pose, materials skipped, no animation started',assets:[]};
+try{for(const path of ['original/converted-collada/body.glb','converted/compacted.glb','runtime-v3/body.glb']){
+ const scene=new Scene(engine);scene.useRightHandedSystem=true;const c=await LoadAssetContainerAsync(new Uint8Array(readFileSync(intake+'/'+path)),scene,{pluginExtension:'.glb',pluginOptions:{gltf:{skipMaterials:true,animationStartMode:0}}});c.addAllToScene();for(const n of scene.transformNodes)n.computeWorldMatrix(true);for(const s of c.skeletons)s.prepare(true);
+ const positions=[];for(const mesh of c.meshes.filter(m=>m.getTotalVertices())){const matrix=mesh.computeWorldMatrix(true),p=mesh.getPositionData(true,false);for(let i=0;i<p.length;i+=3)positions.push(Vector3.TransformCoordinates(new Vector3(p[i],p[i+1],p[i+2]),matrix).asArray())}out.assets.push({path,positions});scene.dispose();
+}writeFileSync(intake+'/control/rest-world-positions.json',JSON.stringify(out)+'\n',{flag:'wx'});}finally{engine.dispose();}

@@ -1,0 +1,172 @@
+{
+  "schema": "ggd.ssbu-pickel-steve-source-delivery@1",
+  "deliveryId": "ssbu-pickel-steve-c00-blender4513-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "name": "Steve",
+    "nameZh": "史蒂夫／Steve",
+    "nativeId": "fighter/pickel/body/c00",
+    "variant": "c00",
+    "sourceGame": "Super Smash Bros. Ultimate",
+    "originalSeries": "Minecraft"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+    "bytes": 4211812,
+    "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+  },
+  "allNativeBodyVariants": [
+    {
+      "variant": "c00",
+      "identity": "Steve",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+      "bytes": 4211812,
+      "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+    },
+    {
+      "variant": "c01",
+      "identity": "Alex",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/pickel-alex-c01.blend",
+      "bytes": 4168692,
+      "sha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445"
+    },
+    {
+      "variant": "c02",
+      "identity": "Steve",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c02/pickel-steve-c02.blend",
+      "bytes": 4211812,
+      "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+    },
+    {
+      "variant": "c03",
+      "identity": "Alex",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c03/pickel-alex-c03.blend",
+      "bytes": 4168692,
+      "sha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445"
+    },
+    {
+      "variant": "c04",
+      "identity": "Steve",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c04/pickel-steve-c04.blend",
+      "bytes": 4211812,
+      "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+    },
+    {
+      "variant": "c05",
+      "identity": "Alex alternate",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c05/pickel-alex-c05.blend",
+      "bytes": 4293756,
+      "sha256": "4708b31102231f759800e88e2d0b47cdd0baf7edf375a64c6dac6e0d138b949f"
+    },
+    {
+      "variant": "c06",
+      "identity": "Zombie",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c06/pickel-zombie-c06.blend",
+      "bytes": 4176968,
+      "sha256": "947ba466e2fad8b035903efc8303db1ab0847eb7d07da3cd62f8ba683449ea33"
+    },
+    {
+      "variant": "c07",
+      "identity": "Enderman",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c07/pickel-enderman-c07.blend",
+      "bytes": 4256620,
+      "sha256": "888590a604f2f8147ae800f7380a63a7191ec4e05a6c9569ee51642b24552e32"
+    }
+  ],
+  "equivalentSourceVariants": [
+    "c00",
+    "c02",
+    "c04"
+  ],
+  "variantRelationship": "Byte-identical costume slots share one conversion; c05 Alex alternate, c06 Zombie and c07 Enderman remain separate unconverted sources.",
+  "finalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1",
+  "rebuildRoot": "/private/tmp/ssbu-pickel-steve-c00-rebuild-v1",
+  "blenderExport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/blender-export.glb",
+    "bytes": 51600,
+    "sha256": "d5f47801948e67318304e2df6bcc13dfc864ef25177362431d6093d888a514ef"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/body.glb",
+    "bytes": 51664,
+    "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75"
+  },
+  "metrics": {
+    "triangles": 828,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "jointCount": 31,
+    "textureCount": 1,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0,
+    "worldHeightMeters": 1.8000001415944074
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 3,
+      "after": 3
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": false
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "finiteFloatValuesChecked": 7936,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/normalize_static_component.mts",
+      "sha256": "3bcd8d978034cd77013deb8e21f123056c9872ff9dfacecc1093d43747aafe34"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.py",
+      "sha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.mjs",
+      "sha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
+    }
+  ],
+  "gaps": [
+    "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+    "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
+    "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+    "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+    "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+    "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+  ]
+}

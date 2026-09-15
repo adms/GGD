@@ -1,0 +1,3737 @@
+{
+  "schema": "ggd-design-backlog-localization@1",
+  "locale": "zh-TW",
+  "policy": {
+    "displayOnly": true,
+    "preserveRawNameWorkIdsPathsAndStatus": true,
+    "unknownLabelsRemainUnconfirmed": true,
+    "commonTranslationsAreNotOfficialLocalizationClaims": true
+  },
+  "names": {
+    "300heroes:153": {
+      "nameZh": "白岩射手",
+      "translationBasis": "直接採用輸入 aliases 已有中文「白岩射手」；不改來源身份。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "300heroes:278": {
+      "nameZh": "不老不死的神祕少女",
+      "translationBasis": "官方仍以字母代號命名；此欄依官方角色介紹提供中文描述，並非新增中文本名。原代號由英文欄保留。來源：geass-character。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:farah46": {
+      "nameZh": "待確認角色／模型（檔名疑指法菈）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:guy46": {
+      "nameZh": "待確認角色／模型（檔名疑指蓋伊）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:lion46": {
+      "nameZh": "待確認角色／模型（檔名疑指里歐）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:mint46": {
+      "nameZh": "待確認角色／模型（檔名疑指敏特）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:mitos46": {
+      "nameZh": "待確認角色／模型（檔名疑指米托斯）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:natalia46": {
+      "nameZh": "待確認角色／模型（檔名疑指娜塔莉亞）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:rid46": {
+      "nameZh": "待確認角色／模型（檔名疑指里德）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "parallel-community-slayers-tales-of-rays:van46": {
+      "nameZh": "待確認角色／模型（檔名疑指梵）",
+      "translationBasis": "僅按聯動包羅馬字檔名提供常見音譯線索，原資料明列身份待核；不據檔名確認人物或作品。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:aeris": {
+      "nameZh": "待確認角色／模型（檔名譯作艾莉絲）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:cecil": {
+      "nameZh": "待確認角色／模型（檔名譯作塞西爾）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:firion": {
+      "nameZh": "待確認角色／模型（檔名譯作菲利歐尼爾）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:garland": {
+      "nameZh": "待確認角色／模型（檔名譯作加蘭德）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:goddess": {
+      "nameZh": "待確認角色／模型（女神檔名）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:golbez": {
+      "nameZh": "待確認角色／模型（檔名譯作高貝札）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:jecht": {
+      "nameZh": "待確認角色／模型（檔名譯作傑克特）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:kefka": {
+      "nameZh": "待確認角色／模型（檔名譯作凱夫卡）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:lightning": {
+      "nameZh": "待確認角色／模型（檔名譯作雷光）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:mithragirl": {
+      "nameZh": "待確認角色／模型（蜜絲拉族少女檔名）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:onionknight": {
+      "nameZh": "待確認角色／模型（洋蔥騎士檔名）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:squall": {
+      "nameZh": "待確認角色／模型（檔名譯作史克爾）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:terra": {
+      "nameZh": "待確認角色／模型（檔名譯作蒂娜）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:tidus": {
+      "nameZh": "待確認角色／模型（檔名譯作提達）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:warrioroflight": {
+      "nameZh": "待確認角色／模型（光之戰士檔名）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:yuna": {
+      "nameZh": "待確認角色／模型（檔名譯作優娜）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "github-neztypezero-psp-gmo-loader-f346daec:zidane": {
+      "nameZh": "待確認角色／模型（檔名譯作吉坦）",
+      "translationBasis": "按原始模型檔名提供中文譯名或字面說明；原作品欄仍為未知，保留身份待核，不將譯名當作模型鑑定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:B3_KL": {
+      "nameZh": "待確認角色／模型（縮寫代碼，人物未辨）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:Guild2": {
+      "nameZh": "待確認角色／模型（含公會字樣及版本數字的檔名）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:LS shiqikuangsan": {
+      "nameZh": "待確認角色／模型（檔名疑指時崎狂三）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:LS whql": {
+      "nameZh": "待確認角色／模型（縮寫代碼，人物未辨）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:LS ydssx": {
+      "nameZh": "待確認角色／模型（縮寫代碼，人物未辨）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:LS you": {
+      "nameZh": "待確認角色／模型（短稱檔名，人物未辨）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:Shinobu": {
+      "nameZh": "待確認角色／模型（檔名讀音為忍，具體人物未核）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:newBRS_flame": {
+      "nameZh": "待確認角色／模型（檔名含黑岩射手與火焰字樣）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:sugou": {
+      "nameZh": "待確認角色／模型（檔名疑指須鄉）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:whiterockshooter": {
+      "nameZh": "待確認角色／模型（白岩射手檔名，身份未核）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "map-native:yaya": {
+      "nameZh": "待確認角色／模型（檔名疑指夜夜）",
+      "translationBasis": "只翻譯地圖原生檔名可讀部分；未查明的縮寫不展開，原身份待核狀態保持不變。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ou99-donor:ou99:481732": {
+      "nameZh": "待確認角色／模型（論壇以數字代碼命名）",
+      "translationBasis": "論壇標題只有日期樣式及數字代碼，無可靠人物名；不得由代碼推定身份。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "bomberman": {
+      "nameZh": "炸彈人",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "emiya-archer": {
+      "nameZh": "英靈衛宮（弓兵）",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "aqua-kh": {
+      "nameZh": "亞克雅",
+      "translationBasis": "按王國之心的既有人物標籤採「亞克雅」，不與其他作品的阿克婭混同；來源：kingdom-hearts-characters。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "waluigi": {
+      "nameZh": "瓦路易吉",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "zero-megaman": {
+      "nameZh": "傑洛",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "shovel-knight": {
+      "nameZh": "鏟子騎士",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "knuckles": {
+      "nameZh": "納克魯斯",
+      "translationBasis": "依輸入已明確人物及作品採常見繁中譯名；僅增加顯示文字，不改ID、來源或模型身份狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "shadow-hedgehog": {
+      "nameZh": "夏特",
+      "translationBasis": "採 SEGA 官方繁中名稱「夏特」；來源：sega-shadow。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "guile": {
+      "nameZh": "凱爾",
+      "translationBasis": "採 PlayStation 繁中官方部落格「凱爾」；來源：playstation-guile。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-buddy": {
+      "nameZh": "阿邦＆阿卡",
+      "translationBasis": "採任天堂台灣官方發布的「阿邦＆阿卡」；來源：nintendo-banjo。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-bayonetta": {
+      "nameZh": "蓓優妮塔",
+      "translationBasis": "採任天堂官方繁中名稱「蓓優妮塔」；來源：nintendo-bayonetta。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-koopa": {
+      "nameZh": "庫巴",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-koopajr": {
+      "nameZh": "庫巴二世",
+      "translationBasis": "原官方名稱含英文字尾；本欄採通行中文「庫巴二世」，原正式名稱仍由英文欄保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-master": {
+      "nameZh": "貝雷特／貝雷絲",
+      "translationBasis": "採任天堂官方新增內容的「貝雷特／貝雷絲」；來源：nintendo-byleth；原條目代表雙性別主角，非新增第二個角色ID。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-captain": {
+      "nameZh": "飛隼隊長",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-plizardon": {
+      "nameZh": "噴火龍",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-chrom": {
+      "nameZh": "庫洛武",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-kamui": {
+      "nameZh": "神威",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-daisy": {
+      "nameZh": "黛西公主",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pitb": {
+      "nameZh": "黑暗彼特",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-samusd": {
+      "nameZh": "黑暗薩姆斯",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-diddy": {
+      "nameZh": "狄狄剛",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-donkey": {
+      "nameZh": "咚奇剛",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-duckhunt": {
+      "nameZh": "打獵搭檔",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-falco": {
+      "nameZh": "法爾科·隆巴迪",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-fox": {
+      "nameZh": "火狐·麥克勞德",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ganon": {
+      "nameZh": "加儂多夫",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-gekkouga": {
+      "nameZh": "甲賀忍蛙",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ike": {
+      "nameZh": "艾克",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-gaogaen": {
+      "nameZh": "熾焰咆哮虎",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-inkling": {
+      "nameZh": "墨魚戰士",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-shizue": {
+      "nameZh": "西施惠",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pfushigisou": {
+      "nameZh": "妙蛙草",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-purin": {
+      "nameZh": "胖丁",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-jack": {
+      "nameZh": "小丑（怪盜代號）",
+      "translationBasis": "原怪盜代號沒有固定漢字本名，此處採字面中文「小丑」並註明代號；不增訂遊戲主角本名。原英文代號由英文欄保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ken": {
+      "nameZh": "肯·馬斯達斯",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-dedede": {
+      "nameZh": "帝帝帝大王",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-krool": {
+      "nameZh": "庫魯魯王",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-littlemac": {
+      "nameZh": "小麥克",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-lucario": {
+      "nameZh": "路卡利歐",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-lucas": {
+      "nameZh": "琉加",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-lucina": {
+      "nameZh": "露琪娜",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-luigi": {
+      "nameZh": "路易吉",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-mario": {
+      "nameZh": "瑪利歐",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-marth": {
+      "nameZh": "馬爾斯",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-metaknight": {
+      "nameZh": "魅塔騎士",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-mewtwo": {
+      "nameZh": "超夢",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-miifighter": {
+      "nameZh": "自建鬥士（格鬥型）",
+      "translationBasis": "原角色為玩家自建鬥士，本欄以全中文說明其類型，不杜撰人物姓名；原英文類型與Mii標識由英文欄保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-miigunner": {
+      "nameZh": "自建鬥士（射擊型）",
+      "translationBasis": "原角色為玩家自建鬥士，本欄以全中文說明其類型，不杜撰人物姓名；原英文類型與Mii標識由英文欄保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-miiswordsman": {
+      "nameZh": "自建鬥士（劍術型）",
+      "translationBasis": "原角色為玩家自建鬥士，本欄以全中文說明其類型，不杜撰人物姓名；原英文類型與Mii標識由英文欄保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-tantan": {
+      "nameZh": "麵麵",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-gamewatch": {
+      "nameZh": "遊戲與手錶先生",
+      "translationBasis": "原名為英文品牌式角色名，本欄提供字面中文譯名「遊戲與手錶先生」，不是另立角色；英文原名保留。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-elight": {
+      "nameZh": "光",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-nana": {
+      "nameZh": "娜娜",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ness": {
+      "nameZh": "奈斯",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pikmin": {
+      "nameZh": "歐利瑪／阿爾福",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pacman": {
+      "nameZh": "小精靈",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-palutena": {
+      "nameZh": "帕露提娜",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-peach": {
+      "nameZh": "碧姬公主",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pichu": {
+      "nameZh": "皮丘",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-packun": {
+      "nameZh": "吞食花",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pit": {
+      "nameZh": "彼特",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ptrainer": {
+      "nameZh": "寶可夢訓練家",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-popo": {
+      "nameZh": "波波",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-eflame": {
+      "nameZh": "焰",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-robot": {
+      "nameZh": "機器人",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-richter": {
+      "nameZh": "里希特·貝爾蒙多",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ridley": {
+      "nameZh": "利德雷",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-reflet": {
+      "nameZh": "魯弗萊",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-rosetta": {
+      "nameZh": "羅潔塔",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-roy": {
+      "nameZh": "羅伊",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-ryu": {
+      "nameZh": "隆",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-samus": {
+      "nameZh": "薩姆斯·亞蘭",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-sheik": {
+      "nameZh": "希克",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-shulk": {
+      "nameZh": "修爾克",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-simon": {
+      "nameZh": "西蒙·貝爾蒙多",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-snake": {
+      "nameZh": "固蛇",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-sonic": {
+      "nameZh": "索尼克",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-trail": {
+      "nameZh": "索拉",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-pzenigame": {
+      "nameZh": "傑尼龜",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-dolly": {
+      "nameZh": "泰利·柏格",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-murabito": {
+      "nameZh": "村民",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-wario": {
+      "nameZh": "瓦利歐",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-wiifit": {
+      "nameZh": "健身教練",
+      "translationBasis": "原名稱包含未漢字化品牌，本欄以中文功能名「健身教練」表示；品牌與英文原名保留，不增訂人物本名。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-wolf": {
+      "nameZh": "沃爾夫·歐唐納",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-yoshi": {
+      "nameZh": "耀西",
+      "translationBasis": "依既有大亂鬥英文人物標籤採繁中常用譯名；角色對照參考 smash-roster-zh，少數完整姓名為常用音譯，不宣稱每一譯名皆官方。只改顯示文字，不更動身份或來源。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "chiikawa": {
+      "nameZh": "吉伊卡哇",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "hachiware": {
+      "nameZh": "小八貓",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "kurimanju": {
+      "nameZh": "栗子饅頭",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "momonga": {
+      "nameZh": "小桃鼠",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "rakko": {
+      "nameZh": "海獺",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "shisa": {
+      "nameZh": "獅薩",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "usagi": {
+      "nameZh": "兔兔",
+      "translationBasis": "採吉伊卡哇官方商品店繁中角色對照；來源：chiikawa-market。袋著走繁中官網亦列角色對照，其中獅薩別譯「風獅爺」。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "community:palworld-daedream": {
+      "nameZh": "寐魔",
+      "translationBasis": "採 PalDB 繁中詞條 #022 寐魔，來源：paldb-daedream；沿用已確認 Daedream／DreamDemon 身份，不更動設計狀態。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_other"
+    },
+    "ssbu-native:assist/andross": {
+      "nameZh": "安德羅斯（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/androssshot": {
+      "nameZh": "安德羅斯的彈丸（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/ashley": {
+      "nameZh": "艾希莉（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/baito": {
+      "nameZh": "徽章兔（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/baitocrane": {
+      "nameZh": "徽章兔的抓取機械爪（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/bombermanbomb": {
+      "nameZh": "炸彈人的炸彈（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/bombermanbomb2": {
+      "nameZh": "炸彈人的第２種炸彈（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/bombermanswitch": {
+      "nameZh": "炸彈人的開關（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/claptrap": {
+      "nameZh": "咬人鱷魚克拉普特拉普（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/cyborg": {
+      "nameZh": "灰狐（機械忍者）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/darkknight": {
+      "nameZh": "漆黑騎士（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/devil": {
+      "nameZh": "惡魔（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/dossun": {
+      "nameZh": "咚咚（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/driver": {
+      "nameZh": "航平（司機）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/eleka": {
+      "nameZh": "電光艾蕾卡（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/flyandhand": {
+      "nameZh": "蒼蠅與手（複合助攻資源，非單一人物，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/flyandhandfly": {
+      "nameZh": "蒼蠅與手中的蒼蠅（助攻部件，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/ghirahim": {
+      "nameZh": "吉拉希姆（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/ghirahimknife": {
+      "nameZh": "吉拉希姆的飛刀（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/goroh": {
+      "nameZh": "武士五郎（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/hammerbros": {
+      "nameZh": "鐵鎚兄弟（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/hammerbroshammer": {
+      "nameZh": "鐵鎚兄弟的鐵鎚（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/hebigarasu": {
+      "nameZh": "蛇鱗鴉（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/jeff": {
+      "nameZh": "傑夫（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/jeffpencilbullet": {
+      "nameZh": "傑夫的鉛筆彈（助攻彈丸，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/jeffpencilrocket": {
+      "nameZh": "傑夫的鉛筆火箭（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/jiro": {
+      "nameZh": "狄龍（次郎）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/joe": {
+      "nameZh": "格鬥家喬（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kawasaki": {
+      "nameZh": "廚師川崎（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kawasakipot": {
+      "nameZh": "廚師川崎的鍋（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kawasakishot": {
+      "nameZh": "廚師川崎的投射物（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kawashima": {
+      "nameZh": "川島博士（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kawashimashot": {
+      "nameZh": "川島博士的投射物（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/kozukata": {
+      "nameZh": "不來方夕莉（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/krystal": {
+      "nameZh": "克莉絲塔（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/lin": {
+      "nameZh": "琳（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/lioleus": {
+      "nameZh": "雄火龍（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/lioleustail": {
+      "nameZh": "雄火龍的尾巴（助攻部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/metroid": {
+      "nameZh": "密特羅德（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/midna": {
+      "nameZh": "米多娜（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/monsters": {
+      "nameZh": "吃豆人的幽靈群（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/moon": {
+      "nameZh": "月亮（助攻天體道具，非人物，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/motherbrain": {
+      "nameZh": "母腦（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nightmare": {
+      "nameZh": "夢魘（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikki": {
+      "nameZh": "妮琪（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust1": {
+      "nameZh": "妮琪的第1幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust2": {
+      "nameZh": "妮琪的第2幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust3": {
+      "nameZh": "妮琪的第3幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust4": {
+      "nameZh": "妮琪的第4幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust5": {
+      "nameZh": "妮琪的第5幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nikkiillust6": {
+      "nameZh": "妮琪的第6幅插畫（助攻繪圖部件，內容待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nintendogs": {
+      "nameZh": "任天狗狗（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/nintendogshi": {
+      "nameZh": "任天狗狗的 hi 版本資源（用途待確認）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/riki": {
+      "nameZh": "力奇（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/robin": {
+      "nameZh": "羅賓（艾薩克／黃金的太陽）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/robinlift": {
+      "nameZh": "羅賓的抬升招式資源（黃金的太陽助攻部件，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/robinpress": {
+      "nameZh": "羅賓的壓制招式資源（黃金的太陽助攻部件，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/robinshot": {
+      "nameZh": "羅賓的投射招式資源（黃金的太陽助攻部件，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/rodin": {
+      "nameZh": "羅丹（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/rodinarml": {
+      "nameZh": "羅丹的左臂（助攻部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/rodinarmr": {
+      "nameZh": "羅丹的右臂（助攻部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/sable": {
+      "nameZh": "薩布雷王國的王子（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/sheriff": {
+      "nameZh": "西部警長（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/sheriffshot": {
+      "nameZh": "西部警長的子彈（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/shiokarazu": {
+      "nameZh": "魷魚姐妹（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/skullkid": {
+      "nameZh": "骷髏小子（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/springman": {
+      "nameZh": "彈簧人（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/stafy": {
+      "nameZh": "斯塔菲（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/starman": {
+      "nameZh": "星人（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/sukapon": {
+      "nameZh": "斯卡彭（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/sukaponshot": {
+      "nameZh": "斯卡彭的投射物（助攻部件，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/takamaru": {
+      "nameZh": "鷹丸（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/takamarushot": {
+      "nameZh": "鷹丸的飛行武器（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/tiki": {
+      "nameZh": "琪姬（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/tvgame": {
+      "nameZh": "彩色電視遊戲１５（電子遊戲助攻資源，非人物，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/tvgameshot": {
+      "nameZh": "彩色電視遊戲１５的球（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/vince": {
+      "nameZh": "文斯老師（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wanwan": {
+      "nameZh": "汪汪（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wanwanpile": {
+      "nameZh": "汪汪的固定樁（助攻道具，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wilycapsule": {
+      "nameZh": "威利膠囊飛行器（助攻載具，非人物，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wilycapsulewily": {
+      "nameZh": "威利博士（威利膠囊內角色）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wright": {
+      "nameZh": "萊特博士（模擬城市）（輔助模型標識待核）",
+      "translationBasis": "參照任天堂官方輔助模型繁中／日文對照表；英文保留項採中文音譯或描述，非宣稱官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:assist/wrightbuil": {
+      "nameZh": "萊特博士的建築物（助攻道具，非人物，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-assist-tc",
+        "ssbu-assist-jp"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/crazyhand": {
+      "nameZh": "瘋狂之手（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/crazyhandbomb": {
+      "nameZh": "瘋狂之手的炸彈（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/crazyhandsearchlight": {
+      "nameZh": "瘋狂之手的探照光（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/darz": {
+      "nameZh": "暗之首領達茲（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/darzcrossbomb": {
+      "nameZh": "達茲的十字爆破資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/darzpierce": {
+      "nameZh": "達茲的穿刺資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/darzspacerush": {
+      "nameZh": "達茲的空間突進資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/darztorrent": {
+      "nameZh": "達茲的洪流資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/dracula": {
+      "nameZh": "德古拉（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/dracula2": {
+      "nameZh": "德古拉的第２形態候選（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/galleom": {
+      "nameZh": "加雷歐姆（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/galleommissile": {
+      "nameZh": "加雷歐姆的飛彈（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/ganonboss": {
+      "nameZh": "加儂（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiila": {
+      "nameZh": "光之首領奇拉（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiilacore": {
+      "nameZh": "奇拉的核心（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiilacrossbomb": {
+      "nameZh": "奇拉的十字爆破資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiilacrushwing": {
+      "nameZh": "奇拉的翼部攻擊資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiilashockwave": {
+      "nameZh": "奇拉的衝擊波（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/kiilatorrent": {
+      "nameZh": "奇拉的洪流資源（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/lioleusboss": {
+      "nameZh": "雄火龍（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/lioleusbosstail": {
+      "nameZh": "雄火龍首領的尾巴（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marx": {
+      "nameZh": "魔嚕酷（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marxchaseeye": {
+      "nameZh": "魔嚕酷的追蹤眼球（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marxeyelaser": {
+      "nameZh": "魔嚕酷的眼部雷射（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marxicebomb1": {
+      "nameZh": "魔嚕酷的第１種冰彈（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marxplantbody": {
+      "nameZh": "魔嚕酷招式中的植物主體（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/marxplantseed": {
+      "nameZh": "魔嚕酷招式中的植物種子（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "kirby-dreamfriends-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/masterhand": {
+      "nameZh": "大師之手（首領資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/masterhandbullet": {
+      "nameZh": "大師之手的子彈（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/masterhandironball": {
+      "nameZh": "大師之手的鐵球（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:boss/masterhandpaintball": {
+      "nameZh": "大師之手的漆彈（首領招式／部件，非完整本體，標識待核）",
+      "translationBasis": "依內部代碼直譯或描述；道具／部件不提升為人物或完整本體。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:enemy/flyingman": {
+      "nameZh": "飛行人（敵方資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:enemy/metalface": {
+      "nameZh": "金屬臉（梅塔菲斯）（敵方資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:enemy/nabbit": {
+      "nameZh": "偷天兔（敵方資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:enemy/subetenoyaminoou": {
+      "nameZh": "統御一切黑暗之王（敵方資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:enemy/yellowdevil": {
+      "nameZh": "黃色惡魔（敵方資源，標識待核）",
+      "translationBasis": "通用中文譯名或識別碼音譯，非已核定的官方中文定名。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:fighter/common": {
+      "nameZh": "待確認的戰士共用資源（非特定人物本體）",
+      "translationBasis": "common 僅表示共用代碼，不能指定成某位角色。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:fighter/element": {
+      "nameZh": "待確認的戰士元素資源（共用代碼，具體角色待核）",
+      "translationBasis": "element 為內部代碼；本次不據此指定焰／光或其他人物，不新增身份判定。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/arceus": {
+      "nameZh": "阿爾宙斯（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/darkrai": {
+      "nameZh": "達克萊伊（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/dedenne": {
+      "nameZh": "咚咚鼠（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/deoxys": {
+      "nameZh": "代歐奇希斯（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/eievui": {
+      "nameZh": "伊布（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/entei": {
+      "nameZh": "炎帝（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/fire": {
+      "nameZh": "火焰鳥（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 此處採寶可夢日文ファイヤー對照火焰鳥，非一般火焰特效；檔案身份仍未驗證。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/fokko": {
+      "nameZh": "火狐狸（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/genesect": {
+      "nameZh": "蓋諾賽克特（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/giratina": {
+      "nameZh": "騎拉帝納（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/gogoat": {
+      "nameZh": "坐騎山羊（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/harimaron": {
+      "nameZh": "哈力栗（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/hassam": {
+      "nameZh": "巨鉗螳螂（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/hitodeman": {
+      "nameZh": "海星星（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kabigon": {
+      "nameZh": "卡比獸（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kairyu": {
+      "nameZh": "快龍（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc",
+        "pokedex-kairyu"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kapukokeko": {
+      "nameZh": "卡璞・鳴鳴（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kasey": {
+      "nameZh": "凱西（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/keldeo": {
+      "nameZh": "凱路迪歐（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kireihana": {
+      "nameZh": "美麗花（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kiteruguma": {
+      "nameZh": "穿著熊（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kofuurai": {
+      "nameZh": "粉蝶蛹（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 コフーライ對照粉蝶蛹，不是彩粉蝶。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc",
+        "pokedex-kofuurai"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kyogre": {
+      "nameZh": "蓋歐卡（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/kyurem": {
+      "nameZh": "酋雷姆（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/latiaslatios": {
+      "nameZh": "拉帝亞斯與拉帝歐斯（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 合併代碼保留成一筆，不把它拆算兩個已驗證本體。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/lugia": {
+      "nameZh": "洛奇亞（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/lunala": {
+      "nameZh": "露奈雅拉（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/maaiika": {
+      "nameZh": "好啦魷（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/marshadow": {
+      "nameZh": "瑪夏多（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/marumine": {
+      "nameZh": "頑皮雷彈（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc",
+        "pokedex-marumine"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/meloetta": {
+      "nameZh": "美洛耶塔（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/metagross": {
+      "nameZh": "巨金怪（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/metamon": {
+      "nameZh": "百變怪（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/mew": {
+      "nameZh": "夢幻（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/mijumaru": {
+      "nameZh": "水水獺（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/mimikkyu": {
+      "nameZh": "謎擬Ｑ（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/namakobushi": {
+      "nameZh": "拳海參（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/nassya": {
+      "nameZh": "椰蛋樹（形態待核）（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 官網列阿羅拉的樣子，但來源代碼未列形態，本次不推定此檔一定是該形態。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/nyarth": {
+      "nameZh": "喵喵（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/palkia": {
+      "nameZh": "帕路奇亞（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/peroppafu": {
+      "nameZh": "綿綿泡芙（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/raichua": {
+      "nameZh": "雷丘（阿羅拉的樣子候選）（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 官網列阿羅拉的樣子；字尾 a 提供候選線索，仍需原檔畫面確認。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/rokon": {
+      "nameZh": "六尾（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/rokona": {
+      "nameZh": "六尾（阿羅拉的樣子候選）（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。 官網列阿羅拉的樣子；字尾 a 提供候選線索，仍需原檔畫面確認。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/sirnight": {
+      "nameZh": "沙奈朵（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/solgaleo": {
+      "nameZh": "索爾迦雷歐（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/suicune": {
+      "nameZh": "水君（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/togedemaru": {
+      "nameZh": "托戈德瑪爾（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/togepy": {
+      "nameZh": "波克比（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/tosakinto": {
+      "nameZh": "角金魚（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/tsutarja": {
+      "nameZh": "藤藤蛇（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/victini": {
+      "nameZh": "比克提尼（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/xerneas": {
+      "nameZh": "哲爾尼亞斯（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/yayakoma": {
+      "nameZh": "小箭雀（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/yukinooh": {
+      "nameZh": "暴雪王（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "ssbu-native:pokemon/zoroark": {
+      "nameZh": "索羅亞克（寶可夢資源，標識待核）",
+      "translationBasis": "依寶可夢名稱及任天堂繁中寶可夢清單提供對照；清單只佐證名稱，不能確認此檔的物種、形態或完整性。僅依原始分類與識別碼提供中文顯示名；保留 identity-review，未做模型本體或完整性認定。",
+      "identityUnchanged": true,
+      "sourceRefs": [
+        "ssbu-pokemon-tc"
+      ],
+      "translationSourceGroup": "names_ssbu"
+    },
+    "300heroes:270": {
+      "nameZh": "迪奧·布蘭度",
+      "translationBasis": "沿用原始名稱已有中文部分；保留英文代號。",
+      "identityUnchanged": true,
+      "originalLabel": "DIO"
+    }
+  },
+  "works": {
+    "300英雄原創": {
+      "workZh": "300英雄原創",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "300英雄：西遊記題材改編": {
+      "workZh": "300英雄：西遊記題材改編",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "Angel Beats!": {
+      "workZh": "天使的脈動",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "BEATLESS 沒有心跳的少女": {
+      "workZh": "沒有心跳的少女",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "BLACK★ROCK SHOOTER THE GAME": {
+      "workZh": "黑岩射手 遊戲版",
+      "translationBasis": "採常見中文「黑岩射手 遊戲版」；中文作品條目區分 THE GAME 遊戲版，不與同名動畫版本合併。",
+      "translationSourceGroup": "works"
+    },
+    "BLACK★ROCK SHOOTER 黑岩射手": {
+      "workZh": "黑岩射手",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "BLEACH": {
+      "workZh": "死神",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "BLEACH 死神": {
+      "workZh": "死神",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Bomberman": {
+      "workZh": "轟炸超人",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Castlevania": {
+      "workZh": "惡魔城",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Code Geass 反叛的魯路修": {
+      "workZh": "反叛的魯路修",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "D.Gray-man 驅魔少年": {
+      "workZh": "驅魔少年",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "DARKER THAN BLACK－黑之契約者": {
+      "workZh": "黑之契約者",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Death Note": {
+      "workZh": "死亡筆記本",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Dr.STONE 新石紀": {
+      "workZh": "新石紀",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Engage Kiss 契約之吻": {
+      "workZh": "契約之吻",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "FAIRY TAIL 魔導少年／妖精的尾巴": {
+      "workZh": "魔導少年／妖精的尾巴",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Fairy Tail": {
+      "workZh": "魔導少年",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Fate": {
+      "workZh": "命運系列",
+      "translationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/Apocrypha": {
+      "workZh": "命運／外典",
+      "translationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/EXTRA 系列": {
+      "workZh": "命運系列：Fate/EXTRA",
+      "translationBasis": "以 Fate 的中文通稱「命運系列」補中文；子系列保留正式原名，不臆造統一中文譯名。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/Grand Order": {
+      "workZh": "命運－冠位指定",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/Zero": {
+      "workZh": "命運／零",
+      "translationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/kaleid liner 魔法少女☆伊莉雅": {
+      "workZh": "魔法少女☆伊莉雅",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Fate/stay night": {
+      "workZh": "命運／停駐之夜",
+      "translationBasis": "採常見繁中譯名「命運／停駐之夜」；中文條目記載此地區譯名。原 key 保留 Fate/stay night，不改作品版本。",
+      "translationSourceGroup": "works"
+    },
+    "Final Fantasy VII": {
+      "workZh": "最終幻想 VII",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Final Fantasy VII／最終幻想 VII": {
+      "workZh": "最終幻想 VII",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "GGD 原創": {
+      "workZh": "GGD 原創",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "Goblin Slayer": {
+      "workZh": "哥布林殺手",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Guilty Crown 罪惡王冠": {
+      "workZh": "罪惡王冠",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "HATSUNE MIKU": {
+      "workZh": "初音未來",
+      "translationBasis": "角色／音聲軟體品牌的常見繁中名稱；原資料未指定具體遊戲作品，不補猜遊戲標題。",
+      "translationSourceGroup": "works"
+    },
+    "HUNTER×HUNTER": {
+      "workZh": "獵人",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "HUNTER×HUNTER 獵人": {
+      "workZh": "獵人",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "JoJo 的奇妙冒險 第七部：飆馬野郎 STEEL BALL RUN": {
+      "workZh": "JoJo 的奇妙冒險 第七部：飆馬野郎",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "JoJo 的奇妙冒險 第三部：星塵遠征軍": {
+      "workZh": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "JoJo 的奇妙冒險 第五部：黃金之風": {
+      "workZh": "JoJo 的奇妙冒險 第五部：黃金之風",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "JoJo 的奇妙冒險 第六部：石之海": {
+      "workZh": "JoJo 的奇妙冒險 第六部：石之海",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "JoJo 的奇妙冒險 第四部：不滅鑽石": {
+      "workZh": "JoJo 的奇妙冒險 第四部：不滅鑽石",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "K": {
+      "workZh": "K（原創動畫）",
+      "translationBasis": "本作常以原名 K 發行；補中文作品類型便於閱讀，未將「王者」等未核譯法宣稱正式片名。",
+      "translationSourceGroup": "works",
+      "originalLabel": ""
+    },
+    "K-ON！輕音部": {
+      "workZh": "輕音部",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "KILL la KILL／斬服少女": {
+      "workZh": "斬服少女",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Kingdom Hearts": {
+      "workZh": "王國之心",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "MAGI 魔奇少年": {
+      "workZh": "魔奇少年",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Magi": {
+      "workZh": "魔奇少年",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Mario": {
+      "workZh": "瑪利歐系列",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Mega Man": {
+      "workZh": "洛克人",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Mega Man X": {
+      "workZh": "洛克人 X",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "NO GAME NO LIFE 遊戲人生": {
+      "workZh": "遊戲人生",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "ONE PIECE 航海王": {
+      "workZh": "航海王",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "OVERLORD": {
+      "workZh": "不死者之王",
+      "translationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
+      "translationSourceGroup": "works"
+    },
+    "One Piece": {
+      "workZh": "航海王",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Palworld / 幻獸帕魯": {
+      "workZh": "幻獸帕魯",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Pokémon": {
+      "workZh": "寶可夢",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Re:CREATORS": {
+      "workZh": "Re:創世主們",
+      "translationBasis": "採常用譯名「Re:創世主們」；中文維基作品條目列為常用譯名，正式名稱亦保留 Re:CREATORS，不宣稱此為臺灣正式譯名。",
+      "translationSourceGroup": "works"
+    },
+    "Re:Zero": {
+      "workZh": "Re:從零開始的異世界生活",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Re:從零開始的異世界生活": {
+      "workZh": "Re:從零開始的異世界生活",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "STEINS;GATE 命運石之門": {
+      "workZh": "命運石之門",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Shovel Knight": {
+      "workZh": "鏟子騎士",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Slayers": {
+      "workZh": "秀逗魔導士",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Sonic the Hedgehog": {
+      "workZh": "音速小子",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Street Fighter": {
+      "workZh": "快打旋風",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Super Smash Bros. Ultimate": {
+      "workZh": "任天堂明星大亂鬥 特別版（角色原作待確認）",
+      "translationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
+      "translationSourceGroup": "works",
+      "originalLabel": "Super Smash Bros. Ultimate"
+    },
+    "Super Smash Bros. Ultimate; original series pending identifier review": {
+      "workZh": "任天堂明星大亂鬥 特別版（角色原作待確認）",
+      "translationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
+      "translationSourceGroup": "works",
+      "originalLabel": "Super Smash Bros. Ultimate"
+    },
+    "Sword Art Online": {
+      "workZh": "刀劍神域",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "TIGER×DRAGON！／龍與虎": {
+      "workZh": "龍與虎",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "TSUBASA 翼／翼年代記": {
+      "workZh": "翼／翼年代記",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "Tales collaboration (identity label pending)": {
+      "workZh": "作品待確認（傳奇系列合作標籤，角色身分待核）",
+      "translationBasis": "原字串明列 identity label pending；只翻譯合作標籤，不從角色代碼推定個別傳奇作品。",
+      "translationSourceGroup": "works"
+    },
+    "The King of Fighters": {
+      "workZh": "拳皇",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "The Legend of Zelda": {
+      "workZh": "薩爾達傳說",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Virtua Fighter": {
+      "workZh": "VR快打",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Warriors Orochi": {
+      "workZh": "無雙 OROCHI 蛇魔",
+      "translationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
+      "translationSourceGroup": "works"
+    },
+    "Wrestling / meme": {
+      "workZh": "作品待確認（摔角／網路迷因分類）",
+      "translationBasis": "原字串僅為題材／迷因分類，不足以確定作品。",
+      "translationSourceGroup": "works"
+    },
+    "Yes! 光之美少女5／GoGo!": {
+      "workZh": "Yes! 光之美少女5／GoGo!",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "unknown": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料為 unknown；未從名稱或檔名猜作品。",
+      "translationSourceGroup": "works"
+    },
+    "unverified source identity": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源身分未核；保留未確認狀態。",
+      "translationSourceGroup": "works"
+    },
+    "一人之下": {
+      "workZh": "一人之下",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "一拳超人 ONE-PUNCH MAN": {
+      "workZh": "一拳超人 ONE-PUNCH MAN",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "七夜怪談": {
+      "workZh": "七夜怪談",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "七夜怪談 / Dead by Daylight": {
+      "workZh": "七夜怪談／黎明死線",
+      "translationBasis": "保留已列原作「七夜怪談」，將來源遊戲 Dead by Daylight 補為常見繁中名「黎明死線」；不合併兩種來源層次。",
+      "translationSourceGroup": "works"
+    },
+    "七龍珠": {
+      "workZh": "七龍珠",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "七龍珠／Dragon Ball 系列": {
+      "workZh": "七龍珠／Dragon Ball 系列",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "三國演義題材（300英雄改編）": {
+      "workZh": "三國演義題材（300英雄改編）",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "中二病也想談戀愛！": {
+      "workZh": "中二病也想談戀愛！",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "中華一番": {
+      "workZh": "中華一番",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "伍六七／刺客伍六七": {
+      "workZh": "伍六七／刺客伍六七",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：202511z13": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：SSR鬼神吕布鬼脸将军": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：WOW兽人祭祀法师": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：中洲队潇洒哥": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：二次元巫女": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：人妖喜乐": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：休闲西装版七夜智贵": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：假面绅士": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：光刀女剑二次元": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：动漫卡尔斯": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：可爱娃娃": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：可爱小宠物chii吉伊": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：圣洁化身戚小姐": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：天使可爱小女孩派蒙": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：女刺客双见凛": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：搞怪哆啦A梦猫": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：海星动画人": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：牛魔角仙人男": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：狂刀风衣男": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：甲贺忍蛙": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：白西装七夜志贵": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：篮球小男孩": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：绯红女剑校服女": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：逃亡的盗墓女孩": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：遥远救世主拳皇": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：银发动漫正装男": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：雷欧·凹凸曼无披风版": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：韩当武侠猛男": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：龙族亚瑟王": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "來源作品待核；論壇標題：龙珠超孙悟空": {
+      "workZh": "作品待確認",
+      "translationBasis": "原資料明列來源作品待核；論壇標題僅保留於原 work key，不據此猜角色原作。",
+      "translationSourceGroup": "works"
+    },
+    "全職高手": {
+      "workZh": "全職高手",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "出包王女 To LOVE-Ru": {
+      "workZh": "出包王女",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "刀劍神域": {
+      "workZh": "刀劍神域",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "刀劍神域 Sword Art Online": {
+      "workZh": "刀劍神域",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "刃牙": {
+      "workZh": "刃牙",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "加速世界": {
+      "workZh": "加速世界",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "北斗神拳": {
+      "workZh": "北斗神拳",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "原創": {
+      "workZh": "原創",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "只有神知道的世界": {
+      "workZh": "只有神知道的世界",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "吉伊卡哇": {
+      "workZh": "吉伊卡哇",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "名偵探柯南": {
+      "workZh": "名偵探柯南",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "咕嚕咕嚕魔法陣": {
+      "workZh": "咕嚕咕嚕魔法陣",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "哆啦A夢": {
+      "workZh": "哆啦A夢",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "喜羊羊與灰太狼": {
+      "workZh": "喜羊羊與灰太狼",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "噬血狂襲": {
+      "workZh": "噬血狂襲",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "在下坂本，有何貴幹？": {
+      "workZh": "在下坂本，有何貴幹？",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "境界的彼方": {
+      "workZh": "境界的彼方",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "境界線上的地平線": {
+      "workZh": "境界線上的地平線",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "大王饒命": {
+      "workZh": "大王饒命",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "天降之物": {
+      "workZh": "天降之物",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "妖怪少爺／滑頭鬼之孫": {
+      "workZh": "妖怪少爺／滑頭鬼之孫",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "妖狐×僕SS": {
+      "workZh": "妖狐×僕SS",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "小林家的龍女僕": {
+      "workZh": "小林家的龍女僕",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "干物妹！小埋": {
+      "workZh": "干物妹！小埋",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "庫洛魔法使／魔卡少女櫻": {
+      "workZh": "庫洛魔法使／魔卡少女櫻",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "怕痛的我，把防禦力點滿就對了": {
+      "workZh": "怕痛的我，把防禦力點滿就對了",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "戀姬†無雙 系列": {
+      "workZh": "戀姬†無雙 系列",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "我想成為影之強者": {
+      "workZh": "我想成為影之強者",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "我的妹妹哪有這麼可愛！": {
+      "workZh": "我的妹妹哪有這麼可愛！",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "我的朋友很少": {
+      "workZh": "我的朋友很少",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "戰姬絕唱 SYMPHOGEAR": {
+      "workZh": "戰姬絕唱 SYMPHOGEAR",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "數碼寶貝大冒險": {
+      "workZh": "數碼寶貝大冒險",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "斬！赤紅之瞳": {
+      "workZh": "斬！赤紅之瞳",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "新世紀福音戰士": {
+      "workZh": "新世紀福音戰士",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "旋風管家！": {
+      "workZh": "旋風管家！",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "暗殺教室": {
+      "workZh": "暗殺教室",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "未來日記": {
+      "workZh": "未來日記",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "末日時在做什麼？有沒有空？可以來拯救嗎？": {
+      "workZh": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "東京喰種／東京食屍鬼": {
+      "workZh": "東京喰種／東京食屍鬼",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "東方 Project": {
+      "workZh": "東方系列",
+      "translationBasis": "原字串已有「東方」，以慣用中文「東方系列」展開 Project；不指認特定子作品。",
+      "translationSourceGroup": "works"
+    },
+    "機動戰士鋼彈": {
+      "workZh": "機動戰士鋼彈",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "機動戰士鋼彈 SEED DESTINY": {
+      "workZh": "機動戰士鋼彈 SEED DESTINY",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "機器人動畫": {
+      "workZh": "作品待確認（機器人動畫分類）",
+      "translationBasis": "僅有作品類型，沒有具體作品名稱；不從角色名稱推定作品。",
+      "translationSourceGroup": "works"
+    },
+    "機巧少女不會受傷": {
+      "workZh": "機巧少女不會受傷",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "沙耶之歌": {
+      "workZh": "沙耶之歌",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "流浪神差／野良神": {
+      "workZh": "流浪神差／野良神",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "火影忍者 NARUTO": {
+      "workZh": "火影忍者",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "灼眼的夏娜": {
+      "workZh": "灼眼的夏娜",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "為美好的世界獻上祝福！": {
+      "workZh": "為美好的世界獻上祝福！",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "烙印勇士": {
+      "workZh": "烙印勇士",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "無職轉生～到了異世界就拿出真本事～": {
+      "workZh": "無職轉生～到了異世界就拿出真本事～",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "無頭騎士異聞錄 DuRaRaRa!!": {
+      "workZh": "無頭騎士異聞錄",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "物語系列": {
+      "workZh": "物語系列",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "犬夜叉": {
+      "workZh": "犬夜叉",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "狐妖小紅娘": {
+      "workZh": "狐妖小紅娘",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "狼與辛香料": {
+      "workZh": "狼與辛香料",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "甲鐵城的卡巴內里": {
+      "workZh": "甲鐵城的卡巴內里",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "畫江湖之不良人": {
+      "workZh": "畫江湖之不良人",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "異形 Alien": {
+      "workZh": "異形",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "百花繚亂 SAMURAI GIRLS": {
+      "workZh": "百花繚亂 SAMURAI GIRLS",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "盾之勇者成名錄": {
+      "workZh": "盾之勇者成名錄",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "神偷怪盜／魔術快斗；名偵探柯南": {
+      "workZh": "神偷怪盜／魔術快斗；名偵探柯南",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "神劍闖江湖": {
+      "workZh": "神劍闖江湖",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "神劍闖江湖／浪客劍心": {
+      "workZh": "神劍闖江湖／浪客劍心",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "秀逗魔導士": {
+      "workZh": "秀逗魔導士",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "秀逗魔導士 Slayers": {
+      "workZh": "秀逗魔導士",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "科學超電磁砲": {
+      "workZh": "科學超電磁砲",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "秦時明月": {
+      "workZh": "秦時明月",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "空之境界": {
+      "workZh": "空之境界",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "約會大作戰 DATE A LIVE": {
+      "workZh": "約會大作戰",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "結城友奈是勇者": {
+      "workZh": "結城友奈是勇者",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "緋彈的亞莉亞": {
+      "workZh": "緋彈的亞莉亞",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "聖鬥士星矢": {
+      "workZh": "聖鬥士星矢",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "膽大黨": {
+      "workZh": "膽大黨",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "艦隊 Collection／艦隊收藏": {
+      "workZh": "艦隊收藏",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "艾梅洛閣下II世事件簿": {
+      "workZh": "艾梅洛閣下II世事件簿",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "葫蘆兄弟／葫蘆娃": {
+      "workZh": "葫蘆兄弟／葫蘆娃",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "葬送的芙莉蓮": {
+      "workZh": "葬送的芙莉蓮",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "薔薇少女 Rozen Maiden": {
+      "workZh": "薔薇少女",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "藥師少女的獨語": {
+      "workZh": "藥師少女的獨語",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "蠟筆小新": {
+      "workZh": "蠟筆小新",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "襲來！美少女邪神／潛行吧！奈亞子": {
+      "workZh": "襲來！美少女邪神／潛行吧！奈亞子",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "西遊記": {
+      "workZh": "西遊記",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "請問您今天要來點兔子嗎？": {
+      "workZh": "請問您今天要來點兔子嗎？",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "變態假面": {
+      "workZh": "變態假面",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "賭博默示錄": {
+      "workZh": "賭博默示錄",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "超次元戰記 戰機少女／Neptunia 系列": {
+      "workZh": "超次元戰記 戰機少女",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "迷宮黑心企業／異世界迷宮黑心企業": {
+      "workZh": "迷宮黑心企業／異世界迷宮黑心企業",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "這樣算是殭屍嗎？": {
+      "workZh": "這樣算是殭屍嗎？",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "進擊的巨人": {
+      "workZh": "進擊的巨人",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "遊戲王／遊戲王 怪獸之決鬥": {
+      "workZh": "遊戲王／遊戲王 怪獸之決鬥",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "銀魂": {
+      "workZh": "銀魂",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "鋼之鍊金術師": {
+      "workZh": "鋼之鍊金術師",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "鎧甲勇士刑天": {
+      "workZh": "鎧甲勇士刑天",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "鎮魂街": {
+      "workZh": "鎮魂街",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "鏈鋸人": {
+      "workZh": "鏈鋸人",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "關於我轉生變成史萊姆這檔事": {
+      "workZh": "關於我轉生變成史萊姆這檔事",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "阿凡提故事題材（300英雄改編）": {
+      "workZh": "阿凡提故事題材（300英雄改編）",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "雛蜂": {
+      "workZh": "雛蜂",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "霧山五行": {
+      "workZh": "霧山五行",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "鬼滅之刃": {
+      "workZh": "鬼滅之刃",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "魂斗羅 Contra": {
+      "workZh": "魂斗羅",
+      "translationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "translationSourceGroup": "works"
+    },
+    "魔法少女奈葉": {
+      "workZh": "魔法少女奈葉",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "魔法少女小圓": {
+      "workZh": "魔法少女小圓",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "魔法禁書目錄／科學超電磁砲": {
+      "workZh": "魔法禁書目錄／科學超電磁砲",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "魔法科高中的劣等生": {
+      "workZh": "魔法科高中的劣等生",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "魔法紀錄 魔法少女小圓外傳": {
+      "workZh": "魔法紀錄 魔法少女小圓外傳",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "黑執事": {
+      "workZh": "黑執事",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    },
+    "黑色子彈／漆黑的子彈": {
+      "workZh": "黑色子彈／漆黑的子彈",
+      "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
+      "translationSourceGroup": "works"
+    }
+  },
+  "sourcesByGroup": {
+    "works": [
+      {
+        "kind": "local-input",
+        "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+        "scope": "226 original work labels and their existing uncertainty statements",
+        "revision": "45d9d782a23edf5b8845a1b706d345c5b9588b0f",
+        "projectionFields": [
+          "id",
+          "name",
+          "work",
+          "status",
+          "aliases"
+        ],
+        "projectionSha256": "f83f210e710e325146648f0f0b2608570ecd40ab8de0b4faf5326de04913e02b"
+      },
+      {
+        "kind": "common-title-dictionary",
+        "scope": "Conventional Traditional Chinese title display. No per-title official localization verification; every applicable row states this in translationBasis."
+      },
+      {
+        "kind": "web-title-check",
+        "url": "https://zh.wikipedia.org/wiki/Re%3ACREATORS",
+        "works": [
+          "Re:CREATORS"
+        ],
+        "evidence": "常用譯名：Re:創世主們；正式譯名列原文與其他地區譯法。"
+      },
+      {
+        "kind": "web-title-check",
+        "url": "https://zh.wikipedia.org/wiki/Fate/stay_night_%28%E7%94%B5%E8%A7%86%E5%8A%A8%E7%94%BB%29",
+        "works": [
+          "Fate/stay night"
+        ],
+        "evidence": "正式譯名欄記載臺灣「Fate/stay night 命運／停駐之夜」。"
+      },
+      {
+        "kind": "web-title-check",
+        "url": "https://zh.wikipedia.org/wiki/Fate/EXTRA",
+        "works": [
+          "Fate/EXTRA 系列"
+        ],
+        "evidence": "保留作品標題 Fate/EXTRA，不另造子作譯名。"
+      },
+      {
+        "kind": "web-title-check",
+        "url": "https://zh.wikipedia.org/wiki/K_%28%E5%8B%95%E7%95%AB%29",
+        "works": [
+          "K"
+        ],
+        "evidence": "以 K 為作品標題；只加中文「原創動畫」說明。"
+      },
+      {
+        "kind": "web-title-check",
+        "url": "https://moegirl.uk/index.php?title=%E9%BB%91%E5%B2%A9%E5%B0%84%E6%89%8B_THE_GAME&variant=zh-tw",
+        "works": [
+          "BLACK★ROCK SHOOTER THE GAME"
+        ],
+        "evidence": "遊戲版與 THE GAME 對應；用常見中文名稱，非官方翻譯認證。"
+      }
+    ],
+    "names_other": [
+      {
+        "id": "input-rows",
+        "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+        "scope": "133 non-ssbu-native rows without Han characters in the original name; source identity/status left unchanged",
+        "revision": "45d9d782a23edf5b8845a1b706d345c5b9588b0f",
+        "projectionFields": [
+          "id",
+          "name",
+          "work",
+          "status",
+          "aliases"
+        ],
+        "projectionSha256": "f83f210e710e325146648f0f0b2608570ecd40ab8de0b4faf5326de04913e02b"
+      },
+      {
+        "id": "smash-roster-zh",
+        "url": "https://zh.wikipedia.org/zh-tw/任天堂明星大亂鬥系列角色列表",
+        "kind": "community-reference",
+        "scope": "Common Traditional Chinese fighter names; not proof that each local model has that identity."
+      },
+      {
+        "id": "nintendo-banjo",
+        "url": "https://www.nintendo.com/tw/topics/article/a_190612_01.html",
+        "kind": "official",
+        "scope": "阿邦＆阿卡"
+      },
+      {
+        "id": "nintendo-byleth",
+        "url": "https://ec.nintendo.com/HK/zh/aocs/70050000009027",
+        "kind": "official",
+        "scope": "貝雷特／貝雷絲"
+      },
+      {
+        "id": "nintendo-bayonetta",
+        "url": "https://www.nintendo.com/tw/switch/axb7a/story/index.html",
+        "kind": "official",
+        "scope": "蓓優妮塔"
+      },
+      {
+        "id": "chiikawa-market",
+        "url": "https://chiikawamarket.jp/zh-hant/products/",
+        "kind": "official",
+        "scope": "Seven names and original romanized names listed side-by-side."
+      },
+      {
+        "id": "chiikawa-pocket",
+        "url": "https://gl.chiikawa-pocket.com/zh-hant/",
+        "kind": "official",
+        "scope": "Seven Traditional Chinese names; Shisa is 風獅爺 on this site."
+      },
+      {
+        "id": "geass-character",
+        "url": "https://geass.jp/r2/chara_04.html",
+        "kind": "official",
+        "scope": "CC remains a letter-code name; Chinese display is a paraphrased character descriptor, not a claimed official Han name."
+      },
+      {
+        "id": "paldb-daedream",
+        "url": "https://paldb.cc/tw/Daedream",
+        "kind": "community-reference",
+        "scope": "#22 寐魔"
+      },
+      {
+        "id": "kingdom-hearts-characters",
+        "url": "https://zh.wikipedia.org/wiki/王國之心系列角色列表",
+        "kind": "community-reference",
+        "scope": "Aqua = 亞克雅"
+      },
+      {
+        "id": "sega-shadow",
+        "url": "https://asia.sega.com/SonicXShadowGenerations/cht/products.html?verEdition=0&verQuery=0",
+        "kind": "official",
+        "scope": "夏特"
+      },
+      {
+        "id": "playstation-guile",
+        "url": "https://blog.zh-hant.playstation.com/?p=13097",
+        "kind": "official",
+        "scope": "凱爾"
+      }
+    ],
+    "names_ssbu": [
+      {
+        "id": "input",
+        "type": "local-input",
+        "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+        "scope": "本次僅覆蓋 ssbu-native: 的 177 行；身份狀態與原始ID不可由此 overlay 改寫。",
+        "revision": "45d9d782a23edf5b8845a1b706d345c5b9588b0f",
+        "projectionFields": [
+          "id",
+          "name",
+          "work",
+          "status",
+          "aliases"
+        ],
+        "projectionSha256": "f83f210e710e325146648f0f0b2608570ecd40ab8de0b4faf5326de04913e02b"
+      },
+      {
+        "id": "ssbu-assist-tc",
+        "url": "https://www.smashbros.com/TC/item/assistfigure.html",
+        "title": "任天堂明星大亂鬥 特別版：輔助模型（繁中）",
+        "scope": "名稱用語；頁面保留多個英文名稱，對那些項目另做中文音譯／說明。不是本機檔案身份或完整性驗收。"
+      },
+      {
+        "id": "ssbu-assist-jp",
+        "url": "https://www.smashbros.com/ja_JP/item/assistfigure.html",
+        "title": "大乱闘スマッシュブラザーズ SPECIAL：アシストフィギュア",
+        "scope": "批次核對ロビン=Isaac、電光のエレカ=Phosphora、うんてんしゅ=Kapp'n、ヘビガラス=蛇鱗鴉等；不依代碼推斷本體已完整。"
+      },
+      {
+        "id": "ssbu-pokemon-tc",
+        "url": "https://www.smashbros.com/TC/item/pokemon.html",
+        "title": "任天堂明星大亂鬥 特別版：寶可夢（繁中）",
+        "scope": "寶可夢中文名稱；原頁包含形態但本機檔案的形態仍待驗。"
+      },
+      {
+        "id": "pokedex-kofuurai",
+        "url": "https://tw.portal-pokemon.com/play/pokedex/0665",
+        "title": "台灣寶可夢官方圖鑑：粉蝶蛹",
+        "scope": "粉蝶蛹正名，避免與彩粉蝶混淆。"
+      },
+      {
+        "id": "pokedex-kairyu",
+        "url": "https://tw.portal-pokemon.com/pokedex/0149/",
+        "title": "台灣寶可夢官方圖鑑：快龍",
+        "scope": "快龍中文名称。"
+      },
+      {
+        "id": "pokedex-marumine",
+        "url": "https://tw.portal-pokemon.com/play/pokedex/0101",
+        "title": "台灣寶可夢官方圖鑑：頑皮雷彈",
+        "scope": "頑皮雷彈中文名稱，未指定本機模型的地區形態。"
+      },
+      {
+        "id": "kirby-dreamfriends-tc",
+        "url": "https://www.nintendo.com/tw/switch/kirby_star_allies/pc/dreamfriends/index.html",
+        "title": "任天堂 星之卡比 新星同盟：夢幻盟友",
+        "scope": "Marx 使用官方繁中魔嚕酷；招式部件中文僅按其代碼描述。"
+      }
+    ]
+  }
+}

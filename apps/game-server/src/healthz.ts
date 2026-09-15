@@ -20,6 +20,7 @@ import { platformStatusWithContent } from "./config/contentBus";
 import { degradedHealthzStatus, replayHealth, type ReplayHealthSnapshot } from "./replay/replayHealth";
 import { contentHealth, type ContentHealthSnapshot } from "./contentHealth";
 import { contentCacheHealth, type ContentCacheSnapshot } from "./contentCacheHealth";
+import { heroModelHealth, type HeroModelHealthSnapshot } from "./heroModelHealth";
 import { buildHealth, buildStampGateMode, type BuildHealthSnapshot } from "./buildHealth";
 
 export interface HealthzPayload {
@@ -44,6 +45,8 @@ export interface HealthzPayload {
    * 見 ./contentCacheHealth.ts 的檔頭。
    */
   contentCache: ContentCacheSnapshot;
+  /** ⭐ GH#1230 —— 開機量一次：今天有幾隻英雄會畫成體素替身。⛔ 刻意不影響 `ok`。 */
+  heroModels: HeroModelHealthSnapshot;
   /**
    * ⭐ GH#949 —— 「這台在跑哪一版」。
    *
@@ -107,6 +110,7 @@ export function buildHealthzPayload(): HealthzPayload {
     replay,
     content,
     contentCache: contentCacheHealth(),
+    heroModels: heroModelHealth(),
     build,
     platform: platformStatusWithContent(),
   };

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -36,10 +36,10 @@
   ],
   "id": "b2-makoto.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "本店定點營業範圍",
@@ -52,7 +52,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "effects": [
         {
@@ -90,5 +90,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-makoto.e.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

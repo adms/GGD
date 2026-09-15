@@ -1,0 +1,84 @@
+{
+  "schema": "ggd.ssbu-zero-component-delivery@1",
+  "deliveryId": "ssbu-zero-blender4513-v4",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "name": "Zero",
+    "nameZh": "Zero／傑洛",
+    "nativeId": "assist/zero",
+    "variant": "c00",
+    "sourceGame": "Super Smash Bros. Ultimate",
+    "originalSeries": "Mega Man X / Mega Man Zero"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/zero-c00.blend",
+    "bytes": 2387720,
+    "sha256": "e9ef80e0f910453a09c43d7b42282a65bbe9ecd45a9dae76be0a0c07dae26a21"
+  },
+  "finalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4",
+  "rebuildRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v5-rebuild",
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+    "bytes": 596332,
+    "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1"
+  },
+  "derivedTexture": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/derived-textures/asf_zero_body_col.png.ggd-256.png",
+    "bytes": 95963,
+    "sha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316"
+  },
+  "metrics": {
+    "triangles": 5276,
+    "drawPrimitives": 6,
+    "skinnedPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 75,
+    "textureCount": 4,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0,
+    "worldHeightMeters": 1.7999995976106125
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "ggdBudgetWarnings": [
+      "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "finiteFloatValuesChecked": 64788,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "f5652b4db8fce114d1e8b1aa39706b9a400e3c8b51aebb10251838289f76275a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "aab79bf6ff8a3328d8eb06b89e0dfcc41b488a732be5ab91e564787463acae6e"
+    }
+  ],
+  "gaps": [
+    "Source Blender contains zero actions; attack, death, locomotion and idle animation remain missing.",
+    "No GGD hero definition or skill binding exists for this exact Zero identity.",
+    "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+    "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+    "Hidden damage mesh remains preserved only in the original Blender source and is excluded from c00 visible appearance.",
+    "Exporter emitted NumPy overflow/divide warnings for one mesh transform; all 64,788 exported float values were finite in both validations and the WebGL render was visually intact."
+  ]
+}

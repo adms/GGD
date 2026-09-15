@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    56.0
+    75.0
   ],
   "manaCostTier": "極小",
   "targetsEnemies": true,
@@ -25,15 +25,16 @@
       "damageTier": "小",
       "apRatio": 0.6,
       "damageType": "magic",
-      "leechFlat": 50.0,
-      "intervalSec": 1.0,
-      "durationSec": 5.0,
+      "leechFlat": 50,
+      "intervalSec": 1,
+      "durationSec": 5,
       "stacking": "refresh",
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.nature.bolt",
-  "castTimeSec": 1.7,
+  "castTimeSec": 1,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

@@ -1,0 +1,186 @@
+{
+  "schema": "ggd-source-tool-copies@1",
+  "files": [
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/build-delivery.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/build-delivery.py",
+      "bytes": 17591,
+      "sha256": "85127a59da09b0e3b1c74c330cba81d834dcd9d21d5dc8038751e0dd3ed42ddd"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/declare_quantization.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/declare_quantization.py",
+      "bytes": 1612,
+      "sha256": "8a7d89e0aafbca2c384e664af7f756c1a91ebd84951195639a64a4d6ca9c2c2c"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/inspect_opgg_glb.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/inspect_opgg_glb.py",
+      "bytes": 6641,
+      "sha256": "9323ceb2a100b89a2e3c33e03ef0b5d22ac70c68593641aa0211b6064f4f3bf4"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/prepare_fbx_reserve.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/prepare_fbx_reserve.py",
+      "bytes": 5912,
+      "sha256": "e477d666aa3acca24e5f06943bc3b5e9407dc6d6f2617c960938155da6f62c9a"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/tools/static-analysis.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/static-analysis.py",
+      "bytes": 8790,
+      "sha256": "1a6b145f556aaf9f61eb772799344ac957e9c9acb3ff5358dad781bc07854bdc"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/analyze-astralym.mjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/analyze-astralym.mjs",
+      "bytes": 6644,
+      "sha256": "01ad30f19f787fce36ddfd3a7b18347dd2908dd115a559048fb999bc6f2af6cd"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/declare-quantization.mjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/declare-quantization.mjs",
+      "bytes": 2458,
+      "sha256": "09d8cc3fde6aef01dcf29b80997986f247bfdbbc60ac20964c4a1e7accc797f5"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/freeze-intake.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/freeze-intake.py",
+      "bytes": 2576,
+      "sha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/meshopt_decoder.cjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshopt_decoder.cjs",
+      "bytes": 32869,
+      "sha256": "05e1d7b12b8fe408b07690d701328671d026c4ace808684c942f398b1f0801d5"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/meshoptimizer-LICENSE.md",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshoptimizer-LICENSE.md",
+      "bytes": 1079,
+      "sha256": "e4a26033e3551fb2722888949fbb41e77aee628e8e8f04dcffeee301aa7e5634"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/tools/write-source-receipts.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/write-source-receipts.py",
+      "bytes": 9181,
+      "sha256": "d9e6487d04d61615a68f667ee298652fd5beb392335439eb3298ad51fbd95c22"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/tools/backup.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/tools/inspect_model.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/inspect_model.py",
+      "bytes": 3865,
+      "sha256": "41bb81c6aa63df4e32b474705ceef21a615dc419291467bad68aa6f8eead9aeb"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/tools/prepare-delivery.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/tools/standardize.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/standardize.py",
+      "bytes": 1878,
+      "sha256": "c26dcf6bb43b8bac27a664e46d0e10df04a2a0be92f3939b4758ce486e995550"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/tools/validate.cjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/validate.cjs",
+      "bytes": 527,
+      "sha256": "b794c4d7312645a5429976111c499bd2a6890205faa986d7f2ddf8953bf5c95e"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/acquire.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/acquire.py",
+      "bytes": 1450,
+      "sha256": "39b907ad2d1d1485d16e53b9b535b8017e3e1d2278b1ec71ebfe1f5ced233e58"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/backup.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/declare_quantization.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/declare_quantization.py",
+      "bytes": 1609,
+      "sha256": "06c5dd30f369a9aa6a3fa58707b1a8a71602bab8ce9bf9f9d8c91440d17acd69"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/inspect_glb.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/inspect_glb.py",
+      "bytes": 5296,
+      "sha256": "05895b064d87725d134cebc9924d9d7cc30209b643952b3216023193e2b0e8fd"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/prepare-delivery.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/validate-quantization.cjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/validate-quantization.cjs",
+      "bytes": 557,
+      "sha256": "565a5350d86f065a3d8ecb32d1595967a340a10aafa305e1e9771aa2245d746f"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/tools/validate.cjs",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/validate.cjs",
+      "bytes": 538,
+      "sha256": "e9cb4e5df9ef73c45cb5476e487309b4ad68cab8705aedb09e087f99dd52b69e"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/tools/acquire.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/acquire.py",
+      "bytes": 1303,
+      "sha256": "d7f5ebbbeee9bf7c8593f20957fd8a6d31665e286d328c9e7cb8cc6034d574e2"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/tools/analyze_audio.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/analyze_audio.py",
+      "bytes": 2416,
+      "sha256": "011a01271379bd5236451fae46fa6c2fa6f5add819b474056983ff871cfdf26a"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/tools/backup.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/tools/prepare-delivery.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/tools/backup.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/backup.py",
+      "bytes": 5549,
+      "sha256": "8f35ee8e71d0a49501e818860c269faed10599697bb2a86304e090aa031a8b76"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/tools/independent_audit.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/independent_audit.py",
+      "bytes": 7993,
+      "sha256": "e31346030fa32ddd6f6fb2aa3ba74ed56d91ae880369d76ea6494df46dd3aa10"
+    },
+    {
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/tools/parse_character_settings.py",
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/parse_character_settings.py",
+      "bytes": 7254,
+      "sha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025"
+    }
+  ],
+  "usage": "Exact copies of archived acquisition/analysis scripts. Some retain acquisition-machine paths; parameterized current entrypoints are documented in ../README.md."
+}

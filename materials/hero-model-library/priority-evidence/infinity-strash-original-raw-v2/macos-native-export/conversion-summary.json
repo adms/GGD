@@ -1,0 +1,217 @@
+{
+  "schema": "ggd.infinity-strash-macos-native-export-summary@1",
+  "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+  "tool": {
+    "sourceId": "infinity-strash-umodel-macos-v1",
+    "upstreamCommit": "a0bfb468d42be831b126632fd8a0ae6b3614f981",
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v1-texture-export-fix",
+    "manifestSha256": "8d8b04e40ef02d4d56095f07b20e1ba0b5b3be2c63fdd2d5ab98e3fe654bad35",
+    "binarySha256": "4fc7f059613f40fe380d196bd06a3703e423e1fff1dd5158fc4bb16e61c98bd1"
+  },
+  "outputs": {
+    "skeletalMeshGltf": 29,
+    "losslessPngTextures": 97,
+    "nativePsaAnimations": 12,
+    "meshManifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-mesh-components-v1/export-manifest.json",
+    "meshManifestSha256": "700fe8cfa26c88b9133e38c53e02303240dc20b60484baeaf0a15b06908112d6",
+    "textureManifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-textures-v1/export-manifest.json",
+    "textureManifestSha256": "d139fe705d9de5aee5c5e08050665ed7e20ae8f120b207e1b1d4c538bcb1101a",
+    "animationManifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v1/export-manifest.json",
+    "animationManifestSha256": "0ce67cd0185e2f1254aea3578271f6d5a6b81c493ed24816feb7c00a3ceabaa6"
+  },
+  "identities": [
+    {
+      "nativeId": "PN010",
+      "nameZh": "小呆／達伊",
+      "bodyVariantsReviewed": 8,
+      "state": "original-runtime-model-accepted-and-local-dropdown-registered"
+    },
+    {
+      "nativeId": "EN801",
+      "nameZh": "巴恩大魔王",
+      "form": "pre-transformation-old-vearn",
+      "state": "original-runtime-model-accepted-and-local-dropdown-registered"
+    },
+    {
+      "nativeId": "EN653",
+      "nameZh": "密斯特巴恩",
+      "state": "native-components-converted-and-kept-separate-pending-review"
+    }
+  ],
+  "daiVariantReceipts": [
+    {
+      "candidateId": "dai-pn010-01-sk_pn010_01cut_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-01-sk_pn010_01cut_body/receipt.json",
+      "receiptSha256": "69ef7a6c3c560fd7af0b1a0364627ae4d8776f2854bae8368a8b6629b93ceed0"
+    },
+    {
+      "candidateId": "dai-pn010-02-sk_pn010_02_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-02-sk_pn010_02_body/receipt.json",
+      "receiptSha256": "9b238fb9f6723e7e84bad2876e6735c9edf01d3c918e6f44aa4a0f0ab2c8a14f"
+    },
+    {
+      "candidateId": "dai-pn010-03-sk_pn010_03_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-03-sk_pn010_03_body/receipt.json",
+      "receiptSha256": "d58f0f2477be0a0a0c87dff89ca00065bba43a5eb4bdcedee46acbdebd1ef3ea"
+    },
+    {
+      "candidateId": "dai-pn010-05-sk_pn010_05_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-05-sk_pn010_05_body/receipt.json",
+      "receiptSha256": "4d545189714685e6c4ddeaad8de0ecdc1c1abddb5b0055278bea84a90156f174"
+    },
+    {
+      "candidateId": "dai-pn010-06-sk_pn010_06_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-06-sk_pn010_06_body/receipt.json",
+      "receiptSha256": "dfbad574e6a62c00517f4aa71f488f64ab2486370eb87a1c1956122b935a6249"
+    },
+    {
+      "candidateId": "dai-pn010-07-sk_pn010_07_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-07-sk_pn010_07_body/receipt.json",
+      "receiptSha256": "ffe62b3096f692c9e27e8b7d835898d4134fe94eeebdc041eb9ef287a238a17a"
+    },
+    {
+      "candidateId": "dai-pn010-08-sk_pn010_08_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-08-sk_pn010_08_body/receipt.json",
+      "receiptSha256": "6094b1b157ea618210f42d6e3f4f29b4dafaca3a3be765264eb3764367ee8345"
+    },
+    {
+      "candidateId": "dai-pn010-10-sk_pn010_10_body",
+      "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/dai-pn010-10-sk_pn010_10_body/receipt.json",
+      "receiptSha256": "897e4e7d8d6e2733154a7efa2c2dbe3f0fc35af3d14a05a540c22a5b17aad94b"
+    }
+  ],
+  "vearnReceiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/prepared-components-v1/vearn-en801-pre-transformation-body/receipt.json",
+  "vearnReceiptSha256": "d0a6b9bcaaf9bde788407b486b4eb65b7a97f96710854d3df5cb669255e813f0",
+  "visualEvidence": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/dai-pn010-body-variants.png",
+      "sha256": "682a2c87744a5f9d840a518168afd58ef58bafc13672e37dbd07ea5f24bf521c"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/vearn-en801-front.png",
+      "sha256": "1523fe0e4c45c1c0ea6cc59e525025e642d6fa3d9d273a960527daeb9781785e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/vearn-en801-isometric.png",
+      "sha256": "744c9a46a068f26f1a2c262ac932c4cac7d2ee5ea05034e1288d67dd51ca8904"
+    }
+  ],
+  "legacyBackups": [
+    {
+      "role": "umodelTool",
+      "sourceId": "infinity-strash-umodel-macos-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-umodel-macos-v1/e983d6aaf5bf845a8f65ece2ab53abbeef441aadbbaf5a5fd51831a556895183.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-umodel-macos-v1/e983d6aaf5bf845a8f65ece2ab53abbeef441aadbbaf5a5fd51831a556895183.files.json",
+      "archiveBytes": 5238624,
+      "archiveSha256": "e983d6aaf5bf845a8f65ece2ab53abbeef441aadbbaf5a5fd51831a556895183",
+      "fileCount": 5,
+      "manifestSha256": "1ab554ccb6d9cf4c0c66dc7fb34a887bca098d2b4ae3f23faf7e1c2246936ea5",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "meshComponents",
+      "sourceId": "infinity-strash-priority-mesh-components-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-components-v1/c9172b3ca3175082ae2315fe8302ef87cf50c488c2a24ae3df97db5bce1cf451.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-components-v1/c9172b3ca3175082ae2315fe8302ef87cf50c488c2a24ae3df97db5bce1cf451.files.json",
+      "archiveBytes": 11098316,
+      "archiveSha256": "c9172b3ca3175082ae2315fe8302ef87cf50c488c2a24ae3df97db5bce1cf451",
+      "fileCount": 110,
+      "manifestSha256": "15e7684f450cba088097d7102a0ca62584f0306e938758ec6ff6ba04d986f704",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "textures",
+      "sourceId": "infinity-strash-priority-textures-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-textures-v1/cfdf7808b89814bd56de8397e5989e2b3337a1ce8fbadb20fd5fc0a9d07e285d.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-textures-v1/cfdf7808b89814bd56de8397e5989e2b3337a1ce8fbadb20fd5fc0a9d07e285d.files.json",
+      "archiveBytes": 20146460,
+      "archiveSha256": "cfdf7808b89814bd56de8397e5989e2b3337a1ce8fbadb20fd5fc0a9d07e285d",
+      "fileCount": 195,
+      "manifestSha256": "f4509f4dac40557b2c8e96102b7efb7a2d5f3ec4f64274bb402f0e3ff7e55bec",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "nativeAnimations",
+      "sourceId": "infinity-strash-priority-native-animations-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v1/31aa17cba38360347cbc807237ce7959dabe9f3d8b749b071a1dc966a834329e.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v1/31aa17cba38360347cbc807237ce7959dabe9f3d8b749b071a1dc966a834329e.files.json",
+      "archiveBytes": 2191357,
+      "archiveSha256": "31aa17cba38360347cbc807237ce7959dabe9f3d8b749b071a1dc966a834329e",
+      "fileCount": 49,
+      "manifestSha256": "e0caa5fcec8c47b5402ab2ac8d28bf4f7c028adf0ea26f6d24175028ca027e19",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "preparedComponents",
+      "sourceId": "infinity-strash-prepared-components-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-prepared-components-v1/985416895e62eab62373f07e747891c4909157b9a1c4c55995698e887620dcf4.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-prepared-components-v1/985416895e62eab62373f07e747891c4909157b9a1c4c55995698e887620dcf4.files.json",
+      "archiveBytes": 10599227,
+      "archiveSha256": "985416895e62eab62373f07e747891c4909157b9a1c4c55995698e887620dcf4",
+      "fileCount": 54,
+      "manifestSha256": "1c71771c05570d28ee120ca47c392cb9539523fcabc251f90ad38983249d1df4",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "meshPsk",
+      "sourceId": "infinity-strash-priority-mesh-psk-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-psk-v1/894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-psk-v1/894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503.files.json",
+      "archiveBytes": 1981861,
+      "archiveSha256": "894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503",
+      "fileCount": 19,
+      "manifestSha256": "1a4a1debf0dc740de071f4c7af7d0791a372c6b61c65b5bae4f6167766da21d8",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "nativeAnimationsV2",
+      "sourceId": "infinity-strash-priority-native-animations-v2",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v2/3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v2/3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3.files.json",
+      "archiveBytes": 2279367,
+      "archiveSha256": "3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3",
+      "fileCount": 52,
+      "manifestSha256": "debedce2ee06325719ceb8975b1b7257878afb8ed1b0742192bec7d5d2199f0d",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "blenderAddon",
+      "sourceId": "blender-io-scene-psk-psa-9c1c8ba6",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.files.json",
+      "archiveBytes": 21381791,
+      "archiveSha256": "a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273",
+      "fileCount": 157,
+      "manifestSha256": "cd5cbd25610821fdf64292add1032a52ad77b2353925404c5cc3ae366c8ab7f6",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    },
+    {
+      "role": "finalRuntime",
+      "sourceId": "infinity-strash-final-runtime-delivery-v1",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.files.json",
+      "archiveBytes": 28708018,
+      "archiveSha256": "e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080",
+      "fileCount": 68,
+      "manifestSha256": "4508a5c82323dfa117361ddce7c67e30b203430b4c0585fd26e9cdd8687c353c",
+      "readbackVerified": true,
+      "allArchiveMembersSha256Verified": true
+    }
+  ],
+  "runtimeAcceptance": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+    "sha256": "78e57089ea694a12c22a4c6d57e4a1b684407aaf17f3564381ad1a70713f4efd"
+  },
+  "readiness": "two-original-runtime-models-accepted-and-local-dropdown-registered",
+  "postTransformationVearnLocated": false,
+  "runtimeDropdownRegistered": true,
+  "deploymentVerified": false
+}

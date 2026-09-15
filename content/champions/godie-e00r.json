@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 60.0649,
+    "maxHealth": 60,
     "healthRegen": 0.3328,
-    "maxMana": 21.9668,
+    "maxMana": 20,
     "manaRegen": 0.0679,
     "ad": 3.1016,
     "armor": 0.6681,
@@ -188,7 +188,8 @@
       "cooldownShape": "單體",
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-e00r.w",
@@ -303,7 +304,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-e00r.w.webp",
-      "vfxKey": "fx.prim.physical.slash"
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00r.e",
@@ -476,11 +478,12 @@
         "flashColor": [
           0.7,
           0.85,
-          1.0
+          1
         ],
         "flashMs": 120,
         "camKick": 0.3
-      }
+      },
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-e00r.r",
@@ -496,11 +499,12 @@
         60.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 8.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -565,9 +569,9 @@
         }
       ],
       "cooldownTier": "極大",
-      "manaCostTier": "大",
       "rangeTier": "大",
-      "castTimeSec": 0.833
+      "manaCostTier": "中",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

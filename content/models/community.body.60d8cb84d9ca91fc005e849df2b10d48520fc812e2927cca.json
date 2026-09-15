@@ -1,0 +1,16 @@
+{
+  "id": "community.body.60d8cb84d9ca91fc005e849df2b10d48520fc812e2927cca",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/256e318ecb9a40754306031f46e34ee15b0b9dc48edacccfdc7ee7cac5632e04.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "wait",
+    "run": "F-Move",
+    "attack": "attack_01",
+    "cast": "sp01_01",
+    "hurt": "Damage-1",
+    "death": "D-Down"
+  },
+  "yawOffsetDeg": 0
+}

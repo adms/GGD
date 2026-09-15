@@ -1,4 +1,5 @@
 // ggd:writes docs/editor-contract/ggd-editor-coverage.json
+// ggd:writes apps/editor/README.md
 /**
  * ⭐⭐ **編輯器必須實作什麼** —— 從出貨註冊表推導的**機器可讀清單**。
  *
@@ -58,6 +59,61 @@ import { zVfxScriptDoc } from "../../packages/shared/src/content/schema/vfxScrip
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT = join(REPO, "docs/editor-contract/ggd-editor-coverage.json");
+
+/**
+ * ⭐⭐ **README 收據** —— `apps/editor/README.md` 的「Contract gates」那一格。
+ *
+ * ⛔⛔ 在此之前那幾行是**手抄**的，⭐ 而它至少過期了四次（v0.44.1 · 合併前 main ·
+ * 7f57fa130 抄回 ebd5131324b1/5230 · integ-nc/0915 又漂到 899e14fa667d/5234）——
+ * 每一次都是「引擎長一格 ⇒ 這一份 JSON 自動變 ⇒ README 沒人跟 ⇒ readmeContract.test.ts 紅
+ * ⇒ 有人手抄一次」。⇒ ⭐ 那幾行是第〇·四守則說的「**第二個住處**」，而它的成本是 O(N)。
+ *
+ * ⇒ 現在它是這一支的 **marker 區段**（與 `gen_readme_lists.py` / `gen_contract_numbers.py`
+ * 同一個形狀；`tools/parallel-gates/marker_regions.py` 據此判「部分產物」——
+ * 區段外的散文照舊手編、隔離區不鎖整份）：
+ *
+ *     <!-- BEGIN GENERATED:editor-coverage-receipt --> … <!-- END GENERATED:editor-coverage-receipt -->
+ *
+ * ⭐ 同一次 run 寫 JSON 與收據 ⇒ `editorcov:check` 綠 ⇔ 兩者一致（結構上不可能只有一邊新）。
+ * ⛔ 標記之間的字不要手改 —— 下一次 `pnpm editorcov:build` 會打回來。
+ */
+const README = join(REPO, "apps/editor/README.md");
+const RECEIPT_REGION = "editor-coverage-receipt";
+
+function receiptBlock(c: {
+  fingerprint: string;
+  capabilityFingerprint: string;
+  required: unknown[];
+  counts: Record<string, number>;
+}): string {
+  const row = (label: string, value: string | number) => `${label.padEnd(32)}${value}`;
+  return [
+    "```text",
+    row("editor coverage fingerprint", c.fingerprint),
+    row("capability fingerprint", c.capabilityFingerprint),
+    row("required cells", c.required.length),
+    row("nested effect paths", c.counts["effectFieldPath"] ?? 0),
+    "```",
+  ].join("\n");
+}
+
+/** 把 marker 之間換成 `body`。⛔ 標記缺席／重複／顛倒 ⇒ 中止（手改事故，⛔ 不猜位置）。 */
+function spliceReceipt(text: string, body: string): string {
+  const begin = `<!-- BEGIN GENERATED:${RECEIPT_REGION} -->`;
+  const end = `<!-- END GENERATED:${RECEIPT_REGION} -->`;
+  const nb = text.split(begin).length - 1;
+  const ne = text.split(end).length - 1;
+  const i = text.indexOf(begin);
+  const j = text.indexOf(end);
+  if (nb !== 1 || ne !== 1 || j < i) {
+    process.stderr.write(
+      `⛔ apps/editor/README.md 的 '${RECEIPT_REGION}' 標記要剛好一對且 BEGIN 在前` +
+        `（BEGIN=${nb}, END=${ne}）—— 請手動修，⛔ 產生器不猜位置。\n`,
+    );
+    process.exit(1);
+  }
+  return text.slice(0, i) + `${begin}\n${body}\n${end}` + text.slice(j + end.length);
+}
 
 /**
  * ⭐ 這一份**內容**的指紋（12 hex）。⛔ 不吃時鐘、⛔ 不吃路徑 —— 只吃清單本身,
@@ -402,21 +458,32 @@ export function buildEditorCoverage(): {
   };
 }
 
-const rendered = JSON.stringify(buildEditorCoverage(), null, 2) + "\n";
+const coverage = buildEditorCoverage();
+const rendered = JSON.stringify(coverage, null, 2) + "\n";
+if (!existsSync(README)) {
+  process.stderr.write("⛔ apps/editor/README.md 不見了 —— 收據沒有地方寫（⛔ 不靜默跳過）。\n");
+  process.exit(1);
+}
+const readmeCur = readFileSync(README, "utf8");
+const readmeNext = spliceReceipt(readmeCur, receiptBlock(coverage));
 
 if (process.argv.includes("--check")) {
   const cur = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
-  if (cur !== rendered) {
+  const stale = [
+    cur !== rendered ? "docs/editor-contract/ggd-editor-coverage.json" : "",
+    readmeCur !== readmeNext ? `apps/editor/README.md（${RECEIPT_REGION} 區段）` : "",
+  ].filter(Boolean);
+  if (stale.length) {
     process.stderr.write(
-      "⛔ docs/editor-contract/ggd-editor-coverage.json 過期了。\n" +
-        "   ⭐ 跑：pnpm editorcov:build && git add docs/editor-contract/\n" +
-        "   ⚠️ ⛔ 不要手改那份 JSON —— 它從出貨註冊表推導（第〇·四守則）。\n",
+      `⛔ 過期了：${stale.join(" · ")}\n` +
+        "   ⭐ 跑：pnpm editorcov:build && git add docs/editor-contract/ apps/editor/README.md\n" +
+        "   ⚠️ ⛔ 不要手改那份 JSON 或 README 的收據區段 —— 它們從出貨註冊表推導（第〇·四守則）。\n",
     );
     process.exit(1);
   }
-  process.stdout.write("✓ ggd-editor-coverage.json 是新鮮的\n");
+  process.stdout.write("✓ ggd-editor-coverage.json 與 README 收據是新鮮的\n");
 } else {
   writeFileSync(OUT, rendered);
-  const c = buildEditorCoverage().counts;
-  process.stdout.write(`✓ ${OUT}\n  ${JSON.stringify(c)}\n`);
+  if (readmeNext !== readmeCur) writeFileSync(README, readmeNext);
+  process.stdout.write(`✓ ${OUT}\n✓ ${README}（${RECEIPT_REGION}）\n  ${JSON.stringify(coverage.counts)}\n`);
 }

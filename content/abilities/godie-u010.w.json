@@ -16,11 +16,11 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -50,15 +50,15 @@
       "damageType": "magic",
       "statusId": "slow40",
       "statusDurationSec": 1.5,
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     }
   },
   "vfxKey": "godie-fireblast-p3",
   "sfxKey": "wc3.hcancelbuilding",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 5,
@@ -66,7 +66,7 @@
     "shakeStyle": "omni",
     "sparkKind": "heavy",
     "flashColor": [
-      1.0,
+      1,
       0.66,
       0.3
     ],
@@ -75,5 +75,6 @@
   },
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

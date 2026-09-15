@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+  "modelSha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Pokémon Trainer (male) head, torso, arms and legs.",
+    "The visible face, clothing and bag match Pokémon Trainer (male) and remain distinct from the other Trainer identity.",
+    "No detached part, missing primary material, opaque facial card or bind-pose collapse is visible.",
+    "Review covers the static bind pose only because source and output contain no clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/front.png",
+      "bytes": 195452,
+      "sha256": "f7977d90e7fdacf456c1f1807e8cdbd111687e484204d11cba006b20471d20fd"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/back.png",
+      "bytes": 179602,
+      "sha256": "c1f3cd59fe201afb3456f89339a3fb9acff6f22210a8cad1af1a0d53d0dee77c"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/isometric.png",
+      "bytes": 198638,
+      "sha256": "896e777e6c8cf382946d4f00e14320769d78394a969aaedc81c40dfc76736ec5"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/contact-sheet.png",
+      "bytes": 410899,
+      "sha256": "740f3bf3fa03876401f4e517f2966673a4403ca7abd96f5026cddc078fe4d64b"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/webgl-proof.json",
+    "bytes": 6612,
+    "sha256": "27979d44a58955865768dc1dc88f49af743f234c3b17f21760cee6f61f670dda"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "path": "processed-run-side-250.png",
+      "bytes": 237694,
+      "sha256": "9cad257a49808bfa40482cbda58cb3c87cbda358ac7b7243a14db0726effe3a2",
+      "sourcePath": "evidence/playback/processed-run-side-250.png"
+    },
+    {
+      "path": "processed-idle-front-250.png",
+      "bytes": 305334,
+      "sha256": "fdb613049a245f6814cd322013e713feffea6832f386e4ba7c5254ecb7adc630",
+      "sourcePath": "evidence/playback/processed-idle-front-250.png"
+    }
+  ],
+  "sourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+  "manifestSha256": "f7e4bee9acc7c7e616f3c2b5e5dabeb1c92beb95051d3ecd88e62b6b83fcd27f",
+  "runtimeReady": false
+}

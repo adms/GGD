@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -33,12 +33,12 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 4,
@@ -46,11 +46,12 @@
     "shakeStyle": "directional",
     "sparkKind": "heavy",
     "flashColor": [
-      1.0,
+      1,
       0.52,
       0.22
     ],
     "flashMs": 108,
     "camKick": 0.27
-  }
+  },
+  "castTimeTier": "小"
 }

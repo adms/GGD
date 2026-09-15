@@ -5,7 +5,7 @@
   "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "imported.luffe",
+  "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -24,9 +24,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 59,
+    "maxHealth": 80,
     "healthRegen": 0.15,
-    "maxMana": 18,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 0.9,
     "armor": 0.5,
@@ -65,10 +65,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.nova",
@@ -98,7 +98,8 @@
           },
           "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-u00o.w",
@@ -116,15 +117,15 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "小",
@@ -144,12 +145,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "burnstun",
-            "duration": 1.0,
+            "duration": 1,
             "stun": true
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-u00o.e",
@@ -167,15 +169,15 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.demonhuntermissilehit3",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極大",
@@ -188,9 +190,10 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00o.r",
@@ -207,16 +210,16 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.ki.bolt-lg",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 2,
+      "radius": 6,
+      "castTimeSec": 1,
       "cooldownTier": "中",
       "manaCostTier": "小",
       "radiusTier": "中",
@@ -225,7 +228,7 @@
         "params": {
           "mode": "inPlace",
           "applyTo": "self",
-          "apexHeight": 1000.0,
+          "apexHeight": 1000,
           "durationSec": 0.84,
           "landRadius": 380.18,
           "damage": {
@@ -241,12 +244,13 @@
           "invulnerableSec": 0.84,
           "status": {
             "statusId": "burnstun",
-            "duration": 2.0,
+            "duration": 2,
             "stun": true
           },
-          "castTimeSec": 2
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [
@@ -279,5 +283,57 @@
         "1": 60.0
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.luffe",
+      "modelSha256": "4bfd7fe3b8aaae2e8ab55040db52a6f3a34aef131a772f922acd75c4be4decb9",
+      "binarySha256": "42995b064505d5d69ac3725e54a6ddb7256d16b9a3450460bd627ed4b294e532",
+      "registeredAt": "2026-09-09T07:13:26.998Z",
+      "source": {
+        "kind": "previous",
+        "character": "草帽小子 - 蒙其.D.魯夫",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.luffe.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
+      "label": "草帽小子",
+      "sourceModelKey": "community.body.8db1ff20165f108b20c94e940493e6d06944afb44e98c9ef",
+      "modelSha256": "20e11962ccff5f46557afa950be4167f55f24040a52df6d9fa7d0c284bfdb29b",
+      "binarySha256": "5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68",
+      "registeredAt": "2026-09-09T07:13:27.004Z",
+      "source": {
+        "kind": "exact",
+        "character": "草帽小子",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:6831f37192755a6d7bcce1f8",
+        "tier": "300heroes"
+      }
+    },
+    {
+      "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+      "label": "原上線模型（貼圖 256 正規化）",
+      "sourceModelKey": "imported.luffe",
+      "modelSha256": "033f4ea09a8f6e353a7a012bb41b5d37961c3ce7658affda0fcb08928cfffa86",
+      "binarySha256": "042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f",
+      "registeredAt": "2026-09-14T22:47:01.446Z",
+      "source": {
+        "kind": "exact",
+        "character": "草帽小子 - 蒙其.D.魯夫",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.luffe.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

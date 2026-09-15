@@ -25,15 +25,19 @@ import { ContentLoader, registerAll } from "../src/content/index";
 import { FsContentSource } from "../src/content/node/index";
 import { Abilities, Champions, championPassive } from "../src/sim/content/registry";
 import { isPassiveOnly } from "../src/sim/abilities/abilityPassives";
-import { deriveCastTime } from "../src/content/castTimeFormula";
+import {
+  DEFAULT_CAST_TIME_TIERS,
+  resolveCastTimeTier,
+  type CastTimeTiers,
+} from "../src/content/castTimeTiers";
 import type { ChampionId } from "../src/ids";
 
 const CONTENT_DIR = process.env.GGD_CONTENT_DIR ?? join(__dirname, "../../../content");
 const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
 registerAll(result.store);
 
-const env = result.store.tryGet<{ multipliers: Record<string, number> }>("config", "combat-env");
-const cdMult = env?.multipliers.cooldown ?? 1;
+const castTimeTiers =
+  result.store.tryGet<CastTimeTiers>("config", "cast-time-tiers") ?? DEFAULT_CAST_TIME_TIERS;
 
 console.log(`contentVersion ${result.manifest.contentVersion}`);
 console.log(`${Abilities.ids().length} abilities, ${Champions.ids().length} champions\n`);
@@ -74,9 +78,11 @@ for (const cid of withPassive) {
   if (Abilities.get(def.id) !== def) problem("registry returned a COPY, not the standalone doc");
   if (def.innateKind === undefined) problem("no innateKind — sim/UI cannot tell the two kinds apart");
 
-  const want = deriveCastTime(def, cdMult).castTimeSec;
+  const want = isPassiveOnly(def)
+    ? undefined
+    : resolveCastTimeTier(def.castTimeTier, castTimeTiers);
   if (def.castTimeSec !== want) {
-    problem(`castTimeSec ${String(def.castTimeSec)} != formula ${String(want)}`);
+    problem(`castTimeSec ${String(def.castTimeSec)} != tier fallback ${String(want)}`);
   }
   if (def.innateKind === "passive") {
     if (!isPassiveOnly(def)) problem('innateKind "passive" but the doc is castable (effects non-empty)');

@@ -1,0 +1,431 @@
+{
+  "schema": "ggd-priority-runtime-inputs@1",
+  "entries": [
+    {
+      "candidateId": "guts-community-procedural-ready-20260910",
+      "heroId": "b2-guts",
+      "name": "凱茲",
+      "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-v1",
+      "sha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+      "documentSha256": "02d9872a35e93854de3cbf7b8207643e6a4b860a7c4980a8facf516b797295ab",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Lethal Company MOD／RRoD",
+        "character": "凱茲｜狂戰士鎧甲",
+        "work": "烙印勇士 Berserk",
+        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "LOD uses Blender COLLAPSE; 2048 body texture reduced to1024; other three material textures retained.",
+        "Cape follows source skin weights without cloth simulation; death is a generic sideways fall."
+      ]
+    },
+    {
+      "candidateId": "maomao-community-procedural-ready-20260910",
+      "heroId": "b2-maomao",
+      "name": "貓貓",
+      "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/runtime-v2",
+      "sha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
+      "documentSha256": "03250a8b206fe27d8c62e88b34cf8940572e6a1d84bfff502e51c44c57d78cb9",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Lethal Company MOD／GrogCompany",
+        "character": "貓貓｜中性表情／小步幅",
+        "work": "藥師少女的獨語",
+        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "This explicitly named neutral-face derivative omits 58 source facial morph targets; original Unity bundle retains all 58, whose defaults are zero.",
+        "Run amplitude is 0.18 of initial procedural fallback to limit leg/skirt intersections; it is a restrained running-state gesture, not original character running motion.",
+        "The high-resolution original and original topology remain preserved; LOD uses Blender COLLAPSE and textures are reduced from2048 to1024.",
+        "Initial runtime-v1 is retained as historical review variant with visible large-stride skirt clipping; prefer runtime-v2."
+      ]
+    },
+    {
+      "candidateId": "turbo-granny-community-procedural-ready-20260910",
+      "heroId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "label": "高速婆婆｜招財貓形態（GGD 程序化動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/runtime-v1",
+      "sha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3",
+      "documentSha256": "72f43e059e28e506d3126eca0bf3807aeaf8176c563e89f5fcaa79c146da5d7d",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "manual",
+        "library": "Lethal Company MOD／inkiidonut",
+        "character": "高速婆婆｜招財貓形態",
+        "work": "膽大黨 Dandadan",
+        "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "Confirmed lucky-cat form; distinct from pre-existing ou99.458013 owner-listed similar proxy.",
+        "All 9432 source triangles and five material slots retained; no decimation required."
+      ]
+    },
+    {
+      "candidateId": "tmr-sinbad-baal-procedural-six-state-v1",
+      "heroId": "b2-sinbad",
+      "name": "辛巴達",
+      "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/sinbad-baal-runtime-option-20260910/runtime-v3",
+      "sha256": "535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5",
+      "documentSha256": "7679d7aced0d9eeb50223f7aa475bf09e09300526dd41eee40419d19c2c22c4a",
+      "source": {
+        "kind": "alternate",
+        "tier": "original",
+        "selectionClass": "manual",
+        "library": "3DS Magi／The Models Resource",
+        "character": "辛巴達（巴力魔裝）",
+        "work": "魔奇少年 Magi",
+        "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/"
+      },
+      "limitations": [
+        "使用者允許巴力魔裝兼用一般形態；未取得另一套一般服裝。",
+        "六段均為 GGD 程序化替補動作，原生模型不含遊戲動作。",
+        "原始 DAE、六張 PNG、完整原包保留；不代表專屬技能、特效、音訊及實戰時序已完成。"
+      ]
+    },
+    {
+      "candidateId": "gta5mod-shinchan-kstamil-procedural-six-state-v1",
+      "heroId": "b2-shinchan",
+      "name": "野原新之助",
+      "label": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/kstamil-runtime-v2",
+      "sha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "documentSha256": "be27bdd44a4c1aecfd8f8f96ba6e4150d0c237af9796b0d07bc7e4c3b8615447",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
+        "character": "野原新之助（normal outfit 紅衣／黃褲）",
+        "work": "蠟筆小新",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化替補，來源未附 YCD／原作動作。",
+        "原始 58,752 面模型、骨架及貼圖全部保留；可用副本減至 25,262 面，1024 貼圖圖集。",
+        "KS 另8張作者替換貼圖已保存，尚待組合，未冒稱已成後台外觀選項。",
+        "來源權利聲明原文保存；技術檢查未代表完成來源再散布授權確認。"
+      ]
+    },
+    {
+      "candidateId": "gta5mod-shinchan-sd2-procedural-six-state-v1",
+      "heroId": "b2-shinchan",
+      "name": "野原新之助",
+      "label": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/sd2-runtime-v2",
+      "sha256": "9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e",
+      "documentSha256": "20f51a6f820bfc182a054630cb186ce23e5546af0998fa51187baf297c34dbc3",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "GTA V MOD／GTA5OPMOD",
+        "character": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
+        "work": "蠟筆小新",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化替補，來源未附 YCD／原作動作。",
+        "原始 58,752 面模型、骨架及貼圖全部保留；可用副本減至 25,262 面，1024 貼圖圖集。",
+        "KS 另8張作者替換貼圖已保存，尚待組合，未冒稱已成後台外觀選項。",
+        "來源權利聲明原文保存；技術檢查未代表完成來源再散布授權確認。"
+      ]
+    },
+    {
+      "candidateId": "naofumi-native-material-fixed-procedural-v2",
+      "heroId": "b2-naofumi",
+      "name": "岩谷尚文",
+      "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2",
+      "sha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+      "documentSha256": "770e5c2c88f7604f9be0e14864073314ed5ddb44a2fac1886984e72d654e120a",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "GTA SA 社群 MOD",
+        "character": "岩谷尚文",
+        "work": "盾之勇者成名錄",
+        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/"
+      },
+      "limitations": [
+        "原生模型轉出32骨及四材質；修復錯誤 BLEND 模式為來源對應 OPAQUE，保留完整貼圖與 specular。",
+        "減面至26,000面；全部八組骨權重保留，原始高面數 DFF/TXD 與錯誤試作另存。",
+        "六段均為GGD程序化替补動作，非原生遊戲動作；技能實戰及專用特效未宣稱完成。"
+      ]
+    },
+    {
+      "candidateId": "haga-native-visibility-v1",
+      "heroId": "b2-haga",
+      "name": "羽賀",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/haga-native-visibility-20260910/runtime-v2-hidden-primitive",
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "documentSha256": "e529f1cd3a8a776f4da7c13a517c781d48218558ffee67b148db825be0e53f0d",
+      "source": {
+        "kind": "style-proxy",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "library": "ou99",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html"
+      },
+      "nativeAnimationCount": 13,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-inspect-budget-backend-prepare-and-82-sample-babylon-comparison-passed",
+      "limitations": [
+        "This remains the previously approved Patrick Star style proxy for Haga; no identity upgrade.",
+        "All 13 original clips, original geometry, textures and motion channels retained; binary source GEOA restored by exclusive leaf-joint STEP scale.",
+        "Direct playback across 13 clips sampled; animation blending may transiently scale the decay-only geoset.",
+        "Production deployment and full gameplay acceptance remain pending."
+      ]
+    },
+    {
+      "candidateId": "kaiji-holya-procedural-six-state-v1",
+      "heroId": "b2-kaiji",
+      "name": "伊藤開司",
+      "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/runtime-v2",
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "documentSha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Lethal Company MOD／holya",
+        "character": "伊藤開司",
+        "work": "賭博默示錄",
+        "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/"
+      },
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
+      "limitations": [
+        "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+        "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+        "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+        "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+        "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+        "技術模型驗收及後台登記與正式站部署分開記錄。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-dai-pn010-02-native-v1",
+      "heroId": "godie-nbbc",
+      "name": "小呆／達伊",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
+      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+        "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+      "heroId": "godie-nbbc",
+      "name": "小呆／達伊",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "小呆／達伊（PN010/05，達伊之劍）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+        "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+        "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
+      ],
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.files.json",
+        "sha256": "c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6",
+        "bytes": 29617453,
+        "fileCount": 147,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/s3-conversion-receipt.json"
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vearn-en801-pre-transformation-native-v1",
+      "heroId": "godie-ubal",
+      "name": "巴恩大魔王",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
+      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+        "GGD hurt/death 共用原生死亡序列。",
+        "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-popp-pn020-00-magikaru-native-v2",
+      "heroId": "b2-popp",
+      "name": "何布／波普",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00",
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "documentSha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
+        "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
+        "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
+        "Mahouno／Kagayaki 已另建獨立選項；特效、動畫事件、技能時序與完整實戰尚未綁定，正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-popp-pn020-01-mahouno-native-v1",
+      "heroId": "b2-popp",
+      "name": "何布／波普",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "documentSha256": "55740b6bfdfa9d7e18676729f761dee169fa44eb833984fd299ffa939e539b0e",
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/s3-conversion-receipt.json"
+      },
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "何布／波普（PN020/01，Mahouno）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Mahouno 法杖；CB_PN020_01 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Mahouno Base／Normal／Bundle／Shade 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Base，原作 toon、金屬及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+      "heroId": "b2-popp",
+      "name": "何布／波普",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "documentSha256": "a4df65eba593278c5fb065b86988ab18b329244e46d5b38917f0599316e992c3",
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/s3-conversion-receipt.json"
+      },
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "何布／波普（PN020/02，Kagayaki）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/02; CB_PN020_02; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Kagayaki 法杖；CB_PN020_02 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Kagayaki Diffuse／Bundle Mask／Shadow 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Diffuse，原作 toon、遮罩及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
+      ]
+    }
+  ]
+}

@@ -2,8 +2,34 @@ import { expect, it } from "vitest";
 import { modelUploadFixture } from "./fixtures";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel, heroModelBudgetIssues } from "./heroModel";
 import { inspectModelUpload } from "./inspect";
-import { HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
 import { encodeUploadGlb } from "./glb";
+
+function sourceWithLeadingZeroClip() {
+  const source = modelUploadFixture(), clip = source.json.animations![0]!, sampler = clip.samplers[0]!;
+  source.json.animations![1]!.name = "Cast";
+  const input = source.json.accessors.length;
+  source.json.accessors.push({ ...source.json.accessors[sampler.input]!, count: 1, min: [0], max: [0] });
+  const output = source.json.accessors.length;
+  source.json.accessors.push({ ...source.json.accessors[sampler.output]!, count: 1 });
+  source.json.animations!.unshift({ name: "ZeroPose", channels: structuredClone(clip.channels), samplers: [{ ...sampler, input, output }] });
+  return encodeUploadGlb(source.json, source.bin);
+}
+
+it("preserves original selected clip identities when normalization removes an earlier zero-length clip", async () => {
+  const bytes = sourceWithLeadingZeroClip(), original = bytes.slice();
+  const result = await prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 2, cast: 2, hurt: 1, death: 2 });
+  expect(result.model.clipMap).toEqual({ idle: "Motion", run: "Motion", attack: "Cast", cast: "Cast", hurt: "Motion", death: "Cast" });
+  expect(result.inspected.json.animations!.map((clip) => clip.channels[0]!.target.path)).toEqual(["translation", "rotation"]);
+  await expect(verifyUploadedHeroModel(result.model, result.bytes)).resolves.toBeDefined();
+  expect(bytes).toEqual(original);
+});
+
+it("rejects a selected zero-length clip instead of substituting the next animation", async () => {
+  const bytes = sourceWithLeadingZeroClip(), original = bytes.slice();
+  await expect(prepareUploadedHeroModel(bytes, { idle: 0, run: 1, attack: 2, cast: 2, hurt: 1, death: 2 })).rejects.toThrow("長度為零");
+  expect(bytes).toEqual(original);
+});
 
 it("allows one clip to serve all six states and verifies the exact prepared bytes", async () => {
   const source = modelUploadFixture(), before = source.bytes.slice();
@@ -39,6 +65,13 @@ it("enforces the tablet budget on the selected runtime body", async () => {
     meshes: over(HERO_MODEL_BUDGET.meshes),
     textures: [{ width: over(HERO_MODEL_BUDGET.texEdge), height: 4, bytes: 20, sha256: "x" }],
     clips: [{ index: 0, name: "A", duration: 1, channels: over(HERO_MODEL_BUDGET.channels) }],
+    // ⭐ GH#1230 —— 骨架綁定變成硬錯誤之後，這個夾具要**明說它是綁好的**。
+    // ⚠️ ⛔ 這不是回歸，是**前提消失**：`meshes` 被覆寫成 limit+1，而 `skinnedPrimitives`
+    //    還留著 `original` 的值 ⇒ 「有網格沒權重」當然成立。
+    // ⇒ 這條測試要問的是**四條預算**，⛔ 不是骨架 —— 所以把骨架這一格釘成合格。
+    //    骨架本身有自己的守衛：`heroModelRig.test.ts`。
+    skins: 1,
+    skinnedPrimitives: over(HERO_MODEL_BUDGET.meshes),
   };
   expect(heroModelBudgetIssues(metrics).errors).toHaveLength(4);
   // One heavy unused clip must not block a small explicitly selected one.
@@ -52,4 +85,20 @@ it("enforces the tablet budget on the selected runtime body", async () => {
   const selected = await prepareUploadedHeroModel(bytes, { idle: 0, run: 0, attack: 0, cast: 0, hurt: 0, death: 0 });
   expect(selected.inspected.clips[0]!.channels).toBe(1);
   await expect(prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 1, cast: 1, hurt: 1, death: 1 })).rejects.toThrow(overChannels);
+});
+
+it("applies the formal adoption decimation policy only above 10,000 triangles", async () => {
+  expect(HERO_MODEL_ADOPTION_POLICY).toMatchObject({
+    decimateWhenTrianglesAbove: 10_000,
+    decimatedTargetTrianglesMax: 8_000,
+  });
+  const source = modelUploadFixture();
+  const inspected = await inspectModelUpload(source.bytes);
+  const adoptionErrors = (triangles: number) =>
+    heroModelBudgetIssues({ ...inspected, triangles }).errors.filter((issue) => issue.includes("正式採用門檻"));
+
+  expect(adoptionErrors(10_000)).toEqual([]);
+  expect(adoptionErrors(10_001)).toEqual([
+    expect.stringMatching(/三角面 10001 .*門檻 10000.*不超過 8000 面/),
+  ]);
 });

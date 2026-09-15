@@ -1,0 +1,6 @@
+# Byte-exact restored source snapshots retain their historical whitespace.
+tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-FPKUnpacker.cs -whitespace
+tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-PRSUncompressor.cs -whitespace
+tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-README.md -whitespace
+tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/specs/studio.h -whitespace
+tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bundle-render.mjs -whitespace

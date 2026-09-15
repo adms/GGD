@@ -4,12 +4,12 @@
   "name": "外掛開很大的死神 - 黑崎一護",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "imported.heroichigo-bankai",
+  "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 300,
+    "maxMana": 100,
     "manaRegen": 0.2,
     "ad": 6.0,
     "ap": 0,
@@ -24,9 +24,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 55,
+    "maxHealth": 80,
     "healthRegen": 0.14,
-    "maxMana": 19,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 1.68,
     "armor": 0.4,
@@ -65,10 +65,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -121,11 +121,12 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-h01o.w",
@@ -143,10 +144,10 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 4.5,
       "effects": [
@@ -177,7 +178,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "manaCostTier": "極小",
       "passive": {
@@ -196,7 +197,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -220,7 +221,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 2.0
+                          "coeff": 2
                         }
                       ]
                     }
@@ -238,7 +239,8 @@
         ]
       },
       "rangeTier": "小",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-h01o.e",
@@ -256,10 +258,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -302,11 +304,12 @@
       ],
       "vfxKey": "fx.prim.void.dash",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-h01o.r",
@@ -323,9 +326,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -338,12 +341,13 @@
               "value": 300
             }
           ],
-          "duration": 3.0
+          "duration": 3
         }
       ],
       "vfxKey": "fx.prim.void.pulse-lg",
-      "castTimeSec": 0.667,
-      "cooldownTier": "極大"
+      "castTimeSec": 0.5,
+      "cooldownTier": "極大",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [
@@ -382,5 +386,40 @@
         "4": 30.0
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.heroichigo-bankai",
+      "modelSha256": "f7063394bef01f2026d4c34afc2185e97cd1fdd028738edfa3c5cf5c2d7ade79",
+      "binarySha256": "b8bb808bd8728b0d6cd80e9933d95b5fffe4c15e317728fe59a69e372abef21a",
+      "registeredAt": "2026-09-09T07:13:26.548Z",
+      "source": {
+        "kind": "previous",
+        "character": "外掛開很大的死神 - 黑崎一護",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroichigo-bankai.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+      "label": "小一",
+      "sourceModelKey": "community.body.64dc1015923537534452de098ac7209081039b5fae0e2169",
+      "modelSha256": "926f1b9835b1b08526793b4465dfdce7dd6cad1dfeaaa06e69a1381149bcccff",
+      "binarySha256": "efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509",
+      "registeredAt": "2026-09-09T07:13:26.554Z",
+      "source": {
+        "kind": "exact",
+        "character": "小一",
+        "work": "BLEACH 死神",
+        "library": "300heroes",
+        "reference": "300heroes:0583f874944e93106f8f0f97",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

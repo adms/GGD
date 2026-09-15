@@ -88,6 +88,14 @@ export function makeSourceSandbox(kind: SandboxKind): string {
       recursive: true,
       filter: (src) => !src.includes("__pycache__"),
     });
+    // ⭐⭐ GH#1194／#1211（2026-09-11）：`stamp_provenance.py:33` 把 `tools/ship-81`
+    //   插進 `sys.path` 再 `from model_map import SKELETON`（骨架英雄 sela／thorne 的 id）。
+    // ⇒ ⛔ 沙盒只複製 `tools/skill-remake/` ⇒ 那個 import 在沙盒裡 **ModuleNotFoundError**，
+    //   而錯誤訊息是「⛔ 沙盒裡的產生器步驟失敗」——⭐ 它指向**產生器**，
+    //   ⛔ 而真正缺的是**沙盒少搬了一個被依賴的模組**。
+    // ⭐ 只搬那一支 `.py`（⛔ 不整棵 `ship-81` —— 那裡面還有大量與這條鏈無關的東西）。
+    mkdirSync(join(root, "tools/ship-81"), { recursive: true });
+    cpSync(join(REPO, "tools/ship-81/model_map.py"), join(root, "tools/ship-81/model_map.py"));
     cpSync(join(REPO, "skill-tag-manifest.json"), join(root, "skill-tag-manifest.json"));
   }
   ensureUserWritable(root);

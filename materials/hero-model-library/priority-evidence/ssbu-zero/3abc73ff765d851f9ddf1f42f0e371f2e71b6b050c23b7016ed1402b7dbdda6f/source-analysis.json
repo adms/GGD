@@ -1,0 +1,375 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-zero-c00-blender4513-v4",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/zero-c00.blend",
+  "sourceBytes": 2387720,
+  "sourceSha256": "e9ef80e0f910453a09c43d7b42282a65bbe9ecd45a9dae76be0a0c07dae26a21",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "GameModelShape",
+      "vertices": 46,
+      "polygons": 34,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_glass_mat"
+      ]
+    },
+    {
+      "name": "GameModelShape.001",
+      "vertices": 50,
+      "polygons": 64,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_glass_mat2"
+      ]
+    },
+    {
+      "name": "GameModelShape.002",
+      "vertices": 60,
+      "polygons": 70,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_sword_mat"
+      ]
+    },
+    {
+      "name": "GameModelShape.003",
+      "vertices": 64,
+      "polygons": 56,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_zer_ani_mat"
+      ]
+    },
+    {
+      "name": "GameModelShape.004",
+      "vertices": 4895,
+      "polygons": 4800,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_zero_body_mat"
+      ]
+    },
+    {
+      "name": "zero_base_VIS_O_OBJShape",
+      "vertices": 184,
+      "polygons": 252,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "asf_skin_mat"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "zero_damage_VIS_O_OBJShape"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 75,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "Knee_supL",
+        "Leg_supL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "Knee_supR",
+        "Leg_supR",
+        "Waist",
+        "Bust",
+        "ClavicleC",
+        "ClavicleL",
+        "SArmor_L",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "FingerL10",
+        "FingerL11",
+        "FingerL12",
+        "FingerL13",
+        "FingerL20",
+        "FingerL21",
+        "FingerL22",
+        "FingerL23",
+        "FingerL30",
+        "FingerL31",
+        "FingerL32",
+        "FingerL33",
+        "FingerL40",
+        "FingerL41",
+        "FingerL42",
+        "FingerL43",
+        "FingerL51",
+        "FingerL52",
+        "FingerL53",
+        "ClavicleR",
+        "SArmor_R",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "FingerR10",
+        "FingerR11",
+        "FingerR12",
+        "FingerR13",
+        "FingerR20",
+        "FingerR21",
+        "FingerR22",
+        "FingerR23",
+        "FingerR30",
+        "FingerR31",
+        "FingerR32",
+        "FingerR33",
+        "FingerR40",
+        "FingerR41",
+        "FingerR42",
+        "FingerR43",
+        "FingerR51",
+        "FingerR52",
+        "FingerR53",
+        "HaveR",
+        "Neck",
+        "Head",
+        "S_Hair",
+        "S_Hair1",
+        "S_Hair2",
+        "S_Hair3",
+        "S_Hair4"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "asf_glass_mat",
+      "useNodes": true,
+      "surfaceRenderMethod": "BLENDED"
+    },
+    {
+      "name": "asf_glass_mat2",
+      "useNodes": true,
+      "surfaceRenderMethod": "BLENDED"
+    },
+    {
+      "name": "asf_skin_mat",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "asf_sword_mat",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "asf_zer_ani_mat",
+      "useNodes": true,
+      "surfaceRenderMethod": "BLENDED"
+    },
+    {
+      "name": "asf_zero_body_mat",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "asf_zero_alp_col.png",
+      "source": "FILE",
+      "filepath": "//asf_zero_alp_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/asf_zero_alp_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 128,
+      "height": 128,
+      "bytes": 6283,
+      "sha256": "ab185c2a7015abf0e8037a24f676d96dbb031840ee78eabedc5a14f336bb478a"
+    },
+    {
+      "name": "asf_zero_body_col.png",
+      "source": "FILE",
+      "filepath": "//asf_zero_body_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/asf_zero_body_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 1024,
+      "height": 1024,
+      "bytes": 686336,
+      "sha256": "b6b343741b23def1cfcbf4616abf6346b368a925e677c99a9a6227df03773050"
+    },
+    {
+      "name": "asf_zero_face_col.png",
+      "source": "FILE",
+      "filepath": "//asf_zero_face_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/asf_zero_face_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 48423,
+      "sha256": "2529b93b6340ab1b0dd23d25956e7d8ffff9a171085a988d75017ebb69d52ccf"
+    },
+    {
+      "name": "default_white",
+      "source": "GENERATED",
+      "filepath": "",
+      "resolvedPath": null,
+      "exists": false,
+      "packed": false,
+      "width": 128,
+      "height": 128
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "asf_glass_mat2",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "asf_zer_ani_mat",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "asf_skin_mat",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "asf_zero_body_mat",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "asf_glass_mat",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "asf_sword_mat",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "asf_zero_body_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/derived-textures/asf_zero_body_col.png.ggd-256.png",
+      "derivedBytes": 95963,
+      "derivedSha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 75,
+      "nodeName": "GameModelShape",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 76,
+      "nodeName": "GameModelShape.001",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 77,
+      "nodeName": "GameModelShape.002",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 78,
+      "nodeName": "GameModelShape.003",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 79,
+      "nodeName": "GameModelShape.004",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 80,
+      "nodeName": "zero_base_VIS_O_OBJShape",
+      "previousParentIndex": 81,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}

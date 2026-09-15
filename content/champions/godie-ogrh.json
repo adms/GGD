@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 77.4,
+    "maxHealth": 80,
     "healthRegen": 0.2045,
-    "maxMana": 47.0969,
+    "maxMana": 50,
     "manaRegen": 0.1662,
     "ad": 3.109,
     "armor": 0.8642,
@@ -70,16 +70,16 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.holy.slash",
       "targetsEnemies": true,
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -101,15 +101,16 @@
             "damageType": "true",
             "applyTo": "self",
             "amountPerTick": {
-              "flat": 10.0
+              "flat": 10
             },
-            "intervalSec": 1.0,
-            "durationSec": 10.0,
+            "intervalSec": 1,
+            "durationSec": 10,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.7
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-ogrh.w",
@@ -127,23 +128,24 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.dash",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -161,10 +163,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -188,8 +190,9 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.267,
-      "cooldownTier": "中"
+      "castTimeSec": 0.3,
+      "cooldownTier": "中",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-ogrh.r",
@@ -206,9 +209,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -253,7 +256,7 @@
           "radius": 9.39,
           "applyTo": "nearby",
           "amplitude": 0.3,
-          "durationSec": 2.0
+          "durationSec": 2
         },
         {
           "kind": "spawnVfx",
@@ -262,7 +265,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -290,11 +293,12 @@
           },
           "damageType": "magic",
           "length": 14,
-          "width": 2.0,
+          "width": 2,
           "aim": "facing",
-          "castTimeSec": 0.833
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

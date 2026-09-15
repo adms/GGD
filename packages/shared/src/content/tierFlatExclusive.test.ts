@@ -61,9 +61,21 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
 // ⭐ GH#1068（2026-09-07）：模板技的傷害節點住在 `template.params` ⇒ 它們沒有 `kind`，
 //   而豁免規則是按 `kind` 匹配的（`dot-per-tick` 就是這樣漏掉 `params.dot.amountPerTick` 的）。
 //   ⇒ 用出貨那一支展開器攤開再掃，⛔ 不是替豁免表加一條「按路徑」的第二種匹配。
+// ⭐⭐ GH#1211（2026-09-11）：這裡本來只收 `tpl-*`，⛔ 而 `content/ability-templates/`
+//   底下今天有 **24 份 `hero-template.<sha>`**（社群英雄鑄造出來的那一族）。
+//   ⇒ 那 24 份不在 map 裡 ⇒ `resolveTemplateExpansion` 對引用它們的技能回 `ok:false`
+//   ⇒ `expandOne` 的 `if (!res.ok) return doc` **把原文（含 `template`）原樣送回去**
+//   ⇒ 它們的 `template.params.amount` 被當成「沒有級別的裸數字」⇒ ⛔ **182 個假紅**。
+//
+// ⚠️ ⭐ 實測：637 支有 template 的技能裡 **264 支展開失敗**（全部是 `phase:"ref"`，
+//   refs 指向 `hero-template.*`）—— ⛔ 而失敗是**靜默**的：它退回原文，
+//   於是症狀長得像「內容缺級別」，⭐ 而真相是「掃描器少載了一半的模板」。
+//
+// ⇒ ⭐ 收**全部** `.json`，⛔ 不是按檔名前綴猜。
+//   （這正是本 repo 記過的形狀：⛔ 不要用路徑/檔名判斷「這是什麼」。）
 const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
   readdirSync(join(CONTENT, "ability-templates"))
-    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => {
       const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")));
       return [t.id, t] as const;

@@ -1,0 +1,28 @@
+✔ asset-only capability change preserves exact historical bytes and attribution (8.8735ms)
+✔ fully unchanged measurement also preserves exact history (1.674708ms)
+✔ rejects changed actual renderability even with an unrelated fingerprint change (0.30575ms)
+✔ rejects changed actual parameter editing even with an unrelated fingerprint change (0.203833ms)
+✔ rejects changed added measured control even with an unrelated fingerprint change (1.43ms)
+✔ rejects changed brick input SHA even with an unrelated fingerprint change (0.23975ms)
+✔ rejects changed type catalog SHA even with an unrelated fingerprint change (0.174084ms)
+✔ rejects changed input source path even with an unrelated fingerprint change (0.120792ms)
+✔ rejects changed measurement limit even with an unrelated fingerprint change (0.599958ms)
+✔ rejects changed claim attribution even with an unrelated fingerprint change (2.132917ms)
+✔ rejects changed base commit even with an unrelated fingerprint change (4.065041ms)
+✔ rejects changed repro expectation even with an unrelated fingerprint change (1.397959ms)
+✔ rejects changed claim identity even with an unrelated fingerprint change (0.398584ms)
+✔ rejects changed new source evidence even with an unrelated fingerprint change (0.6795ms)
+✔ rejects changed count summary even with an unrelated fingerprint change (0.2655ms)
+✔ incomplete historical/current evidence fails closed: missing brick hash (0.787167ms)
+✔ incomplete historical/current evidence fails closed: malformed catalog hash (0.150958ms)
+✔ incomplete historical/current evidence fails closed: empty receipts (2.358ms)
+✔ incomplete historical/current evidence fails closed: missing capability fingerprint (0.553084ms)
+✔ unavailable or malformed origin/main evidence cannot authorize historical reuse (3.166334ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 396.100833

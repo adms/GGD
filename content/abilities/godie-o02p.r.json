@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -24,9 +24,9 @@
       "kind": "heal",
       "amount": {
         "perRank": [
-          200.0,
-          275.0,
-          350.0
+          200,
+          275,
+          350
         ]
       }
     },
@@ -34,13 +34,13 @@
       "kind": "delayed",
       "shape": "circle",
       "radiusTier": "中",
-      "radius": 6.0,
+      "radius": 6,
       "side": "enemies",
       "anchor": "caster",
       "targetMode": "reresolve",
-      "delaySec": 1.0,
+      "delaySec": 1,
       "count": 4,
-      "intervalSec": 1.0,
+      "intervalSec": 1,
       "effects": [
         {
           "kind": "damage",
@@ -54,5 +54,6 @@
   ],
   "vfxKey": "fx.prim.holy.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1,
+  "castTimeTier": "小"
 }

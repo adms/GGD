@@ -1,0 +1,18 @@
+# 模型入庫棘輪（GH#1230 → GH#1263 分帳）—— ⛔ 三個數字都只能變小；改大要在 commit 訊息貼 owner 原話。
+# 分母以關係判定（`tools/w3x-import/model_intake.py` 的 `glb_roles()`）；(c) 列出不計、不在這裡。
+#
+# ⛔⛔ 誠實說明（2026-09-15，更正 f52ca71eb 訊息裡的「⛔ 解法不是拉線放行」）：
+#   a／b 是**直接設在 2026-09-15 的現況**。對照 #1230 設基準線的 52ed534cb（641 顆）逐路徑比，
+#   a=265 裡有 23 顆、b=69 裡有 17 顆是之後才進 repo、玩家拿得到的有問題模型（其中 13 顆貼圖 > 256）
+#   ⇒ ⭐ 這等於**接受了這 40 顆存量**。那是 Claude 在「自己判斷＋留 rollback」常設指令下挑的預設，
+#   ⛔ 不是 owner 裁決過的拉線（#1263 AC① 仍待 owner 覆核）。rollback：revert 回 285 的單一分母（閘會紅）。
+#
+# a＝玩家預設拿得到的有問題顆數（任何問題 × 身體／場景／道具／執行期載入）· b＝可切換、非預設的有問題顆數
+# a_body_tex＝(a) 裡更嚴的一格：玩家**預設載入**的身體（英雄 modelKey＋Hero Forge 範例預設）貼圖超過上限的**格數**
+#   ＝ 3 位英雄＋1 個 Forge 範例：godie-n00b · godie-o030 · godie-orkn ＋ Forge「imported.herobuu」
+#     （2026-09-15 `model_intake.py` 實跑列出的 4 格；n00b／o030／orkn 共用 2 個 512 的唯一檔）
+#   ⭐ 2026-09-15 10 → 4、a 265 → 261：`5dc32cc3c`（tex256，6 位預設身體走 `ModelVersions.prepare` 降到 256：
+#     b2-maple-alt-9769eb88b85b · godie-h01u · godie-huth · godie-n003 · godie-u00n · godie-u00o）。剩下的逐格降，目標 0；a／b 跟著降。
+a=261
+b=69
+a_body_tex=4

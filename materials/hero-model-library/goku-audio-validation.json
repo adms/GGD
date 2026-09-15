@@ -1,0 +1,58 @@
+{
+  "schema": "ggd-intake-audio-validation@1",
+  "sourceId": "thunderstore-goku",
+  "heroIds": [
+    "godie-ogrh"
+  ],
+  "version": "2.12.3",
+  "decoder": {
+    "name": "vgmstream-cli",
+    "version": "r2117",
+    "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+    "source": "https://github.com/vgmstream/vgmstream/tree/r2117",
+    "sourceCommit": "71e2361042531fe767fb98300cf8c1ee95e539a0"
+  },
+  "sourceArchive": {
+    "path": "raw/Goku-2.12.3.zip",
+    "sha256": "e6aa81b9c63b9194a9c8fcc0d817c325a9d89c3b88e06178d9a146b619778be5"
+  },
+  "nativeMediaCount": 69,
+  "decodedFloatWavCount": 69,
+  "diagnosticPcm16WavCount": 69,
+  "totalSeconds": 178.3068557256236,
+  "floatWavBytes": 36767604,
+  "nativeRateAndChannelsPreserved": true,
+  "samplesMatchDecoderMetadata": true,
+  "sourceWemHashesPreserved": true,
+  "ffmpegValidation": {
+    "count": 69,
+    "passed": true,
+    "path": "decoded-audio-float/ffmpeg-validation.json",
+    "sha256": "b085a59e122489c3e04bb3e0ade5fa4afd618c28ec4e74936399137765ef742c"
+  },
+  "floatAudioIndex": {
+    "path": "decoded-audio-float/audio-index.json",
+    "sha256": "9d936b1f7a688647c5a02fee0c3bbea07f281478b291db85aed0b9626c3254a7"
+  },
+  "quality": {
+    "allSilentFiles": 0,
+    "filesWithPeaksAboveUnity": 25,
+    "maxAbsFloatPeak": 1.1445869207382202,
+    "floatPeaksRetained": true,
+    "diagnosticPcm16MayClip": true,
+    "listeningReviewComplete": false
+  },
+  "eventBindingsVerified": false,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "blockers": [
+    "Bank event to media and skill bindings unverified.",
+    "25 floating-point masters exceed unity; playback gain and integer export must be reviewed.",
+    "Listening review, complete hero model/animation/VFX integration and backend selection remain unverified."
+  ],
+  "priorIntakePreservation": {
+    "backupSha256": "d19531d19d87c99c97d8b1471f3afe1d56f1c2932a45a0171737ef3f472aff3e",
+    "filesChecked": 1717,
+    "allBytesUnchanged": true
+  }
+}

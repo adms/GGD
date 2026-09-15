@@ -1,0 +1,64 @@
+{
+  "leads": [
+    {
+      "title": "Infinity Strash specific UModel build support",
+      "sourceURL": "https://www.gildor.org/smf/index.php?topic=8730.0",
+      "author": "spiritovod",
+      "status": "documentation-verified-no-game-assets",
+      "notes": "UE4.26; effects outline/aura mesh sections hidden by default preview but included in export. Tool binary not downloaded/executed; no encryption keys acquired."
+    },
+    {
+      "title": "New Sounds Dragonic Aura (2 versions)",
+      "sourceURL": "https://www.nexusmods.com/infinitystrashdragonquesttheadventureofdai/mods/13",
+      "downloadPage": "https://www.nexusmods.com/infinitystrashdragonquesttheadventureofdai/mods/13?tab=files",
+      "author": "Gantz79",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "status": "not-acquired-tool-non-retryable",
+      "error": "URL is not safe to open (non-retryable error)",
+      "notes": "Author describes electric/flame replacement for active aura loop. Two files on source page; no voice claim. Stopped download route.",
+      "sourceConditions": "Source page prohibits offsite reupload and other-game conversion; modification/use requires author permission."
+    },
+    {
+      "title": "ISDQTAOD Dark Armour Blade (For Sword)",
+      "sourceURL": "https://steamcommunity.com/workshop/filedetails/?id=3524131621",
+      "mirrorPage": "https://catalogue.smods.ru/archives/370912",
+      "downloadPage": "https://modsbase.com/0ojeshzlae4l/3524131621_ISDQTAOD_Dark_Armour_Blade___40_For_Sword__41_.zip.html",
+      "author": "killmymiss",
+      "sourceGame": "Infinity Strash",
+      "targetGame": "Final Fantasy XV Windows Edition",
+      "role": "weapon-only",
+      "status": "not-acquired",
+      "notes": "Author description verified through public Steam API; original proportions; credit Square Enix.",
+      "accessResults": {
+        "steamSourcePage": "HTTP200",
+        "publicApi": "result1; file_url empty; metadata file_size0 is unavailable size, not proof of empty asset",
+        "mirror": "HTTP403 Forbidden; stopped; no alternate bypass"
+      }
+    },
+    {
+      "title": "Kagayaki no Tsue for Legendary Mage DLC",
+      "sourceURL": "https://www.nexusmods.com/infinitystrashdragonquesttheadventureofdai/mods/top",
+      "author": "Gantz79",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "status": "lead-only-not-acquired",
+      "notes": "Top list reports 7KB staff replacement. Full geometry unverified; might reference base game assets."
+    },
+    {
+      "title": "Infinity Strash switch-port-mods",
+      "sourceURL": "https://github.com/StevensND/switch-port-mods",
+      "status": "lead-only-excluded-non-asset",
+      "notes": "Indexed readme describes 60fps pchtxt patches; no model/motion/audio acquisition."
+    },
+    {
+      "title": "Infinity Strash official TGS prelaunch report",
+      "sourceURL": "https://steamcommunity.com/app/1895810/allnews/",
+      "status": "official-character-existence-evidence",
+      "notes": "Square Enix Sep27 2023 report announces Vearn Dark King and Medroa. This proves game presence, not downloaded files or multiple Vearn forms."
+    }
+  ]
+}

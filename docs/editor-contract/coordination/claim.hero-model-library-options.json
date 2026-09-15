@@ -1,0 +1,171 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-model-library-options",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "優先合併81英雄模型、動作與音訊；保留雙方版本",
+  "claims": [
+    {
+      "kind": "owner-decision",
+      "commit": "24d6bfcf3",
+      "text": "認領 shared 模型版本 schema、開發與正式後台模型選擇、固定成品資源索引及 Mac mini 部署前模型同步；依來源排序保留手動選擇，並重生新預設模型衍生的特效仰角及外觀索引。機制變更請 Main review。",
+      "ownerQuote": {
+        "date": "2026-09-09",
+        "text": "請你全部都上架照這個順序設定 並且在後台每個角色都有下拉式選單 可以替換多個選項 但預設是我上面給你的順序"
+      },
+      "evidence": [
+        "apps/content-api/src/modelVersions.ts",
+        "apps/admin/src/ui/ChampionModelVersions.tsx",
+        "apps/platform/internal/contentoverlay/model_selection.go",
+        "materials/hero-model-library/README.md",
+        "scripts/mini-deploy.sh"
+      ],
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/modelVersions.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "24d6bfcf3",
+      "text": "來源索引將銀時、蜘蛛子寵物形態、海克力斯列為本尊首選；S3 發布與逐檔讀回收據留在 Git，並未宣稱網站已部署。",
+      "evidence": [
+        "materials/hero-model-library/manifest.json",
+        "materials/hero-model-library/spider-identity.json",
+        "materials/hero-model-library/s3-publication-receipt.json"
+      ],
+      "repro": {
+        "command": "python3 tools/hero-model-library/check-index.py",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "9b20aa481",
+      "text": "本機 Editor 發布驗收通過 592 項完整測試與 production build；固定 S3 版本 7b6ec0c8c5bd75fc173c5f2d 已讀回驗證 443 個版本檔及 11 個控制檔。正式／本機原始 checkout 尚待 PR 合併後同步。",
+      "evidence": [
+        "materials/hero-model-library/s3-publication-receipt.json",
+        "materials/hero-model-library/README.md"
+      ],
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "9b20aa481",
+      "text": "11 個 Owner 指定模型均以完整獨立副本保留貼圖、骨架和動作，5 個改色貼圖及哥布林殺手左右手配件已在本機 Babylon 畫面核對；來源未改動證據與逐檔 SHA 留在 derivative-validation.json。新增 7 名 LOL 配方角色納入盤點，其中 3 名仍受 160 動畫通道上限阻擋。",
+      "evidence": [
+        "materials/hero-model-library/derivatives.json",
+        "materials/hero-model-library/derivative-validation.json",
+        "materials/hero-model-library/全角色模型盤點.md"
+      ],
+      "repro": {
+        "command": "python3 tools/hero-model-library/check-index.py",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "54bf2dcc5b7372f2d712de1654aaaab61afda28c",
+      "text": "統一共編入口為 materials/asset-library/README.md；131 個使用者來源網址完整保留，去除重複頁為 129 帖。盤點與查詢不依賴本機 intake/outputs；未核准 style-proxy 不再自動用作來源匯入預設，僅 11 個指定加工副本列入核准範圍。",
+      "evidence": [
+        "materials/asset-library/README.md",
+        "materials/hero-model-library/default-policy.json",
+        "materials/hero-model-library/download-sources.json",
+        "materials/hero-model-library/全角色模型盤點.md"
+      ],
+      "repro": {
+        "command": "python3 tools/hero-model-library/test_inventory.py",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "owner-decision",
+      "commit": "e19ca4d52b489654cdaa96aa6c4b26b408bbe898",
+      "text": "擷取不以新舊角色、上架與否或現有 GGD ID 篩選；跨世代、平台、作品與配色整庫儲備，按需轉換。九級主順位保留，同級按來源遊戲發售日由新到舊；所有舊版仍可選，手動選擇不變。已取得 Wii 12 包／448 WAV 及 S3 完整讀回收據；NS 整庫仍下載中，索引與 LFS pointer 不當成模型取得。",
+      "repro": {
+        "command": "python3 tools/hero-model-library/test_inventory.py",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "materials/hero-model-library/全角色模型盤點.md",
+        "materials/hero-model-library/download-sources.json",
+        "materials/hero-model-library/ssbb-audio-validation.json",
+        "materials/hero-model-library/default-policy.json",
+        "packages/shared/src/content/schema/championModelVersions.ts",
+        "apps/platform/internal/contentoverlay/model_selection.go"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "commit": "e19ca4d52b489654cdaa96aa6c4b26b408bbe898",
+      "text": "角色語音索引保留 335 個來源分組、71,750 個可播放格式檔案，含逐檔 SHA-256 與 S3 取檔索引；區分已取得音訊與已驗收語音，未宣稱任何組已可直接合成。莉娜 MBA 查詢回傳 36 個檔案。",
+      "repro": {
+        "command": "python3 tools/hero-model-library/query_voice.py mba:Chara02",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "materials/hero-model-library/角色語音索引.md",
+        "materials/hero-model-library/voice-index.json",
+        "materials/hero-model-library/voice-files.jsonl.gz",
+        "materials/hero-model-library/voice-index-validation.json",
+        "tools/hero-model-library/query_voice.py"
+      ]
+    }
+  ],
+  "asks": [
+    "Main 優先審查合併本 PR 的81英雄成品；固定入口 materials/hero-model-library/81英雄優先合併清單.md，程序讀 priority-81-handoff.json，逐角色有Git模型/動作/音訊路徑和SHA。",
+    "已合入main b6686109a，原222個版本引用加Main60個成為282個；15個既有手動預設與11個指定加工副本未改，雙方版本均保留。",
+    "74名已有1016個已提交戰鬥音訊成品：308個原來源重用、708個合成；LoL7名4927個日文WAV儲備可本機讀取，尚待runtime戰鬥分類綁定。未宣稱全部是本尊原聲或已聽審。",
+    "請 review 模型匯入兩個整合修復：JPEG縮图後依實際bytes更新MIME；移除零長動畫後按原片段身份重映射選項，選中被刪片段明確拒收。既有不可變版本保留。",
+    "開司社群模型及不知火舞DOA6→GTA SA 162段IFP新取得，尚待本工作流轉換，不阻擋現有81成品審查；未把原始來源當後台完成選項。",
+    "全庫發布檢查現況見 priority-evidence/main-81-handoff/validation.json；以下claims內的commit/測試數是歷史收據，不代表目前完整發布驗證全部通過。Main負責審查合併與部署，本工作流不宣稱正式站已更新。"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-10",
+      "text": "別忘了有語音檔也要一起抓喔"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "預設順序改為\n手動指定模型 > 原著模型 > MOD社群修改 >相似模型貼圖修改 > 相似模型 > 300英雄 ＞ MBA ＞ 原版 ＞ 借用 W3X 選用\n\n請註明在全角色模型盤點第二守則"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "原作遊戲直接擷取；300／MBA 仍按第 6／7 位"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "第三守則 我們上傳git的規則是 成品一律上傳至git, 剩下半成品、來源、準備材料等都進 S3 (本機全保留)"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "NS 連克勞德之類都有 一定引用到 越新的作品優先權越高"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "但你可以將不同世代或不同作品來源的都擷取下來 登記整合 讓後台設定下拉選單要用哪一個"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "我拿克勞德舉例是新舊角色、上架與否都可以抓取"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "對 就跟300英雄一樣 先抓下來 要用的話 就可以當儲備轉換來源"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "你要整理一個角色語音索引.md 推送 讓別的工作流可以使用來合成生成新語音"
+    },
+    {
+      "date": "2026-09-11",
+      "text": "你整理好了嗎 我們要優先提交81個英雄相關的模組動作音效給main合併"
+    }
+  ]
+}

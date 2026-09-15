@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    448.0
+    600.0
   ],
   "manaCostTier": "大",
   "effects": [
@@ -26,10 +26,10 @@
       "scale": 2.5,
       "tint": [
         0.3922,
-        0.0,
-        0.0
+        0,
+        0
       ],
-      "lifeSec": 7.0
+      "lifeSec": 7
     }
   ],
   "template": {
@@ -46,15 +46,16 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 2.233
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "schema": "ability@1",
   "radius": 4.5,
   "targetsEnemies": true,
-  "castTimeSec": 2.233,
+  "castTimeSec": 1,
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

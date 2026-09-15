@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 95.3724,
+    "maxHealth": 100,
     "healthRegen": 0.2001,
-    "maxMana": 24.1097,
+    "maxMana": 20,
     "manaRegen": 0.0979,
     "ad": 1.699,
     "armor": 1.7722,
@@ -223,7 +223,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-h02k.q.webp",
-      "vfxKey": "fx.prim.physical.shockwave"
+      "vfxKey": "fx.prim.physical.shockwave",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-h02k.w",
@@ -322,7 +323,8 @@
       },
       "icon": "assets/icons/abilities/godie-h02k.w.webp",
       "vfxKey": "fx.prim.nature.explosion",
-      "sfxKey": "wc3.pandarenbrewmasterpissed8"
+      "sfxKey": "wc3.pandarenbrewmasterpissed8",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-h02k.e",
@@ -550,7 +552,8 @@
       },
       "icon": "assets/icons/abilities/godie-h02k.e.webp",
       "vfxKey": "fx.prim.physical.swarm",
-      "sfxKey": "wc3.pandarenbrewmasterwarcry1"
+      "sfxKey": "wc3.pandarenbrewmasterwarcry1",
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-h02k.r",
@@ -799,7 +802,8 @@
       },
       "icon": "assets/icons/abilities/godie-h02k.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "sfxKey": "wc3.pandarenbrewmasteryes1"
+      "sfxKey": "wc3.pandarenbrewmasteryes1",
+      "castTimeTier": "極小"
     }
   },
   "skillOrder": [

@@ -120,7 +120,9 @@ describe("GH#1005 —— castTimeSec 磁碟 ↔ 登錄表（出貨內容 × 出�
   });
 
   it("⭐ sentinel：尺量得到兩個方向（拿掉一格 ⇒ 指名它；憑空一格 ⇒ 指名它）", () => {
-    const victim = [...disk.entries()].find(([, d]) => d.standalone !== undefined && !d.otherSource)![0];
+    // 五級距遷移後每一份技能都有 castTimeTier，因此不再存在「沒有 otherSource」的
+    // 出貨樣本；拿掉磁碟上的明示值仍然是這把尺必須抓到的方向。
+    const victim = [...disk.entries()].find(([, d]) => d.standalone !== undefined)![0];
     const eaten = castTimeDrift(disk, (id) =>
       id === victim ? { ...Abilities.get(id as never), castTimeSec: undefined } : Abilities.tryGet(id as never),
     );

@@ -1,0 +1,196 @@
+{
+  "schema": "ggd-local-validation-file-index@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/haga-native-visibility-20260910",
+  "files": [
+    {
+      "path": "backend-prepare-content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    },
+    {
+      "path": "backend-prepare-content/assets/models/community/versions/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
+      "bytes": 653604,
+      "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d"
+    },
+    {
+      "path": "backend-prepare-content/assets/models/community/versions/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+      "bytes": 2405996,
+      "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d"
+    },
+    {
+      "path": "backend-prepare-content/assets/models/ou99/versions/981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3.glb",
+      "bytes": 649672,
+      "sha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3"
+    },
+    {
+      "path": "backend-prepare-content/champions/b2-haga.json",
+      "bytes": 12424,
+      "sha256": "f8948202d3796fcaede72e863e52c07d429d2572bd9b5781aaaa84755e43c398"
+    },
+    {
+      "path": "backend-prepare-content/models/ou99.495015-native-visibility-v1.json",
+      "bytes": 373,
+      "sha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368"
+    },
+    {
+      "path": "backend-prepare-content/models/version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b.json",
+      "bytes": 517,
+      "sha256": "7ad348cf195e9105305362d553715a4d619944b8f30ebaa09064b77aea4165e3"
+    },
+    {
+      "path": "backend-prepare-content/models/version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7.json",
+      "bytes": 612,
+      "sha256": "d7e2386d4b44b11913492df3ab126ce8a39a36a4c46b95d3b2648af024d6fc53"
+    },
+    {
+      "path": "backend-prepare-content/models/version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc.json",
+      "bytes": 532,
+      "sha256": "1ec72b0ea223e32a1a0067cee2c1a152ac5b600791ae6464cd425e4a14c3b1cc"
+    },
+    {
+      "path": "converted-v1/body.glb",
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    },
+    {
+      "path": "converted-v1/conversion.json",
+      "bytes": 3361,
+      "sha256": "cedfee72f6b05e65936ab0406962d00712095f4c352033ae37f0e692ebc8e617"
+    },
+    {
+      "path": "render-v1/chrome-process.log",
+      "bytes": 5079,
+      "sha256": "fac171e590b1aee28dcb03e1caddf24da0e7f4736574cc96eace099fda7c918b"
+    },
+    {
+      "path": "render-v1/corrected-attack-6000.png",
+      "bytes": 121390,
+      "sha256": "0b743903bae0073187e9e373cddf4152b104f0c79986a35e1c3c93a2d8ba03f9"
+    },
+    {
+      "path": "render-v1/corrected-death-6000.png",
+      "bytes": 91031,
+      "sha256": "31ef581bef0e7341d9f6de779e55d67f46a13e06c72a498b23808ddad0d1d8fd"
+    },
+    {
+      "path": "render-v1/corrected-decay-bone-6000.png",
+      "bytes": 119735,
+      "sha256": "9c060f31d58259d9e179b94183c258f884559a3906b1fff76c80b3a8f9656234"
+    },
+    {
+      "path": "render-v1/corrected-decay-flesh-0.png",
+      "bytes": 94526,
+      "sha256": "624567f1c42a33d22a34c3f256b8ac400c9c34fa0c676a799ec2c7543922a465"
+    },
+    {
+      "path": "render-v1/corrected-decay-flesh-629.png",
+      "bytes": 107635,
+      "sha256": "7cce2b16bab26e3ced758e9b9b79779c2d6616a01084b2c1883b5814b0bee75b"
+    },
+    {
+      "path": "render-v1/corrected-spell-6000.png",
+      "bytes": 115519,
+      "sha256": "1a2a0d87f298871b0f42089a891bcf8fb0f0ea263d17bc48203c300a965c8746"
+    },
+    {
+      "path": "render-v1/corrected-stand-6000.png",
+      "bytes": 124559,
+      "sha256": "9ac1845310cc2b2428f1afe097db28d86b90fa5ab7b0f341042b676c3889736e"
+    },
+    {
+      "path": "render-v1/corrected-stand-ready-6000.png",
+      "bytes": 128831,
+      "sha256": "d49f8a4999ef8f9bf6fdf76c5ed7de01fd768fd8e3f031685fcf24c5314ae7d0"
+    },
+    {
+      "path": "render-v1/corrected-walk-6000.png",
+      "bytes": 101628,
+      "sha256": "f713d64535f100d4b63c3791901c5aa389ca56bbd5499daed55949aafb1264a4"
+    },
+    {
+      "path": "render-v1/original-attack-6000.png",
+      "bytes": 165767,
+      "sha256": "6348584625a5cf2ab6746d6f2d6895afdefc85878771a26622f3457acffd441c"
+    },
+    {
+      "path": "render-v1/original-death-6000.png",
+      "bytes": 107186,
+      "sha256": "d6aa8c89a9adae9fd0b595d72a3428febbd5b4fec0e2c6a5c3722595fcf8a0e2"
+    },
+    {
+      "path": "render-v1/original-decay-bone-6000.png",
+      "bytes": 119735,
+      "sha256": "9c060f31d58259d9e179b94183c258f884559a3906b1fff76c80b3a8f9656234"
+    },
+    {
+      "path": "render-v1/original-decay-flesh-0.png",
+      "bytes": 110248,
+      "sha256": "c3ba8c8755657850913e93b57945f135177181f7aa8643c5ee748bac16c7e7e8"
+    },
+    {
+      "path": "render-v1/original-decay-flesh-629.png",
+      "bytes": 107635,
+      "sha256": "7cce2b16bab26e3ced758e9b9b79779c2d6616a01084b2c1883b5814b0bee75b"
+    },
+    {
+      "path": "render-v1/original-spell-6000.png",
+      "bytes": 159348,
+      "sha256": "9fe00db87375d856d9e3a6ef172d6101c6c383dd16dfd93a0d6b6ac0cd3cb0d1"
+    },
+    {
+      "path": "render-v1/original-stand-6000.png",
+      "bytes": 168242,
+      "sha256": "3bbcfa577ab48e8b888e0a12ecac25049d17b45114ded075ba35cef0e58b5d98"
+    },
+    {
+      "path": "render-v1/original-stand-ready-6000.png",
+      "bytes": 172378,
+      "sha256": "5d139ac436fe5d3fda934c0086cf91a30f75a20eac10e2df40e98a3a3a700b91"
+    },
+    {
+      "path": "render-v1/original-walk-6000.png",
+      "bytes": 144950,
+      "sha256": "b5b74146b056bdff4b6610d38123dabc41709c997b4ad51a6b34f867f504cbd4"
+    },
+    {
+      "path": "render-v1/render-proof.json",
+      "bytes": 19973,
+      "sha256": "8d5cca33981f23e21de947516a8b4276da64b3d85f4bebfeed6b4cd9f7bdabdf"
+    },
+    {
+      "path": "render-v1/tools/ggd-haga-render-server.py",
+      "bytes": 3251,
+      "sha256": "977c4e7cf502fb3fcc7188a2c520da5785b480c6f0920f6f9cbe91eb0f68c686"
+    },
+    {
+      "path": "render-v1/tools/ggd-haga-render.mjs",
+      "bytes": 4256,
+      "sha256": "cb72b30f8e8d6f16982e9fbcfdbb71ff965bc733b2f063e28c7513b476ff14ff"
+    },
+    {
+      "path": "runtime-v1/backend-prepare-receipt.json",
+      "bytes": 16819,
+      "sha256": "b4e8c9f741138daa7a5c4f63fa57fb1db59229ea6fc097b129b2920e8eb34b22"
+    },
+    {
+      "path": "runtime-v1/body.glb",
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    },
+    {
+      "path": "runtime-v1/khronos-unlimited.json",
+      "bytes": 1402,
+      "sha256": "81e3c377f6d57a04b85f4b098b21d591b7d96fd55bfe413f868926fcb1aedd9e"
+    },
+    {
+      "path": "runtime-v1/model.json",
+      "bytes": 373,
+      "sha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368"
+    },
+    {
+      "path": "runtime-v1/receipt.json",
+      "bytes": 3274,
+      "sha256": "c98c7daecbf0758a52a933a1a3150e009ba8ac40568ab2b22cb9ee7161074fae"
+    }
+  ]
+}

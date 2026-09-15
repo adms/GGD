@@ -9,6 +9,7 @@
 #   deploy 因為 agent 空了而失敗卻被讀成「連不到」）。⭐ 一個指令 ⇒ 缺一步就看得見。
 set -uo pipefail
 cd "$(dirname "$0")/.."
+. "$(dirname "$0")/_hosts.sh"   # 部署主機身分（⛔ 不寫死 —— 這個 repo 是 public 的）
 
 MSG="${1:?用法: bash scripts/ship-it.sh \"<這一版的一句話說明>\" [--no-deploy]}"
 DEPLOY=1; [ "${2:-}" = "--no-deploy" ] && DEPLOY=0
@@ -117,8 +118,8 @@ else
   ssh-add -l 2>/dev/null | grep -q id_rsa || ssh-add ~/.ssh/id_rsa >/dev/null 2>&1
   if GGD_PUBLIC_HOST="${GGD_PUBLIC_HOST:-ggd.adms.ai}" \
      GGD_SITE_HOSTS="${GGD_SITE_HOSTS:-ggd.adms.ai test.adms.ai}" \
-     GGD_MINI_USER="${GGD_MINI_USER:-genieacceler}" \
-     GGD_MINI_HOST="${GGD_MINI_HOST:-192.168.0.133}" \
+     GGD_MINI_USER="$(ggd_host GGD_MINI_USER '正式站 mini 的使用者')" \
+     GGD_MINI_HOST="$(ggd_host GGD_MINI_HOST '正式站 mini')" \
      bash scripts/mini-deploy.sh deploy; then
     :
   else

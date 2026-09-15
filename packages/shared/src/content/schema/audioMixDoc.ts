@@ -58,13 +58,15 @@ export type AudioMixRoundEndMachineVoice = (typeof AUDIO_MIX_ROUND_END_MACHINE_V
 
 /** 同一位英雄兩句回合結束語音之間的最短間隔（秒）的上界。 */
 export const AUDIO_MIX_ROUND_END_MIN_GAP_SEC_MAX = 60;
+export const AUDIO_MIX_OTHERS_GAIN_MIN = 0;
+export const AUDIO_MIX_OTHERS_GAIN_MAX = 1;
 
 export const zAudioMixVoice = z
   .object({
     othersGain: z
       .number()
-      .min(0)
-      .max(1)
+      .min(AUDIO_MIX_OTHERS_GAIN_MIN)
+      .max(AUDIO_MIX_OTHERS_GAIN_MAX)
       .describe(
         "@zh 其他角色的語音音量（相對於自己）\n" +
         "@note 敵人、隊友與小怪講話時，相對於**你自己的角色**要多大聲。0.5＝一半（出貨值，owner 2026-08-17 的原話）；1＝跟自己一樣大聲，也就是這一格出現之前的行為，所以填 1 就是一鍵 rollback；0＝其他人完全不出聲（⚠️ 那會讓「我打中了」這個用耳朵接收的回饋整個消失，不建議）。調小＝自己的角色更聽得清楚，代價是一場團戰聽起來比較空。\n" +

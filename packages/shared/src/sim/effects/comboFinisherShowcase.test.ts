@@ -125,7 +125,13 @@ const FENCED_OUT = new Set(["godie-hapm.ex"]);
 
 describe("② 契約 —— 每一支出貨的連段技都帶著模板宣告的演出三件套", () => {
   /** 「自動連段→收尾」的**結構**判準：N 段排程 ＋ 一個收尾。⛔ 這裡沒有技能 id。 */
+  /** ⭐ 這份文件接的是不是 combo-finisher 模板（⛔ 結構像不算，見下面第二分支）。 */
+  function isComboTemplate(doc: unknown): boolean {
+    const ref = ((doc as Record<string, unknown>)?.["template"] as Record<string, unknown> | undefined)?.["ref"];
+    return typeof ref === "string" && ref === "tpl-combo-finisher";
+  }
   function comboNodes(doc: unknown): { perStrike: unknown[]; finisher: unknown[] }[] {
+    const isComboFamily = isComboTemplate(doc);
     const out: { perStrike: unknown[]; finisher: unknown[] }[] = [];
     const walk = (n: unknown): void => {
       if (Array.isArray(n)) return void n.forEach(walk);
@@ -135,7 +141,20 @@ describe("② 契約 —— 每一支出貨的連段技都帶著模板宣告的�
         out.push({ perStrike: r["perStrike"] as unknown[], finisher: r["finisher"] as unknown[] });
       // ⭐ `delayed` + `finalEffects` 是**同一個家族的另一個作者介面**（同一支
       //    `delayedSystem` 付款）—— 只認 `comboStrikes` 會讓一半的成員逃掉。
-      if (r["kind"] === "delayed" && Array.isArray(r["finalEffects"]))
+      //
+      // ⚠️⚠️ ⭐ GH#1211（2026-09-11）：但它**過度伸手**了。
+      //   `delayed` + `finalEffects` 是一個**結構**，⛔ 不是一個家族 ——
+      //   `tpl-traveling-wave`（行進波：沿路點名、終點再一發）展開出來**也長這樣**，
+      //   ⭐ 而「每一刀的打擊特效」「哪一下是重招」是**連段**的概念，⛔ 波沒有「刀」。
+      //
+      //   量到的（2026-09-11 逐檔掃 `content/abilities/`）：
+      //     · 真的 `comboStrikes` 節點 **1 個**，⭐ 而它的演出**是齊的**
+      //     · 被這條第二分支抓進來的 **6 支全部**是 `tpl-traveling-wave`
+      //   ⇒ ⛔ 6 個「缺演出」裡，**零個**是連段技。
+      //
+      // ⇒ ⭐ 加一道家族閘：只有**這份文件真的接了 combo-finisher 模板**時，
+      //   `delayed` 才算連段的另一個介面。⛔ 不是看結構長得像不像。
+      if (r["kind"] === "delayed" && Array.isArray(r["finalEffects"]) && isComboFamily)
         out.push({ perStrike: r["effects"] as unknown[], finisher: r["finalEffects"] as unknown[] });
       Object.values(r).forEach(walk);
     };

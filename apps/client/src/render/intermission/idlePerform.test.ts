@@ -280,15 +280,57 @@ describe("idlePerform — the shipped roster actually performs", () => {
     expect(empty, "champions with an empty perform pool").toEqual([]);
   });
 
+  /**
+   * ⚠️ 量到的**素材缺口**，逐位具名 —— ⛔ 不是規則的洞。
+   *
+   * 這條普查真正抓得到的是**分類器漏字**（d68716ad3：300 英雄系骨架把招式叫
+   * `single_skill_0N`，沒有 spell/cast 字樣 ⇒ 補 `skill`）。而下面這幾位的骨架
+   * **除了 idle／run／dead 之外只有兩段 dance** —— 每一段都被正確地分成 celebrate，
+   * 規則**造不出**第二種動作可以輪播。
+   *
+   * ⭐ 它們是 PR #1152 的模型選項（818566183「register priority hero model options」）
+   * 換上來的 `bat_*` 骨架；⚠️ 同一份 model doc 的 `clipMap` 還把**戰鬥的** attack／cast
+   * 也對到這兩段 dance —— 那是一個**戰鬥畫面**的素材缺口，⛔ 不是商店輪播能修的。
+   *
+   * ⛔ 豁免**不會長大、也不會活得比缺陷久**：
+   *   · 一位沒列在這裡的英雄變成單一種類 ⇒ 紅（多半又是分類器漏字）；
+   *   · 列在這裡的骨架**動作清單一變**（換模型／補了 attack 或 spell）⇒ 紅，重新判定；
+   *   · 列在這裡的不再是單一種類 ⇒ 紅，把它從表上拿掉。
+   */
+  const ONE_FAMILY_RIGS: Readonly<Record<string, { clips: readonly string[]; why: string }>> = {
+    "b2-bojji": {
+      clips: ["bat_idle", "bat_run", "bat_dance1", "bat_dance2", "bat_dead"],
+      why: "骨架只有兩段 dance 可輪播（818566183）",
+    },
+    "b2-kumoko": {
+      clips: ["bat_idle", "bat_run", "bat_dance1", "bat_dance2", "bat_dead"],
+      why: "骨架只有兩段 dance 可輪播（818566183）",
+    },
+    "b2-takopi": {
+      clips: ["bat_idle", "bat_run", "bat_dance1", "bat_dance2", "bat_hit", "dead"],
+      why: "骨架只有兩段 dance 可輪播，bat_hit 是受擊（禁止輪播）（818566183）",
+    },
+  };
+
   it("no champion's rotation is a single kind on repeat", () => {
     cover("shop-idle-perform");
-    const monotone = roster
-      .filter((r) => {
-        const pool = buildPerformPool(r.clips, idleClipFor(r.clips));
-        return pool.length > 1 && new Set(pool.map((p) => p.kind)).size < 2;
-      })
-      .map((r) => r.championId);
-    expect(monotone, "champions whose whole pool is one kind").toEqual([]);
+    const isMonotone = (r: RosterEntry): boolean => {
+      const pool = buildPerformPool(r.clips, idleClipFor(r.clips));
+      return pool.length > 1 && new Set(pool.map((p) => p.kind)).size < 2;
+    };
+    const monotone = roster.filter(isMonotone);
+    expect(
+      monotone.filter((r) => !(r.championId in ONE_FAMILY_RIGS)).map((r) => r.championId),
+      "champions whose whole pool is one kind",
+    ).toEqual([]);
+    // 反方向：豁免表上的每一位，今天真的還是那一具骨架、真的還是單一種類。
+    const byId = new Map(roster.map((r) => [r.championId, r]));
+    for (const [id, gap] of Object.entries(ONE_FAMILY_RIGS)) {
+      const r = byId.get(id);
+      expect(r, `${id} 不在可量的名單上了 —— 把它從 ONE_FAMILY_RIGS 拿掉`).toBeDefined();
+      expect(r!.clips, `${id} 的骨架動作清單變了 —— 重新判定這條豁免（${gap.why}）`).toEqual(gap.clips);
+      expect(isMonotone(r!), `${id} 已經不是單一種類 —— 把它從 ONE_FAMILY_RIGS 拿掉`).toBe(true);
+    }
   });
 
   it("every kind the rule can emit is reachable on the real roster", () => {

@@ -1,0 +1,520 @@
+{
+  "schema": "ggd-priority-model-policy-audit@1",
+  "generatedFrom": {
+    "priorityRelease": "materials/hero-model-library/priority-release.json",
+    "priorityReleaseSha256": "a26eba4def9edc782106140fe043a8eab940b475dc1df04e78da16a7a90a9036",
+    "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+    "adoptionPolicySha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf",
+    "runtimeBudget": "packages/shared/src/content/modelUpload/budget.ts",
+    "runtimeBudgetSha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+  },
+  "scope": "Priority-15 current model bytes and six-state bindings. This is a model-policy audit, not deployment proof or native-motion/VFX acceptance.",
+  "branch": "codex/hero-model-library-options",
+  "pullRequest": "https://github.com/adms/GGD/pull/1152",
+  "productionDeployed": false,
+  "totals": {
+    "audited": 15,
+    "currentPolicyReady": 2,
+    "needsWork": 13
+  },
+  "records": [
+    {
+      "heroId": "b2-shadow",
+      "name": "闇影",
+      "modelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
+      "modelDocPath": "content/models/version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0.json",
+      "glbPath": "content/assets/models/community/versions/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
+      "glbSha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "metrics": {
+        "triangles": 12171,
+        "meshes": 4,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 79,
+        "skins": 1,
+        "clips": 5
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 5,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "b2-maomao",
+      "name": "貓貓",
+      "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
+      "modelDocPath": "content/models/version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592.json",
+      "glbPath": "content/assets/models/community/versions/a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67.glb",
+      "glbSha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
+      "metrics": {
+        "triangles": 25999,
+        "meshes": 1,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "ggd-procedural",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "b2-naofumi",
+      "name": "岩谷尚文",
+      "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+      "modelDocPath": "content/models/version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8.json",
+      "glbPath": "content/assets/models/community/versions/cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11.glb",
+      "glbSha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+      "metrics": {
+        "triangles": 26000,
+        "meshes": 4,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "ggd-procedural",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "b2-guts",
+      "name": "凱茲",
+      "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
+      "modelDocPath": "content/models/version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086.json",
+      "glbPath": "content/assets/models/community/versions/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
+      "glbSha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+      "metrics": {
+        "triangles": 25999,
+        "meshes": 4,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "ggd-procedural",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "b2-shinchan",
+      "name": "野原新之助",
+      "modelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
+      "modelDocPath": "content/models/version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca.json",
+      "glbPath": "content/assets/models/community/versions/faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b.glb",
+      "glbSha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "metrics": {
+        "triangles": 25262,
+        "meshes": 1,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "ggd-procedural",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-02-20260907",
+      "name": "八神庵",
+      "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+      "modelDocPath": "content/models/version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7.json",
+      "glbPath": "content/assets/models/community/versions/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+      "glbSha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+      "metrics": {
+        "triangles": 2267,
+        "meshes": 1,
+        "maxTextureEdge": 512,
+        "channelsPerFrame": 91,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-05-20260907",
+      "name": "洛克人",
+      "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+      "modelDocPath": "content/models/version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608.json",
+      "glbPath": "content/assets/models/community/versions/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
+      "glbSha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d",
+      "metrics": {
+        "triangles": 1860,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 24,
+        "skins": 1,
+        "clips": 11
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "ok",
+      "blockingAxes": [],
+      "currentPolicyReady": true,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-07-20260907",
+      "name": "西索",
+      "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+      "modelDocPath": "content/models/version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159.json",
+      "glbPath": "content/assets/models/community/versions/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+      "glbSha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "metrics": {
+        "triangles": 25995,
+        "meshes": 5,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 82,
+        "skins": 1,
+        "clips": 5
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 5,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "modelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
+      "modelDocPath": "content/models/version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d.json",
+      "glbPath": "content/assets/models/community/versions/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
+      "glbSha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+      "metrics": {
+        "triangles": 5628,
+        "meshes": 3,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 97,
+        "skins": 1,
+        "clips": 5
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 5,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-11-20260907",
+      "name": "利姆路",
+      "modelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
+      "modelDocPath": "content/models/version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e.json",
+      "glbPath": "content/assets/models/community/versions/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
+      "glbSha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+      "metrics": {
+        "triangles": 8458,
+        "meshes": 3,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 154,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-14-20260907",
+      "name": "殺老師",
+      "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
+      "modelDocPath": "content/models/version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62.json",
+      "glbPath": "content/assets/models/community/versions/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
+      "glbSha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+      "metrics": {
+        "triangles": 4454,
+        "meshes": 1,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 68,
+        "skins": 1,
+        "clips": 5
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 5,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "modelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+      "modelDocPath": "content/models/version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb.json",
+      "glbPath": "content/assets/models/community/versions/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
+      "glbSha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "metrics": {
+        "triangles": 8628,
+        "meshes": 2,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 57,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "ok",
+      "blockingAxes": [],
+      "currentPolicyReady": true,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+      "modelDocPath": "content/models/version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52.json",
+      "glbPath": "content/assets/models/community/versions/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
+      "glbSha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "metrics": {
+        "triangles": 4542,
+        "meshes": 3,
+        "maxTextureEdge": 512,
+        "channelsPerFrame": 198,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "modelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
+      "modelDocPath": "content/models/version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c.json",
+      "glbPath": "content/assets/models/community/versions/02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3.glb",
+      "glbSha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3",
+      "metrics": {
+        "triangles": 9432,
+        "meshes": 5,
+        "maxTextureEdge": 1024,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "clips": 6
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 6,
+        "kind": "ggd-procedural",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    },
+    {
+      "heroId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+      "modelDocPath": "content/models/version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419.json",
+      "glbPath": "content/assets/models/community/versions/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
+      "glbSha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "metrics": {
+        "triangles": 17216,
+        "meshes": 2,
+        "maxTextureEdge": 512,
+        "channelsPerFrame": 42,
+        "skins": 1,
+        "clips": 4
+      },
+      "motionBinding": {
+        "stateCount": 6,
+        "uniqueClipCount": 3,
+        "kind": "source-or-shared",
+        "nativeCompletenessNotClaimed": true
+      },
+      "formalAdoption": {
+        "eligible": false,
+        "triggerTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000
+      },
+      "runtimeGateWorst": "over",
+      "blockingAxes": [
+        "triangles",
+        "maxTextureEdge"
+      ],
+      "currentPolicyReady": false,
+      "productionDeployed": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "ggd.infinity-strash-en653-source-rebuild@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "outputSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+  "conversionByteIdentical": true,
+  "normalizedGlbByteIdentical": true,
+  "bothValidationsPassed": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/prepare_en653_component.py",
+      "sha256": "0d50fec57a09075740097bf3513607e63d2854ae2906c78a30e8c82363d90699"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/normalize_validate_candidate.mts",
+      "sha256": "9be7756c59a87666a24fdb2d7a9e37ae428d15a586793a899261784954ab5f60"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.py",
+      "sha256": "e24eb2ed7aec152ee27d7138fae29b92832b80db51e5888e665f52d2c799fbf1"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.mjs",
+      "sha256": "0ff58abef0acba02ceb4b46ba6df34ca92005111ece1b4c1219885f284f6fd0a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/collect_en653_delivery.py",
+      "sha256": "17394ccc9719a0c579d3e594bd9b263a33da9e2370d83d1b15a44ac0d69ce1cc"
+    },
+    {
+      "path": "tools/hero-model-library/intake_infinity_strash_en653_component.py",
+      "sha256": "755c041b9c467ebd455c48df884ff6b91d5d82a2f659478d1897694f9a2e9dc1"
+    },
+    {
+      "path": "tools/hero-model-library/skinned_components.py",
+      "sha256": "d16dbce809698202d55de213ddc8aac8dabf4cdcb8fd933fc8bc48b85751917f"
+    }
+  ],
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+    "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+    "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+  }
+}

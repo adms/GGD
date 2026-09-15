@@ -252,6 +252,7 @@ import {
 } from "@ggd/shared/sim/deathWard";
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
 import { endCombatChampionForms } from "@ggd/shared/sim/systems/ChampionFormSystem";
+import { endCombatSummons } from "@ggd/shared/sim/summons";
 import {
   anyMobsAlive,
   anyMobsAliveOfKinds,
@@ -3882,6 +3883,7 @@ export class MatchController {
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
     endCombatDeathWards(this.world); // …and every 死亡遺留物 + 其加成 clears (71-00 暗夜旗)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
+    endCombatSummons(this.world); // …and every 召喚物 — 回合邊界不是它的三個結束條件之一 (GH#1241)
     // …and every 變身 reverts (GH#579). A form is WITHIN-ROUND state — the next
     // round starts from the picked hero — but until this line the module's own
     // design note said so while NOBODY called it: 8 shipped `{"to":"toggle"}`

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "95a0e0a7be39",
+  "hash": "f057f8bcc755",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -85,6 +85,12 @@
       "path": "config/authoring-rules.json",
       "hash": "debe3d095be9",
       "size": 5477
+    },
+    {
+      "id": "balance-anchors",
+      "path": "config/balance-anchors.json",
+      "hash": "249b5f562c62",
+      "size": 1948
     },
     {
       "id": "base-bonus",
@@ -221,8 +227,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "7edc151e7fde",
-      "size": 3347
+      "hash": "70740be7f3a6",
+      "size": 3344
     },
     {
       "id": "dispel",
@@ -269,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "975ad940dc18",
+      "hash": "4eef1e7c5464",
       "size": 921
     },
     {
@@ -311,8 +317,8 @@
     {
       "id": "mana-tiers",
       "path": "config/mana-tiers.json",
-      "hash": "6d500097e499",
-      "size": 2110
+      "hash": "29b26f94dac9",
+      "size": 2606
     },
     {
       "id": "map-report",
@@ -335,8 +341,8 @@
     {
       "id": "model-lod",
       "path": "config/model-lod.json",
-      "hash": "e3a1aa269cfa",
-      "size": 1129
+      "hash": "2d6f356593b7",
+      "size": 1016
     },
     {
       "id": "move-speed-tiers",
@@ -353,8 +359,8 @@
     {
       "id": "one-shot-clamp",
       "path": "config/one-shot-clamp.json",
-      "hash": "18be96faf9c3",
-      "size": 1256
+      "hash": "840256a8643e",
+      "size": 1517
     },
     {
       "id": "origin-routes",
@@ -365,8 +371,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "6d1c98f7bc46",
-      "size": 14705
+      "hash": "02b05e6fd3c1",
+      "size": 14700
     },
     {
       "id": "per-level-bonus",
@@ -425,8 +431,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "b8ee47643f51",
-      "size": 8945
+      "hash": "4e0cf198f7f9",
+      "size": 10056
     },
     {
       "id": "round-grade",
@@ -461,7 +467,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "11de07da31da",
+      "hash": "78e31f81326a",
       "size": 918
     },
     {
@@ -551,14 +557,14 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "be6e790c73cf",
-      "size": 29852
+      "hash": "c7a38d6f8dca",
+      "size": 29899
     },
     {
       "id": "vfx-scripts",
       "path": "config/vfx-scripts.json",
-      "hash": "1b951b2a6090",
-      "size": 610
+      "hash": "501feddf68d2",
+      "size": 972
     },
     {
       "id": "victory-fx",

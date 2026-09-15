@@ -16,10 +16,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "effects": [],
@@ -36,13 +36,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.void.swarm",
   "sfxKey": "wc3.parasite",
   "targetsEnemies": true,
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

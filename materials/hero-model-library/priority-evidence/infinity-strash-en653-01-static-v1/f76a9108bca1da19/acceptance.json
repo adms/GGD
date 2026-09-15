@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "acceptedAt": "2026-09-13",
+  "components": [
+    {
+      "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+      "nativeId": "EN653/01",
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+        "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+        "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+        "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+        "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+      ]
+    }
+  ]
+}

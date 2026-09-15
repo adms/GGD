@@ -13,7 +13,9 @@
  *
  *   ① OFFER   — your duel is over, another arena is still fighting, and your
  *               camera has NOT moved. 「前往觀戰 第N競技場」.
- *   ② WATCHING— you pressed it. 「返回自己的競技場」.
+ *   ② WATCHING— you pressed it. 「等待並觀戰別的競技場晉級戰鬥中」＋「返回自己的競技場」
+ *               (the sentence only where the plate can hold it — see
+ *               SPECTATE_WATCH_SENTENCE_W).
  *
  * SOURCE OF TRUTH is still the frameBus, and still the very fields the camera
  * uses: `spectateOffer` (what the pure #208 decision says is available) and
@@ -64,7 +66,7 @@ import { SfxButton } from "../SfxButton";
 export const SPECTATE_POLL_MS = 200;
 
 /** The line the owner asked for in v0.9.1, kept verbatim for the WATCHING state. */
-export const SPECTATE_NOTICE_TEXT = "";
+export const SPECTATE_NOTICE_TEXT = "等待並觀戰別的競技場晉級戰鬥中";
 /** The OFFER state's line: your fight is over and nothing has moved on its own. */
 export const SPECTATE_OFFER_TEXT = "你的競技場已分出勝負";
 export const SPECTATE_GO_LABEL = "前往觀戰";
@@ -89,6 +91,23 @@ export const SPECTATE_COMPACT_W = 320;
 
 /** The short sentence used when the plate cannot hold the full one. */
 export const SPECTATE_OFFER_TEXT_SHORT = "已分出勝負";
+
+/**
+ * WATCHING's sentence is the owner's verbatim line and the widest thing this
+ * plate ever carries, so it gets its own rung instead of riding the OFFER one.
+ * MEASURED 2026-09-15 (Chromium on macOS, the client's font stack, every
+ * inline style copied from the render below; calibrated against the OFFER
+ * plate, which measured 358 vs the ≈366 estimate above):
+ *
+ *   sentence + chip + button   483  — never fits the registry's 420 cap
+ *   sentence + button          411  (dot 9 + gap 10 + sentence 218 + gap 10 + 返回 134 + 2×14 + 2 border)
+ *   chip + button              265
+ *
+ * So the sentence REPLACES the 「第 N 競技場」 chip, and on a plate narrower than
+ * this it yields entirely (chip + button, or just the button when compact) —
+ * the way back must always survive.
+ */
+export const SPECTATE_WATCH_SENTENCE_W = 411;
 
 export type SpectateMode = "hidden" | "offer" | "watching";
 
@@ -179,7 +198,8 @@ export function SpectateNoticeView_({
   if (view.mode === "hidden" || !rect) return null;
   const watching = view.mode === "watching";
   const compact = rect.w < SPECTATE_COMPACT_W;
-  const text = compact && !watching ? SPECTATE_OFFER_TEXT_SHORT : view.text;
+  const sentence = watching && rect.w >= SPECTATE_WATCH_SENTENCE_W;
+  const text = watching ? (sentence ? view.text : "") : compact ? SPECTATE_OFFER_TEXT_SHORT : view.text;
   return (
     <div
       data-hud-surface="spectate-notice"
@@ -231,7 +251,7 @@ export function SpectateNoticeView_({
       >
         {text}
       </span>
-      {!compact && (
+      {!compact && !sentence && (
         <span
           style={{
             fontSize: 12,

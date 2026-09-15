@@ -1,16 +1,16 @@
 {
   "id": "community-review-29-20260907",
   "name": "芙莉蓮",
-  "description": "芙莉蓮 社群英雄功能驗收稿。作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n視覺方向：淡金 Zoltraak、青白六角防壁、柔色花田；不把其他角色專屬魔法填入。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n視覺方向：淡金 Zoltraak、青白六角防壁、柔色花田；不把其他角色專屬魔法填入。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+  "modelKey": "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 80,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 13.676326530612242,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-29-20260907.q.webp",
       "template": {
@@ -114,7 +114,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -166,7 +166,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-29-20260907.w.webp",
       "template": {
@@ -174,7 +174,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -201,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -232,7 +232,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-29-20260907.e.webp",
       "template": {
@@ -248,7 +248,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -274,9 +274,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -297,7 +297,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 1.767,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-29-20260907.r.webp",
       "template": {
@@ -313,7 +313,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 1.767
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -340,5 +340,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.43f76edd6ef6fac669a686fbd5dfd81425c24efa7a9e8316",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+      "modelSha256": "8224843f53823d449984a1a8622f448c6f661a76e753a2a8a1ab8a39a87c9afc",
+      "binarySha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "registeredAt": "2026-09-12T23:02:34.275Z",
+      "source": {
+        "kind": "previous",
+        "character": "芙莉蓮",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3bcda47dcb1560b48322242c607a1927f1d0eddfbfc36d64",
+      "label": "芙莉莲",
+      "sourceModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+      "modelSha256": "da5e4c675e533f1e81a8626a138533a300715455a10506c8beb4a94ddaaf6a33",
+      "binarySha256": "cfa0f849e7463a4bf545dd225af430f2da04744a1c8ce9a65fb31f5e52a3a885",
+      "registeredAt": "2026-09-12T23:02:34.281Z",
+      "source": {
+        "kind": "exact",
+        "character": "芙莉莲",
+        "work": "葬送的芙莉蓮",
+        "library": "300heroes",
+        "reference": "300heroes:cfce4a1a5c5ede186be83a40",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8",
+      "label": "芙莉莲",
+      "sourceModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+      "modelSha256": "c76aaabdf23a43ab36d495a655263f07e17af26be6cb089ce0d738aa7e965ef8",
+      "binarySha256": "cfa0f849e7463a4bf545dd225af430f2da04744a1c8ce9a65fb31f5e52a3a885",
+      "registeredAt": "2026-09-13T00:08:50.137Z",
+      "source": {
+        "kind": "exact",
+        "character": "芙莉莲",
+        "work": "葬送的芙莉蓮",
+        "library": "300heroes",
+        "reference": "300heroes:cfce4a1a5c5ede186be83a40",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

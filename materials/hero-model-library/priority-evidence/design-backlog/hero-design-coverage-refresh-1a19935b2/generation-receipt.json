@@ -1,0 +1,79 @@
+{
+  "schema": "ggd-hero-design-coverage-refresh-receipt@1",
+  "generatedAt": "2026-09-13T01:52:13.645278+00:00",
+  "gitCommit": "1a19935b2b46d2d11c4af0ce627c4ed11f6f0917",
+  "purpose": "Refresh hero-definition and standalone-ability evidence used by the acquired-model design backlog; no model, runtime or deployment claim.",
+  "commands": [
+    "node --import tsx tools/hero-model-library/design-backlog/analyze_abilities.mts <ability-analysis.json>",
+    "python3 tools/hero-model-library/design-backlog/audit_design.py --analysis <ability-analysis.json> --output <full.json> --compact <compact.json>",
+    "python3 tools/hero-model-library/build_model_design_backlog.py",
+    "python3 tools/hero-model-library/build_model_design_backlog.py --check"
+  ],
+  "sourceAudits": [
+    {
+      "path": "/private/tmp/ggd-backlog-refresh-1a19935/materials/hero-model-library/design-backlog/sources-300-mba.json",
+      "bytes": 4074417,
+      "sha256": "57e240f00e6e02ef08d06ad825d9cdbaabcfb6fed4848192bb07e00d63b7368f"
+    },
+    {
+      "path": "/private/tmp/ggd-backlog-refresh-1a19935/materials/hero-model-library/design-backlog/sources-community.json",
+      "bytes": 4170184,
+      "sha256": "5d83876057eeaacd6ed09a1cbe219f1bb9580236736743809b9732a8a2ee4c73"
+    },
+    {
+      "path": "/private/tmp/ggd-backlog-refresh-1a19935/materials/hero-model-library/design-backlog/resource-coverage.json",
+      "bytes": 591738,
+      "sha256": "81573b37fd0d7f077c631973039aa20bd93a01def81ace97776a0f72b17a14af"
+    }
+  ],
+  "preservedPrevious": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-refresh-1a19935b2/previous-hero-design-coverage-compact-a3777dc6.json",
+      "bytes": 1202024,
+      "sha256": "a3777dc6f589290588b8bf8d823b7586575234f3884ec86b659a01158f9d0e98"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-refresh-1a19935b2/ability-analysis.json",
+      "bytes": 2405463,
+      "sha256": "787575166612194ad7ae2ad26b4e5261249122583264a9f5e23bfe59e064fecf"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-refresh-1a19935b2/hero-design-coverage-full.json",
+      "bytes": 2835393,
+      "sha256": "315701b929199564387875cdd3d744a3ab2c5d0f16d94227582184557a53541e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-refresh-1a19935b2/hero-design-coverage-compact.json",
+      "bytes": 1168097,
+      "sha256": "7950b60fd323c5c7af80f7694f14c0e79cf15db82b5d5955975126ee93b515e8"
+    },
+    {
+      "path": "/private/tmp/ggd-backlog-refresh-1a19935/materials/hero-model-library/已取得模型待設計英雄.json",
+      "bytes": 11236178,
+      "sha256": "ce8bd6b79cac98a08f5543307483a2a8f780a88825b9dc180c199357e53b9dd7"
+    },
+    {
+      "path": "/private/tmp/ggd-backlog-refresh-1a19935/materials/hero-model-library/已取得模型待設計英雄.md",
+      "bytes": 759771,
+      "sha256": "e03d38c92c3be8f6bea51e40f379e8c5877e2922603a8170b33188b0fc73d15f"
+    }
+  ],
+  "summary": {
+    "heroes": 153,
+    "abilityDocuments": 907,
+    "schemaFailures": 0,
+    "templateExpansionFailures": 0,
+    "missingAbilityReferences": 0,
+    "explicitPlaceholderHeroes": 0,
+    "uncertainHeroesBefore": 152,
+    "uncertainHeroesAfter": 0,
+    "modelCandidatesChanged": 0,
+    "sourceIdentityCountsChanged": false
+  },
+  "boundaries": [
+    "Design mechanics evidence is not source-fidelity, balance, runtime, backend-selection or deployment proof.",
+    "Large analysis inputs and prior compact snapshot remain local and in S3 legacy; fixed backlog outputs remain in Git."
+  ]
+}

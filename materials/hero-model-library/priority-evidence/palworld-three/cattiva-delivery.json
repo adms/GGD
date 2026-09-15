@@ -1,0 +1,22 @@
+{
+  "deliveryRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911",
+  "sourceEntriesPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/source-entries.json",
+  "sourceEntriesSha256": "366851b7036f2fddafd9ddb43eba3ed1b0ae9e47783558de21584a03a349bd64",
+  "receipts": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-atlasforge.s3-backup.json",
+      "sha256": "dc00e0d7d572eeded7f0b13fac61eb4f0090cf856899f00b67aecf11f6c147ff",
+      "sourceId": "palworld-cattiva-atlasforge"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-opgg.s3-backup.json",
+      "sha256": "e8c5973d24537ed16548162db9529021c84969ac21bd025dfdf7a556b88f6768",
+      "sourceId": "palworld-cattiva-opgg"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-20260911/palworld-cattiva-gamevault.s3-backup.json",
+      "sha256": "2da6cc96007ea2e7f0fad831a516d11194834d6ad4ae62b8c4b5c26d2b7b2ac2",
+      "sourceId": "palworld-cattiva-gamevault"
+    }
+  ]
+}

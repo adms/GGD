@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "path": "kirei-motion-contact-sheet.png",
+      "bytes": 175608,
+      "sha256": "74fbe556136cb6ec93cc022dd5d6ac94c94efab061ad4535cbd250498a1e479d",
+      "sourcePath": "kotomine-kirei/preview/kirei-motion-contact-sheet.png"
+    },
+    {
+      "path": "01-p1.png",
+      "bytes": 40352,
+      "sha256": "63fbe0a3caf3ea17a37642e8d2bd37f70d66540042aeb9a7fe1b8a6f0f67c0b9",
+      "sourcePath": "dark-sakura/preview/01-p1.png"
+    },
+    {
+      "path": "02-p2.png",
+      "bytes": 46394,
+      "sha256": "11f5ece52d6d0bbe6a985da1f6efad2a1f7f905552aa39ef794890daab9bc511",
+      "sourcePath": "dark-sakura/preview/02-p2.png"
+    }
+  ],
+  "sourceIds": [
+    "gamebanana-fuc-kotomine-kirei-291438",
+    "gamebanana-fuc-dark-sakura-492607"
+  ],
+  "deliverySha256": "fbb0d61967c3e5b0df8b47a8c13461215a41028a255123005dc58b940f393447",
+  "runtimeReady": false
+}

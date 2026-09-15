@@ -1,0 +1,532 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-touka.json",
+  "sourceHeroSha256": "0165e64c17f08e55f71906de4f49fe25408a32fdbc94f46b1ddd0081fd2cd190",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:2aa985177da2c5065aa37390f0b737815baeb1f5a352e58c47ce0f937f6760e1",
+    "sourceModelKey": "ou99.459257-standard-v2",
+    "label": "白西装七夜志贵（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "白西装七夜志贵",
+      "work": "來源作品待核；論壇標題：白西装七夜志贵",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-459257-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-touka",
+    "name": "托卡・史考特",
+    "description": "勇者死了｜挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.459257",
+        "modelSha256": "460775bd6f2f4e02a5de58713cd51db429f9809a85927a283190dd2de3353e78",
+        "binarySha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+        "registeredAt": "2026-09-10T14:37:54.063Z",
+        "source": {
+          "kind": "previous",
+          "character": "托卡・史考特",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.459257.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.99aedf222d4490e806bfb9da2277a505601f6de3911b747f",
+        "label": "白西装七夜志贵（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.459257-standard-v2",
+        "modelSha256": "87595934d2362218b6a8d565aa0e67514faef23eb1abe38ac8471cd9accdfb5c",
+        "binarySha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+        "registeredAt": "2026-09-10T14:37:54.083Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "白西装七夜志贵",
+          "work": "來源作品待核；論壇標題：白西装七夜志贵",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-459257-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 8,
+      "range": 1.6
+    },
+    "growth": {
+      "ad": 4.289142857142858,
+      "ap": 0,
+      "armor": 0.4578979591836735,
+      "as": 0,
+      "healthRegen": 0.13085306122448978,
+      "manaRegen": 0,
+      "maxHealth": 35.000204081632646,
+      "maxMana": 26.357142857142858,
+      "mr": 2.639795918367347
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-touka.q",
+        "name": "英雄招募延時坑",
+        "provenance": "w3x-import",
+        "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑{{radius}} 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 3,
+            "radiusTier": "極小",
+            "side": "enemies",
+            "maxTargets": 4,
+            "delaySec": 0.6,
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 2,
+                "applyTo": "target",
+                "root": true
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "point",
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.667,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.667,
+            "castType": "ground",
+            "effects": [
+              {
+                "anchor": "point",
+                "delaySec": 0.6,
+                "effects": [
+                  {
+                    "applyTo": "target",
+                    "duration": 2,
+                    "kind": "applyStatus",
+                    "root": true,
+                    "statusId": "root"
+                  }
+                ],
+                "kind": "delayed",
+                "maxTargets": 4,
+                "radius": 2.5,
+                "shape": "circle",
+                "side": "enemies",
+                "stopOnCasterDeath": true,
+                "targetMode": "reresolve"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-touka.w",
+        "name": "聖劍當釣竿使",
+        "provenance": "w3x-import",
+        "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "leap",
+            "applyTo": "target",
+            "mode": "toPoint",
+            "apexHeight": 0.4,
+            "durationSec": 0.4,
+            "throwDistance": 1.83,
+            "dragToCaster": true,
+            "landRadius": 2,
+            "onLand": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小"
+                }
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.567,
+        "template": {
+          "ref": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+          "params": {
+            "apexHeight": 100,
+            "castTimeSec": 0.567,
+            "durationSec": 0.4,
+            "grabMode": "dragToCaster",
+            "landDamageTier": "小",
+            "landRadius": 2,
+            "mode": "toPoint",
+            "throwDistance": 100,
+            "throwMode": "distance"
+          },
+          "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d"
+        }
+      },
+      "E": {
+        "id": "b2-touka.e",
+        "name": "入坑紀錄蓋個章",
+        "provenance": "w3x-import",
+        "description": "「入坑紀錄蓋個章！」\n貼上 root 定身 2 秒的入坑紀錄，小級物理傷害；可被淨化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小"
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "root",
+            "duration": 2,
+            "applyTo": "target",
+            "root": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.567,
+        "template": {
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+          "params": {
+            "castTimeSec": 0.567,
+            "damage": {
+              "damageTier": "小"
+            },
+            "damageType": "physical",
+            "status": {
+              "applyTo": "target",
+              "duration": 2,
+              "root": true,
+              "statusId": "root"
+            }
+          },
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+        }
+      },
+      "R": {
+        "id": "b2-touka.r",
+        "name": "錄取地下室再送出口",
+        "provenance": "w3x-import",
+        "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小"
+            }
+          },
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "root",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "knockback",
+                "distance": 4,
+                "speed": 12,
+                "from": "caster",
+                "subtractGap": false,
+                "uncontrollable": false
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 1.633,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 1.633,
+            "castType": "targeted",
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "kind": "damage"
+              },
+              {
+                "count": "all",
+                "kind": "consumeStatus",
+                "onConsumed": [
+                  {
+                    "distance": 4,
+                    "from": "caster",
+                    "kind": "knockback",
+                    "speed": 12,
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ],
+                "shape": "single",
+                "statusId": "root",
+                "subject": "target"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-touka.ex",
+    "passiveAbility": "b2-touka.passive",
+    "icon": "assets/icons/champions/b2-touka.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell two",
+          "hurt": "stand ready",
+          "death": "death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.459257",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.459257",
+        "modelSha256": "460775bd6f2f4e02a5de58713cd51db429f9809a85927a283190dd2de3353e78",
+        "binarySha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+        "registeredAt": "2026-09-10T14:37:54.063Z",
+        "source": {
+          "kind": "previous",
+          "character": "托卡・史考特",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.459257.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 5408996,
+      "sha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32"
+    },
+    {
+      "document": {
+        "id": "version.body.99aedf222d4490e806bfb9da2277a505601f6de3911b747f",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "stand",
+          "run": "walk",
+          "attack": "attack 1",
+          "cast": "spell two",
+          "hurt": "stand ready",
+          "death": "death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.459257-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.99aedf222d4490e806bfb9da2277a505601f6de3911b747f",
+        "label": "白西装七夜志贵（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.459257-standard-v2",
+        "modelSha256": "87595934d2362218b6a8d565aa0e67514faef23eb1abe38ac8471cd9accdfb5c",
+        "binarySha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+        "registeredAt": "2026-09-10T14:37:54.083Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "白西装七夜志贵",
+          "work": "來源作品待核；論壇標題：白西装七夜志贵",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-459257-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 2753524,
+      "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

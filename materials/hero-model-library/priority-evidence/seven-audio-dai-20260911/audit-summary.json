@@ -1,0 +1,277 @@
+{
+  "schema": "ggd.priority-audio-live-recheck@1",
+  "checkedAt": "2026-09-10T19:33:39.330658+00:00",
+  "repoHead": "b5fd4fd0bbd5f10cdf37692408d1c2980f49f301",
+  "centralFilesChanged": false,
+  "awsAccessed": false,
+  "downloadedNewAssets": false,
+  "inputs": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-81-handoff.json",
+      "sha256": "f568e344376d118819738c743a60bbbd3b187ced422e9c78aa980164b1fc0e2f"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-registration.json",
+      "sha256": "b3a5597916dcba8a559cd4e1665d0a67078b8222cfd2d6350a87c2699005b8db"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+      "sha256": "49df935df37ea3a6462150de6062d37d049296ca50fecef6b26037f442a1b440"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+      "sha256": "a14cee2613236d164da513a783d90e630161ae9c200fa070128072563b21f995"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/seven-voice-index.json",
+      "sha256": "5765ddb9cb6bd9f385bb1325649eb7dc388991ee8d7610eed534f1c67de49fad"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+      "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
+    }
+  ],
+  "model": {
+    "priorityHeroCount": 81,
+    "activeModelHashesChecked": 162,
+    "activeModelHashMismatches": 0,
+    "activeModelFilesAndMappingsPassRecorded": 81,
+    "registeredCandidateCount": 283,
+    "registrationStatusCounts": {
+      "merged-readback-verified": 81
+    },
+    "visualAndGameplayAcceptanceByThisAudit": false,
+    "deploymentVerified": false
+  },
+  "motion": {
+    "activeAnimationRows": 474,
+    "activeUniqueBinaries": 81,
+    "mappedStateCounts": {
+      "6": 81
+    },
+    "distinctMappedClipCountDistribution": {
+      "5": 51,
+      "6": 23,
+      "4": 6,
+      "3": 1
+    },
+    "sourceExplicitNativeCountHeroes": 8,
+    "sourceExplicitNativeCounts": [
+      {
+        "heroId": "community-review-34-20260907",
+        "name": "高速婆婆",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-maomao",
+        "name": "貓貓",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-naofumi",
+        "name": "岩谷尚文",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-haga",
+        "name": "羽賀",
+        "nativeCount": 13,
+        "proceduralCount": 0
+      },
+      {
+        "heroId": "b2-guts",
+        "name": "凱茲",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-sinbad",
+        "name": "辛巴達",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-kaiji",
+        "name": "伊藤開司",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      },
+      {
+        "heroId": "b2-shinchan",
+        "name": "野原新之助",
+        "nativeCount": 0,
+        "proceduralCount": 6
+      }
+    ],
+    "warning": "Animation rows/state mappings are not a native or original-character animation completeness claim."
+  },
+  "vfx": {
+    "abilityDocumentsChecked": 486,
+    "uniqueVfxKeysReferenced": 62,
+    "missingAbilityDocuments": [],
+    "missingReferencedVfxDocuments": [],
+    "sourceNativeVfxCompletionCount": null,
+    "visualOrGameplayVerificationPerformed": false
+  },
+  "voiceAndSfx": {
+    "baselineAudioSummaryRecorded": {
+      "heroCount": 81,
+      "activeModelFilesAndMappingsPass": 81,
+      "activeModelsGitTracked": 81,
+      "activePlaceholderCount": 0,
+      "registeredCandidateCount": 283,
+      "perHeroAudioAudits": 81,
+      "heroesWithReportedGaps": 7,
+      "mainBaselineAudioFiles": 1016,
+      "currentBranchAudioAdditions": 2,
+      "currentBranchAudioFiles": 1018,
+      "mainMergedAudioAdditions": false,
+      "productionDeploymentVerified": false,
+      "all81NativeAudioOrMotionComplete": false
+    },
+    "mainCommittedClassificationCountsRecorded": {
+      "synthetic-own-reference-labelled": 403,
+      "source-file-reused-not-speaker-verified": 308,
+      "synthetic-donor-reference": 305
+    },
+    "heroesWithExplicitAbilitySfxRecorded": 0,
+    "selectedAudioRows": 5218,
+    "selectedUniquePaths": 5218,
+    "hashVerifiedFiles": 5218,
+    "hashMismatches": [],
+    "bytes": 5439130190,
+    "decodeChecked": 27,
+    "decodeFailed": 0,
+    "listeningPerformed": false,
+    "languageOrSpeakerVerifiedByThisAudit": false,
+    "groups": {
+      "parallel-ps-jumpforce-audio:JForce_Dai": {
+        "files": 261,
+        "shaVerified": 261,
+        "bytes": 7868623,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/extracted/JForce_Dai/JForce_Dai/chr0430_ActSE/chr0430_ActSE#1.ogg",
+        "exampleSha256": "f4996d8b7fe289e6f4d5022bf7e9feb2da8809bd29bb8b88746abc92647e51a5"
+      },
+      "gamevault-palworld-astralym-audio:astralym-cries": {
+        "files": 6,
+        "shaVerified": 6,
+        "bytes": 163051,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/692273765.mp3",
+        "exampleSha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0"
+      },
+      "palworld-cattiva-gamevault:cattiva-cries": {
+        "files": 6,
+        "shaVerified": 6,
+        "bytes": 877960,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/717847191.wav",
+        "exampleSha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec"
+      },
+      "gamevault-palworld-jetragon-cries:jetragon-cries": {
+        "files": 6,
+        "shaVerified": 6,
+        "bytes": 69428,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/474464904.mp3",
+        "exampleSha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099"
+      },
+      "lol-project-seven:Karthus.ja_JP": {
+        "files": 225,
+        "shaVerified": 225,
+        "bytes": 311303080,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/45bfe8b8a03ea625/00000-7588378.wav",
+        "exampleSha256": "63ccd52417e04336579fc3b1accbefaf955f1ab7db9f511176b82f11547116c7"
+      },
+      "lol-project-seven:LeeSin.ja_JP": {
+        "files": 1069,
+        "shaVerified": 1069,
+        "bytes": 1603331104,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/LeeSin.ja_JP/wav/1c553a91c1c683b5/00000-45126442.wav",
+        "exampleSha256": "639508aef81815e6e13ad119861a5c77de5eaf974542312032ab21daf6f167f2"
+      },
+      "lol-project-seven:Lux.ja_JP": {
+        "files": 1142,
+        "shaVerified": 1142,
+        "bytes": 954512456,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Lux.ja_JP/wav/116b2f04c2025b70/00000-534416372.wav",
+        "exampleSha256": "81d16751fe15e8920c0d9d3461103d82ab19295baaa4fd469f6ce2bb34efc1bf"
+      },
+      "lol-project-seven:MissFortune.ja_JP": {
+        "files": 695,
+        "shaVerified": 695,
+        "bytes": 563086756,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/26cfb419c4a7bc27/00000-12667406.wav",
+        "exampleSha256": "198a9d805862c1244c152885c69f06356cd464e8a57b45ac4dfd2df43412c205"
+      },
+      "lol-project-seven:Warwick.ja_JP": {
+        "files": 531,
+        "shaVerified": 531,
+        "bytes": 648887568,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/77d52fbfa5aa38cd/00000-39917643.wav",
+        "exampleSha256": "e0b53dcea26007dd16bfcdfaac93e8174989e071813e49bb53d644587a6eaa5d"
+      },
+      "lol-project-seven:Xerath.ja_JP": {
+        "files": 223,
+        "shaVerified": 223,
+        "bytes": 261625636,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/51d14684dec89d21/00000-11875451.wav",
+        "exampleSha256": "950ec4ec12c7753485f29beaf84108773ca3f00a75a0a5e68479d1fcbf87b8ce"
+      },
+      "lol-project-seven:Yasuo.ja_JP": {
+        "files": 1042,
+        "shaVerified": 1042,
+        "bytes": 1087126480,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Yasuo.ja_JP/wav/105e6d198746cfbe/00000-2723429.wav",
+        "exampleSha256": "6f757ff2f41643292e607aef0fee90cb8f9b294e96fc878f2d30c71fdada80ee"
+      },
+      "ggd-synthetic:b2-popp": {
+        "files": 12,
+        "shaVerified": 12,
+        "bytes": 278048,
+        "exampleAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/audio/voices/lines/b2-popp/taunt.mp3",
+        "exampleSha256": "5fd1a237d32981ad5e74ee4e77d61671ea10bce456ae0d7d465829f796b2022d"
+      }
+    }
+  },
+  "lolSeven": {
+    "totalsRecorded": {
+      "completeWads": 7,
+      "completeAudioWads": 7,
+      "nonAudioWads": 0,
+      "pcmWavCount": 4927,
+      "audioSeconds": 18611.429133078203,
+      "audioBytes": 5429873080,
+      "nativeWemFiles": 4927,
+      "nativeBanks": 113,
+      "filesWithSamplesAboveUnity": 2264,
+      "confirmedVoiceCount": null,
+      "synthesisReadyGroups": 0,
+      "exactPcm16Recoveries": 0,
+      "packagesWithUnresolvedErrors": 0
+    },
+    "sourceIdRegisteredInDownloadSources": false,
+    "centralIndexedRowsByNativeId": {
+      "Karthus.ja_JP": 225,
+      "Xerath.ja_JP": 223
+    },
+    "scopedDeliveryFilesByNativeId": {
+      "Karthus.ja_JP": 225,
+      "LeeSin.ja_JP": 1069,
+      "Lux.ja_JP": 1142,
+      "MissFortune.ja_JP": 695,
+      "Warwick.ja_JP": 531,
+      "Xerath.ja_JP": 223,
+      "Yasuo.ja_JP": 1042
+    },
+    "scopeExpanded": false
+  },
+  "gaps": [
+    "Popp native/original source audio is not explicitly mapped; existing 12-clip GGD pack is synthetic-own-reference-labelled.",
+    "Dai 261 OGG source-labelled files are from JUMP FORCE, not Infinity Strash. No new Infinity Strash native audio was established.",
+    "Vearn audio source audit has zero acquired files; do not substitute Baran or W3X proxy audio.",
+    "Palworld 18 selected files are nonverbal sound effects; central source groups remain pending-character-mapping and unreviewed.",
+    "LOL seven 4,927 files are float32 decode reserves; 2,264 report samples above unity, pending gain decision/listening/event binding.",
+    "Priority handoff records all 81 local model mappings but does not establish all-native animation completeness, visual gameplay acceptance, backend switching or deployment."
+  ]
+}

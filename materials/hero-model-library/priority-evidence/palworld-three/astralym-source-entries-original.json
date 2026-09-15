@@ -1,0 +1,638 @@
+{
+  "schema": "ggd.public-source-proposal@1",
+  "publicSources": [
+    {
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "defaultEligible": false,
+      "sourceGame": "Palworld",
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+      "license": "Original Palworld assets copyright Pocketpair. No explicit redistribution/reuse license found on the observed source pages; not labelled free licensed.",
+      "publicationStatus": "s3-readback-verified-source-awaiting-standardization",
+      "purchaseDecision": "hold-purchase-review-acquired-source",
+      "reportedLanguage": "nonverbal",
+      "platform": "unknown game build/platform; public web export",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "original-game",
+      "id": "opgg-palworld-astralym-2026081102",
+      "target": "Palworld 枯星龍 Astralym／骨架模型＋58動畫條目＋9貼圖",
+      "url": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "author": "OP.GG (web exporter); Pocketpair (original game assets)",
+      "downloadUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/model.glb?v=2026081102",
+      "manifestUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials.json?v=2026081102",
+      "sourceVersion": "OP.GG revision 2026081102; source manifest v3",
+      "readiness": "pending-standardization",
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "animation",
+        "material",
+        "texture"
+      ],
+      "modelCount": 1,
+      "modelCandidates": [
+        {
+          "id": "opgg-palworld-astralym-2026081102.body",
+          "candidateId": "opgg-palworld-astralym-2026081102.body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "character": "枯星龍 / Astralym",
+          "aliases": [
+            "Astralym",
+            "枯星龍",
+            "WorldTreeDragon"
+          ],
+          "sourceWork": "Palworld / 幻獸帕魯",
+          "sourceGame": "Palworld",
+          "sourcePlatform": "unknown; web game-derived export",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "heroIds": [],
+          "resourceRole": "character-body",
+          "readiness": "acquired-rigged-animated-source-pending-standardization",
+          "defaultEligible": false,
+          "sourceModel": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+          "sourceModelBytes": 12611064,
+          "sourceModelSha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
+          "decodedAnalyticalModel": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+          "meshCount": 1,
+          "primitiveCount": 3,
+          "triangleCount": 23928,
+          "boneCount": 145,
+          "materialCount": 3,
+          "textureCount": 9,
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "staticPoseClipCount": 1,
+          "audioCount": 0,
+          "vfxCount": 0,
+          "textures": [
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Body.webp",
+              "bytes": 156298,
+              "sha256": "39ceb19cbd5a002aaf236a1bf7624448e655af1ecb3e34cbe2e611212da201f5",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Emissive.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+              "bytes": 51020,
+              "sha256": "052662d3f172086780a63964b2485e397c929efbc776efa8be6718ce7b971fdc",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+              "bytes": 1116450,
+              "sha256": "e401caa9a66adfaa6bf0f45a41d93b0023870b0b35a575e9bfa42754a1571ef7",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Body_Normal.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+              "bytes": 420554,
+              "sha256": "8136a207354ed0d6badfdaa2272874e548cece09cb837190eabb38f10a075491",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Extra.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Extra_Emissive.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+              "bytes": 24020,
+              "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Eye.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/MI_WorldTreeDragon_Eye_Emissive.webp?v=2026081102",
+              "path": "original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+              "bytes": 49774,
+              "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58",
+              "acquired": true,
+              "width": 1024,
+              "height": 1024
+            },
+            {
+              "sourceUrl": "https://s-stats-platform-cdn.op.gg/palworld/models/pals/WorldTreeDragon/materials/T_WorldTreeDragon_Body_SSS.webp?v=2026081102",
+              "path": "original/materials/T_WorldTreeDragon_Body_SSS.webp",
+              "bytes": 16898,
+              "sha256": "17a25c314742c4f6f587174246fb864ddb0ae7eda06a937c7576114e4d27bec6",
+              "acquired": true,
+              "width": 2048,
+              "height": 2048
+            }
+          ],
+          "animations": [
+            {
+              "name": "Damage",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 408
+            },
+            {
+              "name": "FarSkill_Action",
+              "seconds": 0.4166666567325592,
+              "channels": 435,
+              "changingChannels": 420
+            },
+            {
+              "name": "FarSkill_ActionLoop",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 406
+            },
+            {
+              "name": "FarSkill_End",
+              "seconds": 1.4583333730697632,
+              "channels": 435,
+              "changingChannels": 418
+            },
+            {
+              "name": "FarSkill_Start",
+              "seconds": 1.4583333730697632,
+              "channels": 435,
+              "changingChannels": 395
+            },
+            {
+              "name": "FarSkill_StartLoop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 343
+            },
+            {
+              "name": "HaloBeam_End",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 386
+            },
+            {
+              "name": "HaloBeam_End_Ring",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "HaloBeam_Loop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 335
+            },
+            {
+              "name": "HaloBeam_Loop_Ring",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 225
+            },
+            {
+              "name": "HaloBeam_Start",
+              "seconds": 2.0833332538604736,
+              "channels": 435,
+              "changingChannels": 383
+            },
+            {
+              "name": "HaloBeam_Start_Ring",
+              "seconds": 2.0833332538604736,
+              "channels": 435,
+              "changingChannels": 237
+            },
+            {
+              "name": "HaloCutter",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 386
+            },
+            {
+              "name": "HaloCutter_End_Ring",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 240
+            },
+            {
+              "name": "HaloCutter_Loop_Ring",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 0
+            },
+            {
+              "name": "HaloCutter_Start_Ring",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 241
+            },
+            {
+              "name": "Idle",
+              "seconds": 7.666666507720947,
+              "channels": 435,
+              "changingChannels": 411
+            },
+            {
+              "name": "Idle_Ring",
+              "seconds": 7.666666507720947,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "LaserGliding_End",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 387
+            },
+            {
+              "name": "LaserGliding_End_Ring",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 228
+            },
+            {
+              "name": "LaserGliding_Loop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 289
+            },
+            {
+              "name": "LaserGliding_Loop_Ring",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "LaserGliding_Start",
+              "seconds": 3.5416667461395264,
+              "channels": 435,
+              "changingChannels": 371
+            },
+            {
+              "name": "LaserGliding_Start_Ring",
+              "seconds": 3.5416667461395264,
+              "channels": 435,
+              "changingChannels": 228
+            },
+            {
+              "name": "PaldiumCannon_Attack",
+              "seconds": 0.4166666567325592,
+              "channels": 435,
+              "changingChannels": 377
+            },
+            {
+              "name": "PaldiumCannon_Attack_Loop",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 409
+            },
+            {
+              "name": "PaldiumCannon_Attack_Loop_Ring",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "PaldiumCannon_Attack_Ring",
+              "seconds": 0.4166666567325592,
+              "channels": 435,
+              "changingChannels": 230
+            },
+            {
+              "name": "PaldiumCannon_End",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 419
+            },
+            {
+              "name": "PaldiumCannon_End_Ring",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 225
+            },
+            {
+              "name": "PaldiumCannon_Start",
+              "seconds": 2.75,
+              "channels": 435,
+              "changingChannels": 421
+            },
+            {
+              "name": "PaldiumCannon_Start_Loop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 347
+            },
+            {
+              "name": "PaldiumCannon_Start_Loop_Ring",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "PaldiumCannon_Start_Ring",
+              "seconds": 2.75,
+              "channels": 435,
+              "changingChannels": 220
+            },
+            {
+              "name": "PaldiumExplosion_Cancel",
+              "seconds": 3.75,
+              "channels": 435,
+              "changingChannels": 388
+            },
+            {
+              "name": "PaldiumExplosion_Cancel_Ring",
+              "seconds": 3.75,
+              "channels": 435,
+              "changingChannels": 209
+            },
+            {
+              "name": "PaldiumExplosion_End",
+              "seconds": 3.75,
+              "channels": 435,
+              "changingChannels": 405
+            },
+            {
+              "name": "PaldiumExplosion_End_Ring",
+              "seconds": 3.75,
+              "channels": 435,
+              "changingChannels": 209
+            },
+            {
+              "name": "PaldiumExplosion_Loop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 317
+            },
+            {
+              "name": "PaldiumExplosion_Loop_Ring",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "PaldiumExplosion_Start",
+              "seconds": 3.125,
+              "channels": 435,
+              "changingChannels": 399
+            },
+            {
+              "name": "PaldiumExplosion_Start_Ring",
+              "seconds": 3.125,
+              "channels": 435,
+              "changingChannels": 209
+            },
+            {
+              "name": "PaldiumRain_End",
+              "seconds": 1.25,
+              "channels": 435,
+              "changingChannels": 395
+            },
+            {
+              "name": "PaldiumRain_Loop",
+              "seconds": 3.125,
+              "channels": 435,
+              "changingChannels": 350
+            },
+            {
+              "name": "PaldiumRain_Start",
+              "seconds": 2.9166667461395264,
+              "channels": 435,
+              "changingChannels": 392
+            },
+            {
+              "name": "PaldiumShot_End",
+              "seconds": 1.4583333730697632,
+              "channels": 435,
+              "changingChannels": 413
+            },
+            {
+              "name": "PaldiumShot_End_Ring",
+              "seconds": 1.4583333730697632,
+              "channels": 435,
+              "changingChannels": 144
+            },
+            {
+              "name": "PaldiumShot_Loop",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 351
+            },
+            {
+              "name": "PaldiumShot_Loop_Ring",
+              "seconds": 0.8333333134651184,
+              "channels": 435,
+              "changingChannels": 145
+            },
+            {
+              "name": "PaldiumShot_Start",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 404
+            },
+            {
+              "name": "PaldiumShot_Start_Ring",
+              "seconds": 1.875,
+              "channels": 435,
+              "changingChannels": 144
+            },
+            {
+              "name": "Supernova_End",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 382
+            },
+            {
+              "name": "Supernova_End_Ring",
+              "seconds": 4.375,
+              "channels": 435,
+              "changingChannels": 223
+            },
+            {
+              "name": "Supernova_Loop",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 273
+            },
+            {
+              "name": "Supernova_Loop_Ring",
+              "seconds": 1.6666666269302368,
+              "channels": 435,
+              "changingChannels": 236
+            },
+            {
+              "name": "Supernova_Start",
+              "seconds": 2.5,
+              "channels": 435,
+              "changingChannels": 394
+            },
+            {
+              "name": "Supernova_Start_Ring",
+              "seconds": 2.5,
+              "channels": 435,
+              "changingChannels": 236
+            },
+            {
+              "name": "Walk",
+              "seconds": 4.333333492279053,
+              "channels": 435,
+              "changingChannels": 412
+            }
+          ],
+          "modelAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/model-analysis.json",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-standardization",
+            "selectionVerified": false
+          },
+          "limitations": [
+            "Game-derived web export, not original Unreal container; source game platform/build not verified.",
+            "Original GLB requires EXT_meshopt_compression; lossless decoded analytical copy retains identical nodes/skins/animation structure.",
+            "Raw/V1 NORMAL declaration errors corrected in V2 by KHR_mesh_quantization metadata only; V2 zero errors, one nonroot skin warning; runtime/material acceptance still pending.",
+            "External material recipe plus all 9 WebP files retained; standalone GLB has no embedded images. Original shader equivalence/visual validation pending.",
+            "58 clips retained; only 57 show changing values. HaloCutter_Loop_Ring is a static pose.",
+            "Ring-named animations are not proof of separately acquired particle/VFX systems; no standalone VFX package.",
+            "No registered GGD hero ID found by exact Astralym/WorldTreeDragon/枯星龍 search at audit time; heroIds remain empty."
+          ],
+          "decodedAnalyticalModelV1": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded.glb",
+          "decodedAnalyticalModelSha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797",
+          "normalizationReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/analysis/decoded-v2-receipt.json",
+          "validator": {
+            "errors": 0,
+            "warnings": 1,
+            "infos": 3,
+            "truncated": false
+          }
+        }
+      ],
+      "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-candidates-v2.json",
+      "nativeAnimationCount": 57,
+      "animationClipCount": 58,
+      "audioCount": 0,
+      "audioFileIndex": {
+        "reportPath": "model-audioFileIndex.json",
+        "reportSha256": "ef909a791640e574c538b2c7de75883cc383b23d98f613668a3eb1da39c5c6f2"
+      },
+      "limitations": [
+        "Game-derived web export, not original Unreal container; source game platform/build not verified.",
+        "Original GLB requires EXT_meshopt_compression; lossless decoded analytical copy retains identical nodes/skins/animation structure.",
+        "Raw/V1 NORMAL declaration errors corrected in V2 by KHR_mesh_quantization metadata only; V2 zero errors, one nonroot skin warning; runtime/material acceptance still pending.",
+        "External material recipe plus all 9 WebP files retained; standalone GLB has no embedded images. Original shader equivalence/visual validation pending.",
+        "58 clips retained; only 57 show changing values. HaloCutter_Loop_Ring is a static pose.",
+        "Ring-named animations are not proof of separately acquired particle/VFX systems; no standalone VFX package.",
+        "No registered GGD hero ID found by exact Astralym/WorldTreeDragon/枯星龍 search at audit time; heroIds remain empty."
+      ],
+      "backup": {
+        "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "bytes": 29873643,
+        "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "parallel-palworld-astralym",
+        "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+        "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+        "deletionAllowed": false
+      },
+      "s3BackupReceiptPath": "/private/tmp/ggd-astralym-s3-backup-receipt.json"
+    },
+    {
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "defaultEligible": false,
+      "sourceGame": "Palworld",
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+      "license": "Original Palworld assets copyright Pocketpair. No explicit redistribution/reuse license found on the observed source pages; not labelled free licensed.",
+      "publicationStatus": "s3-readback-verified-source-awaiting-standardization",
+      "purchaseDecision": "hold-purchase-review-acquired-source",
+      "reportedLanguage": "nonverbal",
+      "platform": "unknown game build/platform; public web export",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "original-game",
+      "id": "gamevault-palworld-astralym-audio",
+      "target": "Palworld 枯星龍 Astralym／六種非語言叫聲",
+      "url": "https://palworld.gamevault.in/paldex/astralym/",
+      "author": "Gamevault (audio exporter); Pocketpair (original game assets)",
+      "readiness": "local-audio-decode-verified-listening-pending",
+      "assetKinds": [
+        "audio",
+        "sound-effect"
+      ],
+      "modelCount": 0,
+      "audioCount": 6,
+      "audioSeconds": 19.966666,
+      "audioCategory": "sound-effect",
+      "sourceIsSynthetic": false,
+      "audioFileIndex": {
+        "reportPath": "audioFileIndex.json",
+        "reportSha256": "a9fca630483f1e828ec4a24d6dd3fff96eace01b4d2713b044fb4a7d6f05c29a"
+      },
+      "audioGroups": [
+        {
+          "id": "astralym-cries",
+          "name": "枯星龍 Astralym 非語言叫聲",
+          "heroIds": [],
+          "pathPrefixes": [
+            "original/692273765.mp3",
+            "original/490600725.mp3",
+            "original/334845214.mp3",
+            "original/825892274.mp3",
+            "original/646052.mp3",
+            "original/118059401.mp3"
+          ],
+          "audioCategory": "sound-effect",
+          "reportedLanguage": "nonverbal",
+          "sourceIsSynthetic": false,
+          "classificationEvidence": "Six named cry buttons on the Astralym soundboard; no per-clip listening claim."
+        }
+      ],
+      "limitations": [
+        "Source soundboard identity and emotion labels retained; listening validation pending.",
+        "No original native Wwise bank obtained; MP3 files are web-exported game audio.",
+        "Protected Gamevault model pointer was not decrypted, requested or bypassed; model acquired from independent public OP.GG route.",
+        "No spoken Japanese dialogue; these are nonverbal creature cries and excluded from speech synthesis by sound-effect classification."
+      ],
+      "backup": {
+        "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "bytes": 29873643,
+        "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "parallel-palworld-astralym",
+        "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+        "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+        "deletionAllowed": false
+      },
+      "s3BackupReceiptPath": "/private/tmp/ggd-astralym-s3-backup-receipt.json"
+    }
+  ]
+}
