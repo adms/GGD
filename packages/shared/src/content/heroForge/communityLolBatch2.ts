@@ -3171,5 +3171,12 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
   }
 ] satisfies readonly CommunityHeroExample[]).map(withCommunityLolBatch2Presentation);
 
-/** Source-critical mechanics are pending; the editor must not offer these as completed presets. */
-export const COMMUNITY_LOL_BATCH2_RELEASE_READY = false;
+/**
+ * 編輯器是否把 LoL 第二批 11 名當成**完成的範本**提供（Hero Forge 範例清單）＋作者清單的 `releaseReady`。
+ *
+ * ⭐ owner 2026-09-15（逐字，GH#1185）：「v0.45.2 部署後先實機看過鄂爾、阿璃、瑟雷西、稻草人、威寇茲這幾招，再翻開關 => 不需要 直接上就好」
+ *   ⇒ 核心機制（#1187／#1189／#1190／#1191／#1197）已在 v0.45.2 接上 ⇒ 翻開。鏈路已接上，⛔ 未實機驗收（owner 明示不必先實機看）。
+ * ⚠️ 這一格⛔ 不會把 11 名放進正式站的上架名單 —— 正式站上架走平台的投稿→核准→發布（同 #1205）。
+ * ↩ rollback：改回 false ＋ 重跑 `node --import tsx tools/community-hero-forge/lol-batch2.mts --out <暫存>`。
+ */
+export const COMMUNITY_LOL_BATCH2_RELEASE_READY = true;
