@@ -158,12 +158,15 @@ fi
 #   ⭐ 修正輪補收 `docs/legacy/_overwrites/_ledger.tsv`：B 的 preserve.sh 會追加它，⛔ 不收的話收尾之後它仍躺在工作區。
 #     ⚠️ 它是 append-only 的留底帳本（hook 也寫）⇒ 整份進 commit 會連同別的 session 追加的列 ——
 #     那是紀錄、⛔ 不是別人的程式改動；合併衝突取聯集（CLAUDE.md「追加式帳本 ⛔ --ours／--theirs」）。
+#   ⭐ 修正輪二補收根目錄捷徑 `GGD戰情版.md`（cb08a41f1 維持追蹤）：換日那一輪 M 的 board:roll **同時**寫新日檔與改指捷徑，
+#     只收日檔 ⇒ HEAD 是「新日檔＋指向昨天的捷徑」（d935cfc98 的形狀）⇒ 工作樹綠、乾淨 clone 的 board:roll:check 紅。
+#     `-m` 只在它被追蹤且有改動時列它；哪天改回不追蹤，.gitignore（e525a37b5 那一行）＋ --exclude-standard 會排除它。
 board_wrap() {
   local files=() f msg
   while IFS= read -r -d '' f; do files+=("$f"); done < <(git ls-files -z -m -o --exclude-standard -- \
     'docs/_release/戰情版-*.md' 'docs/_release/戰情版_temp_*.md' \
     'docs/legacy/_overwrites/*/docs/_release/戰情版-*.md' 'docs/legacy/_overwrites/*/docs/_execution-batches.md' \
-    'docs/legacy/_overwrites/_ledger.tsv')
+    'docs/legacy/_overwrites/_ledger.tsv' 'GGD戰情版.md')
   [ ${#files[@]} -gt 0 ] || { echo "✓ 戰情版沒有新的改動或副本要收"; return 0; }
   msg="${TMPDIR:-/tmp}"; msg="${msg%/}/bmpndd-board-wrap-$$.txt"
   printf 'chore(board): 🗂 GH#1256 戰情版與副本收尾（BMPNDD B·M，%s 個檔）\n\nowner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」\n' "${#files[@]}" > "$msg"
