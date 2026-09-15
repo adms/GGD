@@ -238,6 +238,11 @@ func (s *Service) Buy(ctx context.Context, accountID, kind, id string) (Wallet, 
 			if contains(a.OwnedSkins, id) {
 				return httpx.Err(http.StatusConflict, "already_owned", "skin already owned")
 			}
+			// GH#1177 下架 (skin@1 listed:false): not sold any more. Same 404 an
+			// id outside the catalog gets — to a non-owner it is not on the shelf.
+			if !sk.OnSale() {
+				return httpx.NotFound("skin not for sale: " + id)
+			}
 			if a.MCoin < sk.MCoinPrice {
 				return ErrInsufficient()
 			}
@@ -348,6 +353,9 @@ func (s *Service) CatalogFor(ctx context.Context, accountID string) ([]CatalogCh
 	skins := []CatalogSkin{}
 	for _, id := range s.cat.SkinIDs() {
 		sk := s.cat.Skins[id]
+		if !s.cat.OnShelf(id, contains(w.OwnedSkins, sk.ID)) {
+			continue // GH#1177 下架：只留給已購玩家
+		}
 		skins = append(skins, CatalogSkin{
 			ID: sk.ID, ChampionID: sk.ChampionID, Price: sk.MCoinPrice, ModelKey: sk.ModelKey,
 			Owned:    contains(w.OwnedSkins, sk.ID),

@@ -9,6 +9,7 @@ export interface ModelSelectionApi {
   };
 }
 import { Btn, Panel } from "./widgets";
+import { ChampionModelVersionShop } from "./ChampionModelVersionShop";
 import { DANGER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 /**
@@ -111,6 +112,7 @@ export function ChampionModelVersions(props: {
       <Btn disabled={locked || !version || (selected === state?.activeModelKey && state?.selectionMode === "manual")} onClick={() => state && void apply({ action: "activate", modelKey: selected, expectedHash: state.expectedHash })}>套用選取版本</Btn>
       <div style={{ color: TEXT_DIM, fontSize: 12 }}>預設順序：{MODEL_SELECTION_ORDER.map((key) => MODEL_SELECTION_LABELS[key]).join(" ＞ ")}。同級按來源遊戲發售日由新到舊，日期待核者排後；不同世代與作品全部保留供手選。原著模型指原作遊戲直接擷取，300／MBA 維持各自順位。僅套用核准的預設候選；現在為{state?.selectionMode === "manual" ? "手動選用" : "自動選用"}。</div>
       <Btn disabled={locked || !state?.versions.length || (state.selectionMode === "automatic" && state.activeModelKey === state.preferredModelKey)} onClick={() => state && void apply({ action: "automatic", expectedHash: state.expectedHash })}>恢復依順位自動選用</Btn>
+      {state && state.versions.length > 0 && <ChampionModelVersionShop championId={championId} versions={state.versions} disabled={props.disabled} />}
       {props.allowRegister !== false && <details><summary>新增已匯入的模型版本</summary>
         <fieldset disabled={locked} style={{ border: 0, padding: "10px 0", display: "grid", gap: 8 }}>
           <label>已匯入模型<input aria-label="新增版本的模型" list={`model-options-${championId}`} style={inputStyle} value={sourceModelKey} onChange={(e) => setSourceModelKey(e.target.value)} /></label>

@@ -415,6 +415,8 @@ export interface SkinDoc {
   description?: string;
   mcoinPrice: number;
   modelKey: string;
+  /** GH#1177 商店上架開關；缺席＝上架，`false`＝下架（只留給已購玩家）。 */
+  listed?: boolean;
 }
 
 /**

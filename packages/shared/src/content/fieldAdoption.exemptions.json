@@ -1079,6 +1079,11 @@
     "why": "zTintRgb: ABSENT == untinted, and `[1,1,1]` must never be written. Skin tint is for a recolour variant; none has shipped.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
+  "field:skins.listed": {
+    "status": "default-live",
+    "why": "GH#1177: ABSENT == listed (on sale) and the admin shop deletes the key when it (re)lists, so only a DELISTED skin ever carries it. Zero adoption = nothing has been taken off the shelf yet. Consumers: apps/platform/internal/wallet/catalog.go SkinDef.OnSale / Catalog.OnShelf (wallet.go CatalogFor + Buy) and apps/client/src/ui/platform/catalog.ts deriveStoreRows. The day the owner delists one, this entry goes STALE and must be removed.",
+    "group": "GH#1177 模型版本商店"
+  },
   "field:champions.abilities.*.innateKind": {
     "status": "schema-impossible",
     "why": "zChampionDoc pins the embedded slots to Q/W/E/R, and zAbilityDoc.refineInnate REJECTS innateKind on anything but slot PASSIVE. A doc setting it would fail to load.",

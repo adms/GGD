@@ -29,6 +29,25 @@ type SkinDef struct {
 	Name       string `json:"name"`
 	MCoinPrice int    `json:"mcoinPrice"`
 	ModelKey   string `json:"modelKey"`
+	// Listed is skin@1's GH#1177 商店上架開關. A POINTER because ABSENT must read
+	// as listed: every skin doc that shipped before the field existed keeps
+	// selling. Read it through OnSale, never directly.
+	Listed *bool `json:"listed,omitempty"`
+}
+
+// OnSale reports whether the store still SELLS this skin (skin@1 `listed`,
+// absent == true). It does not decide ownership: a delisted skin a player
+// already bought stays theirs — see Catalog.OnShelf.
+func (sk SkinDef) OnSale() bool { return sk.Listed == nil || *sk.Listed }
+
+// OnShelf is THE catalog visibility rule for one skin row (GH#1177): a skin
+// that is on sale is shown to everyone; a delisted one (listed:false) is shown
+// only to a player who already owns it, so 下架 stops new sales without taking
+// a paid cosmetic away. CatalogFor filters every row through it and Buy refuses
+// anything that is not OnSale, so the two cannot drift apart.
+func (c Catalog) OnShelf(id string, owned bool) bool {
+	sk, ok := c.Skins[id]
+	return ok && (owned || sk.OnSale())
 }
 
 // storeDoc mirrors content/config/store.json (config.store@1).

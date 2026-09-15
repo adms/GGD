@@ -49,6 +49,7 @@ import {
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
 import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
+import type { SkinDoc } from "@ggd/shared/content/schema/skin";
 
 /** Vite dev flag, guarded so plain node (vitest) never throws. */
 function isDevBuild(): boolean {
@@ -650,3 +651,51 @@ export const heroCatalogApi = {
   preview: (heroPath: string, versionId: string, opts?: ContentApiOptions) => catalogRequest<CatalogHeroPreview>("preview", "POST", {heroPath, versionId}, opts),
   restore: (preview: CatalogHeroPreview, opts?: ContentApiOptions) => catalogRequest<{versionId: string; restoredFrom: string; previousVersion: string; contentVersion: string}>("restore", "POST", {heroPath: preview.hero.path, versionId: preview.versionId, expectedCurrentVersion: preview.currentVersion, planDigest: preview.planDigest}, opts),
 };
+
+/**
+ * ⭐ GH#1177 模型版本商店 —— 造型（skin@1）的**窄口**。
+ *
+ * `skins` 刻意⛔不進 EDIT_COLLECTIONS（那會長出一整頁通用表單，而商店只需要「上架／售價／下架」
+ * 三個動作）⇒ 這裡只開兩個函式，⭐ 仍然住在這一支（contentGate：本檔是後台唯一的 /content-api 呼叫端），
+ * 仍然吃同一個 `ENABLED` 部署閘，寫入仍然「先 validate 再 PUT」（content-api 覆蓋前先留底）。
+ *
+ * ⚠️ 寫進去的是 `content/skins/*.json` —— 平台的商店目錄**開機時**讀它（wallet/catalog.go LoadCatalog）
+ * ⇒ 玩家看得到要 commit ＋ 完整部署。⛔ 這不是 content-overlay（線上即時）那條路。
+ */
+export const modelShopApi = {
+  async listSkins(championId: string, opts: ContentApiOptions = {}): Promise<{ docs: SkinDoc[]; error: string | null }> {
+    if (!ENABLED) return { docs: [], error: OFF_MESSAGE };
+    const fetchFn = opts.fetchFn ?? defaultFetch;
+    const url = "/content-api/skins/_index";
+    try {
+      const res = await send(fetchFn, url, "GET");
+      if (res.status !== 200) return { docs: [], error: errorOf(res.body, res.status, url) };
+      const entries = (res.body as { entries?: { id?: unknown }[] } | null)?.entries;
+      if (!Array.isArray(entries)) return { docs: [], error: "造型清單格式不完整。" };
+      const docs: SkinDoc[] = [];
+      for (const entry of entries) {
+        if (typeof entry.id !== "string" || !entry.id.startsWith(`skin.${championId}.`)) continue;
+        const docUrlOf = `/content-api/skins/${encodeURIComponent(entry.id)}`;
+        const one = await send(fetchFn, docUrlOf, "GET");
+        if (one.status !== 200) return { docs: [], error: errorOf(one.body, one.status, docUrlOf) };
+        const doc = one.body as SkinDoc | null;
+        if (doc?.championId === championId) docs.push(doc);
+      }
+      return { docs, error: null };
+    } catch (error) { return { docs: [], error: error instanceof Error ? error.message : String(error) }; }
+  },
+  async saveSkin(doc: SkinDoc, opts: ContentApiOptions = {}): Promise<{ ok: boolean; issues: EditIssue[]; error: string | null }> {
+    if (!ENABLED) return { ok: false, issues: [], error: OFF_MESSAGE };
+    const fetchFn = opts.fetchFn ?? defaultFetch;
+    const url = `/content-api/skins/${encodeURIComponent(doc.id)}`;
+    try {
+      const v = await send(fetchFn, `${url}/validate`, "POST", doc);
+      if (v.status === 422) return { ok: false, issues: issuesOf(v.body), error: null };
+      if (v.status !== 200) return { ok: false, issues: [], error: errorOf(v.body, v.status, `${url}/validate`) };
+      const res = await send(fetchFn, url, "PUT", doc);
+      if (res.status !== 200 && res.status !== 201) return { ok: false, issues: issuesOf(res.body), error: errorOf(res.body, res.status, url) };
+      return { ok: true, issues: [], error: null };
+    } catch (error) { return { ok: false, issues: [], error: error instanceof Error ? error.message : String(error) }; }
+  },
+};
+export type ModelShopApi = Pick<typeof modelShopApi, "listSkins" | "saveSkin">;
