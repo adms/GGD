@@ -115,6 +115,9 @@ const IGNORES = [
   "scratchpad/**",
   // vite 跑起來時暫時寫在 apps/*/ 底下的設定 bundle
   "**/vite.config.*.timestamp-*.mjs",
+  // ⭐ 2026-09-15（v0.45.2 整合）：GH#1257 新增 apps/editor/vitest.config.ts 之後，vitest 也會寫同形的暫存 bundle；
+  //   ship:check 並行段 lint 掃到它、vitest 收工刪掉 ⇒ ESLint ENOENT 崩潰（exit 2）。與上一列同一個理由。
+  "**/vitest.config.*.timestamp-*.mjs",
 ];
 
 export default tseslint.config(

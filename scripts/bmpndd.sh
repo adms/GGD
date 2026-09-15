@@ -146,7 +146,7 @@ print(" ".join(f"#{n}" for n in map(int, sys.stdin.read().split()) if n not in s
     echo "   ⇒ 在帳本把那則對上票：python3 scripts/ledger_table.py --map <帳本.md> <HH:MM 或 身分> '<票號>'（戰情版從帳本重建）"
     FAIL="${FAIL}M "
   else
-    echo "✓ 近一週**開著**的 $CNT 張票，戰情版（$BOARD）都提到了"
+    echo "✓ 近一週**開著**的 ${CNT} 張票，戰情版（${BOARD}）都提到了"
   fi
 fi
 
@@ -179,7 +179,7 @@ board_wrap() {
     && echo "✓ 戰情版與副本 ${#files[@]} 個檔進 git（$(git rev-parse --short HEAD)）"
 }
 wrap_step() {
-  step "B·M 收尾  戰情版與副本進 git（GGD_BMPNDD_BOARD_WRAP=$BOARD_WRAP）"
+  step "B·M 收尾  戰情版與副本進 git（GGD_BMPNDD_BOARD_WRAP=${BOARD_WRAP}）"
   board_wrap || { echo "⚠️ 收尾 commit 失敗 —— 副本還在工作區，⛔ 但沒進 git（不會上 S3）"; FAIL="${FAIL}B "; }
 }
 # 🔙 GGD_BMPNDD_BOARD_WRAP（見檔頭）：after-gate ⇒ 閘綠了才收；off ⇒ 這一輪不收。
