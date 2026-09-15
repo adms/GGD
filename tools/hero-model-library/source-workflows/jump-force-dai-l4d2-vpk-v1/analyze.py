@@ -21,6 +21,7 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 OUTPUT = REPO / "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json"
+SOURCEIO_PREFLIGHT = OUTPUT.with_name("sourceio-preflight.json")
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -106,7 +107,7 @@ def assimp(path: Path) -> dict[str, Any]:
     }
 
 
-def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
+def source_row(workspace: Path, item: dict[str, Any], preflight: dict[str, Any]) -> dict[str, Any]:
     root = workspace / "GGD-Asset-Library/intake/public-sources" / item["folder"]
     members = validated_members(root)
     acquisition = json.loads((root / "acquisition.json").read_text(encoding="utf-8"))
@@ -126,19 +127,36 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
     suffixes = Counter(Path(row["path"]).suffix.lower() for row in members if row["path"].startswith("extracted/"))
     vmts = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vmt")]
     vtfs = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vtf")]
+    if preflight.get("schema") != "ggd.jump-force-sourceio-preflight@1":
+        raise ValueError("unexpected SourceIO preflight schema")
+    ready = preflight.get("status", {}).get("standardizationReady") is True
+    tooling = {
+        "gitPath": str(SOURCEIO_PREFLIGHT.relative_to(REPO)),
+        "sha256": sha256(SOURCEIO_PREFLIGHT),
+        "blenderVersion": preflight["toolchain"]["blender"]["version"],
+        "sourceioCommit": preflight["toolchain"]["sourceio"]["gitCommit"],
+        "standardizationReady": ready,
+    }
+    reader_blocker = ("SourceIO is pinned locally, but Blender background startup fails before plugin/model import; "
+                      "repair the headless Blender environment before standardization." if not ready else
+                      "SourceIO is available but no MDL conversion has been executed or accepted.")
     return {
         "sourceId": item["sourceId"], "leadId": item["leadId"],
         "source": {"absolutePath": str(root.resolve()), "title": acquisition["title"], "pageUrl": acquisition["pageUrl"], "itemId": acquisition["itemId"], "raw": {"path": acquisition["file"], "bytes": acquisition["bytes"], "sha256": acquisition["sha256"]}, "checkedAt": inspection["checkedAt"]},
         "verifiedFiles": {"count": len(members), "bytes": sum(row["bytes"] for row in members), "manifestSha256": sha256(root / "extraction.json")},
         "extracted": {"extensions": dict(sorted(suffixes.items())), "vmtFiles": len(vmts), "vtfFiles": len(vtfs)},
         "modelGroups": models,
+        "tooling": tooling,
         "status": {"acquired": True, "extracted": True, "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
-        "blockers": ["Source MDL49/VVD/VTX reader is not installed or audited on this workstation.", "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
+        "blockers": [reader_blocker, "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
     }
 
 
 def build(workspace: Path) -> dict[str, Any]:
-    rows = [source_row(workspace, item) for item in WORKFLOWS]
+    if not SOURCEIO_PREFLIGHT.is_file():
+        raise FileNotFoundError(f"Missing SourceIO preflight: {SOURCEIO_PREFLIGHT}")
+    preflight = json.loads(SOURCEIO_PREFLIGHT.read_text(encoding="utf-8"))
+    rows = [source_row(workspace, item, preflight) for item in WORKFLOWS]
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",

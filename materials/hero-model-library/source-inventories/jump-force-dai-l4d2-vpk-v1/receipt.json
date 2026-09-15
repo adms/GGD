@@ -122,6 +122,13 @@
           }
         }
       ],
+      "tooling": {
+        "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/sourceio-preflight.json",
+        "sha256": "e17b75dfb5948dc648ce6556648ba4babec0d45d0b0e0eea9348affd105afd03",
+        "blenderVersion": "Blender 5.2.1 LTS",
+        "sourceioCommit": "25b3978e366aeed1b4bdcf078394751b2d376c7a",
+        "standardizationReady": false
+      },
       "status": {
         "acquired": true,
         "extracted": true,
@@ -132,7 +139,7 @@
         "productionDeployed": false
       },
       "blockers": [
-        "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ]
@@ -247,6 +254,13 @@
           }
         }
       ],
+      "tooling": {
+        "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/sourceio-preflight.json",
+        "sha256": "e17b75dfb5948dc648ce6556648ba4babec0d45d0b0e0eea9348affd105afd03",
+        "blenderVersion": "Blender 5.2.1 LTS",
+        "sourceioCommit": "25b3978e366aeed1b4bdcf078394751b2d376c7a",
+        "standardizationReady": false
+      },
       "status": {
         "acquired": true,
         "extracted": true,
@@ -257,7 +271,7 @@
         "productionDeployed": false
       },
       "blockers": [
-        "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ]

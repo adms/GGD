@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T09:05:14+08:00",
-  "inputsSha256": "74ada83268df71eb4e5c6d6b442755467d4d881089e9f574a7db62fa05888489",
+  "generatedAt": "2026-09-15T09:10:02+08:00",
+  "inputsSha256": "3654c0cc4ac0ae6435b321e6a35411edc3ed96e6b333f7b458bdcdbdecc5b6d2",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -53141,7 +53141,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+            "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
           },
           "modelCandidates": [
             {
@@ -53209,7 +53209,7 @@
           },
           "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
             "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
           ],
@@ -53266,7 +53266,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+            "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
           },
           "modelCandidates": [
             {
@@ -53333,7 +53333,7 @@
           },
           "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
             "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
           ],
@@ -58436,7 +58436,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+            "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
           },
           "modelCandidates": [
             {
@@ -58504,7 +58504,7 @@
           },
           "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
             "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
           ],
@@ -58561,7 +58561,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+            "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
           },
           "modelCandidates": [
             {
@@ -58628,7 +58628,7 @@
           },
           "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
             "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
           ],
@@ -197499,7 +197499,7 @@
         ],
         "extractionReceipt": {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-          "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
         },
         "modelCandidates": [
           {
@@ -197567,7 +197567,7 @@
         },
         "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
-          "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+          "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
           "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
           "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
         ],
@@ -197624,7 +197624,7 @@
         ],
         "extractionReceipt": {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-          "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
         },
         "modelCandidates": [
           {
@@ -197691,7 +197691,7 @@
         },
         "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
-          "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+          "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
           "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
           "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
         ],
