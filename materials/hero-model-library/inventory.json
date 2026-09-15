@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T06:49:31+08:00",
-  "inputsSha256": "2eb9de97d8af907af2eebd44692ec58bb981e7173a263f12e4938a1163c19905",
+  "generatedAt": "2026-09-15T13:53:30+08:00",
+  "inputsSha256": "d2b35bec9a774131bc2821b583563c2708eb2db74328048cf82a02ebc518e047",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -41976,7 +41976,7 @@
           "s3Uri": null
         }
       },
-      "defaultSelectionMode": "automatic",
+      "defaultSelectionMode": "manual",
       "current": {
         "key": "imported.doraemon-cat",
         "id": "imported.doraemon-cat",
@@ -42035,8 +42035,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
-        "mode": "auto"
+        "modelKey": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
+        "mode": "manual"
       },
       "downloadSources": [
         "owner-model-002"
@@ -48853,8 +48853,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
-        "mode": "auto"
+        "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-042"
@@ -49515,8 +49515,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
-        "mode": "auto"
+        "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-042"

@@ -1,7 +1,7 @@
 {
-  "id": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
+  "id": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
   "schema": "model@1",
-  "glbPath": "assets/models/ou99/versions/248fd1d97b7c1abe46be5bcacf6619e347a44a7d1caf10e3d8a8ffb18fcdd016.glb",
+  "glbPath": "assets/models/ou99/versions/6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e.glb",
   "scale": 1,
   "collisionRadius": 0.55,
   "clipMap": {
@@ -12,6 +12,7 @@
     "hurt": "Stand Ready",
     "death": "Death"
   },
+  "heroBody": true,
   "bodyVersion": {
     "sourceModelKey": "ou99.456546",
     "legacyAppearance": false

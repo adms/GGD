@@ -1,0 +1,62 @@
+{
+  "id": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell One",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.doraemon-cat",
+    "legacyAppearance": false
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0635,
+      "y": 0.1017,
+      "z": 0.1482
+    },
+    "Foot Left": {
+      "x": -0.0635,
+      "y": 0.1017,
+      "z": -0.1482
+    },
+    "Hand Right": {
+      "x": -0.0198,
+      "y": 0.381,
+      "z": 0.391
+    },
+    "Hand Left": {
+      "x": -0.0198,
+      "y": 0.381,
+      "z": -0.391
+    },
+    "Head": {
+      "x": -0.1102,
+      "y": 0.7058,
+      "z": 0
+    },
+    "Chest": {
+      "x": -0.0271,
+      "y": 0.4507,
+      "z": 0
+    },
+    "Overhead": {
+      "x": 0,
+      "y": 1.4681,
+      "z": 0
+    },
+    "Origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "yawOffsetDeg": 90
+}
