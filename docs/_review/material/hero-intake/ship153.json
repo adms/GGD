@@ -4,7 +4,7 @@
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
  "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons",
- "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+ "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
   "modelComponents": 65,
@@ -26,7 +26,7 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "916550d8e2a580129e4930067d51c5890cd4ed8dae310f486a672de83db8f590",
+ "digest": "b7be6bfe7f760c4ea70dd223f42b1cdf9b3040c7a42794c61f45db8193ebf445",
  "heroes": [
   {
    "id": "b2-aladdin",
@@ -1442,7 +1442,68 @@
     "haveRequired": 9,
     "missing": [],
     "select": 1,
-    "candidates": [],
+    "candidates": [
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-english_us-voice",
+      "groupName": "何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 125,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+      "groupName": "小呆／達伊／何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-japanese-voice",
+      "groupName": "何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 123,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+      "groupName": "小呆／達伊／何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-unreviewed-voice",
+      "groupName": "何布／波普／語系待核／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 2,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
     "gap": "",
     "severity": ""
    },
@@ -2106,6 +2167,18 @@
       "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
+     },
+     {
+      "groupId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-ior-native-audio",
+      "groupName": "八神庵",
+      "library": "公開來源",
+      "work": "THE KING OF FIGHTERS XIV",
+      "language": "unreviewed",
+      "fileCount": 154,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
      }
     ],
     "gap": "",
@@ -2188,6 +2261,18 @@
       "work": "The King of Fighters XV",
       "language": "unreviewed",
       "fileCount": 82,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-mai-native-audio",
+      "groupName": "不知火舞",
+      "library": "公開來源",
+      "work": "THE KING OF FIGHTERS XIV",
+      "language": "unreviewed",
+      "fileCount": 150,
       "speakerVerified": false,
       "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
@@ -6269,7 +6354,68 @@
     "haveRequired": 9,
     "missing": [],
     "select": 6,
-    "candidates": [],
+    "candidates": [
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-english_us-voice",
+      "groupName": "小呆／達伊／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 139,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+      "groupName": "小呆／達伊／何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-japanese-voice",
+      "groupName": "小呆／達伊／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 136,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+      "groupName": "小呆／達伊／何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-unclassified",
+      "groupName": "小呆／達伊／語系待核／unclassified",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
     "gap": "",
     "severity": ""
    },
@@ -6401,13 +6547,61 @@
       "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-english_us-voice",
+      "groupName": "小呆／達伊／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 139,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+      "groupName": "小呆／達伊／何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-japanese-voice",
+      "groupName": "小呆／達伊／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 136,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+      "groupName": "小呆／達伊／何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
      }
     ],
-    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "gap": "沒有語音包；全庫有 5 個候選來源",
     "severity": "blocker"
    },
    "blockers": [
-    "沒有語音包；全庫有 1 個候選來源"
+    "沒有語音包；全庫有 5 個候選來源"
    ],
    "warnings": [],
    "ready": false
@@ -7681,7 +7875,56 @@
     "haveRequired": 9,
     "missing": [],
     "select": 6,
-    "candidates": [],
+    "candidates": [
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-english_us-voice",
+      "groupName": "巴恩大魔王／英文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 24,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-japanese-voice",
+      "groupName": "巴恩大魔王／日文標籤／voice",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 24,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-nonlocalized-sound-effect",
+      "groupName": "巴恩大魔王／非語系音效／sound-effect",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 82,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-en801-nonlocalized-sound-effect",
+      "groupName": "密斯特巴恩／巴恩大魔王／非語系音效／sound-effect",
+      "library": "公開來源",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "language": "unreviewed",
+      "fileCount": 10,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
     "gap": "",
     "severity": ""
    },

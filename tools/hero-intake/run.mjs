@@ -541,13 +541,19 @@ const REQUIRED = readJson(join(ROOT, CATEGORIES_REL), {})?.shipGate?.required ??
 
 /** owner 的角色語音索引（本機素材庫）—— 有就用來找「這位角色有沒有原作語音」 */
 function loadVoiceIndex() {
+  const repositoryIndex = join(ROOT, "materials/hero-model-library/voice-index.json");
   const candidates = [
     VOICE_INDEX,
+    repositoryIndex,
     "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
   ].filter(Boolean);
   for (const p of candidates) {
     const d = readJson(p);
-    if (d?.groups) return { path: p, groups: d.groups };
+    if (d?.groups) {
+      const resolved = resolve(p);
+      const path = resolved === repositoryIndex ? relative(ROOT, resolved) : p;
+      return { path, groups: d.groups };
+    }
   }
   return null;
 }
