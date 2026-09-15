@@ -101,6 +101,91 @@ func (c Catalog) SkinPrice(id string) (int, bool) {
 	return price, err == nil
 }
 
+// MaxSkinCrystalPerMcoin bounds `crystalPerMcoin` (typo guard, not an economy
+// rule). TS mirror: SKIN_CRYSTAL_PER_MCOIN_MAX in skinTierPrices.ts.
+const MaxSkinCrystalPerMcoin = 1000
+
+// SkinCrystalPrice is the 藍水晶 price of a skin: its M幣 price (SkinPrice, so
+// tier skins follow the live tier table) × crystalPerMcoin. owner 2026-09-15
+// (逐字)：「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」.
+// The bool is false when the skin has no resolvable price or 藍水晶 sales are
+// switched off (crystalPerMcoin = 0) — never a free skin.
+func (c Catalog) SkinCrystalPrice(id string) (int, bool) {
+	price, ok := c.SkinPrice(id)
+	if !ok || c.skinCrystalPerMcoin <= 0 {
+		return 0, false
+	}
+	return price * c.skinCrystalPerMcoin, true
+}
+
+// withSkinCrystalPerMcoin returns a copy of c with the operator's multiplier.
+func (c Catalog) withSkinCrystalPerMcoin(n int) Catalog {
+	out := c
+	out.skinCrystalPerMcoin = n
+	return out
+}
+
+// parseSkinCrystalPerMcoin reads `crystalPerMcoin` off a config.skin-tier-prices@1
+// doc. Absent ⇒ (0, true): 藍水晶 sales off, a legal reading of an older doc.
+// Present but not an integer in 0..MaxSkinCrystalPerMcoin ⇒ error.
+func parseSkinCrystalPerMcoin(raw []byte) (int, error) {
+	var d struct {
+		Schema          string   `json:"schema"`
+		CrystalPerMcoin *float64 `json:"crystalPerMcoin"`
+	}
+	if err := json.Unmarshal(raw, &d); err != nil {
+		return 0, err
+	}
+	if d.Schema != SchemaSkinTierPrices {
+		return 0, fmt.Errorf("schema %q, want %q", d.Schema, SchemaSkinTierPrices)
+	}
+	if d.CrystalPerMcoin == nil {
+		return 0, nil
+	}
+	v := *d.CrystalPerMcoin
+	if v < 0 || v != math.Trunc(v) || v > MaxSkinCrystalPerMcoin {
+		return 0, fmt.Errorf("crystalPerMcoin 必須是 0..%d 的整數", MaxSkinCrystalPerMcoin)
+	}
+	return int(v), nil
+}
+
+// loadSkinCrystalPerMcoin reads the SHIPPED multiplier (absent file ⇒ 0).
+func loadSkinCrystalPerMcoin(contentDir string) (int, error) {
+	path := filepath.Join(contentDir, "config", "skin-tier-prices.json")
+	// #nosec G304 -- same literal leaf as loadSkinTierPrices.
+	raw, err := os.ReadFile(path)
+	if errors.Is(err, fs.ErrNotExist) {
+		return 0, nil
+	}
+	if err != nil {
+		return 0, fmt.Errorf("wallet: read %s: %w", path, err)
+	}
+	n, err := parseSkinCrystalPerMcoin(raw)
+	if err != nil {
+		return 0, fmt.Errorf("wallet: %s: %w", path, err)
+	}
+	return n, nil
+}
+
+// skinCrystalPerMcoinFromOverlay is the operator's live multiplier edit; an
+// unusable value is ignored (loudly) and the shipped multiplier stands.
+func skinCrystalPerMcoinFromOverlay(f overlayFile) (int, bool) {
+	if f.Deleted[OverlaySkinTierPricesKey] {
+		return 0, false
+	}
+	raw, ok := f.Docs[OverlaySkinTierPricesKey]
+	if !ok {
+		return 0, false
+	}
+	n, err := parseSkinCrystalPerMcoin(raw)
+	if err != nil {
+		slog.Warn("wallet: 造型分級售價 override 的藍水晶倍率不能用 —— 沿用出貨值",
+			"key", OverlaySkinTierPricesKey, "err", err)
+		return 0, false
+	}
+	return n, true
+}
+
 // withSkinTierPrices returns a copy of c pricing tier skins from `tiers`.
 func (c Catalog) withSkinTierPrices(tiers map[string]int) Catalog {
 	out := c

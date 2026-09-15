@@ -318,6 +318,8 @@ export interface CatalogSkin {
   id: string;
   championId: string;
   price: number;
+  /** 藍水晶價（M幣價 × 後台倍率）；0 或缺席 ⇒ 不開放藍水晶購買（owner 2026-09-15「造型也可以用 藍水晶來買」）。 */
+  crystalPrice?: number;
   modelKey: string;
   owned: boolean;
   equipped: boolean;

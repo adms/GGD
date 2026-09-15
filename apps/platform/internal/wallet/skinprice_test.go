@@ -1,6 +1,7 @@
 package wallet_test
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -42,7 +43,8 @@ func TestTierPricedSkinsChargeTheShippedTableValue(t *testing.T) {
 	require.NoError(t, json.Unmarshal(copyShipped("champions/_index.json"), &roster))
 	require.NotEmpty(t, roster.Entries)
 	var table struct {
-		Tiers map[string]struct {
+		CrystalPerMcoin int `json:"crystalPerMcoin"`
+		Tiers           map[string]struct {
 			MCoin int `json:"mcoin"`
 		} `json:"tiers"`
 	}
@@ -78,13 +80,22 @@ func TestTierPricedSkinsChargeTheShippedTableValue(t *testing.T) {
 	r := ts.Do(http.MethodGet, "/api/v1/store/catalog", u.Access, nil)
 	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
 	got := map[string]int{}
+	gotCrystal := map[string]int{}
 	for _, row := range r.Body["skins"].([]any) {
 		m := row.(map[string]any)
 		if _, tiered := want[m["id"].(string)]; tiered {
 			got[m["id"].(string)] = int(m["price"].(float64))
+			gotCrystal[m["id"].(string)] = int(m["crystalPrice"].(float64))
 		}
 	}
 	require.Equal(t, want, got, "⛔ /store/catalog 給的價不是出貨分級表那一格")
+	// owner 2026-09-15（逐字）：「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」。
+	require.Positive(t, table.CrystalPerMcoin, "出貨的藍水晶倍率是 0 ⇒ 這條守衛量不到東西")
+	wantCrystal := map[string]int{}
+	for id, p := range want {
+		wantCrystal[id] = p * table.CrystalPerMcoin
+	}
+	require.Equal(t, wantCrystal, gotCrystal, "⛔ /store/catalog 的藍水晶價不是 M幣價 × 出貨倍率")
 
 	ids := make([]string, 0, len(want))
 	for id := range want {
@@ -95,6 +106,16 @@ func TestTierPricedSkinsChargeTheShippedTableValue(t *testing.T) {
 	buy := ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access, map[string]string{"kind": "skin", "id": ids[0]})
 	require.Equal(t, http.StatusOK, buy.Status, string(buy.Raw))
 	require.EqualValues(t, 7, wallet(ts, u.Access).Body["mcoin"], "⛔ /store/buy 扣的不是分級價")
+
+	// 藍水晶購買：扣的是 M幣價 × 倍率，M幣一枚都不動，造型到手。
+	require.NoError(t, ts.Srv.Wallet.SetCrystalAbsolute(context.Background(), u.ID, wantCrystal[ids[1]]+5))
+	cbuy := ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access,
+		map[string]string{"kind": "skin", "id": ids[1], "currency": "crystal"})
+	require.Equal(t, http.StatusOK, cbuy.Status, string(cbuy.Raw))
+	require.Equal(t, 5, ts.Srv.Wallet.CrystalOf(context.Background(), u.ID), "⛔ 藍水晶購買扣的不是 M幣價 × 倍率")
+	after := wallet(ts, u.Access).Body
+	require.EqualValues(t, 7, after["mcoin"], "⛔ 藍水晶購買動到了 M幣")
+	require.Contains(t, strs(after["ownedSkins"]), ids[1], "⛔ 藍水晶買了但造型沒到手")
 }
 
 // 分級在表上查不到 ⇒ LoadCatalog 回錯誤（平台開機失敗）並指名那一格 —— ⛔ 不是 0 元上架。

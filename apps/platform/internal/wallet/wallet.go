@@ -3,6 +3,7 @@ package wallet
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"sort"
 	"sync"
@@ -225,11 +226,18 @@ func ErrInsufficient() *httpx.E {
 //	    button is offered),
 //	404 for an unknown champion — all identical to what the store's own error
 //	    mapping now expects (ui/platform/purchase.ts).
-func (s *Service) Buy(ctx context.Context, accountID, kind, id string) (Wallet, error) {
+func (s *Service) Buy(ctx context.Context, accountID, kind, id, currency string) (Wallet, error) {
 	switch kind {
 	case KindChampion:
 		return s.UnlockChampion(ctx, accountID, id)
 	case KindSkin:
+		switch currency {
+		case "", CurrencyMCoin:
+		case CurrencyCrystal:
+			return s.buySkinWithCrystal(ctx, accountID, id)
+		default:
+			return Wallet{}, httpx.BadRequest(`currency must be "mcoin" or "crystal"`)
+		}
 		sk, ok := s.cat.Skins[id]
 		if !ok {
 			return Wallet{}, httpx.NotFound("unknown skin: " + id)
@@ -332,9 +340,11 @@ type CatalogSkin struct {
 	ID         string `json:"id"`
 	ChampionID string `json:"championId"`
 	Price      int    `json:"price"`
-	ModelKey   string `json:"modelKey"`
-	Owned      bool   `json:"owned"`
-	Equipped   bool   `json:"equipped"`
+	// CrystalPrice is the 藍水晶 price (Price × crystalPerMcoin); 0 ⇒ not sold for 藍水晶.
+	CrystalPrice int    `json:"crystalPrice"`
+	ModelKey     string `json:"modelKey"`
+	Owned        bool   `json:"owned"`
+	Equipped     bool   `json:"equipped"`
 }
 
 // CatalogFor renders the store catalog with the caller's ownership flags. Prices
@@ -366,11 +376,66 @@ func (s *Service) CatalogFor(ctx context.Context, accountID string) ([]CatalogCh
 		if !priced {
 			continue
 		}
+		crystalPrice, _ := cat.SkinCrystalPrice(id)
 		skins = append(skins, CatalogSkin{
-			ID: sk.ID, ChampionID: sk.ChampionID, Price: price, ModelKey: sk.ModelKey,
+			ID: sk.ID, ChampionID: sk.ChampionID, Price: price, CrystalPrice: crystalPrice, ModelKey: sk.ModelKey,
 			Owned:    contains(w.OwnedSkins, sk.ID),
 			Equipped: w.EquippedSkins[sk.ChampionID] == sk.ID,
 		})
 	}
 	return champs, skins, nil
+}
+
+// Store currencies a skin can be bought with (POST /store/buy `currency`).
+const (
+	CurrencyMCoin   = "mcoin"
+	CurrencyCrystal = "crystal"
+)
+
+// buySkinWithCrystal sells a skin for 藍水晶 —— owner 2026-09-15（逐字）：
+// 「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」.
+// Same two-phase shape as UnlockChampion: deduct crystals on the meta truth,
+// then grant on the account, refunding if the grant loses a race or fails.
+func (s *Service) buySkinWithCrystal(ctx context.Context, accountID, id string) (Wallet, error) {
+	sk, ok := s.cat.Skins[id]
+	if !ok {
+		return Wallet{}, httpx.NotFound("unknown skin: " + id)
+	}
+	price, priced := s.effective().SkinCrystalPrice(id)
+	if !sk.OnSale() || !priced {
+		return Wallet{}, httpx.NotFound("skin not for sale for 藍水晶: " + id)
+	}
+	a, err := s.accounts.GetByID(ctx, accountID)
+	if err != nil {
+		return Wallet{}, err
+	}
+	if contains(a.OwnedSkins, id) {
+		return Wallet{}, httpx.Err(http.StatusConflict, "already_owned", "skin already owned")
+	}
+	if _, err := s.mutateMeta(ctx, accountID, func(m *meta) error {
+		if m.Crystal < price {
+			return ErrInsufficientCrystal()
+		}
+		m.Crystal -= price
+		return nil
+	}); err != nil {
+		return Wallet{}, err
+	}
+	errAlreadyOwned := errors.New("already owned")
+	if _, err := s.mutate(ctx, accountID, func(ac *account.Account) error {
+		if contains(ac.OwnedSkins, id) {
+			return errAlreadyOwned
+		}
+		ac.OwnedSkins = append(ac.OwnedSkins, id)
+		sort.Strings(ac.OwnedSkins)
+		ac.EquippedSkins[sk.ChampionID] = id // auto-equip on purchase, same as the M幣 path
+		return nil
+	}); err != nil {
+		_, _ = s.mutateMeta(ctx, accountID, func(m *meta) error { m.Crystal += price; return nil })
+		if errors.Is(err, errAlreadyOwned) {
+			return Wallet{}, httpx.Err(http.StatusConflict, "already_owned", "skin already owned")
+		}
+		return Wallet{}, err
+	}
+	return s.Get(ctx, accountID)
 }

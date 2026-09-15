@@ -74,12 +74,13 @@ export function purchaseErrorText(code: string, message: string): string {
  */
 export async function executePurchase(
   state: PurchaseState,
-  buy: (kind: "champion" | "skin", id: string) => Promise<Wallet>,
+  buy: (kind: "champion" | "skin", id: string, currency?: "mcoin" | "crystal") => Promise<Wallet>,
 ): Promise<PurchaseState> {
   if (state.phase !== "confirm") return state;
   const item = state.item;
   try {
-    const wallet = await buy(item.kind, item.id);
+    // 造型帶上付款的錢包（M幣／藍水晶 —— owner 2026-09-15「造型也可以用 藍水晶來買」）；英雄只收藍水晶，平台忽略這一格。
+    const wallet = await (item.kind === "skin" ? buy(item.kind, item.id, item.currency) : buy(item.kind, item.id));
     return { phase: "done", item, wallet };
   } catch (err) {
     if (err instanceof ApiError) {

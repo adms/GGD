@@ -145,10 +145,14 @@ type Catalog struct {
 	// skinTiers is the 造型分級售價 table in force (tier id -> M COIN): the shipped
 	// config/skin-tier-prices.json at boot, the operator's overlay per request
 	// (Service.effective). Read only through SkinPrice (skinprice.go).
-	skinTiers     map[string]int
-	freeIDs       map[string]struct{}
-	championOrder []string
-	skinOrder     []string
+	skinTiers map[string]int
+	// skinCrystalPerMcoin is the 藍水晶 price of a skin per M幣 of its price
+	// (owner 2026-09-15「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」).
+	// 0 ⇒ skins are not sold for 藍水晶. Read only through SkinCrystalPrice.
+	skinCrystalPerMcoin int
+	freeIDs             map[string]struct{}
+	championOrder       []string
+	skinOrder           []string
 }
 
 // PriceOf is THE pricing rule, in one place: a champion on the free list costs
@@ -305,6 +309,11 @@ func LoadCatalog(contentDir string) (Catalog, error) {
 		return cat, err
 	}
 	cat.skinTiers = tiers
+	perMcoin, err := loadSkinCrystalPerMcoin(contentDir)
+	if err != nil {
+		return cat, err
+	}
+	cat.skinCrystalPerMcoin = perMcoin
 	if err := loadSkins(contentDir, &cat); err != nil {
 		return cat, err
 	}

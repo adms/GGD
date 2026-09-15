@@ -38,6 +38,8 @@ import { SKIN_PRICE_MAX, skinPriceShapeIssue, zSkinPriceTierId } from "../skin";
 
 /** 出貨文件的 id。⭐ 消費端一律用它，⛔ 不要重打字串。 */
 export const SKIN_TIER_PRICES_DOC_ID = "skin-tier-prices";
+/** 藍水晶價＝M幣價 × 這個倍率的上界（打錯字的柵欄）。Go 那一半：`skinprice.go` 的 `MaxSkinCrystalPerMcoin`。 */
+export const SKIN_CRYSTAL_PER_MCOIN_MAX = 1000;
 /** 分級名稱的字數上界（⭐ Zod 與後台那一欄共用）。 */
 export const SKIN_PRICE_TIER_LABEL_MAX = 12;
 /** 內容標準說明的字數上界（⭐ Zod 與後台那一欄共用）。 */
@@ -56,6 +58,16 @@ export const zConfigSkinTierPricesDoc = z
     id: zId,
     schema: z.literal("config.skin-tier-prices@1"),
     note: z.string().optional(),
+    /** 造型也可以用藍水晶買：藍水晶價＝M幣價 × 這個倍率（owner 2026-09-15「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」）。 */
+    crystalPerMcoin: z
+      .number()
+      .int()
+      .min(0)
+      .max(SKIN_CRYSTAL_PER_MCOIN_MAX)
+      .describe(
+        "@zh 藍水晶價倍率（M幣 × N）\n" +
+          "@note 造型也可以用藍水晶買，藍水晶價＝該造型的 M幣價 × 這個倍率（出貨 {{出貨值}}；依據 owner 2026-09-15 對造型用藍水晶購買的裁決，逐字住 content/config/skin-tier-prices.json 的 note 與 GH#1177）。0 ＝ 不開放藍水晶購買。存檔後玩家下一次打開商店就是新價。",
+      ),
     tiers: z.record(zSkinPriceTierId, zSkinPriceTier),
   })
   .strict()
@@ -68,6 +80,7 @@ export const zConfigSkinTierPricesDoc = z
       "@intro ⭐ 出貨預設 M幣＝LoL RP 1:1（一般四檔、史詩、傳說、終極；Mythic 以上用精華或抽獎取得，⛔ 不收）。來源寫在 `content/config/skin-tier-prices.json` 的 note。\n" +
       "@intro ⚠️ 只影響**寫了分級**的造型。GH#1177 之前出貨的 14 份造型寫的是字面價（mcoinPrice），⛔ 這張表改不到它們。\n" +
       "@intro ⚠️ 已經買過的玩家不受影響（擁有權不看價錢）；改價只影響之後的購買。\n" +
+      "@intro ⭐ 造型也可以用**藍水晶**買：藍水晶價＝M幣價 × 「藍水晶價倍率」（owner 2026-09-15「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」；0 ＝ 不開放）。\n" +
       "@consumer apps/platform/internal/wallet/skinprice.go 的 resolveSkinPrice（→ wallet.go CatalogFor 的 /store/catalog 價錢、Buy 的 /store/buy 扣款）；後台 ui/ChampionModelVersionShop.tsx 的分級下拉\n" +
       "@effect 價錢**下一次請求就生效**（平台每一次算價都重讀覆蓋層，⛔ 不必重啟、⛔ 不必部署）。⚠️ 分級的**增刪**與造型文件本身仍住 content/，要 content:build＋commit＋完整部署。",
   );
@@ -113,4 +126,40 @@ export function resolveSkinPrice(
   if (skin.priceTier === undefined) return { ok: true, mcoin: skin.mcoinPrice!, tier: null };
   const mcoin = Object.prototype.hasOwnProperty.call(table, skin.priceTier) ? table[skin.priceTier] : undefined;
   return mcoin === undefined ? { ok: false, error: "unknown-tier" } : { ok: true, mcoin, tier: skin.priceTier };
+}
+
+/** 名次 → 一場發幾枚 M幣（`config.store@1` 的 `mcoinRewards` 那一塊的形狀）。 */
+export interface McoinPlacementRewards {
+  placement1: number;
+  placement2: number;
+  placement3: number;
+  placement4: number;
+}
+
+/**
+ * ⭐ 「這個價要打幾場」的**唯一算式** —— owner 2026-09-15（逐字）：
+ * 「LoL 點數購買分級為一般 390/520/750/975、史詩 1350、傳說 1820、終極 3250 => 對應打幾場的獎勵呢? 記得後台可動態參數設定」
+ *
+ * - `perGameAverage` ＝ 四個名次獎勵的平均（假設四個名次機會均等）；
+ * - `gamesAtAverage` ＝ 價 ÷ 平均，無條件進位；平均是 0 ⇒ `null`（打多少場都拿不到）；
+ * - `gamesAllFirst` ＝ 價 ÷ 第一名獎勵，無條件進位；第一名是 0 ⇒ `null`。
+ * ⚠️ 平台**只在全真人對局**發 M幣（`apps/platform/internal/gamelink/callback.go` 的 perfectLobby）⇒
+ *    這裡算的是「全真人對局的場數」，⛔ 不是任何一場。
+ */
+export function gamesToAffordSkin(
+  mcoin: number,
+  rewards: McoinPlacementRewards,
+): { perGameAverage: number; gamesAtAverage: number | null; gamesAllFirst: number | null } {
+  const perGameAverage = (rewards.placement1 + rewards.placement2 + rewards.placement3 + rewards.placement4) / 4;
+  const price = Math.max(0, mcoin);
+  return {
+    perGameAverage,
+    gamesAtAverage: perGameAverage > 0 ? Math.ceil(price / perGameAverage) : price === 0 ? 0 : null,
+    gamesAllFirst: rewards.placement1 > 0 ? Math.ceil(price / rewards.placement1) : price === 0 ? 0 : null,
+  };
+}
+
+/** 造型的藍水晶價（M幣價 × 倍率）；倍率 0 ⇒ `null`（不開放藍水晶購買）。Go 那一半：`Catalog.SkinCrystalPrice`。 */
+export function skinCrystalPrice(mcoin: number, crystalPerMcoin: number): number | null {
+  return crystalPerMcoin > 0 ? mcoin * crystalPerMcoin : null;
 }

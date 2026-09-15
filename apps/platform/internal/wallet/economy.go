@@ -86,12 +86,16 @@ const (
 // trusted — see parseStoreEconomy for why it is REJECTED rather than clamped.
 const MaxUnlockCost = 1_000_000
 
-// Economy is the operator-editable half of content/config/store.json: the flat
-// unlock price and the free list. It is deliberately NOT the whole doc —
-// `mcoinRewards` is read by internal/gamelink from its own boot-time copy of
-// the catalog, so overriding it here would be a fourth thing that looks live
-// and is not. See the openQuestions of task #241.
+// Economy is the operator-editable part of content/config/store.json: the flat
+// unlock price, the free list, the 藍水晶 payout and (GH#1177 追加, owner
+// 2026-09-15「記得後台可動態參數設定」) the M幣 placement rewards. Until that
+// ruling `mcoinRewards` was read only from gamelink's boot-time catalog copy —
+// a console field that looked live and was not; settlement now asks
+// Service.McoinRewardNow instead.
 type Economy struct {
+	// Mcoin is the override's M幣 reward per final placement (1..4), or nil when
+	// the override carries no valid `mcoinRewards` block ⇒ the shipped table.
+	Mcoin map[int]int
 	// UnlockCost is the flat 藍水晶 price of every champion not on FreeIDs.
 	UnlockCost int
 	// FreeIDs is the free-champion list AS AUTHORED (a typo stays visible, the
@@ -102,12 +106,10 @@ type Economy struct {
 	// with no `crystalRewards` block yields DefaultCrystalRules, so a caller can
 	// use this field without a second nil/zero check.
 	//
-	// ⚠️ IT IS LIVE, unlike `mcoinRewards` two paragraphs up. That is not an
-	// inconsistency, it is which service reads it: M幣 is credited from
-	// gamelink's own boot-time Catalog copy, while 藍水晶 is credited through the
-	// wallet Service the settler already holds (Service.CrystalRulesNow), which
-	// re-reads this file on every settlement. The console page has to say both
-	// things, because it saves both fields in one document.
+	// It is LIVE: 藍水晶 is credited through the wallet Service the settler
+	// already holds (Service.CrystalRulesNow), which re-reads this file on every
+	// settlement — and since GH#1177 追加 the M幣 half does the same
+	// (Service.McoinRewardNow).
 	Crystal CrystalRules
 }
 
@@ -158,6 +160,12 @@ func parseStoreEconomy(raw []byte) (Economy, bool) {
 			Offset        *int `json:"offset"`
 			MaxMultiplier *int `json:"maxMultiplier"`
 		} `json:"crystalRewards"`
+		McoinRewards *struct {
+			Placement1 *int `json:"placement1"`
+			Placement2 *int `json:"placement2"`
+			Placement3 *int `json:"placement3"`
+			Placement4 *int `json:"placement4"`
+		} `json:"mcoinRewards"`
 	}
 	if err := json.Unmarshal(raw, &d); err != nil {
 		slog.Warn("wallet: 商店經濟 override is not readable JSON — serving the shipped store prices",
@@ -211,7 +219,46 @@ func parseStoreEconomy(raw []byte) (Economy, bool) {
 			crystal = cand
 		}
 	}
-	return Economy{UnlockCost: *d.ChampionUnlockCost, FreeIDs: free, Crystal: crystal}, true
+	// GH#1177 追加（owner 2026-09-15「對應打幾場的獎勵呢? 記得後台可動態參數設定」）：
+	// M幣 名次獎勵也吃覆蓋層。缺塊或任何一格缺／超出範圍 ⇒ 這一塊整塊退回出貨表（nil），
+	// ⛔ 不夾、⛔ 不部分套用 —— 部分套用會讓一個名次悄悄掉回出貨值，而畫面上看不出來。
+	var mcoin map[int]int
+	if m := d.McoinRewards; m != nil {
+		vals := []*int{m.Placement1, m.Placement2, m.Placement3, m.Placement4}
+		cand := make(map[int]int, len(vals))
+		okAll := true
+		for i, v := range vals {
+			if v == nil || *v < 0 || *v > MaxMcoinReward {
+				okAll = false
+				break
+			}
+			cand[i+1] = *v
+		}
+		if okAll {
+			mcoin = cand
+		} else {
+			slog.Warn("wallet: 商店經濟 的 M幣 名次獎勵缺欄位或超出範圍 —— 這一塊退回出貨值",
+				"key", OverlayStoreKey, "max", MaxMcoinReward)
+		}
+	}
+	return Economy{UnlockCost: *d.ChampionUnlockCost, FreeIDs: free, Crystal: crystal, Mcoin: mcoin}, true
+}
+
+// MaxMcoinReward bounds ONE placement's per-match M幣 grant in an override — a
+// typo guard, not an economy rule. TS mirror: MCOIN_REWARD_MAX in
+// packages/shared/src/content/schema/config/store.ts.
+const MaxMcoinReward = 10_000
+
+// McoinRewardNow is the M幣 one final team placement earns in a perfect
+// (all-human) lobby RIGHT NOW: the operator's live 商店經濟 override when it
+// carries a valid `mcoinRewards` block, the shipped catalog table otherwise.
+// Read per settlement, exactly like CrystalRulesNow, so a console save reaches
+// the very next match with no restart.
+func (s *Service) McoinRewardNow(place int) int {
+	if ov, ok := s.EconomyOverride(); ok && ov.Mcoin != nil {
+		return ov.Mcoin[place]
+	}
+	return s.cat.RewardFor(place)
 }
 
 // putInt copies an OPTIONAL override field over a shipped default. A field the
@@ -323,6 +370,9 @@ func (s *Service) effective() Catalog {
 	}
 	if tiers, ok := s.cat.skinTierPricesFromOverlay(f); ok {
 		cat = cat.withSkinTierPrices(tiers)
+	}
+	if n, ok := skinCrystalPerMcoinFromOverlay(f); ok {
+		cat = cat.withSkinCrystalPerMcoin(n)
 	}
 	return cat
 }
