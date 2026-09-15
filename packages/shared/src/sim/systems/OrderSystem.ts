@@ -16,10 +16,11 @@ import {
 } from "../combatFeel";
 import { bodyHeldByRules } from "../movementHold";
 import { stuckEscapeRules, stuckEscapeTick } from "../stuckEscape";
-import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
-import { fearDropsOrders, fearPass } from "../fear";
-import { charmDropsOrders, charmPass } from "../charm";
-import { chaosDropsOrders, chaosPass } from "../chaos";
+import { berserkSeek, isBerserk } from "../berserk";
+import { fearPass } from "../fear";
+import { charmPass } from "../charm";
+import { chaosPass } from "../chaos";
+import { steeringTaken } from "../steeringTaken";
 import { reachTo } from "./BasicAttackSystem";
 import { cancelRecoveryByOrder } from "../abilities/abilityRecovery";
 import { aimChannel, cancelChannelByOrder } from "../abilities/channel";
@@ -246,13 +247,8 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       // owner 2026-08-09:「完全無法指定目標,並且會亂走路,跟恐懼一樣」。
       // 一樣只丟 `order`、一樣不丟 `aim`。差別在後面那一半:恐懼逃離最近的敵人,
       // 混亂走 `world.rng` 抽出來的方向(`chaosPass`,這支函式的最後一步)。
-      if (
-        berserkDropsOrders(world, id) ||
-        fearDropsOrders(world, id) ||
-        charmDropsOrders(world, id) ||
-        chaosDropsOrders(world, id)
-      )
-        break; // one entity per seat
+      // ⭐ GH#1191：四種「方向盤被拿走」住 `sim/steeringTaken.ts` 一份 —— 持續引導的 `control` 打斷讀同一支。
+      if (steeringTaken(world, id)) break; // one entity per seat
       const order = frame.order;
       if (!order) continue;
       // ⭐ GH#1191【持續引導】—— 主動移動／攻擊指令打斷引導（S／H 是「站著」，⛔ 不打斷）。

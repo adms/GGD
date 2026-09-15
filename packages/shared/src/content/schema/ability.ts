@@ -150,9 +150,12 @@ export const zAbilityRecast = z
   .strict();
 
 /** 【持續引導】可以被哪些事打斷（GH#1191）。⭐ 引擎與 Zod 共用這一組，⛔ 不各抄一份。 */
-export const CHANNEL_CANCEL_CAUSES = ["move", "stun", "silence", "knockdown", "death", "damage"] as const;
-/** 省略 `cancelOn` 時的政策：主動移動／暈眩／沉默／擊倒／死亡會打斷，⛔ 普通受傷不會（`damage` 要明寫）。 */
-export const DEFAULT_CHANNEL_CANCEL_ON: readonly (typeof CHANNEL_CANCEL_CAUSES)[number][] = ["move", "stun", "silence", "knockdown", "death"];
+export const CHANNEL_CANCEL_CAUSES = ["move", "stun", "silence", "knockdown", "death", "damage", "control"] as const;
+/**
+ * 省略 `cancelOn` 時的政策：主動移動／暈眩／沉默／擊倒／死亡／方向盤被拿走會打斷，⛔ 普通受傷不會（`damage` 要明寫）。
+ * `control` ＝ 暴走／恐懼／魅惑／混亂（`sim/steeringTaken.ts`，與 OrderSystem 丟指令同一支）＋ 後台設成「嘲弄蓋掉玩家指令」時的嘲弄。
+ */
+export const DEFAULT_CHANNEL_CANCEL_ON: readonly (typeof CHANNEL_CANCEL_CAUSES)[number][] = ["move", "stun", "silence", "knockdown", "death", "control"];
 /** 一次引導最長幾秒（誤植柵欄：把 250 毫秒打成 250 秒時在這裡被擋）。 */
 export const CHANNEL_MAX_SEC = 10;
 
@@ -177,7 +180,7 @@ export const zAbilityChannel = z
       .array(z.enum(CHANNEL_CANCEL_CAUSES))
       .max(CHANNEL_CANCEL_CAUSES.length)
       .optional()
-      .describe("被哪些事打斷：move 主動移動或攻擊指令／stun 暈眩／silence 沉默／knockdown 擊倒／death 死亡／damage 掉血。省略＝move、stun、silence、knockdown、death（普通受傷不打斷）"),
+      .describe("被哪些事打斷：move 主動移動或攻擊指令／stun 暈眩／silence 沉默／knockdown 擊倒／death 死亡／damage 掉血／control 方向盤被拿走（暴走、恐懼、魅惑、混亂；後台設成嘲弄蓋掉玩家指令時也含嘲弄）。省略＝move、stun、silence、knockdown、death、control（普通受傷不打斷）"),
     /** 撐滿才跑的收尾（稻草人 W 的末段）。被打斷 ⇒ ⛔ 不跑。 */
     onComplete: z.array(zEffectDef).optional().describe("撐滿引導才跑的收尾效果；被打斷就不跑"),
   })

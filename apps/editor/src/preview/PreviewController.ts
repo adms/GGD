@@ -615,7 +615,9 @@ function effectLines(
         });
         break;
       case "dash":
-        out.push({ depth, kind: e.kind, summary: `dash ${e.mode} ${e.maxDistance}u @ ${e.speed}u/s` });
+        out.push({ depth, kind: e.kind, summary: `dash ${e.mode} ${e.maxDistance}u @ ${e.speed}u/s${e.onPathHit?.length ? "，沿途身體掃過的敵人（被擋停就只算到擋停點）:" : ""}` });
+        // GH#1190 鄂爾 E【衝刺沿途命中】—— 表單看到的 == 遊戲跑的。
+        if (e.onPathHit?.length) effectLines(e.onPathHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
       // TASK #247 follow-up. `leap` was added to the shared EffectDef union but
       // never taught to this switch, so 蒼月潮 07-03 — an ability whose ONLY

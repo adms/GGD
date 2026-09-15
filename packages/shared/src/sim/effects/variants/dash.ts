@@ -53,4 +53,11 @@ export interface DashVariant {
    * 形狀與精神逐字沿用 `randomArea.stopOnCasterDeath`。
    */
   onEndWhenDead?: boolean;
+  /**
+   * ⭐ GH#1190 鄂爾 E【衝刺沿途命中】—— 身體**真的掃過**的那一段線上的敵人各吃一次（目標 = 被掃到的人）。
+   * 逐 tick 由 `dashOnEnd.ts::sweepDashPath` 結算；`world.dashPath.mode:"full"` 則在施放那一刻沿整條 `maxDistance` 一次結算。
+   */
+  onPathHit?: EffectDef[];
+  /** 沿途命中那條線的寬度（⛔ 不是半徑）。缺 = 施法者身體直徑。 */
+  pathWidth?: number;
 }

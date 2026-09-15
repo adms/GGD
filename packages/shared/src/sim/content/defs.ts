@@ -329,8 +329,8 @@ export interface AbilityRecast {
 /** 【持續引導】—— mirrors `zAbilityChannel`（content/schema/ability.ts）。 */
 export interface AbilityChannel {
   durationSec: number;
-  /** 省略 = `DEFAULT_CHANNEL_CANCEL_ON`（move／stun／silence／knockdown／death）。 */
-  cancelOn?: readonly ("move" | "stun" | "silence" | "knockdown" | "death" | "damage")[];
+  /** 省略 = `DEFAULT_CHANNEL_CANCEL_ON`（move／stun／silence／knockdown／death／control）。 */
+  cancelOn?: readonly ("move" | "stun" | "silence" | "knockdown" | "death" | "damage" | "control")[];
   onComplete?: EffectDef[];
 }
 

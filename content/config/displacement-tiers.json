@@ -62,5 +62,8 @@
   },
   "projectileRedirect": {
     "mode": "contact"
+  },
+  "dashPath": {
+    "mode": "sweep"
   }
 }

@@ -67,7 +67,8 @@ const LOOKS: Record<string, Look> = {
   },
   ahri: {
     color: [240, 120, 205],
-    slots: { Q: [beam(), beam("strike")], W: [cue("fx.prim.fire.pulse", "self", "strike")], E: shot(), R: [cue("fx.prim.arcane.dash")], EX: [cue("fx.prim.arcane.pulse", "point")] },
+    // GH#1197：Q 改成真的回程法球 ⇒ 演出掛投射物生成／命中（⛔ 舊的 strike 錨點已經沒有延遲波次會發）。
+    slots: { Q: shot(), W: [cue("fx.prim.fire.pulse", "self", "strike")], E: shot(), R: [cue("fx.prim.arcane.dash")], EX: [cue("fx.prim.arcane.pulse", "point")] },
     passive: [proc("heal", "fx.prim.nature.pulse-sm")],
     landing: { R: "fx.prim.arcane.explosion" },
   },

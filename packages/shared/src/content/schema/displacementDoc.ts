@@ -34,6 +34,8 @@ import {
 // `sim/effects/knockbackLimits`），所以這一條不會產生模組循環。
 // ⛔ 出貨值只有一份：`DEFAULT_WALL_BLOCK`，⛔ 不在這裡重打四個字面值。
 import { DEFAULT_WALL_BLOCK, WALL_BLOCK_POLICIES } from "../../sim/movement/wallBlock";
+import { DEFAULT_PROJECTILE_REDIRECT } from "../../sim/projectileRedirectRules";
+import { DEFAULT_DASH_PATH } from "../../sim/dashPathRules";
 
 /** 四個級別的名字（schema / 後台下拉 / 技能欄位共用同一份）。 */
 export const zDisplacementTier = z.enum(DISPLACEMENT_TIER_NAMES);
@@ -205,6 +207,22 @@ export const zConfigDisplacementTiersDoc = z
           ),
       })
       .optional(),
+    /**
+     * ⭐ GH#1190【衝刺沿途命中】（鄂爾 E）的規則開關。**必須 `.optional()`**，理由與 `projectileRedirect` 逐字相同：
+     * 缺席時 `dashPathFromDoc` 回**出貨值**（sweep），⛔ 不是退回舊近似。
+     */
+    dashPath: z
+      .object({
+        mode: z
+          .enum(["sweep", "full"])
+          .describe(
+            "@zh 衝刺沿途命中怎麼結算（鄂爾 E）\n" +
+              "@note ⭐ GH#1190 修正輪的正確性爭議預設（⛔ 不是 owner 原話）＋ rollback 開關：`dash.onPathHit` 那一族「衝刺沿途打到的人」。⚠️ 改成 full 之後，被柱子或牆擋停的衝刺仍會打到擋停點**後面**的人（衝刺根本沒到那裡），屬應急。\n" +
+              "@opt sweep sweep 逐 tick 只打身體真的掃過的那一段；被擋停就只算到擋停點（出貨）\n" +
+              "@opt full full 施放那一刻沿整條衝刺長度一次結算，不管後來有沒有被擋停（舊近似）",
+          ),
+      })
+      .optional(),
     wallBlock: z
       .object({
         enabled: z
@@ -271,4 +289,7 @@ export const DEFAULT_DISPLACEMENT_TIERS_DOC = {
   travel: DEFAULT_DISPLACEMENT_TIERS.travel,
   push: DEFAULT_DISPLACEMENT_TIERS.push,
   wallBlock: DEFAULT_WALL_BLOCK,
+  // ⭐ GH#1187／#1190 兩格衝刺互動的開關 —— 出貨值只有一份（`DEFAULT_PROJECTILE_REDIRECT`／`DEFAULT_DASH_PATH`），⛔ 不在這裡重打字面值。
+  projectileRedirect: DEFAULT_PROJECTILE_REDIRECT,
+  dashPath: DEFAULT_DASH_PATH,
 } as const;

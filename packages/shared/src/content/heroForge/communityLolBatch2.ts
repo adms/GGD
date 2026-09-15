@@ -1,5 +1,37 @@
 import type { CommunityHeroExample } from "./communityExamples";
 import { withCommunityLolBatch2Presentation } from "./communityLolBatch2Presentation";
+import { DEFAULT_DISPLACEMENT_TIERS, type DisplacementTierName } from "../displacementTiers";
+
+// ⭐ 修正輪（#1190／#1187／#1191 審查，第〇·四守則）：**同一個數字只有一個住處**。
+//   這支是 TS ⇒ 兩格講同一件事時共用一個常數或從對方推導，⛔ 不各抄一個字面值。
+
+/**
+ * 位移走五級距（`distanceTier`；註冊時由 `config.displacement-tiers@1` 翻成距離與速度，**級別贏**）。
+ * ⚠️ Zod 仍要求 `speed`／`maxDistance`（擊退是 `distance`）必填 ⇒ 帶的是**出貨級距表的同一列**，⛔ 不是手打數字。
+ */
+const travelTier = (tier: DisplacementTierName) => ({
+  distanceTier: tier,
+  speed: DEFAULT_DISPLACEMENT_TIERS.travel[tier].speed,
+  maxDistance: DEFAULT_DISPLACEMENT_TIERS.travel[tier].distance,
+});
+const pushTier = (tier: DisplacementTierName) => ({
+  distanceTier: tier,
+  speed: DEFAULT_DISPLACEMENT_TIERS.push[tier].speed,
+  distance: DEFAULT_DISPLACEMENT_TIERS.push[tier].distance,
+});
+/**
+ * 持續引導的節拍：`count` 發、每 `intervalSec` 秒一發。⭐ 首發延遲＝半拍、引導時長＝count × intervalSec
+ * ⇒ 每一發代表自己前後各半拍的時段，⛔ 結尾沒有「只定身、什麼都不打」的空檔（修正前 0.1 秒起跳 ⇒ 最後 0.4 秒空轉）。
+ */
+const channelBeat = (count: number, intervalSec: number) => ({ count, intervalSec, delaySec: intervalSec / 2, durationSec: count * intervalSec });
+const FIDDLESTICKS_W_BEAT = channelBeat(4, 0.5);
+const VELKOZ_R_BEAT = channelBeat(5, 0.5);
+/** 鄂爾 Q 裂地長度 —— 柱子升在裂地終點，兩格讀同一個數。 */
+const ORNN_Q_FISSURE_U = 6;
+/** 威寇茲 W 的裂痕 —— 兩段打的是**同一條**線（起點與方向凍在施放那一刻，GH#1197），幾何只住這裡。 */
+const VELKOZ_W_RIFT = { length: 7, width: 1.5, aim: "cast", fromCaster: true, includeOrigin: true } as const;
+/** 威寇茲 R 的射線 —— 同一道射線依「研究完成」與否分魔法／真實兩個分支，幾何只住這裡。 */
+const VELKOZ_R_BEAM = { length: 9, width: 1.3, aim: "facing", fromCaster: true, includeOrigin: true } as const;
 
 /** Fourth-batch authoring candidates. These are not publication-ready kits. #1185 / #1187 */
 export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
@@ -489,7 +521,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。",
       "Q：不額外給未被看見時群體恐懼。",
-      "W：持續引導 2 秒（channel）：每半秒以自身為圓心打一圈，每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
+      `W：持續引導 ${FIDDLESTICKS_W_BEAT.durationSec} 秒（channel）：每 ${FIDDLESTICKS_W_BEAT.intervalSec} 秒以自身為圓心打一圈（首發在半拍後、共 ${FIDDLESTICKS_W_BEAT.count} 發，引導時長由節拍推導），每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷；擊飛（非擊倒）不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。`,
       "E：弧形與中央命中改為窄直帶，整條帶吃沉默。",
       "R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。",
       "EX：只會既有代理普攻，不是三具複製 QWER 的分身。"
@@ -541,7 +573,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "W": {
         "name": "豐收之魘",
-        "purpose": "站定引導兩秒，周圍敵人每半秒受傷、每打中一人自身回血；撐滿兩秒再收割一次。移動、暈眩、沉默、擊倒或死亡會打斷，打斷後不再汲取也不收割。",
+        "purpose": `站定引導 ${FIDDLESTICKS_W_BEAT.durationSec} 秒，周圍敵人每 ${FIDDLESTICKS_W_BEAT.intervalSec} 秒受傷、每打中一人自身回血；撐滿再收割一次。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑會打斷，打斷後不再汲取也不收割。`,
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "self",
@@ -552,9 +584,9 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
             {
               "kind": "delayed",
               "shape": "single",
-              "delaySec": 0.1,
-              "count": 4,
-              "intervalSec": 0.5,
+              "delaySec": FIDDLESTICKS_W_BEAT.delaySec,
+              "count": FIDDLESTICKS_W_BEAT.count,
+              "intervalSec": FIDDLESTICKS_W_BEAT.intervalSec,
               "effects": [
                 {
                   "kind": "damageArea",
@@ -582,7 +614,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
         },
         "abilityOverrides": {
           "channel": {
-            "durationSec": 2,
+            "durationSec": FIDDLESTICKS_W_BEAT.durationSec,
             "onComplete": [
               {
                 "kind": "damageArea",
@@ -710,10 +742,10 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。",
-      "Q：裂地終點在施放當下立刻升起 4 秒暫時柱（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。",
+      `Q：裂地（長 ${ORNN_Q_FISSURE_U} 格）終點在施放當下立刻升起 4 秒暫時柱，柱子位置與裂地長度讀同一個數（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。`,
       "W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。",
-      "E：沿途傷害在起衝時沿整條衝刺線結算、不因撞停縮短；撞柱或牆的震波也會打到已被沿途命中的敵人（原作不重複）。",
-      "R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。",
+      `E：衝刺走位移五級距「小」（出貨級距表 ${DEFAULT_DISPLACEMENT_TIERS.travel["小"].distance} 格 @${DEFAULT_DISPLACEMENT_TIERS.travel["小"].speed} 格/秒，後台可調）。修正前：Codex 原配方 tpl-charge-push 400 wc3u≈7.33 格／0.35 秒≈21 格/秒（上線會被穿牆天花板夾到 16）；第 1 輪寫死 7.33 格 @16。沿途傷害改由衝刺自己逐 tick 結算（dash.onPathHit）：只打身體真的掃過的人，被柱／牆擋停就只算到擋停點，柱子後面的人不挨打（修正前：起衝當下沿整條 7.33 格結算，柱後的人也挨打；後台 displacement-tiers.dashPath.mode 可切回舊結算）。撞柱或牆的震波擊飛走擊退五級距「極小」＋拋高 1（出貨級距表 ${DEFAULT_DISPLACEMENT_TIERS.push["極小"].distance} 格 @${DEFAULT_DISPLACEMENT_TIERS.push["極小"].speed}）。修正前：Codex 原配方推 100 wc3u≈1.83 格、650 wc3u/s≈11.9 格/秒、不拋高；第 1 輪 0.2 格 @12、拋高 1。震波仍會打到已被沿途命中的敵人（原作不重複）。`,
+      `R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。後段衝刺走位移五級距「極小」（出貨級距表 ${DEFAULT_DISPLACEMENT_TIERS.travel["極小"].distance} 格 @${DEFAULT_DISPLACEMENT_TIERS.travel["極小"].speed}，與第 1 輪寫死的 5.5 格 @16 同值）；改向擊飛走擊退五級距「極小」＋拋高 1（修正前第 1 輪 1 格 @12；Codex 原配方沒有擊飛）。`,
       "EX：沒有任何裝備升級；保固就是這三秒的盾。"
     ],
     "moves": {
@@ -798,7 +830,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
               "amount": {
                 "damageTier": "小"
               },
-              "length": 6,
+              "length": ORNN_Q_FISSURE_U,
               "width": 1.4,
               "aim": "facing",
               "fromCaster": true,
@@ -818,7 +850,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
               "radius": 1,
               "durationSec": 4,
               "at": "self",
-              "offsetForwardU": 6
+              "offsetForwardU": ORNN_Q_FISSURE_U
             }
           ]
         }
@@ -867,22 +899,19 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "side": "enemies",
           "effects": [
             {
-              "kind": "damageLine",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小"
-              },
-              "length": 7.33,
-              "width": 1.4,
-              "aim": "facing",
-              "fromCaster": true,
-              "includeOrigin": true
-            },
-            {
               "kind": "dash",
               "mode": "forward",
-              "speed": 16,
-              "maxDistance": 7.33,
+              ...travelTier("小"),
+              "pathWidth": 1.4,
+              "onPathHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ],
               "onEndOn": "blocked",
               "shatter": true,
               "onEnd": [
@@ -897,8 +926,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "onHitTargets": [
                     {
                       "kind": "knockback",
-                      "distance": 0.2,
-                      "speed": 12,
+                      ...pushTier("極小"),
                       "from": "caster",
                       "subtractGap": false,
                       "launchHeight": 1
@@ -956,8 +984,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                 },
                 {
                   "kind": "knockback",
-                  "distance": 1,
-                  "speed": 12,
+                  ...pushTier("極小"),
                   "from": "facing",
                   "subtractGap": false,
                   "launchHeight": 1
@@ -975,8 +1002,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
             {
               "kind": "dash",
               "mode": "forward",
-              "speed": 16,
-              "maxDistance": 5.5
+              ...travelTier("極小")
             }
           ]
         },
@@ -1840,9 +1866,9 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：計數60秒窗口；英雄取擊殺而非助攻參與。",
-      "Q：已確認缺少往返彈道：第二段仍從施法者當下位置/面向重新判定，不能當作返航追身的球；列為來源核心缺口。",
+      "Q：同一顆穿透法球（imported.wave.arcane.return）去程穿過每人一次、射程盡頭掉頭追向阿璃當下位置，回程命中另外記錄、再打一次，回到身上消失。去程與回程共用同一串命中效果（原作回程是真實傷害；現有回程彈沒有分段命中效果，這裡兩程都是魔法傷害）。",
       "W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。",
-      "E：重大簡化：沒有charmed軸，故不是持續強制走向她，也不保證打斷所有位移。",
+      "E：命中後魅惑（charmed）：被命中者被迫朝阿璃走、丟掉自己的指令並減速，到期恢復；不另外拉扯或繳械。不保證打斷所有位移。",
       "R：首放後 10 秒內可再按兩次，每一段各自重新瞄準落點；三段衝完或窗口到期才進冷卻。原作擊殺參與增加可重施放次數不做。",
       "EX：單純離場工具，沒有刷新R。"
     ],
@@ -1908,7 +1934,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "Q": {
         "name": "幻玉",
-        "purpose": "向前第一段魔法傷害，短延遲第二段真實傷害。",
+        "purpose": "向前擲出法球穿過敵人，射程盡頭掉頭飛回阿璃身上，去程與回程各打一次。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -1917,38 +1943,17 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "side": "enemies",
           "effects": [
             {
-              "kind": "damageLine",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "極小"
-              },
-              "length": 7,
-              "width": 1.4,
-              "aim": "facing",
-              "fromCaster": true,
-              "includeOrigin": true
-            },
-            {
-              "kind": "delayed",
-              "shape": "single",
-              "delaySec": 0.6,
-              "count": 1,
-              "intervalSec": 0.5,
-              "effects": [
+              "kind": "spawnProjectile",
+              "projectileId": "imported.wave.arcane.return",
+              "onHit": [
                 {
-                  "kind": "damageLine",
-                  "damageType": "true",
+                  "kind": "damage",
+                  "damageType": "magic",
                   "amount": {
                     "damageTier": "極小"
-                  },
-                  "length": 7,
-                  "width": 1.4,
-                  "aim": "facing",
-                  "fromCaster": true,
-                  "includeOrigin": true
+                  }
                 }
-              ],
-              "stopOnCasterDeath": true
+              ]
             }
           ]
         }
@@ -2005,7 +2010,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "E": {
         "name": "傾城",
-        "purpose": "直線吻彈命中後減速、繳械，並短距朝阿璃拉近。",
+        "purpose": "直線吻彈命中後魅惑：被命中者被迫減速朝阿璃走過去。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -2029,16 +2034,8 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "statusId": "$hero.charm",
                   "duration": 1,
                   "sourceScope": "caster",
-                  "disarmed": true,
+                  "charmed": true,
                   "moveSpeedMult": 0.5
-                },
-                {
-                  "kind": "knockback",
-                  "distance": 1.5,
-                  "speed": 12,
-                  "from": "pull",
-                  "subtractGap": false,
-                  "launchHeight": 0
                 }
               ]
             }
@@ -2129,7 +2126,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。",
       "W：重大簡化：施法者指定隊友，沒有隊友點燈選擇；本候選不附盾，不能描述有護盾。",
       "E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。",
-      "R：重大簡化：沒有五面牆、穿牆破壞或單牆觸發；只是一圈施放時控制。",
+      "R：自身周圍立起五段可穿越的邊界（半徑 3、存活 5 秒）；敵人穿過某一段時受傷並重緩速，那一段隨即消失，放下時站在圈內不挨打。同一人穿過不同段會各吃一次（原作第二道牆起傷害減半且不再緩速）；邊界不擋路。",
       "EX：不召喚不可通行的燈籠物件。"
     ],
     "moves": {
@@ -2284,7 +2281,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "R": {
         "name": "惡靈領域",
-        "purpose": "自身周圍一次重緩速與傷害，阻擋追近。",
+        "purpose": "自身周圍立起五段邊界；敵人穿過任何一段時受傷並重緩速，那一段隨即消失。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "self",
@@ -2293,14 +2290,18 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "side": "enemies",
           "effects": [
             {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中"
-              },
+              "kind": "spawnThresholds",
+              "sides": 5,
               "radius": 3,
-              "includeOrigin": true,
-              "onHitTargets": [
+              "durationSec": 5,
+              "onCross": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
                 {
                   "kind": "applyStatus",
                   "statusId": "$hero.box",
@@ -2368,10 +2369,10 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。",
-      "Q：重大簡化：沒有再按分裂、左右90度支彈；保留直線消耗。",
-      "W：已確認 delayed.point 不被 damageLine 當作幾何起點；第二段仍讀施法者當下位置/面向，缺固定裂痕及兩次充能，列為來源核心缺口。",
+      "Q：主彈（imported.bolt.void.split）命中敵人時，或飛行中 1 秒內再按 Q，從主彈當下位置左右各分出一發子彈（垂直 90 度），子彈不再打主彈打過的人；主彈飛完之後再按不會有任何效果。",
+      "W：兩段裂痕的起點與方向都凍在施放那一刻（damageLine.aim:cast）：施法者轉身或走開，延遲的第二段仍落在原裂痕上。⛔ 未滿足：原作「兩次充能」—— Main 沒有技能彈藥機制（ability.charges），這一槽仍是一般冷卻，要不要做彈藥由 owner 決定。",
       "E：近遠受害者都同一小推移；沒有額外專用判斷。",
-      "R：持續引導 2.5 秒（channel）朝施放方向射線；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡會打斷，打斷後排好的射線作廢；普通受傷不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
+      `R：持續引導 ${VELKOZ_R_BEAT.durationSec} 秒（channel）朝施放方向射線，每 ${VELKOZ_R_BEAT.intervalSec} 秒判定一次、共 ${VELKOZ_R_BEAT.count} 次（首發在半拍後，引導時長由節拍推導；原作是連續傷害）；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的射線作廢；普通受傷不打斷；擊飛（非擊倒）不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。`,
       "EX：會失去該目標R真傷資格，真有交換代價。"
     ],
     "moves": {
@@ -2424,10 +2425,10 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "Q": {
         "name": "分裂電漿",
-        "purpose": "直線電漿命中造成傷害及緩速。",
+        "purpose": "直線電漿命中造成傷害及緩速；命中或飛行中再按一次，從電漿當下位置左右分裂出兩發子彈。",
         "ref": "tpl-projectile-strike",
         "params": {
-          "projectileId": "imported.bolt.void",
+          "projectileId": "imported.bolt.void.split",
           "damage": {
             "damageTier": "小"
           },
@@ -2438,11 +2439,18 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
             "duration": 1.5,
             "moveSpeedMult": 0.7
           }
+        },
+        "abilityOverrides": {
+          "recast": {
+            "charges": 1,
+            "windowSec": 1
+          },
+          "recastEffects": []
         }
       },
       "W": {
         "name": "虛空裂痕",
-        "purpose": "直線裂痕先小爆，延遲後再爆。",
+        "purpose": "直線裂痕先小爆，延遲後在同一條裂痕上再爆；施法者走開或轉身也不會帶走裂痕。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -2456,11 +2464,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
               "amount": {
                 "damageTier": "極小"
               },
-              "length": 7,
-              "width": 1.5,
-              "aim": "facing",
-              "fromCaster": true,
-              "includeOrigin": true
+              ...VELKOZ_W_RIFT
             },
             {
               "kind": "delayed",
@@ -2475,11 +2479,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "amount": {
                     "damageTier": "小"
                   },
-                  "length": 7,
-                  "width": 1.5,
-                  "aim": "facing",
-                  "fromCaster": true,
-                  "includeOrigin": true
+                  ...VELKOZ_W_RIFT
                 }
               ],
               "stopOnCasterDeath": true
@@ -2530,7 +2530,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "R": {
         "name": "生化射線",
-        "purpose": "朝瞄準方向站定引導2.5秒，射線五次判定，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒或死亡會打斷，打斷後不再射出。",
+        "purpose": `朝瞄準方向站定引導 ${VELKOZ_R_BEAT.durationSec} 秒，射線判定 ${VELKOZ_R_BEAT.count} 次，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑會打斷，打斷後不再射出。`,
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -2541,9 +2541,9 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
             {
               "kind": "delayed",
               "shape": "single",
-              "delaySec": 0.1,
-              "count": 5,
-              "intervalSec": 0.5,
+              "delaySec": VELKOZ_R_BEAT.delaySec,
+              "count": VELKOZ_R_BEAT.count,
+              "intervalSec": VELKOZ_R_BEAT.intervalSec,
               "effects": [
                 {
                   "kind": "damageLine",
@@ -2551,11 +2551,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "amount": {
                     "damageTier": "極小"
                   },
-                  "length": 9,
-                  "width": 1.3,
-                  "aim": "facing",
-                  "fromCaster": true,
-                  "includeOrigin": true,
+                  ...VELKOZ_R_BEAM,
                   "victimCondition": {
                     "not": {
                       "kind": "status",
@@ -2571,11 +2567,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "amount": {
                     "damageTier": "極小"
                   },
-                  "length": 9,
-                  "width": 1.3,
-                  "aim": "facing",
-                  "fromCaster": true,
-                  "includeOrigin": true,
+                  ...VELKOZ_R_BEAM,
                   "victimCondition": {
                     "kind": "status",
                     "subject": "target",
@@ -2590,7 +2582,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
         },
         "abilityOverrides": {
           "channel": {
-            "durationSec": 2.5
+            "durationSec": VELKOZ_R_BEAT.durationSec
           }
         },
         "cooldown": "極大"
@@ -2939,7 +2931,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：敵人/兵種重置差異先統一為受傷；不是戰鬥中固定秒回。",
-      "Q：已確認現有 dispel 無慢速篩選，不能只解除既有減速；statusImmunity 只拒絕新掛載，列為來源核心缺口；不擴張成全淨化。",
+      "Q：施放時先清掉身上既有的減速（dispel.statusKinds:[slow]，只清「純減速」的狀態：同一筆帶暈眩、定身或沉默的留著），再加速並強化下一次普攻；不擴張成全淨化，也不給之後的減速免疫。只看機制不看極性標記（配方自帶的減速多半沒有狀態文件、極性是空的，照 debuff 篩會一個都清不到）。",
       "W：重要簡化：暫未接韌性、後段減傷和擊殺永久雙抗。",
       "E：damageTier 是整段預算，由模板分攤，不能文案寫每波中級傷害。",
       "R：不做必殺保證；護盾/免死仍按現有傷害規則。",
@@ -2998,7 +2990,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "Q": {
         "name": "致命打擊",
-        "purpose": "自己加速，下一次普攻追加傷害並沉默。",
+        "purpose": "清掉身上既有的減速後自己加速，下一次普攻追加傷害並沉默。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "self",
@@ -3006,6 +2998,17 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "radius": 2.5,
           "side": "enemies",
           "effects": [
+            {
+              "kind": "dispel",
+              "shape": "single",
+              "pools": {
+                "status": true
+              },
+              "polarity": "any",
+              "statusKinds": [
+                "slow"
+              ]
+            },
             {
               "kind": "applyBuff",
               "applyTo": "self",

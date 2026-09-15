@@ -7,7 +7,7 @@
  *   效果跑完 ─ beginChannel ─▶ 引導中（身體定住・不普攻・別的技能按不出來・同一格再按＝更新瞄準）
  *                                │
  *     ├─ 撐滿 durationSec（channelSystem）⇒ 殘留波次作廢 ⇒ onComplete
- *     └─ 被打斷（channelSystem：暈眩／沉默／擊倒／死亡／掉血；OrderSystem：移動指令）⇒ 波次作廢 ⇒ ⛔ 不跑 onComplete
+ *     └─ 被打斷（channelSystem：暈眩／沉默／擊倒／死亡／掉血／方向盤被拿走；OrderSystem：移動指令）⇒ 波次作廢 ⇒ ⛔ 不跑 onComplete
  *
  * ⭐ 「作廢波次」的關聯鍵 ＝ 施法者 × `ability:<id>` × `castInstance.serial` —— 同一次施放排出去的 `delayed`，
  *   ⛔ 不碰上一次施放的、也不碰別人的（與 `splitLiveProjectiles` 同一條關聯）。
@@ -25,9 +25,11 @@ import { runEffects } from "../effects/effectRunner";
 import { delayedQueue } from "../effects/delayed";
 import { armFacingLock } from "../facingLock";
 import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
+import { steeringTaken } from "../steeringTaken";
+import { tauntedBy } from "../taunt";
 
-/** 引導為什麼結束 —— 前六個是作者寫得出的政策；`settled`（決鬥結束）與 `gone`（身體或技能不在了）一律結束。 */
-export type ChannelEndCause = "move" | "stun" | "silence" | "knockdown" | "death" | "damage" | "settled" | "gone";
+/** 引導為什麼結束 —— 前七個是作者寫得出的政策；`settled`（決鬥結束）與 `gone`（身體或技能不在了）一律結束。 */
+export type ChannelEndCause = "move" | "stun" | "silence" | "knockdown" | "death" | "damage" | "control" | "settled" | "gone";
 
 export interface ChannelBegin {
   slot: CastableSlot;
@@ -82,6 +84,10 @@ function breakCause(world: SimWorld, id: EntityId, ch: ChannelState, def: Abilit
   if (causes.includes("stun") && (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick) ?? false)) return "stun";
   if (causes.includes("silence") && (st?.effects.some((e) => e.silenced && e.expiresAtTick > world.tick) ?? false)) return "silence";
   if (causes.includes("knockdown") && (world.knockdown.get(id) ?? 0) > 0) return "knockdown";
+  // ⭐ 修正輪（#1191 審查）：方向盤被拿走（暴走／恐懼／魅惑／混亂）也打斷 —— 判準與 OrderSystem 丟指令**同一支**。
+  //   ⛔ 少了這一行，引導把腳定住，恐懼／魅惑打在引導中的人身上等於無效。
+  //   嘲弄只在後台 `config.taunt@1.overridesManualOrder` 開著（＝嘲弄真的蓋掉玩家的指令）時才算；出貨 false ＝ 玩家仍握著方向盤。
+  if (causes.includes("control") && (steeringTaken(world, id) || (world.tauntRules.overridesManualOrder && tauntedBy(world, id) !== null))) return "control";
   if (causes.includes("damage") && hp.hp < ch.hpAtStart) return "damage";
   return undefined;
 }
