@@ -3,7 +3,7 @@
   "generator": "tools/hero-model-library/build_priority81_handoff.py",
   "generatorSha256": "1fa9a92eec7c99e3d83042d0ab28bf656f38c25b2faf6cb8c05dc2f33cf74d06",
   "scope": "Main review and merge of existing 81-hero content; Root owns remaining conversions",
-  "inputsSha256": "11bd1093c67fbd17b051ece32604247788c2ad79be52654ff0bdd7ced356b2de",
+  "inputsSha256": "978d0939843ac26d629f0b63497f2b2b9e57bcf2216fd5b3739059da2e3bafc8",
   "inputs": [
     {
       "gitPath": null,
@@ -21730,8 +21730,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/inventory.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 10323976,
-      "sha256": "ee8ca6ca9c025ff82f2d4a53c56df34ff8e3a982049a9ff5445770b9b5ed71cc"
+      "bytes": 10341851,
+      "sha256": "c248faa897403137107df3a304097d656f1ed7939c716985324196bf58c14cc9"
     },
     {
       "gitPath": "materials/hero-model-library/lol-project-seven/runtime-audit.json",
