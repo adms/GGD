@@ -29,6 +29,11 @@ owner 2026-08-23：「編輯器只編輯原始資料（五級距），根本不�
 
     <!-- BEGIN GENERATED:vocab-kind-count --> … <!-- END GENERATED:vocab-kind-count -->
 
+⭐ #1260 —— §〇之二的**佔位符表**也進了區塊（`contract-prose-slots`），而它讀的**不是** config：
+列與每一格都從 `abilityProse.ts` 的 `PROSE_SLOT_KEYS` × `PROSE_SLOT_DOC` 推導。手打的那一版在
+佔位符語意改動（06ea60a4a）之後就地說謊，⛔ 而它不在任何區塊裡、沒有東西會紅。
+第一次跑由 `adopt()` 把舊表**原地**換成標記（⛔ 不是讓 `splice()` 附加在檔尾 —— 那會留下兩張表）。
+
 ⛔ **標記之間的任何一個字都不要手改** —— 下次重新產生就沒了。
 要改數字請改 `content/config/*.json`（那也正是後台在改的東西），然後：
 
@@ -64,7 +69,7 @@ DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-ap-damage", "contract-range",
+BLOCKS = ("contract-prose-slots", "contract-caps", "contract-ap-damage", "contract-range",
           "contract-normalized", "contract-bands", "contract-tiers",
           "contract-effects", "contract-sharding")
 VOCAB_BLOCKS = ("vocab-kind-count",)
@@ -209,6 +214,126 @@ def retire(text, name, doc):
     # 目錄那一行 = 同時含錨點連結與**逐字**的章節標題 ⇒ 精確比對，⛔ 不做模糊猜測。
     kept = [ln for ln in text.split("\n") if not ("](#" in ln and label and label in ln)]
     return "\n".join(kept), f"{name}(retired)"
+
+
+# ⭐ #1260 —— 一張**本來是手打**的表第一次收進區塊時，要**原地**換成標記。
+#   名 → (章節標題的開頭, 舊表表頭的開頭)。
+# ⛔ 不可以交給 `splice()` 的「缺標記 → 附加在檔尾」：那會留下章節裡那張沒人對帳的舊表，
+#   再在檔尾長出第二張 —— 兩個住處，而 `--check` 對兩者都是綠的。
+ADOPT = {
+    "contract-prose-slots": ("## 〇之二、", "| 佔位符 | 是什麼 |"),
+}
+
+
+def adopt(text, name, doc):
+    """標記還不在時，把 `ADOPT` 指名的那張表**原地**換成一對空標記（冪等：標記在就不動）。
+
+    ⛔ 章節或表頭找不到就中止 —— ⛔ 不猜位置，也 ⛔ 不退回附加在檔尾。
+    """
+    begin, end = markers(name)
+    if name not in ADOPT or begin in text or end in text:
+        return text, None
+    heading, header = ADOPT[name]
+    lines = text.split("\n")
+    h = next((i for i, ln in enumerate(lines) if ln.startswith(heading)), None)
+    if h is None:
+        sys.exit(f"{doc.name}: 找不到 `{heading}` 章節 —— '{name}' 要原地換掉的表不知道在哪，⛔ 不猜")
+    i = next((k for k in range(h + 1, len(lines))
+              if lines[k].startswith(header) or lines[k].startswith("## ")), None)
+    if i is None or not lines[i].startswith(header):
+        sys.exit(f"{doc.name}: `{heading}` 章節裡找不到以 `{header}` 開頭的表 —— ⛔ 不猜，也 ⛔ 不附加在檔尾")
+    j = i
+    while j < len(lines) and lines[j].startswith("|"):
+        j += 1
+    return "\n".join(lines[:i] + [begin, end] + lines[j:]), f"{name}(adopted {j - i} 行)"
+
+
+# ---------------------------------------------------------------------------
+# ⭐ #1260 —— §〇之二的佔位符表：卡面上的 `{{…}}` 各讀哪幾格
+# ---------------------------------------------------------------------------
+#
+# ⚠️ 手打的那一版在 06ea60a4a 改了佔位符語意之後，三列同時說謊：`{{radius}}` 漏了 leap 的
+#   `landRadius`、`{{travel}}` 還列著被拋目標的 leap（已改走 push）、`{{push}}` 漏了
+#   `throwDistance` —— 而 `skills:sync` 不碰它、沒有任何 `--check` 管它。
+# ⇒ 語意的唯一住處是 `PROSE_SLOT_DOC`（第〇·四），這裡只負責排版。
+# ⚠️ 路徑刻意寫成**一整串字面值**：`syncPlan.mjs` 的輸入表只認得對得上 git 追蹤檔的字面值，
+#   ⛔ 拆成 `REPO / "packages" / …` 裁剪計畫就看不到這條相依。
+PROSE_TS = REPO / "packages/shared/src/content/abilityProse.ts"
+PROSE_FIELDS = ("zh", "from", "renders")  # ＝ TS 型別 `{ zh; from; renders }`，也是表的三欄
+
+# 字串（三種引號）與註解 —— 數大括號、拆欄位之前都要先跳過它們（`「{{msb}}%」` 就在字串裡）。
+_TS_TOKEN = re.compile(r'"(?:[^"\\\n]|\\.)*"|\'(?:[^\'\\\n]|\\.)*\'|`(?:[^`\\]|\\.)*`|//[^\n]*|/\*[\s\S]*?\*/')
+
+
+def _ts_frozen_object(path, name):
+    """`export const <name> … Object.freeze({ … })` 的內文。⛔ 換了寫法就中止，不猜。"""
+    src = path.read_text(encoding="utf-8")
+    at = src.find(f"export const {name}")
+    at = src.find("Object.freeze(", at) if at >= 0 else -1
+    if at < 0:
+        sys.exit(f"{path.name} 裡找不到 `export const {name} … Object.freeze(` —— 它被改名或換寫法了，⛔ 不猜")
+    start = src.index("{", at)
+    depth, k = 0, start
+    while k < len(src):
+        m = _TS_TOKEN.match(src, k)
+        if m:
+            k = m.end()
+            continue
+        depth += {"{": 1, "}": -1}.get(src[k], 0)
+        k += 1
+        if depth == 0:
+            return src[start + 1:k - 1]
+    sys.exit(f"{path.name} 的 `{name}` 大括號沒有收尾 —— 解析器與程式碼分家了")
+
+
+def prose_slots():
+    """`PROSE_SLOT_KEYS` 的順序 × `PROSE_SLOT_DOC` 的三格。兩個方向都對帳，讀不懂的寫法一律中止。"""
+    src = PROSE_TS.read_text(encoding="utf-8")
+    m = re.search(r"export const PROSE_SLOT_KEYS\s*=\s*\[([^\]]*)\]", src)
+    keys = re.findall(r'"([a-z]+)"', m.group(1)) if m else []
+    if not keys:
+        sys.exit(f"{PROSE_TS.name} 裡解析不到 `PROSE_SLOT_KEYS` —— 它被改名或換寫法了，⛔ 不猜")
+    strings = []
+
+    def stash(t):
+        s = t.group(0)
+        if s.startswith("/"):
+            return " "
+        if not s.startswith('"'):
+            sys.exit(f"`PROSE_SLOT_DOC` 用了雙引號以外的字串（{s[:24]}…）—— 這裡只認雙引號字面值，⛔ 不猜")
+        strings.append(json.loads(s))
+        return f"\x00{len(strings) - 1}\x00"
+
+    flat = _TS_TOKEN.sub(stash, _ts_frozen_object(PROSE_TS, "PROSE_SLOT_DOC"))
+    entry, pair = r"(\w+)\s*:\s*\{([^{}]*)\}", r"(\w+)\s*:\s*\x00(\d+)\x00"
+    doc = {}
+    for key, inner in re.findall(entry, flat):
+        fields = dict(re.findall(pair, inner))
+        if set(fields) != set(PROSE_FIELDS) or re.sub(pair, "", inner).strip(" \t\n,"):
+            sys.exit(f"`PROSE_SLOT_DOC.{key}` 不是恰好 {'/'.join(PROSE_FIELDS)} 三個字串字面值 —— "
+                     "契約表的欄沒跟上，請在 `table_prose_slots()` 決定怎麼印，⛔ 不要讓它靜默少一格")
+        doc[key] = {f: strings[int(fields[f])] for f in PROSE_FIELDS}
+    if re.sub(entry, "", flat).strip(" \t\n,") or set(doc) != set(keys):
+        sys.exit(f"`PROSE_SLOT_DOC` 與 `PROSE_SLOT_KEYS` 對不上：只在 DOC {sorted(set(doc) - set(keys))}"
+                 f" ／ 只在 KEYS {sorted(set(keys) - set(doc))}（或 DOC 裡有解析不了的寫法）")
+    return [(k, doc[k]) for k in keys]
+
+
+def _code(s):
+    """行內程式碼。內文自己帶反引號（`stat:ms`）時換更長的圍欄 —— ⛔ 不然那一格會被切成三段。"""
+    fence = "`" * (max((len(r) for r in re.findall(r"`+", s)), default=0) + 1)
+    pad = "" if fence == "`" else " "
+    return f"{fence}{pad}{s}{pad}{fence}"
+
+
+def table_prose_slots():
+    def cell(s):
+        return s.replace("|", "\\|")  # ⛔ 一個裸的 `|` 會把表格多切一欄
+
+    out = ["| 佔位符 | 是什麼 | 從哪一格推導 | 算繪成 |", "|---|---|---|---|"]
+    for key, d in prose_slots():
+        out.append(f"| `{{{{{key}}}}}` | {cell(d['zh'])} | {cell(_code(d['from']))} | {cell(d['renders'])} |")
+    return "\n".join(out)
 
 
 # ---------------------------------------------------------------------------
@@ -1237,6 +1362,7 @@ def _damage_literal_rule(axes):
 COLS = 5
 
 BODIES = {
+    "contract-prose-slots": table_prose_slots,
     "contract-caps": table_caps,
     "contract-ap-damage": table_ap_damage,
     "contract-normalized": table_normalized,
@@ -1276,6 +1402,9 @@ AP_DMG_SOURCE = ("`content/config/ap-damage-scaling.json`"
 # ⭐ §七那一段讀的是 `appliesTo` 這一格，⛔ 沒有一格取決於今天有幾支技能。
 NORMALIZED_SOURCE = "`content/config/stat-normalization.json` 的 `appliesTo`"
 SOURCES = {
+    # ⚠️ **不蓋內容版號**（同 `contract-effects`）：它一格 `content/` 都沒讀。
+    "contract-prose-slots": ("`packages/shared/src/content/abilityProse.ts` 的 `PROSE_SLOT_KEYS` × "
+                             "`PROSE_SLOT_DOC`（佔位符語意的唯一住處）", False),
     # ⚠️ **不蓋內容版號**（同 `contract-sharding` 的理由）：這一段讀的是三格設定 + 一個
     #    TS union，⛔ 沒有一格取決於「今天新增了幾支技能」。
     "contract-ap-damage": (AP_DMG_SOURCE, False),
@@ -1326,6 +1455,9 @@ def main():
             if how:
                 actions.append(how)
         for name in names:
+            text, how = adopt(text, name, doc)  # #1260：手打表第一次收編 ⇒ 原地換成標記
+            if how:
+                actions.append(how)
             text, how = splice(text, name, render(name), doc)
             actions.append(f"{name}({how})")
         if text == original:

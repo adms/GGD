@@ -40,6 +40,8 @@
  *
  * 突變紀錄（跑過）：
  *   · 把 `combat-env.json` 的 `manaRegen` 改成 99 → 紅（`--check` 回 1 並列出哪幾個區塊 stale）
+ *   · #1260：把 `PROSE_SLOT_DOC.radius.zh` 改成「有效半徑X」→ 紅兩條（`--check` 報
+ *     contract-prose-slots stale；逐列對帳 `radius.zh:false`）
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
@@ -48,6 +50,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
 import { BAND_MEANING, NORMAL_BANDS } from "../content/statNormalization";
+import { PROSE_SLOT_DOC, PROSE_SLOT_KEYS } from "../content/abilityProse";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const GEN = join(REPO, "tools/editor-contract/gen_contract_numbers.py");
@@ -97,7 +100,9 @@ describe("Codex 合約散文裡的數字", () => {
     // ⭐ `contract-ap-damage` / `contract-normalized`（2026-08-21）：兩節在此之前是**散文**
     //    或**根本不存在**，而散文那一半已經量到過期（`manaRegen ×16` vs 出貨 8、
     //    「攻速不在 `appliesTo`」vs 它已經在）。⛔ 標記被刪掉就退回同一個形狀。
-    for (const name of ["contract-caps", "contract-ap-damage", "contract-range",
+    // ⭐ `contract-prose-slots`（#1260）：§〇之二的佔位符表。手打那一版在佔位符語意改動後
+    //    三列同時說謊（`landRadius`／被拋目標改走 push／`throwDistance`），而它不在任何區塊裡。
+    for (const name of ["contract-prose-slots", "contract-caps", "contract-ap-damage", "contract-range",
                         "contract-normalized", "contract-bands", "contract-tiers",
                         "contract-effects", "contract-sharding"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
@@ -121,6 +126,25 @@ describe("Codex 合約散文裡的數字", () => {
     expect(`vocab-kind-count:${vocab.includes("<!-- BEGIN GENERATED:vocab-kind-count -->")}`).toBe(
       "vocab-kind-count:true",
     );
+  });
+
+  it("⭐ §〇之二佔位符表逐列等於出貨的 PROSE_SLOT_DOC —— 拿**真的模組**對 python 的 TS 解析", () => {
+    cover("codex-contract-numbers");
+    // ⚠️ `--check` 只證明「產生器輸出 == 磁碟」。產生器是用 regex 讀 `abilityProse.ts` 的**原始碼**
+    //   ⇒ 解析錯（少一列、截一段、跳脫解錯）時兩邊一起錯，`--check` 照樣綠（失敗形態⑤）。
+    //   ⇒ 這裡對的是 import 進來的出貨常數，⛔ 不是再抄一份說明文字（第〇·四）。
+    const doc = readFileSync(DOC, "utf8");
+    const block = doc.slice(doc.indexOf("<!-- BEGIN GENERATED:contract-prose-slots -->"),
+                            doc.indexOf("<!-- END GENERATED:contract-prose-slots -->"));
+    const rows = block.split("\n").filter((l) => l.startsWith("| `{{"));
+    expect(`列數:${rows.length}`).toBe(`列數:${PROSE_SLOT_KEYS.length}`);
+    for (const k of PROSE_SLOT_KEYS) {
+      const row = rows.find((l) => l.startsWith(`| \`{{${k}}}\` |`)) ?? "";
+      for (const f of ["zh", "from", "renders"] as const) {
+        const want = PROSE_SLOT_DOC[k][f].replaceAll("|", "\\|");
+        expect(`${k}.${f}:${row.includes(want)}`).toBe(`${k}.${f}:true`);
+      }
+    }
   });
 
   it("⭐ 契約有講**技能傷害的新公式**與**出身決定每級成長**（2026-08-21 的兩條架構裁決）", () => {
