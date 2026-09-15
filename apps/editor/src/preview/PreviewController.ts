@@ -640,8 +640,13 @@ function effectLines(
         break;
       }
       case "spawnProjectile":
-        out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
+        out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}${e.launchFrom === "rangeEnd" ? "（射程盡頭生成、朝施法者飛回）" : ""}, on hit:` });
         effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
+        // GH#1187 鄂爾 R【撞擊改向】—— 後段衝刺撞到之後命中改跑這一串。
+        if (e.onRedirectHit?.length) {
+          out.push({ depth, kind: e.kind, summary: "被再次施放撞擊改向後，on hit:" });
+          effectLines(e.onRedirectHit, finalStats, attrs, maxRank, depth + 1, out);
+        }
         break;
       // GH#1190 鄂爾 Q【暫時障礙】—— 真碰撞圓柱，到期／被 dash.shatter 撞碎消失。
       case "spawnObstacle":

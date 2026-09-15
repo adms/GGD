@@ -63,7 +63,7 @@ export interface RecastState {
   /** 首段解析出的落點／方向（`recast.anchor:"firstCast"` 的後段讀這兩格）。 */
   point?: { x: number; z: number };
   direction?: { x: number; z: number };
-  /** 首段命中的第一個受害者（後段「沿鉤進場」那一族要用；今天只記，不消費）。 */
+  /** 首段命中的第一個受害者 —— `recast.anchor:"firstHit"` 的後段目標（瑟雷西 Q 沿鉤進場；讀端 `liveRecastAnchor`）。 */
   anchor?: EntityId;
   /** `cooldownAt:"end"` 時暫存的冷卻 tick 數，階段結束才寫進 cooldownRemainingTicks。 */
   pendingCooldownTicks: number;

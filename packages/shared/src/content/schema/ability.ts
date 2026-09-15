@@ -137,8 +137,15 @@ export const zAbilityRecast = z
     cooldownAt: z.enum(["first", "end"]).optional(),
     /** 每一次後段的耗魔（預設 0 —— 首放已經付過）。 */
     costPerRecast: z.number().min(0).optional(),
-    /** GH#1197 威寇茲 W：`firstCast` = 後段沿用**首段**的落點與方向（裂痕固定在原處，⛔ 不讀後段這一按的目標）。缺 = press */
-    anchor: z.enum(["press", "firstCast"]).optional().describe("firstCast = 後段釘在首段的落點／方向（威寇茲 W）"),
+    /**
+     * GH#1197 威寇茲 W：`firstCast` = 後段沿用**首段**的落點與方向（裂痕固定在原處，⛔ 不讀後段這一按的目標）。
+     * GH#1187 瑟雷西 Q：`firstHit` = 後段的目標是**首段命中的第一個單位**（目標＝他、落點＝他腳下、方向＝朝他），
+     * ⛔ 不讀後段這一按的瞄準；那個人已死亡／消失／不在同一區 ⇒ 按下被拒**且階段當場清除**（⛔ 不留可再按的殘窗）。缺 = press
+     */
+    anchor: z
+      .enum(["press", "firstCast", "firstHit"])
+      .optional()
+      .describe("後段瞄準什麼：press（預設，這一按的瞄準）／firstCast（釘在首段的落點與方向，威寇茲 W）／firstHit（首段命中的第一個單位，瑟雷西 Q；那人死亡或消失 ⇒ 階段結束）"),
   })
   .strict();
 

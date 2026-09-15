@@ -317,8 +317,8 @@ export interface AbilityRecast {
   /** `end`：冷卻等最後一段放完（或窗口到期）才開始跑。缺 = first */
   cooldownAt?: "first" | "end";
   costPerRecast?: number;
-  /** firstCast：後段釘在首段的落點／方向（威寇茲 W）。缺 = press */
-  anchor?: "press" | "firstCast";
+  /** firstCast：後段釘在首段的落點／方向（威寇茲 W）；firstHit：後段目標＝首段命中的第一人（瑟雷西 Q）。缺 = press */
+  anchor?: "press" | "firstCast" | "firstHit";
 }
 
 export interface AbilityToggle {

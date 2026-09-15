@@ -188,6 +188,23 @@ export const zConfigDisplacementTiersDoc = z
           .optional(),
       })
       .optional(),
+    /**
+     * ⭐ GH#1187【撞擊改向】（鄂爾 R 後段）的規則開關。**必須 `.optional()`**，理由與 `markedBlink` 逐字相同：
+     * 缺席時 `projectileRedirectFromDoc` 回**出貨值**（contact），⛔ 不是關掉。
+     */
+    projectileRedirect: z
+      .object({
+        mode: z
+          .enum(["contact", "press", "off"])
+          .describe(
+            "@zh 再次施放怎麼改向投射物（鄂爾 R）\n" +
+              "@note ⭐ GH#1187 分類時的爭議預設（⛔ 不是 owner 原話）＋ rollback 開關：`spawnProjectile.onRedirectHit` 那一族投射物被**同一次施放的後段**改向的條件。⚠️ 改成 press 或 off 之後，鄂爾 R 卡面「衝撞羊並改向」那一句的條件就不再成立，屬應急。\n" +
+              "@opt contact contact 後段衝刺時身體撞到才改向（出貨）\n" +
+              "@opt press press 按下後段就當場改朝那一按的方向（不必撞到）\n" +
+              "@opt off off 一律不改向（投射物照首段飛完，後段只剩衝刺）",
+          ),
+      })
+      .optional(),
     wallBlock: z
       .object({
         enabled: z

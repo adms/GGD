@@ -185,6 +185,13 @@ export interface ProjectileComp {
   returns?: boolean;
   /** GH#1197 分裂彈設定（從 `ProjectileDef.split` 複製）。 */
   split?: { projectileId: ProjectileId; on: readonly ("hit" | "recast")[] };
+  /**
+   * GH#1187【撞擊改向】還沒用掉的改向（從 `spawnProjectile.onRedirectHit` 烘好複製）。改向一次或作廢之後**刪掉**
+   * ⇒ 缺 = 這發已經不能再被改向（`sim/projectileRedirect.ts`）。
+   */
+  redirectOnHit?: import("./effects/effect").EffectDef[];
+  /** 施法者按下後段的那一 tick（`contact` 模式等著被撞）。缺 = 還沒按。 */
+  redirectArmedTick?: number;
   /** effects executed on each unit hit (caster = owner) */
   onHit: import("./effects/effect").EffectDef[];
   /** rank of the spawning ability (for scaling in onHit) */

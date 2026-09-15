@@ -92,6 +92,7 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   flowerRules: CONFIG,
   wallBlock: CONFIG,
   markedBlink: CONFIG,
+  projectileRedirect: CONFIG,
   reviveRules: CONFIG,
   guardianRules: CONFIG,
   // GH#752 戰場任務的陣營塔規則 —— 與隔壁 `guardianRules` 逐字同一個理由：主機在

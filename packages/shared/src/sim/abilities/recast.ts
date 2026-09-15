@@ -15,6 +15,18 @@ import type { CastInstance } from "../content/castInstance";
 import type { AbilityInstance, RecastState } from "../stats/statsComp";
 import type { AbilityRecast } from "../content/defs";
 import type { EntityId } from "../../ids";
+import type { SimWorld } from "../SimWorld";
+
+/**
+ * `anchor:"firstHit"` 的後段目標：首段命中的第一個單位，**還活著、還在施法者這一區**才算。
+ * 回 undefined ＝ 錨點已失效（沒命中過／死亡／消失／換區）⇒ 呼叫端要結束階段，⛔ 不是退回這一按的瞄準。
+ */
+export function liveRecastAnchor(world: SimWorld, inst: AbilityInstance, zone: number): EntityId | undefined {
+  const a = inst.recast?.anchor;
+  if (a === undefined) return undefined;
+  const at = world.transform.get(a);
+  return at !== undefined && world.health.get(a)?.alive === true && at.zone === zone ? a : undefined;
+}
 
 /** `ability@1.recast` 的形狀 —— 一個住處（`content/defs.ts`），這裡只讀。 */
 export type RecastSpec = AbilityRecast;
@@ -67,11 +79,11 @@ export function finishRecast(inst: AbilityInstance): void {
   delete inst.recast;
 }
 
-/** 每 tick：窗口到期／施法者死亡 ⇒ 結束（tickCooldowns 呼叫）。 */
-export function sweepRecast(inst: AbilityInstance, nowTick: number, alive: boolean): void {
+/** 每 tick：窗口到期／施法者死亡／`firstHit` 錨點失效 ⇒ 結束（tickCooldowns 呼叫）。 */
+export function sweepRecast(inst: AbilityInstance, nowTick: number, alive: boolean, anchorLost = false): void {
   const r = inst.recast;
   if (!r) return;
-  if (!alive || nowTick >= r.untilTick) finishRecast(inst);
+  if (!alive || anchorLost || nowTick >= r.untilTick) finishRecast(inst);
 }
 
 /** 傷害封包命中受害者 ⇒ 若它是某槽首段的那一次施放，開窗（`gate:"onHit"`）並記第一個受害者。 */

@@ -29,8 +29,9 @@ import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules"
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
-import { armRecast, bindRecastSerial, consumeRecastCharge, recastPressGate, sweepRecast } from "./recast";
+import { armRecast, bindRecastSerial, consumeRecastCharge, finishRecast, liveRecastAnchor, recastPressGate, sweepRecast } from "./recast";
 import { splitLiveProjectiles } from "../projectileSplit";
+import { armProjectileRedirects } from "../projectileRedirect";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
@@ -650,6 +651,13 @@ export function castAbility(
     const rd = inst.recast.direction;
     target = def.castType === "ground" ? { type: "point", point: { x: rp.x, z: rp.z } } : rd ? { type: "dir", dir: { x: rd.x, z: rd.z } } : target;
   }
+  // ⭐ GH#1187 瑟雷西 Q：後段目標＝首段命中的第一個單位。錨點失效（死亡／消失／換區）⇒ 階段當場結束並拒絕，
+  //   ⛔ 不退回這一按的瞄準（那會變成一次免費的普通施放）。位置在付任何成本之前。
+  const recastAnchorUnit = isRecast && def.recast?.anchor === "firstHit" ? liveRecastAnchor(world, inst, t.zone) : undefined;
+  if (isRecast && def.recast?.anchor === "firstHit" && recastAnchorUnit === undefined) {
+    finishRecast(inst);
+    return "bad-target";
+  }
   if (!isRecast && inst.cooldownRemainingTicks > 0) return "cooldown";
 
   // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
@@ -701,7 +709,13 @@ export function castAbility(
   let direction: { x: number; z: number } | undefined;
   const selfTeam = world.team.get(caster);
 
-  switch (def.castType) {
+  if (recastAnchorUnit !== undefined) {
+    // `anchor:"firstHit"` 的後段：⛔ 不看施放型別與這一按的瞄準 —— 目標、落點、方向全部指向那個人。
+    const at = world.transform.get(recastAnchorUnit)!;
+    targets = [recastAnchorUnit];
+    point = { x: at.pos.x, z: at.pos.z };
+    direction = normalize(sub(at.pos, t.pos));
+  } else switch (def.castType) {
     case "self":
       targets = [caster];
       break;
@@ -825,6 +839,7 @@ export function castAbility(
   const cdTicks = Math.round(cdSecs / world.dt);
   if (isRecast) {
     splitLiveProjectiles(world, caster, slot, inst.recast?.serial ?? -1); // GH#1197 威寇茲 Q：再按 ⇒ 主彈當場分裂
+    armProjectileRedirects(world, caster, slot, inst.recast?.serial ?? -1, direction ?? t.facing); // GH#1187 鄂爾 R：再按 ⇒ 首段的羊等著被撞
     consumeRecastCharge(inst); // 用完 ⇒ finishRecast 會把 `cooldownAt:"end"` 暫存的冷卻寫進去
   } else if (def.recast) {
     inst.cooldownRemainingTicks = armRecast(inst, def.recast, world.tick, world.dt, cdTicks);
@@ -1098,7 +1113,13 @@ export function tickCooldowns(world: SimWorld): void {
     // ⭐ GH#1187 後段窗口到期／施法者死亡 ⇒ 結束。放在冷卻凍結的 `continue` **前面**：
     //   窗口是真實時間，⛔ 不吃流逝速度。
     const alive = world.health.get(id)?.alive !== false;
-    for (const slot of ["Q", "W", "E", "R"] as const) sweepRecast(ab.slots[slot], world.tick, alive);
+    for (const slot of ["Q", "W", "E", "R"] as const) {
+      const inst = ab.slots[slot];
+      // `anchor:"firstHit"`（瑟雷西 Q）：被鉤的人死了／消失了 ⇒ HUD 上的「可再按」當場消失，⛔ 不等窗口到期。
+      const anchorLost = inst.recast?.anchor !== undefined && Abilities.get(inst.abilityId).recast?.anchor === "firstHit"
+        && liveRecastAnchor(world, inst, world.transform.get(id)?.zone ?? -1) === undefined;
+      sweepRecast(inst, world.tick, alive, anchorLost);
+    }
     // ⭐ G17 —— 這個單位的流逝速度。0 = ×1 = 今天（同 `OutputDamagePct` 那一族：
     // 出貨 0，內容不開就是**嚴格 no-op**，而且下面走的是原本那條 `--`）。
     const bonus = world.stats.get(id)?.final[Stat.CooldownDrainRate] ?? 0;

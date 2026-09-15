@@ -20,7 +20,7 @@ const vfxSubtypes = [...catalog.documents].filter(([key]) => key.startsWith("vfx
 const compiled = new Map<string, Extract<CompiledHeroDraftResult, { ok: true }>>();
 
 beforeAll(() => {
-  for (const id of ["sett", "fiddlesticks", "ornn"]) {
+  for (const id of ["sett", "fiddlesticks", "ornn", "ahri", "thresh"]) {
     const recipe = COMMUNITY_LOL_BATCH2_EXAMPLES.find((entry) => entry.id === id)!;
     const project = createCommunityHeroRecipe(recipe, `lol-mechanics-${id}`, templates);
     const generated = generateHeroDraft(project.acceptedPlan!, {
@@ -139,6 +139,76 @@ describe("LoL batch 2 corrected recipe mechanics", () => {
       const knockup = events.filter((e) => e.type === "leapStart" && e.data.id === foes[0]);
       expect([shock.length > 0, knockup.length > 0, events.some((e) => e.type === "obstacleShatter")]).toEqual([withPillar, withPillar, withPillar]);
       expect(world.obstacle.size, "柱子被撞碎（沒柱那一臂本來就是 0）").toBe(0);
+    });
+  });
+
+  // GH#1187【再次施放】—— 三種用法都走正常指令（world.step 的 castAbility），⛔ 不手造階段。
+  const cast = (slot: "Q" | "R", point: { x: number; z: number }): IntentFrame => ({ commands: [{ kind: "castAbility", slot, target: { type: "point", point } }] });
+  const rejected = (rig: Rig, slot: "Q" | "R") => rig.events.filter((e) => e.type === "castRejected" && e.data.entity === rig.hero && e.data.slot === slot).map((e) => e.data.reason);
+  const settle = (rig: Rig, ticks = TICK_HZ) => { for (let tick = 0; tick < ticks; tick++) rig.step(); };
+
+  it("recast: Ahri R dashes to three separately aimed points and only then starts its cooldown", () => {
+    withHero("ahri", [[0, -8]], (rig) => {
+      const { world, hero } = rig;
+      expect(rankUpAbility(world, hero, "R")).toBe(true);
+      const c = { ...world.transform.get(hero)!.pos };
+      const aims = [{ x: c.x + 3, z: c.z }, { x: c.x + 3, z: c.z + 3 }, { x: c.x, z: c.z + 3 }];
+      const landed = aims.map((aim) => {
+        rig.step(cast("R", aim));
+        settle(rig);
+        return world.transform.get(hero)!.pos;
+      }).map((pos, i) => Math.hypot(pos.x - aims[i]!.x, pos.z - aims[i]!.z) < 1);
+      expect(landed, "每一段落在自己那一按的落點").toEqual([true, true, true]);
+      expect(world.abilities.get(hero)!.slots.R.cooldownRemainingTicks, "三段衝完才進冷卻").toBeGreaterThan(0);
+      rig.step(cast("R", c));
+      expect(rejected(rig, "R")).toEqual(["cooldown"]);
+    });
+  });
+
+  it.each(["miss", "hit", "victim-dies"] as const)("recast: Thresh Q %s", (arm) => {
+    withHero("thresh", [arm === "miss" ? [0, 6] : [5, 0]], (rig) => {
+      const { world, hero, foes } = rig;
+      expect(rankUpAbility(world, hero, "Q")).toBe(true);
+      const c = { ...world.transform.get(hero)!.pos };
+      rig.step(cast("Q", { x: c.x + 5, z: c.z }));
+      settle(rig, TICK_HZ / 2);
+      if (arm === "victim-dies") {
+        Object.assign(world.health.get(foes[0]!)!, { hp: 1 });
+        runEffects([{ kind: "damage", damageType: "true", amount: { flat: 100 } }], { world, caster: hero, rank: 1, targets: [foes[0]!], origin: "fixture:kill", rng: world.rng });
+        settle(rig, 2);
+        expect(world.health.get(foes[0]!)!.alive).toBe(false);
+        expect(world.abilities.get(hero)!.slots.Q.recast, "被鉤者死亡 ⇒ 後段當場清除").toBeUndefined();
+      }
+      // ⭐ 刻意朝反方向按：飛向被鉤者靠的是錨點，⛔ 不是這一按的瞄準
+      rig.step(cast("Q", { x: c.x - 5, z: c.z }));
+      settle(rig, TICK_HZ / 2);
+      if (arm === "hit") {
+        const [h, f] = [world.transform.get(hero)!.pos, world.transform.get(foes[0]!)!.pos];
+        expect(Math.hypot(h.x - f.x, h.z - f.z), "飛到同一個被鉤者身邊").toBeLessThan(2);
+        expect(rejected(rig, "Q")).toEqual([]);
+      } else expect(rejected(rig, "Q")).toEqual([arm === "miss" ? "recast-gate" : "cooldown"]);
+    });
+  });
+
+  it.each([true, false])("recast: Ornn R recast dash rams the goat=%s ⇒ redirected knock-up only on contact", (recast) => {
+    withHero("ornn", [[10, 0]], (rig) => {
+      const { world, hero, foes, events } = rig;
+      expect(rankUpAbility(world, hero, "R")).toBe(true);
+      const c = { ...world.transform.get(hero)!.pos };
+      const ahead = { x: c.x + 5, z: c.z };
+      rig.step(cast("R", ahead));
+      for (let tick = 0; tick < 3 * TICK_HZ && !events.some((e) => e.type === "projectileSpawn" && e.data.owner === hero); tick++) rig.step();
+      settle(rig, TICK_HZ / 5);
+      if (recast) rig.step(cast("R", ahead));
+      settle(rig, TICK_HZ);
+      const knockup = events.some((e) => e.type === "leapStart" && e.data.id === foes[0]);
+      expect(knockup, "改向後的羊擊飛身前的敵人（首段那一趟不擊飛）").toBe(recast);
+      // 沒按後段：羊先碰到鄂爾 ⇒ 窗口在 3 秒到期**之前**就清掉，再按 R 只會撞冷卻
+      expect(world.abilities.get(hero)!.slots.R.recast).toBeUndefined();
+      if (!recast) {
+        rig.step(cast("R", ahead));
+        expect(rejected(rig, "R")).toEqual(["cooldown"]);
+      }
     });
   });
 

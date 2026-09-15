@@ -46,6 +46,7 @@ export const EFFECT_CHILD_CHAINS = [
   "onHit", // spawnProjectile
   "onHitTargets", // damageArea · damageLine
   "onLand", // leap
+  "onRedirectHit", // spawnProjectile —— 被再次施放撞擊改向之後命中跑的那一串（GH#1187 鄂爾 R）
   "onTouch", // spawnModelFx —— 路徑上碰到人的那一串（#551）
   "perStrike", // comboStrikes —— 每一段各跑一次的那一串（#541）
 ] as const;

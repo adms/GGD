@@ -68,6 +68,7 @@ import {
 } from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import { markedBlinkFromDoc } from "@ggd/shared/sim/movement/markedBlink";
+import { projectileRedirectFromDoc } from "@ggd/shared/sim/projectileRedirectRules";
 import { wallBlockFromDoc } from "@ggd/shared/sim/movement/wallBlock";
 import {
   CAST_APPROACH_DOC_ID,
@@ -1473,6 +1474,7 @@ export class MatchController {
     //   和 `per-level-bonus` 同一條路，已知限制也一樣（後台改了要重啟 shard）。
     this.world.wallBlock = wallBlockFromDoc(Configs.tryGet("displacement-tiers"));
     this.world.markedBlink = markedBlinkFromDoc(Configs.tryGet("displacement-tiers"));
+    this.world.projectileRedirect = projectileRedirectFromDoc(Configs.tryGet("displacement-tiers")); // GH#1187 鄂爾 R 撞擊改向開關
     // ⭐ 走過去放技能 (`config.cast-approach@1`, owner 2026-08-22「超過施法距離人物不會
     //   走過去放技能（做成後台開關）」)。⛔ GH#1051：在此之前 `castApproachRules(world)` 讀的是
     //   一格**零寫入端**的欄位 ⇒ 場上永遠出貨預設、後台關不掉（#1035 的形狀：三個住處齊全 ≠ 已上線）。

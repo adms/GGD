@@ -59,5 +59,8 @@
   "markedBlink": {
     "enabled": true,
     "requireOwnMark": true
+  },
+  "projectileRedirect": {
+    "mode": "contact"
   }
 }

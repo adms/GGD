@@ -14,7 +14,8 @@ import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { addHeroTemplateProduct, adoptHeroProductTemplate } from "./projectModel";
 
 // Share Main's exact schemas, including recursive effects and refinements.
-const overrideSchema = zAbilityDef.pick({ rangeTier: true, radiusTier: true, cooldownTier: true, cooldownShape: true, manaCostTier: true, castTimeTier: true, effects: true });
+// GH#1187：再次施放（recast／recastEffects）也從這張共用 schema 挑 —— 表單、保存、編譯走同一份契約。
+const overrideSchema = zAbilityDef.pick({ rangeTier: true, radiusTier: true, cooldownTier: true, cooldownShape: true, manaCostTier: true, castTimeTier: true, effects: true, recast: true, recastEffects: true });
 const overrideNode = walkZod(overrideSchema);
 const apFormulaReason = "AP 係數由遊戲公式計算；請調整傷害、冷卻、吟唱、距離或條件級距，並查看實際結果";
 const versionFieldLabels: Record<string, string> = { name: "名稱", description: "說明", family: "機制家族", status: "啟用狀態", requires: "能力需求", gapScore: "支援度", exemplar: "來源", default: "預設值", type: "類型", min: "下限", max: "上限", unit: "單位", values: "選項", optional: "選填", inert: "未生效原因", origin: "預設來源", perRank: "逐級", ratios: "比例" };

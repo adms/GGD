@@ -4,7 +4,10 @@
   "requirements": [
     {
       "id": "recast-ahri",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：ahri.R 加 abilityOverrides.recast{charges:2, windowSec:10, cooldownAt:end}；後段重跑同一個 leap（不抄第二份）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常 castAbility 輸入三次各自瞄準的短衝、第四按撞冷卻、冷卻在三段衝完才開始" ,
+      "notVerified": "擊殺參與增加次數不做（adaptations 明示）；HUD 段數顯示與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "ahri.R"
@@ -16,7 +19,10 @@
     },
     {
       "id": "recast-thresh",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：thresh.Q 加 abilityOverrides.recast{charges:1, windowSec:2, gate:onHit, anchor:firstHit} ＋ recastEffects[leap toPoint]；引擎新增 recast.anchor=firstHit（後段目標＝首段命中的第一人，失效即結束階段）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 鉤空按 Q 被拒；鉤中按 Q 飛到同一個被鉤者（按的方向刻意朝反方向）；被鉤者消失 ⇒ 階段清除且按下被拒",
+      "notVerified": "後段是 0.25 秒平飛落在被鉤者身上，不是沿鉤線拖行；畫面與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "thresh.Q"
@@ -28,7 +34,10 @@
     },
     {
       "id": "recast-ornn",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：ornn.R 改 spawnProjectile{launchFrom:rangeEnd, onRedirectHit:擊飛} ＋ abilityOverrides.recast{charges:1, windowSec:3} ＋ recastEffects[dash forward]；引擎新增 spawnProjectile.launchFrom／onRedirectHit 與 sim/projectileRedirect.ts（同施法者·同槽·同施放序號才改向）；規則開關 config.displacement-tiers@1.projectileRedirect.mode（contact 預設／press／off）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常輸入 R→再按 R 撞到火羊 ⇒ 羊改朝衝刺方向並擊飛身後敵人；沒按 R 被羊碰到 ⇒ 後段窗口清除、同一位敵人不被擊飛",
+      "notVerified": "羊的模型與改向演出、體型／速度不隨改向成長；編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "ornn.R"

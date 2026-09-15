@@ -11,4 +11,8 @@ export interface SpawnProjectileVariant {
   kind: "spawnProjectile";
   projectileId: ProjectileId;
   onHit: EffectDef[];
+  /** GH#1187 鄂爾 R：`rangeEnd` = 射程盡頭生成、朝施法者飛回。缺 = caster */
+  launchFrom?: "caster" | "rangeEnd";
+  /** GH#1187【撞擊改向】改向後命中跑的那一串 —— 語意住 `zSpawnProjectile.onRedirectHit`；執行期 `sim/projectileRedirect.ts`。 */
+  onRedirectHit?: EffectDef[];
 }

@@ -706,7 +706,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "Q：裂地終點在施放當下立刻升起 4 秒暫時柱（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。",
       "W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。",
       "E：沿途傷害在起衝時沿整條衝刺線結算、不因撞停縮短；撞柱或牆的震波也會打到已被沿途命中的敵人（原作不重複）。",
-      "R：PENDING MAIN：需要跨施放保存同一代理物、碰撞事件、方向重定與二段payload；不等同再射一隻羊。 原單段params只為技術候選，不授權作最終替代。",
+      "R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。",
       "EX：沒有任何裝備升級；保固就是這三秒的盾。"
     ],
     "moves": {
@@ -905,7 +905,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "R": {
         "name": "鑄火者的呼喚",
-        "purpose": "長起手後沿直線衝擊，施加緩速及焦化。",
+        "purpose": "長起手後在遠處召出火羊朝自己衝回，沿途緩速並焦化敵人；再次施放往前短衝，撞到火羊就讓牠改朝衝刺方向奔去並擊飛沿途敵人。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -914,17 +914,17 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "side": "enemies",
           "effects": [
             {
-              "kind": "damageLine",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中"
-              },
-              "length": 10,
-              "width": 2,
-              "aim": "facing",
-              "fromCaster": true,
-              "includeOrigin": true,
-              "onHitTargets": [
+              "kind": "spawnProjectile",
+              "projectileId": "imported.wave.fire",
+              "launchFrom": "rangeEnd",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
                 {
                   "kind": "applyStatus",
                   "statusId": "$hero.r-slow",
@@ -938,7 +938,38 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "duration": 3,
                   "sourceScope": "caster"
                 }
+              ],
+              "onRedirectHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 1,
+                  "speed": 12,
+                  "from": "facing",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                }
               ]
+            }
+          ]
+        },
+        "abilityOverrides": {
+          "recast": {
+            "charges": 1,
+            "windowSec": 3
+          },
+          "recastEffects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 16,
+              "maxDistance": 5.5
             }
           ]
         },
@@ -1805,7 +1836,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "Q：已確認缺少往返彈道：第二段仍從施法者當下位置/面向重新判定，不能當作返航追身的球；列為來源核心缺口。",
       "W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。",
       "E：重大簡化：沒有charmed軸，故不是持續強制走向她，也不保證打斷所有位移。",
-      "R：PENDING MAIN：需要一個有剩餘次數、窗口期限與重施放冷卻的狀態，不等同自動三段。 原單段params只為技術候選，不授權作最終替代。",
+      "R：首放後 10 秒內可再按兩次，每一段各自重新瞄準落點；三段衝完或窗口到期才進冷卻。原作擊殺參與增加可重施放次數不做。",
       "EX：單純離場工具，沒有刷新R。"
     ],
     "moves": {
@@ -2036,6 +2067,13 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
             }
           ]
         },
+        "abilityOverrides": {
+          "recast": {
+            "charges": 2,
+            "windowSec": 10,
+            "cooldownAt": "end"
+          }
+        },
         "range": "小",
         "cooldown": "中"
       },
@@ -2081,7 +2119,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。",
-      "Q：PENDING MAIN：需要命中解鎖、目標綁定、失效/死亡處理與自願追入；不等同必中突進或自動追入。 原單段params只為技術候選，不授權作最終替代。",
+      "Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。",
       "W：重大簡化：施法者指定隊友，沒有隊友點燈選擇；本候選不附盾，不能描述有護盾。",
       "E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。",
       "R：重大簡化：沒有五面牆、穿牆破壞或單牆觸發；只是一圈施放時控制。",
@@ -2161,6 +2199,23 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "launchHeight": 0
                 }
               ]
+            }
+          ]
+        },
+        "abilityOverrides": {
+          "recast": {
+            "charges": 1,
+            "windowSec": 2,
+            "gate": "onHit",
+            "anchor": "firstHit"
+          },
+          "recastEffects": [
+            {
+              "kind": "leap",
+              "applyTo": "self",
+              "mode": "toPoint",
+              "apexHeight": 0,
+              "durationSec": 0.25
             }
           ]
         },
