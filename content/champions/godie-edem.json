@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法刺",
-  "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+  "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.01,
@@ -554,6 +554,23 @@
         "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.herosasuke",
+      "modelSha256": "5f0785201518dfceb782454cc6eeb0d3223f5c07a75dd3253c2e4e91883971f3",
+      "binarySha256": "865a87dbf0a8d90d31ec20dfebeb846b932f10688948221b8c36d13a73148041",
+      "registeredAt": "2026-09-15T03:56:35.084Z",
+      "source": {
+        "kind": "exact",
+        "character": "寫輪眼復仇者 - 宇智波佐助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosasuke.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "version.body.c462be5cabf1c6528b2023539dfaaae6504b7cb3af483702",
+  "modelKey": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -291,6 +291,23 @@
         "reference": "300heroes:8959786d1611f717e24c5321",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.sesshomaru",
+      "modelSha256": "eafa087288d7cc89c64966afd8e9b05c23d1b4de7fa4588420721d5f6398448f",
+      "binarySha256": "5239e1d214e9a2e9829c646274d50392d1e52e0ef70abef1ceb568269cc848d3",
+      "registeredAt": "2026-09-15T03:56:36.480Z",
+      "source": {
+        "kind": "exact",
+        "character": "犬妖 - 殺生丸",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.sesshomaru.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

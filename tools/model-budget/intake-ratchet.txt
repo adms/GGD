@@ -13,6 +13,10 @@
 #     （2026-09-15 `model_intake.py` 實跑列出的 4 格；n00b／o030／orkn 共用 2 個 512 的唯一檔）
 #   ⭐ 2026-09-15 10 → 4、a 265 → 261：`5dc32cc3c`（tex256，6 位預設身體走 `ModelVersions.prepare` 降到 256：
 #     b2-maple-alt-9769eb88b85b · godie-h01u · godie-huth · godie-n003 · godie-u00n · godie-u00o）。剩下的逐格降，目標 0；a／b 跟著降。
-a=261
+#   ⭐ 2026-09-15 a 261 → 255：GH#1173，10 位英雄（7 顆 GLB）作用中的「原上線模型」凍結副本過不了嚴格 glTF 驗證
+#     ⇒ `tools/model-fix/register-normalized-version.mts --reason gltf-valid` 從已修好的來源註冊新版本並切作用中；
+#     新 GLB 6 顆全乾淨，1 顆（黑崎一護 fef75249…）剩「可合併」—— 它宣告了 hiddenPrimitives（分形態身體），合併就藏不掉，刻意不合併。
+#     之後 (a)(b) 的 glTF 錯誤都是 0；舊凍結副本落進 (c)「原上線模型」（後台下拉仍可切回）。
+a=255
 b=69
 a_body_tex=4

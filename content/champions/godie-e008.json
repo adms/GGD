@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f",
+  "modelKey": "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -358,6 +358,23 @@
         "reference": "300heroes:bf3e026ad02df6899219c6a6",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.heroshana",
+      "modelSha256": "397c9f6c8a925ff2c5f19e0390ec20288abbc213f88d875ac839ca23803e0874",
+      "binarySha256": "22d5cd7a2c83ff1e5dae2b0f5432b6ef2c1044f40b21ae60c409fad776e05d44",
+      "registeredAt": "2026-09-15T03:56:34.876Z",
+      "source": {
+        "kind": "exact",
+        "character": "火霧戰士 - 夏娜",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroshana.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

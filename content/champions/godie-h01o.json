@@ -4,7 +4,7 @@
   "name": "外掛開很大的死神 - 黑崎一護",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
+  "modelKey": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -419,6 +419,23 @@
         "reference": "300heroes:0583f874944e93106f8f0f97",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.heroichigo-bankai",
+      "modelSha256": "64a25b08a01c4b9460829e6df4a17372a1ef103627d99f5a1e4e83c75b79faaf",
+      "binarySha256": "fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2",
+      "registeredAt": "2026-09-15T03:56:35.432Z",
+      "source": {
+        "kind": "exact",
+        "character": "外掛開很大的死神 - 黑崎一護",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroichigo-bankai.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

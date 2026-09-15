@@ -9,12 +9,12 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "f2ee7470c560eb3a6dd8970f3ad018e9fb27ca49c7335f61a794168afe6ff8a8",
-      "fileCount": 1017
+      "sha256": "d660db11782cb5258421182716a31b72a685cc7c767fb464d3d49494e83083d2",
+      "fileCount": 1025
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "4cc7fb966e5e9f17e41291112b404d88726c1e2a7759ef09a47023a5848a5f49",
+      "sha256": "a9324b76908b8b6711c15d375eaa6cdbcce4bad08cc33c790163c09cb55d6185",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -27,14 +27,14 @@
     }
   },
   "summary": {
-    "modelAt1Documents": 1012,
+    "modelAt1Documents": 1020,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 515,
-    "championModelVersionRows": 572,
+    "championPrimaryAndVersionSelectableModelKeys": 523,
+    "championModelVersionRows": 582,
     "sourceModelsRepresentedByFrozenVersions": 200,
     "heroForgeHeroesWithOptions": 34,
     "heroForgeSelectableModelKeys": 42,
-    "allActualSelectableModelKeys": 550,
+    "allActualSelectableModelKeys": 558,
     "centralSourceRows": 156,
     "centralUniqueModelKeys": 149,
     "centralRowsWithQualificationEvidence": 141,
@@ -49,7 +49,7 @@
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1012,
+    "modelDocumentsWithoutResourceRole": 1020,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -4900,7 +4900,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1012
+      "modelAt1DocumentsWithoutResourceRole": 1020
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

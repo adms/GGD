@@ -5,7 +5,7 @@
   "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
   "role": "marksman",
   "attackType": "ranged",
-  "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+  "modelKey": "version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9",
   "missileSpeed": 18.3,
   "baseStats": {
     "maxHealth": 150,
@@ -535,6 +535,23 @@
         "reference": "mba:90e2e3fdffbbb5b1251958c6",
         "tier": "mba"
       }
+    },
+    {
+      "modelKey": "version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "001cb53ed07c71a6ee5b9aa3361b912a7555e5a0a5102a9e40e7edb04c55a30e",
+      "binarySha256": "23bb76d86885629ddaeaa0558e70a7a3d3d649358387a03c8d6949feba706146",
+      "registeredAt": "2026-09-15T03:56:35.550Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"
