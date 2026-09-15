@@ -66067,7 +66067,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
+        "sha256": "d29d5b6c7d8336c48cfc7d3bece6b014c24d4ac6c423053b951dee3df979bf35"
       },
       "modelCandidates": [
         {
@@ -66147,11 +66147,11 @@
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "sourceio-raw-glb-emitted-pending-material-rebuild-decimation-contract-validation-and-visual-acceptance",
+          "conversionStatus": "sourceio-material-rebuilt-89833-triangles-pending-topology-aware-decimation-visual-acceptance-and-contract-validation",
           "limitations": [
-            "A SourceIO raw GLB intermediate exists locally, but its VMT patch materials are incomplete and it is not an accepted GGD model.",
+            "The same-name Workshop VTF maps were rebuilt into an embedded 256px GLB with Babylon render proof; it remains a conversion intermediate.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
-            "The raw GLB exceeds the triangle budget and has not passed material, visual, action-semantic, backend, or deployment validation."
+            "The material-rebuilt GLB retains 89,833 triangles, so it must pass topology-aware decimation and new visual acceptance before GGD validation, backend registration, or deployment."
           ],
           "rawGlbIntermediate": {
             "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/conversion-receipt.json",
@@ -66205,6 +66205,42 @@
               "region": "ap-east-2",
               "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
               "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+            },
+            "materialRebuildIntermediate": {
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/receipt.json",
+              "receiptSha256": "29a63756c8c2d4fbf8cda9de861952405183b2f59d999b7dfec30471710d9046",
+              "output": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+                "bytes": 5852664,
+                "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1",
+                "materialCount": 22,
+                "imageCount": 22,
+                "texturedMaterialCount": 22,
+                "allImagesEmbedded": true,
+                "textureMaxEdge": 256
+              },
+              "visualReview": {
+                "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/run.json",
+                "runSha256": "fc4f74d77d41d782907eed490a87bb61e6e42207d483588d7c496a5224dd0970",
+                "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/proof.json",
+                "proofSha256": "2f5b5524320f49a9aa10687644c1f2d388fbc089e9141a64bc1bd8b588b3c9dc",
+                "imageCount": 3
+              },
+              "status": "material-rebuilt-topology-unchanged-pending-decimation-and-visual-review",
+              "stageBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.files.json",
+                "archiveSha256": "741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e",
+                "archiveBytes": 8012130,
+                "fileCount": 35,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3/latest-receipt.json",
+                "receiptSha256": "6db7decaa885da45d1325d9d09cf9324d61a85e4edefe37fd13d487a9721e08d"
+              }
             }
           },
           "rawGlbIntermediateBackup": {
@@ -66220,6 +66256,42 @@
             "region": "ap-east-2",
             "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
             "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+          },
+          "materialRebuildIntermediate": {
+            "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/receipt.json",
+            "receiptSha256": "29a63756c8c2d4fbf8cda9de861952405183b2f59d999b7dfec30471710d9046",
+            "output": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+              "bytes": 5852664,
+              "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1",
+              "materialCount": 22,
+              "imageCount": 22,
+              "texturedMaterialCount": 22,
+              "allImagesEmbedded": true,
+              "textureMaxEdge": 256
+            },
+            "visualReview": {
+              "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/run.json",
+              "runSha256": "fc4f74d77d41d782907eed490a87bb61e6e42207d483588d7c496a5224dd0970",
+              "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/proof.json",
+              "proofSha256": "2f5b5524320f49a9aa10687644c1f2d388fbc089e9141a64bc1bd8b588b3c9dc",
+              "imageCount": 3
+            },
+            "status": "material-rebuilt-topology-unchanged-pending-decimation-and-visual-review",
+            "stageBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.files.json",
+              "archiveSha256": "741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e",
+              "archiveBytes": 8012130,
+              "fileCount": 35,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true,
+              "profile": "vibe-coding",
+              "region": "ap-east-2",
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3/latest-receipt.json",
+              "receiptSha256": "6db7decaa885da45d1325d9d09cf9324d61a85e4edefe37fd13d487a9721e08d"
+            }
           },
           "resourceRole": "character-body",
           "character": "小呆／達伊 / Dai"
@@ -66289,7 +66361,7 @@
       },
       "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
-        "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
+        "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],
@@ -66346,7 +66418,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
+        "sha256": "d29d5b6c7d8336c48cfc7d3bece6b014c24d4ac6c423053b951dee3df979bf35"
       },
       "modelCandidates": [
         {

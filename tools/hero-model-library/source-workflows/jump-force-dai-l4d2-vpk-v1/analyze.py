@@ -25,6 +25,8 @@ OUTPUT = REPO / "materials/hero-model-library/source-inventories/jump-force-dai-
 SOURCEIO_PREFLIGHT = OUTPUT.with_name("sourceio-preflight.json")
 SOURCEIO_CONVERSION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1"
 SOURCEIO_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1"
+MATERIAL_REBUILD_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3"
+MATERIAL_REBUILD_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3"
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -235,6 +237,50 @@ def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, sour
         }
         result["conversionStageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
         result["conversionStageBackup"]["receiptSha256"] = sha256(backup_path)
+    material_root = workspace / MATERIAL_REBUILD_ROOT
+    material_receipt_path = material_root / "receipt.json"
+    if material_receipt_path.is_file():
+        material = json.loads(material_receipt_path.read_text(encoding="utf-8"))
+        output = Path(material.get("output", {}).get("absolutePath", ""))
+        review = material_root / "visual-review-v1" / "run.json"
+        if (material.get("schema") != "ggd.jump-force-dai-material-rebuild-receipt@1"
+                or material.get("input", {}).get("rawGlb", {}).get("sha256") != result["rawGlb"]["sha256"]
+                or material.get("output", {}).get("textureMaxEdge") != 256
+                or material.get("output", {}).get("texturedMaterialCount") != 22
+                or not output.is_file() or sha256(output) != material["output"]["sha256"]):
+            raise ValueError(f"invalid material rebuild receipt: {material_receipt_path}")
+        if not review.is_file():
+            raise FileNotFoundError(f"missing material rebuild visual proof: {review}")
+        visual = json.loads(review.read_text(encoding="utf-8"))
+        if (visual.get("sourceSha256") != material["output"]["sha256"]
+                or visual.get("complete") is not True or visual.get("proofExists") is not True
+                or visual.get("errorExists") is not False or visual.get("images") != 3):
+            raise ValueError(f"invalid material rebuild visual proof: {review}")
+        result["materialRebuildIntermediate"] = {
+            "receiptAbsolutePath": str(material_receipt_path.resolve()),
+            "receiptSha256": sha256(material_receipt_path),
+            "output": material["output"],
+            "visualReview": {"runAbsolutePath": str(review.resolve()), "runSha256": sha256(review),
+                             "proofAbsolutePath": str((review.parent / "proof.json").resolve()),
+                             "proofSha256": sha256(review.parent / "proof.json"), "imageCount": visual["images"]},
+            "status": material["status"],
+        }
+        backup_path = workspace / MATERIAL_REBUILD_BACKUP_ROOT / "latest-receipt.json"
+        if backup_path.is_file():
+            backup = json.loads(backup_path.read_text(encoding="utf-8"))
+            required = ("s3Uri", "manifestUri", "archiveSha256", "archiveBytes", "fileCount")
+            if (backup.get("schema") != "ggd-intake-backup-receipt@1"
+                    or Path(backup.get("source", "")).resolve() != material_root.resolve()
+                    or not backup.get("s3Uri", "").startswith("s3://ggd-390630837668-ap-east-2-an/legacy/")
+                    or backup.get("fullGetVerified") is not True
+                    or backup.get("allMemberSha256Verified") is not True
+                    or any(key not in backup for key in required)):
+                raise ValueError(f"invalid material rebuild backup receipt: {backup_path}")
+            result["materialRebuildIntermediate"]["stageBackup"] = {
+                key: backup[key] for key in (*required, "fullGetVerified", "allMemberSha256Verified", "localUnchanged", "profile", "region")
+            }
+            result["materialRebuildIntermediate"]["stageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
+            result["materialRebuildIntermediate"]["stageBackup"]["receiptSha256"] = sha256(backup_path)
     return result
 
 
@@ -276,10 +322,12 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "standardizationReady": ready,
     }
     intermediates = [model["sourceioRawIntermediate"] for model in models if model["sourceioRawIntermediate"]]
+    material_rebuilds = [entry["materialRebuildIntermediate"] for entry in intermediates if entry.get("materialRebuildIntermediate")]
     reader_blocker = ("SourceIO is pinned locally, but Blender background startup fails before plugin/model import; "
                       "repair the headless Blender environment before standardization." if not ready else
                       "SourceIO is available but no MDL conversion has been executed or accepted." if not intermediates else
-                      "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.")
+                      "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration." if not material_rebuilds else
+                      "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration.")
     return {
         "sourceId": item["sourceId"], "leadId": item["leadId"],
         "source": {"absolutePath": str(root.resolve()), "title": acquisition["title"], "pageUrl": acquisition["pageUrl"], "itemId": acquisition["itemId"], "raw": {"path": acquisition["file"], "bytes": acquisition["bytes"], "sha256": acquisition["sha256"]}, "checkedAt": inspection["checkedAt"]},
@@ -287,7 +335,7 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "extracted": {"extensions": dict(sorted(suffixes.items())), "vmtFiles": len(vmts), "vtfFiles": len(vtfs)},
         "modelGroups": models,
         "tooling": tooling,
-        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
+        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "materialRebuildIntermediates": len(material_rebuilds), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
         "blockers": [reader_blocker, "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
     }
 
@@ -297,7 +345,7 @@ def build(workspace: Path) -> dict[str, Any]:
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",
-        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
+        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "materialRebuildIntermediates": sum(row["status"]["materialRebuildIntermediates"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
         "sources": rows,
         "reproduction": {"write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace ..", "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace .. --check"},
     }

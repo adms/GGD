@@ -7,6 +7,7 @@
     "extracted": 2,
     "sourceMdlGroups": 4,
     "rawGlbIntermediates": 1,
+    "materialRebuildIntermediates": 1,
     "converted": 0,
     "runtimeSelectable": 0,
     "productionDeployed": false
@@ -198,6 +199,42 @@
               "region": "ap-east-2",
               "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
               "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+            },
+            "materialRebuildIntermediate": {
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/receipt.json",
+              "receiptSha256": "29a63756c8c2d4fbf8cda9de861952405183b2f59d999b7dfec30471710d9046",
+              "output": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+                "bytes": 5852664,
+                "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1",
+                "materialCount": 22,
+                "imageCount": 22,
+                "texturedMaterialCount": 22,
+                "allImagesEmbedded": true,
+                "textureMaxEdge": 256
+              },
+              "visualReview": {
+                "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/run.json",
+                "runSha256": "fc4f74d77d41d782907eed490a87bb61e6e42207d483588d7c496a5224dd0970",
+                "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1/proof.json",
+                "proofSha256": "2f5b5524320f49a9aa10687644c1f2d388fbc089e9141a64bc1bd8b588b3c9dc",
+                "imageCount": 3
+              },
+              "status": "material-rebuilt-topology-unchanged-pending-decimation-and-visual-review",
+              "stageBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-material-rebuild-v3/741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e.files.json",
+                "archiveSha256": "741ef925f1a32e8b3447e35ed84546b49575759d52f8c92f1a1e3298bafe765e",
+                "archiveBytes": 8012130,
+                "fileCount": 35,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3/latest-receipt.json",
+                "receiptSha256": "6db7decaa885da45d1325d9d09cf9324d61a85e4edefe37fd13d487a9721e08d"
+              }
             }
           }
         },
@@ -273,6 +310,7 @@
         "acquired": true,
         "extracted": true,
         "rawGlbIntermediates": 1,
+        "materialRebuildIntermediates": 1,
         "converted": false,
         "validated": false,
         "registered": false,
@@ -280,7 +318,7 @@
         "productionDeployed": false
       },
       "blockers": [
-        "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
+        "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ]
@@ -452,6 +490,7 @@
         "acquired": true,
         "extracted": true,
         "rawGlbIntermediates": 0,
+        "materialRebuildIntermediates": 0,
         "converted": false,
         "validated": false,
         "registered": false,

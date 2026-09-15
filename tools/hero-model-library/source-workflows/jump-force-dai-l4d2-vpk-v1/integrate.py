@@ -64,6 +64,12 @@ def source_entry(row: dict) -> dict:
             candidate["limitations"][2] = "The raw GLB exceeds the triangle budget and has not passed material, visual, action-semantic, backend, or deployment validation."
             if intermediate.get("conversionStageBackup"):
                 candidate["rawGlbIntermediateBackup"] = intermediate["conversionStageBackup"]
+            material_rebuild = intermediate.get("materialRebuildIntermediate")
+            if material_rebuild:
+                candidate["materialRebuildIntermediate"] = material_rebuild
+                candidate["conversionStatus"] = "sourceio-material-rebuilt-89833-triangles-pending-topology-aware-decimation-visual-acceptance-and-contract-validation"
+                candidate["limitations"][0] = "The same-name Workshop VTF maps were rebuilt into an embedded 256px GLB with Babylon render proof; it remains a conversion intermediate."
+                candidate["limitations"][2] = "The material-rebuilt GLB retains 89,833 triangles, so it must pass topology-aware decimation and new visual acceptance before GGD validation, backend registration, or deployment."
         if "body replacement" in role:
             candidate["resourceRole"] = "character-body"
             candidate["character"] = "小呆／達伊 / Dai"
