@@ -7,6 +7,13 @@
 import { z } from "zod";
 import { zAlpha, zId, zRef, zTintRgb } from "./common";
 
+/**
+ * GH#1177 —— skin@1 `mcoinPrice` 的上界，⭐ 唯一住處（第〇·四守則）。
+ * 讀它的：下面的 Zod `.max` ＋ 後台 `apps/admin/src/ui/ChampionModelVersionShop.tsx` 的 `parseSkinPrice`。
+ * 打錯字的柵欄，⛔ 不是平衡意見；要放寬就改這一行，兩邊一起動。
+ */
+export const SKIN_PRICE_MAX = 1_000_000;
+
 export const zSkinDoc = z
   .object({
     id: zId,
@@ -15,8 +22,24 @@ export const zSkinDoc = z
     championId: zRef("champions"),
     name: z.string().min(1),
     description: z.string().optional(),
-    /** M COIN price; integer ≥ 0 (0 = free) */
-    mcoinPrice: z.number().int().min(0),
+    /**
+     * M COIN price; integer ≥ 0 (0 = free). The upper bound is a typo guard,
+     * not a balance opinion (第一守則：欄位要有上界) — GH#1177 made pricing a
+     * routine 後台 action, so 750 typed as 7500000 has to stop at validate.
+     */
+    mcoinPrice: z.number().int().min(0).max(SKIN_PRICE_MAX),
+    /**
+     * GH#1177 商店上架開關 —— ABSENT == listed (true), so every skin that shipped
+     * before this field keeps selling exactly as before. `false` = 下架：the
+     * platform stops OFFERING it (hidden from non-owners' catalog, /store/buy
+     * refuses it) but a player who already bought it KEEPS it — it stays in their
+     * catalog, stays equippable and still renders. Delisting is the rollback, and
+     * it never deletes the doc (an account's ownedSkins still names this id).
+     * Consumers: apps/platform/internal/wallet/catalog.go `SkinDef.OnSale`
+     * (→ wallet.go CatalogFor / Buy) and apps/client/src/ui/platform/catalog.ts
+     * `deriveStoreRows`.
+     */
+    listed: z.boolean().optional(),
     /** replacement model when the skin is equipped */
     modelKey: zRef("models"),
     /**
@@ -32,3 +55,8 @@ export const zSkinDoc = z
   .strict();
 
 export type SkinDoc = z.infer<typeof zSkinDoc>;
+
+/** GH#1177 —— `listed` 缺席＝上架；只有明寫 `false` 才是下架。 */
+export function skinOnSale(doc: { listed?: boolean }): boolean {
+  return doc.listed !== false;
+}

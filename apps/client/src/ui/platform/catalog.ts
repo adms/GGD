@@ -8,6 +8,7 @@ import type { ChampionDisplay } from "./championDisplay";
 import { championDisplayFrom } from "./championDisplay";
 import { applyChampionWhitelist, type Whitelist } from "../panels/champSelectFilter";
 import { hiddenChampionIds, retiredChampionIds } from "@ggd/shared/content/championRetirement";
+import { skinOnSale } from "@ggd/shared/content/schema/skin";
 import { CHAMPION_CURRENCY, SKIN_CURRENCY, type StoreCurrency } from "./currency";
 import type { Catalog, CatalogSkin, SkinDoc, Wallet } from "./types";
 
@@ -74,6 +75,10 @@ export function deriveStoreRows(
   const byChampion = new Map(rows.map((r) => [r.id, r]));
   for (const sk of catalog.skins) {
     const doc = skinDocs.get(sk.id);
+    // GH#1177 下架（skin@1 listed:false）：沒買過的人看不到它。平台的 /store/catalog
+    // 已經濾過（catalog.go OnShelf）—— 這一行守的是「平台比內容舊」的那一段部署視窗，
+    // ⛔ 否則會出現一顆按下去 404 的「購買」按鈕。
+    if (doc && !skinOnSale(doc) && !sk.owned) continue;
     const row: SkinRow = {
       ...sk,
       name: doc?.name ?? sk.id,
