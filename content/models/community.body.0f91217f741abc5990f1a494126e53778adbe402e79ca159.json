@@ -1,0 +1,16 @@
+{
+  "id": "community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "chariot_summon",
+    "attack": "one_hand_1",
+    "cast": "chariot_summon",
+    "hurt": "one_hand_7",
+    "death": "one_hand_7"
+  },
+  "yawOffsetDeg": 0
+}

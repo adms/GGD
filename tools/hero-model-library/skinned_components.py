@@ -75,6 +75,20 @@ def validate_component(candidate, repo):
                 'SSBU structural or finite-accessor validation failed')
         require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
                 'SSBU component validation cannot claim runtime readiness')
+    elif schema == 'ggd.rezero-rem-material-preserving-decimation-validation@1':
+        glb=validation.get('candidate',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'Re:Zero Rem decimation output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')], 'Unexpected Re:Zero Rem skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'), 'Every Rem primitive must remain skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0 and inspection.get('budget',{}).get('errors') == [], 'Rem static decimation invalid')
+        issues=validation.get('khronosIssues',{})
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False, 'Rem Khronos validation failed')
+        require(validation.get('finiteFloatAccessors',{}).get('passed') is True and validation.get('structuralValidationPassed') is True, 'Rem finite/structural validation failed')
+        require(validation.get('policy',{}).get('satisfiesFormalDecimationTarget') is True and candidate.get('triangles',0) <= 8000, 'Rem misses formal <=8000 target')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False, 'Rem validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.rezero-rem-formal-decimation-rebuild@1' and rebuild.get('componentId') == candidate['id'] and rebuild.get('byteIdenticalRebuild') is True, 'Unexpected Rem rebuild proof')
     elif schema == 'ggd.rezero-static-component-validation@1':
         require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'Re:Zero conversion candidate mismatch')
         glb=validation.get('glb',{})
@@ -106,6 +120,32 @@ def validate_component(candidate, repo):
         require(rebuild.get('sourceConversionByteIdentical') is True and
                 rebuild.get('normalizedGlbByteIdentical') is True and
                 rebuild.get('outputSha256') == candidate['sha256'], 'Re:Zero deterministic rebuild proof failed')
+    elif schema == 'ggd-ssbu-static-decimation-validation@1':
+        require(validation.get('componentId') == candidate['id'], 'SSBU decimation component mismatch')
+        require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'SSBU decimation candidate mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (accepted_sha,accepted_bytes), 'SSBU decimation predecessor pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')],
+                'Unexpected SSBU decimation skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'),
+                'Every SSBU decimated primitive must remain skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0, 'Static SSBU decimated component cannot contain clips')
+        require(inspection.get('budget',{}).get('errors') == [], 'SSBU decimated component exceeds current hard budget')
+        require(validation.get('policy',{}).get('satisfiesFormalDecimationTarget') is True and candidate.get('triangles',0) <= 8000,
+                'SSBU decimated component misses formal <=8000 target')
+        issues=validation.get('khronosIssues',{})
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
+                'Direct SSBU decimation Khronos validation failed')
+        require(validation.get('structuralValidationPassed') is True and validation.get('finiteFloatAccessors',{}).get('passed') is True,
+                'SSBU decimation structural or finite-accessor validation failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
+                'SSBU decimation validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.ssbu-ryu-static-decimation-rebuild@1' and rebuild.get('componentId') == candidate['id'],
+                'Unexpected SSBU Ryu decimation rebuild proof')
+        require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('firstBuild',{}).get('sha256') == accepted_sha,
+                'SSBU Ryu decimation deterministic rebuild proof failed')
     elif schema == 'ggd.infinity-strash-en653-static-component-validation@1':
         require(validation.get('componentId') == candidate['id'], 'Infinity Strash EN653 component mismatch')
         glb=validation.get('glb',{})
@@ -135,10 +175,38 @@ def validate_component(candidate, repo):
                 rebuild.get('normalizedGlbByteIdentical') is True and
                 rebuild.get('bothValidationsPassed') is True and
                 rebuild.get('outputSha256') == candidate['sha256'], 'EN653 deterministic rebuild proof failed')
+    elif schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':
+        require(validation.get('componentId') == candidate['id'], 'KOF Ash component mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (accepted_sha,accepted_bytes),
+                'KOF Ash validation predecessor pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require((inspection.get('triangles'),inspection.get('drawPrimitives'),inspection.get('skinnedPrimitives'),
+                 inspection.get('skinCount'),inspection.get('joints'),inspection.get('textureCount'),inspection.get('clipCount')) ==
+                (candidate.get('triangles'),candidate.get('drawPrimitives'),candidate.get('drawPrimitives'),1,[candidate.get('jointCount')],candidate.get('textureCount'),0),
+                'Unexpected KOF Ash skin/mesh/texture shape')
+        require(inspection.get('budget',{}).get('errors') == [], 'KOF Ash component exceeds current hard budget')
+        issues=validation.get('khronosIssues',{})
+        expected={'MESH_PRIMITIVE_GENERATED_TANGENT_SPACE': 5, 'NODE_SKINNED_MESH_NON_ROOT': 2, 'UNUSED_OBJECT': 5}
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 7 and issues.get('truncated') is False and
+                issues.get('issueCodeCounts') == expected, 'KOF Ash Khronos result changed')
+        require(validation.get('structuralValidationPassed') is True and
+                validation.get('finiteFloatAccessors',{}).get('passed') is True,
+                'KOF Ash structural or finite-accessor validation failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and
+                validation.get('defaultEligible') is False, 'KOF Ash validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.kof-xv-ash-universal-atlas-source-rebuild@1' and
+                rebuild.get('componentId') == candidate['id'] and rebuild.get('byteIdenticalRebuild') is True and
+                rebuild.get('output',{}).get('sha256') == accepted_sha, 'KOF Ash deterministic rebuild proof failed')
     else:
         raise ValueError('Unexpected skinned validation schema: '+str(schema))
-    require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
-            'Component upload validation failed')
+    if schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':
+        require(issues.get('numErrors') == 0 and issues.get('truncated') is False,
+                'KOF Ash component upload validation failed')
+    else:
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
+                'Component upload validation failed')
     acceptance=json.loads(verify_pin(candidate['acceptanceEvidence'],repo).read_text())
     matches=[row for row in acceptance.get('components',[]) if row.get('id') == candidate['id']]
     require(len(matches) == 1 and matches[0].get('accepted') is True,
@@ -160,6 +228,19 @@ def validate_component(candidate, repo):
             'ssbu-pickel-alex-c01-static-skinned-v1': 'ggd.ssbu-pickel-alex-source-rebuild@1',
             'ssbu-ptrainer-male-c00-static-skinned-v1': 'ggd.ssbu-ptrainer-male-source-rebuild@1',
             'ssbu-ptrainer-female-c01-static-skinned-v1': 'ggd.ssbu-ptrainer-female-source-rebuild@1',
+            'ssbu-ptrainer-male-c00-formal-decimated-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-ptrainer-female-c01-formal-decimated-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-kirby-c00-static-skinned-v1': 'ggd.ssbu-kirby-source-rebuild@1',
+            'ssbu-mario-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-link-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-sonic-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-sonic-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-chrom-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-ganondorf-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-lucina-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-daisy-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-peach-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-toonlink-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
         }
         require(rebuild.get('schema') == expected_rebuild_schemas.get(candidate['id']), 'Unexpected SSBU rebuild schema')
         require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')

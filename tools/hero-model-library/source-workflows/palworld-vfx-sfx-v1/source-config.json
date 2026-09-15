@@ -1,0 +1,72 @@
+{
+  "schema": "ggd.palworld-vfx-sfx-source-config@1",
+  "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+  "game": "Palworld",
+  "workZh": "幻獸帕魯",
+  "steamAppId": "1623730",
+  "platform": "Windows (Steam)",
+  "expectedWindowsRoot": "F:\\SteamLibrary\\steamapps\\common\\Palworld",
+  "macMountCandidates": [
+    "/Volumes/common/Palworld",
+    "/Volumes/common/Palworld/Pal/Content/Paks",
+    "/Volumes/R/Palworld"
+  ],
+  "accessPolicy": {
+    "readOnly": true,
+    "doNotRequestBroaderSharePermissions": true,
+    "noLoginOrDownloadBypass": true,
+    "noEncryptionKeyDiscovery": true,
+    "noRuntimeBindingBeforeOwnerReview": true
+  },
+  "characters": [
+    {
+      "id": "jetragon",
+      "nameZh": "空渦龍",
+      "nameEn": "Jetragon",
+      "nativeId": "JetDragon",
+      "heroId": "acquired-jetragon",
+      "motionPrefixes": ["FarSkill", "JumpBeam"],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "JumpBeam",
+          "skillCode": "Unique_JetDragon_JumpBeam",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        }
+      ],
+      "packageTokens": ["JetDragon", "JumpBeam", "BeamComet"]
+    },
+    {
+      "id": "astralym",
+      "nameZh": "枯星龍",
+      "nameEn": "Astralym",
+      "nativeId": "WorldTreeDragon",
+      "heroId": "acquired-astralym",
+      "motionPrefixes": ["FarSkill", "HaloBeam", "HaloCutter", "LaserGliding", "Paldium", "Supernova"],
+      "motionSkillRelationships": [
+        {"motionPrefix": "PaldiumShot", "skillCode": "Unique_WorldTreeDragon_PaldiumShot", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumCannon", "skillCode": "Unique_WorldTreeDragon_PaldiumCannon", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumRain", "skillCode": "Unique_WorldTreeDragon_PaldiumRain", "confidence": "native-name-stem-exact", "bindingApproved": false},
+        {"motionPrefix": "PaldiumExplosion", "skillCode": "Unique_WorldTreeDragon_PaldiumExplosion", "confidence": "native-name-stem-exact", "bindingApproved": false}
+      ],
+      "packageTokens": ["WorldTreeDragon", "PaldiumShot", "PaldiumCannon", "PaldiumRain", "PaldiumExplosion"]
+    },
+    {
+      "id": "cattiva",
+      "nameZh": "搗蛋貓",
+      "nameEn": "Cattiva",
+      "nativeId": "PinkCat",
+      "heroId": "acquired-cattiva",
+      "motionPrefixes": ["FarSkill", "NekoPunch"],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "NekoPunch",
+          "skillCode": "Unique_PinkCat_CatPunch",
+          "confidence": "translated-name-alias-only",
+          "bindingApproved": false
+        }
+      ],
+      "packageTokens": ["PinkCat", "CatPunch", "NekoPunch"]
+    }
+  ]
+}

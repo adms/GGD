@@ -3,8 +3,12 @@
 
 This converter is deliberately narrower than a general Bedrock/Molang reader.
 It accepts translation-only source rest rigs and numeric animation channels.
-Formula-driven channels and pre/post discontinuities are rejected instead of
-guessed.  Static rest rotations remain rejected by default.  The explicit
+The bounded formula grammar used by the pinned FateUBW source is baked at the
+configured sampling rate; every expression is retained in the report. Numeric
+pre/post discontinuities are represented by a key immediately before the
+source timestamp and the post value at the timestamp. Unknown variables,
+functions and interpolation shapes remain rejected. Static rest rotations
+remain rejected by default.  The explicit
 leaf-rest-rotation mode only accepts unanimated terminal bones, bakes their
 reviewed rest transform into their vertices, and writes full inverse bind
 matrices.  Rotations are sampled in Euler space before they are encoded as
@@ -12,6 +16,7 @@ glTF quaternions, preserving the source's component-wise linear interpolation
 more closely than interpolating only the source key quaternions.
 """
 import argparse
+import ast
 import hashlib
 import json
 import math
@@ -43,45 +48,128 @@ def require(condition, message):
         raise ValueError(message)
 
 
-def numeric_vector(value, channel, context):
+ALLOWED_FORMULA_NAMES = {"time", "anim_time"}
+ALLOWED_FORMULA_FUNCTIONS = {"sin", "cos"}
+
+
+def formula_tree(expression, context):
+    require(isinstance(expression, str) and expression.strip(), context + ": empty formula")
+    normalized = expression.replace("query.anim_time", "anim_time")
+    try:
+        tree = ast.parse(normalized, mode="eval")
+    except SyntaxError as exc:
+        raise ValueError(context + ": invalid formula syntax") from exc
+    allowed = (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Constant, ast.Name,
+               ast.Attribute, ast.Call, ast.Add, ast.Sub, ast.Mult, ast.Div,
+               ast.USub, ast.UAdd, ast.Load)
+    for node in ast.walk(tree):
+        require(isinstance(node, allowed), context + ": formula operator is outside this converter")
+        if isinstance(node, ast.Name):
+            require(node.id in ALLOWED_FORMULA_NAMES or node.id == "math",
+                    context + ": formula variable is outside this converter: " + node.id)
+        if isinstance(node, ast.Attribute):
+            require(isinstance(node.value, ast.Name) and node.value.id == "math"
+                    and node.attr in ALLOWED_FORMULA_FUNCTIONS,
+                    context + ": formula function is outside this converter")
+        if isinstance(node, ast.Call):
+            require(isinstance(node.func, ast.Attribute) and len(node.args) == 1 and not node.keywords,
+                    context + ": formula call is outside this converter")
+    return tree.body
+
+
+def evaluate_formula(node, time):
+    if isinstance(node, ast.Constant):
+        require(isinstance(node.value, (int, float)), "formula constant must be numeric")
+        return float(node.value)
+    if isinstance(node, ast.Name):
+        require(node.id in ALLOWED_FORMULA_NAMES, "formula name is not a time variable")
+        return float(time)
+    if isinstance(node, ast.UnaryOp):
+        value = evaluate_formula(node.operand, time)
+        return -value if isinstance(node.op, ast.USub) else value
+    if isinstance(node, ast.BinOp):
+        left, right = evaluate_formula(node.left, time), evaluate_formula(node.right, time)
+        if isinstance(node.op, ast.Add): return left + right
+        if isinstance(node.op, ast.Sub): return left - right
+        if isinstance(node.op, ast.Mult): return left * right
+        if isinstance(node.op, ast.Div):
+            require(right != 0, "formula division by zero")
+            return left / right
+    if isinstance(node, ast.Call):
+        value = math.radians(evaluate_formula(node.args[0], time))
+        return math.sin(value) if node.func.attr == "sin" else math.cos(value)
+    raise ValueError("formula node is outside this converter")
+
+
+def parsed_scalar(value, context):
+    if isinstance(value, (int, float)):
+        require(math.isfinite(float(value)), context + ": nonfinite channel")
+        return float(value)
+    if isinstance(value, str):
+        return {"expression": value, "tree": formula_tree(value, context)}
+    raise ValueError(context + ": channel component must be numeric or a bounded time formula")
+
+
+def parsed_vector(value, channel, context):
     if channel == "scale" and isinstance(value, (int, float)):
         value = [value, value, value]
     require(isinstance(value, list) and len(value) == 3, context + ": expected a 3-vector")
-    require(all(isinstance(item, (int, float)) and math.isfinite(float(item)) for item in value),
-            context + ": formula/nonfinite channel is outside this converter")
-    return np.asarray(value, dtype=float)
+    return tuple(parsed_scalar(item, context) for item in value)
+
+
+def vector_dynamic(value):
+    return any(isinstance(item, dict) for item in value)
+
+
+def evaluate_vector(value, time):
+    result = [evaluate_formula(item["tree"], time) if isinstance(item, dict) else item for item in value]
+    require(all(math.isfinite(item) for item in result), "formula produced a nonfinite value")
+    return np.asarray(result, dtype=float)
 
 
 def source_curve(payload, channel, duration, context):
-    """Return sorted numeric source keys and reject ambiguous Bedrock forms."""
+    """Return source keys with bounded formulas and explicit pre/post values."""
     if isinstance(payload, dict):
         rows = []
         for raw_time, value in payload.items():
-            require(isinstance(value, (list, int, float)),
-                    context + ": pre/post or custom interpolation is outside this converter")
             try:
                 time = float(raw_time)
             except (TypeError, ValueError) as exc:
                 raise ValueError(context + ": invalid key time " + str(raw_time)) from exc
             require(math.isfinite(time) and time >= 0, context + ": invalid key time")
-            rows.append((time, numeric_vector(value, channel, context + "@" + str(raw_time))))
-        rows.sort(key=lambda item: item[0])
-        require(rows and len({time for time, _ in rows}) == len(rows), context + ": duplicate/empty key times")
-        require(rows[-1][0] <= duration + 1e-6, context + ": key exceeds animation length")
+            if isinstance(value, dict):
+                require(set(value) == {"pre", "post"},
+                        context + ": custom interpolation is outside this converter")
+                pre = parsed_vector(value["pre"], channel, context + "@" + str(raw_time) + "/pre")
+                post = parsed_vector(value["post"], channel, context + "@" + str(raw_time) + "/post")
+                rows.append({"time": time, "pre": pre, "post": post, "discontinuous": pre != post})
+            else:
+                vector = parsed_vector(value, channel, context + "@" + str(raw_time))
+                rows.append({"time": time, "pre": vector, "post": vector, "discontinuous": False})
+        rows.sort(key=lambda item: item["time"])
+        require(rows and len({row["time"] for row in rows}) == len(rows), context + ": duplicate/empty key times")
+        require(rows[-1]["time"] <= duration + 1e-6, context + ": key exceeds animation length")
         return rows
-    value = numeric_vector(payload, channel, context)
-    return [(0.0, value), (duration, value)] if duration > 0 else [(0.0, value)]
+    vector = parsed_vector(payload, channel, context)
+    row = {"time": 0.0, "pre": vector, "post": vector, "discontinuous": False}
+    return [row, {**row, "time": duration}] if duration > 0 else [row]
 
 
 def interpolate(keys, time):
-    if time <= keys[0][0]:
-        return keys[0][1]
-    if time >= keys[-1][0]:
-        return keys[-1][1]
-    for (left_time, left), (right_time, right) in zip(keys, keys[1:]):
-        if time <= right_time:
-            amount = (time - left_time) / (right_time - left_time)
-            return left * (1 - amount) + right * amount
+    if time < keys[0]["time"]:
+        return evaluate_vector(keys[0]["pre"], time)
+    if time >= keys[-1]["time"]:
+        return evaluate_vector(keys[-1]["post"], time)
+    for left, right in zip(keys, keys[1:]):
+        if math.isclose(time, left["time"], abs_tol=1e-9):
+            return evaluate_vector(left["post"], time)
+        if time < right["time"]:
+            amount = (time - left["time"]) / (right["time"] - left["time"])
+            a = evaluate_vector(left["post"], time)
+            b = evaluate_vector(right["pre"], time)
+            return a * (1 - amount) + b * amount
+        if math.isclose(time, right["time"], abs_tol=1e-9):
+            return evaluate_vector(right["post"], time)
     raise AssertionError("curve interpolation fell through")
 
 
@@ -151,11 +239,15 @@ def validate_leaf_rest_rotations(bones, bones_by_name, clips, allowed):
     return sorted(rotated)
 
 
-def sampled_times(keys, duration, fps, rotation):
-    if not rotation:
-        return sorted({0.0, duration, *(time for time, _ in keys)})
+def sampled_times(keys, duration, fps, sample_every_frame):
+    key_times = {row["time"] for row in keys}
+    dynamic = any(vector_dynamic(row[side]) for row in keys for side in ("pre", "post"))
+    discontinuities = [row["time"] for row in keys if row["discontinuous"] and row["time"] > 0]
+    if not sample_every_frame and not dynamic and not discontinuities:
+        return sorted({0.0, duration, *key_times})
     frames = {min(duration, index / fps) for index in range(int(math.ceil(duration * fps)) + 1)}
-    frames.update(time for time, _ in keys)
+    frames.update(key_times)
+    frames.update(max(0.0, time - min(1e-4, 0.25 / fps)) for time in discontinuities)
     frames.add(duration)
     return sorted(frames)
 
@@ -188,6 +280,8 @@ def add_animation(glb, name, clip, bones_by_name, base_translations, fps):
             prepared.append((bone_name, source_channel, keys))
     samplers, channels, channel_rows = [], [], []
     for bone_name, source_channel, keys in prepared:
+        formula_baked = any(vector_dynamic(row[side]) for row in keys for side in ("pre", "post"))
+        discontinuity_baked = any(row["discontinuous"] for row in keys)
         times = sampled_times(keys, duration, fps, source_channel == "rotation")
         values = []
         for time in times:
@@ -208,17 +302,26 @@ def add_animation(glb, name, clip, bones_by_name, base_translations, fps):
                                                            "path": {"position": "translation", "rotation": "rotation", "scale": "scale"}[source_channel]}})
         channel_rows.append({"bone": bone_name, "sourceChannel": source_channel,
                              "gltfPath": channels[-1]["target"]["path"], "sourceKeys": len(keys),
-                             "outputKeys": len(times), "eulerResampled": source_channel == "rotation"})
+                             "outputKeys": len(times), "eulerResampled": source_channel == "rotation",
+                             "formulaBaked": formula_baked,
+                             "prePostDiscontinuityBaked": discontinuity_baked,
+                             "sourceExpressions": sorted({item["expression"] for row in keys
+                                 for side in ("pre", "post") for item in row[side] if isinstance(item, dict)})})
     if not channels:
         return None, {"name": name, "sourceLoop": clip.get("loop"), "sourceLength": duration,
                       "converted": False, "reason": "source clip has no bone channels"}
     glb.g.setdefault("animations", []).append({"name": name, "samplers": samplers, "channels": channels,
         "extras": {"ggd": {"sourceLoop": clip.get("loop", False), "sourceAnimationLength": duration,
                               "nativeClassification": "community-mod-native-animation-json",
-                              "rotationSamplingFps": fps}}})
+                              "rotationSamplingFps": fps,
+                              "formulaChannelsBaked": sum(row["formulaBaked"] for row in channel_rows),
+                              "prePostChannelsBaked": sum(row["prePostDiscontinuityBaked"] for row in channel_rows)}}})
     return len(glb.g["animations"]) - 1, {"name": name, "sourceLoop": clip.get("loop"),
         "sourceLength": duration, "converted": True, "channelCount": len(channels),
-        "outputKeyCount": sum(row["outputKeys"] for row in channel_rows), "channels": channel_rows}
+        "outputKeyCount": sum(row["outputKeys"] for row in channel_rows),
+        "formulaChannelCount": sum(row["formulaBaked"] for row in channel_rows),
+        "prePostChannelCount": sum(row["prePostDiscontinuityBaked"] for row in channel_rows),
+        "channels": channel_rows}
 
 
 def main():
@@ -386,6 +489,8 @@ def main():
                             "rotation": "numeric source Euler curves linearly evaluated and resampled to glTF quaternions",
                             "scale": "numeric source scale encoded directly"},
         "nativeClassification": "community-mod-native-animation-json",
+        "formulaPolicy": "bounded time/query.anim_time plus arithmetic and degree-based math.sin/math.cos baked at rotationSamplingFps; exact source expressions retained in conversion report",
+        "prePostPolicy": "numeric pre/post discontinuities baked using a key immediately before the source timestamp and the post value at the timestamp",
         "runtimeReady": False, "backendSelectionVerified": False, "defaultEligible": False,
         "rightsStatus": "Source metadata says ARR; public source access is not redistribution permission.",
         "remaining": ["Khronos/GGD structural validation", "actual WebGL clip playback review",

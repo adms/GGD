@@ -39,7 +39,8 @@ def validate(candidate, source, repo):
     require(provenance in (NATIVE_PROVENANCE, PROCEDURAL_PROVENANCE),
             "Animated component motion provenance is ambiguous")
     if provenance == NATIVE_PROVENANCE:
-        require(candidate.get("nativeAnimationCount") == 5 and candidate.get("proceduralAnimationCount") == 0,
+        require(isinstance(candidate.get("nativeAnimationCount"), int) and candidate.get("nativeAnimationCount") > 0 and
+                candidate.get("proceduralAnimationCount") == 0,
                 "Unexpected native animated component motion counts")
     else:
         require(candidate.get("nativeAnimationCount") == 0 and candidate.get("proceduralAnimationCount") == 6,
@@ -49,9 +50,9 @@ def validate(candidate, source, repo):
             "Noncanonical animated component Git path")
 
     validation = json.loads(verify_pin(candidate["validationEvidence"], repo).read_text())
-    expected_schema = ("ggd-ssbu-mario-ultimate14-motion-validation@1" if provenance == NATIVE_PROVENANCE
-                       else "ggd-procedural-six-state-validation@1")
-    require(validation.get("schema") == expected_schema, "Unexpected animated component validation schema")
+    expected_schemas = ({"ggd-ssbu-mario-ultimate14-motion-validation@1", "ggd-ssbu-ultimate14-motion-validation@1", "ggd-ssbu-ultimate14-matching-motion-validation@1"}
+                        if provenance == NATIVE_PROVENANCE else {"ggd-procedural-six-state-validation@1"})
+    require(validation.get("schema") in expected_schemas, "Unexpected animated component validation schema")
     require((validation.get("glb", {}).get("sha256"), validation.get("glb", {}).get("bytes")) ==
             (candidate["sha256"], candidate["bytes"]), "Animated validation GLB pin mismatch")
     require(validation.get("structuralValidationPassed") is True, "Animated component structural validation failed")
@@ -67,7 +68,9 @@ def validate(candidate, source, repo):
             "Unexpected animated component skin")
     clips = inspection.get("clips", [])
     if provenance == NATIVE_PROVENANCE:
-        require(len(clips) == 5 and all(row.get("channels") == 294 for row in clips),
+        expected_count = candidate.get("nativeAnimationCount")
+        expected_channels = candidate.get("animationChannelCountPerClip", candidate.get("jointCount") * 3)
+        require(len(clips) == expected_count and all(row.get("channels") == expected_channels for row in clips),
                 "Incomplete native animated component clips")
     else:
         require([row.get("name") for row in clips] ==

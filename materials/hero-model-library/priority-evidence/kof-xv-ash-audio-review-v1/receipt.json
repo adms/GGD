@@ -1,0 +1,57 @@
+{
+  "schema": "ggd.kof-xv-ash-audio-review-conversion@1",
+  "conversionId": "kof-xv-ash-audio-review-v1",
+  "sourceId": "kof-xv-ash-audio-float32-v1",
+  "sourceGame": "The King of Fighters XV",
+  "platform": "PC (author sound-rip collection; original platform/build not independently verified)",
+  "scope": "86 Float32 WAV files under XV_Ash; original Vorbis and Float32 WAV remain untouched",
+  "sourceValidation": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-audio-float32-v1/audio-validation.json",
+    "sha256": "69aa52104c5d3bb3ebb7495f4f09d6c67276fd6ebd046400f188933fdeae66fa",
+    "schema": "ggd-float32-audio-conversion@1"
+  },
+  "tool": {
+    "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+    "arguments": [
+      "-map_metadata",
+      "-1",
+      "-fflags",
+      "+bitexact",
+      "-flags:a",
+      "+bitexact",
+      "-c:a",
+      "libmp3lame",
+      "-b:a",
+      "96k",
+      "-write_xing",
+      "0",
+      "-id3v2_version",
+      "0"
+    ],
+    "twoIndependentEncodesByteIdentical": true
+  },
+  "fileManifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/files.jsonl.gz",
+    "sha256": "09998de58e7f7850c7e1b1b4d14d9203205db910a6c63a0321a22ac4fe7d70b4",
+    "uncompressedSha256": "df3f1931dc0ce24ac11f43f6b284db9872ebdf426aca85f464eb32dd287ddd5a",
+    "encoding": "gzip-jsonl"
+  },
+  "summary": {
+    "sourceFloat32WavFiles": 86,
+    "convertedReviewMp3Files": 86,
+    "convertedBytes": 1227168,
+    "fullDecodePassed": true,
+    "perClipLanguageConfirmed": 0,
+    "perClipSpeakerConfirmed": 0,
+    "perClipEventConfirmed": 0,
+    "runtimeBindingsCreated": 0,
+    "backendSelectableAssets": 0,
+    "productionDeployments": 0
+  },
+  "status": "converted-review-candidates-pending-listening-and-event-mapping",
+  "limitations": [
+    "The source directory name is XV_Ash, but it does not prove an individual clip's speaker.",
+    "No clip is assigned to dialogue, cry, sound effect, music, a skill, or a game event.",
+    "Review MP3s are local conversion products, not accepted Git runtime voice assets."
+  ]
+}

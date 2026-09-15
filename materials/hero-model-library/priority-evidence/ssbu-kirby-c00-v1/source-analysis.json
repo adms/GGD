@@ -1,0 +1,259 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-kirby-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/kirby/model/body/c00/kirby-c00.blend",
+  "sourceBytes": 9042756,
+  "sourceSha256": "8674bd9eea87d351662cf4c3090f1b18ab2a10128c96d42656b4216f2e75829b",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "Kirby_Armfoot_VIS_O_OBJShape",
+      "vertices": 956,
+      "polygons": 1536,
+      "vertexGroups": 51,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "EyeL6"
+      ]
+    },
+    {
+      "name": "Kirby_Armfoot_VIS_O_OBJShape.001",
+      "vertices": 499,
+      "polygons": 888,
+      "vertexGroups": 51,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_kirby_001"
+      ]
+    },
+    {
+      "name": "Kirby_Eye1_VIS_O_OBJShape",
+      "vertices": 137,
+      "polygons": 198,
+      "vertexGroups": 51,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "EyeL6"
+      ]
+    },
+    {
+      "name": "Kirby_FaceN_VIS_O_OBJShape",
+      "vertices": 1714,
+      "polygons": 2878,
+      "vertexGroups": 51,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "EyeL6"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "Kirby_Bodybig_VIS_O_OBJShape",
+    "Kirby_Bodybig_VIS_O_OBJShape.001",
+    "Kirby_Bodybig2_VIS_O_OBJShape.001",
+    "Kirby_Eye2_VIS_O_OBJShape",
+    "Kirby_Eye3_VIS_O_OBJShape",
+    "Kirby_Eye4_VIS_O_OBJShape",
+    "Kirby_Halfblink1_VIS_O_OBJShape",
+    "Kirby_Halfblink2_VIS_O_OBJShape",
+    "Kirby_Blink_VIS_O_OBJShape",
+    "Kirby_Ouch_VIS_O_OBJShape",
+    "Kirby_Talk_VIS_O_OBJShape",
+    "Kirby_PatternA_VIS_O_OBJShape",
+    "Kirby_Attack_VIS_O_OBJShape",
+    "Kirby_HeavyOuch_VIS_O_OBJShape",
+    "Kirby_Furafura_VIS_O_OBJShape",
+    "Kirby_StepPose_VIS_O_OBJShape",
+    "Kirby_Sorori_VIS_O_OBJShape",
+    "Kirby_PatternB_VIS_O_OBJShape",
+    "Kirby_DamageFlyFront_VIS_O_OBJShape",
+    "Kirby_DamageFlyFront_VIS_O_OBJShape.001",
+    "Kirby_DamageFlyFront_VIS_O_OBJShape.002",
+    "Kirby_Bodybig2_VIS_O_OBJShape"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 51,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "Waist",
+        "Bust",
+        "Neck",
+        "Head",
+        "Body",
+        "Mouth1",
+        "MouthLc",
+        "MouthRc",
+        "MouthLd",
+        "MouthD1",
+        "MouthD2",
+        "MouthRd",
+        "MouthLa1",
+        "Cheek",
+        "MouthLb",
+        "MouthRb",
+        "MouthRa1",
+        "Puff",
+        "MouthLe",
+        "MouthRe",
+        "MouthL2",
+        "Mouth2",
+        "Headdress",
+        "EyeblinkL1",
+        "EyeblinkL2",
+        "EyeblinkR1",
+        "EyeblinkR2",
+        "ClavicleC",
+        "ClavicleL",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "HaveL",
+        "ClavicleR",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "HaveR",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "Throw"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "EyeL6",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "skin_kirby_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "melee_eye_kirby_w_col.png",
+      "source": "FILE",
+      "filepath": "//melee_eye_kirby_w_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/kirby/model/body/c00/melee_eye_kirby_w_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 512,
+      "height": 512,
+      "bytes": 47511,
+      "sha256": "0d75fec14afcacc051910b752839345ef47a7a2b8209ec8aa0d1301a00086b72"
+    },
+    {
+      "name": "skin_kirby_001_col.png",
+      "source": "FILE",
+      "filepath": "//skin_kirby_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/kirby/model/body/c00/skin_kirby_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 16,
+      "height": 16,
+      "bytes": 107,
+      "sha256": "eb72a37be2fbaa28be6bd0861561ebf8950692de9b9c28f818a1a4b2ba2df8e4"
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "EyeL6",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_kirby_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "melee_eye_kirby_w_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/derived-textures/melee_eye_kirby_w_col.png.ggd-256.png",
+      "derivedBytes": 20849,
+      "derivedSha256": "8e8c59ce7f5054a20817df4d7da3d09ea7db55c0914eab62ae988960e39a143f",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 51,
+      "nodeName": "Kirby_Armfoot_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 52,
+      "nodeName": "Kirby_Armfoot_VIS_O_OBJShape.001",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 53,
+      "nodeName": "Kirby_Eye1_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 54,
+      "nodeName": "Kirby_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}

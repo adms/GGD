@@ -1,0 +1,948 @@
+{
+  "schema": "ggd.valhalla-37-production-probe@1",
+  "observedAt": "2026-09-13T22:53:50.961215Z",
+  "origin": "https://ggd.adms.ai",
+  "bundle": {
+    "sourceUrl": "https://ggd.adms.ai/content/bundle.json",
+    "bytes": 4189561,
+    "sha256": "5534a2879925b45d2820d0959a9025eb5d6f7c76c41d76b5d259f4aceeb7eb91",
+    "contentVersion": "cv_114e59b0b552",
+    "champions": 153,
+    "models": 389
+  },
+  "assetCdn": {
+    "baseUrl": "",
+    "enabled": false,
+    "fallbackToLocal": true,
+    "id": "asset-cdn",
+    "note": "⭐ GH#1116 —— 素材走 CDN 還是走站台自己。⛔ 出貨 enabled=false：CloudFront 還沒建（Main 的 profile 只有 S3 的 ListBucket/GetObject/PutObject，建 distribution 要 owner）。⇒ 這一格是**先接好線**，owner 把 baseUrl 填進來就生效。",
+    "schema": "config.asset-cdn@1"
+  },
+  "rows": [
+    {
+      "batch": "b2",
+      "heroId": "b2-albus",
+      "expectedName": "阿爾巴斯",
+      "productionChampionPresent": true,
+      "productionChampionName": "阿爾巴斯",
+      "productionActiveModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
+      "branchActiveModelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+      "branchActiveGlbPath": "assets/models/community/versions/fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-bojji",
+      "expectedName": "波吉",
+      "productionChampionPresent": true,
+      "productionChampionName": "波吉",
+      "productionActiveModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
+      "branchActiveModelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+      "branchActiveGlbPath": "assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-goblin",
+      "expectedName": "哥布林殺手",
+      "productionChampionPresent": true,
+      "productionChampionName": "哥布林殺手",
+      "productionActiveModelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "branchActiveModelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+      "branchActiveGlbPath": "assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-kisaragi",
+      "expectedName": "如月電車",
+      "productionChampionPresent": true,
+      "productionChampionName": "如月電車",
+      "productionActiveModelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "branchActiveModelKey": "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
+      "branchActiveGlbPath": "assets/models/community/versions/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-kumoko",
+      "expectedName": "蜘蛛子",
+      "productionChampionPresent": true,
+      "productionChampionName": "蜘蛛子",
+      "productionActiveModelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
+      "branchActiveModelKey": "version.body.60820e7ce0d81eebe5d8e5d8b4d790e4447e6f9ecc898f90",
+      "branchActiveGlbPath": "assets/models/community/versions/0de4625aa386a6965981791eacf24c4af80ca1defa7fae59e340bc731cf5bb47.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/0de4625aa386a6965981791eacf24c4af80ca1defa7fae59e340bc731cf5bb47.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-maple",
+      "expectedName": "梅普露",
+      "productionChampionPresent": true,
+      "productionChampionName": "梅普露",
+      "productionActiveModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+      "branchActiveModelKey": "version.body.8e9a3c68ca92cb24f5e23b5f7462ef354e20aac42ec810e7",
+      "branchActiveGlbPath": "assets/models/community/versions/49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-misery",
+      "expectedName": "米瑟利",
+      "productionChampionPresent": true,
+      "productionChampionName": "米瑟利",
+      "productionActiveModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
+      "branchActiveModelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+      "branchActiveGlbPath": "assets/models/community/versions/97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-popp",
+      "expectedName": "何布",
+      "productionChampionPresent": true,
+      "productionChampionName": "何布",
+      "productionActiveModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+      "branchActiveModelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+      "branchActiveGlbPath": "assets/models/community/versions/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-rem",
+      "expectedName": "蕾姆",
+      "productionChampionPresent": true,
+      "productionChampionName": "蕾姆",
+      "productionActiveModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
+      "branchActiveModelKey": "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
+      "branchActiveGlbPath": "assets/models/community/versions/3734d48d4f190483fce8e45e809641f9325b7b0b77a1ba82f4c9a32a12a22189.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/3734d48d4f190483fce8e45e809641f9325b7b0b77a1ba82f4c9a32a12a22189.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-rin",
+      "expectedName": "遠坂凜",
+      "productionChampionPresent": true,
+      "productionChampionName": "遠坂凜",
+      "productionActiveModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
+      "branchActiveModelKey": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
+      "branchActiveGlbPath": "assets/models/community/versions/ca651989ff9bdb2275b557b9671346544c4e0c0208b683f5a5b16cb2239bf721.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/ca651989ff9bdb2275b557b9671346544c4e0c0208b683f5a5b16cb2239bf721.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-takopi",
+      "expectedName": "章魚嗶",
+      "productionChampionPresent": true,
+      "productionChampionName": "章魚嗶",
+      "productionActiveModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
+      "branchActiveModelKey": "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
+      "branchActiveGlbPath": "assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-yogiri",
+      "expectedName": "高遠夜霧",
+      "productionChampionPresent": true,
+      "productionChampionName": "高遠夜霧",
+      "productionActiveModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+      "branchActiveModelKey": "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec",
+      "branchActiveGlbPath": "assets/models/community/versions/fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "b2",
+      "heroId": "b2-zenitsu",
+      "expectedName": "我妻善逸",
+      "productionChampionPresent": true,
+      "productionChampionName": "我妻善逸",
+      "productionActiveModelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
+      "branchActiveModelKey": "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
+      "branchActiveGlbPath": "assets/models/community/versions/b26016f7a72a30a8a1cfc9d056b3de6b8621c2995d135b3026a912b25a6b88e5.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/b26016f7a72a30a8a1cfc9d056b3de6b8621c2995d135b3026a912b25a6b88e5.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-01-20260907",
+      "expectedName": "武藤遊戲",
+      "productionChampionPresent": true,
+      "productionChampionName": "武藤遊戲",
+      "productionActiveModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+      "branchActiveModelKey": "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34",
+      "branchActiveGlbPath": "assets/models/community/versions/c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-03-20260907",
+      "expectedName": "不知火舞",
+      "productionChampionPresent": true,
+      "productionChampionName": "不知火舞",
+      "productionActiveModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+      "branchActiveModelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+      "branchActiveGlbPath": "assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-04-20260907",
+      "expectedName": "空條承太郎",
+      "productionChampionPresent": true,
+      "productionChampionName": "空條承太郎",
+      "productionActiveModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+      "branchActiveModelKey": "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
+      "branchActiveGlbPath": "assets/models/community/versions/46e2cf6860d7bf16258e90af87f192b44fb7377d064f076e0b44ff90f34511b0.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/46e2cf6860d7bf16258e90af87f192b44fb7377d064f076e0b44ff90f34511b0.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-06-20260907",
+      "expectedName": "卡比",
+      "productionChampionPresent": true,
+      "productionChampionName": "卡比",
+      "productionActiveModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+      "branchActiveModelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+      "branchActiveGlbPath": "assets/models/community/versions/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-08-20260907",
+      "expectedName": "米卡莎",
+      "productionChampionPresent": true,
+      "productionChampionName": "米卡莎",
+      "productionActiveModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+      "branchActiveModelKey": "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
+      "branchActiveGlbPath": "assets/models/community/versions/53d1306e08bd3b1cecc9b19f6f87233a1f3ff0a25bcb2471b96237002a0e3774.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/53d1306e08bd3b1cecc9b19f6f87233a1f3ff0a25bcb2471b96237002a0e3774.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-10-20260907",
+      "expectedName": "魯路修",
+      "productionChampionPresent": true,
+      "productionChampionName": "魯路修",
+      "productionActiveModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+      "branchActiveModelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
+      "branchActiveGlbPath": "assets/models/community/versions/ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-12-20260907",
+      "expectedName": "衛宮士郎",
+      "productionChampionPresent": true,
+      "productionChampionName": "衛宮士郎",
+      "productionActiveModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+      "branchActiveModelKey": "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
+      "branchActiveGlbPath": "assets/models/community/versions/a846b55907ace92d368cc8ee017adfee62e1a75c368ec39e09ce1eec4bcf595c.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/a846b55907ace92d368cc8ee017adfee62e1a75c368ec39e09ce1eec4bcf595c.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-13-20260907",
+      "expectedName": "朝田詩乃",
+      "productionChampionPresent": true,
+      "productionChampionName": "朝田詩乃",
+      "productionActiveModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+      "branchActiveModelKey": "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
+      "branchActiveGlbPath": "assets/models/community/versions/3ef2b3bae25e503327475832603544ba7fbd7badbd3bcf02e92b47a3253fc113.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/3ef2b3bae25e503327475832603544ba7fbd7badbd3bcf02e92b47a3253fc113.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-16-20260907",
+      "expectedName": "魔法少女☆伊莉雅",
+      "productionChampionPresent": true,
+      "productionChampionName": "魔法少女☆伊莉雅",
+      "productionActiveModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+      "branchActiveModelKey": "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
+      "branchActiveGlbPath": "assets/models/community/versions/843b7fb65d1e88eaa8b1f0883d4df417b52715d3312badf1081611c7828edfda.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/843b7fb65d1e88eaa8b1f0883d4df417b52715d3312badf1081611c7828edfda.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-17-20260907",
+      "expectedName": "安茲·烏爾·恭",
+      "productionChampionPresent": true,
+      "productionChampionName": "安茲·烏爾·恭",
+      "productionActiveModelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+      "branchActiveModelKey": "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
+      "branchActiveGlbPath": "assets/models/community/versions/f587ad6c42e18456baa77d7a0f758270effea0e0248ab0ec0873fc58b08f9f89.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/f587ad6c42e18456baa77d7a0f758270effea0e0248ab0ec0873fc58b08f9f89.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-18-20260907",
+      "expectedName": "吉爾伽美什",
+      "productionChampionPresent": true,
+      "productionChampionName": "吉爾伽美什",
+      "productionActiveModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+      "branchActiveModelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+      "branchActiveGlbPath": "assets/models/community/versions/5d25c46a8fcc90ca7a2f7482c9dfe76f0e3513d9158911743d083bf2a8c981d8.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/5d25c46a8fcc90ca7a2f7482c9dfe76f0e3513d9158911743d083bf2a8c981d8.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-19-20260907",
+      "expectedName": "桐谷和人",
+      "productionChampionPresent": true,
+      "productionChampionName": "桐谷和人",
+      "productionActiveModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+      "branchActiveModelKey": "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558",
+      "branchActiveGlbPath": "assets/models/community/versions/07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-20-20260907",
+      "expectedName": "御坂美琴",
+      "productionChampionPresent": true,
+      "productionChampionName": "御坂美琴",
+      "productionActiveModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+      "branchActiveModelKey": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
+      "branchActiveGlbPath": "assets/models/community/versions/26f2013bd53ae0a3eb1af8d8e1855990fab249c6b6a23c59b8afd906031af2ab.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/26f2013bd53ae0a3eb1af8d8e1855990fab249c6b6a23c59b8afd906031af2ab.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-21-20260907",
+      "expectedName": "鹿目圓",
+      "productionChampionPresent": true,
+      "productionChampionName": "鹿目圓",
+      "productionActiveModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+      "branchActiveModelKey": "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f",
+      "branchActiveGlbPath": "assets/models/community/versions/4171d5a997b5e010420a8395f7726b80d03cc84602d58f2f63f90c414505f874.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/4171d5a997b5e010420a8395f7726b80d03cc84602d58f2f63f90c414505f874.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-23-20260907",
+      "expectedName": "坂田銀時",
+      "productionChampionPresent": true,
+      "productionChampionName": "坂田銀時",
+      "productionActiveModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+      "branchActiveModelKey": "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a",
+      "branchActiveGlbPath": "assets/models/community/versions/02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-24-20260907",
+      "expectedName": "奇犽",
+      "productionChampionPresent": true,
+      "productionChampionName": "奇犽",
+      "productionActiveModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+      "branchActiveModelKey": "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f",
+      "branchActiveGlbPath": "assets/models/community/versions/0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-25-20260907",
+      "expectedName": "一拳超人",
+      "productionChampionPresent": true,
+      "productionChampionName": "一拳超人",
+      "productionActiveModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+      "branchActiveModelKey": "version.body.a53e1d01b4bf47aa8794bb3ca64cefd57ff8c5b63116fd94",
+      "branchActiveGlbPath": "assets/models/community/versions/da62e201a55037f568c2ec533b5812422aa1d8588e81c690d4b46926c5001dc9.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/da62e201a55037f568c2ec533b5812422aa1d8588e81c690d4b46926c5001dc9.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-26-20260907",
+      "expectedName": "名偵探柯南",
+      "productionChampionPresent": true,
+      "productionChampionName": "名偵探柯南",
+      "productionActiveModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+      "branchActiveModelKey": "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
+      "branchActiveGlbPath": "assets/models/community/versions/a8e89599b26c580eaea5b267965ea8a54ae2763d38a74f12d9506c8e2156279d.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/a8e89599b26c580eaea5b267965ea8a54ae2763d38a74f12d9506c8e2156279d.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-27-20260907",
+      "expectedName": "庫洛魔法使",
+      "productionChampionPresent": true,
+      "productionChampionName": "庫洛魔法使",
+      "productionActiveModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
+      "branchActiveModelKey": "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a",
+      "branchActiveGlbPath": "assets/models/community/versions/577637e6d556c50d4a6e9bae0e9da4684a712100a37c05ee9fc828eeccd4f9ed.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/577637e6d556c50d4a6e9bae0e9da4684a712100a37c05ee9fc828eeccd4f9ed.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-28-20260907",
+      "expectedName": "艾莉絲·伯雷亞斯·格雷拉特",
+      "productionChampionPresent": true,
+      "productionChampionName": "艾莉絲·伯雷亞斯·格雷拉特",
+      "productionActiveModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+      "branchActiveModelKey": "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8",
+      "branchActiveGlbPath": "assets/models/community/versions/2c8e4b37a672a7419f74c1ed8576f2f2d183883c6553e57055df66601a8c89c9.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/2c8e4b37a672a7419f74c1ed8576f2f2d183883c6553e57055df66601a8c89c9.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-29-20260907",
+      "expectedName": "芙莉蓮",
+      "productionChampionPresent": true,
+      "productionChampionName": "芙莉蓮",
+      "productionActiveModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+      "branchActiveModelKey": "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8",
+      "branchActiveGlbPath": "assets/models/community/versions/cfa0f849e7463a4bf545dd225af430f2da04744a1c8ce9a65fb31f5e52a3a885.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/cfa0f849e7463a4bf545dd225af430f2da04744a1c8ce9a65fb31f5e52a3a885.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-31-20260907",
+      "expectedName": "SUN樂",
+      "productionChampionPresent": true,
+      "productionChampionName": "SUN樂",
+      "productionActiveModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
+      "branchActiveModelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+      "branchActiveGlbPath": "assets/models/community/versions/f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-32-20260907",
+      "expectedName": "阿薩謝爾",
+      "productionChampionPresent": true,
+      "productionChampionName": "阿薩謝爾",
+      "productionActiveModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+      "branchActiveModelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+      "branchActiveGlbPath": "assets/models/community/versions/f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    },
+    {
+      "batch": "community",
+      "heroId": "community-review-35-20260907",
+      "expectedName": "炭治郎",
+      "productionChampionPresent": true,
+      "productionChampionName": "炭治郎",
+      "productionActiveModelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+      "productionModelDocumentPresent": true,
+      "productionModelVersions": 0,
+      "productionActiveGlbPath": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+      "branchActiveModelKey": "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4",
+      "branchActiveGlbPath": "assets/models/community/versions/c1d2d01e174034e9923dc44a788f2c735cc99350d81c8ff4ca25605f2ba945ab.glb",
+      "productionActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      },
+      "branchActiveGlbHttp": {
+        "url": "https://ggd.adms.ai/content/assets/models/community/versions/c1d2d01e174034e9923dc44a788f2c735cc99350d81c8ff4ca25605f2ba945ab.glb",
+        "status": 404,
+        "contentType": "text/html",
+        "contentLength": "146"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2854 @@
+{
+  "schema": "ggd.palworld-preserved-source-audit@1",
+  "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+  "inputFiles": [
+    {
+      "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
+      "sha256": "cb1915759afd7b65f313d49d9f893b8064270d354023ec2091c9fc5e9f83224b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json",
+      "sha256": "ddc585a26e7fc5c8f88cacbc3ffef24bcfe9b4c0142441a368a6fb4ec6ca63f0"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/source-config.json",
+      "sha256": "c1cd4efff138ae9816ebc98bcd0d72494964ac7be81b341cc823066f120662bd"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/validation.json",
+      "sha256": "2a931b8fc8691197e3948aedf3ef486401fd0c3c20e1a566267b4d73d8ca4074"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+      "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+    }
+  ],
+  "summary": {
+    "characters": 3,
+    "nativeIds": 3,
+    "distinctSourceSkills": 27,
+    "preservedSourceBundleRoots": 5,
+    "sourceAssetFilesHashed": 72,
+    "sourceAssetBytesHashed": 89198740,
+    "modelCandidateFilesVerified": 23,
+    "modelCandidateBytesVerified": 201676292,
+    "glbLikeContainersParsed": 22,
+    "fbxContainersRecorded": 1,
+    "embeddedModelImages": 87,
+    "externalModelImageReferences": 0,
+    "modelAnimationsAcrossCandidates": 607,
+    "modelAnimationChannelsAcrossCandidates": 182187,
+    "sourceSkillMotionCandidates": 70,
+    "nativeNameStemSkillMotionCandidates": 30,
+    "translatedAliasSkillMotionCandidates": 3,
+    "genericCryCandidatesVerified": 18,
+    "genericCrySelectedBytesVerified": 1110439,
+    "currentReviewComponentsPolicyVerified": 3,
+    "currentReviewComponentsPolicyClean": 2,
+    "currentReviewComponentsPolicyWarningOnly": 1,
+    "currentReviewComponentsPolicyHardBlocked": 0,
+    "originalGamePakOrIoStoreContainers": 0,
+    "extractedUnrealAssetFiles": 0,
+    "wwiseBanks": 0,
+    "wwiseMedia": 0,
+    "standaloneVfxCandidates": 0,
+    "skillSpecificSfxCandidates": 0,
+    "ownerApprovedBindings": 0,
+    "runtimeBindingsAdded": 0,
+    "productionDeployed": 0
+  },
+  "sourceRoots": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon"
+  ],
+  "modelContainers": [
+    {
+      "characterId": "jetragon",
+      "candidateId": "mediafire-shinypenguin-palworld-jetragon.fbx",
+      "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+      "format": "fbx",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
+        "bytes": 8907804,
+        "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
+        "expectedBytes": 8907804,
+        "expectedSha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "fbx-source-container",
+        "parsed": false,
+        "reason": "FBX bytes are preserved and hashed; GLB-only structural parser does not reinterpret FBX."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
+      "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
+        "bytes": 8941408,
+        "sha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
+        "expectedBytes": 8941408,
+        "expectedSha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 7,
+        "embeddedImageCount": 7,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 1,
+        "animationCount": 0,
+        "animationChannelCountTotal": 0,
+        "animationChannelsPerClipMax": 0,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
+      "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
+        "bytes": 8941604,
+        "sha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
+        "expectedBytes": 8941604,
+        "expectedSha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 7,
+        "embeddedImageCount": 7,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 1,
+        "animationCount": 0,
+        "animationChannelCountTotal": 0,
+        "animationChannelsPerClipMax": 0,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "opgg-palworld-jetragon.original-glb",
+      "sourceId": "opgg-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
+        "bytes": 2740172,
+        "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
+        "expectedBytes": 2740172,
+        "expectedSha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 29,
+        "animationChannelCountTotal": 6525,
+        "animationChannelsPerClipMax": 225,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "opgg-palworld-jetragon.decoded-v1",
+      "sourceId": "opgg-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
+        "bytes": 3783312,
+        "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
+        "expectedBytes": 3783312,
+        "expectedSha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 29,
+        "animationChannelCountTotal": 6525,
+        "animationChannelsPerClipMax": 225,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "opgg-palworld-jetragon.decoded-declared-v2",
+      "sourceId": "opgg-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+        "bytes": 3783400,
+        "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
+        "expectedBytes": 3783400,
+        "expectedSha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 29,
+        "animationChannelCountTotal": 6525,
+        "animationChannelsPerClipMax": 225,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "opgg-palworld-jetragon.material-bound-native-res-v1",
+      "sourceId": "opgg-palworld-jetragon",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-native-res.glb",
+        "bytes": 11266728,
+        "sha256": "f3e0253139c6840a91a9ae15c5296861b7dfffad83790df93777749a8c4e126a",
+        "expectedBytes": 11266728,
+        "expectedSha256": "f3e0253139c6840a91a9ae15c5296861b7dfffad83790df93777749a8c4e126a",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 1,
+        "animationCount": 29,
+        "animationChannelCountTotal": 6525,
+        "animationChannelsPerClipMax": 225,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "jetragon",
+      "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+      "sourceId": "opgg-palworld-jetragon",
+      "format": "glb",
+      "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "componentReady": true,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+        "bytes": 4297580,
+        "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+        "expectedBytes": 4297580,
+        "expectedSha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 1,
+        "animationCount": 29,
+        "animationChannelCountTotal": 6525,
+        "animationChannelsPerClipMax": 225,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-v2-glb",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+        "bytes": 17242184,
+        "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797",
+        "expectedBytes": 17242184,
+        "expectedSha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 58,
+        "animationChannelCountTotal": 25230,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-glb",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded.glb",
+        "bytes": 17242092,
+        "sha256": "f213f29cfcd31a808a6a57600c59d8f1bcbaf3dc99e6858ebdadd0c34394b1e6",
+        "expectedBytes": 17242092,
+        "expectedSha256": "f213f29cfcd31a808a6a57600c59d8f1bcbaf3dc99e6858ebdadd0c34394b1e6",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 58,
+        "animationChannelCountTotal": 25230,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.body.original--model-glb",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+        "bytes": 12611064,
+        "sha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
+        "expectedBytes": 12611064,
+        "expectedSha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 58,
+        "animationChannelCountTotal": 25230,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.full58",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+        "bytes": 25503732,
+        "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf",
+        "expectedBytes": 25503732,
+        "expectedSha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 3,
+        "animationCount": 58,
+        "animationChannelCountTotal": 25230,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "componentReady": true,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+        "bytes": 17043436,
+        "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+        "expectedBytes": 17043436,
+        "expectedSha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 3,
+        "animationCount": 58,
+        "animationChannelCountTotal": 25230,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.idle-walk-hd",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/astralym-idle-walk.glb",
+        "bytes": 21162960,
+        "sha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16",
+        "expectedBytes": 21162960,
+        "expectedSha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 3,
+        "animationCount": 2,
+        "animationChannelCountTotal": 870,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "astralym",
+      "candidateId": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "format": "glb",
+      "gitPath": "content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "componentReady": true,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+        "bytes": 13224512,
+        "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+        "expectedBytes": 13224512,
+        "expectedSha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 9,
+        "embeddedImageCount": 9,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 3,
+        "animationCount": 2,
+        "animationChannelCountTotal": 870,
+        "animationChannelsPerClipMax": 435,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-atlasforge.body.decoded--cattiva-atlasforge-glb",
+      "sourceId": "palworld-cattiva-atlasforge",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/decoded/cattiva-atlasforge.glb",
+        "bytes": 327652,
+        "sha256": "1afbc1b2122d3e05a49e6fe12775b4d3eb6d2f3e14cfda51388559e52c79707a",
+        "expectedBytes": 327652,
+        "expectedSha256": "1afbc1b2122d3e05a49e6fe12775b4d3eb6d2f3e14cfda51388559e52c79707a",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 3,
+        "embeddedImageCount": 3,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 1,
+        "animationChannelCountTotal": 129,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-atlasforge.body.original--PinkCat-viewer-model",
+      "sourceId": "palworld-cattiva-atlasforge",
+      "format": "viewer-model-glb-wrapper",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/original/PinkCat.viewer-model",
+        "bytes": 327652,
+        "sha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4",
+        "expectedBytes": 327652,
+        "expectedSha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "viewer-model-glb-wrapper",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 3,
+        "embeddedImageCount": 3,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 1,
+        "animationChannelCountTotal": 129,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-atlasforge.body.standardized--cattiva-glb",
+      "sourceId": "palworld-cattiva-atlasforge",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/standardized/cattiva.glb",
+        "bytes": 502344,
+        "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379",
+        "expectedBytes": 502344,
+        "expectedSha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 3,
+        "embeddedImageCount": 3,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 1,
+        "animationChannelCountTotal": 129,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-opgg.body.decoded--cattiva-meshopt-decoded-glb",
+      "sourceId": "palworld-cattiva-opgg",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-meshopt-decoded.glb",
+        "bytes": 1788384,
+        "sha256": "3fc40875bfa0e8181b1b644fd6d77a6b9fac6283d617d6beab81c9f3cff85287",
+        "expectedBytes": 1788384,
+        "expectedSha256": "3fc40875bfa0e8181b1b644fd6d77a6b9fac6283d617d6beab81c9f3cff85287",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 33,
+        "animationChannelCountTotal": 4257,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-opgg.body.decoded--cattiva-quantization-declared-glb",
+      "sourceId": "palworld-cattiva-opgg",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-quantization-declared.glb",
+        "bytes": 1788472,
+        "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635",
+        "expectedBytes": 1788472,
+        "expectedSha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 33,
+        "animationChannelCountTotal": 4257,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-opgg.body.original--model-glb",
+      "sourceId": "palworld-cattiva-opgg",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/model.glb",
+        "bytes": 1461560,
+        "sha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2",
+        "expectedBytes": 1461560,
+        "expectedSha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 0,
+        "embeddedImageCount": 0,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 33,
+        "animationChannelCountTotal": 4257,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-opgg-materials-v1",
+      "sourceId": "palworld-cattiva-opgg",
+      "format": "glb",
+      "gitPath": null,
+      "componentReady": false,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1/result/body.glb",
+        "bytes": 16640188,
+        "sha256": "f1c7ddd235164ac83dd9eb48021cb76137292acf52f91473734be3e50bfb1934",
+        "expectedBytes": 16640188,
+        "expectedSha256": "f1c7ddd235164ac83dd9eb48021cb76137292acf52f91473734be3e50bfb1934",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 5,
+        "embeddedImageCount": 5,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 33,
+        "animationChannelCountTotal": 4257,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    },
+    {
+      "characterId": "cattiva",
+      "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+      "sourceId": "palworld-cattiva-opgg",
+      "format": "glb",
+      "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "componentReady": true,
+      "runtimeBindingApproved": false,
+      "file": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+        "bytes": 2148052,
+        "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+        "expectedBytes": 2148052,
+        "expectedSha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "containerInspection": {
+        "kind": "glb",
+        "parsed": true,
+        "meshCount": 1,
+        "skinCount": 1,
+        "materialCount": 3,
+        "imageCount": 5,
+        "embeddedImageCount": 5,
+        "externalImageReferenceCount": 0,
+        "emissiveMaterialCount": 0,
+        "animationCount": 33,
+        "animationChannelCountTotal": 4257,
+        "animationChannelsPerClipMax": 129,
+        "standaloneVfxObjectsFound": 0,
+        "audioObjectsFound": 0,
+        "interpretation": "Images and emissive materials are model appearance resources; animation names and Ring suffixes are not standalone VFX evidence."
+      }
+    }
+  ],
+  "sourceAssetFiles": [
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "derived/model-decoded-v2.glb",
+      "role": "derived",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+      "bytes": 17242184,
+      "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "derived/model-decoded.glb",
+      "role": "derived",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded.glb",
+      "bytes": 17242092,
+      "sha256": "f213f29cfcd31a808a6a57600c59d8f1bcbaf3dc99e6858ebdadd0c34394b1e6"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/118059401.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/118059401.mp3",
+      "bytes": 56258,
+      "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/334845214.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/334845214.mp3",
+      "bytes": 29718,
+      "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/490600725.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/490600725.mp3",
+      "bytes": 13208,
+      "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/646052.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/646052.mp3",
+      "bytes": 19687,
+      "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/692273765.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/692273765.mp3",
+      "bytes": 25956,
+      "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/825892274.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/825892274.mp3",
+      "bytes": 18224,
+      "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials.json",
+      "role": "source-material-map",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials.json",
+      "bytes": 5919,
+      "sha256": "4d6558fa9ff90570dd8e03caaa67bfc99a3e5f24e54ca944d5311c85c3165fe2"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Body.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body.webp",
+      "bytes": 156298,
+      "sha256": "39ceb19cbd5a002aaf236a1bf7624448e655af1ecb3e34cbe2e611212da201f5"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Emissive.webp",
+      "bytes": 51020,
+      "sha256": "052662d3f172086780a63964b2485e397c929efbc776efa8be6718ce7b971fdc"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_MetallicRoughness.webp",
+      "bytes": 1116450,
+      "sha256": "e401caa9a66adfaa6bf0f45a41d93b0023870b0b35a575e9bfa42754a1571ef7"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Body_Normal.webp",
+      "bytes": 420554,
+      "sha256": "8136a207354ed0d6badfdaa2272874e548cece09cb837190eabb38f10a075491"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Extra.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra.webp",
+      "bytes": 24020,
+      "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+      "bytes": 24020,
+      "sha256": "116103eefeb545b59bcb47d17e865fdcea07b3db113de2e3a01bd293a7fd6d3a"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Eye.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye.webp",
+      "bytes": 49774,
+      "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+      "bytes": 49774,
+      "sha256": "98bdced16b2f908145d7672ecdbcd3b78b63c04f13b091cf699b5c2205e7aa58"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/materials/T_WorldTreeDragon_Body_SSS.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/materials/T_WorldTreeDragon_Body_SSS.webp",
+      "bytes": 16898,
+      "sha256": "17a25c314742c4f6f587174246fb864ddb0ae7eda06a937c7576114e4d27bec6"
+    },
+    {
+      "bundleId": "parallel-palworld-astralym",
+      "relativePath": "original/model.glb",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+      "bytes": 12611064,
+      "sha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "decoded/cattiva-atlasforge.glb",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/decoded/cattiva-atlasforge.glb",
+      "bytes": 327652,
+      "sha256": "1afbc1b2122d3e05a49e6fe12775b4d3eb6d2f3e14cfda51388559e52c79707a"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "extracted/textures/image-0.webp",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-0.webp",
+      "bytes": 16452,
+      "sha256": "7b72978b4bd2fb8b9eb25c6236df1c46efaf1ab5f522a10cf3d4a005ab91c19e"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "extracted/textures/image-1.webp",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-1.webp",
+      "bytes": 31816,
+      "sha256": "c35ed416e63b8a39d6bcaf9b61433f22eedc2ccd8379c7a7cdbe94abcd0f7e67"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "extracted/textures/image-2.webp",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/extracted/textures/image-2.webp",
+      "bytes": 177318,
+      "sha256": "b49db76f150069602fafbbc6b818fcdf66933709008e3f9a5aa10fbbd4683da2"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "original/PinkCat.viewer-model",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/original/PinkCat.viewer-model",
+      "bytes": 327652,
+      "sha256": "3f696fde9f71474545b2a1dacfd046c37f2408b5e8a99345d0f975f483dc15c4"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-atlasforge",
+      "relativePath": "standardized/cattiva.glb",
+      "role": "standardized",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge/standardized/cattiva.glb",
+      "bytes": 502344,
+      "sha256": "d4cba8b2b6bd4f44d7dc0832faa2865840f911e4e192097c5e37efe3a2e71379"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/477932227.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/477932227.wav",
+      "bytes": 147040,
+      "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/573810681.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/573810681.wav",
+      "bytes": 131896,
+      "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/717847191.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/717847191.wav",
+      "bytes": 103576,
+      "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/842808624.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/842808624.wav",
+      "bytes": 165196,
+      "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/942072444.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/942072444.wav",
+      "bytes": 223052,
+      "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "decoded/980873458.wav",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/980873458.wav",
+      "bytes": 107200,
+      "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/477932227.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/477932227.mp3",
+      "bytes": 7148,
+      "sha256": "cae96b1a3b1f2c0d91acd089852e23992fa8be33c841636c744f54725130edad"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/573810681.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/573810681.mp3",
+      "bytes": 6521,
+      "sha256": "e7f8378b486fdeaa6e954de2b0c1abcc60c8c4119c7ba021204df7ad9df12aaa"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/717847191.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/717847191.mp3",
+      "bytes": 5267,
+      "sha256": "6ba47adbb69a06b149e914b68f01a9e4c11fa583425f73ba73d51a32c326c391"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/842808624.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/842808624.mp3",
+      "bytes": 7984,
+      "sha256": "80c507895f596ecd4a519cfcc9a6b3ce1f1a22b8de91de5abeced533092794db"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/942072444.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/942072444.mp3",
+      "bytes": 10700,
+      "sha256": "711aa1b61d4f2bd948dd3ac6775991c8b5cb3f2c4e63165c5806a2d7ba18ec04"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-gamevault",
+      "relativePath": "original/audio/980873458.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/980873458.mp3",
+      "bytes": 5476,
+      "sha256": "8a05a157dccd5d539ca2ba60489d4e77e5eb8d57f6ec2106d3b46528668c9c21"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "decoded/cattiva-meshopt-decoded.glb",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-meshopt-decoded.glb",
+      "bytes": 1788384,
+      "sha256": "3fc40875bfa0e8181b1b644fd6d77a6b9fac6283d617d6beab81c9f3cff85287"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "decoded/cattiva-quantization-declared.glb",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-quantization-declared.glb",
+      "bytes": 1788472,
+      "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials.json",
+      "role": "source-material-map",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials.json",
+      "bytes": 4430,
+      "sha256": "203f743abbae454cfb3693beacd9e7eb67b221e1d3a393f5164f2ea4d422f1b3"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials/MI_PinkCat_Body.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body.webp",
+      "bytes": 560190,
+      "sha256": "4fcbd5916ca73f1b659dd2eec63b3406a8682a54081cfced74da04a4dbb1e896"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_MetallicRoughness.webp",
+      "bytes": 731142,
+      "sha256": "72eb6ce098ba36527e89db6a306b08a41f0bf95aa6eaff1c30bc7cc0db3744bb"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials/MI_PinkCat_Body_Normal.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Body_Normal.webp",
+      "bytes": 1551020,
+      "sha256": "7832eb768a1e0e54439216b90fdd560526e25b191b532dd459862de83c113bb9"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials/MI_PinkCat_Eye.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Eye.webp",
+      "bytes": 21310,
+      "sha256": "c861e9bf8fd99dfe92b9dfe2adcf32b4f2a73b819de0a383faa067a5b903f4cb"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/materials/MI_PinkCat_Mouth.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/materials/MI_PinkCat_Mouth.webp",
+      "bytes": 12516,
+      "sha256": "c6d8c6eb1dc8eec74734877f891ca691392b9267efd1467a54c2de6bb1c5c364"
+    },
+    {
+      "bundleId": "parallel-palworld-cattiva-opgg",
+      "relativePath": "original/model.glb",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/original/model.glb",
+      "bytes": 1461560,
+      "sha256": "4b4c2d426f74d482be37e8b30c0313c132fea88d9a9856914a8937e43b7febf2"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "decoded/jetragon-meshopt-decoded.glb",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
+      "bytes": 3783312,
+      "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "decoded/jetragon-quantization-declared.glb",
+      "role": "decoded",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+      "bytes": 3783400,
+      "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Body_B.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Body_B.png",
+      "bytes": 1773525,
+      "sha256": "7cfcd676fdc56c91336c7e31bfb1149f2ea64c4dd3f3280f24684b39b20e5e36"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Body_M.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Body_M.png",
+      "bytes": 1516711,
+      "sha256": "b600e3ee8e11bfbb33bc820e17b4188d26833840ec171f6920b005bf97da97e9"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Body_N.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Body_N.png",
+      "bytes": 3428262,
+      "sha256": "4ab80c4d096803d932f8ef0ff4b366f3b932ea68cf0ffac19b7e7e3dbb541ad6"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Extra_B.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Extra_B.png",
+      "bytes": 55482,
+      "sha256": "42cf21c4cb1871c00fe46270d0e386c511fbefda99a48fa3c945bf4b320332f0"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Extra_Emissive.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Extra_Emissive.png",
+      "bytes": 329914,
+      "sha256": "f5d4bed006eb14ad6abe598501d3807073c6ad2a437ca85630ad2e2b26926424"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Extra_N.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Extra_N.png",
+      "bytes": 1291100,
+      "sha256": "75a9a04939f11d8a763033820197b4e20248a4ef78c17ae21a04c8df8fba0582"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "extracted/textures/T_JetDragon_Eyes_B.png",
+      "role": "extracted",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/extracted/textures/T_JetDragon_Eyes_B.png",
+      "bytes": 75183,
+      "sha256": "ad856255b471fdae281e1ed4bdd613f4e17a91886b48d6fa8e934d41838498c2"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/144271513.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/144271513.mp3",
+      "bytes": 10283,
+      "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/474464904.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/474464904.mp3",
+      "bytes": 11745,
+      "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/53353968.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/53353968.mp3",
+      "bytes": 13417,
+      "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/543820472.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/543820472.mp3",
+      "bytes": 10074,
+      "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/93212890.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/93212890.mp3",
+      "bytes": 9447,
+      "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/audio/977109776.mp3",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/977109776.mp3",
+      "bytes": 14462,
+      "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/jetdragon.fbx",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
+      "bytes": 8907804,
+      "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials.json",
+      "role": "source-material-map",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials.json",
+      "bytes": 4605,
+      "sha256": "88a14372518bfceaed3bb8362fa098a6f97eb45f74bdd365676f1fd4a6f17e5f"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Body.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Body.webp",
+      "bytes": 129222,
+      "sha256": "ece251c3365ffc783d7982fb43c0170e2300cc7e6ce1b7f3932af4d75672f50a"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Body_MetallicRoughness.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Body_MetallicRoughness.webp",
+      "bytes": 1402182,
+      "sha256": "38a623b2293bfb3bf1b3f3ce97281733537ddf6902e572d0ca2594d00f5b0dd4"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Body_Normal.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Body_Normal.webp",
+      "bytes": 197642,
+      "sha256": "b63a33bc688d617442ae485988b34e4abf22f7ef30120935b443c587f457f31e"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Extra.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Extra.webp",
+      "bytes": 19500,
+      "sha256": "c64cc87f3f2c0108961553d43844cb1038851a7aa2740cabc05b58b9be113c52"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Extra_Emissive.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Extra_Emissive.webp",
+      "bytes": 46272,
+      "sha256": "b7fab009c82d0453b5db6a7a0309e684783b9ec36f69a29247ea8eea0a6b3d97"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Extra_Normal.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Extra_Normal.webp",
+      "bytes": 165984,
+      "sha256": "f585c1bb2c1f44bc37093d84f5060c4015047997626c3c07df6772b3c9d77b09"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/MI_JetDragon_Eye.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/MI_JetDragon_Eye.webp",
+      "bytes": 22750,
+      "sha256": "21bbafa5392e4c341c9bf34374577439a9deef23c462ff983035a2bf1bde9cb0"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/materials/T_JetDragon_Body_SSS.webp",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/materials/T_JetDragon_Body_SSS.webp",
+      "bytes": 59858,
+      "sha256": "d69cb072307d1d4ff2e6d1d7a4decf4ace325623fa27a56b49332cdd30095089"
+    },
+    {
+      "bundleId": "parallel-palworld-jetragon",
+      "relativePath": "original/opgg/model.glb",
+      "role": "original",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
+      "bytes": 2740172,
+      "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f"
+    }
+  ],
+  "skillMotionCandidates": [
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "FarSkill_Action",
+      "durationSeconds": 0.416667,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "FarSkill_ActionLoop",
+      "durationSeconds": 1.0,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "FarSkill_End",
+      "durationSeconds": 1.041667,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "FarSkill_Start",
+      "durationSeconds": 1.041667,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "FarSkill_StartLoop",
+      "durationSeconds": 1.25,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "JumpBeam_End",
+      "durationSeconds": 0.625,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "JumpBeam_Loop",
+      "durationSeconds": 1.0,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "clip": "JumpBeam_Start",
+      "durationSeconds": 0.708333,
+      "animationChannelCount": 225,
+      "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "FarSkill_Action",
+      "durationSeconds": 0.416667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "FarSkill_ActionLoop",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "FarSkill_End",
+      "durationSeconds": 1.458333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "FarSkill_Start",
+      "durationSeconds": 1.458333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "FarSkill_StartLoop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_End",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_End_Ring",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_Loop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_Loop_Ring",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_Start",
+      "durationSeconds": 2.083333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloBeam_Start_Ring",
+      "durationSeconds": 2.083333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloCutter",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloCutter_End_Ring",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloCutter_Loop_Ring",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "HaloCutter_Start_Ring",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_End",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_End_Ring",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_Loop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_Loop_Ring",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_Start",
+      "durationSeconds": 3.541667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "LaserGliding_Start_Ring",
+      "durationSeconds": 3.541667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Attack",
+      "durationSeconds": 0.416667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Attack_Loop",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Attack_Loop_Ring",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Attack_Ring",
+      "durationSeconds": 0.416667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_End",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_End_Ring",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Start",
+      "durationSeconds": 2.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Start_Loop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Start_Loop_Ring",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumCannon_Start_Ring",
+      "durationSeconds": 2.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Cancel",
+      "durationSeconds": 3.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Cancel_Ring",
+      "durationSeconds": 3.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_End",
+      "durationSeconds": 3.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_End_Ring",
+      "durationSeconds": 3.75,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Loop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Loop_Ring",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Start",
+      "durationSeconds": 3.125,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumExplosion_Start_Ring",
+      "durationSeconds": 3.125,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumRain_End",
+      "durationSeconds": 1.25,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumRain_Loop",
+      "durationSeconds": 3.125,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumRain_Start",
+      "durationSeconds": 2.916667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_End",
+      "durationSeconds": 1.458333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_End_Ring",
+      "durationSeconds": 1.458333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_Loop",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_Loop_Ring",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_Start",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "PaldiumShot_Start_Ring",
+      "durationSeconds": 1.875,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+      "relationshipConfidence": "native-name-stem-exact",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_End",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_End_Ring",
+      "durationSeconds": 4.375,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_Loop",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_Loop_Ring",
+      "durationSeconds": 1.666667,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_Start",
+      "durationSeconds": 2.5,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "clip": "Supernova_Start_Ring",
+      "durationSeconds": 2.5,
+      "animationChannelCount": 435,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "FarSkill_Action",
+      "durationSeconds": 0.416667,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "FarSkill_ActionLoop",
+      "durationSeconds": 0.833333,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "FarSkill_End",
+      "durationSeconds": 1.041667,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "FarSkill_Start",
+      "durationSeconds": 1.041667,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "FarSkill_StartLoop",
+      "durationSeconds": 1.25,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": null,
+      "relationshipConfidence": "motion-family-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "NekoPunch_End",
+      "durationSeconds": 1.25,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+      "relationshipConfidence": "translated-name-alias-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "NekoPunch_Loop",
+      "durationSeconds": 0.666667,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+      "relationshipConfidence": "translated-name-alias-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "clip": "NekoPunch_Start",
+      "durationSeconds": 0.625,
+      "animationChannelCount": 129,
+      "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+      "relationshipConfidence": "translated-name-alias-only",
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    }
+  ],
+  "audioCandidates": [
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Normal",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.40805,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/474464904.mp3",
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "expectedBytes": 11745,
+        "expectedSha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Joy",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.113107,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/93212890.mp3",
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "expectedBytes": 9447,
+        "expectedSha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Anger",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.612449,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/53353968.mp3",
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "expectedBytes": 13417,
+        "expectedSha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Sorrow",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.198027,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/543820472.mp3",
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "expectedBytes": 10074,
+        "expectedSha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Pain",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.204195,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/144271513.mp3",
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "expectedBytes": 10283,
+        "expectedSha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "jetragon",
+      "nativeId": "JetDragon",
+      "sourceId": "gamevault-palworld-jetragon-cries",
+      "sourceLabel": "Death",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.749206,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/977109776.mp3",
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "expectedBytes": 14462,
+        "expectedSha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Normal",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 3.183333,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/692273765.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "expectedBytes": 25956,
+        "expectedSha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Joy",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.583333,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/490600725.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "expectedBytes": 13208,
+        "expectedSha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Anger",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 3.65,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/334845214.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "expectedBytes": 29718,
+        "expectedSha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Sorrow",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 2.216667,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/825892274.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "expectedBytes": 18224,
+        "expectedSha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Pain",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 2.383333,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/646052.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "expectedBytes": 19687,
+        "expectedSha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "astralym",
+      "nativeId": "WorldTreeDragon",
+      "sourceId": "gamevault-palworld-astralym-audio",
+      "sourceLabel": "Death",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 6.95,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/118059401.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "expectedBytes": 56258,
+        "expectedSha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": null,
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Normal",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 0.5866439909297052,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/717847191.wav",
+        "bytes": 103576,
+        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "expectedBytes": 103576,
+        "expectedSha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/717847191.mp3",
+        "bytes": 5267,
+        "sha256": "6ba47adbb69a06b149e914b68f01a9e4c11fa583425f73ba73d51a32c326c391",
+        "expectedBytes": 5267,
+        "expectedSha256": "6ba47adbb69a06b149e914b68f01a9e4c11fa583425f73ba73d51a32c326c391",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Joy",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 0.74718820861678,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/573810681.wav",
+        "bytes": 131896,
+        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "expectedBytes": 131896,
+        "expectedSha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/573810681.mp3",
+        "bytes": 6521,
+        "sha256": "e7f8378b486fdeaa6e954de2b0c1abcc60c8c4119c7ba021204df7ad9df12aaa",
+        "expectedBytes": 6521,
+        "expectedSha256": "e7f8378b486fdeaa6e954de2b0c1abcc60c8c4119c7ba021204df7ad9df12aaa",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Anger",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 0.8330385487528345,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/477932227.wav",
+        "bytes": 147040,
+        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "expectedBytes": 147040,
+        "expectedSha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/477932227.mp3",
+        "bytes": 7148,
+        "sha256": "cae96b1a3b1f2c0d91acd089852e23992fa8be33c841636c744f54725130edad",
+        "expectedBytes": 7148,
+        "expectedSha256": "cae96b1a3b1f2c0d91acd089852e23992fa8be33c841636c744f54725130edad",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Sorrow",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 1.2639455782312925,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/942072444.wav",
+        "bytes": 223052,
+        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "expectedBytes": 223052,
+        "expectedSha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/942072444.mp3",
+        "bytes": 10700,
+        "sha256": "711aa1b61d4f2bd948dd3ac6775991c8b5cb3f2c4e63165c5806a2d7ba18ec04",
+        "expectedBytes": 10700,
+        "expectedSha256": "711aa1b61d4f2bd948dd3ac6775991c8b5cb3f2c4e63165c5806a2d7ba18ec04",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Pain",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 0.60718820861678,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/980873458.wav",
+        "bytes": 107200,
+        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "expectedBytes": 107200,
+        "expectedSha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/980873458.mp3",
+        "bytes": 5476,
+        "sha256": "8a05a157dccd5d539ca2ba60489d4e77e5eb8d57f6ec2106d3b46528668c9c21",
+        "expectedBytes": 5476,
+        "expectedSha256": "8a05a157dccd5d539ca2ba60489d4e77e5eb8d57f6ec2106d3b46528668c9c21",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    },
+    {
+      "characterId": "cattiva",
+      "nativeId": "PinkCat",
+      "sourceId": "palworld-cattiva-gamevault",
+      "sourceLabel": "Death",
+      "classification": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "durationSeconds": 0.9359637188208617,
+      "decodeToNullPassed": true,
+      "selectedFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/842808624.wav",
+        "bytes": 165196,
+        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "expectedBytes": 165196,
+        "expectedSha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "originalFile": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/original/audio/842808624.mp3",
+        "bytes": 7984,
+        "sha256": "80c507895f596ecd4a519cfcc9a6b3ce1f1a22b8de91de5abeced533092794db",
+        "expectedBytes": 7984,
+        "expectedSha256": "80c507895f596ecd4a519cfcc9a6b3ce1f1a22b8de91de5abeced533092794db",
+        "bytesVerified": true,
+        "sha256Verified": true
+      },
+      "skillCode": null,
+      "skillEventVerified": false,
+      "ownerReviewStatus": "pending",
+      "runtimeBinding": false
+    }
+  ],
+  "currentReviewComponentPolicy": {
+    "dynamicLimits": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    },
+    "rows": [
+      {
+        "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+        "metrics": {
+          "triangles": 8468,
+          "meshes": 3,
+          "textureCount": 9,
+          "maxTextureEdge": 256,
+          "skins": 1,
+          "skinnedPrimitives": 3,
+          "joints": [
+            75
+          ],
+          "clips": 29,
+          "maxClipChannels": 225,
+          "maxClipSeconds": 7.5
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 3,
+          "infos": 4,
+          "hints": 3,
+          "truncated": false
+        },
+        "formalAdoptionEligible": true,
+        "policyEvidenceGitPath": "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/validation.json",
+        "policyEvidenceSha256": "2a931b8fc8691197e3948aedf3ef486401fd0c3c20e1a566267b4d73d8ca4074"
+      },
+      {
+        "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+        "metrics": {
+          "triangles": 5798,
+          "meshes": 3,
+          "textureCount": 5,
+          "maxTextureEdge": 256,
+          "skins": 1,
+          "skinnedPrimitives": 3,
+          "joints": [
+            43
+          ],
+          "clips": 33,
+          "maxClipChannels": 129,
+          "maxClipSeconds": 3.75
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 2,
+          "infos": 3,
+          "hints": 0,
+          "truncated": false
+        },
+        "formalAdoptionEligible": true,
+        "policyEvidenceGitPath": "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/validation.json",
+        "policyEvidenceSha256": "2a931b8fc8691197e3948aedf3ef486401fd0c3c20e1a566267b4d73d8ca4074"
+      },
+      {
+        "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+        "metrics": {
+          "triangles": 7896,
+          "meshes": 3,
+          "textureCount": 9,
+          "maxTextureEdge": 256,
+          "clips": 58,
+          "maxClipChannels": 435,
+          "maxClipSeconds": 7.666666507720947
+        },
+        "budget": {
+          "errors": [],
+          "warnings": [
+            "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+          ]
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 2,
+          "infos": 1,
+          "hints": 0,
+          "truncated": false
+        },
+        "formalAdoptionEligible": true,
+        "policyEvidenceGitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+        "policyEvidenceSha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+      }
+    ],
+    "note": "Policy values and verdicts are read from the existing generated validation receipts; this audit does not copy a new independent threshold."
+  },
+  "limits": {
+    "sourceFilesOnly": true,
+    "noNetworkAcquisition": true,
+    "noContainerDecryption": true,
+    "modelTexturesAreNotStandaloneVfx": true,
+    "animationNamesAreNotAudioOrVfx": true,
+    "genericCriesAreNotSkillSpecificSfx": true,
+    "ownerReviewRequiredBeforeBinding": true,
+    "runtimeBindingChanged": false,
+    "productionDeploymentVerified": false
+  }
+}

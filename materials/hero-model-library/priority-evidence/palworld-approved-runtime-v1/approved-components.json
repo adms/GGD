@@ -1,0 +1,1230 @@
+{
+  "schema": "ggd.palworld-approved-components@1",
+  "sourceReview": {
+    "bytes": 78800,
+    "sha256": "5a52676e800bbb22e38d685fa08bdca2835c758509f651c17c8cc90647b6e0b0",
+    "gitPath": "materials/hero-model-library/palworld/review/palworld-av-review.json"
+  },
+  "sourcePortalQueue": {
+    "bytes": 977230,
+    "sha256": "4ce25924d2e9d510547711ee88f0633c66aafb31394d769037379aed149944a7",
+    "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json"
+  },
+  "ownerDecisionReceipt": {
+    "bytes": 108481,
+    "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7",
+    "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+  },
+  "summary": {
+    "characters": 3,
+    "ownerApprovedCandidates": 36,
+    "motionSemanticStatesRuntimeSelectable": 18,
+    "approvedGenericMotionBindingsReachable": 14,
+    "approvedPerSkillMotionOverlaysPendingRouter": 0,
+    "approvedPerSkillMotionOverlaysRuntimeBound": 4,
+    "approvedCryProductsInGit": 18,
+    "approvedCryRuntimeBindings": 18,
+    "backendDropdownRegisteredHeroes": 3,
+    "standaloneOriginalVfx": 0,
+    "skillSpecificOriginalSfx": 0,
+    "productionDeploymentVerifiedHeroes": 0
+  },
+  "motions": [
+    {
+      "candidateId": "palworld-jetragon-motion-idle",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "idle",
+      "nativeClip": "Idle",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-run",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "run",
+      "nativeClip": "Run",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-attack",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "attack",
+      "nativeClip": "FarSkill_Action",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "acquired-jetragon.q"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": true,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved ability-id overlay is generated into the client skill-to-motion router."
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-cast",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "cast",
+      "nativeClip": "JumpBeam_Loop",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "acquired-jetragon.r"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": true,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved ability-id overlay is generated into the client skill-to-motion router."
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-hurt",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "hurt",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-death",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "semanticState": "death",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 455,
+        "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json"
+      },
+      "modelGlb": {
+        "bytes": 3221852,
+        "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-idle",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "idle",
+      "nativeClip": "Idle",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-run",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "run",
+      "nativeClip": "Walk",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-attack",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "attack",
+      "nativeClip": "FarSkill_Action",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "generic-attack"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-cast",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "cast",
+      "nativeClip": "HaloBeam_Loop",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "acquired-astralym.q"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": true,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved ability-id overlay is generated into the client skill-to-motion router."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-hurt",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "hurt",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-astralym-motion-death",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "semanticState": "death",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json"
+      },
+      "modelGlb": {
+        "bytes": 3876004,
+        "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-idle",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "idle",
+      "nativeClip": "Idle",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-run",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "run",
+      "nativeClip": "Run",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-attack",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "attack",
+      "nativeClip": "NekoPunch_Loop",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "acquired-cattiva.q"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": true,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved ability-id overlay is generated into the client skill-to-motion router."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-cast",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "cast",
+      "nativeClip": "FarSkill_Action",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "generic-cast"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-hurt",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "hurt",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-death",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "semanticState": "death",
+      "nativeClip": "Damage",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "ownerApproved": true,
+      "modelDocument": {
+        "bytes": 456,
+        "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+        "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json"
+      },
+      "modelGlb": {
+        "bytes": 1428876,
+        "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb"
+      },
+      "activeInModelClipMap": true,
+      "localHeroForgeDropdownRegistered": true,
+      "runtimeSelectable": true,
+      "runtimeBindingChanged": false,
+      "approvedBindingReachable": true,
+      "bindingNote": "The approved generic semantic binding is active through model@1.clipMap."
+    }
+  ],
+  "cries": [
+    {
+      "candidateId": "palworld-jetragon-cry-normal",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Normal",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "runtimeCategories": [
+        "hum"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/474464904.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/normal-4a207cb88f48.mp3",
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/normal-4a207cb88f48.mp3",
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-joy",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Joy",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "victory"
+      ],
+      "runtimeCategories": [
+        "victory"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/93212890.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/joy-03253d18585f.mp3",
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/joy-03253d18585f.mp3",
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-anger",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Anger",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/53353968.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/anger-6745afcc8c9a.mp3",
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-sorrow",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Sorrow",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/543820472.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/sorrow-5638ed8f9fe2.mp3",
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/sorrow-5638ed8f9fe2.mp3",
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-pain",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Pain",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/144271513.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/pain-e28698306de8.mp3",
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/pain-e28698306de8.mp3",
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-death",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Death",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "death"
+      ],
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/977109776.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/death-64114cec12d8.mp3",
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/jetragon/death-64114cec12d8.mp3",
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-normal",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Normal",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "runtimeCategories": [
+        "hum"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/692273765.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/normal-f9949315b5d2.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/normal-f9949315b5d2.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-joy",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Joy",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "victory"
+      ],
+      "runtimeCategories": [
+        "victory"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/490600725.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/joy-5da4f560d3d3.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/joy-5da4f560d3d3.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-anger",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Anger",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/334845214.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/anger-149239e93275.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-sorrow",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Sorrow",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/825892274.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/sorrow-51bcb37280e8.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/sorrow-51bcb37280e8.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-pain",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Pain",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/646052.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/pain-9c981c73e979.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/pain-9c981c73e979.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-astralym-cry-death",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Death",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "death"
+      ],
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/118059401.mp3"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/death-814242c5ae71.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "container": "mp3"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/astralym/death-814242c5ae71.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "container": "mp3"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-normal",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Normal",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "runtimeCategories": [
+        "hum"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 103576,
+        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/717847191.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/normal-2ea4e920f9d5.wav",
+        "bytes": 103576,
+        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.wav",
+        "bytes": 103576,
+        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-joy",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Joy",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "victory"
+      ],
+      "runtimeCategories": [
+        "victory"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 131896,
+        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/573810681.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/joy-085d017aa8b4.wav",
+        "bytes": 131896,
+        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.wav",
+        "bytes": 131896,
+        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-anger",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Anger",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 147040,
+        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/477932227.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/anger-3a592d5a23ab.wav",
+        "bytes": 147040,
+        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+        "bytes": 147040,
+        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-sorrow",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Sorrow",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 223052,
+        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/942072444.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/sorrow-ea1af01924ec.wav",
+        "bytes": 223052,
+        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.wav",
+        "bytes": 223052,
+        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-pain",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Pain",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 107200,
+        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/980873458.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/pain-138aa3d053e7.wav",
+        "bytes": 107200,
+        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+        "bytes": 107200,
+        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-death",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Death",
+      "category": "nonverbal-creature-cry",
+      "language": "not-applicable-nonverbal",
+      "speakerVerified": false,
+      "eventMeaningConfidence": "owner-approved-source-emotion-label; no original Wwise event map",
+      "approvedBindings": [
+        "death"
+      ],
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "ownerApproved": true,
+      "source": {
+        "bytes": 165196,
+        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/842808624.wav"
+      },
+      "gitProduct": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/death-cfb643854222.wav",
+        "bytes": 165196,
+        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "container": "wav"
+      },
+      "runtimeProduct": {
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/death-cfb643854222.wav",
+        "bytes": 165196,
+        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+        "container": "wav"
+      },
+      "runtimeBindingCreated": true,
+      "runtimeSelectable": true,
+      "runtimeRouter": "champion-voice-pack/contextualVoice"
+    }
+  ]
+}

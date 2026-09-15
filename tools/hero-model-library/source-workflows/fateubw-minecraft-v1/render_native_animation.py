@@ -6,6 +6,7 @@ import argparse, base64, hashlib, json, os, re, shutil, signal, subprocess, temp
 
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('source',type=Path);parser.add_argument('output',type=Path);parser.add_argument('--repo',type=Path,required=True)
+parser.add_argument('--include-clip', action='append', default=[], help='render only this exact animation group; repeatable')
 args=parser.parse_args();source=args.source.resolve();out=args.output.resolve();root=args.repo.resolve()
 if out.exists():raise ValueError('output must be new')
 out.mkdir(parents=True);done=threading.Event();env=dict(os.environ,NODE_PATH=str(root/'node_modules/.pnpm/node_modules'))
@@ -17,6 +18,7 @@ class Handler(BaseHTTPRequestHandler):
   if self.path=='/':data=b'<canvas width="800" height="800"></canvas><script type="module" src="/bundle.js"></script>';mime='text/html'
   elif self.path=='/body.glb':data=source.read_bytes();mime='model/gltf-binary'
   elif self.path=='/bundle.js':data=(out/'bundle.js').read_bytes();mime='text/javascript'
+  elif self.path=='/config.json':data=json.dumps({'includeClips':args.include_clip}).encode();mime='application/json'
   else:self.send_error(404);return
   self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
  def do_POST(self):
@@ -37,7 +39,7 @@ with (out/'chrome.log').open('w') as log:
   try:process.wait(timeout=5)
   except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=5)
   server.shutdown();server.server_close();shutil.rmtree(profile,ignore_errors=True)
-receipt={'source':str(source),'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'complete':complete,
+receipt={'source':str(source),'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'includeClips':args.include_clip,'complete':complete,
  'proofExists':(out/'proof.json').is_file(),'errorExists':(out/'error.json').is_file(),'images':len(list(out.glob('*.png')))}
 (out/'run.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt))
 if not complete or not receipt['proofExists'] or receipt['errorExists']:raise SystemExit(1)

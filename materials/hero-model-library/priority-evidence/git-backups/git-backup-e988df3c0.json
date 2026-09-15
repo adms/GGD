@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-git-asset-backup-receipt@1",
+  "commit": "e988df3c0277f1ff09ec66fe63afd93406627626",
+  "baseCommit": "a1285381f8507cb4fe7a21471f846ef93d560bdf",
+  "baseSnapshotUri": "s3://ggd-390630837668-ap-east-2-an/legacy/git-asset-snapshots/a1285381f8507cb4fe7a21471f846ef93d560bdf/fc8c793f136c32c2ac2b695b6f035806fa2cc0915c77b542f991f94ee91e84a3.tar.gz",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/git-asset-snapshots/e988df3c0277f1ff09ec66fe63afd93406627626/8793b87d897f1e988a527ca451e3286942d24b7dd0a07aea6adf200d319d5239.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/git-asset-snapshots/e988df3c0277f1ff09ec66fe63afd93406627626/8793b87d897f1e988a527ca451e3286942d24b7dd0a07aea6adf200d319d5239.files.json",
+  "archiveSha256": "8793b87d897f1e988a527ca451e3286942d24b7dd0a07aea6adf200d319d5239",
+  "archiveBytes": 433173,
+  "files": 49,
+  "uncompressedBytes": 3025051,
+  "fullGetAndEveryFileVerified": true,
+  "localPreserved": true,
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/git-asset-snapshots/e988df3c0277f1ff09ec66fe63afd93406627626",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789417404"
+}

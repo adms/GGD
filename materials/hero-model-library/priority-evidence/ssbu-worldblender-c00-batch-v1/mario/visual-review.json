@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-visual-review@1",
+  "componentId": "ssbu-mario-c00-static-skinned-v2",
+  "modelSha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Mario identity and primary body silhouette are complete in all three WebGL views.",
+    "The alpha-corrected material bake removes the prior black-background artifact; no black frame or missing base-colour material was observed."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

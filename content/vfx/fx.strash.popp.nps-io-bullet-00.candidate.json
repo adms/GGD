@@ -1,0 +1,95 @@
+{
+  "id": "fx.strash.popp.nps-io-bullet-00.candidate",
+  "schema": "vfx@1",
+  "presentation": "billboard",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.14,
+    "angleDeg": 12
+  },
+  "mode": "burst",
+  "burstCount": 30,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.56
+  },
+  "size": {
+    "start": 0.18,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.76,
+      0.28,
+      1.0
+    ],
+    "end": [
+      0.42,
+      0.08,
+      0.18,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1.0,
+        0.76,
+        0.28,
+        1.0
+      ]
+    ],
+    [
+      0.22,
+      [
+        1.0,
+        0.76,
+        0.28,
+        0.95
+      ]
+    ],
+    [
+      0.68,
+      [
+        0.42,
+        0.08,
+        0.18,
+        0.38
+      ]
+    ],
+    [
+      1,
+      [
+        0.42,
+        0.08,
+        0.18,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.18
+    ],
+    [
+      0.18,
+      0.324
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 5.0,
+    "max": 9.0
+  },
+  "texture": "assets/textures/particles/strash/popp/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png",
+  "stretched": true,
+  "tailLength": 1.8
+}

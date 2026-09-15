@@ -1,0 +1,141 @@
+{
+  "schema": "ggd-worldblender-material-alpha-audit@1",
+  "files": [
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "alp_chrom_002",
+          "alphaMode": "BLEND",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "alp_chrom_002_col",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "met_chrom_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "met_chrom_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "alp_chrom_003",
+          "alphaMode": "BLEND",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "alp_chrom_003_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "alp_chrom_004",
+          "alphaMode": "BLEND",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "alp_chrom_001_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": null,
+          "alphaMode": "OPAQUE",
+          "textureIndex": 6,
+          "imageIndex": 6,
+          "imageName": "atlas1.ggd-opaque",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 5,
+          "materialName": null,
+          "alphaMode": "OPAQUE",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "atlas0",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    },
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/rebuild/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "alp_chrom_002",
+          "alphaMode": "BLEND",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "alp_chrom_002_col",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "met_chrom_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "met_chrom_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "alp_chrom_003",
+          "alphaMode": "BLEND",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "alp_chrom_003_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "alp_chrom_004",
+          "alphaMode": "BLEND",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "alp_chrom_001_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": null,
+          "alphaMode": "OPAQUE",
+          "textureIndex": 6,
+          "imageIndex": 6,
+          "imageName": "atlas1.ggd-opaque",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 5,
+          "materialName": null,
+          "alphaMode": "OPAQUE",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "atlas0",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "opaqueTransparentBlockers": 0
+}

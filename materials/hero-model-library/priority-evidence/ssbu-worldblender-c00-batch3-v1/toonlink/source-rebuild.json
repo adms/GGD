@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-source-rebuild@1",
+  "componentId": "ssbu-toonlink-c00-static-skinned-v1",
+  "sourceSha256": "c20a96b41fb5dfcf2e2c6a2d017b3248775efa6dc97d5a68ab92b9b01a4aafb6",
+  "outputSha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+    "bytes": 993100,
+    "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/rebuild/body.glb",
+    "bytes": 993100,
+    "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540"
+  },
+  "byteIdenticalRebuild": true,
+  "bothStructuralValidationsPassed": true,
+  "bothValidationsPassed": true
+}

@@ -127,6 +127,12 @@ def source_and_indexes(repo: Path) -> tuple[dict[str, Any], dict[str, Any], dict
 
 def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
     source, backlog, backups = source_and_indexes(repo)
+    completion = read_json(
+        repo / "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+    )
+    derivative = read_json(
+        repo / "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json"
+    )
     errors: list[str] = []
     local_checks: list[dict[str, Any]] = []
     source_root = workspace / source["localPath"] if workspace else None
@@ -151,6 +157,18 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
     require(backend.get("release") is None, "ARR reserve must not name a runtime release", errors)
     require(backend.get("selectionVerified") is False, "ARR reserve must not claim backend selection", errors)
     require(source.get("defaultEligible") is False, "ARR reserve must not be default eligible", errors)
+    require(completion.get("schema") == "ggd-fateubw-native-motion-completion@1",
+            "native motion completion receipt schema drift", errors)
+    completion_backup = completion.get("s3Backup", {})
+    for key in ("fullGetVerified", "allMemberSha256Verified", "localUnchanged"):
+        require(completion_backup.get(key) is True,
+                "native motion S3 backup receipt is incomplete: " + key, errors)
+    completion_candidates = {row["candidateId"]: row for row in completion.get("candidates", [])}
+    require(len(completion_candidates) == 14, "completion receipt does not contain 14 candidates", errors)
+    derivative_candidates = {row["candidateId"]: row for row in derivative.get("records", [])}
+    require(len(derivative_candidates) == 5, "derivative receipt does not contain five candidates", errors)
+    require(derivative.get("nativeDurationClaim") is False,
+            "derivative receipt must not claim native duration", errors)
 
     attempts = {row["id"]: row for row in source.get("conversionAttempts", [])}
     backlog_candidates = {
@@ -167,6 +185,7 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
     s3_uris: set[str] = set()
     servant_rows: list[dict[str, Any]] = []
     source_clips = converted_clips = unconverted_clips = 0
+    pending_s3_archives = pending_backlog_sync = pending_source_index_sync = 0
 
     for servant in sorted(servants, key=lambda row: row["character"]):
         character = servant["character"]
@@ -182,6 +201,11 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
             continue
         static = attempts[static_id]
         native = attempts[native_id]
+        previous_native_id = native.get("previousAttemptId")
+        previous_native = attempts.get(previous_native_id) if previous_native_id else None
+        completion_candidate = completion_candidates.get(servant["candidateId"])
+        require(completion_candidate is not None,
+                f"{character}: dedicated completion candidate is missing", errors)
 
         for label, attempt in (("static", static), ("native", native)):
             require(attempt.get("runtimeReady") is False, f"{character}: {label} runtimeReady drift", errors)
@@ -197,13 +221,35 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
                 errors,
             )
             backup = attempt.get("legacyBackup", {})
+            dedicated_native_backup = label == "native" and completion_candidate is not None
+            if dedicated_native_backup:
+                backup = completion_candidate.get("backup", {})
+                require(backup.get("state") == "verified",
+                        f"{character}: dedicated native S3 backup is not verified", errors)
+                require(backup.get("archiveSha256") == completion_backup.get("archiveSha256")
+                        and backup.get("s3Uri") == completion_backup.get("s3Uri"),
+                        f"{character}: dedicated native S3 backup differs from batch receipt", errors)
+                if attempt.get("backup", {}).get("state") != "verified":
+                    pending_source_index_sync += 1
+            elif label == "native" and attempt.get("backup", {}).get("state") == "pending":
+                pending_s3_archives += 1
+                require(previous_native is not None,
+                        f"{character}: completion attempt lacks previous backed native lineage", errors)
+                backup = previous_native.get("legacyBackup", {}) if previous_native else {}
             uri = backup.get("s3Uri")
-            require(bool(uri), f"{character}: {label} has no S3 backup URI", errors)
+            require(bool(uri), f"{character}: {label} has no current or lineage S3 backup URI", errors)
             if uri:
                 s3_uris.add(uri)
                 indexed = backup_by_uri.get(uri)
-                require(indexed is not None, f"{character}: {label} S3 backup is absent from public-source-files", errors)
-                if indexed:
+                if dedicated_native_backup:
+                    require(backup.get("fullGetVerified") is True
+                            and backup.get("allMemberSha256Verified") is True
+                            and backup.get("localUnchanged") is True,
+                            f"{character}: dedicated native S3 readback evidence is incomplete", errors)
+                else:
+                    require(indexed is not None,
+                            f"{character}: {label} S3 backup is absent from public-source-files", errors)
+                if indexed and not dedicated_native_backup:
                     require(indexed.get("readbackVerified") is True, f"{character}: {label} S3 readback is false", errors)
                     expected_archive_sha = backup.get("archiveSha256")
                     require(
@@ -214,17 +260,42 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
 
         raw_id = f"fateubw-{character}:0"
         for candidate_id, attempt in ((static_id, static), (native_id, native)):
-            indexed = backlog_candidates.get(candidate_id)
-            require(indexed is not None, f"{character}: backlog missing {candidate_id}", errors)
+            indexed_id, indexed_attempt = candidate_id, attempt
+            if indexed_id not in backlog_candidates and attempt is native and previous_native_id:
+                indexed_id, indexed_attempt = previous_native_id, previous_native
+                pending_backlog_sync += 1
+            indexed = backlog_candidates.get(indexed_id)
+            require(indexed is not None, f"{character}: backlog missing {indexed_id}", errors)
             if indexed:
-                body = attempt["body"]
-                require(indexed.get("path") == body["path"], f"{character}: backlog path differs for {candidate_id}", errors)
-                require(indexed.get("sha256") == body["sha256"], f"{character}: backlog SHA differs for {candidate_id}", errors)
-                require(indexed.get("bytes") == body["bytes"], f"{character}: backlog bytes differ for {candidate_id}", errors)
-                require(indexed.get("readbackVerified") is True, f"{character}: backlog readback is false for {candidate_id}", errors)
-                require(indexed.get("runtimeSelectable") is False, f"{character}: backlog runtime flag drift for {candidate_id}", errors)
-                require(indexed.get("defaultEligible") is False, f"{character}: backlog default flag drift for {candidate_id}", errors)
+                body = indexed_attempt["body"]
+                require(indexed.get("path") == body["path"], f"{character}: backlog path differs for {indexed_id}", errors)
+                require(indexed.get("sha256") == body["sha256"], f"{character}: backlog SHA differs for {indexed_id}", errors)
+                require(indexed.get("bytes") == body["bytes"], f"{character}: backlog bytes differ for {indexed_id}", errors)
+                require(indexed.get("readbackVerified") is True, f"{character}: backlog readback is false for {indexed_id}", errors)
+                require(indexed.get("runtimeSelectable") is False, f"{character}: backlog runtime flag drift for {indexed_id}", errors)
+                require(indexed.get("defaultEligible") is False, f"{character}: backlog default flag drift for {indexed_id}", errors)
         require(raw_id in backlog_candidates, f"{character}: backlog missing raw source {raw_id}", errors)
+        if servant["candidateId"] in derivative_candidates:
+            derivative_id = servant["candidateId"] + "-durationless-derivative-v1"
+            derivative_attempt = attempts.get(derivative_id)
+            indexed = backlog_candidates.get(derivative_id)
+            require(derivative_attempt is not None,
+                    f"{character}: source index missing derivative {derivative_id}", errors)
+            require(indexed is not None,
+                    f"{character}: backlog missing derivative {derivative_id}", errors)
+            if derivative_attempt and indexed:
+                body = derivative_attempt["body"]
+                require(indexed.get("path") == body["path"],
+                        f"{character}: derivative backlog path differs", errors)
+                require(indexed.get("sha256") == body["sha256"],
+                        f"{character}: derivative backlog SHA differs", errors)
+                require(indexed.get("bytes") == body["bytes"],
+                        f"{character}: derivative backlog bytes differ", errors)
+                require(indexed.get("nativeDurationClaim") is False,
+                        f"{character}: derivative native-duration boundary drift", errors)
+                require(indexed.get("runtimeSelectable") is False and
+                        indexed.get("defaultEligible") is False,
+                        f"{character}: derivative release boundary drift", errors)
 
         if source_root:
             raw_records = [
@@ -305,8 +376,14 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
             })
 
     require(source_clips == 132, f"source clip total is {source_clips}, expected 132", errors)
-    require(converted_clips == 112, f"converted clip total is {converted_clips}, expected 112", errors)
-    require(unconverted_clips == 20, f"unconverted clip total is {unconverted_clips}, expected 20", errors)
+    require(converted_clips == 127, f"converted clip total is {converted_clips}, expected 127", errors)
+    require(unconverted_clips == 5, f"unconverted clip total is {unconverted_clips}, expected 5", errors)
+    backup_receipt_record = normalized_record(completion_backup.get("receipt"))
+    if backup_receipt_record:
+        local_checks.append(check_file(backup_receipt_record, source_root=repo,
+                                       label="native-motion-v2:s3-backup-receipt", errors=errors))
+    else:
+        errors.append("native motion v2 has no pinned Git S3 backup receipt")
     failed_file_checks = sum(
         not row["existsLocal"] or not row["sizeMatches"] or not row["sha256Matches"]
         for row in local_checks
@@ -320,7 +397,7 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
         "platform": source["platform"],
         "license": source["license"],
         "rightsStatus": source["rightsStatus"],
-        "verificationScope": "local source/conversion bytes plus Git metadata and S3 readback receipts; no runtime, rights, backend-selection or deployment claim",
+        "verificationScope": "local source/conversion bytes plus dedicated v2 S3 full-readback and member-SHA receipt; shared source/backlog projections may remain pending, with no runtime, rights, backend-selection or deployment claim",
         "workspace": str(workspace.resolve()) if workspace else None,
         "sourceRoot": str(source_root.resolve()) if source_root else None,
         "summary": {
@@ -328,8 +405,13 @@ def build_report(repo: Path, workspace: Path | None) -> dict[str, Any]:
             "sourceClips": source_clips,
             "convertedNativeClips": converted_clips,
             "unconvertedClips": unconverted_clips,
-            "centralCandidateRecords": len(servant_rows) * 3,
+            "newlyConvertedFormulaOrPrePostClips": 15,
+            "retainedNoDurationSourcePoses": 5,
+            "centralCandidateRecords": len(backlog_candidates),
             "distinctS3Archives": len(s3_uris),
+            "pendingV2S3Backups": pending_s3_archives,
+            "pendingSourceIndexSync": pending_source_index_sync,
+            "pendingDesignBacklogSync": pending_backlog_sync,
             "localFileChecks": len(local_checks),
             "failedLocalFileChecks": failed_file_checks,
             "errors": len(errors),

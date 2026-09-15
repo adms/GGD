@@ -1,0 +1,101 @@
+{
+  "schema": "ggd.infinity-strash-dai-vearn-av-summary@1",
+  "sourceIds": [
+    "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+    "steam-infinity-strash-priority-original-assets-build-local-20240328"
+  ],
+  "scope": {
+    "identities": {
+      "PN010": {
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c"
+        ],
+        "nameZh": "小呆／達伊",
+        "originalName": "Dai",
+        "form": "PN010 source family; PN010/02 and PN010/05 model candidates are registered separately"
+      },
+      "EN801": {
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "nameZh": "巴恩大魔王（老年／變身前）",
+        "originalName": "Vearn",
+        "form": "pre-transformation elderly Vearn only"
+      }
+    },
+    "excludedIdentities": {
+      "EN653": "MystVearn is a separate character",
+      "EN680": "Baran is a separate character",
+      "EN681": "Baran form is a separate character"
+    },
+    "youngOrPostTransformationVearnPayloadCount": 0
+  },
+  "stages": {
+    "acquisition": "complete-for-indexed-local-source-and-s3-preserved-parent-deliveries",
+    "extraction": "complete-for-indexed-PN010-and-EN801-raw-packages-and-Wwise-media",
+    "conversion": "decoded-WAV-complete-for-safe-exact-identity-media; GGD-VFX-conversion-not-started",
+    "acceptance": "automated-audio-container-validation-only; listening-and-VFX-visual-acceptance-pending",
+    "registration": "review-queue-and-central-index-pointer-only; runtime-bindings-zero",
+    "deployment": "unverified-and-not-claimed"
+  },
+  "audio": {
+    "byIdentity": {
+      "PN010": {
+        "candidateCount": 355,
+        "voice": 278,
+        "soundEffect": 76,
+        "unclassified": 1,
+        "durationSeconds": 484.730578,
+        "decodedBytes": 53124892,
+        "reportedLocales": {
+          "English_US": 139,
+          "Japanese": 136,
+          "nonlocalized": 76,
+          "unreviewed": 4
+        },
+        "sharedOrMixedMediaExcluded": 4,
+        "runtimeBindingsCreated": 0
+      },
+      "EN801": {
+        "candidateCount": 130,
+        "voice": 48,
+        "soundEffect": 82,
+        "unclassified": 0,
+        "durationSeconds": 410.429458,
+        "decodedBytes": 45195010,
+        "reportedLocales": {
+          "English_US": 24,
+          "Japanese": 24,
+          "nonlocalized": 82
+        },
+        "sharedOrMixedMediaExcluded": 10,
+        "runtimeBindingsCreated": 0
+      }
+    },
+    "missingPayloadRelations": 7
+  },
+  "vfx": {
+    "byIdentity": {
+      "PN010": {
+        "rawPackageGroups": 91,
+        "rawFiles": 182,
+        "rawBytes": 25304532,
+        "ggdVfxConverted": 0,
+        "visuallyAccepted": 0,
+        "skillBindingsCreated": 0
+      },
+      "EN801": {
+        "rawPackageGroups": 84,
+        "rawFiles": 169,
+        "rawBytes": 29833178,
+        "ggdVfxConverted": 0,
+        "visuallyAccepted": 0,
+        "skillBindingsCreated": 0
+      }
+    }
+  },
+  "reviewPage": "apps/client/public/infinity-strash-dai-vearn-av-review.html",
+  "runtimeBindingsCreated": 0,
+  "productionDeploymentVerified": false
+}

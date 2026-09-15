@@ -46,6 +46,18 @@
     "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/model-source-backups/steam-jump-force-streaming-audio-816020-build-8523149/verified-receipt-1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.json",
     "receiptSha256": "bfed61dfb67f04aa01e03a3f2711a01311fe7c79cb6852500c27c115a315a82c"
   },
+  "fullGameMirror": {
+    "evidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
+    "evidenceSha256": "ffd5d4b24b973c66eac8cf6e111571f56c1ce072f2b810c50e431cdb1cb38629",
+    "rawStreamingAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Sound/Streaming",
+    "verifiedAwbFiles": 43,
+    "archiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/jump-force-steam-full-build-8523149/053e56094b7ab2018e42896f05253ac9f126ce5a6f4d1d0af4508b7e5c8bd31f.tar.gz",
+    "archiveSha256": "053e56094b7ab2018e42896f05253ac9f126ce5a6f4d1d0af4508b7e5c8bd31f",
+    "archiveBytes": 23520380710,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "manifestS3ReadbackVerified": true
+  },
   "classification": {
     "speakerVerifiedFiles": 0,
     "languageReviewedFiles": 0,

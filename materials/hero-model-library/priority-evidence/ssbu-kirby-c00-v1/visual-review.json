@@ -1,0 +1,19 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-kirby-c00-static-skinned-v1",
+  "modelSha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Kirby body, face, eyes, hands and feet are complete in all three WebGL views.",
+    "Materials are visible with no detached primary body part or bind-pose collapse."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

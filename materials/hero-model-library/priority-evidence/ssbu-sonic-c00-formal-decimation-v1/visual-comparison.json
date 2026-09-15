@@ -1,0 +1,35 @@
+{
+  "schema": "ggd-visual-ab-comparison@1",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/render-source-v2",
+  "candidate": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/render-candidate-v2",
+  "views": [
+    {
+      "view": "front",
+      "meanAbsoluteChannelDifference": 0.028125390625,
+      "maxChannelDifference": 124,
+      "changedPixels": 8153,
+      "changedPixelPct": 1.27390625
+    },
+    {
+      "view": "back",
+      "meanAbsoluteChannelDifference": 0.012426171875,
+      "maxChannelDifference": 44,
+      "changedPixels": 5462,
+      "changedPixelPct": 0.8534375000000001
+    },
+    {
+      "view": "isometric",
+      "meanAbsoluteChannelDifference": 0.0301640625,
+      "maxChannelDifference": 121,
+      "changedPixels": 8992,
+      "changedPixelPct": 1.405
+    }
+  ],
+  "manualReview": "accepted-independent-static-skinned-component",
+  "reviewedAt": "2026-09-14",
+  "reviewBasis": "Front, back and isometric source/candidate renders were compared side by side. The silhouette, face, gloves, shoes and material identity remain intact; measured changed pixels stay between 0.85% and 1.41% per view.",
+  "heroBound": false,
+  "runtimeSelectable": false,
+  "deploymentVerified": false,
+  "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/visual-ab-contact-sheet.png"
+}

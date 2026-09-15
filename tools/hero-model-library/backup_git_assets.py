@@ -71,6 +71,6 @@ def main():
     mb=out/'manifest-readback.json';aws(['s3','cp',manifest_uri,str(mb),'--only-show-errors'],'s3:GetObject',manifest_uri)
     assert mb.read_bytes()==(out/'manifest.json').read_bytes()
     receipt=dict(schema='ggd-git-asset-backup-receipt@1',commit=commit,baseCommit=base,baseSnapshotUri=(base_receipt or {}).get('s3Uri'),s3Uri=uri,manifestUri=manifest_uri,archiveSha256=digest,archiveBytes=archive.stat().st_size,
-                 files=len(rows),uncompressedBytes=sum(r['bytes'] for r in rows),fullGetAndEveryFileVerified=True,localPreserved=True,localRoot=str(out),profile='vibe-coding',region='ap-east-2')
+                 files=len(rows),uncompressedBytes=sum(r['bytes'] for r in rows),fullGetAndEveryFileVerified=True,localPreserved=True,localRoot=str(out),profile='vibe-coding',region='ap-east-2',callerArn=arn)
     write(out/'receipt.json',receipt);print(json.dumps(receipt),flush=True)
 if __name__=='__main__':main()

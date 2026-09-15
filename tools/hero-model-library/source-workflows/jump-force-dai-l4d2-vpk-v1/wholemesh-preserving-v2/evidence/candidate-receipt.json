@@ -1,0 +1,571 @@
+{
+  "schema": "ggd.jump-force-dai-l4d2-wholemesh-topology-preserving@2",
+  "status": "converted-under-8000-wholemesh-preserve-boundaries-pending-khronos-budget-webgl-and-owner-visual-review",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+    "bytes": 5852664,
+    "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+    "bytes": 2351028,
+    "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+  },
+  "toolchain": {
+    "blender": "5.2.1 LTS",
+    "blenderExecutable": "/Applications/Blender.app/Contents/MacOS/Blender"
+  },
+  "policy": {
+    "decimateWhenTrianglesAbove": 10000,
+    "requiredOutputBelow": 8000,
+    "textureMaxEdge": 256,
+    "method": {
+      "objectsDecimatedAsWhole": true,
+      "boundaryDelimits": [
+        "UV",
+        "MATERIAL",
+        "SEAM",
+        "SHARP",
+        "NORMAL"
+      ],
+      "planarDissolveAngleRadians": 0.0872664626,
+      "collapseAppliedBeforeArmatureModifier": true
+    }
+  },
+  "driver": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/blender-result.json",
+    "bytes": 11475,
+    "sha256": "7aeada79443d28dc069a22d8b1152dff07ae41d19bbf2285c1892d57cb8d335b"
+  },
+  "blenderLog": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/blender.log",
+    "bytes": 4903,
+    "sha256": "0d1de2cb9141104d542a976d9db36ba619b2be9b87fd9c90bb9fc305aded0735"
+  },
+  "excludedHelpers": [
+    {
+      "object": "Icosphere",
+      "triangles": 80,
+      "reason": "unskinned SourceIO helper excluded from character candidate"
+    }
+  ],
+  "shapeKeyPolicy": {
+    "sourceExpressionTargets": 29,
+    "result": "basis-bind-pose-only",
+    "reason": "topology-changing collapse cannot preserve differing morph target topology"
+  },
+  "records": [
+    {
+      "object": "2.smd",
+      "trianglesBefore": 7482,
+      "trianglesAfterPlanarDissolve": 6247,
+      "target": 650,
+      "trianglesAfter": 650,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Glass",
+          "triangles": 376
+        },
+        {
+          "index": 1,
+          "name": "Weapon",
+          "triangles": 7106
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Glass",
+          "triangles": 21
+        },
+        {
+          "index": 1,
+          "name": "Weapon",
+          "triangles": 629
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "3.smd",
+      "trianglesBefore": 16562,
+      "trianglesAfterPlanarDissolve": 15510,
+      "target": 1150,
+      "trianglesAfter": 1150,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Skin",
+          "triangles": 5200
+        },
+        {
+          "index": 1,
+          "name": "Hair3",
+          "triangles": 11032
+        },
+        {
+          "index": 2,
+          "name": "effect",
+          "triangles": 330
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Skin",
+          "triangles": 269
+        },
+        {
+          "index": 1,
+          "name": "Hair3",
+          "triangles": 843
+        },
+        {
+          "index": 2,
+          "name": "effect",
+          "triangles": 38
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "4.smd",
+      "trianglesBefore": 6880,
+      "trianglesAfterPlanarDissolve": 5528,
+      "target": 550,
+      "trianglesAfter": 550,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Face2",
+          "triangles": 276
+        },
+        {
+          "index": 1,
+          "name": "Skin 1",
+          "triangles": 6604
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Face2",
+          "triangles": 29
+        },
+        {
+          "index": 1,
+          "name": "Skin 1",
+          "triangles": 521
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "arms.smd",
+      "trianglesBefore": 9756,
+      "trianglesAfterPlanarDissolve": 7707,
+      "target": 900,
+      "trianglesAfter": 900,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "face1",
+          "triangles": 640
+        },
+        {
+          "index": 1,
+          "name": "Body",
+          "triangles": 8840
+        },
+        {
+          "index": 2,
+          "name": "Face2",
+          "triangles": 276
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "face1",
+          "triangles": 46
+        },
+        {
+          "index": 1,
+          "name": "Body",
+          "triangles": 828
+        },
+        {
+          "index": 2,
+          "name": "Face2",
+          "triangles": 26
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "eyes.smd",
+      "trianglesBefore": 1886,
+      "trianglesAfterPlanarDissolve": 744,
+      "target": 240,
+      "trianglesAfter": 240,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "EyeShadow",
+          "triangles": 426
+        },
+        {
+          "index": 1,
+          "name": "EyesHighlight",
+          "triangles": 426
+        },
+        {
+          "index": 2,
+          "name": "eyes",
+          "triangles": 1034
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "EyeShadow",
+          "triangles": 63
+        },
+        {
+          "index": 1,
+          "name": "EyesHighlight",
+          "triangles": 62
+        },
+        {
+          "index": 2,
+          "name": "eyes",
+          "triangles": 115
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "face.smd",
+      "trianglesBefore": 5494,
+      "trianglesAfterPlanarDissolve": 4346,
+      "target": 850,
+      "trianglesAfter": 850,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Hair4",
+          "triangles": 172
+        },
+        {
+          "index": 1,
+          "name": "Face",
+          "triangles": 5322
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Hair4",
+          "triangles": 24
+        },
+        {
+          "index": 1,
+          "name": "Face",
+          "triangles": 826
+        }
+      ],
+      "shapeKeysBefore": [
+        "Basis",
+        "AU12AU25R",
+        "AU15R",
+        "AU17R",
+        "AU26ZR",
+        "AU27ZR",
+        "AU1R",
+        "AU2R",
+        "AU1AU2R",
+        "AU1AU4R",
+        "AU2AU4R",
+        "AU17DR",
+        "AU16R",
+        "AU6R",
+        "AU10R",
+        "AU9R",
+        "AU25R",
+        "AU22R",
+        "AU20R",
+        "AU32",
+        "AU24",
+        "AU18R",
+        "AU38",
+        "AU31",
+        "AU27R",
+        "AU6ZR",
+        "AU18ZR",
+        "AU22ZR",
+        "AU13R"
+      ],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "glass1.smd",
+      "trianglesBefore": 406,
+      "trianglesAfterPlanarDissolve": 354,
+      "target": 60,
+      "trianglesAfter": 59,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Body3",
+          "triangles": 406
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Body3",
+          "triangles": 59
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "glass.smd",
+      "trianglesBefore": 112,
+      "trianglesAfterPlanarDissolve": 112,
+      "target": 20,
+      "trianglesAfter": 20,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Glass",
+          "triangles": 112
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Glass",
+          "triangles": 20
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "hair1.smd",
+      "trianglesBefore": 4704,
+      "trianglesAfterPlanarDissolve": 3575,
+      "target": 350,
+      "trianglesAfter": 350,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Hair1",
+          "triangles": 4704
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Hair1",
+          "triangles": 350
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "hair2.smd",
+      "trianglesBefore": 1584,
+      "trianglesAfterPlanarDissolve": 1309,
+      "target": 160,
+      "trianglesAfter": 160,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Hair2",
+          "triangles": 1584
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Hair2",
+          "triangles": 160
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "hairJ.smd",
+      "trianglesBefore": 21024,
+      "trianglesAfterPlanarDissolve": 16749,
+      "target": 1300,
+      "trianglesAfter": 1300,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Hair",
+          "triangles": 21024
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Hair",
+          "triangles": 1300
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "legs.smd",
+      "trianglesBefore": 1182,
+      "trianglesAfterPlanarDissolve": 884,
+      "target": 200,
+      "trianglesAfter": 199,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Skin 1",
+          "triangles": 1182
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Skin 1",
+          "triangles": 199
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "pants.smd",
+      "trianglesBefore": 8781,
+      "trianglesAfterPlanarDissolve": 7753,
+      "target": 800,
+      "trianglesAfter": 800,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Pants1",
+          "triangles": 364
+        },
+        {
+          "index": 1,
+          "name": "PantsRip",
+          "triangles": 1306
+        },
+        {
+          "index": 2,
+          "name": "Pants",
+          "triangles": 7111
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Pants1",
+          "triangles": 61
+        },
+        {
+          "index": 1,
+          "name": "PantsRip",
+          "triangles": 199
+        },
+        {
+          "index": 2,
+          "name": "Pants",
+          "triangles": 540
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "shirtrip.smd",
+      "trianglesBefore": 3114,
+      "trianglesAfterPlanarDissolve": 2930,
+      "target": 270,
+      "trianglesAfter": 270,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Body4",
+          "triangles": 3114
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Body4",
+          "triangles": 270
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    },
+    {
+      "object": "up.smd",
+      "trianglesBefore": 866,
+      "trianglesAfterPlanarDissolve": 828,
+      "target": 120,
+      "trianglesAfter": 118,
+      "materialRowsBefore": [
+        {
+          "index": 0,
+          "name": "Face",
+          "triangles": 866
+        }
+      ],
+      "materialRowsAfter": [
+        {
+          "index": 0,
+          "name": "Face",
+          "triangles": 118
+        }
+      ],
+      "shapeKeysBefore": [],
+      "shapeKeysAfter": []
+    }
+  ],
+  "trianglesBefore": 89833,
+  "trianglesAfter": 7616,
+  "structuralValidation": {
+    "triangleCount": 7616,
+    "drawPrimitives": 26,
+    "meshCount": 15,
+    "materialCount": 22,
+    "embeddedImageCount": 22,
+    "maxTextureEdge": 256,
+    "skinCount": 1,
+    "jointCount": 87,
+    "animationCount": 2,
+    "skinnedPrimitives": 26,
+    "allPrimitivesSkinned": true,
+    "jointNamesAndHierarchyEquivalent": true,
+    "materialAndBaseTextureSlotsEquivalent": true,
+    "budget": {
+      "decimateWhenTrianglesAbove": 10000,
+      "requiredOutputBelow": 8000,
+      "trianglePassed": true,
+      "texturePassed": true
+    }
+  },
+  "limitations": [
+    "Source expression shape keys were reduced to bind-pose Basis because topology-changing decimation cannot retain their topology.",
+    "This remains a conversion candidate: no native action/event semantics, owner visual acceptance, backend registration, dropdown option, runtime selectability, or deployment is implied."
+  ]
+}

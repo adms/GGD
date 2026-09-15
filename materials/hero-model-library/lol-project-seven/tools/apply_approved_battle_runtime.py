@@ -163,9 +163,38 @@ def verify_manifest(repo: Path, registrations: list[dict]) -> str:
     for row in registrations:
         clips = manifest["champions"][row["runtimeHeroId"]]["lines"][row["runtimeCategory"]]
         expected = f"assets/audio/voices/lines/{row['runtimeHeroId']}/{row['runtimeTakeKey']}.mp3"
-        if expected not in {clip["clip"] for clip in clips}:
+        matches = [clip for clip in clips if clip["clip"] == expected]
+        if len(matches) != 1:
             raise ValueError(f"Runtime manifest does not register {row['reviewKey']}: {expected}")
+        clip = matches[0]
+        if clip.get("hash") != row["runtimeSha256"] or clip.get("lang") != "ja":
+            raise ValueError(f"Runtime manifest metadata drift: {row['reviewKey']}")
+        # MP3 encoder delay/padding can move the probed container duration by
+        # about one millisecond relative to the source WAV. The manifest value
+        # is rounded to six decimals, so retain a narrow two-millisecond bound.
+        if abs(float(clip.get("durationSec", -1)) - row["sourceSeconds"]) > 0.002:
+            raise ValueError(f"Runtime manifest duration drift: {row['reviewKey']}")
     return sha256(path)
+
+
+def verify_central_voice_index(repo: Path, registrations: list[dict]) -> None:
+    index_path = repo / "materials/hero-model-library/voice-index.json"
+    file_manifest = repo / "materials/hero-model-library/voice-files.jsonl.gz"
+    index = read_json(index_path)
+    review = index.get("listeningReview", {})
+    if review.get("runtimeApproved") != len(registrations) or review.get("runtimeRegistered") != len(registrations):
+        raise ValueError("Central voice index does not expose all approved runtime registrations")
+    if review.get("decisionsPath") != "materials/hero-model-library/lol-project-seven/listening-review-decisions.json":
+        raise ValueError("Central voice index points at a different approval authority")
+    if index.get("sourceFileManifestSha256") != sha256(file_manifest):
+        raise ValueError("Central voice file manifest SHA drift")
+
+
+def verify_runtime_git_blobs(repo: Path, registrations: list[dict]) -> None:
+    for row in registrations:
+        result = subprocess.run(["git", "show", ":" + row["runtimePath"]], cwd=repo, capture_output=True)
+        if result.returncode or hashlib.sha256(result.stdout).hexdigest() != row["runtimeSha256"]:
+            raise ValueError(f"Runtime MP3 is absent or differs in Git index: {row['runtimePath']}")
 
 
 def main() -> None:
@@ -191,6 +220,12 @@ def main() -> None:
     expected, registrations = expected_originals(queue, decisions, originals)
     if len(registrations) != queue["summary"]["battleReviewCandidates"]:
         raise ValueError("Approved runtime rows do not equal the battle review scope")
+    approved_keys = {
+        key for key, decision in decisions["decisions"].items()
+        if decision.get("runtimeApproved") is True
+    }
+    if approved_keys != {row["reviewKey"] for row in registrations}:
+        raise ValueError("Runtime approval authority contains rows outside the fixed battle review scope")
 
     rendered = render_json(expected, indent=1)
     if args.check:
@@ -230,6 +265,9 @@ def main() -> None:
         subprocess.run(["node", "--import", "tsx", "tools/voice-gen/index-lines.mjs"], cwd=repo, check=True)
 
     manifest_sha = verify_manifest(repo, registrations) if not args.skip_runtime_index else None
+    if args.check and not args.skip_runtime_index:
+        verify_central_voice_index(repo, registrations)
+        verify_runtime_git_blobs(repo, registrations)
     per_hero = Counter(row["runtimeHeroId"] for row in registrations)
     per_target = Counter(row["candidateRuntimeTarget"] for row in registrations)
     receipt = {

@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+  "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+  "archiveBytes": 53102420,
+  "fileCount": 74,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1",
+  "localArchive": "/private/tmp/ggd-palworld-astralym-full58-backup/2b807d7d6ae45dc259f6f94b4cd7d73ad10d7e0de6e34010d59698794ebab310/source.tar.gz",
+  "readback": "/private/tmp/ggd-palworld-astralym-full58-backup/2b807d7d6ae45dc259f6f94b4cd7d73ad10d7e0de6e34010d59698794ebab310/readback.tar.gz",
+  "manifest": "/private/tmp/ggd-palworld-astralym-full58-backup/2b807d7d6ae45dc259f6f94b4cd7d73ad10d7e0de6e34010d59698794ebab310/manifest.json"
+}

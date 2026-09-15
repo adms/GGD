@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-worldblender-c00-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-daisy-c00-static-skinned-v1",
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "heroBound": false,
+      "runtimeSelectable": false,
+      "deploymentVerified": false
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "ggd.remaining-integration-gaps@1",
+  "recordedAt": "2026-09-15",
+  "ownerReported": {
+    "branchOnlyPoppOriginalVfxRelationships": 7,
+    "branchOnlyDecimatedDefaultCharacters": [
+      "小呆／達伊",
+      "巴恩（變身前／老巴恩）",
+      "不知火舞"
+    ],
+    "lolSevenCalloutCoverage": "partial-by-skin; skill callout slots remain incomplete",
+    "notIntegratedIntoGame": [
+      "KOF",
+      "拳四郎"
+    ],
+    "originalVoiceDirectFilenameGapGroups": [
+      {
+        "count": 11,
+        "examples": ["洛克人", "赫蘿", "殺老師", "菜月昴"]
+      },
+      {
+        "count": 23,
+        "examples": ["哆啦A夢", "臭作", "夜神月", "呂布", "藏馬"]
+      }
+    ],
+    "jumpForceAmbiguousStoryVoice": {
+      "possibleCharacter": "夜神月",
+      "filenameIdentity": "numeric-only",
+      "directMatchAllowed": false,
+      "status": "pending-speaker-listening-review"
+    }
+  }
+}

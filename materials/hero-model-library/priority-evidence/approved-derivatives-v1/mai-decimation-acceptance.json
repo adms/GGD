@@ -1,0 +1,125 @@
+{
+  "schema": "ggd.approved-derivative-mai-decimation-acceptance@1",
+  "source": {
+    "sha256": "7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2",
+    "triangles": 13796,
+    "retainedAsDropdownOption": true
+  },
+  "candidate": {
+    "gitPath": "content/assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+    "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+    "bytes": 1149836,
+    "triangles": 7994,
+    "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+    "sourceModelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+    "sourceModelDocumentPath": "content/models/community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945.json",
+    "modelDocumentPath": "content/models/version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5.json",
+    "registered": true,
+    "selectedInAutomaticMode": true
+  },
+  "tool": {
+    "path": "tools/model-budget/optimize.ts",
+    "name": "model-budget/optimize@2",
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "tools/model-budget/optimize.ts",
+      "<source.glb>",
+      "--role",
+      "champion",
+      "--geometry",
+      "--apply",
+      "--babylon-verify",
+      "--out",
+      "<stage>",
+      "--json"
+    ],
+    "geometryPlan": {
+      "fromTris": 13796,
+      "targetTris": 8000
+    },
+    "optimizerKey": "9ed12e1b7d1e8183d32c2153ca838d0d858c003f030450e1499929293bea00ce",
+    "gitManifest": {
+      "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-optimizer-manifest.json",
+      "bytes": 1328,
+      "sha256": "e9c0ff493ec2243e38432ef5901101960122c35ca487cdda91e58f50f97a2d52"
+    },
+    "gitSidecar": {
+      "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-optimizer-sidecar.json",
+      "bytes": 1107,
+      "sha256": "6344d2d23dca6739c4d73611acefb59877ae223448c7b56bf76518177882a406"
+    },
+    "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation/optimize-manifest.json",
+    "localSidecar": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb.opt.json"
+  },
+  "validation": {
+    "hardPolicy": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    },
+    "rig": {
+      "ok": true,
+      "reasons": [],
+      "before": {
+        "skins": 1,
+        "joints": 141,
+        "clips": 5,
+        "channels": 585,
+        "tris": 13796,
+        "skinnedPrims": 4,
+        "withWeights": 4
+      },
+      "after": {
+        "skins": 1,
+        "joints": 141,
+        "clips": 5,
+        "channels": 585,
+        "tris": 7994,
+        "skinnedPrims": 4,
+        "withWeights": 4
+      }
+    },
+    "khronos": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "hints": 0,
+      "truncated": false
+    },
+    "babylonWebglComplete": true,
+    "fixedCameraPixelDifference": {
+      "front": {
+        "meanAbsoluteRgb": 0.3190609375,
+        "changedPixelPctAbove16": 0.643125,
+        "maxChannelDelta": 192
+      },
+      "back": {
+        "meanAbsoluteRgb": 0.21676666666666666,
+        "changedPixelPctAbove16": 0.4440625,
+        "maxChannelDelta": 172
+      },
+      "isometric": {
+        "meanAbsoluteRgb": 0.40421822916666666,
+        "changedPixelPctAbove16": 0.84359375,
+        "maxChannelDelta": 201
+      }
+    },
+    "visualAcceptedNoGrossRegression": true
+  },
+  "status": {
+    "converted": true,
+    "validated": true,
+    "registered": true,
+    "selectable": true,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "來源是使用者核准的 300英雄真田幸村改色風格替身，不是 KOF 原作不知火舞模型。",
+    "原生片段屬於來源模型，對不知火舞仍是借用動作。",
+    "未驗證正式站部署。"
+  ]
+}

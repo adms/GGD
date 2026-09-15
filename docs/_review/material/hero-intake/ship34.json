@@ -7,9 +7,9 @@
  "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
-  "modelComponents": 29,
+  "modelComponents": 65,
   "historicalModelSourceArtifacts": 4,
-  "referencedComponents": 12
+  "referencedComponents": 16
  },
  "delivery": {
   "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/_reports/community-acquired-heroes/model-delivery-summary.json",
@@ -30,10 +30,10 @@
   "iconPending": 34,
   "voicePending": 34,
   "independentComponentPending": 8,
-  "independentComponents": 12,
+  "independentComponents": 16,
   "modelCompletelyMissing": 0
  },
- "digest": "9587734478464fe8ea3f2c51067feae65682dcb89b60bc19a7edb9e1f258e9ae",
+ "digest": "a4f124113cd535f5b10c297d2c0027ad953b9c3bd4330a6a342bf01f3c486905",
  "heroes": [
   {
    "id": "acquired-jetragon",
@@ -478,9 +478,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -491,6 +491,9 @@
       "id": "ssbu-zero-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "assist/zero",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
@@ -521,7 +524,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -567,7 +570,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -670,9 +673,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -683,6 +686,9 @@
       "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
       "sourceId": "thunderstore-rezero",
       "sourceGame": "Lethal Company community model replacement",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "ramPrefab",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
@@ -713,7 +719,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -746,7 +752,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -767,9 +773,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -780,6 +786,9 @@
       "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
       "sourceId": "thunderstore-rezero",
       "sourceGame": "Lethal Company community model replacement",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "beatricePrefab",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
@@ -810,7 +819,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -843,7 +852,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -864,9 +873,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -877,6 +886,9 @@
       "id": "ssbu-mario-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/mario/body/c00",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
@@ -901,9 +913,43 @@
       ]
      },
      {
+      "id": "ssbu-mario-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
+      "nativeId": "fighter/mario/model/body/c00",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "bytes": null,
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "verified": false,
+      "problems": [
+       "Git 路徑沒有實檔",
+       "Git 路徑未追蹤"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": null,
+      "animationNames": [],
+      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
+      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
+      "limitations": [
+       "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+       "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+       "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+       "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ]
+     },
+     {
       "id": "ssbu-mario-c00-ultimate14-motion-v1",
       "sourceId": "parallel-ns-ultimate14",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
       "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
       "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
@@ -933,9 +979,9 @@
       ]
      }
     ],
-    "componentCount": 2,
+    "componentCount": 3,
     "componentFilesInRepo": 2,
-    "allVerified": true,
+    "allVerified": false,
     "nativeAnimationCount": 5,
     "proceduralAnimationCount": 0,
     "animationNames": [
@@ -945,7 +991,7 @@
      "d01specialsdash",
      "d01specialsend"
     ],
-    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生／來源動作 5 段（d01specialairsdash、d01specialairsend、d01specialairsjump、d01specialsdash、d01specialsend）。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）",
     "severity": "blocker"
    },
    "icon": {
@@ -1003,7 +1049,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生／來源動作 5 段（d01specialairsdash、d01specialairsend、d01specialairsjump、d01specialsdash、d01specialsend）。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1024,9 +1070,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -1037,6 +1083,9 @@
       "id": "ssbu-mewtwo-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/mewtwo/body/c00",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
@@ -1067,7 +1116,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1113,7 +1162,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1134,9 +1183,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -1144,9 +1193,44 @@
     ],
     "components": [
      {
+      "id": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
+      "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "bytes": null,
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "verified": false,
+      "problems": [
+       "Git 路徑沒有實檔",
+       "Git 路徑未追蹤"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": null,
+      "animationNames": [],
+      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/validation.json",
+      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/visual-comparison.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
+      "limitations": [
+       "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+       "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+       "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+       "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
+       "Main merge and production deployment are not verified."
+      ]
+     },
+     {
       "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/ptrainer/model/ptrainer/c01",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
@@ -1171,9 +1255,44 @@
       ]
      },
      {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
+      "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "bytes": null,
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "verified": false,
+      "problems": [
+       "Git 路徑沒有實檔",
+       "Git 路徑未追蹤"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": null,
+      "animationNames": [],
+      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/validation.json",
+      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/visual-comparison.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
+      "limitations": [
+       "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+       "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+       "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+       "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
+       "Main merge and production deployment are not verified."
+      ]
+     },
+     {
       "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/ptrainer/model/ptrainer/c00",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
@@ -1198,13 +1317,13 @@
       ]
      }
     ],
-    "componentCount": 2,
+    "componentCount": 4,
     "componentFilesInRepo": 2,
-    "allVerified": true,
+    "allVerified": false,
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）",
     "severity": "blocker"
    },
    "icon": {
@@ -1237,7 +1356,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1254,13 +1373,13 @@
     "ssbu-ryu"
    ],
    "model": {
-    "ok": false,
+    "ok": true,
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -1268,19 +1387,22 @@
     ],
     "components": [
      {
-      "id": "ssbu-ryu-c00-procedural-six-state-v1",
+      "id": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": true,
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": null,
       "nativeId": "fighter/ryu/body/c00",
-      "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
-      "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
-      "bytes": 1069196,
-      "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+      "readiness": "registered-non-default-procedural-six-state-option-current-policy-pass",
+      "gitPath": "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb",
+      "bytes": 748828,
+      "sha256": "c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c",
       "verified": true,
       "problems": [],
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
-      "animationProvenance": "ggd-procedural-fallback",
+      "animationProvenance": "ggd-procedural-fallback-not-native-or-retargeted",
       "animationNames": [
        "GGD_procedural_idle",
        "GGD_procedural_run",
@@ -1289,21 +1411,53 @@
        "GGD_procedural_hurt",
        "GGD_procedural_death"
       ],
-      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/validation.json",
-      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/visual-review.json",
-      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+      "validationEvidence": null,
+      "visualEvidence": null,
+      "s3Uri": null,
       "limitations": [
-       "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
-       "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
-       "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
-       "No source VFX, SFX or voice was created or inferred by this motion conversion.",
-       "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+       "Six motions are GGD procedural fallback, not native SSBU or Street Fighter actions.",
+       "Five draw primitives exceed the warning threshold of three but stay within the hard limit.",
+       "Formal deployment has not been verified."
+      ]
+     },
+     {
+      "id": "ssbu-ryu-c00-static-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
+      "nativeId": "fighter/ryu/body/c00",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "gitPath": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+      "bytes": null,
+      "sha256": "8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f",
+      "verified": false,
+      "problems": [
+       "Git 路徑沒有實檔",
+       "Git 路徑未追蹤"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": null,
+      "animationNames": [],
+      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/validation.json",
+      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/visual-review.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
+      "limitations": [
+       "Source Blender contains zero actions; idle, run, attack, cast, hurt and death remain missing.",
+       "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+       "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+       "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed."
       ]
      },
      {
       "id": "ssbu-ryu-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/ryu/body/c00",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
@@ -1328,9 +1482,9 @@
       ]
      }
     ],
-    "componentCount": 2,
+    "componentCount": 3,
     "componentFilesInRepo": 2,
-    "allVerified": true,
+    "allVerified": false,
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 6,
     "animationNames": [
@@ -1341,7 +1495,7 @@
      "GGD_procedural_idle",
      "GGD_procedural_run"
     ],
-    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）",
     "severity": "blocker"
    },
    "icon": {
@@ -1374,7 +1528,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1395,9 +1549,9 @@
     "modelKey": null,
     "clipMap": null,
     "deliveryStatus": "rig-source-present-actions-missing",
-    "deliveryStatusText": "只有骨架來源，⛔ 動作還沒做",
+    "deliveryStatusText": "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
     "componentStatus": "accepted-independent-components-pending-hero-integration",
-    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+    "componentStatusText": "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
     "files": 0,
     "filesInRepo": 0,
     "identities": [
@@ -1408,6 +1562,9 @@
       "id": "ssbu-pickel-alex-c01-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/pickel/body/c01",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
@@ -1435,6 +1592,9 @@
       "id": "ssbu-pickel-steve-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "runtimeModelKey": null,
       "nativeId": "fighter/pickel/body/c00",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
@@ -1465,7 +1625,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1498,7 +1658,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",

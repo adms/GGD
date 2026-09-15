@@ -54,6 +54,7 @@ import {
   resolveAbilityPresentation,
   type PresentationTrigger,
 } from "@ggd/shared/content/abilityPresentation";
+import { resolvePalworldApprovedSkillMotion } from "./generated/palworldApprovedMotion.generated";
 
 /** Per-champion vertex-tint bookkeeping (task #49). */
 interface TintState {
@@ -522,6 +523,7 @@ export class EntityViewRegistry {
     ids: { caster?: number | undefined; target?: number | undefined },
     nowMs: number,
     opts?: { windowMs?: number; clipWindowMs?: number; restartClip?: boolean },
+    casterPulseOverride?: "attack" | "cast" | null,
   ): void {
     for (const rule of resolveAbilityPresentation(trigger)) {
       const id = rule.actor === "caster" ? ids.caster : ids.target;
@@ -530,7 +532,10 @@ export class EntityViewRegistry {
       //   已經接管這條通道時,預設演出**不播**。
       //   ⛔ 不同通道**不受影響**:接管 `caster.action` 不會吃掉受擊者的反應。
       if (channelTakeover.heldBy(id, rule.channel, nowMs)) continue;
-      this.champions.get(id)?.pulse(rule.pulse, nowMs, opts);
+      const pulse = rule.actor === "caster" && casterPulseOverride
+        ? casterPulseOverride
+        : rule.pulse;
+      this.champions.get(id)?.pulse(pulse, nowMs, opts);
     }
   }
 
@@ -676,8 +681,15 @@ export class EntityViewRegistry {
       }
       case "abilityCast": {
         const caster = ev.data.caster as number | undefined;
+        const abilityId = typeof ev.data.abilityId === "string" ? ev.data.abilityId : null;
         // ⭐ P0-3 —— 查表，⛔ 不再寫死
-        this.playDefaultPresentation("abilityCast", { caster }, nowMs);
+        this.playDefaultPresentation(
+          "abilityCast",
+          { caster },
+          nowMs,
+          undefined,
+          resolvePalworldApprovedSkillMotion(abilityId),
+        );
         break;
       }
       // castEnd and castInterrupt are NOT the same moment and must not share a

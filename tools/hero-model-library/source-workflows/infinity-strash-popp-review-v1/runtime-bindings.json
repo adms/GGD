@@ -1,0 +1,55 @@
+{
+  "schema": "ggd.popp-vfx-runtime-bindings@1",
+  "heroId": "b2-popp",
+  "nativeCharacterId": "PN020",
+  "authority": {
+    "decision": "owner-approved-current-review-assets-candidate-only",
+    "date": "2026-09-15",
+    "scope": "all 12 reviewed Popp VFX candidates may enter the feature branch; the seven source-name relationships remain review proposals and do not replace active skill VFX"
+  },
+  "timingPolicy": {
+    "basis": "GGD ability castTimeSec plus reconstructed source phase name",
+    "nativeNiagaraTimingClaim": false,
+    "note": "Delay values in the review proposals are deterministic preview timing only. The Unreal Niagara emitter timeline was not decoded and no proposal is active at runtime."
+  },
+  "bindings": [],
+  "preservedAbilityBindings": [
+    {
+      "abilityId": "b2-popp.q",
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.w",
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.ice.pulse-sm"
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.r",
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    }
+  ],
+  "reserveCandidateIds": [
+    "popp-vfx-candidate-03",
+    "popp-vfx-candidate-04",
+    "popp-vfx-candidate-05",
+    "popp-vfx-candidate-11",
+    "popp-vfx-candidate-12"
+  ]
+}

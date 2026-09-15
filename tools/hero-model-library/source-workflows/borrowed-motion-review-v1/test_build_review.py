@@ -19,18 +19,18 @@ class BorrowedMotionReviewTest(unittest.TestCase):
         cls.source = json.loads(MODULE.SOURCE.read_text())
         cls.contract = MODULE.build_contract(cls.source)
 
-    def test_candidate_is_pinned_playable_and_default_pending(self):
+    def test_popp_candidate_is_resolved_by_authoritative_receipt(self):
         self.assertEqual(self.contract["schema"], "ggd.borrowed-motion-review@1")
-        self.assertEqual(self.contract["summary"]["playableCandidateCount"], 1)
-        candidate = self.contract["candidates"][0]
-        self.assertEqual(candidate["id"], "popp-native-hurt-ascend-fade-v1")
-        self.assertEqual(candidate["clip"]["embeddedName"], "GGD_native_down")
-        self.assertEqual(candidate["skeletonCompatibility"]["status"], "compatible-verified")
-        self.assertIsNone(candidate["review"]["decision"])
-        self.assertFalse(candidate["review"]["runtimeBindingChanged"])
-        self.assertGreaterEqual(len(candidate["validationEvidence"]), 1)
-        for evidence in candidate["validationEvidence"]:
-            self.assertEqual(len(evidence["sha256"]), 64)
+        self.assertEqual(self.contract["summary"]["playableCandidateCount"], 0)
+        self.assertEqual(self.contract["summary"]["resolvedCandidateCount"], 1)
+        self.assertEqual(self.contract["summary"]["pendingDecisionCount"], 0)
+        candidate = self.contract["resolvedCandidates"][0]
+        self.assertEqual(candidate["proposalId"], "popp-native-hurt-ascend-fade-v1")
+        self.assertEqual(candidate["appliedCandidateId"], "popp-native-down-rise-fade-v1")
+        self.assertEqual(candidate["motion"], "GGD_native_down")
+        self.assertEqual(candidate["decision"], "approve")
+        self.assertTrue(candidate["runtimeBindingChanged"])
+        self.assertEqual(len(candidate["receipt"]["sha256"]), 64)
 
     def test_blocked_retarget_is_not_misrepresented_as_playable(self):
         self.assertEqual(self.contract["summary"]["blockedLeadCount"], 2)
@@ -55,7 +55,8 @@ class BorrowedMotionReviewTest(unittest.TestCase):
         self.assertIn("data-decision=\"approve\"", page)
         self.assertIn("data-decision=\"reject\"", page)
         self.assertIn("重新播放原始 clip", page)
-        self.assertIn("播放升天淡出替代演出", page)
+        self.assertIn("已有正式收據的完成項目", page)
+        self.assertIn("不再列入 pending 佇列", page)
         self.assertIn("live=1", page)
         self.assertIn("viewer-status", page)
         self.assertIn("loadAndWait(true)", page)
@@ -78,13 +79,9 @@ class BorrowedMotionReviewTest(unittest.TestCase):
 
     def test_source_contract_rejects_mislabeled_presentation(self):
         altered = json.loads(json.dumps(self.source))
+        altered["candidates"][0]["id"] = "unresolved-copy"
         altered["candidates"][0]["presentation"]["mode"] = "none"
         with self.assertRaisesRegex(ValueError, "presentation mode"):
-            MODULE.build_contract(altered)
-
-        altered = json.loads(json.dumps(self.source))
-        altered["candidates"][0]["presentation"]["runtimeWorldSpaceCalibrationRequired"] = False
-        with self.assertRaisesRegex(ValueError, "runtime calibration"):
             MODULE.build_contract(altered)
 
 

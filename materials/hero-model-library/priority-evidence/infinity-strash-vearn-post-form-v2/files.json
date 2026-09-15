@@ -1,0 +1,120 @@
+{
+  "schema": "ggd.asset-evidence-manifest@1",
+  "sourceId": "infinity-strash-vearn-post-form-local-audit-v2",
+  "files": [
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/CB_EN653_00_a.uasset",
+      "bytes": 12443,
+      "sha256": "d60f47318e1fcae87dabaee9351099e906a666b0cb77536220d8ef1f96ec5918",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/CB_EN653_00_a.uexp",
+      "bytes": 4445,
+      "sha256": "f74d9d18befdb7f09cfad7c6e4a7999b014b6dfaf50993a09d8151d112d0b598",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/SK_EN653_01_model.uasset",
+      "bytes": 7302,
+      "sha256": "b3ceafcc6bc588d5d7ecbef05cfef17b7b3adcb50eff78de385e1de4e196d671",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/SK_EN653_01_model.uexp",
+      "bytes": 1124963,
+      "sha256": "5ce35022a1af217f553dbbc89ec83f0a3caebee5162a27059a9f606706e17c5a",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/CB_EN680_00_a.uasset",
+      "bytes": 13009,
+      "sha256": "3564f10550e8c336b1624a15f61b1aa68125a5f59fbec4b47344f311a8946c89",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/CB_EN680_00_a.uexp",
+      "bytes": 4251,
+      "sha256": "638b2cfcf8a00757fd406c84f1bb23a997b504048cbb43e20ccf8bfdcfad164a",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/SK_EN680_00_model.uasset",
+      "bytes": 9119,
+      "sha256": "84f0bb0da77e2850e912cd6d48e333cd7ca5a6f831bd95ff369b398a757ba9f6",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/SK_EN680_00_model.uexp",
+      "bytes": 13847476,
+      "sha256": "731d5343cb71231ed349c97d951ffd86c5f303d3165612a21802c094bd7e279a",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/CB_EN681_00_a.uasset",
+      "bytes": 12798,
+      "sha256": "209c14ca9d010d2f4b53d5010ab1c254d480ec2a9fc28824b410470b89695bea",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/CB_EN681_00_a.uexp",
+      "bytes": 4228,
+      "sha256": "2df02b62b2ecb6daa6fc76bd76e0bd949d9b73fb2fed2ed955431673e4c3b77c",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/SK_EN681_00_model.uasset",
+      "bytes": 8420,
+      "sha256": "7949398bafafa909f3f7bf69ece47af5bc2e8e634569fa39ab6bb7ab7c26e795",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/SK_EN681_00_model.uexp",
+      "bytes": 12358962,
+      "sha256": "e866c110e6230dbc85667f2b4394295fcdfdb70eb39e69bedc162d77f0837ed9",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/CB_EN801_00_a.uasset",
+      "bytes": 12254,
+      "sha256": "a326c34ed56d50333e89da8b8a8ed1057f257f90ee5c890b36da550767b18058",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/CB_EN801_00_a.uexp",
+      "bytes": 3886,
+      "sha256": "1cf9f33fa172f8e16931e3f0a2252002b707d4695540b28fe02ba18bd2456844",
+      "category": "configuration"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/SK_EN801_00_Body.uasset",
+      "bytes": 9136,
+      "sha256": "9d298433421bb736c90da7efb244a5d1bafeeec9087df067617b97ad39103d8e",
+      "category": "model"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/SK_EN801_00_Body.uexp",
+      "bytes": 9020874,
+      "sha256": "4d06c0aad1618f2a6ee3074e453f7bb22458d709628c550aeb786ac36cc1c9e2",
+      "category": "model"
+    }
+  ],
+  "fileCount": 16,
+  "bytes": 36453566
+}

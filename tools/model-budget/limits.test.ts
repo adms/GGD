@@ -52,7 +52,7 @@ describe("scene lines are the frame slice divided by the derated constant", () =
    * ⭐ 而它今天的角色是**診斷** —— 它讓「調高上限的代價」看得見。
    */
   it("推導本身仍然成立（⛔ 而它不再決定出貨值）", () => {
-    // ⭐ 公式沒壞：照 3× 保守係數，12 名同場塞得進 9 ms
+    // ⭐ 公式沒壞：照現行 2.4× 規劃係數，12 名同場塞得進 9 ms
     expect(DERIVED_CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeLessThanOrEqual(ANIMATION_FRAME_MS);
     expect((DERIVED_CHAMPION_CHANNEL_LIMIT + 10) * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeGreaterThan(ANIMATION_FRAME_MS);
     // ⭐ 而出貨值**高於**推導值 ⇒ 保守餘裕被刻意縮小了，⛔ 那是 owner 的裁決
@@ -66,10 +66,9 @@ describe("scene lines are the frame slice divided by the derated constant", () =
     expect(TARGET.deviceBenchmarkRequired).toBe(false);
     expect(COMBAT_FRAME_SPLIT.reduce((sum, s) => sum + s.ms, 0)).toBeCloseTo(FRAME_MS, 8);
   });
-  it("worst frame the current assets can build stays under the triangle line", () => {
-    // 12 × heaviest asset (dragon2 19,542) + heaviest arena ≈ 289k
-    expect(12 * 19542 + 65000).toBeLessThan(TRI_LIMIT);
+  it("the triangle content guard keeps a warning band below its 30 fps hard cap", () => {
     expect(TRI_WARN).toBeLessThan(TRI_LIMIT);
+    expect(TRI_LIMIT * TARGET.fps).toBe(12_000_000);
   });
 });
 

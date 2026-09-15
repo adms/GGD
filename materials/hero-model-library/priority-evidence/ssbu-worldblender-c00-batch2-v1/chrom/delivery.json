@@ -1,0 +1,83 @@
+{
+  "schema": "ggd-worldblender-c00-component-delivery@1",
+  "componentId": "ssbu-chrom-c00-static-skinned-v1",
+  "label": "庫洛姆 SSBU Ultimate c00 黑底修復版",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "nameZh": "庫洛姆",
+    "originalName": "Chrom",
+    "nativeId": "fighter/chrom/model/body/c00",
+    "variant": "c00"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/chrom/model/body/c00/chrom-c00.blend",
+    "bytes": 6981308,
+    "sha256": "315b422197357a96d5d3bc71532a4902f4a0e58d2f3287871e8e36e9764b83ad"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+    "bytes": 963000,
+    "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/rebuild/body.glb",
+    "bytes": 963000,
+    "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587"
+  },
+  "metrics": {
+    "triangles": 7890,
+    "drawPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 123,
+    "textureCount": 7,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "budgetErrors": 0,
+    "finiteFloatValuesChecked": 88368,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "ultimate14MotionCandidate": {
+    "sourceId": "parallel-ns-ultimate14",
+    "nuanmbPaths": 9,
+    "bodyMotionPaths": 9,
+    "uniqueTransformPayloads": 9,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "s3Backup": {
+    "status": "uploaded-and-readback-verified",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.files.json",
+    "archiveSha256": "2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee",
+    "archiveBytes": 11073728,
+    "fileCount": 47,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "gaps": [
+    "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+    "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+    "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+    "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+  ]
+}

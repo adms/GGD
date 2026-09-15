@@ -1,0 +1,743 @@
+{
+  "schema": "ggd.infinity-strash-texture-backdrop-decimation-validation@1",
+  "generation": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/generation.json",
+    "bytes": 18556,
+    "sha256": "26bbac84b748ee5c28b25e0e0e80411fdd1f2921451134ccbeb86c0bab8245c4"
+  },
+  "visual": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/visual-comparison.json",
+    "bytes": 72078,
+    "sha256": "308c06473d55008554d9e8658e6e2b26fb2c20780d93d4ec1e2fb89c888eab72"
+  },
+  "records": [
+    {
+      "candidateId": "dai-pn010-02",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/02",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "bytes": 1986068,
+        "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "bytes": 1880364,
+        "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+      },
+      "metrics": {
+        "triangles": 7917,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 429,
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 2.5,
+            "channels": 199
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5833333134651184,
+            "channels": 266
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 1.25,
+            "channels": 239
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special02",
+            "duration": 4.166666507720947,
+            "channels": 151
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_down",
+            "duration": 0.0416666679084301,
+            "channels": 214
+          }
+        ]
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 6
+      },
+      "ggdUploadErrors": 0,
+      "ggdBudget": {
+        "errors": [],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "rig": {
+        "ok": true,
+        "reasons": [],
+        "before": {
+          "skins": 1,
+          "joints": 429,
+          "clips": 5,
+          "channels": 1069,
+          "tris": 16035,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        },
+        "after": {
+          "skins": 1,
+          "joints": 429,
+          "clips": 5,
+          "channels": 1069,
+          "tris": 7917,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        }
+      },
+      "preservation": {
+        "sceneDefinitionsExact": true,
+        "skinDefinitionsAndInverseBindMatricesExact": true,
+        "animationDefinitionsTimesAndValuesExact": true,
+        "allNonIndexVertexAttributesExact": true,
+        "embeddedImagesExact": true,
+        "materialAssignmentsExactByName": true,
+        "primitiveRows": [
+          {
+            "mesh": 0,
+            "primitive": 0,
+            "materialBefore": "GGD_body",
+            "materialAfter": "GGD_body",
+            "trianglesBefore": 9008,
+            "trianglesAfter": 4436,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 1,
+            "materialBefore": "GGD_weapon",
+            "materialAfter": "GGD_weapon",
+            "trianglesBefore": 645,
+            "trianglesAfter": 317,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 2,
+            "materialBefore": "GGD_faceDecal1",
+            "materialAfter": "GGD_faceDecal1",
+            "trianglesBefore": 40,
+            "trianglesAfter": 40,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 3,
+            "materialBefore": "GGD_faceDecal2",
+            "materialAfter": "GGD_faceDecal2",
+            "trianglesBefore": 19,
+            "trianglesAfter": 11,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 4,
+            "materialBefore": "GGD_face",
+            "materialAfter": "GGD_face",
+            "trianglesBefore": 3287,
+            "trianglesAfter": 1619,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 5,
+            "materialBefore": "GGD_hair",
+            "materialAfter": "GGD_hair",
+            "trianglesBefore": 3036,
+            "trianglesAfter": 1494,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          }
+        ]
+      },
+      "animationProvenance": {
+        "kind": "native-source-clips-preserved",
+        "nativeClipCount": 5,
+        "nativeClips": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special02",
+          "GGD_native_down"
+        ],
+        "generatedClips": 0,
+        "retargetedClips": 0
+      },
+      "visualEvidence": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/visual-comparison.json",
+        "maxChangedPixelPctAtChannelDeltaGt10": 3.474688,
+        "conservativeChangedPixelDiagnosticUnder5": true,
+        "maxLitClassificationXorPctAtLuma128": 1.057344,
+        "contractMaxPct": 5,
+        "metricGatePassed": true,
+        "humanReview": {
+          "reviewer": "Codex visual inspection",
+          "result": "accepted",
+          "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+        }
+      },
+      "formalHeroAdoptionEligible": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/05 + Dai no Tsurugi",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "bytes": 2192280,
+        "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "bytes": 2081176,
+        "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+      },
+      "metrics": {
+        "triangles": 7918,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 429,
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 2.5,
+            "channels": 199
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5833333134651184,
+            "channels": 266
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 1.25,
+            "channels": 239
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special02",
+            "duration": 4.166666507720947,
+            "channels": 151
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_down",
+            "duration": 0.0416666679084301,
+            "channels": 214
+          }
+        ]
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 12
+      },
+      "ggdUploadErrors": 0,
+      "ggdBudget": {
+        "errors": [],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "rig": {
+        "ok": true,
+        "reasons": [],
+        "before": {
+          "skins": 1,
+          "joints": 429,
+          "clips": 5,
+          "channels": 1069,
+          "tris": 16882,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        },
+        "after": {
+          "skins": 1,
+          "joints": 429,
+          "clips": 5,
+          "channels": 1069,
+          "tris": 7918,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        }
+      },
+      "preservation": {
+        "sceneDefinitionsExact": true,
+        "skinDefinitionsAndInverseBindMatricesExact": true,
+        "animationDefinitionsTimesAndValuesExact": true,
+        "allNonIndexVertexAttributesExact": true,
+        "embeddedImagesExact": true,
+        "materialAssignmentsExactByName": true,
+        "primitiveRows": [
+          {
+            "mesh": 0,
+            "primitive": 0,
+            "materialBefore": "GGD_body",
+            "materialAfter": "GGD_body",
+            "trianglesBefore": 7218,
+            "trianglesAfter": 3376,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 1,
+            "materialBefore": "GGD_sheath",
+            "materialAfter": "GGD_sheath",
+            "trianglesBefore": 2888,
+            "trianglesAfter": 1350,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 2,
+            "materialBefore": "GGD_faceDecal1",
+            "materialAfter": "GGD_faceDecal1",
+            "trianglesBefore": 40,
+            "trianglesAfter": 40,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 3,
+            "materialBefore": "GGD_faceDecal2",
+            "materialAfter": "GGD_faceDecal2",
+            "trianglesBefore": 19,
+            "trianglesAfter": 11,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 4,
+            "materialBefore": "GGD_face",
+            "materialAfter": "GGD_face",
+            "trianglesBefore": 3287,
+            "trianglesAfter": 1537,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 5,
+            "materialBefore": "GGD_hair",
+            "materialAfter": "GGD_hair",
+            "trianglesBefore": 3430,
+            "trianglesAfter": 1604,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "TEXCOORD_2",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          }
+        ]
+      },
+      "animationProvenance": {
+        "kind": "native-source-clips-preserved",
+        "nativeClipCount": 5,
+        "nativeClips": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special02",
+          "GGD_native_down"
+        ],
+        "generatedClips": 0,
+        "retargetedClips": 0
+      },
+      "visualEvidence": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/visual-comparison.json",
+        "maxChangedPixelPctAtChannelDeltaGt10": 2.510937,
+        "conservativeChangedPixelDiagnosticUnder5": true,
+        "maxLitClassificationXorPctAtLuma128": 0.884062,
+        "contractMaxPct": 5,
+        "metricGatePassed": true,
+        "humanReview": {
+          "reviewer": "Codex visual inspection",
+          "result": "accepted",
+          "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+        }
+      },
+      "formalHeroAdoptionEligible": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "heroId": "godie-ubal",
+      "character": "老巴恩",
+      "form": "EN801 變身前",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "bytes": 3004016,
+        "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "bytes": 2899468,
+        "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+      },
+      "metrics": {
+        "triangles": 7998,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 292,
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 3.3333332538604736,
+            "channels": 197
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5416666865348816,
+            "channels": 184
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 2.5,
+            "channels": 215
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special01",
+            "duration": 5.791666507720947,
+            "channels": 223
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_death",
+            "duration": 5,
+            "channels": 281
+          }
+        ]
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 6
+      },
+      "ggdUploadErrors": 0,
+      "ggdBudget": {
+        "errors": [],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "rig": {
+        "ok": true,
+        "reasons": [],
+        "before": {
+          "skins": 1,
+          "joints": 292,
+          "clips": 5,
+          "channels": 1100,
+          "tris": 16760,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        },
+        "after": {
+          "skins": 1,
+          "joints": 292,
+          "clips": 5,
+          "channels": 1100,
+          "tris": 7998,
+          "skinnedPrims": 6,
+          "withWeights": 6
+        }
+      },
+      "preservation": {
+        "sceneDefinitionsExact": true,
+        "skinDefinitionsAndInverseBindMatricesExact": true,
+        "animationDefinitionsTimesAndValuesExact": true,
+        "allNonIndexVertexAttributesExact": true,
+        "embeddedImagesExact": true,
+        "materialAssignmentsExactByName": true,
+        "primitiveRows": [
+          {
+            "mesh": 0,
+            "primitive": 0,
+            "materialBefore": "GGD_body",
+            "materialAfter": "GGD_body",
+            "trianglesBefore": 12030,
+            "trianglesAfter": 6420,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 1,
+            "materialBefore": "GGD_faceDecal1",
+            "materialAfter": "GGD_faceDecal1",
+            "trianglesBefore": 40,
+            "trianglesAfter": 40,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 2,
+            "materialBefore": "GGD_faceDecal2",
+            "materialAfter": "GGD_faceDecal2",
+            "trianglesBefore": 134,
+            "trianglesAfter": 86,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 3,
+            "materialBefore": "GGD_face",
+            "materialAfter": "GGD_face",
+            "trianglesBefore": 2646,
+            "trianglesAfter": 878,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 4,
+            "materialBefore": "GGD_hair",
+            "materialAfter": "GGD_hair",
+            "trianglesBefore": 1822,
+            "trianglesAfter": 488,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          },
+          {
+            "mesh": 0,
+            "primitive": 5,
+            "materialBefore": "GGD_faceDecal3",
+            "materialAfter": "GGD_faceDecal3",
+            "trianglesBefore": 88,
+            "trianglesAfter": 86,
+            "exactAttributes": [
+              "POSITION",
+              "NORMAL",
+              "TEXCOORD_0",
+              "TEXCOORD_1",
+              "COLOR_0",
+              "COLOR_1",
+              "JOINTS_0",
+              "WEIGHTS_0"
+            ]
+          }
+        ]
+      },
+      "animationProvenance": {
+        "kind": "native-source-clips-preserved",
+        "nativeClipCount": 5,
+        "nativeClips": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special01",
+          "GGD_native_death"
+        ],
+        "generatedClips": 0,
+        "retargetedClips": 0
+      },
+      "visualEvidence": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/visual-comparison.json",
+        "maxChangedPixelPctAtChannelDeltaGt10": 5.655,
+        "conservativeChangedPixelDiagnosticUnder5": false,
+        "maxLitClassificationXorPctAtLuma128": 0.4875,
+        "contractMaxPct": 5,
+        "metricGatePassed": true,
+        "humanReview": {
+          "reviewer": "Codex visual inspection",
+          "result": "accepted",
+          "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+        }
+      },
+      "formalHeroAdoptionEligible": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "summary": {
+    "candidates": 3,
+    "allFormalAdoptionEligible": true,
+    "khronosErrors": 0,
+    "ggdUploadErrors": 0,
+    "allRigChecksPassed": true,
+    "allVisualReviewsAccepted": true
+  },
+  "boundaries": {
+    "centralIndexesModified": false,
+    "championPointersModified": false,
+    "runtimeSelectable": false,
+    "productionDeploymentVerified": false
+  }
+}

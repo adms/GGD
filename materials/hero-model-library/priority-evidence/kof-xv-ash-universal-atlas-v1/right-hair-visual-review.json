@@ -1,0 +1,46 @@
+{
+  "schema": "ggd.kof-xv-ash-universal-atlas-visual-status@1",
+  "componentId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+  "modelSha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+  "preStandardizationComparison": {
+    "schema": "ggd.kof-xv-ash-universal-atlas-render-comparison@1",
+    "threshold": {
+      "changedPixelChannelDelta": 12,
+      "maxChangedPixelPct": 5
+    },
+    "views": [
+      {
+        "view": "face",
+        "pixels": 200704,
+        "changedPixels": 92,
+        "changedPixelPct": 0.04583864795918367,
+        "meanMaxChannelDelta": 0.5770039461096939,
+        "maxChannelDelta": 28
+      },
+      {
+        "view": "front",
+        "pixels": 221184,
+        "changedPixels": 711,
+        "changedPixelPct": 0.32145182291666663,
+        "meanMaxChannelDelta": 0.47458676938657407,
+        "maxChannelDelta": 46
+      },
+      {
+        "view": "three-quarter",
+        "pixels": 221184,
+        "changedPixels": 892,
+        "changedPixelPct": 0.40328414351851855,
+        "meanMaxChannelDelta": 0.46159306278935186,
+        "maxChannelDelta": 55
+      }
+    ],
+    "maxChangedPixelPct": 0.40328414351851855,
+    "visualAcceptance": "pending-owner-review"
+  },
+  "preStandardizationThresholdPassed": true,
+  "finalVisualAcceptance": false,
+  "finalRerenderStatus": "pending-blender-background-host-crash",
+  "ownerAuthorization": "2026-09-15 owner authorized catalog intake for all resources; no false final visual-acceptance claim is made.",
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

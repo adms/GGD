@@ -38,14 +38,56 @@ def public_details(metadata, item_id):
     return record
 
 
-def acquire(item_id, home):
+def metadata_record(metadata, item_id):
+    records = metadata.get('response',{}).get('publishedfiledetails',[])
+    if len(records)!=1:
+        raise ValueError('Expected exactly one Workshop metadata record')
+    record = records[0]
+    if str(record.get('publishedfileid'))!=str(item_id):
+        raise ValueError('Workshop item ID mismatch')
+    return record
+
+
+def inspect(item_id, home):
     home.mkdir(parents=True,exist_ok=True)
-    if (home/'acquisition.json').exists():
-        raise ValueError('Existing acquisition receipt: verify or use another intake directory')
     raw_metadata = subprocess.check_output(['curl','--fail','--location','--silent','--show-error',
         '--max-time','45','--data-urlencode','itemcount=1','--data-urlencode',f'publishedfileids[0]={item_id}',API])
     metadata = json.loads(raw_metadata)
-    (home/'steam-metadata.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n')
+    metadata_path = home/'steam-metadata.json'
+    metadata_path.write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n')
+    record = metadata_record(metadata,item_id)
+    url = urlparse(record.get('file_url',''))
+    public = record.get('result')==1 and record.get('visibility')==0 and not record.get('banned',False)
+    inspection = {
+        'schema':'ggd.steam-workshop-public-inspection@1',
+        'id':home.name,
+        'itemId':str(item_id),
+        'pageUrl':f'https://steamcommunity.com/sharedfiles/filedetails/?id={item_id}',
+        'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds'),
+        'title':record.get('title'),
+        'consumerAppId':record.get('consumer_app_id'),
+        'metadata':{
+            'path':str(metadata_path),
+            'sha256':hashlib.sha256(metadata_path.read_bytes()).hexdigest(),
+        },
+        'publicItem':public,
+        'fileSize':int(record.get('file_size',0) or 0),
+        'download':{
+            'fileUrlPresent':bool(record.get('file_url')),
+            'supportedPublicCdn':url.scheme=='https' and url.hostname in CDN_HOSTS and not url.username and not url.password,
+            'status':'public-cdn-url-available' if public and url.scheme=='https' and url.hostname in CDN_HOSTS and not url.username and not url.password else 'public-page-no-supported-api-file-url',
+        },
+        'scope':'Public metadata inspection only; no Steam login, download, extraction, identity mapping, conversion, registration or deployment is asserted.',
+    }
+    inspection_path = home/'inspection.json'
+    inspection_path.write_text(json.dumps(inspection,ensure_ascii=False,indent=2)+'\n')
+    return metadata, inspection
+
+
+def acquire(item_id, home):
+    if (home/'acquisition.json').exists():
+        raise ValueError('Existing acquisition receipt: verify or use another intake directory')
+    metadata, _ = inspect(item_id, home)
     record = public_details(metadata,item_id)
     (home/'raw').mkdir(exist_ok=True)
     part = home/'raw/workshop.part'
@@ -80,6 +122,11 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('item_id')
     parser.add_argument('intake',type=Path)
+    parser.add_argument('--metadata-only',action='store_true',help='Record official public-page metadata without attempting a CDN download')
     args=parser.parse_args()
     if not re.fullmatch(r'[0-9]+',args.item_id):parser.error('item_id must be a numeric Workshop ID')
-    acquire(args.item_id,args.intake)
+    if args.metadata_only:
+        _, inspection = inspect(args.item_id,args.intake)
+        print(json.dumps(inspection,ensure_ascii=False))
+    else:
+        acquire(args.item_id,args.intake)

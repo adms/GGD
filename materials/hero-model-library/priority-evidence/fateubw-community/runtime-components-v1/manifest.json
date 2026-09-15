@@ -1,0 +1,521 @@
+{
+  "schema": "ggd.fateubw-runtime-components@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceGame": "Fate/Unlimited Block Works",
+  "platform": "Minecraft Java 1.21.1",
+  "upstreamLicense": "ARR",
+  "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+  "semanticPolicy": "same-source-semantic-fallback",
+  "summary": {
+    "componentsPinnedToGit": 14,
+    "mappedCharacters": 4,
+    "mappedHeroIds": 5,
+    "unmappedCharacters": 10,
+    "hardPolicyPass": 14,
+    "nativeClipsRetained": 127,
+    "sixStateMapsComplete": 14,
+    "defaultEligible": 0,
+    "productionDeployed": 0
+  },
+  "components": [
+    {
+      "characterId": "artoria_pendragon_saber",
+      "authorLabel": "Artoria Pendragon (Saber)",
+      "heroIds": [
+        "godie-e002",
+        "godie-e00l"
+      ],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+      "clipMap": {
+        "idle": "summon",
+        "run": "one_hand_1",
+        "attack": "two_hand_1",
+        "cast": "excalibur",
+        "hurt": "invisible_burst_hit",
+        "death": "invisible_burst_hit"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 10,
+      "glb": {
+        "gitPath": "content/assets/models/community/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb",
+        "bytes": 245732,
+        "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9.json",
+        "bytes": 461,
+        "sha256": "763076bf54a4aabbf2b58c217779d00c05368c2d615b5aa053e8b2e2c6afe2bc"
+      },
+      "runtimeCandidate": true,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "cu_chulainn_lancer",
+      "authorLabel": "Cu Chulainn (Lancer)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18",
+      "clipMap": {
+        "idle": "spear_1",
+        "run": "spear_2",
+        "attack": "spear_3",
+        "cast": "gae_bolg",
+        "hurt": "spear_5",
+        "death": "spear_5"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 7,
+      "glb": {
+        "gitPath": "content/assets/models/community/4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc.glb",
+        "bytes": 195016,
+        "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18.json",
+        "bytes": 431,
+        "sha256": "c3b226ad942fe5b196216aaf64ef62a562dadf2e98a020e75b59cc1edb734083"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "diarmuid_ua_duibhne_lancer",
+      "authorLabel": "Diarmuid Ua Duibhne (Lancer)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172",
+      "clipMap": {
+        "idle": "blink",
+        "run": "dual_spear_1",
+        "attack": "dual_spear_2",
+        "cast": "hogou_unseal",
+        "hurt": "dual_spear_5",
+        "death": "dual_spear_5"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 7,
+      "glb": {
+        "gitPath": "content/assets/models/community/18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80.glb",
+        "bytes": 222352,
+        "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172.json",
+        "bytes": 453,
+        "sha256": "a397c6e1c7841f85cbef1da87e8a590b4fcb0df17fb7ea4381844b20a673cd66"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "emiya_archer",
+      "authorLabel": "Emiya (Archer)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9",
+      "clipMap": {
+        "idle": "summon",
+        "run": "dual_slash_1",
+        "attack": "dual_slash_2",
+        "cast": "caladbolg",
+        "hurt": "dual_slash_6",
+        "death": "dual_slash_6"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 11,
+      "glb": {
+        "gitPath": "content/assets/models/community/0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696.glb",
+        "bytes": 296000,
+        "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9.json",
+        "bytes": 451,
+        "sha256": "4144e730a054a84b19098d0046aa7c62f76562dc3b6e287f2b474b10f0c25390"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "gilgamesh_archer",
+      "authorLabel": "Gilgamesh (Archer)",
+      "heroIds": [
+        "community-review-18-20260907"
+      ],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+      "clipMap": {
+        "idle": "summon",
+        "run": "one_hand_1",
+        "attack": "one_hand_2",
+        "cast": "ea",
+        "hurt": "guard",
+        "death": "guard"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 9,
+      "glb": {
+        "gitPath": "content/assets/models/community/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb",
+        "bytes": 208968,
+        "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4.json",
+        "bytes": 426,
+        "sha256": "a33c22b6a37ca9d4f3683634da016a984b87335ef5c6086cf3abf8c98320f260"
+      },
+      "runtimeCandidate": true,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "gilles_de_rais_caster",
+      "authorLabel": "Gilles de Rais (Caster)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c",
+      "clipMap": {
+        "idle": "summon",
+        "run": "shoot",
+        "attack": "summon_monster",
+        "cast": "summon_tentacle",
+        "hurt": "shoot",
+        "death": "summon_monster"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 4,
+      "glb": {
+        "gitPath": "content/assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb",
+        "bytes": 73280,
+        "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c.json",
+        "bytes": 447,
+        "sha256": "701bd9664cef9aff57719059ebc13f63050d0aca29ffac368ac3d93aca97534c"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "hassan-i-sabbah_assassin",
+      "authorLabel": "Hassan-i-Sabbah (Assassin)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1",
+      "clipMap": {
+        "idle": "summon",
+        "run": "dupe",
+        "attack": "dagger_1",
+        "cast": "dagger_throw",
+        "hurt": "top_stab",
+        "death": "top_stab"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 8,
+      "glb": {
+        "gitPath": "content/assets/models/community/e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3.glb",
+        "bytes": 158296,
+        "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1.json",
+        "bytes": 434,
+        "sha256": "8323cc48a5573e21d5694dc21021a550fce921ab2d2d47f21a89a31f2d0f899f"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "heracles_berserker",
+      "authorLabel": "Heracles (Berserker)",
+      "heroIds": [
+        "godie-hapm"
+      ],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+      "clipMap": {
+        "idle": "walk",
+        "run": "run",
+        "attack": "one_hand_heavy_1",
+        "cast": "leap_slash",
+        "hurt": "fake_death",
+        "death": "death"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 16,
+      "glb": {
+        "gitPath": "content/assets/models/community/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb",
+        "bytes": 500056,
+        "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca.json",
+        "bytes": 436,
+        "sha256": "ba14da49f4a5ef20c684c99c68a30df317774cb6f876bc964f53ac0ba659b74a"
+      },
+      "runtimeCandidate": true,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "iskander_rider",
+      "authorLabel": "Iskander (Rider)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159",
+      "clipMap": {
+        "idle": "summon",
+        "run": "chariot_summon",
+        "attack": "one_hand_1",
+        "cast": "chariot_summon",
+        "hurt": "one_hand_7",
+        "death": "one_hand_7"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 9,
+      "glb": {
+        "gitPath": "content/assets/models/community/5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3.glb",
+        "bytes": 199136,
+        "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159.json",
+        "bytes": 452,
+        "sha256": "8b02b1742b1cb516138796bf2da744651b1f33f49db2c52475361a4c467cfae5"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "lancelot_berserker",
+      "authorLabel": "Lancelot (Berserker)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7",
+      "clipMap": {
+        "idle": "summon",
+        "run": "jump",
+        "attack": "two_hand_1",
+        "cast": "gun",
+        "hurt": "jump_land",
+        "death": "jump_land"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 13,
+      "glb": {
+        "gitPath": "content/assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb",
+        "bytes": 340508,
+        "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7.json",
+        "bytes": 429,
+        "sha256": "c702a4f97d6702356f47595952cd198da9fb199d5f5f7b0784dd4ff7d8d23c7d"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "medea_caster",
+      "authorLabel": "Medea (Caster)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7",
+      "clipMap": {
+        "idle": "magic_circle",
+        "run": "cast_1",
+        "attack": "rule_breaker",
+        "cast": "magic_circle",
+        "hurt": "cast_4",
+        "death": "cast_4"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 6,
+      "glb": {
+        "gitPath": "content/assets/models/community/9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6.glb",
+        "bytes": 242456,
+        "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7.json",
+        "bytes": 442,
+        "sha256": "37fb2f89a02eabac900297e934c99b671549fd306e4e017a837c5d621c7ac1a7"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "medusa_rider",
+      "authorLabel": "Medusa (Rider)",
+      "heroIds": [
+        "godie-hvsh"
+      ],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+      "clipMap": {
+        "idle": "summon",
+        "run": "jump",
+        "attack": "dual_reverse_1",
+        "cast": "bellerophon",
+        "hurt": "land",
+        "death": "land"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 11,
+      "glb": {
+        "gitPath": "content/assets/models/community/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb",
+        "bytes": 227824,
+        "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd.json",
+        "bytes": 431,
+        "sha256": "415088754968fb07a2cd1be075238209c510a6aee353badef331744b679440a7"
+      },
+      "runtimeCandidate": true,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "nero_claudius_saber",
+      "authorLabel": "Nero Claudius (Saber)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02",
+      "clipMap": {
+        "idle": "summon",
+        "run": "horizontal_slashes",
+        "attack": "vertical_slashes",
+        "cast": "aestus_domus_aurea_full",
+        "hurt": "stab",
+        "death": "stab"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 6,
+      "glb": {
+        "gitPath": "content/assets/models/community/059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad.glb",
+        "bytes": 478168,
+        "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02.json",
+        "bytes": 459,
+        "sha256": "05a2e655239d05dbff12d83606422462803677c5f2101c2854f54b00ecd58380"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "characterId": "sasaki_kojiro_assassin",
+      "authorLabel": "Sasaki Kojiro (Assassin)",
+      "heroIds": [],
+      "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "upstreamLicense": "ARR",
+      "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+      "modelKey": "community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc",
+      "clipMap": {
+        "idle": "one_hand_1",
+        "run": "katana_1",
+        "attack": "two_hand_1",
+        "cast": "tsubame_gaeshi",
+        "hurt": "two_hand_7",
+        "death": "two_hand_7"
+      },
+      "motionSemantics": "same-source-semantic-fallback",
+      "nativeAnimationCount": 10,
+      "glb": {
+        "gitPath": "content/assets/models/community/9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7.glb",
+        "bytes": 253132,
+        "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc.json",
+        "bytes": 450,
+        "sha256": "9c9333f803c97a1f92bbb4746b5da7d8d9c4b99f811887123dab8c350a9bb281"
+      },
+      "runtimeCandidate": false,
+      "defaultEligible": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "registrationCommands": [
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/register-one-source-option.mts",
+      "godie-e002",
+      "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1"
+    ],
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/register-one-source-option.mts",
+      "godie-e00l",
+      "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1"
+    ],
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/register-one-source-option.mts",
+      "community-review-18-20260907",
+      "runtime:fateubw-gilgamesh_archer-native-fallback-v1"
+    ],
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/register-one-source-option.mts",
+      "godie-hapm",
+      "runtime:fateubw-heracles_berserker-native-fallback-v1"
+    ],
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/register-one-source-option.mts",
+      "godie-hvsh",
+      "runtime:fateubw-medusa_rider-native-fallback-v1"
+    ]
+  ]
+}

@@ -51,13 +51,51 @@ Blender add-on coordinate system. Mixing UModel glTF skeletons with PSA caused
 valid-looking files whose posed meshes exploded at runtime, so the pipeline
 does not combine those two representations.
 
-`pipeline.py` composes the independent assembly, normalization, runtime mapping,
+`pipeline.py` composes the independent assembly, texture-backdrop repair, normalization, runtime mapping,
 Babylon review, catalog, registration, asset/content manifest generation and
 central-index modules. Existing output is skipped only after its receipt and
 SHA-256 still match. Before retrying an incomplete stage, the pipeline moves its
 partial directory into a numbered sibling `failed-attempts/` path, preserving
 the evidence without overwriting earlier stages. The index stage uses the repository generators;
 it does not hand-edit generated `_index.json`, bundle or inventory files.
+
+The `backdrop` stage applies a candidate-specific, image-only repair before
+normalization. Dai's planar face decal receives a transparent carrier. EN801's
+opaque body material remains `OPAQUE`; only unused base-texture alpha is
+flattened to 255, which avoids the dark robe introduced by changing blend mode.
+The stage rejects any geometry, rig, animation or material JSON change and
+writes a content hash receipt. The unsafe originals remain preserved in the
+local asset library, the verified S3 legacy archive and Git history; they are
+removed from the current `content/` tree after integration so they cannot ship
+as unreferenced runtime assets. `integrate_repaired_predecessor_options.py` redirects
+the three retained high-poly source/frozen option documents to new repaired
+hashes, updates their catalog and version checksums, and refuses to change the
+already-selected decimated active versions.
+
+The formally adoptable derivatives are rebuilt separately so the repaired
+high-resolution source remains available. `generate_decimated_backdrop_candidates.mts`
+writes content-addressed base/frozen/local copies at no more than 8,000
+triangles. Dai uses the shared border-lock simplifier. EN801 uses explicit
+material allocation and includes normals, UVs, skin weights and joint indices
+in the simplification error; the earlier position-only candidate tore holes in
+the animated robe and remains local rejected evidence. Run
+`render_compare_decimated_backdrops.py`, inspect all six states at 0/50/100%,
+then record that inspection with `--accept-after-inspection`.
+
+```bash
+node --import tsx generate_decimated_backdrop_candidates.mts /path/to/GGD /path/to/ABxVFX_EDIT
+python3 render_compare_decimated_backdrops.py --repo /path/to/GGD --workspace /path/to/ABxVFX_EDIT
+# Only after visually inspecting the generated contact sheets:
+python3 render_compare_decimated_backdrops.py --repo /path/to/GGD --workspace /path/to/ABxVFX_EDIT --accept-after-inspection
+node --import tsx validate_decimated_backdrop_candidates.mts /path/to/GGD generation.json visual-comparison.json validation.json
+python3 integrate_decimated_backdrop_candidates.py --repo /path/to/GGD --apply
+python3 integrate_repaired_predecessor_options.py --repo /path/to/GGD --apply
+```
+
+Both integration scripts default to a read-only deterministic plan. The
+decimation integrator accepts either the original or repaired predecessor hash,
+so the two steps remain repeatable after the high-poly option redirect. Neither
+script runs central index generators or claims production deployment.
 
 Candidate rows may override `meshRoot`, `materialContextRoot`, `textureRoot` and
 `psaRoot`. This keeps later character exports immutable and separate from the
@@ -90,7 +128,7 @@ python3 pipeline.py \
 python3 pipeline.py \
   --config pipeline-config.json \
   --workspace "/path/to/ABxVFX_EDIT" \
-  --from-stage normalize --through indexes \
+  --from-stage backdrop --through indexes \
   --candidate dai-pn010-02
 
 # Resume Popp after its independent UModel export manifests exist.

@@ -20,4 +20,4 @@ python3 tools/hero-model-library/voice_index.py \
   --workspace '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT'
 ```
 
-S3 完整讀回並由 `promote_uploaded_backup.py` 提升中央記錄後，用 `build_evidence.py` 重新核對本機封存檔、讀回收據、中央來源及 41 個音訊群，再產生 Git 內的精簡驗證收據。
+S3 完整讀回並由 `promote_uploaded_backup.py` 提升中央記錄後，用 `build_evidence.py` 重新核對本機封存檔、讀回收據、中央來源及 41 個音訊群。它也會逐一比對 43 個 AWB 與完整 JUMP FORCE 鏡像的未封裝 Streaming 目錄；完整鏡像本身必須已有 S3 archive、archive full readback、逐成員 SHA-256 與 manifest readback 收據，才會產生 Git 內的精簡驗證收據。

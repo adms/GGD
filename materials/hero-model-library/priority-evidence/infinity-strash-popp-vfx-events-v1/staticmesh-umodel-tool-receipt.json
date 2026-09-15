@@ -1,0 +1,36 @@
+{
+  "schema": "ggd.infinity-strash-staticmesh-umodel-build@1",
+  "sourceId": "infinity-strash-umodel-macos-v2-staticmesh-export",
+  "platform": "macOS-x86_64",
+  "sourceArchive": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v1-texture-export-fix/ueviewer-a0bfb468d42be831b126632fd8a0ae6b3614f981.tar.gz",
+    "bytes": 4657912,
+    "sha256": "b2619c5e7c36872c775c83098797d862799a61ba7f754afd878de9844a64ccf0"
+  },
+  "patch": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/ueviewer-infinity-strash-staticmesh-section.patch",
+    "bytes": 664,
+    "sha256": "5ceb7280fd8807ed2dd49bac00a47f8c582b24a744860b778b33f3963f7fdc49"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/umodel",
+    "bytes": 1280976,
+    "sha256": "880600582a8b69a7d2872a76805be30e883694d30b7491d027a418d6656c95a1",
+    "path": "umodel"
+  },
+  "logs": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/patch.log",
+      "bytes": 46,
+      "sha256": "aa32281bdc670d22e3c686cab5e3ea7ac28900e19fab7cdfac6fe67d325349ed",
+      "path": "patch.log"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/build.log",
+      "bytes": 36218,
+      "sha256": "f76f5e1c7d50f40047e6bd3e5ba3360069b279943c9ae1cb5ef4eab3f341bd1b",
+      "path": "build.log"
+    }
+  ],
+  "createdAt": "2026-09-13T19:40:52.016873+00:00"
+}

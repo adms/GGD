@@ -11,11 +11,13 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
 const SOURCE = path.join(ROOT, "materials/hero-model-library/download-sources.json");
 const OUTPUT = path.join(ROOT, "materials/hero-model-library/priority-evidence/current-component-policy-audit.json");
+const S3_SPLIT = path.join(ROOT, "materials/asset-library/pr1152-s3-split.json");
 const CHECK = process.argv.includes("--check");
 const BODY_ROLES = new Set([
   "independent-static-skinned-model-component",
   "independent-skinned-model-motion-component",
   "independent-historical-model-body-component",
+  "complete-hero-body-with-procedural-six-state-motion",
 ]);
 
 function sha256(file: string): string {
@@ -30,6 +32,15 @@ function pin(file: string) {
 
 function main(): void {
   const downloads = JSON.parse(fs.readFileSync(SOURCE, "utf8"));
+  const split = JSON.parse(fs.readFileSync(S3_SPLIT, "utf8"));
+  const splitByPath = new Map<string, any>(
+    (split.files ?? []).map((row: any) => [row.repoPath, row]),
+  );
+  const previousRecords = new Map<string, any>(
+    fs.existsSync(OUTPUT)
+      ? JSON.parse(fs.readFileSync(OUTPUT, "utf8")).records.map((row: any) => [row.id, row])
+      : [],
+  );
   const gate = gateFor("champion");
   if (!gate) throw new Error("champion model gate is missing");
   const candidates = [...(downloads.publicSources ?? []), ...(downloads.paidSources ?? [])]
@@ -40,6 +51,36 @@ function main(): void {
   const records = candidates.map(({ source, candidate }: any) => {
     const glbPath = path.resolve(ROOT, candidate.gitPath);
     if (!glbPath.startsWith(ROOT + path.sep)) throw new Error(`component escapes checkout: ${candidate.id}`);
+    const archived = splitByPath.get(candidate.gitPath);
+    if (archived) {
+      const previous = previousRecords.get(candidate.id);
+      if (
+        !archived || archived.storageRole !== "unreferenced-model-component" ||
+        archived.sha256 !== candidate.sha256 || archived.bytes !== candidate.bytes
+      ) {
+        throw new Error(`missing component is not pinned by the #1252 S3 split: ${candidate.id}`);
+      }
+      if (
+        !previous || previous.gitPath !== candidate.gitPath ||
+        previous.sha256 !== candidate.sha256 || previous.bytes !== candidate.bytes
+      ) {
+        throw new Error(`missing archived policy measurement: ${candidate.id}; restore the S3 split and regenerate`);
+      }
+      return {
+        ...previous,
+        storage: {
+          class: "s3-legacy-preparation",
+          s3Uri: split.s3Uri,
+          s3ManifestUri: split.manifestUri,
+          archiveMember: archived.archiveMember,
+          fullGetAndEveryFileVerified: split.fullGetAndEveryFileVerified === true,
+          note: "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count.",
+        },
+      };
+    }
+    if (!fs.existsSync(glbPath)) {
+      throw new Error(`component Git blob is missing: ${candidate.id}`);
+    }
     const actualSha = sha256(glbPath);
     const actualBytes = fs.statSync(glbPath).size;
     if (actualSha !== candidate.sha256 || actualBytes !== candidate.bytes) {
@@ -94,6 +135,7 @@ function main(): void {
 
   const sourceFiles = [
     SOURCE,
+    S3_SPLIT,
     path.join(ROOT, "packages/shared/src/content/modelUpload/adoptionPolicy.json"),
     path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts"),
     path.join(ROOT, "tools/model-budget/limits.ts"),
@@ -103,7 +145,7 @@ function main(): void {
   ];
   const output = {
     schema: "ggd-current-component-policy-audit@1",
-    scope: "Current measurements for independently reusable Git GLBs. Historical conversion receipts remain immutable; this audit does not prove hero registration, dropdown availability, visual acceptance, or production deployment.",
+    scope: "Current measurements for independently reusable Git GLBs plus SHA-pinned measurements for #1252 components moved to S3 legacy. Historical conversion receipts remain immutable; this audit does not prove hero registration, dropdown availability, visual acceptance, or production deployment.",
     generatedFrom: sourceFiles.map(pin),
     policy: {
       formalHeroAdoption: HERO_MODEL_ADOPTION_POLICY,
@@ -116,6 +158,8 @@ function main(): void {
     },
     totals: {
       audited: records.length,
+      gitMeasured: records.filter((row) => row.storage?.class !== "s3-legacy-preparation").length,
+      s3LegacyPreparation: records.filter((row) => row.storage?.class === "s3-legacy-preparation").length,
       runtimeBudgetPass: records.filter((row) => row.runtimeBudget.pass).length,
       runtimeBudgetNeedsWork: records.filter((row) => !row.runtimeBudget.pass).length,
       heroAdoptionEligible: records.filter((row) => row.formalHeroAdoption.eligible).length,

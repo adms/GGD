@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-visual-review@1",
+  "componentId": "ssbu-ganondorf-c00-static-skinned-v1",
+  "modelSha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Ganondorf identity, body silhouette, armour and cape are visible in all three WebGL views.",
+    "The alpha-corrected material bake removes the prior black-background artifact; no black frame or missing base-colour material was observed."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

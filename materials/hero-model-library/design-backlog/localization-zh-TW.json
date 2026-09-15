@@ -2394,6 +2394,22 @@
       "translationBasis": "沿用原始名稱已有中文部分；保留英文代號。",
       "identityUnchanged": true,
       "originalLabel": "DIO"
+    },
+    "native:jstars-000": {
+      "zhTW": "蒙其·D·魯夫",
+      "basis": "source internal name and established Traditional Chinese character name"
+    },
+    "native:jstars-013": {
+      "zhTW": "阿虜",
+      "basis": "source internal name and established Traditional Chinese character name"
+    },
+    "native:jstars-014": {
+      "zhTW": "澤布拉",
+      "basis": "source internal name and established Traditional Chinese character name"
+    },
+    "native:jstars-018": {
+      "zhTW": "奇犽·揍敵客",
+      "basis": "source internal name and established Traditional Chinese character name"
     }
   },
   "works": {
@@ -3529,6 +3545,10 @@
       "workZh": "黑色子彈／漆黑的子彈",
       "translationBasis": "沿用原 work 已有的中文名稱／題材說明；本次只處理顯示名稱，未另作來源身分核驗。",
       "translationSourceGroup": "works"
+    },
+    "J-Stars Victory VS+": {
+      "zhTW": "J-STARS 勝利對決+",
+      "basis": "official game title transliteration"
     }
   },
   "sourcesByGroup": {

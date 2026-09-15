@@ -1,0 +1,24 @@
+{
+  "schema": "ggd.owner-asset-review@1",
+  "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-256-v2",
+  "candidateSha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba",
+  "reviewedAt": "2026-09-15",
+  "decision": "publication-authorized-when-technical-gates-pass",
+  "ownerInstruction": "所有資源可以都上架。",
+  "scope": [
+    "asset-choice",
+    "backend-option",
+    "publication"
+  ],
+  "visualQualityDecision": "pending-new-v2-render-review",
+  "technicalGatesStillApply": true,
+  "blockingTechnicalStates": [
+    "20 draw primitives exceed champion limit 6",
+    "0 animation clips; six-state motion incomplete"
+  ],
+  "states": {
+    "backendRegistrationAuthorized": true,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

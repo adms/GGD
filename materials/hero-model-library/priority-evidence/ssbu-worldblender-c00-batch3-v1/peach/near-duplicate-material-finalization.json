@@ -1,0 +1,33 @@
+{
+  "schema": "ggd-near-identical-opaque-material-finalization@1",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+    "bytes": 1104860,
+    "sha256": "7ede918bfa8a1c738da4e9f8b2a65e06254112191e770492452eba1fca87e7b1"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+    "bytes": 1104860,
+    "sha256": "7dbfc7adcaf32172b72fc1cb8e6ab97f068d9636f262d73f7a3e8e486c1b1a2d"
+  },
+  "conversionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/conversion.json",
+  "sourceAnalysis": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/source-analysis.json",
+  "adjustments": [
+    {
+      "materials": [
+        "EyeL",
+        "EyeR"
+      ],
+      "property": "glTF baseColorTexture index",
+      "canonicalTextureIndex": 6,
+      "replacedTextureIndex": 7,
+      "canonicalImage": "EyeL.ggd-opaque-base-color",
+      "replacedImage": "EyeR.ggd-opaque-base-color",
+      "maximumRgbaChannelDifference": 1,
+      "changedPixelCount": 7,
+      "alphaOpaque": true,
+      "uvAndSamplerPreserved": true,
+      "reason": "The explicitly authorized derived OPAQUE textures differ only within the recorded byte-rounding bound, so sharing the canonical texture removes one draw without changing UV or wrap behaviour."
+    }
+  ]
+}

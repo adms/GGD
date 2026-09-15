@@ -1,0 +1,81 @@
+{
+  "schema": "ggd.jump-force-dai-multichannel-atlas-plan@1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "atlasEdge": 256,
+  "slots": {
+    "face": {
+      "x": 0,
+      "y": 0,
+      "width": 128,
+      "height": 128
+    },
+    "cloth": {
+      "x": 128,
+      "y": 0,
+      "width": 128,
+      "height": 128
+    },
+    "pants": {
+      "x": 0,
+      "y": 128,
+      "width": 64,
+      "height": 128
+    },
+    "skin": {
+      "x": 64,
+      "y": 128,
+      "width": 64,
+      "height": 128
+    },
+    "weapon": {
+      "x": 128,
+      "y": 128,
+      "width": 64,
+      "height": 128
+    },
+    "blood": {
+      "x": 192,
+      "y": 128,
+      "width": 64,
+      "height": 128
+    }
+  },
+  "materials": {
+    "MI_chr0430_face": "face",
+    "MI_chr0430_oral": "face",
+    "MI_chr0430_face.001": "face",
+    "MI_chr0430_cloth": "cloth",
+    "MI_chr0430_cloth.001": "cloth",
+    "MI_chr0430_cloth.002": "cloth",
+    "MI_chr0430_pants": "pants",
+    "MI_chr0430_pants.001": "pants",
+    "MI_chr0430_pants.002": "pants",
+    "MI_chr0430_pants.003": "pants",
+    "MI_chr0430_skin": "skin",
+    "MI_chr0430_skin.001": "skin",
+    "MI_chr0430_weapon": "weapon",
+    "MI_chr0430_weapon.001": "weapon",
+    "MI_chr0430_damage_blood": "blood"
+  },
+  "atlases": {
+    "base": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/dai-body-base-atlas.png",
+      "bytes": 118596,
+      "sha256": "6105a5de54c0baa463b9c99c92f4f9f76a992c5d4d661f718561b8e1cc9d6ac1"
+    },
+    "normal": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/dai-body-normal-atlas.png",
+      "bytes": 102320,
+      "sha256": "eb92fc3d9af3204fb92dc0f18668db1ef5eedc265c6f7650779492abf80663ac"
+    },
+    "orm": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/dai-body-orm-atlas.png",
+      "bytes": 99373,
+      "sha256": "ce86a0fa9b5aa119314a054452fcf83aa46b7cb38d861990b1d4812057fffbde"
+    }
+  }
+}

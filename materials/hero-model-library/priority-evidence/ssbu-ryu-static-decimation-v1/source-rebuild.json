@@ -1,0 +1,25 @@
+{
+  "schema": "ggd.ssbu-ryu-static-decimation-rebuild@1",
+  "componentId": "ssbu-ryu-c00-static-decimated-v1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+    "bytes": 1005688,
+    "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6"
+  },
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+    "bytes": 952632,
+    "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3-rebuild.glb",
+    "bytes": 952632,
+    "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d"
+  },
+  "byteIdenticalRebuild": true,
+  "validationEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/validation.json",
+    "bytes": 6219,
+    "sha256": "4fcef82fa4829bdecf04a3a0715ff293ae1e7bce37a8184e2a01e05655863656"
+  }
+}

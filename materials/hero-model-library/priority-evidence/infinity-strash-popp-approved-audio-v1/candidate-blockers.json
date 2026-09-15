@@ -1,0 +1,443 @@
+{
+  "schema": "ggd.infinity-strash-popp-audio-blockers@1",
+  "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+  "summary": {
+    "candidates": 36,
+    "runtimeBindable": 0,
+    "blocked": 36
+  },
+  "blockers": [
+    {
+      "candidateId": "popp:popp-f06f9b82e629c1c6012f",
+      "sourceSha256": "03cc36228f4a2d596f8b294765add4b5d133d66b4e8c7c40056e432495be8aa1",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/03cc36228f4a2d596f8b294765add4b5d133d66b4e8c7c40056e432495be8aa1.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-9c850e95b505ee8cc5b2",
+      "sourceSha256": "f60511d40047a54b7cddaf97ebea60807be602c1335f27bff2d6f638a365143d",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/f60511d40047a54b7cddaf97ebea60807be602c1335f27bff2d6f638a365143d.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-29b51c11b1fa959615e4",
+      "sourceSha256": "f1da0f778bd641379488af24cf2c4cca6e60e2cc36b15685ad9896e773bdc61b",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/f1da0f778bd641379488af24cf2c4cca6e60e2cc36b15685ad9896e773bdc61b.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-c5d2ff7a566cbdb8b138",
+      "sourceSha256": "f60511d40047a54b7cddaf97ebea60807be602c1335f27bff2d6f638a365143d",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/f60511d40047a54b7cddaf97ebea60807be602c1335f27bff2d6f638a365143d.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-3b0a078b1d5ff8c324ac",
+      "sourceSha256": "3c11aae87186c882d1b3541e186dea7e81d9fdb3b171213c2928cef7e7670dc7",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/3c11aae87186c882d1b3541e186dea7e81d9fdb3b171213c2928cef7e7670dc7.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-39650cc4c765f2357731",
+      "sourceSha256": "dc6160674acfc2562638b24855623010a80079216c58c5089b98768624d292f9",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/dc6160674acfc2562638b24855623010a80079216c58c5089b98768624d292f9.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-36adaa26b62133345b12",
+      "sourceSha256": "870ebe72c7dee026da03e72b92c6023f07a70cf060bde622f8f29a692264e988",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/870ebe72c7dee026da03e72b92c6023f07a70cf060bde622f8f29a692264e988.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-76255e68aa42e48a29bd",
+      "sourceSha256": "573d1e376fbed7135ec76ab6a074375dc6ae2858f5cf5fc80a1fa491e38ab4a2",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/573d1e376fbed7135ec76ab6a074375dc6ae2858f5cf5fc80a1fa491e38ab4a2.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-5eda5cd42e69ac2c36eb",
+      "sourceSha256": "53681e35023486cf04116875b9bed8919b59b80072d20e7acf753532e7a58438",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/53681e35023486cf04116875b9bed8919b59b80072d20e7acf753532e7a58438.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-96a63b31206ab2d96ef8",
+      "sourceSha256": "940198587e5858c1443db74f34ef8c15037134bb87c723a5743844d91d3708ff",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/940198587e5858c1443db74f34ef8c15037134bb87c723a5743844d91d3708ff.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-e1ef7a8fbdcc0e940e9d",
+      "sourceSha256": "ee0d238927a7a7096b8e31bad607a578190df82db140cc412b4608285697c8f9",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/ee0d238927a7a7096b8e31bad607a578190df82db140cc412b4608285697c8f9.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-8657c163c1fdac6f0a1d",
+      "sourceSha256": "e0a412964eae97a4708bf53880fc69270a49455b3b9ab3c6795cff8f3e9ca1d5",
+      "nativeEvent": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/sfx/nonlocalized/e0a412964eae97a4708bf53880fc69270a49455b3b9ab3c6795cff8f3e9ca1d5.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-7aeb07c0c7627bd147f2",
+      "sourceSha256": "d588d1e33b825ef6204af26a6113e8591be33d58b16b57f843e9399707ff1278",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/d588d1e33b825ef6204af26a6113e8591be33d58b16b57f843e9399707ff1278.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-9c7dcfb04a1f509173f5",
+      "sourceSha256": "2bf969d94fadfebf634db26228392d6c9af0ed6e91d3dd25a328773da9717aae",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/2bf969d94fadfebf634db26228392d6c9af0ed6e91d3dd25a328773da9717aae.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-7a85adf13416af27f8b3",
+      "sourceSha256": "8d0b7caa0badf078bd2c18a43b1a13fdc08de00843b47256fdd1ffa2ad0b7594",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/8d0b7caa0badf078bd2c18a43b1a13fdc08de00843b47256fdd1ffa2ad0b7594.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-9535ef4a60ff2c9ed0fd",
+      "sourceSha256": "d2a44540d02250e36b056eeff41e6fd20c7e8be86b4cf1aef1a2616b6b75b7fa",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/d2a44540d02250e36b056eeff41e6fd20c7e8be86b4cf1aef1a2616b6b75b7fa.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-f6f318c4761e931b4460",
+      "sourceSha256": "84528dd305afde63859c10a8f5754e8287696fabb72f3f3a84b8dad23138f1f8",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/84528dd305afde63859c10a8f5754e8287696fabb72f3f3a84b8dad23138f1f8.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-9bec14e32356c2b20855",
+      "sourceSha256": "b625f5e03bbe2f530c5640eca53e241b78a03aede46fae4e3dd78749c9b8a52e",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/b625f5e03bbe2f530c5640eca53e241b78a03aede46fae4e3dd78749c9b8a52e.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-f8291c098176077330d4",
+      "sourceSha256": "04e1e3748c6834f49933e1871523a4eb23e45742cccb1e2c49c767a293fea587",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/04e1e3748c6834f49933e1871523a4eb23e45742cccb1e2c49c767a293fea587.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-45e9837c9bd7a7383cb4",
+      "sourceSha256": "bef76e890df6af89c7556f1e76e70b4aa1b15932740bdd614c650affad3bbfeb",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/bef76e890df6af89c7556f1e76e70b4aa1b15932740bdd614c650affad3bbfeb.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-765c67b012a46c77d699",
+      "sourceSha256": "bcb250f61c41137f14ec482cde37c8122703a891ee29a627c20a9dd977572722",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/bcb250f61c41137f14ec482cde37c8122703a891ee29a627c20a9dd977572722.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-3524b05b6fd6e7b0fc7a",
+      "sourceSha256": "566ffba6dd6a90a881cbf830eee879cab34175a2efb161b07e65bdc83ef070be",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/566ffba6dd6a90a881cbf830eee879cab34175a2efb161b07e65bdc83ef070be.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-b2bec339fe432028a48d",
+      "sourceSha256": "c53d5c8d0f849deb19837c6573fae7d026ab8348e7c26d805a63770121a50860",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/c53d5c8d0f849deb19837c6573fae7d026ab8348e7c26d805a63770121a50860.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-6910d2643d36115f9e23",
+      "sourceSha256": "1a27355b043a9d76f33d8df0455a52026a4508eb7c0863653bd6311057c540c1",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/1a27355b043a9d76f33d8df0455a52026a4508eb7c0863653bd6311057c540c1.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-123b37418446cfbffaa2",
+      "sourceSha256": "9764e587c9eb5a3330869a9a80a302b1706a178a51468c8633a239c58d746a97",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/9764e587c9eb5a3330869a9a80a302b1706a178a51468c8633a239c58d746a97.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-0e8e5f4a37128ca0b104",
+      "sourceSha256": "a3c9f2d2be577ab51a5200c70134da6fec5153fef75e1a17737a8f54417a1569",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/a3c9f2d2be577ab51a5200c70134da6fec5153fef75e1a17737a8f54417a1569.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-44a53a904012271e241a",
+      "sourceSha256": "b45c84403722b574c5fc633270f3b46a50a348f10b384e0d52ee2a002a343a1d",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/b45c84403722b574c5fc633270f3b46a50a348f10b384e0d52ee2a002a343a1d.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-37f8049ebd4f8f16db6e",
+      "sourceSha256": "87d33d51dc82c90cf47a89ad067ee6752b4e8e8f94d061077a07a8239ceb0640",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/87d33d51dc82c90cf47a89ad067ee6752b4e8e8f94d061077a07a8239ceb0640.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-e8119de6e475315f32b0",
+      "sourceSha256": "826e390686e1e8e5a0689e6698718a5f92ff3596ff5aecd7fab15424cdcff1b0",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/826e390686e1e8e5a0689e6698718a5f92ff3596ff5aecd7fab15424cdcff1b0.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-64ea6a3380c6fac1b6ff",
+      "sourceSha256": "e516bdf086074eb49f648cc22f74644613f8318bb28dd5c4057354fd18ae6a57",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/e516bdf086074eb49f648cc22f74644613f8318bb28dd5c4057354fd18ae6a57.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-6b9e73e83dbc49ea39f0",
+      "sourceSha256": "3b5add7caf4fe5caaf297408b9c3c927d0b0643c7791e15690453de63923b2aa",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/3b5add7caf4fe5caaf297408b9c3c927d0b0643c7791e15690453de63923b2aa.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-9288d586eb28f509f595",
+      "sourceSha256": "68845fc5559e16b41f57706b574dea89b278d2dae709fac6b6d035ce3a3a593f",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/68845fc5559e16b41f57706b574dea89b278d2dae709fac6b6d035ce3a3a593f.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-1f93fe06eba3d1c1af42",
+      "sourceSha256": "d97c65fabc407f709de0c3a6b655c4463e53fa1102da582daed1039ea44f0368",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/english_us/d97c65fabc407f709de0c3a6b655c4463e53fa1102da582daed1039ea44f0368.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-dc483e83b48576fa43f5",
+      "sourceSha256": "3c8ebc33cf0a98ca4c55a1ed60769076fe605c112ce944df819c27cb6cfafd8c",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/3c8ebc33cf0a98ca4c55a1ed60769076fe605c112ce944df819c27cb6cfafd8c.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-bed95cf7aa900c724dd4",
+      "sourceSha256": "84e6a13f58574fc5380467d942381e9d00cbd1cc1f300e83bcd850b4017a378c",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/84e6a13f58574fc5380467d942381e9d00cbd1cc1f300e83bcd850b4017a378c.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    },
+    {
+      "candidateId": "popp:popp-5898b919a7896629ba08",
+      "sourceSha256": "20d04047bc557fe12b1a2ce769fbf480f91b8be4af703f9aae8d829f590a59af",
+      "nativeEvent": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "runtimeCandidateGitPath": "content/assets/audio/original/strash/popp/voice/japanese/20d04047bc557fe12b1a2ce769fbf480f91b8be4af703f9aae8d829f590a59af.mp3",
+      "blocker": "approved-only-for-native-event; no-owner-approved-unique-ggd-runtime-target",
+      "requiredEvidence": [
+        "owner-approved GGD ability/state target for this candidate",
+        "verified speaker and per-clip language when used as character voice",
+        "runtime playback and regression receipt"
+      ]
+    }
+  ]
+}

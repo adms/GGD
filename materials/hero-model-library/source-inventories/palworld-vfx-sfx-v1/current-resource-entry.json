@@ -1,0 +1,30 @@
+{
+  "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
+  "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+  "gitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json",
+  "sha256": "ddc585a26e7fc5c8f88cacbc3ffef24bcfe9b4c0142441a368a6fb4ec6ca63f0",
+  "documentGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md",
+  "documentSha256": "257c5a08b004a01f8099d6dd3e7319491c1859a28992e20ee3a1d5b47eeb60e9",
+  "unusedAssetIndexGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/unused-assets.json",
+  "unusedAssetIndexSha256": "ac00f81a5ec92fec39c259d7008d164d35b7d3ce21b6b684a4df83f44fac9bc9",
+  "summary": {
+    "characters": 3,
+    "distinctSourceSkills": 27,
+    "sourceSkillMotionCandidates": 70,
+    "nativeNameStemSkillMotionCandidates": 30,
+    "translatedAliasSkillMotionCandidates": 3,
+    "genericCryCandidates": 18,
+    "acquiredStandaloneVfx": 0,
+    "acquiredSkillSpecificSfx": 0,
+    "convertedVfx": 0,
+    "decodedSkillSpecificSfx": 0,
+    "approvedAudio": 0,
+    "runtimeBindingsAdded": 0,
+    "productionDeployed": 0
+  },
+  "stage": "source-installed-container-payload-unavailable",
+  "runtimeBinding": false,
+  "productionDeploymentVerified": false,
+  "preservedSourceAuditGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/preserved-source-audit.json",
+  "preservedSourceAuditSha256": "da8adfc2384ba33640a96004083b9d31e0644bf193c4ded233deeae1436d97a5"
+}

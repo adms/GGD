@@ -1,0 +1,830 @@
+{
+  "schema": "ggd-mba-unused-model-batch2-visual@1",
+  "records": [
+    {
+      "slug": "nowel",
+      "label": "諾威爾·迪亞斯塔西斯",
+      "variant": "final",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-b/nowel/body.glb",
+      "sourceSha256": "e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/final",
+      "complete": true,
+      "animationGroups": 6,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "nowel02",
+          "vertices": 2403,
+          "indices": 9540,
+          "worldBounds": {
+            "min": [
+              -1.675445009402111,
+              0.3821176347452049,
+              -1.3925831048575503
+            ],
+            "max": [
+              1.6111801387545484,
+              6.276901720120037,
+              3.8901089294271003
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -1.675445009402111,
+          0.3821176347452049,
+          -1.3925831048575503
+        ],
+        "max": [
+          1.6111801387545484,
+          6.276901720120037,
+          3.8901089294271003
+        ],
+        "extent": [
+          3.2866251481566593,
+          5.894784085374832,
+          5.282692034284651
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/final/front.png",
+          "sha256": "6ecf6294c49d2f06b7e78ef4e9f0d7233bb4943117a49f38cbf716e37ebd834d"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/final/isometric.png",
+          "sha256": "a5f34338fd89617d28be534504bd01793356842cf8e997828fedd9fe2120e829"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/final/back.png",
+          "sha256": "f414d367a08878121aebc902bdac44f515384ec2f568efcf741798b9969fe5ec"
+        }
+      }
+    },
+    {
+      "slug": "nowel",
+      "label": "諾威爾·迪亞斯塔西斯",
+      "variant": "source",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara02_O/Nowel.glb",
+      "sourceSha256": "7236780dfb38d380c483e5cec72fbf1af75c125462f336841371b20eac70caf9",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/source",
+      "complete": true,
+      "animationGroups": 77,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "nowel02_primitive0",
+          "vertices": 102,
+          "indices": 402,
+          "worldBounds": {
+            "min": [
+              -0.21648059213877602,
+              4.297241274971384,
+              2.3549959533660996
+            ],
+            "max": [
+              0.5624690616498746,
+              5.122474365271245,
+              3.150552224376085
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "nowel02_primitive1",
+          "vertices": 68,
+          "indices": 330,
+          "worldBounds": {
+            "min": [
+              -0.25505826853302516,
+              4.507246847558719,
+              2.7019678518469306
+            ],
+            "max": [
+              0.5788136091651559,
+              5.007665708775306,
+              3.149300431449717
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "nowel02_primitive2",
+          "vertices": 26,
+          "indices": 108,
+          "worldBounds": {
+            "min": [
+              0.04492440588659652,
+              4.297241274971384,
+              2.7858738360684185
+            ],
+            "max": [
+              0.375340038170517,
+              4.455745381947537,
+              3.030032775253545
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "nowel02_primitive3",
+          "vertices": 1330,
+          "indices": 5106,
+          "worldBounds": {
+            "min": [
+              -0.8523315556694797,
+              0.3821176347452049,
+              -1.3925831048575503
+            ],
+            "max": [
+              1.6111801387545484,
+              4.5896805493486,
+              3.8901089294271003
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "nowel02_primitive4",
+          "vertices": 877,
+          "indices": 3594,
+          "worldBounds": {
+            "min": [
+              -1.675445009402111,
+              2.978378721749465,
+              -1.2409088319675448
+            ],
+            "max": [
+              0.9759410049906521,
+              6.276901720120037,
+              3.5959206163275326
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 34,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -1.675445009402111,
+          0.3821176347452049,
+          -1.3925831048575503
+        ],
+        "max": [
+          1.6111801387545484,
+          6.276901720120037,
+          3.8901089294271003
+        ],
+        "extent": [
+          3.2866251481566593,
+          5.894784085374832,
+          5.282692034284651
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/source/front.png",
+          "sha256": "3f2e6609a810c85de41dc3f4ed9cd24b4910c8e88ac305c07608ef34b380a75e"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/source/isometric.png",
+          "sha256": "66b82092677d0b018e63c3e8a6516b5824ab534ae9ee2a373da3db4e3df53942"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/nowel/source/back.png",
+          "sha256": "4ed88cde3ce64a998c29fcfc9fe24955271e475341b0d0830b374c6a6a0779f2"
+        }
+      }
+    },
+    {
+      "slug": "kukuri",
+      "label": "柯柯麗",
+      "variant": "final",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-b/kukuri/body.glb",
+      "sourceSha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/final",
+      "complete": true,
+      "animationGroups": 6,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "kukuri_02",
+          "vertices": 2633,
+          "indices": 9717,
+          "worldBounds": {
+            "min": [
+              -2.405644178390503,
+              -0.5673784613609314,
+              -2.4688916206359863
+            ],
+            "max": [
+              2.405644178390503,
+              4.640766620635986,
+              2.196007013320923
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -2.405644178390503,
+          -0.5673784613609314,
+          -2.4688916206359863
+        ],
+        "max": [
+          2.405644178390503,
+          4.640766620635986,
+          2.196007013320923
+        ],
+        "extent": [
+          4.811288356781006,
+          5.208145081996918,
+          4.664898633956909
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/final/front.png",
+          "sha256": "bd4da925a7c49804617fd9f516de4eebcc6342e2ad678142dcb46902dbea5af6"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/final/isometric.png",
+          "sha256": "d480b490978e646098b12fbcb9e09b5167e0d1118c63b00779b1895d0de19bee"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/final/back.png",
+          "sha256": "43e160f53b4d784535cad0ebfb90649c9fd2700310fa6ce417fb92b67bd385a9"
+        }
+      }
+    },
+    {
+      "slug": "kukuri",
+      "label": "柯柯麗",
+      "variant": "source",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+      "sourceSha256": "bc98efe10be27cc65943a8897e7d3c498c69777e09ede50820ea5443ec13ecb1",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/source",
+      "complete": true,
+      "animationGroups": 68,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "kukuri_02_primitive0",
+          "vertices": 495,
+          "indices": 1902,
+          "worldBounds": {
+            "min": [
+              -1.017380952835083,
+              1.384986400604248,
+              -0.6321839690208435
+            ],
+            "max": [
+              0.763083815574646,
+              4.119534492492676,
+              1.3111681938171387
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "kukuri_02_primitive1",
+          "vertices": 42,
+          "indices": 186,
+          "worldBounds": {
+            "min": [
+              -0.6335163116455078,
+              3.1940369606018066,
+              0.7650026679039001
+            ],
+            "max": [
+              0.35628703236579895,
+              3.724353075027466,
+              1.271176815032959
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "kukuri_02_primitive2",
+          "vertices": 25,
+          "indices": 102,
+          "worldBounds": {
+            "min": [
+              -0.3268085718154907,
+              2.994471549987793,
+              0.7738037109375
+            ],
+            "max": [
+              0.10658043622970581,
+              3.1741158962249756,
+              1.011820912361145
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "kukuri_02_primitive3",
+          "vertices": 855,
+          "indices": 3387,
+          "worldBounds": {
+            "min": [
+              -0.8187028169631958,
+              1.7110226154327393,
+              -1.500313401222229
+            ],
+            "max": [
+              0.6230112910270691,
+              4.592708587646484,
+              1.4474058151245117
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "kukuri_02_primitive4",
+          "vertices": 966,
+          "indices": 3384,
+          "worldBounds": {
+            "min": [
+              -0.993000864982605,
+              1.805079460144043,
+              -0.6828109622001648
+            ],
+            "max": [
+              1.0182090997695923,
+              4.640766620635986,
+              1.468778133392334
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "kukuri_02_primitive5",
+          "vertices": 250,
+          "indices": 756,
+          "worldBounds": {
+            "min": [
+              -2.405644178390503,
+              -0.5673784613609314,
+              -2.4688916206359863
+            ],
+            "max": [
+              2.405644178390503,
+              1.734548568725586,
+              2.196007013320923
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 26,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -2.405644178390503,
+          -0.5673784613609314,
+          -2.4688916206359863
+        ],
+        "max": [
+          2.405644178390503,
+          4.640766620635986,
+          2.196007013320923
+        ],
+        "extent": [
+          4.811288356781006,
+          5.208145081996918,
+          4.664898633956909
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/source/front.png",
+          "sha256": "a1b9011d52e591ffa86911586154c38612d65a706a8401ea43539e7387dd191b"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/source/isometric.png",
+          "sha256": "23140e2d0af5b07f1689badfe1de4f195a3f1cdb162e59aa4ded378e2952e99f"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/kukuri/source/back.png",
+          "sha256": "3170730add24d01df635d5252c291171ab2537f5450b86831bdf3f62e906e5fb"
+        }
+      }
+    },
+    {
+      "slug": "naga",
+      "label": "白蛇娜卡",
+      "variant": "final",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-b/naga/body.glb",
+      "sourceSha256": "25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/final",
+      "complete": true,
+      "animationGroups": 6,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "obj1",
+          "vertices": 2838,
+          "indices": 10761,
+          "worldBounds": {
+            "min": [
+              -4.338895099444613,
+              1.01661111439185,
+              -2.358421170091944
+            ],
+            "max": [
+              1.7764328267638803,
+              6.683558754377941,
+              4.343042056903869
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -4.338895099444613,
+          1.01661111439185,
+          -2.358421170091944
+        ],
+        "max": [
+          1.7764328267638803,
+          6.683558754377941,
+          4.343042056903869
+        ],
+        "extent": [
+          6.115327926208494,
+          5.666947639986091,
+          6.701463226995813
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/final/front.png",
+          "sha256": "b0993d6e3d219ece9f5e633b6e9571e6b68ea2fb377ff325bd2cf678e7f33d02"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/final/isometric.png",
+          "sha256": "43fbfa17546b11aa52a9e0f89f2b48cbbcaef5fd7d220c130d9c81eb7a336e15"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/final/back.png",
+          "sha256": "7d3d70833d260c5fd156001e2c2e9ba6f10323ef0d9c9c7a8eac39b0c995b397"
+        }
+      }
+    },
+    {
+      "slug": "naga",
+      "label": "白蛇娜卡",
+      "variant": "source",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara08/Naga.glb",
+      "sourceSha256": "eeeaccdd0fdff24be7c27f09c04fdd3dc9f00030c4a3aeae15780b2a438a1d9d",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/source",
+      "complete": true,
+      "animationGroups": 86,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "obj1_primitive0",
+          "vertices": 114,
+          "indices": 510,
+          "worldBounds": {
+            "min": [
+              -0.1565694236244175,
+              5.360558780440073,
+              2.7459110669182394
+            ],
+            "max": [
+              0.6756473641939067,
+              6.069469160876707,
+              3.423104909406675
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "obj1_primitive1",
+          "vertices": 57,
+          "indices": 276,
+          "worldBounds": {
+            "min": [
+              -0.031623945111393104,
+              5.659639442855706,
+              3.060442588633933
+            ],
+            "max": [
+              0.6321540449880665,
+              5.932837765408124,
+              3.3991951495289072
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "obj1_primitive2",
+          "vertices": 25,
+          "indices": 102,
+          "worldBounds": {
+            "min": [
+              0.1623326325764154,
+              5.39059074805067,
+              3.1035341725280006
+            ],
+            "max": [
+              0.453968579381236,
+              5.5952462076432425,
+              3.319591190212833
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "obj1_primitive3",
+          "vertices": 1271,
+          "indices": 4914,
+          "worldBounds": {
+            "min": [
+              -2.0316192929687986,
+              1.4699465970687058,
+              0.05079587773674543
+            ],
+            "max": [
+              1.2273490134976655,
+              6.171795746263797,
+              3.792614039668649
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "obj1_primitive4",
+          "vertices": 1148,
+          "indices": 4050,
+          "worldBounds": {
+            "min": [
+              -0.9350160738083133,
+              1.01661111439185,
+              -1.8789118093090025
+            ],
+            "max": [
+              1.7764328267638803,
+              6.539907934366283,
+              4.343042056903869
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "obj1_primitive5",
+          "vertices": 223,
+          "indices": 909,
+          "worldBounds": {
+            "min": [
+              -4.338895099444613,
+              3.851606426411962,
+              -2.358421170091944
+            ],
+            "max": [
+              0.8151958587049819,
+              6.683558754377941,
+              4.177403321525503
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 35,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -4.338895099444613,
+          1.01661111439185,
+          -2.358421170091944
+        ],
+        "max": [
+          1.7764328267638803,
+          6.683558754377941,
+          4.343042056903869
+        ],
+        "extent": [
+          6.115327926208494,
+          5.666947639986091,
+          6.701463226995813
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/source/front.png",
+          "sha256": "59a058c3000f3ad49bde1a224109bdc23135e71304be848f6db8ecbcd415e419"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/source/isometric.png",
+          "sha256": "37ac19573f06d803372faa9a7f8bdd124a1212ca5d51455c9532d8705ba2de1a"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/naga/source/back.png",
+          "sha256": "a1aeff14afb10cee785ab8cf0bf10db097f1838076223b47c1c5c46168fead7a"
+        }
+      }
+    },
+    {
+      "slug": "gajet1",
+      "label": "Gadget Drone I 型",
+      "variant": "final",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-b/gajet1/body.glb",
+      "sourceSha256": "4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/final",
+      "complete": true,
+      "animationGroups": 6,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "gajet",
+          "vertices": 132,
+          "indices": 504,
+          "worldBounds": {
+            "min": [
+              -7.880377314692396,
+              0.12578156181844413,
+              -1.6350029235333636
+            ],
+            "max": [
+              7.879446528545714,
+              6.498779393714358,
+              1.08729030321971
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 7,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -7.880377314692396,
+          0.12578156181844413,
+          -1.6350029235333636
+        ],
+        "max": [
+          7.879446528545714,
+          6.498779393714358,
+          1.08729030321971
+        ],
+        "extent": [
+          15.75982384323811,
+          6.372997831895914,
+          2.7222932267530737
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/final/front.png",
+          "sha256": "b942c3f30e387731740407b57031b6f755b6e356640a8464bd779c3540e5a4fc"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/final/isometric.png",
+          "sha256": "2a561d983bc4fd52e8a6619ebb0404a108bfdb990e30b2855b88046c0858f2f4"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/final/back.png",
+          "sha256": "d8991f2ed4987a8f4deb90e4f22515feee369d56c5fcf67837dadd33315d1a45"
+        }
+      }
+    },
+    {
+      "slug": "gajet1",
+      "label": "Gadget Drone I 型",
+      "variant": "source",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara09/Gajet1.glb",
+      "sourceSha256": "89066fee1031928d45eba7dad942923b876575bd593b29c391a9e6ad0deea909",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/source",
+      "complete": true,
+      "animationGroups": 63,
+      "skeletons": 1,
+      "geometry": [
+        {
+          "name": "gajet",
+          "vertices": 132,
+          "indices": 504,
+          "worldBounds": {
+            "min": [
+              -7.880377314692396,
+              0.12578156181844413,
+              -1.6350029235333636
+            ],
+            "max": [
+              7.879446528545714,
+              6.498779393714358,
+              1.08729030321971
+            ]
+          },
+          "skeleton": "skin",
+          "bones": 7,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -7.880377314692396,
+          0.12578156181844413,
+          -1.6350029235333636
+        ],
+        "max": [
+          7.879446528545714,
+          6.498779393714358,
+          1.08729030321971
+        ],
+        "extent": [
+          15.75982384323811,
+          6.372997831895914,
+          2.7222932267530737
+        ]
+      },
+      "views": {
+        "front": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/source/front.png",
+          "sha256": "3f05b1214b386973975ed406cfafbf135762bc95c953b560df70142c1d6ad1a3"
+        },
+        "isometric": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/source/isometric.png",
+          "sha256": "2af0ee5a2afb96c82f3ac41c45b845f1e8906575f27b285e11727f70fb7584ab"
+        },
+        "back": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/gajet1/source/back.png",
+          "sha256": "79060d8af8d6db3d3c1e0e247cdfde3a40e9e51bee045de6933835e957243c99"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "requested": 8,
+    "complete": 8,
+    "failed": 0
+  },
+  "contactSheet": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/visual/source-final-contact-sheet.png",
+    "bytes": 402505,
+    "sha256": "595685feec957b2bdeaf366d2c1d8b76237813e1ede3cc7702b1d02a723ddb7f"
+  },
+  "scope": "Babylon WebGL rest-pose source/final evidence; motion semantics, source shader parity, hero binding and deployment excluded."
+}

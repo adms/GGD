@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Audit b2-kisaragi audio drift after the frozen Main baseline.
+"""Audit b2-kisaragi additions and owner-reviewed branch replacements.
 
 Separates clips already present in the current Main revision from the two branch
-additions. Writes an independent overlay, per-hero view and receipt. Never edits
-the frozen baseline, runtime audio, source manifest, COMBAT_ORIGINALS or voice
-generators.
+additions.  An existing Main path may only differ in the branch when its exact
+replacement is present in the owner-reviewed LoL runtime registration; that
+replacement stays explicitly branch-only.  Writes an independent overlay,
+per-hero view and receipt. Never edits the frozen baseline, runtime audio,
+source manifest, COMBAT_ORIGINALS or voice generators.
 """
 from __future__ import annotations
 
@@ -22,6 +24,7 @@ import sys
 HERO = "b2-kisaragi"
 CATEGORIES = ("taunt", "victory")
 BASE = Path("materials/hero-model-library/priority-evidence/main-81-handoff")
+LOL_RUNTIME_REGISTRATION = Path("materials/hero-model-library/lol-project-seven/runtime-registration.json")
 
 
 def encode(value):
@@ -107,6 +110,18 @@ def build(repo, source_manifest, main_ref):
     originals_path = repo / "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json"
     manifest_path = repo / "content/assets/audio/voices/champions/MANIFEST.json"
     status, originals, manifest = read(status_path), read(originals_path), read(manifest_path)
+    lol_runtime = read(repo / LOL_RUNTIME_REGISTRATION)
+    if (lol_runtime.get("schema") != "ggd-lol-approved-battle-runtime-registration@1"
+            or lol_runtime.get("summary", {}).get("approved") != 311
+            or lol_runtime.get("summary", {}).get("runtimeRegistered") != 311
+            or lol_runtime.get("summary", {}).get("productionDeployed") is not False):
+        raise ValueError("LoL approved runtime registration is not current")
+    runtime_by_path = {}
+    for row in lol_runtime.get("records", []):
+        runtime_path = row.get("runtimePath")
+        if not runtime_path or runtime_path in runtime_by_path:
+            raise ValueError("LoL runtime registration contains an invalid or duplicate path")
+        runtime_by_path[runtime_path] = row
     document_paths = [
         "content/assets/audio/voices/champions/MANIFEST.json",
         "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json",
@@ -162,6 +177,8 @@ def build(repo, source_manifest, main_ref):
                 record["manifestBindings"].append(manifest_row)
     main_clip_blobs = main_blobs("content/" + clip for clip in main_records)
     current_main_files = []
+    current_main_reference_files = []
+    approved_branch_replacements = []
     for clip, record in main_records.items():
         git_path = "content/" + clip
         blob = main_clip_blobs[git_path]
@@ -173,7 +190,37 @@ def build(repo, source_manifest, main_ref):
             raise ValueError(f"Current Main manifest hash mismatch: {clip}")
         current = pin(repo / git_path)
         if current["sha256"] != main_pin["sha256"] or current["bytes"] != main_pin["bytes"]:
-            raise ValueError(f"Current branch differs from Current Main clip: {clip}")
+            replacement = runtime_by_path.get(git_path)
+            if (not replacement or replacement.get("runtimeHeroId") != record["runtimeHeroId"]
+                    or replacement.get("runtimeSha256") != current["sha256"]
+                    or replacement.get("runtimeBytes") != current["bytes"]):
+                raise ValueError(f"Current branch differs from Current Main clip without an owner-reviewed runtime registration: {clip}")
+            approved_branch_replacements.append({
+                **record, **current,
+                "classification": "owner-reviewed-runtime-registered-replacement",
+                "changeKind": "current-branch-owner-reviewed-runtime-replacement",
+                "publicationState": "current-branch-pending-main-merge",
+                "mainMerged": False,
+                "speakerVerified": True,
+                "currentMainRevision": main_revision,
+                "currentMainBlob": main_pin,
+                "runtimeRegistration": replacement,
+            })
+            current_main_reference_files.append({
+                **record,
+                "gitPath": git_path,
+                "bytes": main_pin["bytes"],
+                "sha256": main_pin["sha256"],
+                "classification": "current-main-snapshot",
+                "changeKind": "current-main-snapshot",
+                "publicationState": "current-main-at-pinned-revision",
+                "mainMerged": True,
+                "speakerVerified": False,
+                "currentMainRevision": main_revision,
+                "currentMainBlob": main_pin,
+                "mainWorktreeMatches": False,
+            })
+            continue
         runtime_id = record["runtimeHeroId"]
         source_key = Path(clip).stem
         source_binding = main_originals.get("champions", {}).get(runtime_id, {}).get(source_key)
@@ -204,6 +251,7 @@ def build(repo, source_manifest, main_ref):
             },
             "originalBinding": source_binding,
         })
+        current_main_reference_files.append(current_main_files[-1])
     additions = []
     for category in CATEGORIES:
         content_path = f"assets/audio/voices/lines/{HERO}/{category}.mp3"
@@ -255,7 +303,7 @@ def build(repo, source_manifest, main_ref):
         })
     baseline_count = len({f["clip"] for f in baseline_files["files"]})
     baseline_by_clip = {row["clip"]: row for row in baseline_files["files"]}
-    current_main_by_clip = {row["clip"]: row for row in current_main_files}
+    current_main_by_clip = {row["clip"]: row for row in current_main_reference_files}
     added_since_baseline = sorted(set(current_main_by_clip) - set(baseline_by_clip))
     removed_since_baseline = sorted(set(baseline_by_clip) - set(current_main_by_clip))
     changed_since_baseline = sorted(
@@ -268,8 +316,11 @@ def build(repo, source_manifest, main_ref):
     required = main_manifest.get("shipGate", {}).get("required", [])
     extended = list(dict.fromkeys(required + ["taunt", "victory"]))
     main_files_by_hero = collections.defaultdict(list)
-    for row in current_main_files:
+    branch_replacements_by_hero = collections.defaultdict(list)
+    for row in current_main_reference_files:
         main_files_by_hero[row["heroId"]].append(row)
+    for row in approved_branch_replacements:
+        branch_replacements_by_hero[row["heroId"]].append(row)
     overlay_heroes = []
     for baseline_row in baseline["heroes"]:
         hero_id, runtime_id = baseline_row["heroId"], baseline_row["runtimeHeroId"]
@@ -294,13 +345,22 @@ def build(repo, source_manifest, main_ref):
             "missingCoreCategories": [category for category in required if not lines.get(category)],
             "missingExtended11Categories": [category for category in extended if not lines.get(category)],
             "allGitHashesVerified": bool(rows) and all(row["currentMainBlob"]["sha256"] == row["sha256"] for row in rows),
-            "allWorktreeFilesMatchMain": bool(rows) and all(row["currentMainBlob"]["sha256"] == row["sha256"] for row in rows),
+            "allWorktreeFilesMatchMain": bool(rows) and all(row.get("mainWorktreeMatches", True) for row in rows),
             "sourceSpeakerVerified": False,
             "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
         }
         branch_voice = copy.deepcopy(current_main_voice)
         branch_voice["mainBaselineRevision"] = baseline_summary["revision"]
         branch_voice["mainMergedAdditions"] = True
+        replacements = branch_replacements_by_hero[hero_id]
+        if replacements:
+            branch_voice.update({
+                "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
+                "mainMergedAdditions": False,
+                "ownerReviewedRuntimeReplacementCount": len(replacements),
+                "allCurrentFilesShaVerified": True,
+                "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
+            })
         if hero_id == HERO:
             branch_voice.update({
                 "publicationState": "current-branch-pending-main-merge",
@@ -324,17 +384,19 @@ def build(repo, source_manifest, main_ref):
             "currentMainVoice": current_main_voice,
             "currentBranchVoice": branch_voice,
         })
-    all_paths = set(current_main_by_clip) | {f["clip"] for f in additions}
-    if len(all_paths) != len(current_main_files) + 2:
-        raise ValueError("The two additions are not distinct new runtime paths")
+    all_paths = set(current_main_by_clip) | {f["clip"] for f in additions} | {f["clip"] for f in approved_branch_replacements}
+    if len(all_paths) != len(current_main_files) + len(additions) + len(approved_branch_replacements):
+        raise ValueError("Branch audio additions or replacements are not distinct runtime paths")
     summary = {"baselineRevision": baseline_summary["revision"], "currentMainRevision": main_revision,
                "baselineUniqueClipPaths": baseline_count,
-               "currentMainUniqueClipPaths": len(current_main_files),
+               "currentMainUniqueClipPaths": len(current_main_reference_files),
                "unchangedFrozenBaselinePaths": unchanged_since_baseline,
                "currentMainChangedPathsAfterBaseline": len(changed_since_baseline),
                "currentMainAddedPathsAfterBaseline": len(added_since_baseline),
                "currentMainRemovedPathsAfterBaseline": len(removed_since_baseline),
-               "currentBranchAdditionalFiles": len(additions), "currentUniqueClipPaths": len(all_paths),
+               "currentBranchAdditionalFiles": len(additions),
+               "currentBranchOwnerReviewedReplacementFiles": len(approved_branch_replacements),
+               "currentUniqueClipPaths": len(all_paths),
                "currentHeroesCompleteExtended11": sum(
                    row["currentBranchVoice"]["packPresent"]
                    and not row["currentBranchVoice"]["missingExtended11Categories"]
@@ -349,11 +411,15 @@ def build(repo, source_manifest, main_ref):
                "generator": "tools/hero-model-library/build_priority81_audio_overlay.py",
                "generatorSha256": sha(Path(__file__).resolve()),
                "baselineUnmodified": True, "scopeHeroIds": [row[0] for row in scope],
-               "branchAdditionHeroIds": [HERO], "scopeCategories": list(CATEGORIES),
+               "branchAdditionHeroIds": [HERO],
+               "branchReplacementHeroIds": sorted(branch_replacements_by_hero),
+               "scopeCategories": list(CATEGORIES),
                "inputs": evidence, "inputsSha256": hashlib.sha256(encode(evidence)).hexdigest(),
                "currentMainPins": current_main_pins,
                "summary": summary, "files": additions,
+               "approvedBranchReplacementFiles": approved_branch_replacements,
                "currentMainFiles": current_main_files,
+               "currentMainReferenceFiles": current_main_reference_files,
                "mainSynchronizedFiles": [current_main_by_clip[clip] for clip in added_since_baseline + changed_since_baseline],
                "currentMainRemovedBaselineFiles": [baseline_by_clip[clip] for clip in removed_since_baseline],
                "heroes": overlay_heroes,
@@ -367,10 +433,11 @@ def build(repo, source_manifest, main_ref):
     receipt = {"schema": "ggd.priority81.audio-overlay-receipt@1", "summary": summary,
                "baselineUnmodified": True, "checks": {"originalSourceSha": True, "statusSha": True,
                "runtimeManifestSha": True, "combatOriginalsSha": True,
-               "allCurrentMainManifestFilesMatchGitAndWorktree": True,
+               "allCurrentMainManifestFilesMatchGitAndWorktree": not approved_branch_replacements,
+               "ownerReviewedBranchReplacementFiles": len(approved_branch_replacements),
                "frozenBaselineFileCount": baseline_count,
-               "currentMainFileCount": len(current_main_files),
-               "currentMainDeltaBalances": baseline_count + len(added_since_baseline) - len(removed_since_baseline) == len(current_main_files)},
+               "currentMainFileCount": len(current_main_reference_files),
+               "currentMainDeltaBalances": baseline_count + len(added_since_baseline) - len(removed_since_baseline) == len(current_main_reference_files)},
                "products": [{"path": name, "bytes": len(contents), "sha256": hashlib.sha256(contents).hexdigest()}
                             for name, contents in products.items()]}
     products["receipt.json"] = encode(receipt)

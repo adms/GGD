@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-worldblender-c00-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-toonlink-c00-static-skinned-v1",
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "heroBound": false,
+      "runtimeSelectable": false,
+      "deploymentVerified": false
+    }
+  ]
+}

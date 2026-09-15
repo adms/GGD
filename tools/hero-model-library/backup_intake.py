@@ -54,6 +54,6 @@ def main():
  assert inventory(root)==rows,'Local intake changed during readback'
  m_uri=uri.removesuffix('.tar.gz')+'.files.json';aws(['s3','cp',str(mp),m_uri,'--only-show-errors'],'s3:PutObject',m_uri)
  mb=dest/'manifest-readback.json';aws(['s3','cp',m_uri,str(mb),'--only-show-errors'],'s3:GetObject',m_uri);assert mb.read_bytes()==mp.read_bytes()
- receipt=dict(schema='ggd-intake-backup-receipt@1',s3Uri=uri,manifestUri=m_uri,archiveSha256=archive_sha,archiveBytes=archive.stat().st_size,fileCount=len(rows),fullGetVerified=True,allMemberSha256Verified=True,localUnchanged=True,source=str(root),localArchive=str(archive),readback=str(back),manifest=str(mp))
+ receipt=dict(schema='ggd-intake-backup-receipt@1',s3Uri=uri,manifestUri=m_uri,archiveSha256=archive_sha,archiveBytes=archive.stat().st_size,fileCount=len(rows),fullGetVerified=True,allMemberSha256Verified=True,localUnchanged=True,source=str(root),localArchive=str(archive),readback=str(back),manifest=str(mp),profile='vibe-coding',region='ap-east-2',callerArn=arn)
  (dest/'receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n');(out/'latest-receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n');print(json.dumps(receipt,ensure_ascii=False))
 if __name__=='__main__':main()

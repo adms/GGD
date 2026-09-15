@@ -248,6 +248,92 @@ def unpack_gma(src, dest):
         'validation':'Every member size and CRC32 verified; addon code not executed'},ensure_ascii=False,indent=2)+'\n')
 
 
+def unpack_vpk(src, dest):
+    """Extract a self-contained Source 1 VPK v1 with path/size/CRC checks.
+
+    Workshop deliveries commonly use a single VPK where ``archiveIndex`` is
+    ``0x7fff`` and the member data follows the directory tree.  External archive
+    segments are deliberately rejected here: their names are not safely
+    derivable from an arbitrary downloaded filename and accepting them without
+    an explicit delivery manifest could silently mix source versions.
+    """
+    limit, member_limit = 2_000_000_000, 20_000
+    with src.open('rb') as stream:
+        header = stream.read(12)
+        if len(header) != 12:
+            raise ValueError('Truncated VPK header')
+        magic, version, tree_size = struct.unpack('<III', header)
+        if magic != 0x55AA1234 or version != 1 or not 0 < tree_size <= 64_000_000:
+            raise ValueError('Unsupported VPK header')
+        tree = stream.read(tree_size)
+        if len(tree) != tree_size:
+            raise ValueError('Truncated VPK directory tree')
+        payload = stream.read()
+
+    offset, entries, paths, total = 0, [], set(), 0
+    def string():
+        nonlocal offset
+        end = tree.find(b'\0', offset)
+        if end < 0:
+            raise ValueError('Truncated VPK directory string')
+        value = tree[offset:end].decode('utf-8', errors='strict')
+        offset = end + 1
+        return value
+
+    while True:
+        extension = string()
+        if not extension:
+            break
+        while True:
+            directory = string()
+            if not directory:
+                break
+            while True:
+                filename = string()
+                if not filename:
+                    break
+                if offset + 18 > len(tree):
+                    raise ValueError('Truncated VPK entry')
+                crc, preload_size, archive_index, member_offset, member_size, terminator = struct.unpack_from('<IHHIIH', tree, offset)
+                offset += 18
+                if terminator != 0xffff:
+                    raise ValueError('Invalid VPK entry terminator')
+                if offset + preload_size > len(tree):
+                    raise ValueError('Truncated VPK preload bytes')
+                preload = tree[offset:offset + preload_size]
+                offset += preload_size
+                base = filename + ('.' + extension if extension else '')
+                name = base if directory == ' ' else directory + '/' + base
+                target = safe_path(dest, name)
+                key = str(target.relative_to(dest)).casefold()
+                if key in paths or len(entries) >= member_limit:
+                    raise ValueError('Duplicate path or too many VPK members')
+                paths.add(key)
+                if archive_index != 0x7fff:
+                    raise ValueError('VPK requires external archive segment: ' + name)
+                if member_size > limit or total + preload_size + member_size > limit:
+                    raise ValueError('VPK member or total extraction size exceeds limit')
+                if member_offset + member_size > len(payload):
+                    raise ValueError('VPK member data is outside embedded payload: ' + name)
+                data = preload + payload[member_offset:member_offset + member_size]
+                if zlib.crc32(data) & 0xffffffff != crc:
+                    raise ValueError('VPK CRC32 mismatch: ' + name)
+                total += len(data)
+                entries.append({'path': name, 'target': target, 'bytes': len(data), 'crc32': crc, 'sha256': hashlib.sha256(data).hexdigest(), 'data': data})
+    if offset != len(tree):
+        raise ValueError('Unexpected trailing bytes in VPK directory tree')
+    for entry in entries:
+        entry['target'].parent.mkdir(parents=True, exist_ok=True)
+        entry['target'].write_bytes(entry.pop('data'))
+        entry.pop('target')
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest/'vpk-manifest.json').write_text(json.dumps({
+        'schema':'ggd.source1-vpk-extraction@1', 'version': version,
+        'source':str(src), 'members': entries,
+        'validation':'All member paths, sizes and CRC32 values verified; no executable or addon code was loaded.',
+    },ensure_ascii=False,indent=2)+'\n')
+
+
 def read_map(src, dest, library):
     lib = C.CDLL(library)
     handle = C.c_void_p
@@ -285,10 +371,13 @@ def read_map(src, dest, library):
 
 
 def extract_unity(home):
+    assemblies = sorted((home/'extracted').rglob('*.dll'))
+    if not assemblies:
+        return []
     import dnfile
     import UnityPy
     records = []
-    for dll in sorted((home/'extracted').rglob('*.dll')):
+    for dll in assemblies:
         pe = dnfile.dnPE(str(dll))
         for resource in (pe.net.resources if pe.net else []):
             if not isinstance(resource.data, bytes) or not resource.data.startswith(b'UnityFS\0'):
@@ -325,13 +414,16 @@ def process(home, stormlib):
     from embedded_resources import extract_embedded_resources
     errors=[]
     for source in sorted((home/'raw').iterdir()):
-        magic=source.read_bytes()[:8]
+        with source.open('rb') as stream:
+            magic=stream.read(8)
         if magic.startswith(b'PK'):
             unpack_zip(source,home/'extracted')
         elif magic.startswith((b'Rar!', b'7z\xbc\xaf\x27\x1c')):
             unpack_native_archive(source,home/'extracted')
         elif magic.startswith(b'GMAD') or source.name.endswith(('.gma','.gma.lzma')):
             unpack_gma(source,home/'extracted')
+        elif magic.startswith(b'\x34\x12\xaa\x55'):
+            unpack_vpk(source,home/'extracted')
         elif magic.startswith((b'HM3W',b'MPQ')):
             try: errors += read_map(source,home/'extracted',stormlib)
             except Exception as exc: errors.append({'member':source.name,'error':str(exc)})

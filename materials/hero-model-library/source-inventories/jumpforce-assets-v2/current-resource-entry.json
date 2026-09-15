@@ -1,0 +1,79 @@
+{
+  "gitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/inventory.json",
+  "documentGitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/README.md",
+  "listeningReviewQueueGitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/listening-review-groups.json",
+  "sourceIds": [
+    "parallel-ps-jumpforce-audio",
+    "parallel-ps-jumpforce-local-10",
+    "parallel-ps-jumpforce-local-second10",
+    "parallel-ps-jumpforce-local-next32",
+    "parallel-ps-jumpforce-local-final3",
+    "steam-jump-force-streaming-audio-816020-build-8523149",
+    "steam-jump-force-priority-original-assets-build-8523149"
+  ],
+  "summary": {
+    "publicPackages": 58,
+    "publicCharacterPackages": 57,
+    "publicCommonPackages": 1,
+    "publicPackagesLiveShaVerified": 58,
+    "publicAudioFiles": 15207,
+    "publicAudioBytes": 520589494,
+    "publicAudioDurationSeconds": 26402.028304132662,
+    "steamAwbBanks": 43,
+    "steamDecodedAudioFiles": 4034,
+    "steamVoiceLabelFiles": 1794,
+    "steamSoundEffectFiles": 2170,
+    "steamMusicFiles": 70,
+    "nativeToPublicCharacterMappings": 32,
+    "unresolvedNativeCharacterGroups": 5,
+    "listeningReviewGroups": 89,
+    "publicListeningReviewGroups": 57,
+    "steamListeningReviewGroups": 32,
+    "automaticSpeakerBindings": 0,
+    "automaticEventBindings": 0,
+    "runtimeSelectableAssets": 0,
+    "productionDeployedAssets": 0
+  },
+  "daiCandidateStatus": {
+    "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v6-alpha",
+    "gitPath": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+    "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d",
+    "triangles": 7930,
+    "maxTextureEdge": 256,
+    "drawPrimitives": 6,
+    "animations": 0,
+    "ownerPublicationAuthorized": true,
+    "ownerVisualQualityReview": "pending-v6-alpha-normalization-review",
+    "runtimeRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false,
+    "evidence": [
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/conversion.json",
+        "bytes": 2887,
+        "sha256": "4a77cc71565fc369f59c92280607fe637261e25ffb331361f4bc2465026115ed"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/validation.json",
+        "bytes": 3601,
+        "sha256": "6aa425a4a8505789d34ba51d220dff434702a3ec28319c26fbb0024b6848f2fa"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/guard.json",
+        "bytes": 1484,
+        "sha256": "1a216821ce17f706541d5a7f4f4d51bc8aef1595bd7d2139e5c9bb72394ef8a2"
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
+        "bytes": 1084,
+        "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
+      }
+    ]
+  },
+  "registered": false,
+  "runtimeSelectable": false,
+  "productionDeploymentVerified": false,
+  "sha256": "b1008a413126cfbc1923e13dc14b7db7a4d060361dd8c6e2e33ee0c7e46b3700",
+  "documentSha256": "19075e4157380b89643fab40397014490c7788b96a52444c3e6cba4c25735b7f",
+  "listeningReviewQueueSha256": "92095d0a181ca0395f34764f1bda6f257d2ef1af854052ca4786ebb0778249d4"
+}

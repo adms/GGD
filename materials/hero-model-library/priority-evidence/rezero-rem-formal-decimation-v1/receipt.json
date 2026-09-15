@@ -1,0 +1,61 @@
+{
+  "schema": "ggd.rezero-rem-formal-decimation@1",
+  "sourceId": "thunderstore-rezero",
+  "componentId": "rezero-rem-thunderstore-0.1.1-static-skinned-formal-decimation-v1",
+  "policy": {
+    "ownerRule": "over 10,000 triangles decimate below 8,000",
+    "triggerTrianglesAbove": 10000,
+    "targetTrianglesMax": 8000
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "bytes": 1173224,
+    "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+    "triangles": 18328,
+    "primitiveTriangles": [
+      18328
+    ],
+    "drawPrimitives": 1,
+    "skins": 1,
+    "joints": 151,
+    "animations": 0,
+    "materials": 1,
+    "textures": 1
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-formal-decimation-v1/final/body.glb",
+    "bytes": 606944,
+    "sha256": "66ac1e2abc5e04d066c03514c7ed387a6808d5182bfad68b4e0fd84d887e8f12",
+    "triangles": 7883,
+    "primitiveTriangles": [
+      7883
+    ],
+    "drawPrimitives": 1,
+    "skins": 1,
+    "joints": 151,
+    "animations": 0,
+    "materials": 1,
+    "textures": 1
+  },
+  "geometryOnly": true,
+  "textureResamplingPerformed": false,
+  "validation": {
+    "glbHeader": "valid",
+    "skinCount": 1,
+    "jointCount": 151,
+    "animationCount": 0,
+    "triangleTargetMet": true
+  },
+  "visualEvidence": {
+    "renderAttempt": {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/render-attempt.json",
+      "bytes": 926,
+      "sha256": "aec3d11c5720dce8479d140c1cc77edacb5b0eecf5156c0db70d7d12ce367e87"
+    },
+    "automatedRenderAvailable": false,
+    "ownerAccepted": false
+  },
+  "runtimeDropdownRegistered": false,
+  "runtimeSelectable": false,
+  "productionDeploymentVerified": false
+}

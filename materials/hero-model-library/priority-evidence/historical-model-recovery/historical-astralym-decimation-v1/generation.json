@@ -1,0 +1,107 @@
+{
+  "schema": "ggd-historical-astralym-decimation-generation@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+    "bytes": 3889188,
+    "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+    "bytes": 3793672,
+    "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
+  },
+  "command": {
+    "worker": "tools/model-budget/optimize/decimate-emissive-lock.mjs",
+    "target": 7900,
+    "emissiveThreshold": 192,
+    "errorBound": 0.02,
+    "lockBorder": true,
+    "transparentEmissiveMatteSanitization": {
+      "alphaMax": 5,
+      "hiddenRgbFloorExclusive": 8
+    }
+  },
+  "dependencySetup": "bash tools/model-budget/optimize/bootstrap-geometry.sh",
+  "dependencyVersions": {
+    "gltfTransformCore": "4.4.1",
+    "meshoptimizer": "1.2.0",
+    "ffmpeg": "required by model-budget optimizer"
+  },
+  "result": {
+    "tool": "model-budget/decimate-emissive-lock@1",
+    "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+    "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+    "parameters": {
+      "target": 7900,
+      "emissiveThreshold": 192,
+      "errorBound": 0.02,
+      "lockBorder": true,
+      "sanitizeTransparentEmissiveMattes": true
+    },
+    "trianglesBefore": 23928,
+    "trianglesAfter": 7996,
+    "emissiveMatteSanitization": [
+      {
+        "texture": "materials/MI_WorldTreeDragon_Extra.webp",
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 927,
+        "visiblePixelsChanged": 0,
+        "alphaValuesChanged": 0
+      },
+      {
+        "texture": "materials/MI_WorldTreeDragon_Extra_Emissive.webp",
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 927,
+        "visiblePixelsChanged": 0,
+        "alphaValuesChanged": 0
+      },
+      {
+        "texture": "materials/MI_WorldTreeDragon_Eye.webp",
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 1428,
+        "visiblePixelsChanged": 0,
+        "alphaValuesChanged": 0
+      },
+      {
+        "texture": "materials/MI_WorldTreeDragon_Eye_Emissive.webp",
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 1428,
+        "visiblePixelsChanged": 0,
+        "alphaValuesChanged": 0
+      }
+    ],
+    "records": [
+      {
+        "primitiveIndex": 0,
+        "material": "MI_WorldTreeDragon_Body",
+        "trianglesBefore": 20594,
+        "trianglesAfter": 6798,
+        "vertices": 13921,
+        "emissiveLockedVertices": 1380,
+        "measuredError": 0.0010030643315985799
+      },
+      {
+        "primitiveIndex": 1,
+        "material": "MI_WorldTreeDragon_Extra",
+        "trianglesBefore": 2978,
+        "trianglesAfter": 982,
+        "vertices": 1928,
+        "emissiveLockedVertices": 119,
+        "measuredError": 0.0014064926654100418
+      },
+      {
+        "primitiveIndex": 2,
+        "material": "MI_WorldTreeDragon_Eye",
+        "trianglesBefore": 356,
+        "trianglesAfter": 216,
+        "vertices": 248,
+        "emissiveLockedVertices": 54,
+        "measuredError": 0.0013841078616678715
+      }
+    ]
+  }
+}

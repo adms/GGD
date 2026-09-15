@@ -1,0 +1,358 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-sonic-c00-ultimate14-motion-v1",
+  "sourceId": "parallel-ns-ultimate14",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/import-01/sonic-c00-ultimate14-actions.blend",
+    "bytes": 38460573,
+    "sha256": "b393ebe79d00a7f4f5dd8d2e36ef2acbd6f71c7107325acdec2ee8032c9a9f9c"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": true,
+    "excludeVisibleMeshPrefixes": []
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 2000388,
+    "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -9.653240203857422,
+        -4.576890468597412,
+        -0.010815728455781937
+      ],
+      [
+        9.653240203857422,
+        6.919288635253906,
+        17.10340118408203
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.10517571497421693,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    115
+  ],
+  "sourceActionCount": 11,
+  "sourceVisibleMeshesExcludedByPrefix": [],
+  "sourceImageCountUsed": 8,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "EyeL",
+      "node": "Mix",
+      "property": "Principled Base Color alpha-mask mix",
+      "sourceValue": {
+        "baseImage": "eyew_sonic_001_col.png",
+        "overlayImage": "eyel_sonic_001_col.png",
+        "factor": "eyel_sonic_001_col.png.Alpha",
+        "opaqueSurface": true
+      },
+      "exportValue": {
+        "image": "EyeL.ggd-opaque-base-color",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-materials/EyeL.ggd-opaque-base-color.png",
+        "bytes": 112813,
+        "sha256": "a120894382f6e5d515bc11bf080ccc1a11e1c1ff7effe52c8b1ce870b63b1a05",
+        "alphaMinimum": 1.0,
+        "method": "Blender diffuse-colour bake to UVMap.001"
+      },
+      "reason": "Bake a source opaque two-image colour mix that glTF core cannot represent; retaining only the overlay creates OPAQUE+transparent texture data."
+    },
+    {
+      "material": "EyeR",
+      "node": "Mix",
+      "property": "Principled Base Color alpha-mask mix",
+      "sourceValue": {
+        "baseImage": "eyew_sonic_001_col.png",
+        "overlayImage": "eyer_sonic_001_col.png",
+        "factor": "eyer_sonic_001_col.png.Alpha",
+        "opaqueSurface": true
+      },
+      "exportValue": {
+        "image": "EyeR.ggd-opaque-base-color",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-materials/EyeR.ggd-opaque-base-color.png",
+        "bytes": 112954,
+        "sha256": "a2f384314313c66dd1c9fcc49a5bf0665c1ca2d9b9e5d9fa714b91935a9b4e7f",
+        "alphaMinimum": 1.0,
+        "method": "Blender diffuse-colour bake to UVMap.001"
+      },
+      "reason": "Bake a source opaque two-image colour mix that glTF core cannot represent; retaining only the overlay creates OPAQUE+transparent texture data."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "metal_sonic_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_sonic_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_sonic_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [
+    {
+      "material": "def_sonic_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "sonic_Brow1_VIS_O_OBJShape",
+          "vertices": 168,
+          "polygons": 250
+        },
+        {
+          "name": "sonic_FaceN_VIS_O_OBJShape",
+          "vertices": 186,
+          "polygons": 320
+        },
+        {
+          "name": "sonic_M_VIS_O_OBJShape",
+          "vertices": 2394,
+          "polygons": 3982
+        }
+      ],
+      "outputMesh": "GGD_joined_def_sonic_001",
+      "outputVertices": 2748,
+      "outputPolygons": 4552,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "metal_sonic_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "sonic_M_VIS_O_OBJShape.001",
+          "vertices": 2093,
+          "polygons": 3292
+        },
+        {
+          "name": "sonic_RingM_VIS_O_OBJShape",
+          "vertices": 342,
+          "polygons": 636
+        }
+      ],
+      "outputMesh": "GGD_joined_metal_sonic_001",
+      "outputVertices": 2435,
+      "outputPolygons": 3928,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "EyeL.ggd-opaque-base-color",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/EyeL.ggd-opaque-base-color.ggd-256.png",
+      "derivedBytes": 37087,
+      "derivedSha256": "62390137ed3cddfaea4901b6f2baa7a861ce22ab44ebc50ad60fd5fca0ca5151",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "EyeR.ggd-opaque-base-color",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/EyeR.ggd-opaque-base-color.ggd-256.png",
+      "derivedBytes": 37210,
+      "derivedSha256": "1f24ecc7e7c4733203b2fe9b6ffe8558a5f26920f2572bd3c6c1637e74592e3d",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_sonic_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/def_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 77618,
+      "derivedSha256": "73b6ca19d8fc89f8232aba70e3f47804befe98b94c2e067607a1265b58b217b0",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "eyel_sonic_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/eyel_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 12581,
+      "derivedSha256": "bfefbbc5edf1a963d3950f793293c5018c619f4ac7f465fdf386055b4d4a1b42",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "eyer_sonic_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/eyer_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 12745,
+      "derivedSha256": "0eca8bdb308c24af25271e9a948d9616027e38ec9d8b5b14a7bfb26be84f1be4",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "eyew_sonic_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/eyew_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 27220,
+      "derivedSha256": "3b485859ad62ca087943bad5a0f3c256ecbc3a960d0b106aef31efcfa163e3ad",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "metal_sonic_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/metal_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 70734,
+      "derivedSha256": "b721de42ef2f8d3fc962d8f04be49d013b4418a69ab4bd9b6671f64823b41080",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_sonic_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/derived-textures/skin_sonic_001_col.png.ggd-256.png",
+      "derivedBytes": 4220,
+      "derivedSha256": "4a359b6d21cd20779f32b62606c98c5e4ff158f8a061b7d44e59cdb86fd4d58c",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 115,
+      "nodeName": "GGD_joined_def_sonic_001",
+      "previousParentIndex": 120,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 116,
+      "nodeName": "GGD_joined_metal_sonic_001",
+      "previousParentIndex": 120,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 117,
+      "nodeName": "sonic_eye1_VIS_O_OBJShape",
+      "previousParentIndex": 120,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 118,
+      "nodeName": "sonic_eye1_VIS_O_OBJShape.001",
+      "previousParentIndex": 120,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 119,
+      "nodeName": "sonic_FaceN_VIS_O_OBJShape.001",
+      "previousParentIndex": 120,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

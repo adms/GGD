@@ -12,6 +12,7 @@
       "catalogCandidateId": "infinity-strash-dai-pn010-02-native-v1",
       "heroId": "godie-nbbc",
       "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-idle-n-v3/dai-pn010-02",
+      "backdropOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/texture-backdrop-repaired-v1/dai-pn010-02",
       "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-dai-idle-n-v3/dai-pn010-02",
       "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v1/dai-pn010-02"
@@ -29,6 +30,7 @@
       "attachmentTextureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-textures-v1",
       "attachmentSourceRoot": "{asset}/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw",
       "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "backdropOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/texture-backdrop-repaired-v1/dai-pn010-05-daino-tsurugi",
       "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
       "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi"
@@ -38,6 +40,7 @@
       "catalogCandidateId": "infinity-strash-vearn-en801-pre-transformation-native-v1",
       "heroId": "godie-ubal",
       "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-final-v2/vearn-en801-pre-transformation",
+      "backdropOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/texture-backdrop-repaired-v1/vearn-en801-pre-transformation",
       "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-final-v2/vearn-en801-pre-transformation",
       "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v1/vearn-en801-pre-transformation"

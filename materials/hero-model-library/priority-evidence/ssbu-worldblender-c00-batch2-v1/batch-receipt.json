@@ -1,0 +1,96 @@
+{
+  "schema": "ggd-worldblender-c00-batch-build@2",
+  "blender": "/private/tmp/blender4513/Blender.app/Contents/MacOS/Blender",
+  "characters": [
+    {
+      "character": "chrom",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "candidateId": "ssbu-chrom-c00-static-skinned-v1",
+      "sourceSha256": "315b422197357a96d5d3bc71532a4902f4a0e58d2f3287871e8e36e9764b83ad",
+      "outputSha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "outputBytes": 963000,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "joints": [
+        123
+      ],
+      "textures": 7,
+      "finiteFloatValues": 88368,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "ultimate14MotionCandidate": {
+        "nuanmbPaths": 9,
+        "bodyMotionPaths": 9,
+        "uniqueTransformPayloads": 9,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "runtimeSelectable": false,
+      "deployed": false
+    },
+    {
+      "character": "ganon",
+      "nameZh": "加儂多夫",
+      "originalName": "Ganondorf",
+      "candidateId": "ssbu-ganondorf-c00-static-skinned-v1",
+      "sourceSha256": "cefa74a20064364df875275345b06ef399182c9f98aec816ad7bc27143283613",
+      "outputSha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "outputBytes": 1264104,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "joints": [
+        90
+      ],
+      "textures": 6,
+      "finiteFloatValues": 150184,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "ultimate14MotionCandidate": {
+        "nuanmbPaths": 10,
+        "bodyMotionPaths": 10,
+        "uniqueTransformPayloads": 10,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "runtimeSelectable": false,
+      "deployed": false
+    },
+    {
+      "character": "lucina",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "candidateId": "ssbu-lucina-c00-static-skinned-v1",
+      "sourceSha256": "b3cf288dade295275686cccee97824945347b430c8d91fa5a0ee2c103cc51e69",
+      "outputSha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "outputBytes": 895472,
+      "triangles": 7927,
+      "drawPrimitives": 6,
+      "joints": [
+        156
+      ],
+      "textures": 5,
+      "finiteFloatValues": 84324,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "ultimate14MotionCandidate": {
+        "nuanmbPaths": 105,
+        "bodyMotionPaths": 41,
+        "uniqueTransformPayloads": 19,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "runtimeSelectable": false,
+      "deployed": false
+    }
+  ]
+}
