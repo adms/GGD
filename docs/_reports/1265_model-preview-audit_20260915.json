@@ -2343,5 +2343,20 @@
    "inAdminList": true,
    "inEditorList": true
   }
- ]
+ ],
+ "uploadParse": {
+  "method": "packages/shared/src/content/modelUpload/glb.ts parseUploadGlb()（編輯器上傳與後台註冊共用）",
+  "limits": {
+   "fileMiB": 32,
+   "jsonMiB": 4
+  },
+  "checked": 163,
+  "pass": 163,
+  "fail": [],
+  "largestJson": {
+   "id": "ou99.469191",
+   "MiB": 3.59,
+   "note": "已達 JSON 上限的 90% ⇒ 再加動作片段就會讓編輯器打不開"
+  }
+ }
 }
