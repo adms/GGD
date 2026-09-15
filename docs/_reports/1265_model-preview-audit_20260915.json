@@ -1,0 +1,2347 @@
+{
+ "schema": "ggd-model-preview-audit@1",
+ "ticket": 1265,
+ "base": "origin/main a3a179e09",
+ "measuredAt": "2026-09-15T08:13:20.340Z",
+ "method": {
+  "preview": "apps/editor/src/preview3d/ModelPanel（autoPlay=idle, normalizeBody=true，與 apps/admin/src/ui/ModelPreview.tsx 相同）",
+  "adminList": "apps/admin/src/contentApi.ts readModelVersionCatalog()，打在 GGD_CONTENT_DIR=worktree 的 content-api",
+  "editorList": "apps/editor/src/hero/catalog.ts bundledHeroCatalog.modelIds",
+  "meter": "scene.whenReadyAsync() → scene.render()×4 → 同一個 JS 任務 engine.readPixels；地板網格關閉；非背景＝任一通道與 clearColor 差 >6",
+  "harness": "apps/editor/model-audit.html + src/preview3d/modelAudit.tsx"
+ },
+ "frame": [
+  956,
+  516
+ ],
+ "calibration": {
+  "ok": true,
+  "negative": [
+   "load-error",
+   0
+  ],
+  "fast": [
+   "ready",
+   27117
+  ],
+  "heavy": [
+   "ready",
+   11539
+  ]
+ },
+ "meterIncident": "第一輪 24 份 ready 卻 0 像素（最慢的 5 份全在內）＝材質未 ready 被靜默跳過；加 whenReadyAsync 與慢的正控制 ou99.469191（0→11,539 px）後重跑",
+ "visualPreReview": {
+  "note": "Claude 看 128px 縮圖的初審（Tier 1.5），⛔ 不是最終驗收",
+  "flags": {
+   "ou99.452782": "白色光環蓋住身體",
+   "ou99.454064": "藍色光盤，身體很小",
+   "ou99.454858": "紫色拖尾，身體很小",
+   "ou99.455144": "身體很小",
+   "ou99.458241": "身體很小、偏離中心",
+   "ou99.463198": "紫色拖尾，身體很小",
+   "ou99.463252": "紫色拖尾，身體很小",
+   "ou99.464696": "白色光刃，身體很小（GEOA，#1186）",
+   "ou99.465884": "太暗，看不清",
+   "ou99.465884-standard": "太暗，看不清",
+   "ou99.467258": "紫色拖尾，身體很小（heroBody:false）",
+   "ou99.470351": "只看到一團紫色（劍心）",
+   "ou99.474312": "身體很小",
+   "ou99.474798": "白色光環蓋住身體",
+   "ou99.482763": "身體很小",
+   "ou99.487191": "很暗，看不清",
+   "ou99.495309": "很暗，姿勢看不清",
+   "ou99.496905": "躺倒姿勢＋粉色長條"
+  }
+ },
+ "derivatives": {
+  "count": 34,
+  "generator": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-standardize-v2.py",
+  "heroBody": "未寫 ⇒ 編輯器列不出來、後台列得到",
+  "changedHere": false,
+  "why": "有上游產生器（直接改文件會被蓋回）；PR #1267 正要重做這一批"
+ },
+ "results": [
+  {
+   "id": "ou99.272513",
+   "meshes": 4,
+   "nonBackgroundPixels": 10483,
+   "litPixels": 9917,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.283718",
+   "meshes": 4,
+   "nonBackgroundPixels": 11574,
+   "litPixels": 9518,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.287871",
+   "meshes": 2,
+   "nonBackgroundPixels": 27117,
+   "litPixels": 25227,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.287871-standard",
+   "meshes": 4,
+   "nonBackgroundPixels": 27117,
+   "litPixels": 25227,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.310996",
+   "meshes": 2,
+   "nonBackgroundPixels": 9023,
+   "litPixels": 4805,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.311294",
+   "meshes": 4,
+   "nonBackgroundPixels": 13089,
+   "litPixels": 7013,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 533,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.311294-standard-v2",
+   "meshes": 4,
+   "nonBackgroundPixels": 13092,
+   "litPixels": 7030,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.312479",
+   "meshes": 2,
+   "nonBackgroundPixels": 6801,
+   "litPixels": 4136,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.312566",
+   "meshes": 6,
+   "nonBackgroundPixels": 12427,
+   "litPixels": 7649,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.313646",
+   "meshes": 2,
+   "nonBackgroundPixels": 15444,
+   "litPixels": 8686,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 532,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.313646-standard-v2",
+   "meshes": 2,
+   "nonBackgroundPixels": 15479,
+   "litPixels": 8724,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.328403",
+   "meshes": 5,
+   "nonBackgroundPixels": 10955,
+   "litPixels": 4827,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 410,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.406299",
+   "meshes": 3,
+   "nonBackgroundPixels": 20872,
+   "litPixels": 17324,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.407884",
+   "meshes": 2,
+   "nonBackgroundPixels": 14855,
+   "litPixels": 10793,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.413694",
+   "meshes": 5,
+   "nonBackgroundPixels": 8526,
+   "litPixels": 3992,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 553,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.433442",
+   "meshes": 5,
+   "nonBackgroundPixels": 13714,
+   "litPixels": 8937,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.433987",
+   "meshes": 3,
+   "nonBackgroundPixels": 20124,
+   "litPixels": 14792,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.451392",
+   "meshes": 4,
+   "nonBackgroundPixels": 28559,
+   "litPixels": 14487,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.452782",
+   "meshes": 10,
+   "nonBackgroundPixels": 23823,
+   "litPixels": 22405,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 514,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.453337",
+   "meshes": 3,
+   "nonBackgroundPixels": 10335,
+   "litPixels": 3029,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.453949",
+   "meshes": 6,
+   "nonBackgroundPixels": 12858,
+   "litPixels": 2524,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.453949-standard-v2",
+   "meshes": 6,
+   "nonBackgroundPixels": 13016,
+   "litPixels": 2545,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 408,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.454064",
+   "meshes": 10,
+   "nonBackgroundPixels": 10497,
+   "litPixels": 8547,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 516,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.454069",
+   "meshes": 6,
+   "nonBackgroundPixels": 14432,
+   "litPixels": 13494,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.454482",
+   "meshes": 3,
+   "nonBackgroundPixels": 14567,
+   "litPixels": 12454,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.454482-standard-v2",
+   "meshes": 3,
+   "nonBackgroundPixels": 14566,
+   "litPixels": 12466,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 515,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.454858",
+   "meshes": 4,
+   "nonBackgroundPixels": 15426,
+   "litPixels": 14298,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 581,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.455144",
+   "meshes": 2,
+   "nonBackgroundPixels": 4092,
+   "litPixels": 996,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.455488",
+   "meshes": 2,
+   "nonBackgroundPixels": 9656,
+   "litPixels": 8918,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.456546",
+   "meshes": 4,
+   "nonBackgroundPixels": 16539,
+   "litPixels": 9115,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 408,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.456917",
+   "meshes": 2,
+   "nonBackgroundPixels": 36700,
+   "litPixels": 17977,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 511,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.456917-standard-v2",
+   "meshes": 2,
+   "nonBackgroundPixels": 38257,
+   "litPixels": 19200,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.457123",
+   "meshes": 3,
+   "nonBackgroundPixels": 12150,
+   "litPixels": 11095,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 512,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457123-standard-v2",
+   "meshes": 3,
+   "nonBackgroundPixels": 12150,
+   "litPixels": 11094,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.457280",
+   "meshes": 3,
+   "nonBackgroundPixels": 16194,
+   "litPixels": 15612,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 513,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457280-standard-v2",
+   "meshes": 4,
+   "nonBackgroundPixels": 16193,
+   "litPixels": 15624,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.457594",
+   "meshes": 3,
+   "nonBackgroundPixels": 9944,
+   "litPixels": 9698,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457594-standard-v2",
+   "meshes": 3,
+   "nonBackgroundPixels": 9938,
+   "litPixels": 9696,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.457710",
+   "meshes": 3,
+   "nonBackgroundPixels": 18336,
+   "litPixels": 16843,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457780",
+   "meshes": 7,
+   "nonBackgroundPixels": 20257,
+   "litPixels": 20076,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457874",
+   "meshes": 3,
+   "nonBackgroundPixels": 17117,
+   "litPixels": 17027,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.457883",
+   "meshes": 2,
+   "nonBackgroundPixels": 24130,
+   "litPixels": 21727,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 412,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.458013",
+   "meshes": 2,
+   "nonBackgroundPixels": 14813,
+   "litPixels": 14306,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.458013-standard",
+   "meshes": 2,
+   "nonBackgroundPixels": 14816,
+   "litPixels": 14312,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 410,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.458241",
+   "meshes": 2,
+   "nonBackgroundPixels": 5851,
+   "litPixels": 4934,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.458777",
+   "meshes": 3,
+   "nonBackgroundPixels": 16081,
+   "litPixels": 1231,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 412,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.458777-standard-v3",
+   "meshes": 6,
+   "nonBackgroundPixels": 16130,
+   "litPixels": 1238,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.459087",
+   "meshes": 4,
+   "nonBackgroundPixels": 10359,
+   "litPixels": 6487,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 685,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.459257",
+   "meshes": 5,
+   "nonBackgroundPixels": 10150,
+   "litPixels": 9798,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.459257-standard-v2",
+   "meshes": 5,
+   "nonBackgroundPixels": 10148,
+   "litPixels": 9811,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 513,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.459617",
+   "meshes": 3,
+   "nonBackgroundPixels": 24777,
+   "litPixels": 22425,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.459617-standard",
+   "meshes": 3,
+   "nonBackgroundPixels": 24714,
+   "litPixels": 22350,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.460977",
+   "meshes": 4,
+   "nonBackgroundPixels": 32353,
+   "litPixels": 3389,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.462013",
+   "meshes": 4,
+   "nonBackgroundPixels": 19206,
+   "litPixels": 9689,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.462157",
+   "meshes": 3,
+   "nonBackgroundPixels": 28894,
+   "litPixels": 20188,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.463198",
+   "meshes": 9,
+   "nonBackgroundPixels": 9795,
+   "litPixels": 8792,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 578,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.463252",
+   "meshes": 5,
+   "nonBackgroundPixels": 5060,
+   "litPixels": 3870,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.463318",
+   "meshes": 3,
+   "nonBackgroundPixels": 22521,
+   "litPixels": 21417,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.463344",
+   "meshes": 2,
+   "nonBackgroundPixels": 12409,
+   "litPixels": 9812,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.463625",
+   "meshes": 11,
+   "nonBackgroundPixels": 8677,
+   "litPixels": 7377,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 534,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.464207",
+   "meshes": 7,
+   "nonBackgroundPixels": 18806,
+   "litPixels": 14899,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.464483",
+   "meshes": 6,
+   "nonBackgroundPixels": 22639,
+   "litPixels": 22302,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 410,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.464696",
+   "meshes": 5,
+   "nonBackgroundPixels": 8308,
+   "litPixels": 4959,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 805,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.465205",
+   "meshes": 3,
+   "nonBackgroundPixels": 14553,
+   "litPixels": 2838,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.465884",
+   "meshes": 4,
+   "nonBackgroundPixels": 8880,
+   "litPixels": 1129,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.465884-standard",
+   "meshes": 4,
+   "nonBackgroundPixels": 8852,
+   "litPixels": 1133,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.466002",
+   "meshes": 2,
+   "nonBackgroundPixels": 16100,
+   "litPixels": 6933,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 539,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.466278",
+   "meshes": 3,
+   "nonBackgroundPixels": 15667,
+   "litPixels": 8393,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.467165",
+   "meshes": 3,
+   "nonBackgroundPixels": 20326,
+   "litPixels": 20142,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.467227",
+   "meshes": 5,
+   "nonBackgroundPixels": 19919,
+   "litPixels": 17431,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.467227-standard",
+   "meshes": 5,
+   "nonBackgroundPixels": 19820,
+   "litPixels": 17410,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 512,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.467258",
+   "meshes": 6,
+   "nonBackgroundPixels": 4722,
+   "litPixels": 3608,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.467889",
+   "meshes": 18,
+   "nonBackgroundPixels": 17495,
+   "litPixels": 14936,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 512,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.468447",
+   "meshes": 3,
+   "nonBackgroundPixels": 8150,
+   "litPixels": 5406,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 550,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.468771",
+   "meshes": 4,
+   "nonBackgroundPixels": 15399,
+   "litPixels": 15193,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.468771-standard-v2",
+   "meshes": 4,
+   "nonBackgroundPixels": 15449,
+   "litPixels": 15234,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.469191",
+   "meshes": 3,
+   "nonBackgroundPixels": 11536,
+   "litPixels": 3915,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 843,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470087",
+   "meshes": 3,
+   "nonBackgroundPixels": 11828,
+   "litPixels": 3286,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470087-standard-v2",
+   "meshes": 3,
+   "nonBackgroundPixels": 11844,
+   "litPixels": 3289,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.470225",
+   "meshes": 2,
+   "nonBackgroundPixels": 16433,
+   "litPixels": 15071,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470351",
+   "meshes": 4,
+   "nonBackgroundPixels": 6642,
+   "litPixels": 3515,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470426",
+   "meshes": 2,
+   "nonBackgroundPixels": 24678,
+   "litPixels": 16215,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470467",
+   "meshes": 5,
+   "nonBackgroundPixels": 12425,
+   "litPixels": 11007,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 517,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.470782",
+   "meshes": 6,
+   "nonBackgroundPixels": 26671,
+   "litPixels": 18669,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.471669",
+   "meshes": 7,
+   "nonBackgroundPixels": 20368,
+   "litPixels": 20303,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.472035",
+   "meshes": 6,
+   "nonBackgroundPixels": 24184,
+   "litPixels": 5825,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.472038",
+   "meshes": 6,
+   "nonBackgroundPixels": 13098,
+   "litPixels": 6599,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.472038-standard-v2",
+   "meshes": 6,
+   "nonBackgroundPixels": 13184,
+   "litPixels": 6467,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 513,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.472112",
+   "meshes": 2,
+   "nonBackgroundPixels": 20658,
+   "litPixels": 9816,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.472112-standard-v2",
+   "meshes": 2,
+   "nonBackgroundPixels": 20670,
+   "litPixels": 9834,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.472273",
+   "meshes": 5,
+   "nonBackgroundPixels": 18553,
+   "litPixels": 14906,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.472410",
+   "meshes": 2,
+   "nonBackgroundPixels": 30534,
+   "litPixels": 13088,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 506,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.473324",
+   "meshes": 4,
+   "nonBackgroundPixels": 19660,
+   "litPixels": 10397,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 404,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.473324-standard-v3",
+   "meshes": 6,
+   "nonBackgroundPixels": 19664,
+   "litPixels": 10690,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.474258",
+   "meshes": 3,
+   "nonBackgroundPixels": 19102,
+   "litPixels": 4993,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.474258-standard",
+   "meshes": 5,
+   "nonBackgroundPixels": 19054,
+   "litPixels": 4986,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 410,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.474312",
+   "meshes": 5,
+   "nonBackgroundPixels": 5042,
+   "litPixels": 3689,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.474798",
+   "meshes": 11,
+   "nonBackgroundPixels": 24871,
+   "litPixels": 22843,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.476060",
+   "meshes": 3,
+   "nonBackgroundPixels": 15252,
+   "litPixels": 2176,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.478062",
+   "meshes": 4,
+   "nonBackgroundPixels": 10493,
+   "litPixels": 9918,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.478121",
+   "meshes": 2,
+   "nonBackgroundPixels": 37294,
+   "litPixels": 32241,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.478203",
+   "meshes": 3,
+   "nonBackgroundPixels": 11838,
+   "litPixels": 10615,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 567,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.478642",
+   "meshes": 2,
+   "nonBackgroundPixels": 20797,
+   "litPixels": 18714,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.478642-standard",
+   "meshes": 4,
+   "nonBackgroundPixels": 20797,
+   "litPixels": 18705,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.478915",
+   "meshes": 2,
+   "nonBackgroundPixels": 34770,
+   "litPixels": 34429,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.479248",
+   "meshes": 5,
+   "nonBackgroundPixels": 17983,
+   "litPixels": 5632,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 616,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.480489",
+   "meshes": 3,
+   "nonBackgroundPixels": 20147,
+   "litPixels": 17769,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.481732",
+   "meshes": 5,
+   "nonBackgroundPixels": 20122,
+   "litPixels": 3189,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.481732-standard-v2",
+   "meshes": 5,
+   "nonBackgroundPixels": 20917,
+   "litPixels": 3597,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.482609",
+   "meshes": 3,
+   "nonBackgroundPixels": 25534,
+   "litPixels": 25379,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 409,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.482763",
+   "meshes": 4,
+   "nonBackgroundPixels": 4688,
+   "litPixels": 3132,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.483692",
+   "meshes": 4,
+   "nonBackgroundPixels": 20697,
+   "litPixels": 19603,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 533,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.485012",
+   "meshes": 2,
+   "nonBackgroundPixels": 40665,
+   "litPixels": 32349,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.486403",
+   "meshes": 7,
+   "nonBackgroundPixels": 18853,
+   "litPixels": 14855,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487191",
+   "meshes": 7,
+   "nonBackgroundPixels": 8174,
+   "litPixels": 4884,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487482",
+   "meshes": 3,
+   "nonBackgroundPixels": 18881,
+   "litPixels": 18214,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 411,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487484",
+   "meshes": 3,
+   "nonBackgroundPixels": 11210,
+   "litPixels": 1191,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487484-standard",
+   "meshes": 3,
+   "nonBackgroundPixels": 11232,
+   "litPixels": 1194,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 409,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.487487-7yzc0mtk",
+   "meshes": 4,
+   "nonBackgroundPixels": 12423,
+   "litPixels": 7551,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487487-7yzc0mtk-standard-v2",
+   "meshes": 5,
+   "nonBackgroundPixels": 12424,
+   "litPixels": 7560,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.487487-sbhhkedr",
+   "meshes": 3,
+   "nonBackgroundPixels": 13609,
+   "litPixels": 5853,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487487-sbhhkedr-standard",
+   "meshes": 6,
+   "nonBackgroundPixels": 13607,
+   "litPixels": 5838,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.487742",
+   "meshes": 5,
+   "nonBackgroundPixels": 25317,
+   "litPixels": 22440,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.487887",
+   "meshes": 4,
+   "nonBackgroundPixels": 16068,
+   "litPixels": 15574,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 538,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.491161",
+   "meshes": 3,
+   "nonBackgroundPixels": 18063,
+   "litPixels": 17988,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.491448",
+   "meshes": 7,
+   "nonBackgroundPixels": 20701,
+   "litPixels": 18030,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 409,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.491448-standard-v3",
+   "meshes": 6,
+   "nonBackgroundPixels": 21062,
+   "litPixels": 18320,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.491497",
+   "meshes": 2,
+   "nonBackgroundPixels": 42568,
+   "litPixels": 3192,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 516,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.491497-standard",
+   "meshes": 3,
+   "nonBackgroundPixels": 42674,
+   "litPixels": 3628,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 525,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.493578",
+   "meshes": 2,
+   "nonBackgroundPixels": 15896,
+   "litPixels": 4555,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.493578-standard-v2",
+   "meshes": 2,
+   "nonBackgroundPixels": 16047,
+   "litPixels": 4617,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.493659",
+   "meshes": 3,
+   "nonBackgroundPixels": 11836,
+   "litPixels": 10938,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 407,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.494307",
+   "meshes": 5,
+   "nonBackgroundPixels": 20048,
+   "litPixels": 15165,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 513,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.495015",
+   "meshes": 3,
+   "nonBackgroundPixels": 22668,
+   "litPixels": 21564,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 506,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.495015-native-visibility-v1",
+   "meshes": 6,
+   "nonBackgroundPixels": 22664,
+   "litPixels": 21568,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 506,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.495015-standard",
+   "meshes": 6,
+   "nonBackgroundPixels": 22660,
+   "litPixels": 21557,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.495084",
+   "meshes": 5,
+   "nonBackgroundPixels": 13157,
+   "litPixels": 10679,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 404,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.495309",
+   "meshes": 8,
+   "nonBackgroundPixels": 24056,
+   "litPixels": 8492,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 533,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.495978",
+   "meshes": 2,
+   "nonBackgroundPixels": 22554,
+   "litPixels": 20035,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.496452",
+   "meshes": 3,
+   "nonBackgroundPixels": 13464,
+   "litPixels": 8629,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 406,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.496452-standard-v2",
+   "meshes": 3,
+   "nonBackgroundPixels": 13504,
+   "litPixels": 8562,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.496746",
+   "meshes": 3,
+   "nonBackgroundPixels": 19330,
+   "litPixels": 16762,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 404,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.496859",
+   "meshes": 3,
+   "nonBackgroundPixels": 16938,
+   "litPixels": 12083,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 404,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.496905",
+   "meshes": 4,
+   "nonBackgroundPixels": 21446,
+   "litPixels": 18532,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 586,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497129",
+   "meshes": 2,
+   "nonBackgroundPixels": 12938,
+   "litPixels": 8298,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 513,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497131",
+   "meshes": 3,
+   "nonBackgroundPixels": 11161,
+   "litPixels": 8274,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497211",
+   "meshes": 6,
+   "nonBackgroundPixels": 16850,
+   "litPixels": 15592,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 508,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497211-standard-v2",
+   "meshes": 6,
+   "nonBackgroundPixels": 17295,
+   "litPixels": 15969,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 511,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.497213",
+   "meshes": 4,
+   "nonBackgroundPixels": 17967,
+   "litPixels": 16582,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497398",
+   "meshes": 3,
+   "nonBackgroundPixels": 37951,
+   "litPixels": 37293,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497400",
+   "meshes": 4,
+   "nonBackgroundPixels": 12841,
+   "litPixels": 11802,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 532,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497433",
+   "meshes": 4,
+   "nonBackgroundPixels": 20943,
+   "litPixels": 17545,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 509,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497434",
+   "meshes": 3,
+   "nonBackgroundPixels": 10424,
+   "litPixels": 2643,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 507,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497483",
+   "meshes": 2,
+   "nonBackgroundPixels": 18668,
+   "litPixels": 3157,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 554,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.497746",
+   "meshes": 2,
+   "nonBackgroundPixels": 13633,
+   "litPixels": 12489,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498214",
+   "meshes": 2,
+   "nonBackgroundPixels": 25628,
+   "litPixels": 23627,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498214-standard-v2",
+   "meshes": 2,
+   "nonBackgroundPixels": 25664,
+   "litPixels": 23668,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": false
+  },
+  {
+   "id": "ou99.498341",
+   "meshes": 5,
+   "nonBackgroundPixels": 14690,
+   "litPixels": 10718,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498407",
+   "meshes": 3,
+   "nonBackgroundPixels": 19849,
+   "litPixels": 15769,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 410,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498472",
+   "meshes": 5,
+   "nonBackgroundPixels": 14253,
+   "litPixels": 6273,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 510,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498515",
+   "meshes": 3,
+   "nonBackgroundPixels": 11011,
+   "litPixels": 10479,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 541,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.498517",
+   "meshes": 3,
+   "nonBackgroundPixels": 18927,
+   "litPixels": 18201,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 547,
+   "inAdminList": true,
+   "inEditorList": true
+  },
+  {
+   "id": "ou99.499084",
+   "meshes": 9,
+   "nonBackgroundPixels": 19227,
+   "litPixels": 18564,
+   "frame": [
+    956,
+    516
+   ],
+   "status": "ready",
+   "ms": 405,
+   "inAdminList": true,
+   "inEditorList": true
+  }
+ ]
+}
