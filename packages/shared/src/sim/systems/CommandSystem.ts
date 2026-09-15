@@ -128,6 +128,8 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           break;
         case "interact": {
           // 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 隊友**自己**點燈。每一個拒絕都回給按的人（⛔ 不靜默）。
+          // ⚠️ 控場（暈／定身／施法鎖／擊倒／被背著 ⇒ `controlled`）也在 `checkInteractable` 裡驗，⛔ 不在這裡另寫一份：
+          //   bot 規則（`Tier0Brain`）問的是同一支，兩個呼叫端才不會一邊擋一邊放。
           const result = acceptInteractable(world, entity, cmd.objectId);
           if (result !== "ok") {
             world.emit("interactRejected", { entity, seatId, objectId: cmd.objectId, reason: result });

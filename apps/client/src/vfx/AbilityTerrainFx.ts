@@ -28,6 +28,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { LANTERN_BODY_RADIUS } from "../input/interactables";
 
 /** ⭐ 柱子的高度（格）。⚠️ 碰撞是 2D 圓 —— 這個數字只影響**看得見的**那一半。 */
 export const OBSTACLE_HEIGHT = 3.2;
@@ -109,7 +110,9 @@ export class AbilityTerrainFx {
       m.alpha = 0.9;
       this.lanternMat = m;
     }
-    const body = MeshBuilder.CreateSphere(`ability-lantern-${p.id}`, { diameter: 0.7, segments: 8 }, this.scene);
+    // ⭐ 球徑與右鍵點選判定同一個半徑（`LANTERN_BODY_RADIUS`）。⚠️ 判定在地面投影上（與點英雄同一個模型），
+    //   而球浮在 `LANTERN_HEIGHT` —— 斜視角下點球的上緣會落到燈心後方一小段；⛔ 未實機量過手感。
+    const body = MeshBuilder.CreateSphere(`ability-lantern-${p.id}`, { diameter: LANTERN_BODY_RADIUS * 2, segments: 8 }, this.scene);
     body.position.set(p.x, LANTERN_HEIGHT, p.z);
     const ring = MeshBuilder.CreateTorus(
       `ability-lantern-ring-${p.id}`,

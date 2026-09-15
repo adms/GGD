@@ -1,7 +1,8 @@
 /**
  * InputCapture — DOM listeners → IntentFrame-shaped orders/commands.
- *   right-click        move order (or attackTarget when over an enemy); on an ALLIED
- *                      skill interactable (GH#1189 lantern) → interact / walk to it
+ *   right-click        move order (or attackTarget when over an enemy); on the BODY of an
+ *                      ALLIED skill interactable (GH#1189 lantern) → interact / walk to it
+ *                      (an enemy under the cursor wins by default: arena-rules.interactClick)
  *   A + left-click     attackMove order (A also swaps in the attack cursor)
  *   plain left-click   on YOUR OWN hero → onSelectSelf (select voice quip);
  *                      anywhere else it stays inert (misclicks are free)
@@ -25,7 +26,7 @@ import { rangeGuide } from "../ui/rangeGuideConfig";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 import { pickAllyAt } from "./allyTargets";
 import { cancelTwoStageCast, getTwoStageArmedSlot } from "./mouseTwoStageCast";
-import { mapInteractClick, pickInteractableAt } from "./interactables";
+import { interactClickEnemyFirst, mapInteractClick, pickInteractableAt } from "./interactables";
 import type { InteractableSpawnEvent } from "@ggd/shared/sim/effects/spawnInteractable";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
@@ -232,16 +233,20 @@ export class InputCapture {
       const ground = this.ground(ev);
       if (!ground) return;
       this.setAttackArmed(false);
-      // ⭐ GH#1189 —— 右鍵點在我隊的燈籠上：碰得到就點燈、碰不到就先走過去（⛔ 兩者不同時送）。
-      //   它排在攻擊目標前面：燈籠是救命的那一下，壓在敵人身上時也要點得到。
-      const lantern = (this.deps.pickInteractable ?? pickInteractableAt)(ground);
+      // ⭐ GH#1189 —— 右鍵點在我隊燈籠的**本體**上：碰得到就點燈、碰不到就先走過去（⛔ 兩者不同時送）。
+      //   ⭐ 游標下同時有敵人 ⇒ 預設**敵人先**（`arena-rules.interactClick.enemyFirst`，後台一鍵翻成燈籠先）：
+      //   燈籠就丟在隊友打架的位置，⛔ 不可以吃掉那幾秒的攻擊指令（票文驗收②「選擇不搭乘仍可正常戰鬥」）。
+      //   ⚠️ 前一版排在攻擊目標前面、而且整個接受圈都算點到 —— 審查實跑：圈內右鍵點敵人送出的是 interact。
+      const enemy = this.deps.pickEnemy(ground);
+      const lantern =
+        enemy !== null && interactClickEnemyFirst() ? null : (this.deps.pickInteractable ?? pickInteractableAt)(ground);
       if (lantern) {
         const act = mapInteractClick(lantern, this.deps.getSelfPos());
         if (act.kind === "command") this.deps.onCommand(act.command);
         else this.deps.onOrder(act.order);
         return;
       }
-      this.deps.onOrder(mapRightClick(ground, this.deps.pickEnemy(ground)));
+      this.deps.onOrder(mapRightClick(ground, enemy));
     });
 
     on(this.el, "pointerdown", (ev: PointerEvent) => {

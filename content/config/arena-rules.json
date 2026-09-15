@@ -103,6 +103,9 @@
   "botInteract": {
     "autoAccept": false
   },
+  "interactClick": {
+    "enemyFirst": true
+  },
   "disadvantageWeights": {
     "roundGapPct": 50,
     "itemValueGapPct": 30,

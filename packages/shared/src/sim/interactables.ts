@@ -3,7 +3,7 @@
  *
  *   · `acceptInteractable(world, entity, objectId)`：`CommandSystem` 的 `interact` 指令呼叫它。
  *     ⭐ 伺服器逐項驗（⛔ 不信客戶端）：還在（沒到期／沒用完／施法者活著／該區沒結算）·
- *     不是施法者本人 · 接受者活著 · 同隊 · 沒接受過 · 同區且身體碰到接受圈。
+ *     不是施法者本人 · 接受者活著 · 同隊 · 沒接受過 · 沒被按住（控場）· 同區且身體碰到接受圈。
  *     通過 ⇒ 以**接受者**為目標、原施法者為 caster 跑烘好的 `onAccept`，扣一次使用。
  *   · `interactableSystem(world)`：到期／施法者死亡／回合重置收掉（`interactableEnd.reason`）。
  *
@@ -16,9 +16,19 @@
 import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import { runEffects } from "./effects/effectRunner";
+import { movementHold } from "./movementHold";
+import { isCarried } from "./carry";
 
 /** 接受的結果。非 `ok` 的每一個都會以 `interactRejected.reason` 回給按的人（⛔ 不靜默）。 */
-export type InteractResult = "ok" | "gone" | "owner" | "dead" | "enemy" | "already-accepted" | "too-far";
+export type InteractResult =
+  | "ok"
+  | "gone"
+  | "owner"
+  | "dead"
+  | "enemy"
+  | "already-accepted"
+  | "controlled"
+  | "too-far";
 
 export type InteractableEndReason = "expired" | "ownerDead" | "roundReset" | "used";
 
@@ -50,6 +60,11 @@ export function checkInteractable(world: SimWorld, entity: EntityId, objectId: E
   const ownerTeam = world.team.get(it.ownerId)?.teamId;
   if (ownerTeam === undefined || world.team.get(entity)?.teamId !== ownerTeam) return "enemy";
   if (it.acceptedBy.includes(entity)) return "already-accepted";
+  // ⭐ 被遊戲按住的身體不能靠接受互動物脫身（GH#1189 審查：被暈／定身／被背著也點得了燈 = 瞬移逃脫）。
+  //   ⭐ 這是**所有互動物**的規則（⛔ 不是燈籠的 if），而且⛔ 不另寫判準：讀的就是移動系統的唯一判準
+  //   `movementHold().rooted`（root／stun／施法鎖／recovery 鎖／擊倒／紮根）＋ 背負 `isCarried`。
+  //   ⚠️ 刻意不用 `bodyHeldByRules`（多了 hitstop）：挨打的那幾個 tick 點燈會隨機失敗。
+  if (movementHold(world, entity).rooted || isCarried(world, entity)) return "controlled";
   const t = world.transform.get(entity);
   if (!t || t.zone !== it.zone) return "too-far";
   const dx = t.pos.x - it.center.x;
@@ -68,6 +83,7 @@ export function acceptInteractable(world: SimWorld, entity: EntityId, objectId: 
   world.emit("interactAccepted", { id: objectId, by: entity, owner: it.ownerId, origin: it.origin, usesLeft: it.usesLeft });
   // ⭐ 點燈是一個新的玩家決定 ⇒ 放下還在走的那一段移動（走向燈籠的那一道）。
   //   ⛔ 少了這一行：飛回施法者之後 sticky 的 moveTarget 還指著燈籠，人會自己走回去 —— 搭了等於沒搭。
+  //   守衛：`interactables.test.ts` ③「接受時放下走到一半的移動」。
   const nav = world.nav.get(entity);
   if (nav) nav.moveTarget = null;
   runEffects(it.onAccept, {

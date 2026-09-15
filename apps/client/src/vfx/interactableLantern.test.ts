@@ -1,6 +1,6 @@
 /**
  * @visual-proof GH#1189 燈籠的客戶端那一半 —— 出貨的整條路（⛔ 不手搭 payload）：真的 `runEffects` → 真的
- * `VfxSystem.handleEvent` → 網格（出生那一刻 emissive×alpha > 0）＋點選表 → 真的 `InputCapture` 右鍵 → `interact`。
+ * `VfxSystem.handleEvent` → 網格（出生那一刻 emissive×alpha > 0）＋點選表 → 真的 `InputCapture` 右鍵（本體 ⇒ interact · 壓著敵人 ⇒ 打敵人 · 圈內本體外 ⇒ 走路）。
  * ⚠️ NullEngine 不 raster ⇒ 證明的是「材質不會把圖元歸零」，⛔ 不是實機截圖。突變：右鍵分支拿掉 ⇒ 紅。
  */
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
@@ -14,7 +14,6 @@ import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { runEffects } from "@ggd/shared/sim/effects/effectRunner";
 import { asSeatId, asTeamId, type ChampionId } from "@ggd/shared/ids";
 import type { EffectDef } from "@ggd/shared/sim/effects/effect";
-import type { Command, Order } from "@ggd/shared/sim/intents";
 import { VfxSystem } from "./VfxSystem";
 import { InputCapture } from "../input/InputCapture";
 import { pickInteractableAt } from "../input/interactables";
@@ -48,28 +47,26 @@ describe("GH#1189 燈籠：看得到、點得到、點了送 interact", () => {
     expect(glow.length === 2 && glow.every((g) => g > 0), "⛔ 燈籠本體或接受圈的 emissive×alpha 是 0 —— 畫了等於沒畫").toBe(true);
 
     const ally = { entityId: 999, teamId: 0 };
-    let self = { ...at };
-    const orders: Order[] = [];
-    const commands: Command[] = [];
+    let self = { ...at }, ground = { ...at }, enemy: number | null = null;
+    const sent: string[] = [];
     const el = new FakeTarget();
     vi.stubGlobal("window", new FakeTarget());
     const cap = new InputCapture(el as unknown as HTMLElement, {
-      screenToGround: () => at,
-      getSelfPos: () => self,
-      getAbility: () => null, pickEnemy: () => null, pickSelf: () => false,
+      screenToGround: () => ground, getSelfPos: () => self,
+      getAbility: () => null, pickEnemy: () => enemy, pickSelf: () => false,
       pickInteractable: (g) => pickInteractableAt(g, ally),
-      onOrder: (o) => orders.push(o),
-      onCommand: (c) => commands.push(c),
+      onOrder: (o) => sent.push(o.kind), onCommand: (c) => sent.push(c.kind),
       onSelectSelf: () => {}, onZoom: () => {}, onToggleFollow: () => {},
     });
     cap.attach();
-    const rclick = { clientX: 1, clientY: 1, preventDefault: () => {} };
-    el.dispatch("contextmenu", rclick);
-    expect(commands.map((c) => c.kind), "⛔ 站在燈旁右鍵點燈沒有送出 interact").toEqual(["interact"]);
-    expect(orders).toEqual([]);
-    self = { x: at.x + 10, z: at.z };
-    el.dispatch("contextmenu", rclick);
-    expect(orders.map((o) => o.kind)).toEqual(["move"]);
+    const rclick = (): string[] => { sent.length = 0; el.dispatch("contextmenu", { clientX: 1, clientY: 1, preventDefault: () => {} }); return [...sent]; };
+    expect(rclick(), "⛔ 站在燈旁右鍵點燈本體沒有送出 interact").toEqual(["interact"]);
+    enemy = 777;
+    expect(rclick(), "⛔ 燈籠上壓著敵人時右鍵被燈籠吃掉（出貨 enemyFirst ⇒ 先打敵人）").toEqual(["attackTarget"]);
+    [enemy, ground] = [null, { x: at.x + 1.2, z: at.z }];
+    expect(rclick(), "⛔ 接受圈內、燈籠本體外的右鍵被燈籠吃掉（應該照常走路）").toEqual(["move"]);
+    [ground, self] = [{ ...at }, { x: at.x + 10, z: at.z }];
+    expect(rclick(), "碰不到燈 ⇒ 先走過去").toEqual(["move"]);
     expect(pickInteractableAt(at, { entityId: caster, teamId: 0 }), "自己放的燈不在自己的點選表裡").toBeNull();
 
     for (let i = 0; i < 20; i++) { world.step(new Map()); drain(); }

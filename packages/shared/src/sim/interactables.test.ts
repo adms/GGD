@@ -4,6 +4,8 @@
  * → 隊友的 `interact` 指令走 `CommandSystem` → `acceptInteractable`。
  *
  * 突變（實跑，見 commit）：`checkInteractable` 拿掉同隊那一行 ⇒ ①「敵人點燈」紅。
+ * ③（2026-09-15 修正輪）不是出貨燈籠：手放一盞**兩次使用、onAccept 空**的互動物，只驗三條通用規則 ——
+ * 控場被拒且不消耗、接受時放下走到一半的移動、同一人不可重複接受（出貨 kit maxUses=1 走不到那個分支）。
  */
 import { beforeAll, describe, expect, it } from "vitest";
 import { shippedHeroCatalog } from "../../testkit/heroPackageFixture";
@@ -17,6 +19,10 @@ import { createCommunityHeroRecipe } from "../content/heroForge/communityExample
 import { COMMUNITY_LOL_BATCH2_EXAMPLES } from "../content/heroForge/communityLolBatch2";
 import { compileGeneratedHeroDraft, generateHeroDraft, type CompiledHeroDraftResult } from "../content/heroForge/generator";
 import { createHeroSimulationBaseline } from "../content/heroForge/simulationBaseline";
+import { runEffects } from "./effects/effectRunner";
+import type { EffectDef } from "./effects/effect";
+import type { Order } from "./intents";
+import { movementHold } from "./movementHold";
 
 const catalog = shippedHeroCatalog();
 const baseline = createHeroSimulationBaseline(catalog.documents);
@@ -33,7 +39,9 @@ beforeAll(() => {
   draft = result.draft;
 });
 
-type Rig = { world: SimWorld; thresh: EntityId; near: EntityId; far: EntityId; foe: EntityId; events: SimEvent[]; step: (cmds?: Map<number, IntentFrame["commands"]>) => void };
+/** `orders` 裡某座位給 `null` ＝ 那一 tick **不下指令**（其餘座位照舊 hold）。 */
+type Step = (cmds?: Map<number, IntentFrame["commands"]>, orders?: Map<number, Order | null>) => void;
+type Rig = { world: SimWorld; thresh: EntityId; near: EntityId; far: EntityId; foe: EntityId; events: SimEvent[]; step: Step };
 
 function withLantern(run: (rig: Rig) => void): void {
   const context = extendRegistryContext(baseline.context, "lol-interact-thresh", () => {
@@ -53,8 +61,11 @@ function withLantern(run: (rig: Rig) => void): void {
     const far = spawn("thorne", 2, 0, at(-9, 0));
     const foe = spawn("thorne", 3, 1, at(2, 1));
     const events: SimEvent[] = [];
-    const step = (cmds = new Map<number, IntentFrame["commands"]>()) => {
-      world.step(new Map([0, 1, 2, 3].map((s) => [asSeatId(s), { commands: cmds.get(s) ?? [], order: { kind: "hold" } }] as const)));
+    const step: Step = (cmds = new Map(), orders = new Map()) => {
+      world.step(new Map([0, 1, 2, 3].map((s) => {
+        const order: Order | null = orders.has(s) ? (orders.get(s) as Order | null) : { kind: "hold" };
+        return [asSeatId(s), order === null ? { commands: cmds.get(s) ?? [] } : { commands: cmds.get(s) ?? [], order }] as const;
+      })));
       events.push(...world.events);
     };
     step();
@@ -120,10 +131,39 @@ describe("GH#1189 瑟雷西 W 燈籠：隊友自選互動位移", () => {
       world.health.get(near)!.alive = false;
       step(new Map([[1, [{ kind: "interact", objectId: lantern }]]]));
       expect(rejection(events, near)).toEqual(["dead"]);
-      for (let t = 0; t < 8 * TICK_HZ && world.interactable.size > 0; t++) step();
+      // 存活秒數讀出貨 kit 發出來的那一份（⛔ 不抄 6 秒），多等 1 秒當寬容。
+      const life = Number(events.find((e) => e.type === "interactableSpawn" && e.data.id === lantern)!.data.durationSec);
+      for (let t = 0; t < Math.ceil((life + 1) * TICK_HZ) && world.interactable.size > 0; t++) step();
       expect(events.some((e) => e.type === "interactableEnd" && e.data.id === lantern && e.data.reason === "expired")).toBe(true);
       step(new Map([[2, [{ kind: "interact", objectId: lantern }]]]));
       expect(rejection(events, far)).toEqual(["gone"]);
+    });
+  });
+
+  it("③ 通用規則：被暈的隊友被拒且不消耗；接受時放下走到一半的移動；同一人不可重複接受", () => {
+    withLantern(({ world, thresh, far, events, step }) => {
+      const spot = { ...world.transform.get(far)!.pos };
+      const ctx = { world, caster: thresh, rank: 1, origin: "ability:test.lantern", rng: world.rng };
+      runEffects([{ kind: "spawnInteractable", radius: 2.5, durationSec: 6, maxUses: 2, onAccept: [] } as EffectDef], { ...ctx, targets: [], point: spot } as never);
+      const lantern = Number(world.events.find((e) => e.type === "interactableSpawn")!.data.id) as EntityId;
+      const press = (orders?: Map<number, Order | null>) => step(new Map([[2, [{ kind: "interact", objectId: lantern }]]]), orders);
+
+      runEffects([{ kind: "applyStatus", statusId: "test.stun" as never, duration: 0.2, stun: true } as EffectDef], { ...ctx, targets: [far] } as never);
+      press();
+      expect(rejection(events, far), "⛔ 被暈眩的隊友照樣接受了互動物（控場驗證）").toEqual(["controlled"]);
+      expect(world.interactable.get(lantern)?.usesLeft, "⛔ 被拒的點擊消耗了使用次數").toBe(2);
+      for (let t = 0; t < TICK_HZ && movementHold(world, far).rooted; t++) step();
+
+      const free = new Map<number, Order | null>([[2, null]]);
+      const pos = () => ({ ...world.transform.get(far)!.pos });
+      const walkedFrom = (from: { x: number; z: number }) => { for (let t = 0; t < TICK_HZ / 4; t++) step(undefined, free); return Math.hypot(pos().x - from.x, pos().z - from.z); };
+      step(undefined, new Map<number, Order | null>([[2, { kind: "move", point: { x: spot.x, z: spot.z + 5 } }]]));
+      expect(walkedFrom(pos()), "尺先自證：一道移動指令之後不再下指令，身體會繼續走").toBeGreaterThan(0.05);
+      press(free);
+      expect(walkedFrom(pos()), "⛔ 接受了互動物還繼續走 —— 走到一半的移動沒有放下（acceptInteractable 的 moveTarget 那一行）").toBeLessThan(0.05);
+
+      press(free);
+      expect(rejection(events, far), "同一位隊友不可重複接受多次使用的互動物").toEqual(["controlled", "already-accepted"]);
     });
   });
 });
