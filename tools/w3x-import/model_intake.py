@@ -266,9 +266,13 @@ C_WHY = {
     "中央素材庫的獨立元件（純素材）": "⚠️ 位元組可以改；不計是因為玩家拿不到：`current-resources.json` 裡 componentReady 但尚未綁英雄",
 }
 
-#: ratchet 檔的三格。`a_body_tex` 是 (a) 裡更嚴的一格（2026-09-15 補，理由見 `default_body_slots` 與角色分帳的檔頭）。
-RATCHET_KEYS = ("a", "b", "a_body_tex")
+#: ratchet 檔的格。`a_body_tex` 是 (a) 裡更嚴的一格（2026-09-15 補，理由見 `default_body_slots` 與角色分帳的檔頭）。
+#: `ab_gltf`（GH#1173，2026-09-15）：(a)(b) 裡**嚴格 glTF 驗證有錯**的顆數，只問這一題。
+#:   ⚠️ 為什麼不靠 a／b 就好：a／b 數的是「任何問題」的顆數 ⇒ 一顆新進的 glTF 壞檔只要同時有別顆修好就看不出來（與 a_body_tex 同一個理由）。
+#:   ⭐ 設在 0：當天 10 位英雄換成驗得過的新版本之後 (a)(b) 的 glTF 錯誤是 0；凍結副本在 (c)，位元組不可以改、不計。
+RATCHET_KEYS = ("a", "b", "a_body_tex", "ab_gltf")
 A_BODY_TEX_TITLE = "玩家預設載入的身體（英雄 modelKey＋Forge 範例預設）貼圖超過上限"
+AB_GLTF_TITLE = "(a)(b) 裡嚴格 glTF 驗證有錯的顆數（凍結副本在 (c) 不計）"
 
 
 def read_ratchet(path: str) -> dict:
@@ -279,7 +283,7 @@ def read_ratchet(path: str) -> dict:
         if m:
             got[m.group(1)] = int(m.group(2))
     if set(got) != set(RATCHET_KEYS):
-        raise ValueError(f"{os.path.relpath(path, ROOT)} 要有 {'／'.join(k + '=…' for k in RATCHET_KEYS)} 三行（讀到 {sorted(got)}）")
+        raise ValueError(f"{os.path.relpath(path, ROOT)} 要有 {'／'.join(k + '=…' for k in RATCHET_KEYS)} {len(RATCHET_KEYS)} 行（讀到 {sorted(got)}）")
     return got
 
 
@@ -642,6 +646,15 @@ def main() -> int:
         print(f"      {label} → {rel}（{edge}）")
     if missing:
         print(f"   ⚠️ {len(missing)} 格預設身體的 GLB 檔不存在（體素替身，見 /healthz heroModels）：{missing[:8]}")
+    gltf_bad = [(r, rel, category, detail) for r in "ab" for rel, category, detail, iss in table[r]
+                if any(i.startswith("⛔ glTF 驗證") for i in iss)]
+    count["ab_gltf"] = len(gltf_bad)
+    if a.no_validate:
+        print(f"   ⚠️ ab_gltf —— {AB_GLTF_TITLE}：--no-validate 沒有驗證 ⇒ ⛔ 這一格不比（量不到 ≠ 0）")
+    else:
+        print(f"   ⭐ ab_gltf —— {AB_GLTF_TITLE}：{len(gltf_bad)} 顆")
+        for r, rel, category, detail in gltf_bad[:30]:
+            print(f"      ({r}) {rel}  [{category} {detail}]")
     if not base:
         return 1 if (a.check and bad) else 0
 
@@ -652,6 +665,13 @@ def main() -> int:
     elif count["a_body_tex"] < base["a_body_tex"]:
         code = 1
         print(f"\n⭐ a_body_tex {base['a_body_tex']} → {count['a_body_tex']} —— ⇒ 把 {os.path.relpath(a.ratchet, ROOT)} 的 a_body_tex= 改成 {count['a_body_tex']} 並 commit。")
+    if not a.no_validate and count["ab_gltf"] != base["ab_gltf"]:
+        code = 1
+        if count["ab_gltf"] > base["ab_gltf"]:
+            print(f"\n⛔⛔ ab_gltf {AB_GLTF_TITLE}：{base['ab_gltf']} → {count['ab_gltf']} 顆 —— 名單在上面。"
+                  "修法：從驗得過的來源再註冊一個版本（tools/model-fix/register-normalized-version.mts --reason gltf-valid），⛔ 不原地改凍結位元組。")
+        else:
+            print(f"\n⭐ ab_gltf {base['ab_gltf']} → {count['ab_gltf']} —— ⇒ 把 {os.path.relpath(a.ratchet, ROOT)} 的 ab_gltf= 改成 {count['ab_gltf']} 並 commit。")
     for r in "ab":
         if count[r] > base[r]:
             code = 1

@@ -6,6 +6,7 @@
  * ⇒ 同一份壞位元組（貼圖＝上限×2），只換它與英雄的**關係**：
  *   ① 它是英雄的預設身體 ⇒ (a) 硬棘輪 **紅**，而且更嚴的那一格 a_body_tex 也紅並指名「英雄 probe」
  *   ② 它只是那位英雄凍結的「原上線模型」 ⇒ (c) 不計、a_body_tex 0、閘綠、並印出理由
+ *   ③ GH#1173 ab_gltf：同一條關係換成「嚴格 glTF 驗證驗不過」的位元組 —— 預設身體 ⇒ 紅並指名；凍結原上線模型 ⇒ 0、綠
  */
 import { describe, expect, it } from "vitest";
 import { spawnSync } from "node:child_process";
@@ -14,6 +15,8 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { HERO_MODEL_BUDGET } from "../content/modelUpload/budget";
+import { modelUploadFixture } from "../content/modelUpload/fixtures";
+import { encodeUploadGlb } from "../content/modelUpload/glb";
 
 const SCRIPT = resolve(__dirname, "../../../../tools/w3x-import/model_intake.py");
 /** ⭐ 從出貨上限推導（⛔ 不寫死 512：上限一調，夾具就會用錯的訊息紅）。 */
@@ -32,22 +35,22 @@ function glb(edge: number): Buffer {
   return Buffer.concat([u32(0x46546c67, 2, 12 + body.length), body]);
 }
 
-function scan(badIsDefault: boolean) {
+function scan(badIsDefault: boolean, { bad = glb(EDGE), clean = glb(64), validate = false } = {}) {
   const content = join(mkdtempSync(join(tmpdir(), "intake-roles-")), "content");
-  const bad = glb(EDGE), sha = createHash("sha256").update(bad).digest("hex");
+  const sha = createHash("sha256").update(bad).digest("hex");
   const write = (rel: string, data: string | Buffer) => {
     mkdirSync(join(content, rel, ".."), { recursive: true });
     writeFileSync(join(content, rel), data);
   };
   try {
     write(`assets/models/community/${sha}.glb`, bad);
-    write("assets/models/community/clean.glb", glb(64));
+    write("assets/models/community/clean.glb", clean);
     write("models/probe.body.json", JSON.stringify({ id: "probe.body", glbPath: badIsDefault ? `assets/models/community/${sha}.glb` : "assets/models/community/clean.glb" }));
     write("models/version.body.probe.json", JSON.stringify({ id: "version.body.probe", glbPath: `assets/models/community/${sha}.glb`, bodyVersion: { sourceModelKey: "probe.body", legacyAppearance: true } }));
     const previous = { modelKey: "version.body.probe", label: "原上線模型", sourceModelKey: "probe.body", binarySha256: sha, registeredAt: "2026-09-15T00:00:00.000Z", source: { kind: "previous" } };
     write("champions/probe.json", JSON.stringify({ id: "probe", modelKey: "probe.body", modelVersions: badIsDefault ? [] : [previous] }));
-    write("ratchet.txt", "a=0\nb=0\na_body_tex=0\n");
-    const r = spawnSync("python3", [SCRIPT, "--all", "--no-validate", "--content", content, "--ratchet", join(content, "ratchet.txt")], { encoding: "utf8" });
+    write("ratchet.txt", "a=0\nb=0\na_body_tex=0\nab_gltf=0\n");
+    const r = spawnSync("python3", [SCRIPT, "--all", ...validate ? [] : ["--no-validate"], "--content", content, "--ratchet", join(content, "ratchet.txt")], { encoding: "utf8" });
     return { code: r.status, out: `${r.stdout}${r.stderr}` };
   } finally {
     rmSync(dirname(content), { recursive: true, force: true });
@@ -70,4 +73,19 @@ describe("模型入庫棘輪的分母以關係判定（GH#1263）", () => {
     expect(out).toMatch(/a_body_tex —— [^\n]*：1 格裡 0 格/);
     expect(code, out).toBe(0);
   }, 60_000);
+
+  it("③ GH#1173 ab_gltf：驗不過的位元組是預設身體 ⇒ 紅並指名；同一份只是凍結的原上線模型 ⇒ 0、綠", () => {
+    // ⭐ 出貨真的長這樣：09-09 凍結的副本 accessor 界對不上存進去的值（ACCESSOR_MAX_MISMATCH），其餘全對
+    const fx = modelUploadFixture();
+    const json = structuredClone(fx.json);
+    json.accessors[fx.position]!.max = [9, 9, 9];
+    const files = { bad: Buffer.from(encodeUploadGlb(json, fx.bin)), clean: Buffer.from(fx.bytes), validate: true };
+    const hit = scan(true, files);
+    expect(hit.out, hit.out).toMatch(/⭐ ab_gltf —— [^\n]*：1 顆\n[^\n]*\(a\) [^\n]*assets\/models\/community\/[0-9a-f]{64}\.glb {2}\[英雄的預設身體 probe\]/);
+    expect(hit.out).toMatch(/⛔⛔ ab_gltf[^\n]*0 → 1 顆/);
+    expect(hit.code).toBe(1);
+    const frozen = scan(false, files);
+    expect(frozen.out, frozen.out).toMatch(/⭐ ab_gltf —— [^\n]*：0 顆/);
+    expect(frozen.code, frozen.out).toBe(0);
+  }, 120_000);
 });
