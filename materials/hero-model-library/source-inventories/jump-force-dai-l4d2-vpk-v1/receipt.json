@@ -1,0 +1,270 @@
+{
+  "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
+  "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",
+  "summary": {
+    "sources": 2,
+    "acquired": 2,
+    "extracted": 2,
+    "sourceMdlGroups": 4,
+    "converted": 0,
+    "runtimeSelectable": 0,
+    "productionDeployed": false
+  },
+  "sources": [
+    {
+      "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+      "leadId": "lead-dai-jumpforce-l4d2-2298782931",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931",
+        "title": "[DMG] DAI Jump Force Replace Coach",
+        "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+        "itemId": "2298782931",
+        "raw": {
+          "path": "../GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931/raw/workshop-2298782931.bin",
+          "bytes": 197885497,
+          "sha256": "20130bd02efd53c6cc43ef4c733c6cc6fa86e7cb658d87ae454f254442e84b53"
+        },
+        "checkedAt": "2026-09-15T00:48:36+00:00"
+      },
+      "verifiedFiles": {
+        "count": 111,
+        "bytes": 395793268,
+        "manifestSha256": "18513f46478521b000919184b2b088c6a77eb296fe8bfdca40549b72cf9e6739"
+      },
+      "extracted": {
+        "extensions": {
+          ".jpg": 1,
+          ".json": 1,
+          ".mdl": 2,
+          ".phy": 1,
+          ".txt": 1,
+          ".vmt": 29,
+          ".vtf": 67,
+          ".vtx": 2,
+          ".vvd": 2
+        },
+        "vmtFiles": 29,
+        "vtfFiles": 67
+      },
+      "modelGroups": [
+        {
+          "role": "third-person Dai body replacement",
+          "mdl": {
+            "path": "extracted/models/survivors/survivor_coach.mdl",
+            "bytes": 235628,
+            "sha256": "6214a0eab9b982951d0fbd4ef941364e5c98ad003d20b6a148a6984851584b87"
+          },
+          "headerName": "survivors/survivor_coach.mdl",
+          "version": 49,
+          "checksum": -583458012,
+          "length": 235628,
+          "boneCount": 87,
+          "boneOffset": 664,
+          "localAnimCount": 2,
+          "localAnimOffset": 27268,
+          "localSequenceCount": 2,
+          "localSequenceOffset": 29676,
+          "textureCount": 22,
+          "textureOffset": 217884,
+          "bodyPartCount": 15,
+          "bodyPartOffset": 30456,
+          "vvd": {
+            "path": "extracted/models/survivors/survivor_coach.vvd",
+            "bytes": 3484224,
+            "sha256": "8e79277b8324266bf5d462ce0a71e70f320a36e4ca61da46b8faa8ec33934e06"
+          },
+          "vtx": {
+            "path": "extracted/models/survivors/survivor_coach.dx90.vtx",
+            "bytes": 1033372,
+            "sha256": "c76b59f3bd55606c9e118d06536e44f423bfc6a2047a169bd94320faf9fb59f5"
+          },
+          "assimp": {
+            "readerAccepted": false,
+            "exitCode": 3,
+            "reason": "source-mdl-reader-not-available"
+          }
+        },
+        {
+          "role": "first-person Dai arms accessory",
+          "mdl": {
+            "path": "extracted/models/weapons/arms/v_arms_coach_new.mdl",
+            "bytes": 26656,
+            "sha256": "d2a4dc5b788b3c97a2dd924b13d8f39dd6c2e10b55cd523b63912b1e549564bb"
+          },
+          "headerName": "weapons\\arms\\v_arms_coach_new.mdl",
+          "version": 49,
+          "checksum": -806181617,
+          "length": 26656,
+          "boneCount": 59,
+          "boneOffset": 664,
+          "localAnimCount": 1,
+          "localAnimOffset": 15728,
+          "localSequenceCount": 1,
+          "localSequenceOffset": 15856,
+          "textureCount": 2,
+          "textureOffset": 16704,
+          "bodyPartCount": 1,
+          "bodyPartOffset": 16308,
+          "vvd": {
+            "path": "extracted/models/weapons/arms/v_arms_coach_new.vvd",
+            "bytes": 249664,
+            "sha256": "ac6ecac3ba6408253a4350a60eaefb20e85cf118e6aa08dd05de884e66e433ba"
+          },
+          "vtx": {
+            "path": "extracted/models/weapons/arms/v_arms_coach_new.dx90.vtx",
+            "bytes": 75938,
+            "sha256": "825b9c994b9eaf3938e21c4ccc17796dd802b28cfbd74f5bf802f20b2652e5a5"
+          },
+          "assimp": {
+            "readerAccepted": false,
+            "exitCode": 3,
+            "reason": "source-mdl-reader-not-available"
+          }
+        }
+      ],
+      "status": {
+        "acquired": true,
+        "extracted": true,
+        "converted": false,
+        "validated": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "blockers": [
+        "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+        "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+        "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+      ]
+    },
+    {
+      "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+      "leadId": "lead-dai-jumpforce-sword-l4d2-2318399292",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292",
+        "title": "Jump Force DAI Sword Replace Cricket Bat\n",
+        "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+        "itemId": "2318399292",
+        "raw": {
+          "path": "../GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292/raw/workshop-2318399292.bin",
+          "bytes": 15849515,
+          "sha256": "6bec8d40d26fa385caa538e59499a6b9f8646eab003d4a36b4a2e9edd0e0876e"
+        },
+        "checkedAt": "2026-09-15T00:48:51+00:00"
+      },
+      "verifiedFiles": {
+        "count": 24,
+        "bytes": 31705504,
+        "manifestSha256": "5d6fb53fff6d1859adca73be1f01f3c6f3dffc0582703638a9a0b7332f01f88d"
+      },
+      "extracted": {
+        "extensions": {
+          ".json": 1,
+          ".mdl": 2,
+          ".phy": 1,
+          ".txt": 1,
+          ".vmt": 2,
+          ".vtf": 8,
+          ".vtx": 2,
+          ".vvd": 2
+        },
+        "vmtFiles": 2,
+        "vtfFiles": 8
+      },
+      "modelGroups": [
+        {
+          "role": "third-person Dai sword replacement prop",
+          "mdl": {
+            "path": "extracted/models/weapons/melee/w_cricket_bat.mdl",
+            "bytes": 1952,
+            "sha256": "c88b546200cb12485d83be4a5833c27e7bc21d02bf6e814e314256a81f8754bd"
+          },
+          "headerName": "weapons\\melee\\w_cricket_bat.mdl",
+          "version": 49,
+          "checksum": -1402005250,
+          "length": 1952,
+          "boneCount": 1,
+          "boneOffset": 664,
+          "localAnimCount": 1,
+          "localAnimOffset": 964,
+          "localSequenceCount": 1,
+          "localSequenceOffset": 1088,
+          "textureCount": 2,
+          "textureOffset": 1704,
+          "bodyPartCount": 1,
+          "bodyPartOffset": 1308,
+          "vvd": {
+            "path": "extracted/models/weapons/melee/w_cricket_bat.vvd",
+            "bytes": 81792,
+            "sha256": "c130725714799d2e82b72d286a150013092ec86a70fe0961dcd712f00324c030"
+          },
+          "vtx": {
+            "path": "extracted/models/weapons/melee/w_cricket_bat.dx90.vtx",
+            "bytes": 22827,
+            "sha256": "5200f6e4493cc39e849a585fdf5cb36136c9269984338c6e361e34e64bf561c4"
+          },
+          "assimp": {
+            "readerAccepted": false,
+            "exitCode": 3,
+            "reason": "source-mdl-reader-not-available"
+          }
+        },
+        {
+          "role": "first-person Dai sword replacement prop",
+          "mdl": {
+            "path": "extracted/models/weapons/melee/v_cricket_bat.mdl",
+            "bytes": 79944,
+            "sha256": "0f831454d073fa33ff6b7d6b18b402ccf6e5bf72256cdcb6fbb5e5945e05b23d"
+          },
+          "headerName": "weapons\\melee\\v_cricket_bat.mdl",
+          "version": 49,
+          "checksum": 2070330311,
+          "length": 79944,
+          "boneCount": 63,
+          "boneOffset": 664,
+          "localAnimCount": 20,
+          "localAnimOffset": 14988,
+          "localSequenceCount": 13,
+          "localSequenceOffset": 64528,
+          "textureCount": 2,
+          "textureOffset": 68568,
+          "bodyPartCount": 1,
+          "bodyPartOffset": 68132,
+          "vvd": {
+            "path": "extracted/models/weapons/melee/v_cricket_bat.vvd",
+            "bytes": 81792,
+            "sha256": "31b0833c755e24362af809175dab1120bdb165f428c3d6933e959efbbda11721"
+          },
+          "vtx": {
+            "path": "extracted/models/weapons/melee/v_cricket_bat.dx90.vtx",
+            "bytes": 22827,
+            "sha256": "93df2cf61751e724686dcb3334e5e0ceecd2db4e86da273a62280ef1f408db86"
+          },
+          "assimp": {
+            "readerAccepted": false,
+            "exitCode": 3,
+            "reason": "source-mdl-reader-not-available"
+          }
+        }
+      ],
+      "status": {
+        "acquired": true,
+        "extracted": true,
+        "converted": false,
+        "validated": false,
+        "registered": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "blockers": [
+        "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+        "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+        "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+      ]
+    }
+  ],
+  "reproduction": {
+    "write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace ..",
+    "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace .. --check"
+  }
+}

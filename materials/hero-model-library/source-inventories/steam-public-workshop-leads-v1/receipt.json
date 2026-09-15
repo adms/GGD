@@ -1,0 +1,187 @@
+{
+  "schema": "ggd.steam-public-workshop-lead-revalidation@1",
+  "sourceConfig": {
+    "gitPath": "materials/hero-model-library/download-sources.json",
+    "sha256": "e22f97318c4373d9f8930951e09c8da8d40f1eb376b4bd7effd5f21015fa5210"
+  },
+  "scope": "Official Steam public metadata API revalidation. A missing API file_url remains an acquisition blocker.",
+  "summary": {
+    "steamWorkshopLeadCount": 7,
+    "publicPagesVerified": 7,
+    "publicCdnUrlsAvailable": 2,
+    "blockedNoPublicApiFileUrl": 5,
+    "rawWorkshopFilesDownloaded": 2,
+    "convertedModels": 0,
+    "runtimeSelectable": 0,
+    "productionDeployed": false
+  },
+  "leads": [
+    {
+      "sourceId": "lead-dai-jumpforce-l4d2-2298782931",
+      "target": "小呆 Dai：JUMP FORCE 移植 L4D2 Coach",
+      "heroIds": [
+        "godie-nbbc"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+      "itemId": "2298782931",
+      "checkedAt": "2026-09-15T00:48:36+00:00",
+      "title": "[DMG] DAI Jump Force Replace Coach",
+      "consumerAppId": 550,
+      "publicItem": true,
+      "listedFileBytes": 197885497,
+      "downloadStatus": "public-cdn-url-available",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931/steam-metadata.json",
+        "sha256": "d3d4ba9ac5bcd048c4f3551b541342be80934c556d0030bd686932a18afc8e20"
+      },
+      "centralLeadStatus": "integrated-as-public-source",
+      "rawAcquisition": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931/raw/workshop-2298782931.bin",
+        "bytes": 197885497,
+        "sha256": "20130bd02efd53c6cc43ef4c733c6cc6fa86e7cb658d87ae454f254442e84b53",
+        "status": "downloaded-and-sha256-verified"
+      },
+      "scope": "Raw Workshop bytes are locally downloaded and SHA-256 verified; this receipt does not claim conversion, registration, selection, or deployment."
+    },
+    {
+      "sourceId": "lead-dai-jumpforce-sword-l4d2-2318399292",
+      "target": "小呆 Dai 武器：JUMP FORCE 劍移植 L4D2",
+      "heroIds": [
+        "godie-nbbc"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+      "itemId": "2318399292",
+      "checkedAt": "2026-09-15T00:48:51+00:00",
+      "title": "Jump Force DAI Sword Replace Cricket Bat\n",
+      "consumerAppId": 550,
+      "publicItem": true,
+      "listedFileBytes": 15849515,
+      "downloadStatus": "public-cdn-url-available",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292/steam-metadata.json",
+        "sha256": "dd3000697fe693f00e5672e5e18d64dcfe9c966fe0d457712d0531e9c2b2770c"
+      },
+      "centralLeadStatus": "integrated-as-public-source",
+      "rawAcquisition": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292/raw/workshop-2318399292.bin",
+        "bytes": 15849515,
+        "sha256": "6bec8d40d26fa385caa538e59499a6b9f8646eab003d4a36b4a2e9edd0e0876e",
+        "status": "downloaded-and-sha256-verified"
+      },
+      "scope": "Raw Workshop bytes are locally downloaded and SHA-256 verified; this receipt does not claim conversion, registration, selection, or deployment."
+    },
+    {
+      "sourceId": "steam-adult-gon",
+      "target": "大傑（變身後）",
+      "heroIds": [
+        "godie-u034"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2000599979",
+      "itemId": "2000599979",
+      "checkedAt": "2026-09-15T00:47:32+00:00",
+      "title": "Adult Gon PM - Hunter x Hunter",
+      "consumerAppId": 4000,
+      "publicItem": true,
+      "listedFileBytes": 34068100,
+      "downloadStatus": "public-page-no-supported-api-file-url",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/steam-adult-gon-2000599979/steam-metadata.json",
+        "sha256": "50e6f2bd1aa1c5bbeb27129d52db8956640bf8df71bae0e6b781baef5de47016"
+      },
+      "centralLeadStatus": "not-downloaded",
+      "rawAcquisition": null,
+      "scope": "Metadata confirms page availability only; raw Workshop bytes were not downloaded, extracted, converted, registered, selectable, or deployed."
+    },
+    {
+      "sourceId": "steam-kaiji",
+      "target": "伊藤開司",
+      "heroIds": [
+        "b2-kaiji"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707776242",
+      "itemId": "3707776242",
+      "checkedAt": "2026-09-15T00:47:32+00:00",
+      "title": "Kaiji Itou (PM + C_Hands)",
+      "consumerAppId": 4000,
+      "publicItem": true,
+      "listedFileBytes": 1241533,
+      "downloadStatus": "public-page-no-supported-api-file-url",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/steam-kaiji-3707776242/steam-metadata.json",
+        "sha256": "5b59b14f6d6d10bd6c61c799186e53e907a4146541649ba1feadbc55c842bab2"
+      },
+      "centralLeadStatus": "not-downloaded",
+      "rawAcquisition": null,
+      "scope": "Metadata confirms page availability only; raw Workshop bytes were not downloaded, extracted, converted, registered, selectable, or deployed."
+    },
+    {
+      "sourceId": "steam-light-yagami",
+      "target": "夜神月",
+      "heroIds": [
+        "godie-emns"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3589588791",
+      "itemId": "3589588791",
+      "checkedAt": "2026-09-15T00:47:31+00:00",
+      "title": "Light Yagami (DEATH NOTE Killer Within) [PM/NPC]",
+      "consumerAppId": 4000,
+      "publicItem": true,
+      "listedFileBytes": 14324701,
+      "downloadStatus": "public-page-no-supported-api-file-url",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/steam-light-yagami-3589588791/steam-metadata.json",
+        "sha256": "6790a1ec0240aad9d8d556d7d02c231a404f0672041e0b59bcac5f01a4146d5d"
+      },
+      "centralLeadStatus": "not-downloaded",
+      "rawAcquisition": null,
+      "scope": "Metadata confirms page availability only; raw Workshop bytes were not downloaded, extracted, converted, registered, selectable, or deployed."
+    },
+    {
+      "sourceId": "steam-naofumi",
+      "target": "岩谷尚文",
+      "heroIds": [
+        "b2-naofumi"
+      ],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2011699795",
+      "itemId": "2011699795",
+      "checkedAt": "2026-09-15T00:47:32+00:00",
+      "title": "[PM] Naofumi Iwatani | The Rising of the Shield Hero Playermodel",
+      "consumerAppId": 4000,
+      "publicItem": true,
+      "listedFileBytes": 49061805,
+      "downloadStatus": "public-page-no-supported-api-file-url",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/steam-naofumi-2011699795/steam-metadata.json",
+        "sha256": "b7fd7af3faf1f5abc0db76cb6a321dd4ba5847473877db0b30fd996d86d2d160"
+      },
+      "centralLeadStatus": "not-downloaded",
+      "rawAcquisition": null,
+      "scope": "Metadata confirms page availability only; raw Workshop bytes were not downloaded, extracted, converted, registered, selectable, or deployed."
+    },
+    {
+      "sourceId": "steam-saber-alter",
+      "target": "黑化 Saber",
+      "heroIds": [],
+      "pageUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2031993447",
+      "itemId": "2031993447",
+      "checkedAt": "2026-09-15T00:47:32+00:00",
+      "title": "Saber Alter PM/NPC - Fate Grand Order (FGO)",
+      "consumerAppId": 4000,
+      "publicItem": true,
+      "listedFileBytes": 43538903,
+      "downloadStatus": "public-page-no-supported-api-file-url",
+      "metadata": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/steam-saber-alter-2031993447/steam-metadata.json",
+        "sha256": "fb19fbc8bb7074c4c3314da7cd7d6957980dd5fff2ef4743ff4e7ea3e9fd5755"
+      },
+      "centralLeadStatus": "not-downloaded",
+      "rawAcquisition": null,
+      "scope": "Metadata confirms page availability only; raw Workshop bytes were not downloaded, extracted, converted, registered, selectable, or deployed."
+    }
+  ],
+  "reproduction": {
+    "metadataOnly": "python3 tools/hero-model-library/acquire_steam.py <workshop-id> <intake> --metadata-only",
+    "write": "python3 tools/hero-model-library/revalidate_steam_public_leads.py --workspace ..",
+    "check": "python3 tools/hero-model-library/revalidate_steam_public_leads.py --workspace .. --check"
+  }
+}

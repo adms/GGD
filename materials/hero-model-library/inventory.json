@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T08:22:46+08:00",
-  "inputsSha256": "156224827b98c57e03009ac173dfd15309e61fb016830becdaea18a623a3afdc",
+  "generatedAt": "2026-09-15T09:05:14+08:00",
+  "inputsSha256": "74ada83268df71eb4e5c6d6b442755467d4d881089e9f574a7db62fa05888489",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -53097,6 +53097,255 @@
             "EN680 Baran",
             "EN681 Baran"
           ]
+        },
+        {
+          "id": "steam-jump-force-dai-l4d2-coach-2298782931",
+          "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（Coach 替換）",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+          "downloadUrl": null,
+          "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+          "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+          "accessStatus": "public-steam-file-url",
+          "checkedAt": "2026-09-15T00:48:36+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+          "purchaseDecision": "hold-purchase-review-acquired-source",
+          "defaultEligible": false,
+          "resourceRole": "character-body-and-weapon-prop-collection",
+          "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931",
+          "sourceGame": "JUMP FORCE",
+          "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+          "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+          "selectionClass": "community-mod",
+          "sourceClass": "community-mod-port-of-jump-force-assets",
+          "discoveryChannel": "Valve public Workshop API",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation-metadata",
+            "weapon-prop"
+          ],
+          "files": [
+            {
+              "path": "raw/workshop-2298782931.bin",
+              "bytes": 197885497,
+              "sha256": "20130bd02efd53c6cc43ef4c733c6cc6fa86e7cb658d87ae454f254442e84b53",
+              "archiveMember": "Valve VPK v1"
+            }
+          ],
+          "extractionReceipt": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          },
+          "modelCandidates": [
+            {
+              "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-1",
+              "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+              "sourceModel": "extracted/models/survivors/survivor_coach.mdl",
+              "sourceModelSha256": "6214a0eab9b982951d0fbd4ef941364e5c98ad003d20b6a148a6984851584b87",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 87,
+              "sourceMdlLocalAnimDescriptorCount": 2,
+              "sourceMdlLocalSequenceCount": 2,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 22,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "character-body",
+              "character": "小呆／達伊 / Dai"
+            },
+            {
+              "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-2",
+              "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+              "sourceModel": "extracted/models/weapons/arms/v_arms_coach_new.mdl",
+              "sourceModelSha256": "d2a4dc5b788b3c97a2dd924b13d8f39dd6c2e10b55cd523b63912b1e549564bb",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 59,
+              "sourceMdlLocalAnimDescriptorCount": 1,
+              "sourceMdlLocalSequenceCount": 1,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "first-person-arms-accessory"
+            }
+          ],
+          "nativeAnimationCount": 0,
+          "sourceMdlSequenceMetadataCount": 3,
+          "textureCount": 67,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "publicationStatus": "s3-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-source-mdl-standardization",
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+            "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-l4d2-coach-2298782931/fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6.zip",
+            "bytes": 132840580,
+            "sha256": "fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
+        },
+        {
+          "id": "steam-jump-force-dai-sword-l4d2-2318399292",
+          "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（達伊之劍）",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+          "downloadUrl": null,
+          "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+          "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+          "accessStatus": "public-steam-file-url",
+          "checkedAt": "2026-09-15T00:48:51+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+          "purchaseDecision": "hold-purchase-review-acquired-source",
+          "defaultEligible": false,
+          "resourceRole": "character-body-and-weapon-prop-collection",
+          "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292",
+          "sourceGame": "JUMP FORCE",
+          "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+          "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+          "selectionClass": "community-mod",
+          "sourceClass": "community-mod-port-of-jump-force-assets",
+          "discoveryChannel": "Valve public Workshop API",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation-metadata",
+            "weapon-prop"
+          ],
+          "files": [
+            {
+              "path": "raw/workshop-2318399292.bin",
+              "bytes": 15849515,
+              "sha256": "6bec8d40d26fa385caa538e59499a6b9f8646eab003d4a36b4a2e9edd0e0876e",
+              "archiveMember": "Valve VPK v1"
+            }
+          ],
+          "extractionReceipt": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          },
+          "modelCandidates": [
+            {
+              "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-1",
+              "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+              "sourceModel": "extracted/models/weapons/melee/w_cricket_bat.mdl",
+              "sourceModelSha256": "c88b546200cb12485d83be4a5833c27e7bc21d02bf6e814e314256a81f8754bd",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 1,
+              "sourceMdlLocalAnimDescriptorCount": 1,
+              "sourceMdlLocalSequenceCount": 1,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "weapon-prop"
+            },
+            {
+              "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-2",
+              "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+              "sourceModel": "extracted/models/weapons/melee/v_cricket_bat.mdl",
+              "sourceModelSha256": "0f831454d073fa33ff6b7d6b18b402ccf6e5bf72256cdcb6fbb5e5945e05b23d",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 63,
+              "sourceMdlLocalAnimDescriptorCount": 20,
+              "sourceMdlLocalSequenceCount": 13,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "weapon-prop"
+            }
+          ],
+          "nativeAnimationCount": 0,
+          "sourceMdlSequenceMetadataCount": 14,
+          "textureCount": 8,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "publicationStatus": "s3-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-source-mdl-standardization",
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+            "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-sword-l4d2-2318399292/30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c.zip",
+            "bytes": 13337419,
+            "sha256": "30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -58143,6 +58392,255 @@
             "EN680 Baran",
             "EN681 Baran"
           ]
+        },
+        {
+          "id": "steam-jump-force-dai-l4d2-coach-2298782931",
+          "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（Coach 替換）",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+          "downloadUrl": null,
+          "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+          "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+          "accessStatus": "public-steam-file-url",
+          "checkedAt": "2026-09-15T00:48:36+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+          "purchaseDecision": "hold-purchase-review-acquired-source",
+          "defaultEligible": false,
+          "resourceRole": "character-body-and-weapon-prop-collection",
+          "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931",
+          "sourceGame": "JUMP FORCE",
+          "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+          "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+          "selectionClass": "community-mod",
+          "sourceClass": "community-mod-port-of-jump-force-assets",
+          "discoveryChannel": "Valve public Workshop API",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation-metadata",
+            "weapon-prop"
+          ],
+          "files": [
+            {
+              "path": "raw/workshop-2298782931.bin",
+              "bytes": 197885497,
+              "sha256": "20130bd02efd53c6cc43ef4c733c6cc6fa86e7cb658d87ae454f254442e84b53",
+              "archiveMember": "Valve VPK v1"
+            }
+          ],
+          "extractionReceipt": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          },
+          "modelCandidates": [
+            {
+              "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-1",
+              "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+              "sourceModel": "extracted/models/survivors/survivor_coach.mdl",
+              "sourceModelSha256": "6214a0eab9b982951d0fbd4ef941364e5c98ad003d20b6a148a6984851584b87",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 87,
+              "sourceMdlLocalAnimDescriptorCount": 2,
+              "sourceMdlLocalSequenceCount": 2,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 22,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "character-body",
+              "character": "小呆／達伊 / Dai"
+            },
+            {
+              "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-2",
+              "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+              "sourceModel": "extracted/models/weapons/arms/v_arms_coach_new.mdl",
+              "sourceModelSha256": "d2a4dc5b788b3c97a2dd924b13d8f39dd6c2e10b55cd523b63912b1e549564bb",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 59,
+              "sourceMdlLocalAnimDescriptorCount": 1,
+              "sourceMdlLocalSequenceCount": 1,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "first-person-arms-accessory"
+            }
+          ],
+          "nativeAnimationCount": 0,
+          "sourceMdlSequenceMetadataCount": 3,
+          "textureCount": 67,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "publicationStatus": "s3-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-source-mdl-standardization",
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+            "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-l4d2-coach-2298782931/fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6.zip",
+            "bytes": 132840580,
+            "sha256": "fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
+        },
+        {
+          "id": "steam-jump-force-dai-sword-l4d2-2318399292",
+          "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（達伊之劍）",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+          "downloadUrl": null,
+          "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+          "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+          "accessStatus": "public-steam-file-url",
+          "checkedAt": "2026-09-15T00:48:51+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+          "purchaseDecision": "hold-purchase-review-acquired-source",
+          "defaultEligible": false,
+          "resourceRole": "character-body-and-weapon-prop-collection",
+          "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292",
+          "sourceGame": "JUMP FORCE",
+          "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+          "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+          "selectionClass": "community-mod",
+          "sourceClass": "community-mod-port-of-jump-force-assets",
+          "discoveryChannel": "Valve public Workshop API",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation-metadata",
+            "weapon-prop"
+          ],
+          "files": [
+            {
+              "path": "raw/workshop-2318399292.bin",
+              "bytes": 15849515,
+              "sha256": "6bec8d40d26fa385caa538e59499a6b9f8646eab003d4a36b4a2e9edd0e0876e",
+              "archiveMember": "Valve VPK v1"
+            }
+          ],
+          "extractionReceipt": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+            "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+          },
+          "modelCandidates": [
+            {
+              "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-1",
+              "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+              "sourceModel": "extracted/models/weapons/melee/w_cricket_bat.mdl",
+              "sourceModelSha256": "c88b546200cb12485d83be4a5833c27e7bc21d02bf6e814e314256a81f8754bd",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 1,
+              "sourceMdlLocalAnimDescriptorCount": 1,
+              "sourceMdlLocalSequenceCount": 1,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "weapon-prop"
+            },
+            {
+              "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-2",
+              "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+              "sourceModel": "extracted/models/weapons/melee/v_cricket_bat.mdl",
+              "sourceModelSha256": "0f831454d073fa33ff6b7d6b18b402ccf6e5bf72256cdcb6fbb5e5945e05b23d",
+              "format": "Source MDL49 / VVD / DX90 VTX",
+              "boneCount": 63,
+              "sourceMdlLocalAnimDescriptorCount": 20,
+              "sourceMdlLocalSequenceCount": 13,
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "textureTableCount": 2,
+              "converted": false,
+              "defaultEligible": false,
+              "runtimeSelectable": false,
+              "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+              "limitations": [
+                "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+                "No GLB geometry/material/skin conversion or visual acceptance exists."
+              ],
+              "resourceRole": "weapon-prop"
+            }
+          ],
+          "nativeAnimationCount": 0,
+          "sourceMdlSequenceMetadataCount": 14,
+          "textureCount": 8,
+          "vfxCount": 0,
+          "audioCount": 0,
+          "publicationStatus": "s3-readback-verified",
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-source-mdl-standardization",
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "ownerEntryIds": [],
+            "release": null,
+            "selectionVerified": false
+          },
+          "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+            "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+            "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-sword-l4d2-2318399292/30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c.zip",
+            "bytes": 13337419,
+            "sha256": "30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -196957,6 +197455,255 @@
           "allMemberSha256Verified": true,
           "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789403341"
         }
+      },
+      {
+        "id": "steam-jump-force-dai-l4d2-coach-2298782931",
+        "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（Coach 替換）",
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2298782931",
+        "downloadUrl": null,
+        "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+        "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+        "accessStatus": "public-steam-file-url",
+        "checkedAt": "2026-09-15T00:48:36+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+        "purchaseDecision": "hold-purchase-review-acquired-source",
+        "defaultEligible": false,
+        "resourceRole": "character-body-and-weapon-prop-collection",
+        "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931",
+        "sourceGame": "JUMP FORCE",
+        "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+        "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+        "selectionClass": "community-mod",
+        "sourceClass": "community-mod-port-of-jump-force-assets",
+        "discoveryChannel": "Valve public Workshop API",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation-metadata",
+          "weapon-prop"
+        ],
+        "files": [
+          {
+            "path": "raw/workshop-2298782931.bin",
+            "bytes": 197885497,
+            "sha256": "20130bd02efd53c6cc43ef4c733c6cc6fa86e7cb658d87ae454f254442e84b53",
+            "archiveMember": "Valve VPK v1"
+          }
+        ],
+        "extractionReceipt": {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+          "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+        },
+        "modelCandidates": [
+          {
+            "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-1",
+            "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+            "sourceModel": "extracted/models/survivors/survivor_coach.mdl",
+            "sourceModelSha256": "6214a0eab9b982951d0fbd4ef941364e5c98ad003d20b6a148a6984851584b87",
+            "format": "Source MDL49 / VVD / DX90 VTX",
+            "boneCount": 87,
+            "sourceMdlLocalAnimDescriptorCount": 2,
+            "sourceMdlLocalSequenceCount": 2,
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "textureTableCount": 22,
+            "converted": false,
+            "defaultEligible": false,
+            "runtimeSelectable": false,
+            "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+            "limitations": [
+              "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+              "No GLB geometry/material/skin conversion or visual acceptance exists."
+            ],
+            "resourceRole": "character-body",
+            "character": "小呆／達伊 / Dai"
+          },
+          {
+            "id": "steam-jump-force-dai-l4d2-coach-2298782931.mdl49-2",
+            "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+            "sourceModel": "extracted/models/weapons/arms/v_arms_coach_new.mdl",
+            "sourceModelSha256": "d2a4dc5b788b3c97a2dd924b13d8f39dd6c2e10b55cd523b63912b1e549564bb",
+            "format": "Source MDL49 / VVD / DX90 VTX",
+            "boneCount": 59,
+            "sourceMdlLocalAnimDescriptorCount": 1,
+            "sourceMdlLocalSequenceCount": 1,
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "textureTableCount": 2,
+            "converted": false,
+            "defaultEligible": false,
+            "runtimeSelectable": false,
+            "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+            "limitations": [
+              "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+              "No GLB geometry/material/skin conversion or visual acceptance exists."
+            ],
+            "resourceRole": "first-person-arms-accessory"
+          }
+        ],
+        "nativeAnimationCount": 0,
+        "sourceMdlSequenceMetadataCount": 3,
+        "textureCount": 67,
+        "vfxCount": 0,
+        "audioCount": 0,
+        "publicationStatus": "s3-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-source-mdl-standardization",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "limitations": [
+          "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+          "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+          "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-l4d2-coach-2298782931/fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6.zip",
+          "bytes": 132840580,
+          "sha256": "fe150c3b0bf601eaac01f51d41df72fad674dd819d5e70ef1d6c8231388973f6",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
+        }
+      },
+      {
+        "id": "steam-jump-force-dai-sword-l4d2-2318399292",
+        "target": "JUMP FORCE 小呆／達伊 L4D2 Workshop Source 1 MOD（達伊之劍）",
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2318399292",
+        "downloadUrl": null,
+        "uploader": "Steam Workshop page metadata retained; creator identity is a Steam account identifier only.",
+        "format": "Valve VPK v1 → Source MDL49 / VVD / DX90 VTX / VMT / VTF",
+        "accessStatus": "public-steam-file-url",
+        "checkedAt": "2026-09-15T00:48:51+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+        "purchaseDecision": "hold-purchase-review-acquired-source",
+        "defaultEligible": false,
+        "resourceRole": "character-body-and-weapon-prop-collection",
+        "localPath": "GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292",
+        "sourceGame": "JUMP FORCE",
+        "sourceWork": "JUMP FORCE / JUMP 大亂鬥",
+        "platform": "PC / L4D2 Steam Workshop Source 1 MOD port",
+        "selectionClass": "community-mod",
+        "sourceClass": "community-mod-port-of-jump-force-assets",
+        "discoveryChannel": "Valve public Workshop API",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation-metadata",
+          "weapon-prop"
+        ],
+        "files": [
+          {
+            "path": "raw/workshop-2318399292.bin",
+            "bytes": 15849515,
+            "sha256": "6bec8d40d26fa385caa538e59499a6b9f8646eab003d4a36b4a2e9edd0e0876e",
+            "archiveMember": "Valve VPK v1"
+          }
+        ],
+        "extractionReceipt": {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
+          "sha256": "938e03064bfa0ca02f9d81071a61e413d6b669ea18a4ad9aa997cbddcf683794"
+        },
+        "modelCandidates": [
+          {
+            "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-1",
+            "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+            "sourceModel": "extracted/models/weapons/melee/w_cricket_bat.mdl",
+            "sourceModelSha256": "c88b546200cb12485d83be4a5833c27e7bc21d02bf6e814e314256a81f8754bd",
+            "format": "Source MDL49 / VVD / DX90 VTX",
+            "boneCount": 1,
+            "sourceMdlLocalAnimDescriptorCount": 1,
+            "sourceMdlLocalSequenceCount": 1,
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "textureTableCount": 2,
+            "converted": false,
+            "defaultEligible": false,
+            "runtimeSelectable": false,
+            "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+            "limitations": [
+              "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+              "No GLB geometry/material/skin conversion or visual acceptance exists."
+            ],
+            "resourceRole": "weapon-prop"
+          },
+          {
+            "id": "steam-jump-force-dai-sword-l4d2-2318399292.mdl49-2",
+            "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+            "sourceModel": "extracted/models/weapons/melee/v_cricket_bat.mdl",
+            "sourceModelSha256": "0f831454d073fa33ff6b7d6b18b402ccf6e5bf72256cdcb6fbb5e5945e05b23d",
+            "format": "Source MDL49 / VVD / DX90 VTX",
+            "boneCount": 63,
+            "sourceMdlLocalAnimDescriptorCount": 20,
+            "sourceMdlLocalSequenceCount": 13,
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "textureTableCount": 2,
+            "converted": false,
+            "defaultEligible": false,
+            "runtimeSelectable": false,
+            "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+            "limitations": [
+              "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
+              "No GLB geometry/material/skin conversion or visual acceptance exists."
+            ],
+            "resourceRole": "weapon-prop"
+          }
+        ],
+        "nativeAnimationCount": 0,
+        "sourceMdlSequenceMetadataCount": 14,
+        "textureCount": 8,
+        "vfxCount": 0,
+        "audioCount": 0,
+        "publicationStatus": "s3-readback-verified",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-source-mdl-standardization",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "ownerEntryIds": [],
+          "release": null,
+          "selectionVerified": false
+        },
+        "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "limitations": [
+          "Source MDL49/VVD/VTX reader is not installed or audited on this workstation.",
+          "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+          "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-dai-sword-l4d2-2318399292/30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c.zip",
+          "bytes": 13337419,
+          "sha256": "30d478937dffd4f0308bd506792baf4b24092a2987ed89b0fb0227f447728e8c",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
+        }
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -197608,7 +198355,7 @@
         "checkedAt": "2026-09-10T15:32:00.790812+00:00",
         "ownerEntryIds": [],
         "downloadUrl": null,
-        "acquisitionStatus": "not-acquired",
+        "acquisitionStatus": "integrated-as-public-source",
         "readiness": "source-lead-only",
         "resourceRole": "model-source-lead",
         "sourceWork": "ドラゴンクエスト ダイの大冒険",
@@ -197648,7 +198395,8 @@
           "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
           "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
         },
-        "verification": "本輪未取得素材。No actual body archive or animation/skeleton/texture files acquired. Low-health hair glow/rise is described as a community gameplay effect; not proof of the canonical Dragon Demon form. Not Infinity Strash."
+        "verification": "本輪未取得素材。No actual body archive or animation/skeleton/texture files acquired. Low-health hair glow/rise is described as a community gameplay effect; not proof of the canonical Dragon Demon form. Not Infinity Strash.",
+        "resolvedSourceId": "steam-jump-force-dai-l4d2-coach-2298782931"
       },
       {
         "id": "lead-dai-jumpforce-sword-l4d2-2318399292",
@@ -197687,7 +198435,7 @@
         "checkedAt": "2026-09-10T15:32:00.790812+00:00",
         "ownerEntryIds": [],
         "downloadUrl": null,
-        "acquisitionStatus": "not-acquired",
+        "acquisitionStatus": "integrated-as-public-source",
         "readiness": "source-lead-only",
         "resourceRole": "model-source-lead",
         "sourceWork": "ドラゴンクエスト ダイの大冒険",
@@ -197727,7 +198475,8 @@
           "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
           "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
         },
-        "verification": "本輪未取得素材。No weapon file acquired. No native character voice or sound file verified. Not Infinity Strash."
+        "verification": "本輪未取得素材。No weapon file acquired. No native character voice or sound file verified. Not Infinity Strash.",
+        "resolvedSourceId": "steam-jump-force-dai-sword-l4d2-2318399292"
       },
       {
         "id": "lead-popp-dragonquest-tact-modelsresource",
