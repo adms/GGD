@@ -1,6 +1,9 @@
 import { Worker } from "node:worker_threads";
 import { createRequire } from "node:module";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { createHash } from "node:crypto";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
 import type { EditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import type { ValidateInput, ValidateOutput } from "@ggd/shared/content/import/validatePackage";
@@ -80,6 +83,32 @@ export function heroWorkerBudget(env: Record<string, string | undefined> = proce
   return { ...HERO_WORKER_BUDGET, scope: raw === "whole-job" ? "whole-job" : "untrusted" };
 }
 
+/**
+ * ⭐ 英雄 worker 的 tsx 轉譯快取住**自己的目錄**，⛔ 不跟整台機器共用 `$TMPDIR/tsx-<uid>`。
+ *
+ * ⚠️ 為什麼（2026-09-15 量到，⛔ 不是推測；lane nc-contentapi）：tsx 每起一個載入器就
+ * `readdirSync` **整個**快取目錄建索引（`getDiskCacheIndex`）。這台開發機的共用快取是
+ * **562,370 個檔、6.3 GB**（幾十條 worktree 各自的路徑各算一份鍵，tsx 只清 7 天以上的）⇒
+ * - 單起一個 worker：readdir 687 ms ＋ 建索引 157 ms，佔 1,650 ms 的一半以上
+ *   （專用目錄：788 ms；`TSX_DISABLE_CACHE=1`：1,566 ms ⇒ 共用快取等於沒有快取）
+ * - ⭐ **8 個同時起**（＝ship:check 併行時的樣子）：共用 **8,400–8,900 ms／個**，專用 **1,800 ms／個**
+ *   ⇒ 大目錄的 readdir 在併行時排隊。每一次建包／檢查都起一個新 worker（隔離設計，⛔ 不重用），
+ *   heroWorkRoutes 一個檔就起 20 個 ⇒ 測試在負載下撞 60 秒時鐘的主因。
+ *
+ * 目錄以**這份 checkout 的路徑**分開 ⇒ 大小＝worker 自己的模組圖（量到 546 個檔），不隨別的 worktree 長大。
+ * ⚠️ 只換「tsx 載入那一刻」的 TMPDIR（見 eval 片段）：worker 裡的程式碼（例：`encodeIconNode` 的暫存檔）看到的 tmpdir 不變。
+ *
+ * 回頭開關（只有作者／維運會轉 ⇒ 環境變數，⛔ 不進後台）：`GGD_HERO_WORKER_TSX_CACHE=shared` ⇒ 回到共用快取。
+ * ⛔ 打錯字不靜默退回預設。桌面版走編譯好的 worker（`setBundledHeroPackageWorker`），不經 tsx，這一格不影響它。
+ */
+export function heroWorkerTsxCacheParent(env: Record<string, string | undefined> = process.env): string | null {
+  const raw = env.GGD_HERO_WORKER_TSX_CACHE?.trim();
+  if (raw === "shared") return null;
+  if (raw && raw !== "dedicated") throw new HeroWorkerUnavailable(`GGD_HERO_WORKER_TSX_CACHE 只接受 dedicated／shared，收到「${raw}」。`);
+  const checkout = createHash("sha256").update(fileURLToPath(new URL(".", import.meta.url))).digest("hex").slice(0, 12);
+  return join(tmpdir(), "ggd-hero-worker-tsx", checkout);
+}
+
 type HeroWorkerMessage = { phase: "ready" } | { ok: boolean; result?: EditorImportPackage | ValidateOutput; message?: string };
 export interface HeroWorkerLike {
   on(event: "message", listener: (message: HeroWorkerMessage) => void): unknown;
@@ -120,10 +149,15 @@ export async function runHeroPackageJob(root: string, job: HeroPackageJob, impor
   const limits = { maxOldGenerationSizeMb: 512, stackSizeMb: 8 };
   worker = bundledWorker ? new Worker(bundledWorker, { execArgv: [], resourceLimits: limits, workerData: { root, job, importDir } })
     : new Worker(`const { workerData, parentPort } = require("node:worker_threads");
-    import(workerData.tsxApi).then(({ tsImport }) => tsImport(workerData.moduleUrl, { parentURL: workerData.moduleUrl, tsconfig: workerData.tsconfig }))
-      .catch(error => parentPort.postMessage({ ok: false, message: String(error) }));`, {
+    // ⭐ tsx 在 import 當下從 os.tmpdir() 定下快取目錄 ⇒ 只在載入 tsx 那一刻換 TMPDIR，載完立刻換回（heroWorkerTsxCacheParent）。
+    const inherited = process.env.TMPDIR;
+    if (workerData.tsxCacheParent) { require("node:fs").mkdirSync(workerData.tsxCacheParent, { recursive: true }); process.env.TMPDIR = workerData.tsxCacheParent; }
+    import(workerData.tsxApi).then(({ tsImport }) => {
+      if (workerData.tsxCacheParent) { if (inherited === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = inherited; }
+      return tsImport(workerData.moduleUrl, { parentURL: workerData.moduleUrl, tsconfig: workerData.tsconfig });
+    }).catch(error => parentPort.postMessage({ ok: false, message: String(error) }));`, {
     eval: true, execArgv: [], resourceLimits: limits,
-    workerData: { root, job, importDir, moduleUrl, tsxApi: pathToFileURL(require.resolve("tsx/esm/api")).href, tsconfig: fileURLToPath(new URL("../../../tsconfig.base.json", import.meta.url)) },
+    workerData: { root, job, importDir, moduleUrl, tsxCacheParent: heroWorkerTsxCacheParent(), tsxApi: pathToFileURL(require.resolve("tsx/esm/api")).href, tsconfig: fileURLToPath(new URL("../../../tsconfig.base.json", import.meta.url)) },
   });
     return await superviseHeroWorker(worker, budget);
   } finally { try { await worker?.terminate(); } finally { active -= 1; } }
