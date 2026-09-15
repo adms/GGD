@@ -1,8 +1,8 @@
 {
   "population": {
-    "configFiles": 104,
-    "knobs": 2026,
-    "corpusFiles": 3251,
+    "configFiles": 105,
+    "knobs": 2030,
+    "corpusFiles": 3252,
     "levelWindow": {
       "min": 9,
       "max": 99
@@ -15,7 +15,7 @@
     "dominated": 2,
     "no-read-end": 28,
     "notAssessable": 335,
-    "C": 1650
+    "C": 1654
   },
   "findings": [
     {

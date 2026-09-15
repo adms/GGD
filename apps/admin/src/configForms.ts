@@ -88,6 +88,7 @@ import { VOXEL_LOOK_SPEC } from "./configForms/specs/voxelLook";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
 import { AUDIO_MAP_SPEC } from "./configForms/specs/audio";
 import { UGC_SPEC } from "./configForms/specs/ugc";
+import { SKIN_TIER_PRICES_SPEC } from "./configForms/specs/skinTierPrices";
 
 /**
  * 有序註冊表。⭐ **`as const` 是承重的**（GH#807）：少了它，元素型別會被壓成
@@ -240,6 +241,9 @@ export const CONFIG_DOC_SPECS = [
   REGEN_SPEC,
   BOSS_INTRO_SPEC,
   ITEM_CARD_SPEC,
+  // 🏷️ 造型分級售價（GH#1177 追加，owner 2026-09-15「新模型加購參考 LOL 分級標價」）。
+  // ⭐ 導覽列那一列由 Zod 根節點的 `@nav` 推導（「武器道具」組）；消費端是 Go（wallet/skinprice.go）。
+  SKIN_TIER_PRICES_SPEC,
   REPLAY_SPEC,
   CAST_APPROACH_SPEC,
   // 畫面提示（GH#576 / GH#573，owner 2026-08-23 三則 [優先]）。⚠️ 這一列要跟三件事

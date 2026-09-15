@@ -1084,6 +1084,11 @@
     "why": "GH#1177: ABSENT == listed (on sale) and the admin shop deletes the key when it (re)lists, so only a DELISTED skin ever carries it. Zero adoption = nothing has been taken off the shelf yet. Consumers: apps/platform/internal/wallet/catalog.go SkinDef.OnSale / Catalog.OnShelf (wallet.go CatalogFor + Buy) and apps/client/src/ui/platform/catalog.ts deriveStoreRows. The day the owner delists one, this entry goes STALE and must be removed.",
     "group": "GH#1177 模型版本商店"
   },
+  "field:skins.priceTier": {
+    "status": "default-live",
+    "why": "GH#1177 追加 (owner 2026-09-15「新模型加購參考 LOL 分級標價」): a skin is priced by EXACTLY ONE of mcoinPrice (literal) / priceTier (tier name resolved from content/config/skin-tier-prices.json at load). ABSENT priceTier == the literal-price path, which all 14 shipped skins use and keep (their prices are deliberately not migrated). Only a model version listed from 後台 (ui/ChampionModelVersionShop.tsx) writes it, and none has been listed yet. Consumers: apps/platform/internal/wallet/skinprice.go resolveSkinPrice (LoadCatalog + Catalog.SkinPrice → wallet.go CatalogFor / Buy) and packages/shared/src/content/schema/config/skinTierPrices.ts resolveSkinPrice (admin shop). The day the owner lists the first tier-priced skin, this entry goes STALE and must be removed (the shop's save notice says so).",
+    "group": "GH#1177 模型版本商店"
+  },
   "field:champions.abilities.*.innateKind": {
     "status": "schema-impossible",
     "why": "zChampionDoc pins the embedded slots to Q/W/E/R, and zAbilityDoc.refineInnate REJECTS innateKind on anything but slot PASSIVE. A doc setting it would fail to load.",

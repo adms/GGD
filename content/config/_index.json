@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "f057f8bcc755",
+  "hash": "5eef5bc51efd",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -457,6 +457,12 @@
       "path": "config/skill-normalize.json",
       "hash": "790f4a7be6f1",
       "size": 1038
+    },
+    {
+      "id": "skin-tier-prices",
+      "path": "config/skin-tier-prices.json",
+      "hash": "0db391ce4357",
+      "size": 2105
     },
     {
       "id": "speed-growth-tiers",

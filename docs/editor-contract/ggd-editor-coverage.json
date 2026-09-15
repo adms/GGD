@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "b6f7388e0326",
+  "fingerprint": "8f448d232dbd",
   "capabilityFingerprint": "fb8d3eb8",
   "required": [
     {
@@ -11372,6 +11372,11 @@
     {
       "group": "configField",
       "name": "id",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
       "owner": "config.arena-rules@1"
     },
     {
@@ -14218,6 +14223,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.boss-intro@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.skin-tier-prices@1"
     },
     {
       "group": "configField",
@@ -17732,6 +17742,11 @@
     {
       "group": "configField",
       "name": "schema",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
       "owner": "config.arena-rules@1"
     },
     {
@@ -20323,6 +20338,26 @@
       "group": "configField",
       "name": "tick.tickHz",
       "owner": "config@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.label",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.mcoin",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.standard",
+      "owner": "config.skin-tier-prices@1"
     },
     {
       "group": "configField",
@@ -24719,6 +24754,11 @@
     },
     {
       "group": "skinField",
+      "name": "priceTier",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
       "name": "schema",
       "owner": "skin@1"
     },
@@ -25487,11 +25527,11 @@
     "vfxField": 91,
     "modelField": 47,
     "projectileField": 21,
-    "skinField": 10,
+    "skinField": 11,
     "vfxScriptField": 8,
-    "configField": 4091,
+    "configField": 4098,
     "_notRequired": 15,
-    "_total": 5235,
+    "_total": 5243,
     "_ownerOnly": 39
   }
 }

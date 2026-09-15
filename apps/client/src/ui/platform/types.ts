@@ -413,7 +413,12 @@ export interface SkinDoc {
   championId: string;
   name: string;
   description?: string;
-  mcoinPrice: number;
+  /**
+   * GH#1177 追加：售價寫法恰好一種 —— 字面價 `mcoinPrice` 或分級 `priceTier`（skin@1 superRefine）。
+   * ⛔ 客戶端**不**從這兩格算價：商店顯示的價一律是 /store/catalog 的 `price`（平台從分級表解析）。
+   */
+  mcoinPrice?: number;
+  priceTier?: string;
   modelKey: string;
   /** GH#1177 商店上架開關；缺席＝上架，`false`＝下架（只留給已購玩家）。 */
   listed?: boolean;

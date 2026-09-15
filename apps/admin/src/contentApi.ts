@@ -50,6 +50,11 @@ import {
 } from "@ggd/shared/content/editModel";
 import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 import type { SkinDoc } from "@ggd/shared/content/schema/skin";
+import {
+  SKIN_TIER_PRICES_DOC_ID,
+  zConfigSkinTierPricesDoc,
+  type ConfigSkinTierPricesDoc,
+} from "@ggd/shared/content/schema/config/skinTierPrices";
 
 /** Vite dev flag, guarded so plain node (vitest) never throws. */
 function isDevBuild(): boolean {
@@ -702,5 +707,20 @@ export const modelShopApi = {
       return { ok: true, issues: [], error: null };
     } catch (error) { return { ok: false, issues: [], error: error instanceof Error ? error.message : String(error) }; }
   },
+  /**
+   * 🏷️ GH#1177 追加 —— 分級售價表（owner 2026-09-15「新模型加購參考 LOL 分級標價」）。讀**本機 content 樹**那一份：
+   * 造型文件寫進同一棵樹、平台開機時拿同一份驗 `priceTier` ⇒ 下拉選單只可能選到開機驗得過的分級。
+   * ⚠️ 線上若在後台「造型分級售價」改過價錢，玩家實際付的是覆蓋層那一格（這裡顯示的是出貨價）。
+   */
+  async getPriceTiers(opts: ContentApiOptions = {}): Promise<{ doc: ConfigSkinTierPricesDoc | null; error: string | null }> {
+    if (!ENABLED) return { doc: null, error: OFF_MESSAGE };
+    const url = `/content-api/config/${SKIN_TIER_PRICES_DOC_ID}`;
+    try {
+      const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+      if (res.status !== 200) return { doc: null, error: errorOf(res.body, res.status, url) };
+      const parsed = zConfigSkinTierPricesDoc.safeParse(res.body);
+      return parsed.success ? { doc: parsed.data, error: null } : { doc: null, error: "分級售價表（content/config/skin-tier-prices.json）格式不合 schema。" };
+    } catch (error) { return { doc: null, error: error instanceof Error ? error.message : String(error) }; }
+  },
 };
-export type ModelShopApi = Pick<typeof modelShopApi, "enabled" | "listSkins" | "saveSkin">;
+export type ModelShopApi = Pick<typeof modelShopApi, "enabled" | "listSkins" | "saveSkin" | "getPriceTiers">;

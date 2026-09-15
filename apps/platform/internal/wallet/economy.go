@@ -256,16 +256,33 @@ func validateCrystalRules(r CrystalRules) error {
 // the same thing contentoverlay.Service.Get does for the public bundle — the
 // overlay is a handful of operator-edited docs, not a content tree.
 func (s *Service) EconomyOverride() (Economy, bool) {
-	if s.store == nil {
+	f, ok := s.overlay()
+	if !ok {
 		return Economy{}, false
+	}
+	return economyFromOverlay(f)
+}
+
+// overlay reads the durable content overlay file ONCE. effective() layers two
+// entries off one read (商店經濟 + GH#1177 造型分級售價), so a pricing decision
+// costs one file read, not one per overlaid doc.
+func (s *Service) overlay() (overlayFile, bool) {
+	if s.store == nil {
+		return overlayFile{}, false
 	}
 	var f overlayFile
 	if err := s.store.Get(OverlayCollection, OverlayDocID, &f); err != nil {
 		if !errors.Is(err, jsonstore.ErrNotFound) {
 			s.warnOnce("wallet: could not read the content overlay — serving the shipped store prices", err)
 		}
-		return Economy{}, false
+		return overlayFile{}, false
 	}
+	return f, true
+}
+
+// economyFromOverlay is the `config/store` half of EconomyOverride, split out so
+// effective() can reuse the file it already read.
+func economyFromOverlay(f overlayFile) (Economy, bool) {
 	if f.Deleted[OverlayStoreKey] {
 		// Tombstoned: the operator explicitly reverted to shipped.
 		return Economy{}, false
@@ -290,11 +307,22 @@ func (s *Service) warnOnce(msg string, err error) {
 // s.cat is the value LoadCatalog produced at boot, and on the family host the
 // content tree it came from is a read-only bind mount that no console can edit.
 // s.cat stays correct for everything the override does not touch: the roster
-// (which champions exist), the skins, and the M COIN reward table.
+// (which champions exist), the skin docs, and the M COIN reward table.
+//
+// GH#1177 追加: the SAME read also lays the 造型分級售價 override over the tier
+// table (skinprice.go), so a tier-priced skin's shown AND charged price move on
+// the next request after 後台 saves — see Catalog.SkinPrice.
 func (s *Service) effective() Catalog {
-	ov, ok := s.EconomyOverride()
+	f, ok := s.overlay()
 	if !ok {
 		return s.cat
 	}
-	return s.cat.WithEconomy(ov.UnlockCost, ov.FreeIDs)
+	cat := s.cat
+	if ov, ok := economyFromOverlay(f); ok {
+		cat = cat.WithEconomy(ov.UnlockCost, ov.FreeIDs)
+	}
+	if tiers, ok := s.cat.skinTierPricesFromOverlay(f); ok {
+		cat = cat.withSkinTierPrices(tiers)
+	}
+	return cat
 }

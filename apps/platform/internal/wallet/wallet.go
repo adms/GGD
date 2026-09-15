@@ -234,19 +234,23 @@ func (s *Service) Buy(ctx context.Context, accountID, kind, id string) (Wallet, 
 		if !ok {
 			return Wallet{}, httpx.NotFound("unknown skin: " + id)
 		}
+		// GH#1177 追加：價錢從**這一刻生效的**分級表解析（effective ⇒ 後台改價下一次請求就生效），
+		// 與 CatalogFor 給玩家看的是同一支 SkinPrice。
+		price, priced := s.effective().SkinPrice(id)
 		return s.mutate(ctx, accountID, func(a *account.Account) error {
 			if contains(a.OwnedSkins, id) {
 				return httpx.Err(http.StatusConflict, "already_owned", "skin already owned")
 			}
 			// GH#1177 下架 (skin@1 listed:false): not sold any more. Same 404 an
 			// id outside the catalog gets — to a non-owner it is not on the shelf.
-			if !sk.OnSale() {
+			// A price that does not resolve is the same answer, never a free skin.
+			if !sk.OnSale() || !priced {
 				return httpx.NotFound("skin not for sale: " + id)
 			}
-			if a.MCoin < sk.MCoinPrice {
+			if a.MCoin < price {
 				return ErrInsufficient()
 			}
-			a.MCoin -= sk.MCoinPrice
+			a.MCoin -= price
 			a.OwnedSkins = append(a.OwnedSkins, id)
 			sort.Strings(a.OwnedSkins)
 			a.EquippedSkins[sk.ChampionID] = id // auto-equip on purchase
@@ -356,8 +360,14 @@ func (s *Service) CatalogFor(ctx context.Context, accountID string) ([]CatalogCh
 		if !s.cat.OnShelf(id, contains(w.OwnedSkins, sk.ID)) {
 			continue // GH#1177 下架：只留給已購玩家
 		}
+		// GH#1177 追加：分級造型的價錢從生效中的分級表解析（與 Buy 同一支）。LoadCatalog 已經拒絕
+		// 解析不出價錢的造型，而覆蓋層不能少任何一個出貨分級 ⇒ 這一行走不到；⛔ 走到了也不給 0 元。
+		price, priced := cat.SkinPrice(id)
+		if !priced {
+			continue
+		}
 		skins = append(skins, CatalogSkin{
-			ID: sk.ID, ChampionID: sk.ChampionID, Price: sk.MCoinPrice, ModelKey: sk.ModelKey,
+			ID: sk.ID, ChampionID: sk.ChampionID, Price: price, ModelKey: sk.ModelKey,
 			Owned:    contains(w.OwnedSkins, sk.ID),
 			Equipped: w.EquippedSkins[sk.ChampionID] == sk.ID,
 		})
