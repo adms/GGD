@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T07:53:13+08:00",
-  "inputsSha256": "cb5af844800799f104d96815099f32e99cf42a169c3d7301aeefe27a385fc290",
+  "generatedAt": "2026-09-15T08:22:46+08:00",
+  "inputsSha256": "156224827b98c57e03009ac173dfd15309e61fb016830becdaea18a623a3afdc",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -128528,6 +128528,403 @@
       "audioSources": []
     }
   ],
+  "heroForgeIntegrations": {
+    "source": "priority-evidence/palworld-hero-integration/receipt.json",
+    "scope": "locally verified Hero Forge packages; not static champion documents or production deployment",
+    "integrations": [
+      {
+        "identityId": "community:palworld-jetragon",
+        "heroId": "acquired-jetragon",
+        "name": "空渦龍",
+        "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
+        "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+        "modelOptions": [
+          "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+          "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 8468,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-default",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+            "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
+          ],
+          "defaultModelPolicyEligible": true,
+          "registeredOptionPreserved": true,
+          "note": "The default registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+            "isDefault": true,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
+              "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+              "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+              "bytes": 3221852
+            }
+          },
+          {
+            "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+            "isDefault": false,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
+              "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+              "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+              "bytes": 3224424
+            }
+          },
+          {
+            "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+            "isDefault": false,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
+              "sha256": "ae20eb8288f99324f8b978611b6c0413fea4d6cf4ad3c99a635776a69f4171ef",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+              "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+              "bytes": 4297580
+            }
+          }
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
+          "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+          "bytes": 455
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+          "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+          "bytes": 3221852
+        },
+        "slots": [
+          "acquired-jetragon.passive",
+          "acquired-jetragon.q",
+          "acquired-jetragon.w",
+          "acquired-jetragon.e",
+          "acquired-jetragon.r",
+          "acquired-jetragon.ex"
+        ],
+        "recipeSha256": "sha256:1fd31127af8f4396654a50b4eb040849b0c3576dda2baad34ddde458e78673c6",
+        "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:504d46be6a86127cab9c6c85cf6902a9472f108af34182dc7a0ea7f5720c4e0a",
+          "zipSha256": "sha256:fa1c7f4d684fd715aa031f2030b19687d51b1d22b33d7a977c6c6fdaa8bd4374",
+          "zipBytes": 6288568,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
+        },
+        "productionDeploymentVerified": false
+      },
+      {
+        "identityId": "community:palworld-astralym",
+        "heroId": "acquired-astralym",
+        "name": "枯星龍",
+        "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
+        "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+        "modelOptions": [
+          "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 23928,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-registered-alternative",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
+          ],
+          "defaultModelPolicyEligible": false,
+          "registeredOptionPreserved": true,
+          "note": "The default remains unchanged. Formal adoption is eligible because at least one registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+            "isDefault": true,
+            "triangles": 23928,
+            "status": "needs-decimation",
+            "currentPolicyEligible": false,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
+              "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+              "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+              "bytes": 3876004
+            }
+          },
+          {
+            "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "isDefault": false,
+            "triangles": 7996,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+              "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+              "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+              "bytes": 3793672
+            }
+          },
+          {
+            "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+            "isDefault": false,
+            "triangles": 7896,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+              "sha256": "ffe2ef5c49f792b0d4ad663999c55f049455f55c5debebeab6072fef348dfa0c",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+              "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+              "bytes": 17043436
+            }
+          }
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
+          "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+          "bytes": 456
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+          "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+          "bytes": 3876004
+        },
+        "slots": [
+          "acquired-astralym.passive",
+          "acquired-astralym.q",
+          "acquired-astralym.w",
+          "acquired-astralym.e",
+          "acquired-astralym.r",
+          "acquired-astralym.ex"
+        ],
+        "recipeSha256": "sha256:a9982c91c92b7db4643c4cb37e1c1e6d6af677111ad2b0287e81b42b6b8a7928",
+        "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:10c400ee6239171887732f37aacfa607fa1f148f76e04a6f265ee88b82cdfd3c",
+          "zipSha256": "sha256:5a1db3f4366ca98f7629c996a85cfba91c12e24820ac740714c8b6673151f697",
+          "zipBytes": 6855714,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
+        },
+        "productionDeploymentVerified": false
+      },
+      {
+        "identityId": "community:palworld-cattiva",
+        "heroId": "acquired-cattiva",
+        "name": "搗蛋貓",
+        "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
+        "defaultModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+        "modelOptions": [
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+          "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 5798,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-default",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+            "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
+          ],
+          "defaultModelPolicyEligible": true,
+          "registeredOptionPreserved": true,
+          "note": "The default registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+            "isDefault": true,
+            "triangles": 5798,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json",
+              "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+              "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+              "bytes": 1428876
+            }
+          },
+          {
+            "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+            "isDefault": false,
+            "triangles": 5798,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
+              "sha256": "fbd88023ac63b21c01d7189168d59e50b873f527bfae92d41c7614421bcb72d3",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+              "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+              "bytes": 2148052
+            }
+          }
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json",
+          "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+          "bytes": 456
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+          "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+          "bytes": 1428876
+        },
+        "slots": [
+          "acquired-cattiva.passive",
+          "acquired-cattiva.q",
+          "acquired-cattiva.w",
+          "acquired-cattiva.e",
+          "acquired-cattiva.r",
+          "acquired-cattiva.ex"
+        ],
+        "recipeSha256": "sha256:1d988cf53901b1b8a223b7442db4474cd3e6f23a21bfe77c547a922ce41f232a",
+        "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:20185b1432fd514de4bd9420da83846b4ea7b91d49f4f69f056efe7ef2797797",
+          "zipSha256": "sha256:8c649eaf143027f79fd133fb75cfc00726443496cb406a3dede71e9b21507ada",
+          "zipBytes": 4401433,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
+        },
+        "productionDeploymentVerified": false
+      }
+    ]
+  },
   "downloadPlan": {
     "schema": "ggd-hero-model-download-sources@1",
     "ownerPriority": "use-ready-300-first",
