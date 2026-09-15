@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
+import { readShippedModelDocs } from "@ggd/shared/testkit/shippedModelDocs";
 import { reviewAppearances } from "./appearanceReview";
 
 const model = {
@@ -22,13 +23,20 @@ describe("VFX Forge resolved appearance review gate", () => {
   });
 
   it("keeps mechanics preview possible but rejects stand-ins as approval evidence", () => {
+    // ⭐ GH#1250（1bf3cd6b7）：替身判準只有一條 —— 看**模型文件的 glb 住在哪**
+    //   （`standInBody.isStandInModel`）。⛔ 這裡以前自造 `{ ...model, id: "champ.skin.rogue" }`，
+    //   glb 卻指向 `assets/models/imported/` ⇒ 在唯一的規則下它根本不是替身（被測的不是出貨的那個）。
+    //   ⇒ 用**出貨的**替身文件。
+    const rogueDoc = readShippedModelDocs().get("champ.skin.rogue");
+    expect(rogueDoc, "出貨的共用替身 champ.skin.rogue 不見了 —— 換一顆 glb 在通用身體包底下的替身").toBeDefined();
     const standIn = resolveAppearance(
       "godie-e00r",
       { id: "godie-e00r", modelKey: "champ.skin.rogue" },
-      { ...model, id: "champ.skin.rogue" },
+      rogueDoc,
     );
     const real = resolveAppearance("hero.b", { id: "hero.b", modelKey: "imported.hero" }, model);
     const review = reviewAppearances(standIn, real);
+    expect(review.renderAllowed).toBe(true);
     expect(review.allowed).toBe(false);
     expect(review.issues).toEqual(["施法者 godie-e00r 使用共用替身 champ.skin.rogue"]);
   });
