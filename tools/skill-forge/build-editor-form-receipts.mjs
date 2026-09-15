@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ggd:writes docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle-landed.json
+// ggd:writes docs/editor-contract/coordination/claim.editor-form-receipts-interactable-landed.json
 
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";

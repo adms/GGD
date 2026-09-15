@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_91f9de0a89eb`
+contentVersion `cv_475e5f4091a6`
 
 ---
 
-## 效果（effect kind） —— 51 種
+## 效果（effect kind） —— 52 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -56,6 +56,7 @@ contentVersion `cv_91f9de0a89eb`
 | `screenShake` | 畫面震動 | 17 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r`、`godie-o00x.r` …（共 17） |
 | `shield` | 吸收（護盾） | 85 | `b2-aladdin.ex`、`b2-albus.r`、`b2-bojji.ex`、`b2-boxxo.passive`、`b2-boxxo.w`、`b2-elma.q`、`b2-elma.w`、`b2-fushi.e`、`b2-fushi.q`、`b2-goblin.ex`、`b2-goblin.passive`、`b2-guts.ex` …（共 85） |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
+| `spawnInteractable` | 互動物（技能放在地上、隊友自己點才觸發的物件；施法者不能替隊友決定） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
 | `spawnObstacle` | 暫時障礙（技能生的碰撞圓柱：走不過、衝刺撞得到，到期或被撞碎消失） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spawnProjectile` | 投射物 | 4 | `godie-e010.q`、`grail-c-16`、`grail-c-20`、`storm-arrow` |

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "f8ffad094a66",
+  "hash": "e8bdc48673f6",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -23,14 +23,14 @@
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "5f4b138cc6e9",
-      "size": 1142
+      "hash": "e85b4d3fece0",
+      "size": 1166
     },
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "33bb88afbeaf",
-      "size": 2450
+      "hash": "b0bacf136fcd",
+      "size": 2471
     },
     {
       "id": "ap-damage-scaling",
@@ -137,8 +137,8 @@
     {
       "id": "cast-time",
       "path": "config/cast-time.json",
-      "hash": "54107ce3c680",
-      "size": 1656
+      "hash": "53d807e36264",
+      "size": 1942
     },
     {
       "id": "cast-time-tiers",
@@ -239,8 +239,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "b3e44fc40e26",
-      "size": 3022
+      "hash": "ee7b706dbdd6",
+      "size": 3140
     },
     {
       "id": "feel-fx",
@@ -275,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "4eef1e7c5464",
+      "hash": "36d1a6f5af7e",
       "size": 921
     },
     {
@@ -395,8 +395,8 @@
     {
       "id": "range-tiers",
       "path": "config/range-tiers.json",
-      "hash": "d87cdbcfecf4",
-      "size": 789
+      "hash": "a41729664528",
+      "size": 813
     },
     {
       "id": "rank-growth",
@@ -457,6 +457,12 @@
       "path": "config/skill-normalize.json",
       "hash": "790f4a7be6f1",
       "size": 1038
+    },
+    {
+      "id": "skin-tier-prices",
+      "path": "config/skin-tier-prices.json",
+      "hash": "7b78302b5778",
+      "size": 2404
     },
     {
       "id": "speed-growth-tiers",

@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "935ea3246b86",
+  "hash": "d4a439925cfc",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -2763,6 +2763,12 @@
       "size": 523
     },
     {
+      "id": "version.body.0a0d16b904a2effafb841128d8dfc9630fc1001515087362",
+      "path": "models/version.body.0a0d16b904a2effafb841128d8dfc9630fc1001515087362.json",
+      "hash": "f9857980c46c",
+      "size": 1325
+    },
+    {
       "id": "version.body.0a17d59aab16b776610a5c8c23fe0057bd84f022956951c4",
       "path": "models/version.body.0a17d59aab16b776610a5c8c23fe0057bd84f022956951c4.json",
       "hash": "0541edd74066",
@@ -3279,6 +3285,12 @@
       "size": 716
     },
     {
+      "id": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
+      "path": "models/version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d.json",
+      "hash": "15ac1ccbd83b",
+      "size": 1238
+    },
+    {
       "id": "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
       "path": "models/version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b.json",
       "hash": "da6313e642bb",
@@ -3301,6 +3313,12 @@
       "path": "models/version.body.2f9f563af47ff08c5b5a7e3e34658d24ce59718cc568379c.json",
       "hash": "06b0764714ad",
       "size": 605
+    },
+    {
+      "id": "version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9",
+      "path": "models/version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9.json",
+      "hash": "001cb53ed07c",
+      "size": 1238
     },
     {
       "id": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
@@ -3571,6 +3589,12 @@
       "path": "models/version.body.4d7bf1d4a136c363ec2b470c6db1ae20a1c8b9b7e7cd776c.json",
       "hash": "4ae7311638b9",
       "size": 605
+    },
+    {
+      "id": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
+      "path": "models/version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1.json",
+      "hash": "eafa087288d7",
+      "size": 1256
     },
     {
       "id": "version.body.4e9e98d88d13f8bdb149f5d4c67befa786f11eacdfbd1b3a",
@@ -4053,6 +4077,12 @@
       "size": 607
     },
     {
+      "id": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
+      "path": "models/version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984.json",
+      "hash": "64a25b08a01c",
+      "size": 1339
+    },
+    {
       "id": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
       "path": "models/version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502.json",
       "hash": "ab4b763185ca",
@@ -4207,6 +4237,12 @@
       "path": "models/version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7.json",
       "hash": "75943f0a3fea",
       "size": 537
+    },
+    {
+      "id": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
+      "path": "models/version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f.json",
+      "hash": "5f0785201518",
+      "size": 1223
     },
     {
       "id": "version.body.80c676912c0c63a47519b75f49821316bb6d80cc335f3801",
@@ -4903,6 +4939,12 @@
       "path": "models/version.body.ad825a6b54ef2c646574e8120e4535e57aa8f1ad766f169c.json",
       "hash": "ae86212fe241",
       "size": 611
+    },
+    {
+      "id": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
+      "path": "models/version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7.json",
+      "hash": "1b2c42ee5e04",
+      "size": 1279
     },
     {
       "id": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
@@ -5655,6 +5697,12 @@
       "size": 605
     },
     {
+      "id": "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220",
+      "path": "models/version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220.json",
+      "hash": "397c9f6c8a92",
+      "size": 1242
+    },
+    {
       "id": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
       "path": "models/version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801.json",
       "hash": "712b62541176",
@@ -5839,6 +5887,12 @@
       "path": "models/version.body.f7568368073ada65fac6834932acc02361b3eff9a6804c29.json",
       "hash": "f28e66779977",
       "size": 607
+    },
+    {
+      "id": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
+      "path": "models/version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a.json",
+      "hash": "6cdb56acd0cc",
+      "size": 1278
     },
     {
       "id": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
