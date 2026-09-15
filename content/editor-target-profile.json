@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_91f9de0a89eb",
+    "contentVersion": "cv_718398110b3f",
     "collections": {
       "champions": {
-        "hash": "b6d7de4b8299",
+        "hash": "d825aa39806c",
         "count": 153
       },
       "abilities": {
-        "hash": "8bf435363924",
+        "hash": "cf70c37fdf64",
         "count": 907
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "20014e6f8638",
+        "hash": "168ce6b303a6",
         "count": 104
       },
       "models": {
@@ -8419,15 +8419,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "bf146cf1c03b",
+    "fingerprint": "6b5ef17081d3",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "b241c4d84b0a"
+        "digest": "6eb2ae783bbb"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "c9fd1a54a388"
+        "digest": "1594ff2067ce"
       },
       {
         "surface": "exact-ref-collector",
@@ -8489,5 +8489,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "76eea41fc1db"
+  "profileDigest": "bbffe361f32e"
 }

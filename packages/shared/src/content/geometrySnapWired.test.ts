@@ -21,6 +21,7 @@ import { displacementFieldsOf, displacementTiersFromDoc } from "./displacementTi
 import { DUEL_ZONE_RADIUS_REF } from "./skillTiers";
 import { SKELETON_CHAMPION_IDS } from "./skillNormalize";
 import { zEffectDefUnion } from "./schema/effects/index";
+import { geometrySnapNotices, geometrySnapTablesFromConfigs } from "./geometrySnap";
 
 const SNAP_SCHEMAS = ["config.aoe-tiers@1", "config.range-tiers@1", "config.displacement-tiers@1"];
 
@@ -78,5 +79,31 @@ describe("沒標級別的距離／範圍在載入時吸到最近一格（GH#1260
     const rolled = { ...store, all: <U>(c: string) => (c === "config" ? (off as U[]) : store.all<U>(c as never)) };
     registerAll(rolled as never);
     expect(offLadder().length, "⛔ ② rollback（三格 snapUntiered 關掉）下一條離格的都量不到 ⇒ ① 那把尺是瞎的").toBeGreaterThan(0);
+  });
+
+  /**
+   * ⭐ 修正輪：吸格讓欄位上的值 ≠ 場上值（寫 2.75、場上 3）⇒ 編輯器警示讀 `geometrySnapNotices`。
+   * ⭐ 兩個方向：磁碟那一份喊的每一格 `to` ＝ 註冊表（場上）那一格；已吸格的註冊表那一份一格都不喊。
+   */
+  it("③ 吸格警示說的『場上值』就是註冊表的值；已在格上的不喊", async () => {
+    const store = (await new ContentLoader(shippedContentSource()).load()).store;
+    registerAll(store);
+    const tables = geometrySnapTablesFromConfigs(store.all("config"));
+    const at = (o: unknown, path: string): unknown =>
+      path.split(/\.|\[(\d+)\]/).filter(Boolean).reduce<unknown>((n, k) => (n as Record<string, unknown> | undefined)?.[k], o);
+    const wrong: string[] = [];
+    let seen = 0;
+    for (const disk of store.all<Record<string, unknown>>("abilities")) {
+      if (disk["template"] !== undefined) continue; // 模板技的值住在 template.params（wc3u）⇒ 不是這一格的母體
+      const reg = Abilities.tryGet(disk["id"] as never) as object | undefined;
+      if (reg === undefined) continue;
+      for (const n of geometrySnapNotices(disk, tables)) {
+        seen++;
+        if (at(reg, n.path) !== n.to) wrong.push(`${String(disk["id"])}|${n.path}：警示 ${n.to}、場上 ${String(at(reg, n.path))}`);
+      }
+      if (geometrySnapNotices(reg, tables).length > 0) wrong.push(`${String(disk["id"])}：已吸格的註冊表那一份還在喊`);
+    }
+    expect(seen, "⛔ 一格警示都沒有 —— 量尺沒對到任何被吸的值").toBeGreaterThan(0);
+    expect(wrong).toEqual([]);
   });
 });

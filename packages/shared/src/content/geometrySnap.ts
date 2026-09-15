@@ -4,8 +4,11 @@
  * owner（逐字）：
  * > 2026-08-22 02:44「我將出身 屬性 技能傷害耗魔冷卻**距離範圍** 這些五級距 正規化 公式化」
  * > 2026-09-02 13:52「所有技能傷害（含升級）、AP加成、冷卻、**距離、範圍**、耗魔、條件增幅...
- * >  這些全部都五級距化標籤化」
+ * >  這些全部都五級距化標籤化」（`docs/_daily/2026-09-02.md:99`；:92 是 14:00 重貼的同一段）
  * > 2026-09-02 09:35「…或是**全部公式化自動套用**我就對落入五級距的合理性沒意見」
+ * >  （`docs/_daily/2026-09-02.md:84`）
+ * ⚠️ 09:35 那句的**原上下文是 AP 係數**（12-002 仙氣發勁那一串，帳本標「設計討論」）——
+ *   把它套到「距離／範圍吸格」是 **Claude 的推論**，⛔ 不是 owner 對距離吸格的直接授權。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 為什麼是**一個載入時的接縫**，⛔ 不是逐檔寫級別
@@ -41,10 +44,20 @@
  *
  * ⭐ rollback：三張表各一格 `snapUntiered`（後台「AoE 範圍五級距／施法距離五級距／位移級距」），
  *   false ⇒ 那一軸逐位元回到作者手寫的數字。
+ *
+ * ⚠️ 副作用（GH#1260 B3 修正輪記下）：開著時，文件／編輯器欄位上的 `2.75` ⛔ 不是場上值（場上 3）
+ *   ⇒ 作者把 2.75 微調成 2.9 **不會有任何效果**（一格無聲失效的欄位）。
+ *   ⇒ 緩解：{@link geometrySnapNotices} 用**同一次走訪**列出「寫 X、場上 Y」，編輯器存檔警示讀它
+ *     （`apps/editor/src/authorWarnings.ts`）。要精確值 ⇒ 寫級別欄位，或關那一軸的 `snapUntiered`。
  */
-import { radiusFieldOf, type AoeTiers } from "./aoeTiers";
-import type { RangeTiers } from "./rangeTiers";
-import { displacementFieldsOf, type DisplacementTiers } from "./displacementTiers";
+import { aoeTiersFromDoc, radiusFieldOf, type AoeTiers } from "./aoeTiers";
+import { rangeTiersFromDoc, type RangeTiers } from "./rangeTiers";
+import {
+  displacementFieldsOf,
+  displacementTiersFromDoc,
+  minBodyRadiusFromConfigs,
+  type DisplacementTiers,
+} from "./displacementTiers";
 import { DUEL_ZONE_RADIUS_REF, snapToTier, type SkillTierName } from "./skillTiers";
 import { SKELETON_CHAMPION_IDS } from "./skillNormalize";
 import { zEffectDefUnion } from "./schema/effects/index";
@@ -81,7 +94,22 @@ function snapped(v: unknown, ladder: Ladder): number | undefined {
 const distances = (t: DisplacementTiers["travel"]): Ladder =>
   Object.fromEntries(Object.entries(t).map(([k, r]) => [k, r.distance])) as Ladder;
 
-export function snapUntieredGeometry<T extends object>(def: T, t: GeometrySnapTables): T {
+/** 一格被吸格的幾何：作者寫的 `from` → 場上的 `to`。 */
+export interface GeometrySnapNotice {
+  /** `range` / `radius` / `effects[0].landRadius` */
+  readonly path: string;
+  readonly from: number;
+  readonly to: number;
+  readonly tier: SkillTierName;
+  /** 哪一張表的哪一條梯子（＝要關哪一格 `snapUntiered`）。 */
+  readonly ladder: "range" | "aoe" | "travel" | "push";
+}
+
+export function snapUntieredGeometry<T extends object>(
+  def: T,
+  t: GeometrySnapTables,
+  onSnap?: (n: GeometrySnapNotice) => void,
+): T {
   const rangeOn = t.range.enabled && t.range.snapUntiered;
   const aoeOn = t.aoe.enabled && t.aoe.snapUntiered;
   const dispOn = t.displacement.enabled && t.displacement.snapUntiered;
@@ -93,36 +121,65 @@ export function snapUntieredGeometry<T extends object>(def: T, t: GeometrySnapTa
 
   const kinds = radiusTierKinds();
   const ladders = { travel: distances(t.displacement.travel), push: distances(t.displacement.push) };
+  const put = (
+    out: Record<string, unknown>,
+    key: string,
+    raw: unknown,
+    ladder: Ladder,
+    name: GeometrySnapNotice["ladder"],
+    path: string,
+  ): void => {
+    const v = snapped(raw, ladder);
+    if (v === undefined) return;
+    out[key] = v;
+    onSnap?.({ path: path === "" ? key : `${path}.${key}`, from: raw as number, to: v, tier: snapToTier(v, ladder), ladder: name });
+  };
 
-  const walk = (node: unknown): unknown => {
-    if (Array.isArray(node)) return node.map(walk);
+  const walk = (node: unknown, path: string): unknown => {
+    if (Array.isArray(node)) return node.map((v, i) => walk(v, `${path}[${i}]`));
     if (node === null || typeof node !== "object") return node;
     const rec = node as Record<string, unknown>;
     const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(rec)) out[k] = k === "template" ? v : walk(v);
+    for (const [k, v] of Object.entries(rec)) out[k] = k === "template" ? v : walk(v, path === "" ? k : `${path}.${k}`);
     const kind = rec["kind"];
     if (typeof kind !== "string") return out;
     if (aoeOn && kinds.has(kind) && typeof rec["radiusTier"] !== "string") {
       const f = radiusFieldOf(kind);
-      const v = snapped(rec[f], t.aoe.radius);
-      if (v !== undefined) out[f] = v;
+      put(out, f, rec[f], t.aoe.radius, "aoe", path);
     }
     const disp = dispOn ? displacementFieldsOf(rec) : undefined;
     if (disp !== undefined && typeof rec["distanceTier"] !== "string" && rec["launchDistance"] === undefined) {
-      const v = snapped(rec[disp.distanceField], ladders[disp.ladder]);
-      if (v !== undefined) out[disp.distanceField] = v;
+      put(out, disp.distanceField, rec[disp.distanceField], ladders[disp.ladder], disp.ladder, path);
     }
     return out;
   };
 
-  const out = walk(d) as Record<string, unknown>;
+  const out = walk(d, "") as Record<string, unknown>;
   if (rangeOn && typeof d["rangeTier"] !== "string" && d["rangeUnlimited"] !== true) {
-    const v = snapped(d["range"], t.range.range);
-    if (v !== undefined) out["range"] = v;
+    put(out, "range", d["range"], t.range.range, "range", "");
   }
-  if (aoeOn && typeof d["radiusTier"] !== "string") {
-    const v = snapped(d["radius"], t.aoe.radius);
-    if (v !== undefined) out["radius"] = v;
-  }
+  if (aoeOn && typeof d["radiusTier"] !== "string") put(out, "radius", d["radius"], t.aoe.radius, "aoe", "");
   return out as T;
+}
+
+/**
+ * ⭐ 「作者寫 X、場上 Y」的清單 —— **同一次** {@link snapUntieredGeometry} 走訪記下來的，
+ * ⛔ 不是第二份判斷（兩份一旦分岔，警示就會對一格沒被吸的值喊、或對被吸的值沉默）。
+ * 給編輯器存檔警示用：級距內微調一個沒標級別的幾何值，場上**不會有任何變化**。
+ */
+export function geometrySnapNotices(def: object, t: GeometrySnapTables): GeometrySnapNotice[] {
+  const out: GeometrySnapNotice[] = [];
+  snapUntieredGeometry(def, t, (n) => out.push(n));
+  return out;
+}
+
+/** 三張表從 config 文件讀（與 `createRuntimeResolver` 用同一組 `*FromDoc` 解析）。 */
+export function geometrySnapTablesFromConfigs(configDocs: readonly unknown[]): GeometrySnapTables {
+  const find = (schema: string): unknown =>
+    configDocs.find((c) => (c as { schema?: unknown } | null)?.schema === schema);
+  return {
+    aoe: aoeTiersFromDoc(find("config.aoe-tiers@1")),
+    range: rangeTiersFromDoc(find("config.range-tiers@1")),
+    displacement: displacementTiersFromDoc(find("config.displacement-tiers@1"), minBodyRadiusFromConfigs(configDocs)),
+  };
 }

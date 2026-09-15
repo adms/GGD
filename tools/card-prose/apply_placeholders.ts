@@ -120,11 +120,24 @@ const jsonLit = (s: string): string => JSON.stringify(s);
 
 /**
  * 把 `"description": <old>` 那一段就地換成 `<new>`，⛔ 不重寫整份 JSON。
- * `anchor` 是「從哪個位置之後開始找」（鏡像檔一份裡有好幾支技能）。
+ * `anchor` 是那一支技能 `"id"` 的位置（鏡像檔一份裡有好幾支技能）。
+ *
+ * ⭐ 字面值在檔案裡**只出現一次** ⇒ 就是它（⛔ 不靠鍵的順序）；出現多次才用錨：
+ *   先找錨之後的第一個，找不到再找錨之前最近的一個。
+ * ⚠️ GH#1260 B3 修正輪（2026-09-15）量到：第二批匯入器（`tools/ship-81/gen.py` batch2）寫出的
+ *   英雄卡鏡射是 `description` 排在 `id` **前面** ⇒ 舊寫法（只往錨後面找）對 b2 鏡射**永遠找不到**
+ *   ⇒ 這一支 exit 1、`skills:sync` 斷在這一步（在此之前只是剛好沒有 b2 卡面待轉）。
  */
 function spliceDescription(raw: string, oldLit: string, newLit: string, anchor: number): string | undefined {
-  const at = raw.indexOf(oldLit, anchor);
-  return at < 0 ? undefined : raw.slice(0, at) + newLit + raw.slice(at + oldLit.length);
+  const first = raw.indexOf(oldLit);
+  if (first < 0) return undefined;
+  const at =
+    raw.indexOf(oldLit, first + 1) < 0
+      ? first
+      : raw.indexOf(oldLit, anchor) >= 0
+        ? raw.indexOf(oldLit, anchor)
+        : raw.lastIndexOf(oldLit, anchor);
+  return raw.slice(0, at) + newLit + raw.slice(at + oldLit.length);
 }
 
 /* ──────────────────────────────── main ──────────────────────────────── */
