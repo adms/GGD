@@ -20,6 +20,10 @@ pnpm hero:intake --batch ship34 --from docs/_review/material/hero-intake/ship34.
 ⚠️ **`--check` 要打與當初一模一樣的那一行** —— 少一個 `--delivery` 會算出不同的 digest，
 而「材料過期」與「你少打了旗標」長得一樣。⇒ 材料裡存了 `invocation`，`--check` 紅的時候會把它印出來。
 
+⭐ **角色語音索引預設讀 git 裡那一份** `materials/hero-model-library/voice-index.json`（#1211；以前是寫死的 Dropbox 路徑 ⇒ CI 永遠讀不到 ⇒ `--check` 在 CI 永遠紅）。
+↩ rollback：`GGD_VOICE_INDEX=<路徑>`（或 `--voice-index <路徑>`）；`--voice-index none` ＝ 明確不讀。
+讀不到索引時 `--check` 只比 `digestParts.core`（模型／圖示／語音包），並**明說**「沒驗到 voice.candidates」—— ⛔ 不當成一致。
+
 產出 `docs/_review/material/hero-intake/<批次>.json`（⛔ **不複製圖示** —— 頁面直接讀出貨樹那一張），後台
 **營運 → 🧍 新英雄上架檢核** 那一頁讀它，你只按**通過／退回**。
 
