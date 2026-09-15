@@ -110,15 +110,16 @@ A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   # ⛔ 而且它**與 augment 重複計數**：77-02 雷鳴劍的落雷已經被 `procChance set 0.5`
   #    抬到 50%，這一條再獨立抽 40% ⇒ 實際約 70% 會落雷、而且兩發可以同時落。
   #    規格寫的是「上升**至** 50%」，不是「50% 再加一份 40%」。
-  # ⛔ 但**這一輪不刪**，因為刪掉會讓產生器當場非零離開，而不是靜默出錯：
-  #    `tag_gate.audit()` 對 `[被動]` 問的是 `doc.get("passive") is not None or marks`，
-  #    對 `[機率]` 問的是 `{"chance": ANY}` 那一組形狀 —— 兩個今天**都只由這段
-  #    passive 滿足**，`augment` 的 `{"op":"procChance"}` 兩張表都不認得。
-  #    ⇒ 正解是**同時**在 tag_gate.py 讓一支「純 augment 的被動 EX」也算數
-  #      （`[被動]` 接受 `doc.get("augment")`、`[機率]` 接受 `{"op":"procChance"}`，
-  #      形狀抄 70-002 的 `{"op":"damageCoeffAp"}` 那一列），那是兩個檔的改動。
+  # ⭐⭐ 2026-09-15（GH#1239）**刪了** —— 上面這段 2026-08-13 的診斷一字不改地成立，
+  #    ⭐ 而它當時「這一輪不刪」的唯一理由（`tag_gate` 的 `[機率]` 只認 `{"chance": ANY}`）
+  #    這一次一起關掉了：`tag_gate.py` 的 `機率` 列加上 `{"op": "procChance"}`（形狀同 70-002 的
+  #    `{"op": "damageCoeffAp"}` 那一列）。
+  #    ⇒ 這支 EX 卡面上的兩句話各自只有一個住處（augment 兩條 op），落雷機率回到規格的「至 50%」。
+  #    ⚠️ GH#1239 是從另一個方向撞到它的：普查說「掛 `onBasicAttack` 而卡面沒寫攻擊時」——
+  #    ⛔ 修法**不是**把「攻擊時」寫上卡（那會替一個五層都沒有的 40% 背書），是拿掉這個 hook。
+  # ⚠️ `passive` 留一格**空的 rank**：`isPassiveOnly()` 要 `def.passive !== undefined` 才把它當成
+  #    「不可施放的被動」；整段拿掉會讓 EX 變成一顆按下去什麼都不做的主動鍵。
+  #    `[被動]` 標籤閘也照舊由它滿足（`doc.get("passive") is not None`）。
   # ⭐ 順帶：gap 報告說「augment.targets 少了 condition」的那一條**已經被上面
   #    owner 2026-08-13 的裁決取代**（御雷劍就是這支 EX 自己），⛔ 不要再補回去。
-  passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "chance": 0.4, "target": "event",
-       "effects": [area("magic", tier="極小", ap=0.1)]}]}]})
+  passive={"name": "77-002 御雷劍", "ranks": [{"modifiers": [], "hooks": []}]})

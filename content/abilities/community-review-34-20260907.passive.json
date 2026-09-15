@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔追上你了〕",
   "provenance": "editor-json",
-  "description": "持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。\n【待補機制】需同一可見目標追逐速度與轉目標衰退。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

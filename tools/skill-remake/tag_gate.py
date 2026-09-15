@@ -139,7 +139,12 @@ TAG_SHAPES = {
     # condition / scaling
     "機率": [{"chance": ANY}, {"kind": "chance"},
              {"stat": "evasion"}, {"stat": "critChance"},                  # 迴避率/暴擊率**就是**那個機率
-             {"kind": "weightedBranch"}, {"critStrike": ANY}, {"block": ANY}],
+             {"kind": "weightedBranch"}, {"critStrike": ANY}, {"block": ANY},
+             # ⭐ GH#1239（2026-09-15）：77-002 御雷劍「其雷鳴劍發動[機率]上升至50%」改的是
+             #    **另一支技能**的發動機率（`ability-augment@1` 的 `procChance`）—— 與下面 `AP加成`
+             #    列收 `{"op": "damageCoeffAp"}` 同一個理由。⛔ 在此之前這一格只能靠一條
+             #    五層都沒有的 40% 落雷 hook 滿足（見 heroes/godie-e00w.py 那一段）。
+             {"op": "procChance"}],
     "屬性門檻": [{"kind": "stat", "mode": ANY},
                  {"thresholdPctOfMax": ANY}],                              # 處決線就是門檻
     # ⭐ 2026-08-13：第二種形狀 —— 15-002「將該傷害短暫加成至 [AP]」用的是

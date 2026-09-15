@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔決鬥者的布局〕",
   "provenance": "editor-json",
-  "description": "召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。\n【待補機制】需補召喚／陷阱成功事件去重、三層布局及 EX 扣除。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
