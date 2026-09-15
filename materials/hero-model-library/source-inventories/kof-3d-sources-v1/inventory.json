@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3429152,
-      "sha256": "264904c47b58726a57d379a77e8599b1c8f1b49fea06554eaf5727eeb6a8013c"
+      "bytes": 3466356,
+      "sha256": "639ad7c9e05e569a5e9fae122d27f29c6f015e31a8f8afc204f581d2fbc5ff61"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -5719,9 +5719,9 @@
       "components": [
         {
           "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
-          "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
-          "bytes": 1486160,
-          "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+          "sha256": "7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04",
+          "bytes": 1486220,
+          "gitPath": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
           "triangles": 7869,
           "drawPrimitives": 5,
           "jointCount": 258,
@@ -5737,9 +5737,9 @@
         },
         {
           "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
-          "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
-          "bytes": 1486476,
-          "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+          "sha256": "0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa",
+          "bytes": 1486536,
+          "gitPath": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
           "triangles": 7868,
           "drawPrimitives": 5,
           "jointCount": 258,

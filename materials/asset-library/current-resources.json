@@ -6466,7 +6466,7 @@
   },
   "kof3dSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
-    "sha256": "29129089d43cf155f4a4118524739466cb8e794436f8c2dc7dc68710089a5fe0",
+    "sha256": "41975a80e46c59e6e832df808c712a455957d9a27f69dcd833c92ba5b8da2b1c",
     "sourceId": "kof-3d-source-audit-20260914-v1",
     "kofXivCharacters": [
       "IOR",
@@ -6521,7 +6521,7 @@
     "productionDeploymentVerified": false,
     "entryGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json",
     "entrySha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
-    "receiptSha256": "b5fee69a26b49b9f150588786bf89d7aba30629168bd76240c9ed348af1a176d",
+    "receiptSha256": "0f42e0e03bc0a7e01fb963a1d5377ad8461be9ab171480a5568918a328a1283d",
     "documentSha256": "878516c59006c1e7de6c987a58672d0b603fc84d0f19b3a0a597cc071cb5a031",
     "runnerGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
     "runnerSha256": "dfe466c59de95feb47b0abd203db7305958f9494b5a1f976dee1c7715df12942",
