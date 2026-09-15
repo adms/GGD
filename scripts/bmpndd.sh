@@ -19,12 +19,19 @@ cd "$(dirname "$0")/.."
 
 MSG="${1:?用法: bash scripts/mpndd.sh \"<這一版的一句話說明>\" [--no-deploy]}"
 shift
-[ -f docker/.env ] && { set -a; . docker/.env; set +a; }
+# ⛔⛔ GH#1256 順手修 —— **這裡不載 docker/.env**。
+#   在此之前這一行就在這裡 ⇒ 正式站的 env（`PLATFORM_GAME_SHARED_SECRET` 那一族）被 export 進
+#   第 0 步的 `pnpm ship:check` ⇒ game-server 的測試讀到正式站設定而紅（2026-09-15 當晚踩到）。
+#   ⭐ 閘要在**乾淨的 env** 跑；env 只給 P·N·D·D —— 而 `ship-it.sh` 自己就載它，⛔ 不必在這裡載。
+#   守衛：`bmpnddBoardAndEnv.test.ts`「閘的 env 裡沒有 docker/.env」（真的跑出貨的這一支）。
 
 step() { printf '\n\033[1m══ %s\033[0m\n' "$*"; }
 FAIL=""
 
-BOARD_EARLY="docs/_execution-batches.md"
+# ⭐ GH#1256 —— **戰情版是哪一份**只問 `board-roll.sh --where`（⛔ 這裡不再寫一份路徑）。
+#   owner 叫「戰情版」的是 `docs/_release/戰情版-YYYYMMDD.md`。⛔ 在此之前 B／M 指的是
+#   `docs/_execution-batches.md` —— owner 叫它「執行批次計畫」，⛔ 不是戰情版（研究見 #1256）。
+board_path() { bash scripts/board-roll.sh --where; }
 
 # ── B：備份戰情版 ────────────────────────────────────────────────────────
 # ⭐ GH#1162 —— **第 0 步：閘**。在此之前這六步零個閘：`pnpm typecheck` 紅了好幾輪，
@@ -67,7 +74,11 @@ step "B/6  備份戰情版"
 #   （`Path.write_text()` / `writeFileSync` 它看不到）⇒ 戰情版 2026-08-30 被改了
 #   五次以上而帳本裡只有 **1** 筆。⭐ 而 `ggd-board.html` 有 10 筆 —— 因為那支
 #   產生器**自己叫**留底。⇒ 這一步就是替 md 那一份補上同一件事。
-if bash scripts/preserve.sh "$BOARD_EARLY"; then :; else
+# ⭐ GH#1256 owner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」
+#   ⇒ 當日戰情版 ＋ 執行批次計畫（⛔ 不是戰情版，但在「三份」裡）都留底，副本目錄帶時間戳。
+#   ggd-board.html 由 gen_board.py 每次改寫前自己留底；根目錄 GGD戰情版.md 只是指標（不進 git）。
+BOARD=$(board_path) || { echo "⛔ 找不到戰情版（board-roll.sh --where）—— ⛔ 不往下走"; exit 1; }
+if bash scripts/preserve.sh "$BOARD" docs/_execution-batches.md; then :; else
   echo "⚠️ 留底失敗 —— ⛔ 這一步失敗就**不要往下走**（下一步會覆蓋它）"
   exit 1
 fi
@@ -75,7 +86,10 @@ fi
 # ── M：整理近一週對話開票進戰情版 ───────────────────────────────────────
 step "M/6  近一週的票 ↔ 戰情版"
 SINCE=$(date -v-7d +%F 2>/dev/null || date -d '-7 days' +%F)
-BOARD="docs/_execution-batches.md"
+# ⭐ GH#1256「整理」＝ board:roll 從帳本重建七天窗（它改寫前自己留 戰情版_temp_{時間}.md）；
+#   換日後今天那一份才是戰情版 ⇒ 重問一次路徑。
+bash scripts/genrun.sh board:roll board:roll:raw || { echo "⚠️ board:roll 失敗 ⇒ 下面比對的是舊的戰情版"; FAIL="${FAIL}M "; }
+BOARD=$(board_path) || { echo "⛔ 找不到戰情版"; exit 1; }
 # ⭐ **寫戰情版之前先留底**（owner 2026-08-30：「寫入戰情版前 都會自動備份對吧？」）
 #   ⚠️ ⭐ 當時的答案是**沒有** —— PreToolUse hook 對**檔案 API 直寫**是瞎的，
 #   而戰情版今天被 python 改了五次以上，帳本裡只有 1 筆。
@@ -90,22 +104,44 @@ else
   # ⚠️ ⭐ **逐行讀**，⛔ 不是 `for n in $NEW` —— 後者在 `set -u`＋換行分隔下
   #   會把整串當成**一個**值 ⇒ 迴圈只跑一圈、grep 一定失敗 ⇒
   #   ⭐ 而結果是「沒有漏」= **一個空轉的綠燈**（2026-08-30 我自己中了一次）。
-  MISS=""; CNT=0
-  while IFS= read -r n; do
-    [ -n "$n" ] || continue
-    CNT=$((CNT+1))
-    grep -q "#${n}\b" "$BOARD" 2>/dev/null || MISS="${MISS}#${n} "
-  done <<< "$NEW"
-  if [ -n "$MISS" ]; then
-    # ⚠️ ⭐ fail-loud ⛔ 不自動塞：戰情版的內容是**人寫的判斷**（哪幾張重要、為什麼），
-    #   自動貼一行票號進去只會得到一份沒有人讀的清單。
+  # ⭐ GH#1256：戰情版的票號那一格常常**沒寫 `#`**（`| 1157 1158 |`）⇒ ⛔ 不再 `grep "#n"`，
+  #   改問 `ledger_table.board_tickets()`（票號長什麼樣只住那裡）。比對程式壞了 ⇒ ⛔ 不讀成「沒有漏」。
+  CNT=$(printf '%s\n' "$NEW" | grep -c .)
+  if ! MISS=$(printf '%s\n' "$NEW" | python3 -c '
+import sys; sys.path.insert(0, "scripts")
+from ledger_table import board_tickets
+seen = board_tickets(open(sys.argv[1], encoding="utf-8").read())
+print(" ".join(f"#{n}" for n in map(int, sys.stdin.read().split()) if n not in seen))' "$BOARD"); then
+    echo "⛔ 票號比對程式失敗 ⇒ **沒有比對**（⛔ 這不是「都提到了」）"
+    FAIL="${FAIL}M "
+  elif [ -n "$MISS" ]; then
+    # ⚠️ ⭐ fail-loud ⛔ 不自動塞：哪一則對到哪張票是**判斷**，自動貼票號只會得到沒有人讀的清單。
     echo "⚠️ 近一週**開著** $CNT 張票，其中**戰情版沒提到**的：$MISS"
-    echo "   ⇒ 開一段寫進 ${BOARD}（⭐ 寫**為什麼重要**，⛔ 不是貼票號）"
+    echo "   ⇒ 在帳本把那則對上票：python3 scripts/ledger_table.py --map <帳本.md> <HH:MM 或 身分> '<票號>'（戰情版從帳本重建）"
     FAIL="${FAIL}M "
   else
-    echo "✓ 近一週**開著**的 $CNT 張票，戰情版都提到了"
+    echo "✓ 近一週**開著**的 $CNT 張票，戰情版（$BOARD）都提到了"
   fi
 fi
+
+# ── B·M 收尾：戰情版與它的副本**進 git**（GH#1256）─────────────────────────
+# owner 2026-09-11：「S3 是備份不是互斥 所有產生器 抽取器 成品也都要在 S3 上一份 作為備份站點」
+#   而 `backup-s3.sh` 上傳的是 `git archive HEAD` ⇒ ⛔ 沒進 git 的副本不上 S3、只活在這一台。
+# ⭐ 在閘前面收：紅燈的日子副本也不會只留在工作區；P 會把它推上去。
+#   ⛔ 只收戰情版家族，逐檔 pathspec（CLAUDE.md：commit 永遠帶逐檔列名，⛔ 不碰別的 lane）。
+board_wrap() {
+  local files=() f msg
+  while IFS= read -r -d '' f; do files+=("$f"); done < <(git ls-files -z -m -o --exclude-standard -- \
+    'docs/_release/戰情版-*.md' 'docs/_release/戰情版_temp_*.md' \
+    'docs/legacy/_overwrites/*/docs/_release/戰情版-*.md' 'docs/legacy/_overwrites/*/docs/_execution-batches.md')
+  [ ${#files[@]} -gt 0 ] || { echo "✓ 戰情版沒有新的改動或副本要收"; return 0; }
+  msg="${TMPDIR:-/tmp}"; msg="${msg%/}/bmpndd-board-wrap-$$.txt"
+  printf 'chore(board): 🗂 GH#1256 戰情版與副本收尾（BMPNDD B·M，%s 個檔）\n\nowner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」\n' "${#files[@]}" > "$msg"
+  git add -- "${files[@]}" && git commit -q -F "$msg" -- "${files[@]}" \
+    && echo "✓ 戰情版與副本 ${#files[@]} 個檔進 git（$(git rev-parse --short HEAD)）"
+}
+step "B·M 收尾  戰情版與副本進 git"
+board_wrap || { echo "⚠️ 收尾 commit 失敗 —— 副本還在工作區，⛔ 但沒進 git（不會上 S3）"; FAIL="${FAIL}B "; }
 
 # ── 閘：⭐ 站在**它真正守的那扇門**前面（push／note／discord／deploy）────────
 # ⛔ 它本來在 B 之前 ⇒ 紅燈的日子裡連備份與開票整理都跑不了（見檔頭那段根因）。

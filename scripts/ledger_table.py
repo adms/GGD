@@ -435,7 +435,26 @@ def decided(ticket_cell: str) -> bool:
     ⛔ 仍然拒絕：留空、`⏸ 未對票`（兩者都沒有數字）。
     """
     s = ticket_cell.strip()
-    return bool(re.search(r"(?<!\d)#?\d{2,4}(?!\d)", s)) or s.startswith(("—", "–"))
+    return bool(re.search(TICKET_NO, s)) or s.startswith(("—", "–"))
+
+
+#: 票號那一格裡「一個票號」的樣子：`#877` 或 `877`（`#` 是排版 ⛔ 不是語意，見 `decided()`）。唯一住處。
+TICKET_NO = r"(?<!\d)#?(\d{2,4})(?!\d)"
+
+
+def board_tickets(text: str) -> set[int]:
+    """一份戰情版（或帳本）**提到**的票號（GH#1256，`bmpndd.sh` 的 M 步問它）。
+
+    · 逐則對票列（第一格 `HH:MM`）的**票號那一格**：容忍沒寫 `#`（`| 1157 1158 |`）——
+      ⚠️ 量到（a3a179e09 的 `戰情版-20260914.md`）：204 列裡票號格有數字而沒寫 `#` 的 126 列；
+      只認 `#n` 提到的票 106 張，這一支 181 張 ⇒ 75 張會被誤報成「沒提到」。
+    · 其餘文字只認 `#n`（⛔ 內文的裸數字多半是量值，例「269 則」）。
+    """
+    out = {int(n) for n in re.findall(r"#(\d{2,4})(?!\d)", text)}
+    for ln in text.split("\n"):
+        if ln.startswith("|") and len(c := cells(ln)) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
+            out.update(int(n) for n in re.findall(TICKET_NO, c[-1]))
+    return out
 
 
 def _pipes(line: str) -> list[int]:

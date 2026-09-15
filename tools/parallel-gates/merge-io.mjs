@@ -49,7 +49,8 @@ export const DATE_FAMILIES = [
   //   ⛔ 沒有進這張表 ⇒ 單步量測會把當天的字面檔名再量回來（實測 writes 多出 `戰情版-20260906.md`），
   //   而 graph.mjs 的邊是**字面**比對 ⇒ 別支讀到的 `戰情版-20260903.md` 永遠對不上 `戰情版-*.md`。
   [/^docs\/_release\/戰情版-\d{8}\.md$/, "docs/_release/戰情版-*.md"],
-  [/^docs\/_release\/戰情版_temp_\d{8}-\d{4}\.md$/, "docs/_release/戰情版_temp_*.md"],
+  // GH#1256：同一分鐘第二次改寫 ⇒ board-roll.sh 改用到秒的 _temp_YYYYMMDD-HHMMSS（⛔ 不蓋舊的）。
+  [/^docs\/_release\/戰情版_temp_\d{8}-\d{4}(?:\d{2})?\.md$/, "docs/_release/戰情版_temp_*.md"],
 ];
 export const canon = (path) => {
   for (const [re, glob] of DATE_FAMILIES) if (re.test(path)) return glob;
