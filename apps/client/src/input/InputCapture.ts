@@ -1,6 +1,7 @@
 /**
  * InputCapture — DOM listeners → IntentFrame-shaped orders/commands.
- *   right-click        move order (or attackTarget when over an enemy)
+ *   right-click        move order (or attackTarget when over an enemy); on an ALLIED
+ *                      skill interactable (GH#1189 lantern) → interact / walk to it
  *   A + left-click     attackMove order (A also swaps in the attack cursor)
  *   plain left-click   on YOUR OWN hero → onSelectSelf (select voice quip);
  *                      anywhere else it stays inert (misclicks are free)
@@ -24,6 +25,8 @@ import { rangeGuide } from "../ui/rangeGuideConfig";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 import { pickAllyAt } from "./allyTargets";
 import { cancelTwoStageCast, getTwoStageArmedSlot } from "./mouseTwoStageCast";
+import { mapInteractClick, pickInteractableAt } from "./interactables";
+import type { InteractableSpawnEvent } from "@ggd/shared/sim/effects/spawnInteractable";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
 export function mapRightClick(ground: Vec2, hoveredEnemyId: number | null): Order {
@@ -155,6 +158,11 @@ export interface InputDeps {
   pickAlly?(ground: Vec2): number | null;
   /** true when the LOCAL player's own champion is under the ground point */
   pickSelf(ground: Vec2): boolean;
+  /**
+   * ⭐ GH#1189 —— 地面點下的**我隊技能互動物**（瑟雷西 W 燈籠）。
+   * ⛔ 選用：省略 ⇒ 用出貨的 {@link pickInteractableAt}（`VfxSystem` 的事件排水口寫的那張表）。
+   */
+  pickInteractable?(ground: Vec2): InteractableSpawnEvent | null;
   onOrder(order: Order): void;
   onCommand(cmd: Command): void;
   /** plain left-click landed on your own champion (select voice; no order) */
@@ -224,6 +232,15 @@ export class InputCapture {
       const ground = this.ground(ev);
       if (!ground) return;
       this.setAttackArmed(false);
+      // ⭐ GH#1189 —— 右鍵點在我隊的燈籠上：碰得到就點燈、碰不到就先走過去（⛔ 兩者不同時送）。
+      //   它排在攻擊目標前面：燈籠是救命的那一下，壓在敵人身上時也要點得到。
+      const lantern = (this.deps.pickInteractable ?? pickInteractableAt)(ground);
+      if (lantern) {
+        const act = mapInteractClick(lantern, this.deps.getSelfPos());
+        if (act.kind === "command") this.deps.onCommand(act.command);
+        else this.deps.onOrder(act.order);
+        return;
+      }
       this.deps.onOrder(mapRightClick(ground, this.deps.pickEnemy(ground)));
     });
 

@@ -20,6 +20,7 @@ import { isInnateSlot } from "../abilities/innateActive";
 import { buyItem, sellItem, undoShopAction } from "../economy/shop";
 import { shopAccess } from "../economy/shopAccess";
 import { dropCoinCommand } from "../coins";
+import { acceptInteractable } from "../interactables";
 
 export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, IntentFrame>): void {
   tickCooldowns(world);
@@ -125,6 +126,14 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
         case "ready":
           world.emit("ready", { entity, seatId });
           break;
+        case "interact": {
+          // 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 隊友**自己**點燈。每一個拒絕都回給按的人（⛔ 不靜默）。
+          const result = acceptInteractable(world, entity, cmd.objectId);
+          if (result !== "ok") {
+            world.emit("interactRejected", { entity, seatId, objectId: cmd.objectId, reason: result });
+          }
+          break;
+        }
         case "recall":
         case "useItem":
           // deferred features — accepted but inert in the skeleton

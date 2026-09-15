@@ -50,6 +50,9 @@ export interface ThresholdSpawnPayload {
   readonly segments: readonly { ax: number; az: number; bx: number; bz: number }[];
 }
 
+/** 燈籠本體離地的高度（格）—— ⚠️ 接受判定是 2D 圓，這個數字只影響**看得見的**那一半。 */
+export const LANTERN_HEIGHT = 1.2;
+
 interface Entry {
   readonly meshes: Mesh[];
 }
@@ -58,6 +61,7 @@ export class AbilityTerrainFx {
   private readonly live = new Map<number, Entry>();
   private obstacleMat: StandardMaterial | null = null;
   private wallMat: StandardMaterial | null = null;
+  private lanternMat: StandardMaterial | null = null;
 
   constructor(private readonly scene: Scene) {}
 
@@ -89,6 +93,35 @@ export class AbilityTerrainFx {
     mesh.material = this.material("obstacle");
     mesh.isPickable = false;
     this.live.set(p.id, { meshes: [mesh] });
+  }
+
+  /**
+   * ⭐ GH#1189 —— 一盞燈籠（隊友右鍵點它才會飛回施法者）：本體一顆發光球 ＋ 地上一圈**接受圈**。
+   * ⭐ 圈的半徑與伺服器判定用的**同一個數字**（`interactableSpawn.radius`）—— 玩家看到「站進這圈就點得到」。
+   */
+  spawnInteractable(p: { readonly id: number; readonly x: number; readonly z: number; readonly radius: number }): void {
+    this.remove(p.id);
+    if (!this.lanternMat) {
+      const m = new StandardMaterial("ability-terrain-lantern", this.scene);
+      m.emissiveColor = new Color3(0.3, 0.92, 0.68);
+      m.diffuseColor = new Color3(0.04, 0.1, 0.08);
+      m.specularColor = new Color3(0, 0, 0);
+      m.alpha = 0.9;
+      this.lanternMat = m;
+    }
+    const body = MeshBuilder.CreateSphere(`ability-lantern-${p.id}`, { diameter: 0.7, segments: 8 }, this.scene);
+    body.position.set(p.x, LANTERN_HEIGHT, p.z);
+    const ring = MeshBuilder.CreateTorus(
+      `ability-lantern-ring-${p.id}`,
+      { diameter: p.radius * 2, thickness: 0.08, tessellation: 32 },
+      this.scene,
+    );
+    ring.position.set(p.x, 0.05, p.z);
+    for (const m of [body, ring]) {
+      m.material = this.lanternMat;
+      m.isPickable = false; // ⭐ 點選走 `input/interactables` 的 2D 圓，⛔ 不走 Babylon picking（兩套會說兩句話）
+    }
+    this.live.set(p.id, { meshes: [body, ring] });
   }
 
   /** GH#1209 —— 一組牆段。每一段一個盒子，⭐ 全部掛同一個 id（⛔ 一起退場）。 */
@@ -142,7 +175,9 @@ export class AbilityTerrainFx {
     for (const id of [...this.live.keys()]) this.remove(id);
     this.obstacleMat?.dispose();
     this.wallMat?.dispose();
+    this.lanternMat?.dispose();
     this.obstacleMat = null;
     this.wallMat = null;
+    this.lanternMat = null;
   }
 }

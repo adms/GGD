@@ -28,6 +28,7 @@ import {
   DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
   DEFAULT_HUMAN_SEATS_FROM_ROUND,
   DEFAULT_BOT_SHOP,
+  DEFAULT_BOT_INTERACT,
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
@@ -35,6 +36,7 @@ import { DEFAULT_SELL_REFUND_PCT, SWAP_WHEN_FULL, WEAPON_SHELF_OPEN } from "@ggd
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
+  BotInteractConfig,
   BotShopConfig,
   DraftConflict,
   LegendaryShelfConfig,
@@ -258,6 +260,8 @@ export interface ArenaRules {
   postMatchLingerSec: number;
   /** ⭐ bot 怎麼花錢（owner 2026-08-18：買隨機寶具、半價）。 */
   botShop: BotShopConfig;
+  /** ⭐ GH#1189 —— bot 會不會自己點隊友的技能互動物（瑟雷西 W 燈籠）。出貨 false。 */
+  botInteract: BotInteractConfig;
   /**
    * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。NEVER null —— 同
    * `itemDraft` 的理由：「沒有權重」不是一個狀態，缺席的文件要的是出貨規則。
@@ -395,6 +399,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   humanSeatsFromRound: DEFAULT_HUMAN_SEATS_FROM_ROUND,
   postMatchLingerSec: DEFAULT_POST_MATCH_LINGER_SEC,
   botShop: DEFAULT_BOT_SHOP,
+  botInteract: DEFAULT_BOT_INTERACT,
   disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
@@ -500,6 +505,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     humanSeatsFromRound: doc.humanSeatsFromRound ?? DEFAULT_HUMAN_SEATS_FROM_ROUND,
     postMatchLingerSec: doc.postMatchLingerSec ?? DEFAULT_POST_MATCH_LINGER_SEC,
     botShop: doc.botShop ?? DEFAULT_BOT_SHOP,
+    botInteract: doc.botInteract ?? DEFAULT_BOT_INTERACT,
     disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,
     rounds,
     overflow: doc.overflow ?? null,

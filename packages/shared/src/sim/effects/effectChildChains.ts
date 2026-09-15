@@ -37,6 +37,7 @@ export const EFFECT_CHILD_CHAINS = [
   "effects", // randomArea · delayed
   "finalEffects", // delayed
   "finisher", // comboStrikes —— 收尾那一發（#541）
+  "onAccept", // spawnInteractable —— 隊友送出 interact 指令那一刻對接受者跑的那一串（GH#1189 瑟雷西 W）
   "onArrive", // blink · spawnModelFx（#551 抵達/壽命到的落點那一串）
   "onDevour", // devour
   "onConsumed", // consumeStatus

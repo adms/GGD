@@ -1621,7 +1621,7 @@ export class MatchController {
       const seat = new Seat(
         seatId,
         asTeamId(spec.teamId),
-        new AIDriver((itemId) => this.whitelist.allowsItem(itemId), this.rules.botShop),
+        new AIDriver((itemId) => this.whitelist.allowsItem(itemId), this.rules.botShop, this.rules.botInteract),
       );
       seat.accountId = spec.accountId ?? `bot-${spec.seatId}`;
       seat.displayName = spec.displayName ?? (spec.isBot ? `Bot ${spec.seatId}` : `Player ${spec.seatId}`);

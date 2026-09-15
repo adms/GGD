@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_cceb0c9a4f4a",
+    "contentVersion": "cv_cfac6774fcbc",
     "collections": {
       "champions": {
         "hash": "5851bc7d108e",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "7ff2fe23577d",
+        "hash": "37c6018ff53c",
         "count": 104
       },
       "models": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "fb8d3eb8",
+    "fingerprint": "a01ade13",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -139,6 +139,7 @@
       "screenShake",
       "shield",
       "shieldBreak",
+      "spawnInteractable",
       "spawnModelFx",
       "spawnObstacle",
       "spawnProjectile",
@@ -390,6 +391,7 @@
       "maxTargets",
       "maxTargetsCounts",
       "maxTotalJumps",
+      "maxUses",
       "minManaReserve",
       "minimumHp",
       "missChance",
@@ -400,6 +402,7 @@
       "modifiers",
       "moveSpeedMult",
       "offsetForwardU",
+      "onAccept",
       "onArrive",
       "onCap",
       "onCarrierDeath",
@@ -787,6 +790,7 @@
       "maxTargets",
       "maxTargetsCounts",
       "maxTotalJumps",
+      "maxUses",
       "minManaReserve",
       "minimumHp",
       "missChance",
@@ -805,6 +809,7 @@
       "modifiers.value",
       "moveSpeedMult",
       "offsetForwardU",
+      "onAccept",
       "onArrive",
       "onCap",
       "onCarrierDeath",
@@ -7546,12 +7551,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "fb8d3eb8",
+    "engineFingerprint": "a01ade13",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fb8d3eb8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a01ade13 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8419,11 +8424,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "0d83955e9873",
+    "fingerprint": "0ead7f0b6f8d",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "245d0e3d5239"
+        "digest": "e7d26c28f334"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8489,5 +8494,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "35c463601028"
+  "profileDigest": "34bef1def369"
 }

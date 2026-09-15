@@ -113,6 +113,12 @@ export type Command =
   | { kind: "pickOffer"; offerId: string; swapSlot?: number }
   | { kind: "rankUpAbility"; slot: AbilitySlot }
   /**
+   * 【互動物】（GH#1189 瑟雷西 W 燈籠）：接受場上一個技能互動物（`objectId` ＝ `interactableSpawn.id`）。
+   * ⭐ 伺服器逐項驗隊伍／距離／存活／有效性（`sim/interactables.ts::acceptInteractable`），⛔ 不信客戶端。
+   * 指令不是 Colyseus schema ⇒ ⛔ 不動 append-only 協定。
+   */
+  | { kind: "interact"; objectId: EntityId }
+  /**
    * 陣亡投幣 (task #191): throw 100 unspent gold onto the floor as a coin.
    * Deliberately PAYLOAD-FREE. An aim point would be a client-supplied float
    * that `toVec2` happily accepts anywhere on the map, so a dead player could

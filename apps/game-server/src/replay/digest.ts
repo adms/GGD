@@ -220,6 +220,23 @@ export function hostDigest(ctl: MatchController): number {
       m.num(p.z);
     }
   }
+  // GH#1189 【互動物】—— 同上兩張表的形狀（沒有 transform／health、PRESENT-ONLY、逐層排序）。
+  //   `usesLeft` / `acceptedBy` 決定下一次點燈算不算數，一格分岔要等某人點燈才在位置上說話。
+  for (const id of [...w.interactable.keys()].sort((a, b) => a - b)) {
+    const it = w.interactable.get(id)!;
+    m.num(id);
+    m.num(it.ownerId);
+    m.num(it.zone);
+    m.num(it.center.x);
+    m.num(it.center.z);
+    m.num(it.radius);
+    m.num(it.expiresAtTick);
+    m.num(it.usesLeft);
+    m.num(it.rank);
+    m.str(it.origin);
+    for (const a of it.acceptedBy) m.num(a);
+    m.num(it.acceptedBy.length);
+  }
   m.num(w.combatActive ? 1 : 0);
   // PER-ZONE COMBAT LIVENESS (#216). `settledZones` decides whether the fire
   // ring keeps burning a zone and whether mobs keep arriving in it, so a

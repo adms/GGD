@@ -47,6 +47,8 @@ import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
  */
 import { additiveGain, beginAdditiveFrame } from "./additiveBudget";
 import { AbilityTerrainFx, type ObstacleSpawnPayload, type ThresholdSpawnPayload } from "./AbilityTerrainFx";
+import type { InteractableSpawnEvent } from "@ggd/shared/sim/effects/spawnInteractable";
+import { clearInteractables, noteInteractableEnd, noteInteractableSpawn } from "../input/interactables";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -2699,6 +2701,20 @@ export class VfxSystem {
         this.abilityTerrain.remove((ev.data as unknown as { id: number }).id);
         break;
       }
+      // ⭐ GH#1189 【互動物】（瑟雷西 W 燈籠）—— 畫出來 ＋ 登記進右鍵點選表（`input/interactables`）。
+      //   ⚠️ 兩件事同一個 id 進、同一個 id 出，⛔ 否則會留下點得到卻看不見（或看得見卻點不到）的燈。
+      case "interactableSpawn": {
+        const p = ev.data as unknown as InteractableSpawnEvent;
+        this.abilityTerrain.spawnInteractable(p);
+        noteInteractableSpawn(p);
+        break;
+      }
+      case "interactableEnd": {
+        const id = (ev.data as unknown as { id: number }).id;
+        this.abilityTerrain.remove(id);
+        noteInteractableEnd(id);
+        break;
+      }
       case "modelFxSpawn": {
         if (!this.modelFx) break;
         const p = ev.data as unknown as ModelFxSpawnEvent;
@@ -3224,6 +3240,7 @@ export class VfxSystem {
     for (const s of this.sparks) s.dispose();
     for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
     this.abilityTerrain.dispose();
+    clearInteractables();
     this.blood.dispose();
     this.feedback.dispose();
     this.status.dispose();

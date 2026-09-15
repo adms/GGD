@@ -179,6 +179,11 @@ export function sanitizeCommand(raw: unknown): Command | undefined {
       const swapSlot = toItemSlot(c.swapSlot);
       return swapSlot !== undefined ? { kind: "pickOffer", offerId, swapSlot } : undefined;
     }
+    // 【互動物】（GH#1189）—— 只收一個非負整數 id；隊伍／距離／有效性由 sim 逐項驗。
+    case "interact": {
+      const objectId = toEntityId(c.objectId);
+      return objectId !== undefined ? { kind: "interact", objectId } : undefined;
+    }
     case "rankUpAbility": {
       if (typeof c.slot !== "string" || !ABILITY_SLOTS.has(c.slot)) return undefined;
       return { kind: "rankUpAbility", slot: c.slot as AbilitySlot };

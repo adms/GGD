@@ -2326,6 +2326,11 @@
     "since": "2026-09-11",
     "why": "GH#1190／#1211 —— ⭐ 機制與它的第一份內容**不在同一批**。`dash.shatter` 是 `fdd1a25d3` 為「衝刺撞到暫時柱才震」做的那一半；⭐ 它的第一個使用者是 **鄂爾（`lol-ornn`）Q→E**，而那位英雄今天**還不在 `content/champions/`** —— 他在 LoL 第二批 11 名的待上架名單裡（GH#1185）。⇒ ⛔ 今天的 0 **不是沒做完的遷移**，是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架之後這一格要變成非零；若那批上了而它仍是 0，代表機制與內容對不上 —— ⭐ 那時這條 30 天的閘會自己再喊一次。"
   },
+  "variant:abilities.effects[]#spawnInteractable": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1189 —— 互動物（瑟雷西 W 燈籠：隊友送 interact 指令才觸發 onAccept）由本 commit 落地；⭐ 第一份採用者是 **瑟雷西 W**，而它住在 `heroForge/communityLolBatch2.ts`（LoL 第四批 11 名的待上架候選，GH#1185），⛔ 今天還不在 `content/abilities/`。⇒ 今天的 0 是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架後這一格仍為 0 ⇒ 接線斷了，這條 30 天的閘會自己再喊一次。"
+  },
   "variant:abilities.effects[]#spawnObstacle": {
     "status": "landing",
     "since": "2026-09-11",

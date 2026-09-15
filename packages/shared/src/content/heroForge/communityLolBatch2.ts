@@ -2040,7 +2040,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。",
       "Q：PENDING MAIN：需要命中解鎖、目標綁定、失效/死亡處理與自願追入；不等同必中突進或自動追入。 原單段params只為技術候選，不授權作最終替代。",
-      "W：重大簡化：施法者指定隊友，沒有隊友點燈選擇；本候選不附盾，不能描述有護盾。",
+      "W：燈籠丟到地上，落點圈內的隊友獲得護盾；隊友自己點燈（interact 指令，GH#1189）才飛回瑟雷西，施法者不會強制搬人。簡化：護盾給落點圈內的隊友，不是原版「第一個碰到燈籠的隊友」；只能搭乘一人。",
       "E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。",
       "R：重大簡化：沒有五面牆、穿牆破壞或單牆觸發；只是一圈施放時控制。",
       "EX：不召喚不可通行的燈籠物件。"
@@ -2126,13 +2126,40 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "W": {
         "name": "鬼影燈籠",
-        "purpose": "指定一位隊友直接拉到自己腳邊。",
-        "ref": "tpl-teleport",
+        "purpose": "朝地面丟出燈籠：落點圈內的隊友獲得護盾；隊友自己點燈才飛回瑟雷西身邊。",
+        "ref": "tpl-effect-sequence",
         "params": {
-          "destination": "rallyToCaster",
-          "travelSec": 0.2,
-          "arriveRadius": 150,
-          "castTimeSec": 0.2
+          "castType": "ground",
+          "castTimeSec": 0.2,
+          "radius": 2.5,
+          "side": "allies",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 180,
+                "ratios": []
+              },
+              "duration": 3,
+              "stackKey": "$hero.lantern",
+              "onExisting": "keepLarger",
+              "absorbs": "all"
+            },
+            {
+              "kind": "spawnInteractable",
+              "radius": 2.5,
+              "durationSec": 6,
+              "maxUses": 1,
+              "onAccept": [
+                {
+                  "kind": "blink",
+                  "shape": "single",
+                  "to": "caster",
+                  "applyTo": "target"
+                }
+              ]
+            }
+          ]
         },
         "cooldown": "大"
       },

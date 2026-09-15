@@ -15,6 +15,7 @@ import type {
   ProjectileComp,
   ThresholdComp,
   ObstacleComp,
+  InteractableComp,
   ChampionComp,
   StatusComp,
   FlowerComp,
@@ -116,6 +117,7 @@ import { toggleUpkeepSystem } from "./abilities/toggle";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { thresholdSystem } from "./systems/ThresholdSystem";
 import { obstacleSystem } from "./obstacles";
+import { interactableSystem } from "./interactables";
 import { combatResolveSystem } from "./combat/damage";
 import { flightSystem } from "./flight";
 import { attrGrantExpirySystem } from "./effects/grantAttribute";
@@ -175,6 +177,8 @@ export class SimWorld {
   readonly threshold = new Map<EntityId, ThresholdComp>();
   /** 【暫時障礙】（GH#1190）—— 見 `sim/obstacles.ts`。 */
   readonly obstacle = new Map<EntityId, ObstacleComp>();
+  /** 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 見 `sim/interactables.ts`。 */
+  readonly interactable = new Map<EntityId, InteractableComp>();
   readonly champion = new Map<EntityId, ChampionComp>();
   readonly status = new Map<EntityId, StatusComp>();
   readonly stats = new Map<EntityId, StatsComp>();
@@ -1521,6 +1525,7 @@ export class SimWorld {
     this.projectile.delete(id);
     this.threshold.delete(id);
     this.obstacle.delete(id);
+    this.interactable.delete(id);
     this.champion.delete(id);
     this.status.delete(id);
     this.stats.delete(id);
@@ -1792,6 +1797,7 @@ export class SimWorld {
     //                             height and the landing detonation. IMMEDIATELY
     //                             before movementSystem, which then sees the
     //                             `leap` override and leaves the body alone.
+    interactableSystem(this); // 4c′. 【互動物】到期／施法者死亡／回合重置收掉（接受走 commandSystem 的 `interact`）
     obstacleSystem(this); //  4c. 【暫時障礙】到期清掉 —— ⭐ 在 movement 之前，這一 tick 的碰撞清單才是對的
     movementSystem(this); // 5. integrate + collide
     carrySystem(this); //    5a. ⭐ [背負]（[EX∅ 根源]）—— 乘客的座標從載具重建。
