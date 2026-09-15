@@ -27,6 +27,13 @@ SOURCEIO_CONVERSION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-so
 SOURCEIO_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1"
 MATERIAL_REBUILD_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3"
 MATERIAL_REBUILD_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3"
+TOPOLOGY_DECIMATION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1"
+TOPOLOGY_DECIMATION_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1"
+TOPOLOGY_ATTEMPT_FINDINGS = {
+    "run-f": "Unskinned SourceIO Icosphere helper was retained and rendered as a giant visible artifact.",
+    "run-g": "Body and clothing collapse caused visible holes and spikes.",
+    "run-i": "Ankle, pants and hair collapse caused visible holes and spikes after budget reallocation.",
+}
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -66,6 +73,12 @@ def sha256(path: Path) -> str:
 
 def file_record(path: Path, root: Path) -> dict[str, Any]:
     return {"path": path.relative_to(root).as_posix(), "bytes": path.stat().st_size, "sha256": sha256(path)}
+
+
+def resolve_receipt_path(value: str) -> Path:
+    """Resolve a conversion receipt path without depending on the caller CWD."""
+    path = Path(value)
+    return path if path.is_absolute() else (REPO / path).resolve()
 
 
 def validated_members(root: Path) -> list[dict[str, Any]]:
@@ -281,6 +294,71 @@ def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, sour
             }
             result["materialRebuildIntermediate"]["stageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
             result["materialRebuildIntermediate"]["stageBackup"]["receiptSha256"] = sha256(backup_path)
+        topology_root = workspace / TOPOLOGY_DECIMATION_ROOT
+        attempts = []
+        for run_name, finding in TOPOLOGY_ATTEMPT_FINDINGS.items():
+            attempt_root = topology_root / run_name
+            attempt_path = attempt_root / "receipt.json"
+            review = attempt_root / "visual-review-v1" / "run.json"
+            if not attempt_path.is_file() or not review.is_file():
+                raise FileNotFoundError(f"missing topology decimation evidence: {attempt_root}")
+            attempt = json.loads(attempt_path.read_text(encoding="utf-8"))
+            output = resolve_receipt_path(attempt.get("output", {}).get("absolutePath", ""))
+            if (attempt.get("schema") != "ggd.jump-force-dai-workshop-topology-decimation@1"
+                    or attempt.get("input", {}).get("sha256") != material["output"]["sha256"]
+                    or attempt.get("policy", {}).get("decimateWhenTrianglesAbove") != 10000
+                    or attempt.get("policy", {}).get("requiredOutputBelow") != 8000
+                    or not output.is_file()
+                    or output.stat().st_size != attempt["output"]["bytes"]
+                    or sha256(output) != attempt["output"]["sha256"]
+                    or attempt.get("trianglesAfter", 8000) >= 8000):
+                raise ValueError(f"invalid topology decimation receipt: {attempt_path}")
+            visual = json.loads(review.read_text(encoding="utf-8"))
+            proof = review.parent / "proof.json"
+            if (visual.get("sourceSha256") != attempt["output"]["sha256"]
+                    or visual.get("complete") is not True or visual.get("proofExists") is not True
+                    or visual.get("errorExists") is not False or visual.get("images") != 3
+                    or not proof.is_file()):
+                raise ValueError(f"invalid topology decimation visual proof: {review}")
+            attempts.append({
+                "run": run_name,
+                "receiptAbsolutePath": str(attempt_path.resolve()),
+                "receiptSha256": sha256(attempt_path),
+                "output": attempt["output"],
+                "trianglesBefore": attempt["trianglesBefore"],
+                "trianglesAfter": attempt["trianglesAfter"],
+                "visualReview": {
+                    "runAbsolutePath": str(review.resolve()), "runSha256": sha256(review),
+                    "proofAbsolutePath": str(proof.resolve()), "proofSha256": sha256(proof),
+                    "imageCount": visual["images"],
+                },
+                "status": "rejected-technical-visual-screening",
+                "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                "finding": finding,
+            })
+        result["materialRebuildIntermediate"]["topologyDecimationAttempts"] = {
+            "attempts": attempts,
+            "acceptedCount": 0,
+            "rejectedCount": len(attempts),
+            "status": "all-under-8000-candidates-rejected-technical-visual-screening",
+        }
+        backup_path = workspace / TOPOLOGY_DECIMATION_BACKUP_ROOT / "latest-receipt.json"
+        if not backup_path.is_file():
+            raise FileNotFoundError(f"missing topology decimation backup receipt: {backup_path}")
+        backup = json.loads(backup_path.read_text(encoding="utf-8"))
+        required = ("s3Uri", "manifestUri", "archiveSha256", "archiveBytes", "fileCount")
+        if (backup.get("schema") != "ggd-intake-backup-receipt@1"
+                or Path(backup.get("source", "")).resolve() != topology_root.resolve()
+                or not backup.get("s3Uri", "").startswith("s3://ggd-390630837668-ap-east-2-an/legacy/")
+                or backup.get("fullGetVerified") is not True
+                or backup.get("allMemberSha256Verified") is not True
+                or any(key not in backup for key in required)):
+            raise ValueError(f"invalid topology decimation backup receipt: {backup_path}")
+        result["materialRebuildIntermediate"]["topologyDecimationAttempts"]["stageBackup"] = {
+            key: backup[key] for key in (*required, "fullGetVerified", "allMemberSha256Verified", "localUnchanged", "profile", "region")
+        }
+        result["materialRebuildIntermediate"]["topologyDecimationAttempts"]["stageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
+        result["materialRebuildIntermediate"]["topologyDecimationAttempts"]["stageBackup"]["receiptSha256"] = sha256(backup_path)
     return result
 
 
@@ -323,11 +401,13 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
     }
     intermediates = [model["sourceioRawIntermediate"] for model in models if model["sourceioRawIntermediate"]]
     material_rebuilds = [entry["materialRebuildIntermediate"] for entry in intermediates if entry.get("materialRebuildIntermediate")]
+    topology_attempts = [entry["materialRebuildIntermediate"]["topologyDecimationAttempts"] for entry in intermediates if entry.get("materialRebuildIntermediate", {}).get("topologyDecimationAttempts")]
     reader_blocker = ("SourceIO is pinned locally, but Blender background startup fails before plugin/model import; "
                       "repair the headless Blender environment before standardization." if not ready else
                       "SourceIO is available but no MDL conversion has been executed or accepted." if not intermediates else
                       "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration." if not material_rebuilds else
-                      "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration.")
+                      "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration." if not topology_attempts else
+                      "Three under-8,000-triangle collapse-decimation candidates have render proof but all failed technical visual screening; preserve them as rejected intermediates and use a different standardization method before owner review, registration or deployment.")
     return {
         "sourceId": item["sourceId"], "leadId": item["leadId"],
         "source": {"absolutePath": str(root.resolve()), "title": acquisition["title"], "pageUrl": acquisition["pageUrl"], "itemId": acquisition["itemId"], "raw": {"path": acquisition["file"], "bytes": acquisition["bytes"], "sha256": acquisition["sha256"]}, "checkedAt": inspection["checkedAt"]},
@@ -335,8 +415,8 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "extracted": {"extensions": dict(sorted(suffixes.items())), "vmtFiles": len(vmts), "vtfFiles": len(vtfs)},
         "modelGroups": models,
         "tooling": tooling,
-        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "materialRebuildIntermediates": len(material_rebuilds), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
-        "blockers": [reader_blocker, "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
+        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "materialRebuildIntermediates": len(material_rebuilds), "topologyDecimationCandidatesRejected": sum(entry["rejectedCount"] for entry in topology_attempts), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
+        "blockers": [reader_blocker, "No accepted GGD GLB, six-state mapping, backend registration, runtime selection, or deployment has been created; raw and rejected conversion intermediates remain preserved separately.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
     }
 
 
@@ -345,7 +425,7 @@ def build(workspace: Path) -> dict[str, Any]:
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",
-        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "materialRebuildIntermediates": sum(row["status"]["materialRebuildIntermediates"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
+        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "materialRebuildIntermediates": sum(row["status"]["materialRebuildIntermediates"] for row in rows), "topologyDecimationCandidatesRejected": sum(row["status"]["topologyDecimationCandidatesRejected"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
         "sources": rows,
         "reproduction": {"write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace ..", "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace .. --check"},
     }

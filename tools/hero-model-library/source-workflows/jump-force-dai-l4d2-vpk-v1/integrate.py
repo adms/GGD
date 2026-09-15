@@ -70,6 +70,11 @@ def source_entry(row: dict) -> dict:
                 candidate["conversionStatus"] = "sourceio-material-rebuilt-89833-triangles-pending-topology-aware-decimation-visual-acceptance-and-contract-validation"
                 candidate["limitations"][0] = "The same-name Workshop VTF maps were rebuilt into an embedded 256px GLB with Babylon render proof; it remains a conversion intermediate."
                 candidate["limitations"][2] = "The material-rebuilt GLB retains 89,833 triangles, so it must pass topology-aware decimation and new visual acceptance before GGD validation, backend registration, or deployment."
+                topology = material_rebuild.get("topologyDecimationAttempts")
+                if topology:
+                    candidate["topologyDecimationAttempts"] = topology
+                    candidate["conversionStatus"] = "sourceio-material-rebuilt-topology-decimation-candidates-rejected-pending-alternative-standardization"
+                    candidate["limitations"][2] = "Three under-8,000-triangle collapse-decimation candidates are retained with render proof and S3 receipts, but all failed technical visual screening. None is an accepted model, a backend option, runtime selectable, or deployed; use a different standardization method before owner visual acceptance."
         if "body replacement" in role:
             candidate["resourceRole"] = "character-body"
             candidate["character"] = "小呆／達伊 / Dai"

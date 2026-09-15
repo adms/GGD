@@ -66067,7 +66067,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "d29d5b6c7d8336c48cfc7d3bece6b014c24d4ac6c423053b951dee3df979bf35"
+        "sha256": "da154cf2a36ffdff7a29512e463057e298c537d74a510629a7e018a082d000dd"
       },
       "modelCandidates": [
         {
@@ -66147,11 +66147,11 @@
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "sourceio-material-rebuilt-89833-triangles-pending-topology-aware-decimation-visual-acceptance-and-contract-validation",
+          "conversionStatus": "sourceio-material-rebuilt-topology-decimation-candidates-rejected-pending-alternative-standardization",
           "limitations": [
             "The same-name Workshop VTF maps were rebuilt into an embedded 256px GLB with Babylon render proof; it remains a conversion intermediate.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
-            "The material-rebuilt GLB retains 89,833 triangles, so it must pass topology-aware decimation and new visual acceptance before GGD validation, backend registration, or deployment."
+            "Three under-8,000-triangle collapse-decimation candidates are retained with render proof and S3 receipts, but all failed technical visual screening. None is an accepted model, a backend option, runtime selectable, or deployed; use a different standardization method before owner visual acceptance."
           ],
           "rawGlbIntermediate": {
             "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/conversion-receipt.json",
@@ -66240,6 +66240,93 @@
                 "region": "ap-east-2",
                 "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3/latest-receipt.json",
                 "receiptSha256": "6db7decaa885da45d1325d9d09cf9324d61a85e4edefe37fd13d487a9721e08d"
+              },
+              "topologyDecimationAttempts": {
+                "attempts": [
+                  {
+                    "run": "run-f",
+                    "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/receipt.json",
+                    "receiptSha256": "4908513229e672d8245994c2ff2f02c293087f50ca07d5611ef5ba00169d411f",
+                    "output": {
+                      "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/candidate-under-8000.glb",
+                      "bytes": 2835788,
+                      "sha256": "a725987a1d9818dcad4933113fa255a3b4c0aa793f02d83e7253b1221b87b640"
+                    },
+                    "trianglesBefore": 89913,
+                    "trianglesAfter": 7792,
+                    "visualReview": {
+                      "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/run.json",
+                      "runSha256": "42f89afc676e02ef700846a03ee43e31b893dc22670fff5540fa22de0d0daae8",
+                      "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/proof.json",
+                      "proofSha256": "f7480b15fa99f26b347641489edabb51ccad1036b857609cfc8e011003a9026d",
+                      "imageCount": 3
+                    },
+                    "status": "rejected-technical-visual-screening",
+                    "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                    "finding": "Unskinned SourceIO Icosphere helper was retained and rendered as a giant visible artifact."
+                  },
+                  {
+                    "run": "run-g",
+                    "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/receipt.json",
+                    "receiptSha256": "1f318b7fcfa577e543cb5a8e00c9d5c02c2040bc3cf40330fb9443ef5b02614d",
+                    "output": {
+                      "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/candidate-under-8000.glb",
+                      "bytes": 2831900,
+                      "sha256": "08eb8afd27bf919c7fec938ce941c6b54f442de42ca2c900963e81680b19e140"
+                    },
+                    "trianglesBefore": 89833,
+                    "trianglesAfter": 7762,
+                    "visualReview": {
+                      "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/run.json",
+                      "runSha256": "3583207cadb555f7e46ad88ce61b031174c5115612e6a9abb6a33d50e0b6c7f6",
+                      "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/proof.json",
+                      "proofSha256": "dfc0da9a4b48a188e205e81957e0c233029884dc1b8fab9e37b5c33c84a82471",
+                      "imageCount": 3
+                    },
+                    "status": "rejected-technical-visual-screening",
+                    "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                    "finding": "Body and clothing collapse caused visible holes and spikes."
+                  },
+                  {
+                    "run": "run-i",
+                    "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/receipt.json",
+                    "receiptSha256": "ab3b56924593de647d77c538eacd25a8b1e66170874ede25d3b1a02fea24228a",
+                    "output": {
+                      "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/candidate-under-8000.glb",
+                      "bytes": 2840940,
+                      "sha256": "7336765f2ed6eb4935a482d47e03bee547a94a203a393dacc0773165643d724b"
+                    },
+                    "trianglesBefore": 89833,
+                    "trianglesAfter": 7997,
+                    "visualReview": {
+                      "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/run.json",
+                      "runSha256": "dc154e6d37a304133009d45b9d07cbf98a8c8641d3f0ff426fa0e775403d58cb",
+                      "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/proof.json",
+                      "proofSha256": "ef9f3ffd12a5e8e665fbde8382c48ed08952ef0b1c4127803d28743280dc04b2",
+                      "imageCount": 3
+                    },
+                    "status": "rejected-technical-visual-screening",
+                    "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                    "finding": "Ankle, pants and hair collapse caused visible holes and spikes after budget reallocation."
+                  }
+                ],
+                "acceptedCount": 0,
+                "rejectedCount": 3,
+                "status": "all-under-8000-candidates-rejected-technical-visual-screening",
+                "stageBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.files.json",
+                  "archiveSha256": "57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d",
+                  "archiveBytes": 15803413,
+                  "fileCount": 30,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true,
+                  "profile": "vibe-coding",
+                  "region": "ap-east-2",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1/latest-receipt.json",
+                  "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
+                }
               }
             }
           },
@@ -66291,6 +66378,180 @@
               "region": "ap-east-2",
               "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3/latest-receipt.json",
               "receiptSha256": "6db7decaa885da45d1325d9d09cf9324d61a85e4edefe37fd13d487a9721e08d"
+            },
+            "topologyDecimationAttempts": {
+              "attempts": [
+                {
+                  "run": "run-f",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/receipt.json",
+                  "receiptSha256": "4908513229e672d8245994c2ff2f02c293087f50ca07d5611ef5ba00169d411f",
+                  "output": {
+                    "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/candidate-under-8000.glb",
+                    "bytes": 2835788,
+                    "sha256": "a725987a1d9818dcad4933113fa255a3b4c0aa793f02d83e7253b1221b87b640"
+                  },
+                  "trianglesBefore": 89913,
+                  "trianglesAfter": 7792,
+                  "visualReview": {
+                    "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/run.json",
+                    "runSha256": "42f89afc676e02ef700846a03ee43e31b893dc22670fff5540fa22de0d0daae8",
+                    "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/proof.json",
+                    "proofSha256": "f7480b15fa99f26b347641489edabb51ccad1036b857609cfc8e011003a9026d",
+                    "imageCount": 3
+                  },
+                  "status": "rejected-technical-visual-screening",
+                  "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                  "finding": "Unskinned SourceIO Icosphere helper was retained and rendered as a giant visible artifact."
+                },
+                {
+                  "run": "run-g",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/receipt.json",
+                  "receiptSha256": "1f318b7fcfa577e543cb5a8e00c9d5c02c2040bc3cf40330fb9443ef5b02614d",
+                  "output": {
+                    "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/candidate-under-8000.glb",
+                    "bytes": 2831900,
+                    "sha256": "08eb8afd27bf919c7fec938ce941c6b54f442de42ca2c900963e81680b19e140"
+                  },
+                  "trianglesBefore": 89833,
+                  "trianglesAfter": 7762,
+                  "visualReview": {
+                    "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/run.json",
+                    "runSha256": "3583207cadb555f7e46ad88ce61b031174c5115612e6a9abb6a33d50e0b6c7f6",
+                    "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/proof.json",
+                    "proofSha256": "dfc0da9a4b48a188e205e81957e0c233029884dc1b8fab9e37b5c33c84a82471",
+                    "imageCount": 3
+                  },
+                  "status": "rejected-technical-visual-screening",
+                  "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                  "finding": "Body and clothing collapse caused visible holes and spikes."
+                },
+                {
+                  "run": "run-i",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/receipt.json",
+                  "receiptSha256": "ab3b56924593de647d77c538eacd25a8b1e66170874ede25d3b1a02fea24228a",
+                  "output": {
+                    "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/candidate-under-8000.glb",
+                    "bytes": 2840940,
+                    "sha256": "7336765f2ed6eb4935a482d47e03bee547a94a203a393dacc0773165643d724b"
+                  },
+                  "trianglesBefore": 89833,
+                  "trianglesAfter": 7997,
+                  "visualReview": {
+                    "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/run.json",
+                    "runSha256": "dc154e6d37a304133009d45b9d07cbf98a8c8641d3f0ff426fa0e775403d58cb",
+                    "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/proof.json",
+                    "proofSha256": "ef9f3ffd12a5e8e665fbde8382c48ed08952ef0b1c4127803d28743280dc04b2",
+                    "imageCount": 3
+                  },
+                  "status": "rejected-technical-visual-screening",
+                  "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                  "finding": "Ankle, pants and hair collapse caused visible holes and spikes after budget reallocation."
+                }
+              ],
+              "acceptedCount": 0,
+              "rejectedCount": 3,
+              "status": "all-under-8000-candidates-rejected-technical-visual-screening",
+              "stageBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.files.json",
+                "archiveSha256": "57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d",
+                "archiveBytes": 15803413,
+                "fileCount": 30,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1/latest-receipt.json",
+                "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
+              }
+            }
+          },
+          "topologyDecimationAttempts": {
+            "attempts": [
+              {
+                "run": "run-f",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/receipt.json",
+                "receiptSha256": "4908513229e672d8245994c2ff2f02c293087f50ca07d5611ef5ba00169d411f",
+                "output": {
+                  "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/candidate-under-8000.glb",
+                  "bytes": 2835788,
+                  "sha256": "a725987a1d9818dcad4933113fa255a3b4c0aa793f02d83e7253b1221b87b640"
+                },
+                "trianglesBefore": 89913,
+                "trianglesAfter": 7792,
+                "visualReview": {
+                  "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/run.json",
+                  "runSha256": "42f89afc676e02ef700846a03ee43e31b893dc22670fff5540fa22de0d0daae8",
+                  "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-f/visual-review-v1/proof.json",
+                  "proofSha256": "f7480b15fa99f26b347641489edabb51ccad1036b857609cfc8e011003a9026d",
+                  "imageCount": 3
+                },
+                "status": "rejected-technical-visual-screening",
+                "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                "finding": "Unskinned SourceIO Icosphere helper was retained and rendered as a giant visible artifact."
+              },
+              {
+                "run": "run-g",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/receipt.json",
+                "receiptSha256": "1f318b7fcfa577e543cb5a8e00c9d5c02c2040bc3cf40330fb9443ef5b02614d",
+                "output": {
+                  "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/candidate-under-8000.glb",
+                  "bytes": 2831900,
+                  "sha256": "08eb8afd27bf919c7fec938ce941c6b54f442de42ca2c900963e81680b19e140"
+                },
+                "trianglesBefore": 89833,
+                "trianglesAfter": 7762,
+                "visualReview": {
+                  "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/run.json",
+                  "runSha256": "3583207cadb555f7e46ad88ce61b031174c5115612e6a9abb6a33d50e0b6c7f6",
+                  "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-g/visual-review-v1/proof.json",
+                  "proofSha256": "dfc0da9a4b48a188e205e81957e0c233029884dc1b8fab9e37b5c33c84a82471",
+                  "imageCount": 3
+                },
+                "status": "rejected-technical-visual-screening",
+                "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                "finding": "Body and clothing collapse caused visible holes and spikes."
+              },
+              {
+                "run": "run-i",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/receipt.json",
+                "receiptSha256": "ab3b56924593de647d77c538eacd25a8b1e66170874ede25d3b1a02fea24228a",
+                "output": {
+                  "absolutePath": "../GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/candidate-under-8000.glb",
+                  "bytes": 2840940,
+                  "sha256": "7336765f2ed6eb4935a482d47e03bee547a94a203a393dacc0773165643d724b"
+                },
+                "trianglesBefore": 89833,
+                "trianglesAfter": 7997,
+                "visualReview": {
+                  "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/run.json",
+                  "runSha256": "dc154e6d37a304133009d45b9d07cbf98a8c8641d3f0ff426fa0e775403d58cb",
+                  "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1/run-i/visual-review-v1/proof.json",
+                  "proofSha256": "ef9f3ffd12a5e8e665fbde8382c48ed08952ef0b1c4127803d28743280dc04b2",
+                  "imageCount": 3
+                },
+                "status": "rejected-technical-visual-screening",
+                "reviewScope": "Automated fixed front/back/isometric render inspection; this is not owner visual acceptance.",
+                "finding": "Ankle, pants and hair collapse caused visible holes and spikes after budget reallocation."
+              }
+            ],
+            "acceptedCount": 0,
+            "rejectedCount": 3,
+            "status": "all-under-8000-candidates-rejected-technical-visual-screening",
+            "stageBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-decimation-v1/57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d.files.json",
+              "archiveSha256": "57f1b4a132fa560951519dfde1b8ac5363b1aa3fd07ac1370b86144275ed132d",
+              "archiveBytes": 15803413,
+              "fileCount": 30,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true,
+              "profile": "vibe-coding",
+              "region": "ap-east-2",
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1/latest-receipt.json",
+              "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
             }
           },
           "resourceRole": "character-body",
@@ -66361,8 +66622,8 @@
       },
       "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
-        "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration.",
-        "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+        "Three under-8,000-triangle collapse-decimation candidates have render proof but all failed technical visual screening; preserve them as rejected intermediates and use a different standardization method before owner review, registration or deployment.",
+        "No accepted GGD GLB, six-state mapping, backend registration, runtime selection, or deployment has been created; raw and rejected conversion intermediates remain preserved separately.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],
       "backup": {
@@ -66418,7 +66679,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "d29d5b6c7d8336c48cfc7d3bece6b014c24d4ac6c423053b951dee3df979bf35"
+        "sha256": "da154cf2a36ffdff7a29512e463057e298c537d74a510629a7e018a082d000dd"
       },
       "modelCandidates": [
         {
@@ -66532,7 +66793,7 @@
       "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
         "SourceIO is available but no MDL conversion has been executed or accepted.",
-        "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
+        "No accepted GGD GLB, six-state mapping, backend registration, runtime selection, or deployment has been created; raw and rejected conversion intermediates remain preserved separately.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],
       "backup": {

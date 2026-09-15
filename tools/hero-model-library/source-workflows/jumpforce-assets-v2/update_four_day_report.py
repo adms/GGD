@@ -27,6 +27,16 @@ def block() -> str:
     raw = next(model["sourceioRawIntermediate"] for model in coach["modelGroups"] if model.get("sourceioRawIntermediate"))
     raw_metrics = raw["metrics"]
     rebuilt = raw.get("materialRebuildIntermediate")
+    topology = (rebuilt or {}).get("topologyDecimationAttempts")
+    topology_text = ""
+    if topology:
+        attempts = topology["attempts"]
+        runs = "、".join(f"{entry['run']} {entry['trianglesAfter']:,} 面" for entry in attempts)
+        findings = "；".join(f"{entry['run']}：{entry['finding']}" for entry in attempts)
+        backup = topology["stageBackup"]
+        topology_text = (f"另有 {topology['rejectedCount']} 個低面數拓撲減面嘗試（{runs}），雖都低於 8,000 面且各自具三視角證據，"
+                         f"但均在技術視覺檢查拒絕：{findings}。它們是 **已轉換但技術視覺拒絕的中間檔**，"
+                         f"不是 owner 視覺核可、不可註冊、不可切換、未部署；完整階段歸檔 `{backup['s3Uri']}` 已完成讀回與逐檔 SHA-256 驗證。")
     return "\n".join([
         START,
         "",
@@ -45,6 +55,8 @@ def block() -> str:
         f"公開 L4D2 Workshop 的小呆 Coach 移植已用 SourceIO／Blender 輸出一個 raw GLB 中間產物：**{raw_metrics['triangleCount']:,} 面、{raw_metrics['boneCounts'][0]} bones、{raw_metrics['meshObjectCount']} mesh、{raw_metrics['materialCount']} materials**，本機輸出 SHA-256 `{raw['rawGlb']['sha256']}`。其中 {raw_metrics['unsupportedMaterialCount']} 個 VMT patch 材質缺共同基底，且模型超過 10,000 面門檻；狀態固定為 **已轉 raw GLB、待材質重建／減面／視覺驗收，未註冊、不可切換、未部署**。該中間產物已傳至 `{raw['conversionStageBackup']['s3Uri']}`，完整讀回與逐檔 SHA-256 驗證通過；它是公開社群移植候選，與原始 `chr0430` 來源分開保留。",
         "",
         (f"接著的材質重建 v3 將 22 個實際 mesh 材質重綁為同名原始 VTF、全部嵌入且壓至 **256px**；GLB SHA-256 `{rebuilt['output']['sha256']}`、Babylon 三視角證據 3 張無輸出錯誤，並已歸檔到 `{rebuilt['stageBackup']['s3Uri']}`（完整讀回、逐檔 SHA-256 驗證）。它仍保留 **89,833 面**，因此只是 **材質重建完成、待保形減面／視覺驗收，未註冊、不可切換、未部署**。" if rebuilt else "").strip(),
+        "",
+        topology_text,
         "",
         END,
         "",
