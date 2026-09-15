@@ -16,8 +16,17 @@
  *    ⭐ 事後證明：新舊兩顆的**畫面內容**（每個畫法展開後的三角形頂點位元組、骨架、動作、貼圖、文件外觀欄位）
  *    必須全等，只允許 accessor 界與 primitive 分塊不同 ⇒ ⛔ 不等就擋下（那不是修 metadata，是換了東西）。
  *
- *   node --import tsx tools/model-fix/register-normalized-version.mts --reason gltf-valid [--write] [heroId…]
- *   （不帶 --write 只試算，⛔ 一個位元組都不寫；不帶 heroId 時 gltf-valid 掃全部英雄，texture-256 用它原本的名單）
+ *  · `blend-order`（GH#1173 修正輪）—— 作用中身體的半透明（BLEND）塊數比同一條血緣的來源少 ⇒ 註冊時被合併過。
+ *    Babylon 7 的 glTF loader 每塊一個 mesh、半透明逐塊按包圍球中心排序；接成一塊就變成固定的索引順序 ⇒ 繪製順序可能變。
+ *    2026-09-15 量到的：莉娜 `imported.linainvers`（頭 99 頂點＋身體 751 頂點，同一種 doubleSided BLEND）被 gltf-valid 那一輪合成一塊。
+ *    ⇒ 從來源**不合併任何 primitive** 重新註冊（`ModelVersions.prepare` 的 `preservePrimitives`）並切成作用中；合併版留在下拉。
+ *
+ * ⭐ 三種理由都**不合併半透明**：正規化後半透明塊數比來源少 ⇒ 自動改成 `preservePrimitives` 重來一次（保守：整顆不合併，
+ *    ⛔ 不做「只合併不透明」—— 那要改 `normalizeUploadedModel`，屬另票）。
+ *
+ *   node --import tsx tools/model-fix/register-normalized-version.mts --reason gltf-valid|texture-256|blend-order [--write] [heroId…]
+ *   （不帶 --write 只試算，⛔ 一個位元組都不寫；不帶 heroId 時 gltf-valid／blend-order 掃全部英雄，texture-256 用它原本的名單）
+ *   ⚠️ blend-order 掃全部英雄時也會列出**不是這一輪造成的**（例：b2-klaus）—— 寫入請帶明確的 heroId。
  */
 import { randomUUID } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
@@ -26,19 +35,22 @@ import { ModelVersions } from "../../apps/content-api/src/modelVersions";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs";
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
 import { inspectModelUpload, validateModelUploadBytes } from "../../packages/shared/src/content/modelUpload/inspect";
-import { canon, primitiveCounts, renderSignature } from "./renderSignature.mts";
+import { blendPrimitives, canon, primitiveCounts, renderSignature } from "./renderSignature.mts";
 import { zModelVersionCommand, type ChampionModelVersion } from "../../packages/shared/src/content/schema/championModelVersions";
 
 type Doc = Record<string, unknown> & { glbPath: string; hiddenPrimitives?: number[] };
+type Body = { doc: Doc; bytes: Uint8Array };
 interface Reason {
   suffix: string;
   /** 不帶 heroId 掃全部時，不印「不需要轉」的那一大串。 */
   quietSkips?: boolean;
+  /** 一開始就不合併任何 primitive（`ModelVersions.prepare` 的 `preservePrimitives`）。 */
+  preservePrimitives?: boolean;
   defaultHeroes: () => string[];
-  /** 作用中身體要不要轉；`skip` ⇒ 跳過（附原因字串給輸出）。 */
-  needs: (bytes: Uint8Array) => Promise<{ skip: string } | { why: string }>;
+  /** 作用中身體要不要轉；`skip` ⇒ 跳過（附原因字串給輸出）。`origin`＝這一次會拿來註冊的來源。 */
+  needs: (bytes: Uint8Array, origin: Body) => Promise<{ skip: string } | { why: string }>;
   /** 註冊出來的新版本能不能用；回字串 ⇒ 擋下。 */
-  check: (before: { doc: Doc; bytes: Uint8Array }, after: { doc: Doc; bytes: Uint8Array }) => Promise<string | null>;
+  check: (before: Body, after: Body, origin: Body) => Promise<string | null>;
 }
 
 // ── texture-256 ────────────────────────────────────────────────────────────
@@ -87,11 +99,36 @@ const REASONS: Record<string, Reason> = {
       const r = await validateModelUploadBytes(after.bytes);
       if (r.issues.numErrors || r.issues.truncated) return `新版本仍有 ${r.issues.numErrors} 個 glTF 錯`;
       if (appearance(before.doc) !== appearance(after.doc)) return `模型文件外觀欄位變了：${appearance(before.doc)} → ${appearance(after.doc)}`;
+      // ⚠️ 分組簽章看不到「兩塊 BLEND 接成一塊」（繪製順序這一軸是單邊的尺）⇒ 半透明塊數變少就擋
+      if (blendPrimitives(after.bytes) < blendPrimitives(before.bytes)) return `半透明塊數 ${blendPrimitives(before.bytes)} → ${blendPrimitives(after.bytes)}（合併會改繪製順序）`;
       const same = primitiveCounts(before.bytes) === primitiveCounts(after.bytes);
       if (!same && (before.doc.hiddenPrimitives?.length ?? 0) > 0) return "宣告了 hiddenPrimitives 而 primitive 分塊變了（索引會錯位）";
       const a = renderSignature(before.bytes, same), b = renderSignature(after.bytes, same);
       const diff = [...new Set([...Object.keys(a), ...Object.keys(b)])].filter((k) => a[k] !== b[k]);
       return diff.length ? `畫面內容不同（不是只修 metadata）：${diff.map((k) => k.slice(0, 60)).join("；")}` : null;
+    },
+  },
+  "blend-order": {
+    suffix: "（半透明不合併）",
+    quietSkips: true,
+    preservePrimitives: true,
+    defaultHeroes: allHeroes,
+    needs: async (bytes, origin) => {
+      const now = blendPrimitives(bytes), was = blendPrimitives(origin.bytes);
+      return now < was ? { why: `作用中半透明 ${now} 塊、來源 ${was} 塊（註冊時被合併過）` } : { skip: "作用中半透明塊數不少於來源" };
+    },
+    check: async (before, after, origin) => {
+      const r = await validateModelUploadBytes(after.bytes);
+      if (r.issues.numErrors || r.issues.truncated) return `新版本仍有 ${r.issues.numErrors} 個 glTF 錯`;
+      if (appearance(before.doc) !== appearance(after.doc)) return `模型文件外觀欄位變了：${appearance(before.doc)} → ${appearance(after.doc)}`;
+      // ① 與來源**逐塊**全等（塊數、順序、每塊的三角形頂點位元組）⇒ 半透明各自排序，與原上線模型同一個分塊
+      if (primitiveCounts(after.bytes) !== primitiveCounts(origin.bytes)) return `塊數與來源不同：${primitiveCounts(origin.bytes)} → ${primitiveCounts(after.bytes)}`;
+      const diffOf = (x: Record<string, string>, y: Record<string, string>) => [...new Set([...Object.keys(x), ...Object.keys(y)])].filter((k) => x[k] !== y[k]);
+      const perBlock = diffOf(renderSignature(origin.bytes, true), renderSignature(after.bytes, true));
+      if (perBlock.length) return `與來源逐塊的畫面內容不同：${perBlock.map((k) => k.slice(0, 60)).join("；")}`;
+      // ② 與被取代的作用中版本**分組**全等 ⇒ 同一批三角形／貼圖／骨架／動作，只差分塊
+      const grouped = diffOf(renderSignature(before.bytes, false), renderSignature(after.bytes, false));
+      return grouped.length ? `與作用中版本的畫面內容不同：${grouped.map((k) => k.slice(0, 60)).join("；")}` : null;
     },
   },
 };
@@ -116,7 +153,14 @@ for (const heroId of heroes.length ? heroes : reason.defaultHeroes()) {
   const activeDoc = JSON.parse(readFileSync(activeDocPath, "utf8")) as Doc;
   if (!existsSync(resolve(root, activeDoc.glbPath))) { results.push({ heroId, skipped: `GLB 不存在 ${activeDoc.glbPath}` }); continue; }
   const activeBytes = new Uint8Array(readFileSync(resolve(root, activeDoc.glbPath)));
-  const need = await reason.needs(activeBytes);
+  const originKey = active?.sourceModelKey;
+  const originDoc = originKey && existsSync(resolve(root, "models", `${originKey}.json`))
+    ? JSON.parse(readFileSync(resolve(root, "models", `${originKey}.json`), "utf8")) as Doc : null;
+  const sourceModelKey = originDoc && originDoc.heroBody !== false && !/\/versions\//.test(originDoc.glbPath) ? originKey! : champion.modelKey;
+  if (sourceModelKey !== champion.modelKey && !existsSync(resolve(root, originDoc!.glbPath))) { results.push({ heroId, skipped: `來源 GLB 不存在 ${originDoc!.glbPath}` }); continue; }
+  const origin: Body = sourceModelKey === champion.modelKey ? { doc: activeDoc, bytes: activeBytes }
+    : { doc: originDoc!, bytes: new Uint8Array(readFileSync(resolve(root, originDoc!.glbPath))) };
+  const need = await reason.needs(activeBytes, origin);
   if ("skip" in need) { if (heroes.length || !reason.quietSkips) results.push({ heroId, skipped: need.skip }); continue; }
 
   // ⭐ 出處照抄作用中那一列；「previous」（系統自動保存的舊版）不能拿來註冊 ⇒ 改標同角色原檔
@@ -126,25 +170,26 @@ for (const heroId of heroes.length ? heroes : reason.defaultHeroes()) {
         reference: `models/${active?.sourceModelKey ?? champion.modelKey}.json`,
         tier: /^(imported\.|w3x\.)/.test(active?.sourceModelKey ?? champion.modelKey) ? "w3x" as const : "original" as const };
   const label = `${active?.label ?? "原上線模型"}${reason.suffix}`.slice(0, 160);
-  const originKey = active?.sourceModelKey;
-  const originDoc = originKey && existsSync(resolve(root, "models", `${originKey}.json`))
-    ? JSON.parse(readFileSync(resolve(root, "models", `${originKey}.json`), "utf8")) : null;
-  const sourceModelKey = originDoc && originDoc.heroBody !== false && !/\/versions\//.test(originDoc.glbPath) ? originKey! : champion.modelKey;
   // ⭐ 自動模式的英雄：新版本標成可自動選用 ⇒ 同一順位裡新的排在前面，自動模式自己會選到它（⛔ 不改成手動）
   const automatic = (champion.modelSelectionMode ?? "automatic") === "automatic";
   const command = zModelVersionCommand.parse({
     action: "register", expectedHash: before.expectedHash, sourceModelKey, label, source,
     ...(automatic ? { automaticEligible: true } : active?.automaticEligible !== undefined ? { automaticEligible: active.automaticEligible } : {}),
   });
-  let prepared;
+  let prepared, preserved = reason.preservePrimitives === true;
   try {
-    prepared = await service.prepare(heroId, command);
+    prepared = await service.prepare(heroId, command, { preservePrimitives: preserved });
+    // ⭐ 正規化把半透明的塊接起來了 ⇒ 改成不合併重來一次（繪製順序；見 renderSignature.mts 的 blendPrimitives）
+    if (!preserved && blendPrimitives(prepared.artifacts.at(-1)!.bytes) < blendPrimitives(origin.bytes)) {
+      preserved = true;
+      prepared = await service.prepare(heroId, command, { preservePrimitives: true });
+    }
   } catch (error) {
     results.push({ heroId, why: need.why, blocked: error instanceof Error ? error.message : String(error) });
     continue;
   }
   const added = prepared.artifacts.at(-1)!;
-  const blocked = await reason.check({ doc: activeDoc, bytes: activeBytes }, { doc: added.doc as unknown as Doc, bytes: added.bytes });
+  const blocked = await reason.check({ doc: activeDoc, bytes: activeBytes }, { doc: added.doc as unknown as Doc, bytes: added.bytes }, origin);
   if (blocked) { results.push({ heroId, why: need.why, blocked }); continue; }
   // ⭐ 新版本一定要是作用中：自動模式交給排序；沒選到（或手動模式）就明確切過去
   let next = prepared.champion;
@@ -154,6 +199,7 @@ for (const heroId of heroes.length ? heroes : reason.defaultHeroes()) {
   results.push({
     heroId, why: need.why, mode: `${champion.modelSelectionMode ?? "automatic"} → ${next.modelSelectionMode}`,
     from: champion.modelKey, to: added.version.modelKey, glb: added.doc.glbPath, sourceModelKey, label, addedVersions: prepared.artifacts.length,
+    ...(preserved ? { preservedPrimitives: `不合併（來源半透明 ${blendPrimitives(origin.bytes)} 塊）` } : {}),
   });
   if (!WRITE) continue;
   service.assertCurrent(heroId, before.expectedHash);

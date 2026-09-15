@@ -74,6 +74,26 @@ export function renderSignature(bytes: Uint8Array, perPrimitive: boolean): Recor
   return out;
 }
 
+/**
+ * 半透明（`alphaMode: "BLEND"`）的塊數 —— ⚠️ 補 `renderSignature` 分組模式的**盲區**（GH#1173 修正輪）：
+ * 分組把同畫法的塊接起來比，⛔ 看不到「兩塊 BLEND 被接成一塊」—— 而 Babylon 7 的 glTF loader 每塊一個 mesh、
+ * 半透明逐塊按包圍球中心排序（`renderingGroup.js` 的 `_distanceToCamera`），接成一塊就變成固定的索引順序。
+ * ⇒ 在繪製順序這一軸上，分組簽章是一把單邊的尺；BLEND 塊數變少就要擋。
+ */
+export const blendPrimitives = (bytes: Uint8Array): number => {
+  const { json } = parseUploadGlb(bytes) as { json: GlbDocument & Record<string, any> };
+  const materials: Record<string, unknown>[] = json.materials ?? [];
+  let n = 0;
+  for (const node of json.nodes ?? []) {
+    if (node.mesh === undefined) continue;
+    for (const prim of json.meshes![node.mesh]!.primitives) {
+      const m = (prim as { material?: number }).material;
+      if (typeof m === "number" && materials[m]?.alphaMode === "BLEND") n++;
+    }
+  }
+  return n;
+};
+
 export const primitiveCounts = (bytes: Uint8Array) => {
   const { json } = parseUploadGlb(bytes);
   return canon((json.nodes ?? []).map((n) => n.mesh === undefined ? 0 : json.meshes![n.mesh]!.primitives.length));

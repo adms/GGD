@@ -6,7 +6,7 @@
   "role": "marksman",
   "attackType": "ranged",
   "origin": "法師",
-  "modelKey": "version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9",
+  "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
   "missileSpeed": 18.3,
   "baseStats": {
     "maxHealth": 150,
@@ -552,6 +552,23 @@
       "modelSha256": "001cb53ed07c71a6ee5b9aa3361b912a7555e5a0a5102a9e40e7edb04c55a30e",
       "binarySha256": "23bb76d86885629ddaeaa0558e70a7a3d3d649358387a03c8d6949feba706146",
       "registeredAt": "2026-09-15T03:56:35.695Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
+      "label": "原上線模型（glTF 驗證修正）（半透明不合併）",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "15ac1ccbd83b3898ab53df0c58fae19cef93f162538146e152abc5794528df45",
+      "binarySha256": "8791a3e65c3ef4063cb4b93dbe519008d44f4bcf2c4f61e575814d70460413df",
+      "registeredAt": "2026-09-15T06:32:47.834Z",
       "source": {
         "kind": "exact",
         "character": "黑魔導士 - 莉娜因巴斯",

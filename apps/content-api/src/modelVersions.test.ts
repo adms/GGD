@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { FastifyInstance } from "fastify";
 import { buildServer } from "./server";
+import { ModelVersions } from "./modelVersions";
 import { writeDocAtomic, rebuildAllIndexes } from "@ggd/shared/content/node";
 import { modelUploadFixture } from "@ggd/shared/content/modelUpload/fixtures";
 import { encodeUploadGlb, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
@@ -233,6 +234,11 @@ describe("retained hero model versions", () => {
     const kept = await add("twin-hidden", { hiddenPrimitives: [1] });
     expect(primitivesOf(kept)).toBe(2);
     expect(read("models", kept).hiddenPrimitives).toEqual([1]);
+    // ③ 修正輪：作者工具的 preservePrimitives（半透明不合併，`register-normalized-version.mts --reason blend-order`）⇒ 沒宣告也不合併
+    writeDocAtomic(root, "models", model("twin-keep", "assets/models/twin.glb"));
+    const command: ModelVersionCommand = { action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: "twin-keep", label: "twin-keep", source };
+    const prepared = await new ModelVersions(root).prepare(heroId, command, { preservePrimitives: true });
+    expect(parseUploadGlb(prepared.artifacts.at(-1)!.bytes).json.meshes![0]!.primitives.length).toBe(2);
   });
 
   it("rejects a model document linked outside the content root", async () => {

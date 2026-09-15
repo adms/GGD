@@ -3,10 +3,10 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_25b6cd39e9b1",
+    "contentVersion": "cv_fb9808be348a",
     "collections": {
       "champions": {
-        "hash": "dc2807de6a97",
+        "hash": "77acba45386f",
         "count": 153
       },
       "abilities": {
@@ -46,8 +46,8 @@
         "count": 104
       },
       "models": {
-        "hash": "02be5650f901",
-        "count": 1020
+        "hash": "cdb75fb257e2",
+        "count": 1021
       },
       "vfx": {
         "hash": "7df129081586",
@@ -8397,11 +8397,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c94e0716fd27",
+  "assetManifestDigest": "8c25294ba1f7",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2878,
-    "totalBytes": 1110214466
+    "entries": 2879,
+    "totalBytes": 1110444914
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8419,11 +8419,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "e49ab061e375",
+    "fingerprint": "ba4543b53ea8",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "3c4434137fd7"
+        "digest": "e68841fb8196"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8489,5 +8489,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "8652df4feb52"
+  "profileDigest": "11454faeafad"
 }
