@@ -1,0 +1,691 @@
+{
+  "schema": "ggd-community-materials-archive@1",
+  "sources": [
+    "GGD社群英雄上傳內容_37名",
+    "GGD社群英雄完整上傳內容與工作流交接_37名.md",
+    "GGD社群英雄功能驗收設計稿_37名角色.md",
+    "第二批37全自動創建英雄名單.md",
+    "社群創造後台審查英雄自動鑄造計畫最終執行版.md",
+    "outputs/community-hero-asset-integration",
+    "outputs/community-lol-models-20260907",
+    "outputs/community37-static-review-20260907-v1",
+    "outputs/community37-inference-smoke-20260907-v1",
+    "outputs/community37-inference-full-20260907-v1",
+    "outputs/community37-corrected-dataset-20260907-v1",
+    "GGD-community-hero-forge-s3/tools/community-hero-forge",
+    "GGD-community-hero-forge-s3/materials/community-hero-forge",
+    "GGD-community-hero-forge-s3/docs/_reports/community-hero-forge",
+    "GGD-community-hero-forge-s3/docs/_reports/community-hero-icons-20260909",
+    "GGD-community-hero-forge-s3/tools/icon-gen/local",
+    "GGD-community-hero-forge-s3/packages/shared/src/content/heroForge/communityRefinements",
+    "GGD-community-hero-forge/docs/_reports/community-hero-forge/reboot-handoff.md",
+    "GGD-community-hero-forge/docs/_reports/community-hero-forge/reboot-state-20260907",
+    "GGD-community-hero-forge/docs/_reports/community-hero-forge/defense-direction/README.md",
+    "GGD-hero-validation-batch2/tools/editor-acceptance/batch2-37",
+    "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37",
+    "GGD-hero-auto-forge/tools/forge-training"
+  ],
+  "files": [
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-aladdin.zip",
+      "bytes": 3051703,
+      "sha256": "1ebdc62bc0a16057dfb6a825e47b8caaf4c5129dfce4f09a557dce8765583e26",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-albus.zip",
+      "bytes": 3004431,
+      "sha256": "d276df6f2a31c60f0c60d1dbd2292f93c63a877d1529415561bcd59ffe8a5c25",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-bojji.zip",
+      "bytes": 2992937,
+      "sha256": "3d55a8844560d0fbf0de8c848a7ad021d12a02eb05a275a9481fc163bedf5e6b",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-boxxo.zip",
+      "bytes": 2977236,
+      "sha256": "706d5d4233aba44f58dffa406f6088c62a6990d40427263515eae9744cf2253e",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-elma.zip",
+      "bytes": 2954914,
+      "sha256": "8e47c9a00300b6e4cc8814c7a102b2492bbac5abfeb4fa26fffe585f638f7108",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-fushi.zip",
+      "bytes": 2964378,
+      "sha256": "bedf78410a193ba6d8a3b0afd419f8a3766f8985f3ec5c4fbcf94f8d778db87f",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-goblin.zip",
+      "bytes": 2949380,
+      "sha256": "6106c1a4a8ba5cbffff5b69c74210b6e131e37a8c195e86e44da1ae9feee84ae",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-guts.zip",
+      "bytes": 3060593,
+      "sha256": "7ec72cf62ddb037ea3c9a03062370c794df70efd7412f6a4244ecf338030d917",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-haga.zip",
+      "bytes": 2915823,
+      "sha256": "52999f29ee4c824c693779f01d23b381b7c1078c21261bbab5e13492280999a9",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-kaede.zip",
+      "bytes": 3033481,
+      "sha256": "0b8d67ba338af276cf0e9bbbb7a441cd85b4d6a525d8a6d55f813924d3a22662",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-kaiji.zip",
+      "bytes": 2922966,
+      "sha256": "124350acf298577dda4e292932119dfd7eac6649bb8a4e73eebde8689c2fb804",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-keyaru.zip",
+      "bytes": 2927818,
+      "sha256": "12196173663d3b99421306226033993c39a93963040e9a9b81e97e0fb6661f94",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-kisaragi.zip",
+      "bytes": 2997680,
+      "sha256": "253a32bb194572aaac6798cd2eeda60f69ea6622abf95fb5306619d4e67e3142",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-klaus.zip",
+      "bytes": 3059534,
+      "sha256": "b39f4d69fe3664233a50ac2a23aab441f089eeb699a2f1f8c414236aebce85e8",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-kumoko.zip",
+      "bytes": 2983847,
+      "sha256": "f258b103d4652312c403fac80987f4c53c89e11e7df7c38a1999e4a05df3dacf",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-luckyman.zip",
+      "bytes": 2985980,
+      "sha256": "7bb240d03d22b1500db1b6bf66af6f14d23891dcdfa1bc4a557c0305a7d5ce66",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-makoto.zip",
+      "bytes": 3009384,
+      "sha256": "c5a107b35cec260d6dbfc08a3d98ef95e0628c499118d096b065432695021768",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-maomao.zip",
+      "bytes": 2932689,
+      "sha256": "75be322a216dfd69096496a9b23c1f74cd35ea648a4aaf730817cfa13c73e701",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-maple.zip",
+      "bytes": 2944978,
+      "sha256": "bf010c88ec4aab28bdcda48ad4fc6ab22fd2db67fb378fe9e4a00b165fc50bb0",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-matthias.zip",
+      "bytes": 2937141,
+      "sha256": "919024806cc7e8039a04825c7a177ad26507a77b26d78f5a7251528cf62346c3",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-misery.zip",
+      "bytes": 2959325,
+      "sha256": "02a15b9e14376a671f872a07d08a6702fec2c2b550f283354e14eef95a596bc4",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-naofumi.zip",
+      "bytes": 2913756,
+      "sha256": "b758eb2b48b98b457e83e4a3d1ad337ad5af64ce9bbe921ce376334bf102a357",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-ned.zip",
+      "bytes": 3096248,
+      "sha256": "66dc177947ec96c4e54840bbec31f095ec4f1a5d9989293bbb776c37b746dcad",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-noor.zip",
+      "bytes": 2950576,
+      "sha256": "71d244ce967cd0bc10f62079459ee81abf5ec17b713e455991ea2e70b7bab159",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-nube.zip",
+      "bytes": 2930051,
+      "sha256": "21aafa260709e13da0ff284655b8b3c65d06ea894e3b54f4165089571860c357",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-orphen.zip",
+      "bytes": 3079277,
+      "sha256": "738e580c0956c87569c612d9f2691959c91633d903804c3cd82d4b1f9e91be2a",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-popp.zip",
+      "bytes": 3107651,
+      "sha256": "101643d9e95e45b215180d6dc5d59a18457125403d0d1dd2e21b5ba6dbf84e5e",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-rem.zip",
+      "bytes": 3082651,
+      "sha256": "4a80730699c87f831bc771548b72f2389c467b463cdf680d774c808d3e7f0bac",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-rin.zip",
+      "bytes": 3046673,
+      "sha256": "0f7c66fd0fda55b1be44d71d683d50cd9ca4c7b4da85b1820807179c9b215eea",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-shadow.zip",
+      "bytes": 3051144,
+      "sha256": "86427800889cdd9d156ac626379ebfcf2f1f7a95ecebd4d0dcf436dea4558713",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-shinchan.zip",
+      "bytes": 2973452,
+      "sha256": "f4f4128939c6030737eab309b37b184c5ac408c264376e028abec721b2d0a5ac",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-sinbad.zip",
+      "bytes": 3067455,
+      "sha256": "d40110579e5b9708dbbabbabb65607d9c4a58dc41d0d60d9e9a9d1e04a93f34f",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-takopi.zip",
+      "bytes": 2974370,
+      "sha256": "a72fffe1431d3c056a4f0cbe432db40b27b5132dfb224d419d14c7715fe9ec97",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-touka.zip",
+      "bytes": 3024277,
+      "sha256": "e2e0499715a2cfe3092ac6240225f4737f0bb20406f04d5ba36ce96011ab87d9",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-uncle.zip",
+      "bytes": 3014623,
+      "sha256": "22e68be87c2aafcdc5a807c6b9b19ccf66158875dcf7dd1585696c522bc8371e",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-yogiri.zip",
+      "bytes": 2966319,
+      "sha256": "42dd4d5d78743d60ca17ff853eb5220ef241557ff5f574e9054696a11cd43aaa",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/packages/b2-zenitsu.zip",
+      "bytes": 3005342,
+      "sha256": "75516f35e35baae4c89455193c71460d2c7ae4d782658aa41f385bdc544f5d39",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/public/assets/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "bytes": 78876,
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/tools/editor-acceptance/batch2-37/assets/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "bytes": 78876,
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/tools/editor-acceptance/batch2-37/assets/kisaragi-tram-preview.png",
+      "bytes": 189590,
+      "sha256": "a025564bf1eefc7736159bd4bdc065c5c2793742a673bbc5b87e34801a8472b2",
+      "mode": 420
+    },
+    {
+      "path": "GGD-hero-validation-batch2/tools/editor-acceptance/batch2-37/assets/kisaragi-tram.source.glb",
+      "bytes": 78876,
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/PRIOR_OVERLAP_AUDIT.json",
+      "bytes": 1984,
+      "sha256": "0c9279eb1fab2105323cc3c6230457982d50ad2228c8824a03217161d70e1851",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/VALIDATION.json",
+      "bytes": 982,
+      "sha256": "0340a95a27e6a56bf74a128c9091a1de0f9495ff7d2ff8a562a2f95939f3469f",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/TRAINING_DISABLED.json",
+      "bytes": 174,
+      "sha256": "99ed003712f0e375b1fb7285bf5dfa70d15b4db772d56c613ff1bbb4c15db87f",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/cases.private.json",
+      "bytes": 1442504,
+      "sha256": "d49df6aa12e901c423250621b4dac133a735c55ae2cc113ed5e439e633a9a984",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/claim-review.private.json",
+      "bytes": 483605,
+      "sha256": "3983ec10e88b1ca9b2426567c42c3de30421beeaecfed0845f1f162073cd88dd",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/corrected-reference.json",
+      "bytes": 600269,
+      "sha256": "5219311309d818550ea554babf7bb26f079785af3b9d63671a8061574a5b619c",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/correction-ledger.json",
+      "bytes": 64857,
+      "sha256": "2cd0a3bb2c0bf186438b14d70b32a6e597c07586c8e6a595a8777b70b3a9bf54",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/dataset-manifest.json",
+      "bytes": 29775,
+      "sha256": "95cf103e87872408fbda8fc7e6835480663b85456a250d36bff93673aece1121",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/dataset-registration.json",
+      "bytes": 660,
+      "sha256": "4e447b323f8759f77ec91b991081219da30ac827ce366ba606e29e0e01dfd360",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "bytes": 53435,
+      "sha256": "017de2764ab6892405aa456358999155793f69ab2227e5f157c564f8bff62f72",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/requests.json",
+      "bytes": 1021027,
+      "sha256": "de70a3e9ecd54f414315e482ccefb5e6a852c1a0e8071b29bfd03992a67bd753",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/targets.private.json",
+      "bytes": 104306,
+      "sha256": "23c78b4b16678b5d41131853533d375434f8b05d846e00af0c2ae3ac8baf9a79",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/template-quarantine.json",
+      "bytes": 142211,
+      "sha256": "d3e86690196e69c0fc0a2f5ac2955e848656b2bf566a7c2983cae8e3e0ee7696",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/train.chatml.jsonl",
+      "bytes": 847121,
+      "sha256": "43d6c4baa40d45c65821275b92e78527a7b37fc841bc9a630ab5dac24905f1bd",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-corrected-dataset-20260907-v1/data/train.jsonl",
+      "bytes": 853781,
+      "sha256": "1c53b70cdcd8412b081b09abc3de004694b41d71806fe45c09fd078f70574112",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/ANALYSIS_VALIDATION.json",
+      "bytes": 214,
+      "sha256": "b54639f21c6b4906350118cf7d22143aa606992d193cb2c9740cf221939e4513",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/PREPARATION.json",
+      "bytes": 6905,
+      "sha256": "91a886dc19aa190753c23a4551c7b7abbca8aeb81703d9624452b8382fca4e15",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/REPORT_VALIDATION.json",
+      "bytes": 1306,
+      "sha256": "1934ea6a66b2717eafd63a4e2cac226b0a1a69c13922cfe8bf55858e034db667",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/analysis.json",
+      "bytes": 19932,
+      "sha256": "bc02fe226b670cd9c6bfa8c7ed9dee5dd42ae6c163e7b99ba4e4de38bcaac6b4",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/base-raw.json",
+      "bytes": 238707,
+      "sha256": "67f5c3921c971e163d3a0c4ef5817425d78969ee95b3db47397cfbea098e4138",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/base-raw.json.partial",
+      "bytes": 238674,
+      "sha256": "def5a75cc562a5aa4b4b26635815ed4e70f2b59f65226be7b5caccdf08745bfb",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/base.log",
+      "bytes": 56911,
+      "sha256": "673da62378ecaf690a7ccefe178f0cda41af2805e7548bb06d3ffaf373130503",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/cases.private.json",
+      "bytes": 1442504,
+      "sha256": "d49df6aa12e901c423250621b4dac133a735c55ae2cc113ed5e439e633a9a984",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/comparison.json",
+      "bytes": 1621779,
+      "sha256": "356f3a9d20fd5aa87b11ba8e3c534ceccbdf85e092609b779bbbaa93fa8dfa1e",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/error-review.json",
+      "bytes": 128015,
+      "sha256": "a28ee88b07472c34673df14018537ad47ad1d54e1b034afbf04b407d203423ff",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/model-references.json",
+      "bytes": 1177,
+      "sha256": "b5f93f854a781b27ed475ec708dbe24317422e441c9f3205b55e4aa905abc5fa",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/models-after.json",
+      "bytes": 241,
+      "sha256": "059737370717f5af65a0b5832ce6d070e8270f151b45b0f7aa5a52c4d7b79786",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/models-before.json",
+      "bytes": 241,
+      "sha256": "f8e2ec59be2cde1a444da2e763744529b69e3442af169d1686a98d1d71815e08",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/policy.json",
+      "bytes": 450,
+      "sha256": "54256e2c2d0c8f80497c3362e527d814953a69c1d0af8f8acea15cb12bf2dac5",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r3-raw.json",
+      "bytes": 238830,
+      "sha256": "386cb8b247f20181574ad49633d473fcc1f9156cbfa7e6c9d1d8e794f4697205",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r3-raw.json.partial",
+      "bytes": 238797,
+      "sha256": "4ff127497eedf961c909eabcb8ee8d64aa4c5ee0000b1db640922f2dd52b63a6",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r3.log",
+      "bytes": 56919,
+      "sha256": "018d0867e2ba4b4fe49a01d7827ed430a992ff420ca85f411cbba3a8c69afd5b",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r7-raw.json",
+      "bytes": 238838,
+      "sha256": "6647f31aadca8b0ace008df122f70a8b1c1d47af3ee9a1d99772305f1d7e6824",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r7-raw.json.partial",
+      "bytes": 238805,
+      "sha256": "4c68841e02a00b44845e3a3e1df511539b3dcba197618479ff014549ef1695d7",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/r7.log",
+      "bytes": 56899,
+      "sha256": "c9943f77b3f24914c545917fe706791c5fb64e3ae07da93d1b3817ad68ebfea5",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/requests.json",
+      "bytes": 934555,
+      "sha256": "e624de64065c20253a95df46bc4da8b4b381a9ee41f4ae16acea3c5dcf11696d",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/review-notes.json",
+      "bytes": 9276,
+      "sha256": "c7dc91720c740a480281304c77075ec47f5d9cf6dfbfe8be6751f7a1959c2836",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/state.json",
+      "bytes": 568,
+      "sha256": "e2fe71d82f0fdc9ac20e20b43ee9e444f24801c69810cbd8def58daba0207a6e",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/summary.json",
+      "bytes": 807,
+      "sha256": "bc5f5de02d4fdd9a63d931d20a3fdd0eb45a46e9c607e8c2c3ca900f5bc81e8b",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-full-20260907-v1/token-budget.json",
+      "bytes": 56467,
+      "sha256": "dd7743603f0864d31d3acfe82acf8bcb60171259bb2ab7e1c290742b6f87bc89",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/PREPARATION.json",
+      "bytes": 3625,
+      "sha256": "6362be54f4f54f9c715d18e973449f75d755777e63031dc9f7091f876eb690be",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/REPORT_VALIDATION.json",
+      "bytes": 787,
+      "sha256": "480bd3354a5cc11023a6e01446b0a44bd2d409e39811f40edfdf054471f69a3d",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/analysis.json",
+      "bytes": 4617,
+      "sha256": "e7fb3968cc7abb04fabd09e50b055bc354795966aa24d90a32e90201d27f88d2",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/base-raw.json",
+      "bytes": 19298,
+      "sha256": "4650b123ceda3bf548aed10cea5f59eec67d4aa5f6868422af07261daa33889f",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/base-raw.json.partial",
+      "bytes": 19265,
+      "sha256": "336b620dd6cb27f9cd00861e81a83d523e4e70a888f9457d07e794f693fbabe9",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/base.log",
+      "bytes": 4510,
+      "sha256": "0fa4c9f748d1dd463bf87276d9f2024965dec2d775899403f298d5c055c11396",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/cases.private.json",
+      "bytes": 115390,
+      "sha256": "eb30cccc077c04e2e8e95887fca9247f25fd92aaaa9a803305f46e3ac523facd",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/comparison.json",
+      "bytes": 132102,
+      "sha256": "dff823860dac6183d8956b281fb1b684218bfd514c6b53e4d9ac874168e1ea0e",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/error-review.json",
+      "bytes": 15632,
+      "sha256": "6f45297cea590ca126303c02a8e2586ac18a7ed198510837eb662b86ec5d1d20",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/model-references.json",
+      "bytes": 1177,
+      "sha256": "b5f93f854a781b27ed475ec708dbe24317422e441c9f3205b55e4aa905abc5fa",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/models-after.json",
+      "bytes": 241,
+      "sha256": "52e8b2801da10d6974004a8be9fc469543cb4a007335a629cab71e5d14618289",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/models-before.json",
+      "bytes": 241,
+      "sha256": "9965892c861ee7ac948f9c5dc16af9fab118e1f84b9140bafad7e1c017a57833",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/policy.json",
+      "bytes": 450,
+      "sha256": "79e6d78d17ba1ac8873c8ee57006db695ed569afcd70c30e133217dfd8464798",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r3-raw.json",
+      "bytes": 19393,
+      "sha256": "78a5638fc5ad881c3bf426f45b61893ab9bca344ff49b667eec94df43f9fd1b0",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r3-raw.json.partial",
+      "bytes": 19360,
+      "sha256": "30ae667bab92e0412a17abfebcd379c9ae7f5efdf7b3830ca92412459fcd7a66",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r3.log",
+      "bytes": 4503,
+      "sha256": "153d23b9f4806f15f997294bc795f0f0cc22d05f39d7f34db155e8b444f96696",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r7-raw.json",
+      "bytes": 19386,
+      "sha256": "ef08ce7b6dafb6c395ada3adbf33ea11cef422aebe1653b55f11c677065de541",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r7-raw.json.partial",
+      "bytes": 19353,
+      "sha256": "7f8ba24b178f916daa10c4a99dad3e9a7a799368aa2c2b4db63bb6cddfa4ec14",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/r7.log",
+      "bytes": 4500,
+      "sha256": "eb67d9a5873321464bf37cd6d2f2f941dadb9a617695acbabcb3ddf12a7060a3",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/requests.json",
+      "bytes": 76196,
+      "sha256": "522eab12326996232ea2dff78322bb51e4541cd7c8f3049f3a8fd581831889ee",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/state.json",
+      "bytes": 562,
+      "sha256": "1b682f6ceb6bc4e40a34d1177a59cc8602121a96c86d13c3821bff66436e947d",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/summary.json",
+      "bytes": 782,
+      "sha256": "6b926ec364236fabb043c5c2be834deda398b1fc2627334f3111c737c8dc2141",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-inference-smoke-20260907-v1/token-budget.json",
+      "bytes": 4754,
+      "sha256": "10d8ed2b0b2eb26531c968d24515ca68667e725f275810977eb7b93c482bca17",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-static-review-20260907-v1/SLOT_REFERENCE.jsonl",
+      "bytes": 370302,
+      "sha256": "4b787a44e2b321a72e1767e36881bfcfd22a4942684358cd3bf7a9013293a94e",
+      "mode": 420
+    },
+    {
+      "path": "outputs/community37-static-review-20260907-v1/STATIC_AUDIT.json",
+      "bytes": 31597,
+      "sha256": "4010c2391c5b7bf71fe1ac62fa508918e5fc9bb3008c35437e62d650dd8a5c5e",
+      "mode": 420
+    }
+  ],
+  "parts": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "fb88b0005de54767d11995a2edc8dff688adf2196cc3cebce83e252b01dc5e2e"
+    },
+    {
+      "path": "payload.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "82d796ef01fb5fcc384c0f0e7d55b4d061ce523be9b372ad319fff9653138a1f"
+    },
+    {
+      "path": "payload.tar.gz.part002",
+      "bytes": 10615925,
+      "sha256": "e63df87f2432d9ec524b54a4079435607fb11fc5a65f69ad4f3d475d2e0df932"
+    }
+  ],
+  "excluded": [],
+  "summary": {
+    "files": 106,
+    "uniquePayloads": 102,
+    "bytes": 123638832,
+    "compressedBytes": 77724789,
+    "redactedFiles": 0
+  }
+}
