@@ -28,7 +28,7 @@
     "identityMap": {
       "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
       "bytes": 555865,
-      "sha256": "ab666efbd48529970a210289dfaf9104ada5a7dda661d4cda5494f7dc9b0b3f7"
+      "sha256": "5d044e79e1336d48603ce83e8ca01e97399ee77509be802616ce4a8c6640884a"
     },
     "pakAuthority": {
       "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
@@ -110,7 +110,7 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
-      "sha256": "82b043225be4b01bdc812f8d82b2d8183f276f10b8ba03d46ee0e3870aacfa10"
+      "sha256": "c5c9a0dcc253a1d5d0a5324869f416ff9fb0d897637b95180c363e5aaa16603a"
     }
   ],
   "conversionReferences": [
