@@ -24,6 +24,16 @@ export const zConfigRangeTiersDoc = z
       "@zh 級距總開關\n" +
       "@note 關掉之後 `rangeTier` 不解析（填了也不生效），技能只剩手寫的 `range`。⚠️ 關掉**不會**讓技能失去射程 —— 手寫值一直都在。",
     ),
+    /**
+     * ⭐ GH#1260 B3 —— 沒標級別的施法距離，載入時吸到最近一格（`content/geometrySnap.ts`）。
+     * `.optional()`：線上耐久覆蓋層沒有這一格仍要過 strict；缺席 ⇒ 出貨值（開）。
+     */
+    snapUntiered: z.boolean().optional().describe(
+      "@zh 沒標級別的施法距離吸到最近一格\n" +
+      "@note 技能上**沒填** `rangeTier` 的施法距離，載入時靠到最近的級距值 —— 卡面本來就印級距詞，這一格讓場上跟卡面一致。" +
+      "⭐ owner 2026-09-02「距離、範圍…全部都五級距化標籤化」。" +
+      "⭐ **一鍵 rollback**：關掉 ⇒ 逐位元回到手寫的 `range`（有填級別、無上限施法距離的不受影響）。⚠️ 級距總開關關掉時這一格也不跑。",
+    ),
     /** 級別 → 施法距離（GGD 單位）。五格都必填，缺一格就不是一把完整的尺。 */
     range: z
       .object(
@@ -50,5 +60,6 @@ export const DEFAULT_RANGE_TIERS_DOC = {
   id: RANGE_TIERS_DOC_ID,
   schema: "config.range-tiers@1",
   enabled: DEFAULT_RANGE_TIERS.enabled,
+  snapUntiered: DEFAULT_RANGE_TIERS.snapUntiered,
   range: DEFAULT_RANGE_TIERS.range,
 } as const;

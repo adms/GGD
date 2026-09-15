@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "28697bd03792",
+  "fingerprint": "4a9f9e59c73f",
   "capabilityFingerprint": "fb8d3eb8",
   "required": [
     {
@@ -19501,6 +19501,21 @@
     },
     {
       "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.aoe-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.range-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
       "name": "soundEnabled",
       "owner": "config.vfx-families@1"
     },
@@ -25489,9 +25504,9 @@
     "projectileField": 21,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4092,
+    "configField": 4095,
     "_notRequired": 15,
-    "_total": 5235,
+    "_total": 5238,
     "_ownerOnly": 39
   }
 }

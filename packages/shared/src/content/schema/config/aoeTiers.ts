@@ -51,6 +51,16 @@ export const zConfigAoeTiersDoc = z
       "@zh 級距總開關\n" +
       "@note 關掉之後 `radiusTier` 不解析（填了也不生效），技能只剩手寫的 `radius`。⚠️ 關掉**不會**讓技能失去範圍 —— 手寫值一直都在。",
     ),
+    /**
+     * ⭐ GH#1260 B3 —— 沒標級別的半徑，載入時吸到最近一格（`content/geometrySnap.ts`）。
+     * `.optional()`：線上耐久覆蓋層沒有這一格仍要過 strict；缺席 ⇒ 出貨值（開）。
+     */
+    snapUntiered: z.boolean().optional().describe(
+      "@zh 沒標級別的範圍吸到最近一格\n" +
+      "@note 技能上**沒填** `radiusTier` 的半徑（多半是模板換算出來的 2.75、1.83 這種），載入時靠到最近的級距值 —— 卡面本來就印級距詞，這一格讓場上跟卡面一致。" +
+      "⭐ owner 2026-09-02「距離、範圍…全部都五級距化標籤化」。" +
+      "⭐ **一鍵 rollback**：關掉 ⇒ 那些技能逐位元回到手寫半徑（有填級別的不受影響）。⚠️ 級距總開關關掉時這一格也不跑。",
+    ),
     /** 級別 → 半徑（GGD 單位）。四格都必填，缺一格就不是一把完整的尺。 */
     radius: z
       .object(
@@ -76,5 +86,6 @@ export const DEFAULT_AOE_TIERS_DOC = {
   id: AOE_TIERS_DOC_ID,
   schema: "config.aoe-tiers@1",
   enabled: DEFAULT_AOE_TIERS.enabled,
+  snapUntiered: DEFAULT_AOE_TIERS.snapUntiered,
   radius: DEFAULT_AOE_TIERS.radius,
 } as const;

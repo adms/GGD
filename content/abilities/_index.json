@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "0cf535753e2c",
+  "hash": "d8992277fcdc",
   "entries": [
     {
       "id": "b2-aladdin.e",
@@ -245,8 +245,8 @@
     {
       "id": "b2-goblin.r",
       "path": "abilities/b2-goblin.r.json",
-      "hash": "def0436b5641",
-      "size": 2291
+      "hash": "6488cbe2e0b7",
+      "size": 2296
     },
     {
       "id": "b2-goblin.w",
@@ -461,8 +461,8 @@
     {
       "id": "b2-kisaragi.r",
       "path": "abilities/b2-kisaragi.r.json",
-      "hash": "738070ea38e8",
-      "size": 10259
+      "hash": "7476d628b98e",
+      "size": 10267
     },
     {
       "id": "b2-kisaragi.w",
@@ -1091,8 +1091,8 @@
     {
       "id": "b2-shinchan.ex",
       "path": "abilities/b2-shinchan.ex.json",
-      "hash": "bab57afbea1e",
-      "size": 2126
+      "hash": "00a9d55f2bb3",
+      "size": 2131
     },
     {
       "id": "b2-shinchan.passive",
@@ -1217,14 +1217,14 @@
     {
       "id": "b2-touka.r",
       "path": "abilities/b2-touka.r.json",
-      "hash": "e995039b2859",
-      "size": 2462
+      "hash": "b2584c8e6216",
+      "size": 2467
     },
     {
       "id": "b2-touka.w",
       "path": "abilities/b2-touka.w.json",
-      "hash": "8dca796a23c4",
-      "size": 1943
+      "hash": "ec30cce24db7",
+      "size": 1922
     },
     {
       "id": "b2-uncle.e",
@@ -1535,8 +1535,8 @@
     {
       "id": "community-review-06-20260907.q",
       "path": "abilities/community-review-06-20260907.q.json",
-      "hash": "21dfbe0ee810",
-      "size": 1938
+      "hash": "c69ad53a4b36",
+      "size": 1934
     },
     {
       "id": "community-review-06-20260907.r",
@@ -1553,8 +1553,8 @@
     {
       "id": "community-review-07-20260907.e",
       "path": "abilities/community-review-07-20260907.e.json",
-      "hash": "46a68fe5ab87",
-      "size": 1963
+      "hash": "a9b67b0a44f5",
+      "size": 1959
     },
     {
       "id": "community-review-07-20260907.ex",
@@ -1865,14 +1865,14 @@
     {
       "id": "community-review-15-20260907.r",
       "path": "abilities/community-review-15-20260907.r.json",
-      "hash": "8f34f586c60e",
-      "size": 1938
+      "hash": "b2e31911282b",
+      "size": 1934
     },
     {
       "id": "community-review-15-20260907.w",
       "path": "abilities/community-review-15-20260907.w.json",
-      "hash": "d071de876e24",
-      "size": 1926
+      "hash": "e7a5c0ca0a2b",
+      "size": 1919
     },
     {
       "id": "community-review-16-20260907.e",
@@ -2123,8 +2123,8 @@
     {
       "id": "community-review-22-20260907.w",
       "path": "abilities/community-review-22-20260907.w.json",
-      "hash": "959b34101b8b",
-      "size": 1909
+      "hash": "ce2304287c90",
+      "size": 1905
     },
     {
       "id": "community-review-23-20260907.e",

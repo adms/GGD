@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "feccc13536ac",
+  "hash": "20014e6f8638",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -23,8 +23,8 @@
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "5f4b138cc6e9",
-      "size": 1142
+      "hash": "e85b4d3fece0",
+      "size": 1166
     },
     {
       "id": "ap-coefficient",
@@ -239,8 +239,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "b3e44fc40e26",
-      "size": 3022
+      "hash": "19213f82156c",
+      "size": 3046
     },
     {
       "id": "feel-fx",
@@ -275,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "4eef1e7c5464",
+      "hash": "aebcd9c9b629",
       "size": 921
     },
     {
@@ -395,8 +395,8 @@
     {
       "id": "range-tiers",
       "path": "config/range-tiers.json",
-      "hash": "d87cdbcfecf4",
-      "size": 789
+      "hash": "a41729664528",
+      "size": 813
     },
     {
       "id": "rank-growth",
