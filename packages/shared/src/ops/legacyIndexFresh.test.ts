@@ -40,8 +40,8 @@ describe("legacy 記憶索引（owner 2026-08-13「以免真的需要的時候�
     const r = spawnSync("python3", [SCRIPT, "--check"], { cwd: REPO, encoding: "utf8" });
     expect(
       r.status,
-      "docs/legacy-index.md 過期了。⛔ 不要改這條測試，跑：\n" +
-        "  python3 tools/legacy-index/build_index.py && git add docs/legacy-index.md\n" +
+      "docs/legacy-index.md 或 docs/legacy-index-champions.json（GH#1227，同一支產生器）過期了。⛔ 不要改這條測試，跑：\n" +
+        "  pnpm legacyindex:build && git add docs/legacy-index.md docs/legacy-index-champions.json\n" +
         `腳本輸出：${(r.stdout ?? "") + (r.stderr ?? "")}`,
     ).toBe(0);
   });
