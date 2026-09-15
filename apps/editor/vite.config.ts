@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve, relative } from "node:path";
 import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/heroBuildSources";
@@ -13,6 +13,23 @@ import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/
 export default defineConfig(({ mode }) => {
   const repoRoot = resolve(__dirname, "../..");
   const generator = snapshotHeroGenerator(repoRoot);
+  const playerBuild = mode === "player";
+  const playerEntry: Plugin = {
+    name: "ggd-player-hero-entry",
+    enforce: "pre",
+    resolveId(source, importer) {
+      if (playerBuild && source === "./App" && importer?.endsWith("/src/main.tsx")) {
+        return resolve(__dirname, "src/PlayerHeroApp.tsx");
+      }
+      return null;
+    },
+    transformIndexHtml(html) {
+      if (!playerBuild) return html;
+      return html
+        .replace("<title>GGD Content Editor</title>", "<title>GGD 英雄鑄造器</title>")
+        .replace("<meta charset=\"UTF-8\" />", "<meta charset=\"UTF-8\" />\n    <meta name=\"ggd-app\" content=\"player-hero-forge\" />");
+    },
+  };
   return ({
   base: "/editor/",
   // `.env.*` is intentionally ignored repository-wide.  Desktop mode must be
@@ -22,7 +39,7 @@ export default defineConfig(({ mode }) => {
     ...(mode === "desktop" ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") } : {}),
     "import.meta.env.VITE_HERO_GENERATOR_VERSION": JSON.stringify(generator.versionId),
   },
-  plugins: [react(), {
+  plugins: [playerEntry, react(), {
     name: "ggd-generator-version",
     configureServer(server) {
       // Locks and package metadata also change the source version, even when

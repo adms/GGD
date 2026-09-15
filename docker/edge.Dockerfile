@@ -11,7 +11,7 @@
 # (kind hostPath / PVC / compose bind — see deploy/ and docker/compose.yaml).
 #
 # ---------------------------------------------------------------------------
-# THE EDITOR IS NOT IN THIS IMAGE BY DEFAULT (task #241)
+# THE INTERNAL CONTENT EDITOR IS NOT IN THIS IMAGE BY DEFAULT (task #241/#1270)
 # ---------------------------------------------------------------------------
 # apps/editor is a CONTENT-AUTHORING surface. It used to be built and COPYd here
 # unconditionally, and nginx served it at `/editor/` as plain static with no
@@ -34,14 +34,15 @@
 # `/content-api/` — the surface a deploy does not contain cannot be reached,
 # authenticated or otherwise.
 #
-# Local authoring is unaffected: `pnpm dev:editor` runs vite on 127.0.0.1:5174
-# with its own /content-api proxy. To build an image WITH the editor (a dev or
-# LAN box that also mounts nginx/dev/ for the `/editor/` location):
+# The default image instead contains the player-only Hero Forge selected by
+# Vite's `player` mode. It has no collection editor, skill/VFX forge or export
+# console and uses the authenticated `/api/v1/hero-*` platform contract.
+# Local authoring remains `pnpm dev:editor` on 127.0.0.1:5174. To replace the
+# player bundle with the full internal editor in a dev/LAN image:
 #
 #     docker build -f docker/edge.Dockerfile --build-arg GGD_INCLUDE_EDITOR=1 .
 #
-# Both halves are required — the files without the nginx location, or the
-# location without the files, serves nothing. That is intentional.
+# GGD_INCLUDE_EDITOR=1 is never set by a production deploy path.
 
 FROM node:22-alpine AS build
 RUN corepack enable
@@ -164,10 +165,9 @@ ENV VITE_GGD_CONTENT_EDIT=$VITE_GGD_CONTENT_EDIT
 # UNSTAMPED-BUILD: visibly broken beats plausibly wrong.
 ARG GGD_BUILD_STAMP=""
 ENV GGD_BUILD_STAMP=$GGD_BUILD_STAMP
-# ---- THE EDITOR OPT-IN (task #241) -----------------------------------------
-# Default OFF. See the header. `/dist-out/editor` is created either way so the
-# final stage's COPY has a source in both configurations — an image built
-# without the opt-in gets an EMPTY directory there, which is the whole point.
+# ---- THE INTERNAL EDITOR OPT-IN (task #241/#1270) --------------------------
+# Default OFF. OFF builds the player-only Hero Forge; ON replaces it with the
+# full internal content editor for local/dev use.
 ARG GGD_INCLUDE_EDITOR="0"
 ENV GGD_INCLUDE_EDITOR=$GGD_INCLUDE_EDITOR
 RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_STAMP='${GGD_BUILD_STAMP}' GGD_INCLUDE_EDITOR='${GGD_INCLUDE_EDITOR}'" \
@@ -181,7 +181,8 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
       echo "edge build: INCLUDING the content editor at /editor/ — this image must NOT be deployed publicly." >&2; \
       pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/; \
     else \
-      echo "edge build: content editor OMITTED (task #241). Pass --build-arg GGD_INCLUDE_EDITOR=1 for a dev image." >&2; \
+      echo "edge build: building player-only Hero Forge at /editor/ (task #1270)." >&2; \
+      pnpm --filter "@ggd/editor" build:player && cp -a apps/editor/dist/. /dist-out/editor/; \
     fi
 
 # ---- precompress the SPA bundles -------------------------------------------
@@ -209,11 +210,10 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 # /content-api/ route is mounted at /etc/nginx/ggd-dev/ by the Helm chart only
 # when dev.enabled=true (infra-05).
 COPY --from=build /repo/apps/client/dist/ /usr/share/nginx/html/client/
-# The CONTENT EDITOR (task #241). This copies /dist-out/editor, which the build
-# stage leaves EMPTY unless --build-arg GGD_INCLUDE_EDITOR=1 was passed — so the
-# default image contains no editor bundle at all. Do not point this back at
-# /repo/apps/editor/dist: that would bake the authoring console into every
-# image again regardless of the flag, which is the whole defect.
+# The default staging directory contains the player-only Hero Forge. The full
+# content-authoring console reaches it only with GGD_INCLUDE_EDITOR=1. Do not
+# point this COPY directly at /repo/apps/editor/dist because that would bypass
+# the build-mode boundary.
 COPY --from=build /dist-out/editor/ /usr/share/nginx/html/editor/
 COPY --from=build /repo/apps/admin/dist/ /usr/share/nginx/html/admin/
 # ---- full-asset boot assertion (task #176) ---------------------------------

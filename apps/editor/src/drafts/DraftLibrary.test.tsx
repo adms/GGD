@@ -15,6 +15,15 @@ vi.mock("../hero/CommunityHeroExamples", () => ({ CommunityHeroExamples: () => n
 import { DraftLibrary } from "./DraftLibrary";
 beforeEach(() => { state.enqueue.mockClear(); state.flush.mockReset().mockResolvedValue(); });
 
+it("shows only hero drafts on the player-facing library surface", () => {
+  const hero = createLocalDraft("hero/visible", "hero", 1, { project: createHeroProject("hero-visible"), rawInputs: {}, mode: "quick", origin: "鬥士" });
+  const document = createLocalDraft("champions/internal", "document", 1, { collection: "champions", docId: "internal-champion", data: {} });
+  state.drafts = [hero, document];
+  const view = mount(createElement(DraftLibrary, { heroOnly: true, onOpenDocument: vi.fn(), onOpenHero: vi.fn() }));
+  expect(view.text()).toContain("英雄作品");
+  expect(view.text()).not.toContain("internal-champion");
+});
+
 it("shows unknown future heroes as read-only and never passes them to the editor", () => {
   const payload = { project: { schema: "ggd-hero-project@99", brief: { name: "新版英雄", concept: "完整原文\n「原稿不能回寫。」\n" }, futureFields: { untouched: [1, 2, 3] } } };
   const draft = createLocalDraft("hero/future", "hero", 4, payload); state.drafts = [draft];
