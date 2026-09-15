@@ -10691,3 +10691,5 @@ overwrite_temp_20260915-183833	Edit	有未提交改動	/private/tmp/ggd-integ-nc
 overwrite_temp_20260915-184100	Edit	SKIP(git 有)	content/config/ugc.json
 overwrite_temp_20260915-184100	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts
 20260915-191806	gen_board	產生器覆蓋前	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html	/private/tmp/ggd-integ-nc/docs/legacy/_overwrites/overwrite_temp_20260915-191806/docs/_release/ggd-board.html
+20260915-192217	preserve.sh	SKIP(git 有)	docs/_release/戰情版-20260915.md
+20260915-192217	preserve.sh	SKIP(git 有)	docs/_execution-batches.md
