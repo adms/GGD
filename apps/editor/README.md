@@ -5,6 +5,15 @@ loopback-only `content-api`, previews content with the shipped runtime code, and
 keeps generated products read-only unless the server identifies an authoritative
 writable source.
 
+The production edge uses a separate player entry from this package. Run
+`pnpm --filter @ggd/editor build:player` to build it. That entry exposes only
+`/editor/hero-forge` and `/editor/works`: deterministic hero creation, local
+versions, package validation, model upload and the authenticated community
+submission flow. It does not expose Collections, 鑄技工坊, 特效工坊, 匯出中心 or
+the dev-only `content-api`. The generated HTML carries
+`<meta name="ggd-app" content="player-hero-forge">` so deployment smoke checks
+can distinguish it from the game-client SPA fallback.
+
 ## Run locally
 
 From the repository root:

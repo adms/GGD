@@ -20,6 +20,16 @@ input, select, textarea { background: #101216; color: var(--text); border: 1px s
 code { color: var(--accent); }
 
 .app { display: grid; grid-template-columns: 160px 240px 1fr; height: 100vh; }
+.player-hero-app { grid-template-columns: minmax(190px, 230px) minmax(0, 1fr); }
+.player-hero-nav h1 { color: var(--accent); font-size: 18px; margin: 4px 0; }
+.player-hero-nav p { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0 0 12px; }
+
+@media (max-width: 760px) {
+  .player-hero-app { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  .player-hero-nav { flex-direction: row; align-items: center; overflow-x: auto; }
+  .player-hero-nav h1 { white-space: nowrap; }
+  .player-hero-nav p { display: none; }
+}
 
 .sidebar { border-right: 1px solid var(--line); padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
 .sidebar h2 { font-size: 13px; text-transform: uppercase; color: var(--muted); margin: 4px 0 8px; }

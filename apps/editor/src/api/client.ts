@@ -8,11 +8,11 @@ const BASE = "/content-api";
 /**
  * Vite dev flag, guarded so plain node (vitest) never throws on `import.meta`.
  * Mirrors apps/admin/src/contentApi.ts — the admin console has had this gate
- * since #96; the editor never did, which was a live hole: apps/editor/dist is
- * baked into docker/edge.Dockerfile and served at `/editor/` in PRODUCTION,
- * while `/content-api/` only exists in nginx/dev/content-api.conf (mounted
- * under the `dev.enabled` profile). So a prod build shipped save buttons
- * pointing at a route that does not exist — live-looking write UI, publicly.
+ * since #96; the editor never did, which was a live hole: the old full
+ * apps/editor/dist was served at `/editor/` while `/content-api/` only existed
+ * in the dev profile. Task #1270 ships a separate player-only entry there;
+ * full content authoring remains a dev opt-in, and production builds still
+ * dead-fold these writers to false.
  *
  * This does NOT relax anything server-side: content-api still refuses to boot
  * under NODE_ENV=production and still enforces loopback-peer + Origin in

@@ -31,11 +31,13 @@ export function LocalDraftStatus({ draftKey: activeKey, restored, onCopy }: { dr
   </section>;
 }
 
-export function DraftLibrary({ onOpenDocument, onOpenHero }: {
+export function DraftLibrary({ onOpenDocument, onOpenHero, heroOnly = false }: {
   onOpenDocument(collection: CollectionName): void;
   onOpenHero?(draft: LocalDraft): void;
+  heroOnly?: boolean;
 }) {
   const { drafts, recoveries } = useDraftSession();
+  const visibleDrafts = heroOnly ? drafts.filter((draft) => draft.kind === "hero") : drafts;
   const [error, setError] = useState<string | null>(null);
   const [copying, setCopying] = useState(false); const copyingRef = useRef(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -72,8 +74,8 @@ export function DraftLibrary({ onOpenDocument, onOpenHero }: {
     <LocalDraftStatus />
     {error ? <p role="alert">{error}</p> : null}
     {message ? <p role="status">{message}</p> : null}
-    {drafts.length === 0 ? <p>開始創作後，作品會出現在這裡。</p> : null}
-    <ul className="draft-cards">{drafts.map((draft) => {
+    {visibleDrafts.length === 0 ? <p>開始創作後，作品會出現在這裡。</p> : null}
+    <ul className="draft-cards">{visibleDrafts.map((draft) => {
       const data = documentPayload(draft);
       const unsupported = unsupportedHeroDraft(draft);
       const name = data?.docId ?? String((draft.payload as { project?: { brief?: { name?: string } } })?.project?.brief?.name || "未命名英雄");
