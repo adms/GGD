@@ -7,16 +7,24 @@ export interface UploadValidationReport {
   issues: { numErrors: number; numWarnings: number; numInfos: number; truncated: boolean; messages: { code: string; severity: number; pointer?: string; message?: string }[] };
 }
 
-/** Async so the same validator runs in a bounded browser or server worker. */
-export async function inspectModelUpload(bytes: Uint8Array, kind: "model" | "animations" = "model") {
-  const parsed = parseUploadGlb(bytes), { json, bin } = parsed;
+/**
+ * 嚴格 glTF 驗證 —— 上架閘（`inspectModelUpload`）與離線修補工具（`tools/model-fix/`）共用**同一組選項**，
+ * ⛔ 不各寫一份（選項一漂，「工具說乾淨」與「後台擋下」就對不上）。GH#1173
+ */
+export async function validateModelUploadBytes(bytes: Uint8Array): Promise<UploadValidationReport> {
   // Khronos publishes JS without TypeScript declarations.
   // @ts-expect-error gltf-validator has no declaration file.
   const validator = await import("gltf-validator");
-  const report = await validator.validateBytes(bytes, {
+  return await validator.validateBytes(bytes, {
     format: "glb", maxIssues: 1000, writeTimestamp: false, ignoredIssues: ["UNUSED_OBJECT"],
     externalResourceFunction: async () => { throw new Error("External resources disabled"); },
   }) as UploadValidationReport;
+}
+
+/** Async so the same validator runs in a bounded browser or server worker. */
+export async function inspectModelUpload(bytes: Uint8Array, kind: "model" | "animations" = "model") {
+  const parsed = parseUploadGlb(bytes), { json, bin } = parsed;
+  const report = await validateModelUploadBytes(bytes);
   if (report.issues.numErrors || report.issues.truncated) throw new Error("GLB 格式檢查未通過：" + (report.issues.messages.filter((issue) => issue.severity === 0).slice(0, 3).map((issue) => issue.code).join("、") || "診斷數超過上限"));
   const names = new Set<string>();
   const clips: UploadClip[] = (json.animations ?? []).map((animation, index) => {

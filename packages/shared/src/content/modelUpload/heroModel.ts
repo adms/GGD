@@ -3,7 +3,7 @@ import { contentSha256 } from "../import/jcs";
 import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
 import { selectModelAnimations } from "./compose";
 import { normalizeUploadedModel, type ResizeImage } from "./normalize";
-import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET, textureVramBytes } from "./budget";
 import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
 export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
   const model = zUploadedHeroModel.parse(raw);
@@ -31,6 +31,8 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
     ["繪製網格", model.meshes, HERO_MODEL_BUDGET.meshes],
     ["貼圖邊長", Math.max(0, ...model.textures.flatMap((texture) => [texture.width, texture.height])), HERO_MODEL_BUDGET.texEdge],
     ["單段動作通道", Math.max(0, ...model.clips.map((clip) => clip.channels)), HERO_MODEL_BUDGET.channels],
+    // ⭐ GH#1174 —— 每張都過「貼圖邊長」的模型，張數一多照樣吃爆 VRAM ⇒ 兩個名詞分開問。
+    ["貼圖 VRAM 位元組（RGBA8＋mip 加總）", model.textures.reduce((sum, texture) => sum + textureVramBytes(texture.width, texture.height), 0), HERO_MODEL_BUDGET.vramBytes],
   ] as const;
   for (const [label, value, limit] of rows) {
     if (value > limit.limit) errors.push(`${label} ${value} 超過英雄模型上限 ${limit.limit}。`);

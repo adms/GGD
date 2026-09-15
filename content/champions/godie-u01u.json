@@ -5,7 +5,7 @@
   "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+  "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -399,6 +399,23 @@
         "reference": "300heroes:5666df594cba229f74ce4ed9",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.heromusashimiyamoto",
+      "modelSha256": "1b2c42ee5e04e957fdf523d8c038e25ce5f7a57f32b68414f19693c7699c8f0c",
+      "binarySha256": "0c2d3571839a78d707cc496596b7dd2c2f93514e3bf01b00c2cb52841c36e65f",
+      "registeredAt": "2026-09-15T03:56:36.851Z",
+      "source": {
+        "kind": "exact",
+        "character": "三刀流劍士 - 索隆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heromusashimiyamoto.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

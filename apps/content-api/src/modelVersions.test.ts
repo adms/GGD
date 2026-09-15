@@ -4,9 +4,10 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { FastifyInstance } from "fastify";
 import { buildServer } from "./server";
+import { ModelVersions } from "./modelVersions";
 import { writeDocAtomic, rebuildAllIndexes } from "@ggd/shared/content/node";
 import { modelUploadFixture } from "@ggd/shared/content/modelUpload/fixtures";
-import { encodeUploadGlb } from "@ggd/shared/content/modelUpload/glb";
+import { encodeUploadGlb, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
 import { zChampionDoc } from "@ggd/shared/content/schema/champion";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
@@ -204,6 +205,40 @@ describe("retained hero model versions", () => {
     const champion = read("champions", heroId);
     expect(zChampionDoc.safeParse({ ...champion, modelKey: "old-body" }).success).toBe(false);
     expect(zChampionDoc.safeParse({ ...champion, modelVersions: [...champion.modelVersions, champion.modelVersions[0]] }).success).toBe(false);
+  });
+
+  it("★ GH#1173：來源宣告了 hiddenPrimitives 就不合併 primitive（兩個方向）", async () => {
+    // ⭐ 出貨真的會出現的形狀：同一個 mesh 兩塊畫法相同、有索引的 primitive（`imported.heroichigo` 5 塊 1 種畫法、藏 [2]）
+    const fx = modelUploadFixture();
+    fx.json.animations![1]!.name = "Cast";
+    const prim = fx.json.meshes![0]!.primitives[0]!;
+    const idx = new Uint16Array([0, 1, 2]), bin = new Uint8Array(fx.bin.byteLength + 8);
+    bin.set(fx.bin); bin.set(new Uint8Array(idx.buffer), fx.bin.byteLength);
+    fx.json.bufferViews.push({ buffer: 0, byteOffset: fx.bin.byteLength, byteLength: 6, target: 34963 });
+    fx.json.accessors.push({ bufferView: fx.json.bufferViews.length - 1, componentType: 5123, count: 3, type: "SCALAR" });
+    prim.indices = fx.json.accessors.length - 1;
+    fx.json.meshes![0]!.primitives.push({ ...prim });
+    fx.json.buffers = [{ byteLength: bin.byteLength }];
+    putAsset("assets/models/twin.glb", encodeUploadGlb(fx.json, bin));
+    const primitivesOf = (key: string) =>
+      parseUploadGlb(new Uint8Array(readFileSync(join(root, read("models", key).glbPath)))).json.meshes![0]!.primitives.length;
+    const add = async (id: string, extra: Record<string, unknown>) => {
+      writeDocAtomic(root, "models", { ...model(id, "assets/models/twin.glb"), ...extra });
+      const response = await update({ action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: id, label: id, source });
+      expect(response.statusCode, response.body).toBe(200);
+      return response.json<ChampionModelVersionState>().versions.at(-1)!.modelKey;
+    };
+    // ① 沒有宣告 ⇒ 照常合併（⛔ 這一半證明夾具真的「可合併」，否則②永遠是綠的）
+    expect(primitivesOf(await add("twin-merge", {}))).toBe(1);
+    // ② 宣告藏第 1 塊 ⇒ 索引必須原封不動，被藏的那塊才藏得掉
+    const kept = await add("twin-hidden", { hiddenPrimitives: [1] });
+    expect(primitivesOf(kept)).toBe(2);
+    expect(read("models", kept).hiddenPrimitives).toEqual([1]);
+    // ③ 修正輪：作者工具的 preservePrimitives（半透明不合併，`register-normalized-version.mts --reason blend-order`）⇒ 沒宣告也不合併
+    writeDocAtomic(root, "models", model("twin-keep", "assets/models/twin.glb"));
+    const command: ModelVersionCommand = { action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: "twin-keep", label: "twin-keep", source };
+    const prepared = await new ModelVersions(root).prepare(heroId, command, { preservePrimitives: true });
+    expect(parseUploadGlb(prepared.artifacts.at(-1)!.bytes).json.meshes![0]!.primitives.length).toBe(2);
   });
 
   it("rejects a model document linked outside the content root", async () => {

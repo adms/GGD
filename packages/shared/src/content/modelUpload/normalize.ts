@@ -90,7 +90,16 @@ function clipSpanSeconds(json: GlbDocument, bin: Uint8Array, clip: GlbDocument["
 
 export async function normalizeUploadedModel(
   bytes: Uint8Array,
-  options: { maxTextureEdge?: number; resizeImage?: ResizeImage } = {},
+  options: {
+    maxTextureEdge?: number; resizeImage?: ResizeImage;
+    /**
+     * ⭐ GH#1173：模型文件宣告了 `hiddenPrimitives`（按 `mesh.primitives[i]` 索引藏殘留幾何／分形態身體）時
+     * **不合併 primitive** —— 合併會重排索引，而「畫法相同」的被藏那塊會跟本體接成一塊 ⇒ 再也藏不掉。
+     * 量到的：`imported.heroichigo`（黑崎一護雙身體 geoset，#742）5 個 draw 只有 1 種畫法、藏 [2]
+     * ⇒ 從它註冊新版本會把兩具身體接成一塊。⛔ 不重映射索引（保守：寧可少合併也不猜被藏的是哪一塊）。
+     */
+    preservePrimitiveIndices?: boolean;
+  } = {},
 ): Promise<{ bytes: Uint8Array; report: NormalizeReport }> {
   const cap = options.maxTextureEdge ?? HERO_MODEL_BUDGET.texEdge.limit;
   const { json, bin } = parseUploadGlb(bytes);
@@ -152,7 +161,7 @@ export async function normalizeUploadedModel(
   const bin2 = texBin;
   const meshNodes = (json.nodes ?? []).filter((n) => n.mesh !== undefined);
   const singleMesh = new Set(meshNodes.map((n) => n.mesh)).size === 1 && meshNodes.length === 1;
-  if (singleMesh && json.meshes) {
+  if (singleMesh && json.meshes && !options.preservePrimitiveIndices) {
     const mesh = json.meshes[meshNodes[0]!.mesh!]!;
     const groups = new Map<string, GlbPrimitive[]>();
     for (const prim of mesh.primitives) {
