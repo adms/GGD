@@ -76,6 +76,14 @@ const DELIVERY_ROOT = opt("--delivery-root", null) ?? (() => {
 
 const readJson = (p, d = null) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return d; } };
 const sha256 = (b) => createHash("sha256").update(b).digest("hex");
+// `localeCompare()` follows the host ICU/locale, so macOS and GitHub's Linux
+// runner can order IDs differently and produce different receipt digests.
+// Asset IDs are ASCII contract keys; compare their code points directly.
+const compareId = (a, b) => {
+  const left = String(a);
+  const right = String(b);
+  return left < right ? -1 : left > right ? 1 : 0;
+};
 
 // ────────────────────────────── 英雄清單 ──────────────────────────────
 /** `--heroes a,b` ｜ `--from <json>`（吃 id 陣列／{champions:{Name:{ownerName}}}／[{id,name}]）｜ `--all` */
@@ -100,7 +108,7 @@ function heroList() {
     return readdirSync(join(CONTENT, "champions"))
       .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
       .map((f) => ({ id: f.slice(0, -5) }))
-      .sort((a, b) => a.id.localeCompare(b.id));
+      .sort((a, b) => compareId(a.id, b.id));
   }
   die("要給 --heroes a,b ｜ --from <json> ｜ --all");
   return [];
@@ -219,7 +227,7 @@ function acceptedComponentsFor(d) {
   const identities = [...new Set((d?.identityIds ?? []).map(String).filter(Boolean))];
   const found = new Map();
   for (const identity of identities) for (const c of componentIndex.byIdentity.get(identity) ?? []) found.set(String(c.id), c);
-  const components = [...found.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  const components = [...found.values()].sort((a, b) => compareId(a.id, b.id));
   if (components.length === 0) return null;
 
   const checked = components.map((c) => {
@@ -525,13 +533,19 @@ const REQUIRED = readJson(join(ROOT, CATEGORIES_REL), {})?.shipGate?.required ??
 
 /** owner 的角色語音索引（本機素材庫）—— 有就用來找「這位角色有沒有原作語音」 */
 function loadVoiceIndex() {
+  const repositoryIndex = join(ROOT, "materials/hero-model-library/voice-index.json");
   const candidates = [
     VOICE_INDEX,
+    repositoryIndex,
     "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
   ].filter(Boolean);
   for (const p of candidates) {
     const d = readJson(p);
-    if (d?.groups) return { path: p, groups: d.groups };
+    if (d?.groups) {
+      const resolved = resolve(p);
+      const path = resolved === repositoryIndex ? relative(ROOT, resolved) : p;
+      return { path, groups: d.groups };
+    }
   }
   return null;
 }
