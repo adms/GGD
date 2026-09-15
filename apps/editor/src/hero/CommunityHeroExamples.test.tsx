@@ -47,7 +47,12 @@ it("keeps the original seven cards and exposes eleven candidates with their unre
     expect(textOf(candidates.children)).toContain(`建立${recipe.inspiration}草稿候選`);
     for (const difference of recipe.adaptations) expect(textOf(candidates.children)).toContain(difference);
   }
-  expect(countType(old.children, "details")).toBe(COMMUNITY_HERO_EXAMPLES.length);
+  // ⭐ 開關翻開（owner 2026-09-15「直接上就好」）⇒ 11 名也進「社群角色驗收範例」可直接建立；關著則只有原本 7 張
+  const offered = COMMUNITY_HERO_EXAMPLES.length + (COMMUNITY_LOL_BATCH2_RELEASE_READY ? COMMUNITY_LOL_BATCH2_EXAMPLES.length : 0);
+  expect(countType(old.children, "details")).toBe(offered);
+  if (COMMUNITY_LOL_BATCH2_RELEASE_READY) {
+    for (const recipe of COMMUNITY_LOL_BATCH2_EXAMPLES) expect(textOf(old.children)).toContain(`建立${recipe.inspiration}改編作品`);
+  }
 });
 
 it("creates all eleven independent candidates and preserves complete editable data through actual draft download, file import and reopening", async () => {
