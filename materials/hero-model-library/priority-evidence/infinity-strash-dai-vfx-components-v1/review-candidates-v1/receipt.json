@@ -5,6 +5,11 @@
     "bytes": 31977,
     "sha256": "d21a184709eed47be4b709a58f6ba4de12dc8bfa32a2f52ca08bfd4a7087c5fc"
   },
+  "ownerApproval": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/owner-approval.json",
+    "bytes": 15050,
+    "sha256": "49ab3d3b2fb31a54bb404a0ee069bb7dcc921cd6793e8d6b733399f020e9bb05"
+  },
   "unusedAssets": {
     "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/unused-assets.json",
     "bytes": 13647,
@@ -12,8 +17,8 @@
   },
   "document": {
     "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/README.md",
-    "bytes": 1150,
-    "sha256": "3c00f47bd1791956b572aad870bab9018a0e93c5867d8ff5e30d12da96c554b5"
+    "bytes": 1493,
+    "sha256": "43fc2056c9eccf419e54d645ea680037d89898c154b35b717018c7cfa261d603"
   },
   "reviewPage": {
     "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-candidates.html",
@@ -124,6 +129,16 @@
     "textureComponentsCovered": 18,
     "meshComponentsCovered": 8,
     "ownerApproved": 0,
+    "approvedBindings": 0,
+    "runtimeMutations": 0,
+    "productionDeployed": 0
+  },
+  "ownerApprovalSummary": {
+    "ownerVisualApprovedTextureComponents": 18,
+    "ownerVisualApprovedMeshComponents": 8,
+    "ownerVisualApprovedSupportComponents": 26,
+    "ownerVisualApprovedCompositeCandidates": 6,
+    "ownerVisualApprovedItems": 32,
     "approvedBindings": 0,
     "runtimeMutations": 0,
     "productionDeployed": 0

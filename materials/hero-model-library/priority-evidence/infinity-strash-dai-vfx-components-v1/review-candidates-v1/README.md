@@ -2,10 +2,12 @@
 
 本批把既有 18 張合格貼圖與 8 顆 mesh 支援元件組成六個可重現的靜態／程序化視覺候選。每個候選固定輸出 t=0.0、0.5、1.0 三個畫面，供後續統一審查頁產生器收錄。
 
-- 六項 `ownerDecision` 均為 `pending`；`approvedBindings` 是空陣列。
+- `review-candidates.json` 保留審查前 `pending` 快照，維持固定審查收據的來源指紋。
+- `owner-approval.json` 是目前來源專屬核准索引：18 張貼圖、8 顆 mesh 與 6 個 composite 共 32 項均為 owner visual approve。
+- 視覺核准不授權技能或 runtime 綁定；`approvedBindings` 是空陣列，`runtimeMutationAllowed` 為 false。
 - 這些畫面不是 Niagara 播放時序還原，也沒有指定技能事件、骨架掛點或音訊。
 - 沒有寫入 `content/vfx`、英雄設定或 runtime 綁定；正式站部署為 0。
-- 權威候選：`review-candidates.json`；未綁定元件：`unused-assets.json`。
+- 審查前候選：`review-candidates.json`；目前核准索引：`owner-approval.json`；未綁定元件：`unused-assets.json`。
 - 獨立審查頁：`apps/client/public/infinity-strash-dai-vfx-review-candidates.html`。
 
 ## 重建與檢查

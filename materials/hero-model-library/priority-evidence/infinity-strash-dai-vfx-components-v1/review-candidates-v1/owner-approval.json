@@ -1,0 +1,411 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-owner-approval@1",
+  "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+  "sourceFingerprint": "c3a210550afb10b506a83d3aeec79fa4533b47cb3a7f2e94b4d80f07b81460e0",
+  "reviewer": "owner",
+  "reviewedAt": "2026-09-15T01:41:50+08:00",
+  "inputs": {
+    "components": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json",
+      "bytes": 100561,
+      "sha256": "612973fb0189217a32e579f3a0a016a8c8dacb85e44e1fd0bcce4249c12884bd"
+    },
+    "preDecisionCandidates": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json",
+      "bytes": 31977,
+      "sha256": "d21a184709eed47be4b709a58f6ba4de12dc8bfa32a2f52ca08bfd4a7087c5fc"
+    },
+    "ownerDecisionReceipt": {
+      "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
+      "bytes": 108481,
+      "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+    }
+  },
+  "summary": {
+    "ownerVisualApprovedTextureComponents": 18,
+    "ownerVisualApprovedMeshComponents": 8,
+    "ownerVisualApprovedSupportComponents": 26,
+    "ownerVisualApprovedCompositeCandidates": 6,
+    "ownerVisualApprovedItems": 32,
+    "approvedBindings": 0,
+    "runtimeMutations": 0,
+    "productionDeployed": 0
+  },
+  "boundary": {
+    "visualApprovalDoesNotAuthorizeSkillOrRuntimeBinding": true,
+    "niagaraTimingRecovered": false,
+    "skillEventsAssigned": false,
+    "skeletonAttachmentsAssigned": false,
+    "originalEffectParityClaimed": false,
+    "runtimeMutationAllowed": false
+  },
+  "approvedBindings": [],
+  "supportComponents": [
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-3334415bf1cf",
+      "componentId": "dai-vfx-texture-3334415bf1cf",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b4a7e4c1252b",
+      "componentId": "dai-vfx-texture-b4a7e4c1252b",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-760908689aab",
+      "componentId": "dai-vfx-texture-760908689aab",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-caa730676994",
+      "componentId": "dai-vfx-texture-caa730676994",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-5e9552e7cdb1",
+      "componentId": "dai-vfx-texture-5e9552e7cdb1",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-9f7867d7fa2a",
+      "componentId": "dai-vfx-texture-9f7867d7fa2a",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-278d1511f567",
+      "componentId": "dai-vfx-texture-278d1511f567",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-aa307baadef6",
+      "componentId": "dai-vfx-texture-aa307baadef6",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-d3f0cfbb0fe1",
+      "componentId": "dai-vfx-texture-d3f0cfbb0fe1",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b660aa73e684",
+      "componentId": "dai-vfx-texture-b660aa73e684",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-c6d05cb7cfc8",
+      "componentId": "dai-vfx-texture-c6d05cb7cfc8",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-71e658468dee",
+      "componentId": "dai-vfx-texture-71e658468dee",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-1d983aca2c50",
+      "componentId": "dai-vfx-texture-1d983aca2c50",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-79adb82807ab",
+      "componentId": "dai-vfx-texture-79adb82807ab",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-723415b1eff0",
+      "componentId": "dai-vfx-texture-723415b1eff0",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b3c703088417",
+      "componentId": "dai-vfx-texture-b3c703088417",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-35027d881f17",
+      "componentId": "dai-vfx-texture-35027d881f17",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-e3cf25c6edcd",
+      "componentId": "dai-vfx-texture-e3cf25c6edcd",
+      "kind": "texture",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-1afaff4e7a06",
+      "componentId": "dai-vfx-mesh-1afaff4e7a06",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-1f03f74da354",
+      "componentId": "dai-vfx-mesh-1f03f74da354",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-2df98836a4fa",
+      "componentId": "dai-vfx-mesh-2df98836a4fa",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-06d60c9dc509",
+      "componentId": "dai-vfx-mesh-06d60c9dc509",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-b9c28ede0f0d",
+      "componentId": "dai-vfx-mesh-b9c28ede0f0d",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-16ad660ce7bf",
+      "componentId": "dai-vfx-mesh-16ad660ce7bf",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-ae3e9d7e829c",
+      "componentId": "dai-vfx-mesh-ae3e9d7e829c",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-3315cee29bd1",
+      "componentId": "dai-vfx-mesh-3315cee29bd1",
+      "kind": "mesh",
+      "ownerDecision": "approve",
+      "approvalScope": "support-component-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeState": "unbound-reserve"
+    }
+  ],
+  "composites": [
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-5efcc26a6874",
+      "reviewCandidateId": "dai-pn010-review-5efcc26a6874",
+      "nativePackageStem": "NPS_Skl01_Flash_00",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-c040be6be782",
+      "reviewCandidateId": "dai-pn010-review-c040be6be782",
+      "nativePackageStem": "NPS_PN010_Special02_Flash_00",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-2682386eefc4",
+      "reviewCandidateId": "dai-pn010-review-2682386eefc4",
+      "nativePackageStem": "NPS_PN010_Special03_Slash_00",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-811a70524aec",
+      "reviewCandidateId": "dai-pn010-review-811a70524aec",
+      "nativePackageStem": "NPS_PN010_Special03_EnergyThunderA",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-78c1869c7ed9",
+      "reviewCandidateId": "dai-pn010-review-78c1869c7ed9",
+      "nativePackageStem": "NPS_PN010_Special03_Jump_00",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-446d57b8bd17",
+      "reviewCandidateId": "dai-pn010-review-446d57b8bd17",
+      "nativePackageStem": "NPS_PN010_Special03_Shuchusen_00",
+      "ownerDecision": "approve",
+      "approvalScope": "composite-visual-review-only",
+      "visuallyApproved": true,
+      "approvedBindings": [],
+      "runtimeMutationAllowed": false,
+      "runtimeBindingCreated": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false
+    }
+  ]
+}

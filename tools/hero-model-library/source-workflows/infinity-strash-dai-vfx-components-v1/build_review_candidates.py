@@ -28,6 +28,8 @@ REPO = HERE.parents[3]
 SOURCE = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json"
 POLICY = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/policy-check.json"
 OUTPUT = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1"
+OWNER_DECISIONS = REPO / "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+OWNER_APPROVAL = OUTPUT / "owner-approval.json"
 PUBLIC = REPO / "apps/client/public"
 PUBLIC_PREVIEWS = PUBLIC / "infinity-strash-dai-vfx-review-previews-v1"
 PUBLIC_PAGE = PUBLIC / "infinity-strash-dai-vfx-review-candidates.html"
@@ -98,6 +100,112 @@ def verify_pin(item: dict) -> Path:
     if not path.is_file() or path.stat().st_size != item.get("bytes", path.stat().st_size) or sha256(path) != item["sha256"]:
         raise ValueError(f"Pinned Git asset drifted: {item['gitPath']}")
     return path
+
+
+def build_owner_approval(source: dict, manifest: dict) -> dict:
+    """Project the fixed portal receipt onto Dai's source-specific index.
+
+    ``review-candidates.json`` stays the immutable pre-decision input used by
+    the portal fingerprint.  This overlay records the later owner decision
+    without turning visual acceptance into a runtime or skill binding.
+    """
+    receipt = read_json(OWNER_DECISIONS)
+    if receipt.get("schema") != "ggd.asset-review-decisions@1":
+        raise ValueError("Unexpected asset-review owner decision schema")
+    if receipt.get("reviewer") != "owner" or not receipt.get("reviewedAt"):
+        raise ValueError("Dai VFX owner approval lacks reviewer evidence")
+    if receipt.get("runtimeMutationAllowed") is not False:
+        raise ValueError("Owner approval receipt must remain runtime inert")
+    decisions = receipt.get("decisions")
+    if not isinstance(decisions, list):
+        raise ValueError("Owner approval decisions are absent")
+    by_id = {row.get("candidateId"): row for row in decisions}
+    if len(by_id) != len(decisions):
+        raise ValueError("Owner approval decisions contain duplicate candidate IDs")
+
+    support = []
+    for kind, rows in (("texture", source["textureComponents"]), ("mesh", source["meshComponents"])):
+        for row in rows:
+            if kind == "texture" and not row.get("componentEligible"):
+                continue
+            component_id = row["componentId"]
+            candidate_id = f"dai-vfx-{kind}:{component_id}"
+            decision = by_id.get(candidate_id)
+            if (not decision
+                    or decision.get("decision") != "approve"
+                    or decision.get("approvedBindings") != []
+                    or decision.get("runtimeBindingAuthorized") is not False):
+                raise ValueError(f"Dai support component lacks fixed visual-only approval: {candidate_id}")
+            support.append({
+                "candidateId": candidate_id,
+                "componentId": component_id,
+                "kind": kind,
+                "ownerDecision": "approve",
+                "approvalScope": "support-component-visual-review-only",
+                "visuallyApproved": True,
+                "approvedBindings": [],
+                "runtimeMutationAllowed": False,
+                "runtimeState": "unbound-reserve",
+            })
+
+    composites = []
+    for row in manifest["candidates"]:
+        candidate_id = "dai-vfx-composite:" + row["candidateId"]
+        decision = by_id.get(candidate_id)
+        if (not decision
+                or decision.get("decision") != "approve"
+                or decision.get("approvedBindings") != []
+                or decision.get("runtimeBindingAuthorized") is not False):
+            raise ValueError(f"Dai composite lacks fixed visual-only approval: {candidate_id}")
+        composites.append({
+            "candidateId": candidate_id,
+            "reviewCandidateId": row["candidateId"],
+            "nativePackageStem": row["nativePackageStem"],
+            "ownerDecision": "approve",
+            "approvalScope": "composite-visual-review-only",
+            "visuallyApproved": True,
+            "approvedBindings": [],
+            "runtimeMutationAllowed": False,
+            "runtimeBindingCreated": False,
+            "runtimeSelectable": False,
+            "productionDeployed": False,
+        })
+
+    if len(support) != 26 or len(composites) != 6:
+        raise ValueError("Expected 26 approved Dai support components and six approved composites")
+    return {
+        "schema": "ggd.infinity-strash-dai-vfx-owner-approval@1",
+        "sourceId": source["sourceId"],
+        "sourceFingerprint": receipt["sourceFingerprint"],
+        "reviewer": receipt["reviewer"],
+        "reviewedAt": receipt["reviewedAt"],
+        "inputs": {
+            "components": evidence(SOURCE),
+            "preDecisionCandidates": evidence(OUTPUT / "review-candidates.json"),
+            "ownerDecisionReceipt": evidence(OWNER_DECISIONS),
+        },
+        "summary": {
+            "ownerVisualApprovedTextureComponents": 18,
+            "ownerVisualApprovedMeshComponents": 8,
+            "ownerVisualApprovedSupportComponents": 26,
+            "ownerVisualApprovedCompositeCandidates": 6,
+            "ownerVisualApprovedItems": 32,
+            "approvedBindings": 0,
+            "runtimeMutations": 0,
+            "productionDeployed": 0,
+        },
+        "boundary": {
+            "visualApprovalDoesNotAuthorizeSkillOrRuntimeBinding": True,
+            "niagaraTimingRecovered": False,
+            "skillEventsAssigned": False,
+            "skeletonAttachmentsAssigned": False,
+            "originalEffectParityClaimed": False,
+            "runtimeMutationAllowed": False,
+        },
+        "approvedBindings": [],
+        "supportComponents": support,
+        "composites": composites,
+    }
 
 
 def glb_triangles(path: Path) -> list[tuple[tuple[float, float, float], ...]]:
@@ -436,6 +544,10 @@ def build(write: bool) -> dict:
         OUTPUT.mkdir(parents=True, exist_ok=True)
         manifest_path = OUTPUT / "review-candidates.json"
         manifest_path.write_bytes(encode_json(manifest))
+        # Rebuild after writing the manifest so its input evidence pins the
+        # exact pre-decision bytes on disk.
+        owner_approval = build_owner_approval(source, manifest)
+        OWNER_APPROVAL.write_bytes(encode_json(owner_approval))
         PUBLIC_SHEET.write_bytes(make_contact_sheet(candidates))
         PUBLIC_PAGE.write_text(make_page(manifest), encoding="utf-8")
         unused = {
@@ -456,10 +568,12 @@ def build(write: bool) -> dict:
             "",
             "本批把既有 18 張合格貼圖與 8 顆 mesh 支援元件組成六個可重現的靜態／程序化視覺候選。每個候選固定輸出 t=0.0、0.5、1.0 三個畫面，供後續統一審查頁產生器收錄。",
             "",
-            "- 六項 `ownerDecision` 均為 `pending`；`approvedBindings` 是空陣列。",
+            "- `review-candidates.json` 保留審查前 `pending` 快照，維持固定審查收據的來源指紋。",
+            "- `owner-approval.json` 是目前來源專屬核准索引：18 張貼圖、8 顆 mesh 與 6 個 composite 共 32 項均為 owner visual approve。",
+            "- 視覺核准不授權技能或 runtime 綁定；`approvedBindings` 是空陣列，`runtimeMutationAllowed` 為 false。",
             "- 這些畫面不是 Niagara 播放時序還原，也沒有指定技能事件、骨架掛點或音訊。",
             "- 沒有寫入 `content/vfx`、英雄設定或 runtime 綁定；正式站部署為 0。",
-            "- 權威候選：`review-candidates.json`；未綁定元件：`unused-assets.json`。",
+            "- 審查前候選：`review-candidates.json`；目前核准索引：`owner-approval.json`；未綁定元件：`unused-assets.json`。",
             "- 獨立審查頁：`apps/client/public/infinity-strash-dai-vfx-review-candidates.html`。",
             "",
             "## 重建與檢查",
@@ -475,12 +589,14 @@ def build(write: bool) -> dict:
         receipt = {
             "schema": "ggd.infinity-strash-dai-vfx-review-candidate-receipt@1",
             "manifest": evidence(manifest_path),
+            "ownerApproval": evidence(OWNER_APPROVAL),
             "unusedAssets": evidence(OUTPUT / "unused-assets.json"),
             "document": evidence(OUTPUT / "README.md"),
             "reviewPage": evidence(PUBLIC_PAGE),
             "contactSheet": evidence(PUBLIC_SHEET),
             "previewFiles": [evidence(path) for path in sorted(PUBLIC_PREVIEWS.glob("*.png"))],
             "summary": manifest["summary"],
+            "ownerApprovalSummary": owner_approval["summary"],
             "allGeneratedBytesVerified": True,
             "runtimeMutationAllowed": False,
         }
@@ -489,6 +605,12 @@ def build(write: bool) -> dict:
         manifest_path = OUTPUT / "review-candidates.json"
         if not manifest_path.is_file() or manifest_path.read_bytes() != encode_json(manifest):
             raise ValueError("Review candidate manifest is stale")
+        # The candidate manifest intentionally remains the pre-decision portal
+        # input.  Its bytes are part of the fixed 331-item review fingerprint,
+        # so current owner state is checked through a separate overlay.
+        owner_approval = build_owner_approval(source, manifest)
+        if not OWNER_APPROVAL.is_file() or OWNER_APPROVAL.read_bytes() != encode_json(owner_approval):
+            raise ValueError("Dai VFX owner approval overlay is stale")
         expected_set = set(expected_files)
         actual_set = set(PUBLIC_PREVIEWS.glob("*.png"))
         if actual_set != expected_set:
@@ -499,7 +621,7 @@ def build(write: bool) -> dict:
         expected_page = make_page(manifest).encode("utf-8")
         if not PUBLIC_PAGE.is_file() or PUBLIC_PAGE.read_bytes() != expected_page:
             raise ValueError("Review page is stale")
-    return manifest
+    return {**manifest, "ownerApproval": owner_approval}
 
 
 def main() -> None:
@@ -507,7 +629,12 @@ def main() -> None:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     result = build(write=not args.check)
-    print(f"Dai PN010 VFX review candidates: {result['summary']['reviewCandidatesBuilt']} built, {result['summary']['fixedPreviewFrames']} fixed frames, 0 approved, 0 bound")
+    print(
+        "Dai PN010 VFX review candidates: "
+        f"{result['summary']['reviewCandidatesBuilt']} built, "
+        f"{result['summary']['fixedPreviewFrames']} fixed frames, "
+        f"{result['ownerApproval']['summary']['ownerVisualApprovedItems']} owner visually approved, 0 bound"
+    )
 
 
 if __name__ == "__main__":

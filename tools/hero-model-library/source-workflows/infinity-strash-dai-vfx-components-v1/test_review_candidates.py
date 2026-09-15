@@ -49,7 +49,7 @@ class DaiVfxReviewCandidateTests(unittest.TestCase):
             self.assertEqual([row["time"] for row in candidate["previewEvidence"]], [0.0, 0.5, 1.0])
             self.assertTrue(all((MOD.REPO / row["gitPath"]).is_file() for row in candidate["previewEvidence"]))
 
-    def test_all_decisions_and_bindings_remain_pending_or_empty(self):
+    def test_pre_decision_manifest_stays_pending_and_runtime_inert(self):
         self.assertEqual(self.result["approvedBindings"], [])
         self.assertEqual(self.result["summary"]["ownerApproved"], 0)
         self.assertEqual(self.result["summary"]["approvedBindings"], 0)
@@ -64,6 +64,25 @@ class DaiVfxReviewCandidateTests(unittest.TestCase):
             self.assertFalse(candidate["states"]["visuallyApproved"])
             self.assertFalse(candidate["states"]["runtimeBindingCreated"])
             self.assertFalse(candidate["states"]["runtimeSelectable"])
+
+    def test_owner_approval_overlay_covers_26_components_and_6_composites(self):
+        approval = self.result["ownerApproval"]
+        self.assertEqual(approval["schema"], "ggd.infinity-strash-dai-vfx-owner-approval@1")
+        self.assertEqual(approval["summary"]["ownerVisualApprovedTextureComponents"], 18)
+        self.assertEqual(approval["summary"]["ownerVisualApprovedMeshComponents"], 8)
+        self.assertEqual(approval["summary"]["ownerVisualApprovedSupportComponents"], 26)
+        self.assertEqual(approval["summary"]["ownerVisualApprovedCompositeCandidates"], 6)
+        self.assertEqual(approval["summary"]["ownerVisualApprovedItems"], 32)
+        self.assertEqual(approval["summary"]["approvedBindings"], 0)
+        self.assertEqual(approval["summary"]["runtimeMutations"], 0)
+        self.assertEqual(approval["approvedBindings"], [])
+        self.assertFalse(approval["boundary"]["runtimeMutationAllowed"])
+        rows = approval["supportComponents"] + approval["composites"]
+        self.assertEqual(len(rows), 32)
+        self.assertTrue(all(row["ownerDecision"] == "approve" for row in rows))
+        self.assertTrue(all(row["visuallyApproved"] is True for row in rows))
+        self.assertTrue(all(row["approvedBindings"] == [] for row in rows))
+        self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
 
     def test_no_runtime_content_is_generated(self):
         self.assertEqual(list((MOD.REPO / "content/vfx").glob("fx.strash.dai.*candidate*.json")), [])
@@ -81,7 +100,7 @@ class DaiVfxReviewCandidateTests(unittest.TestCase):
         receipt = json.loads((MOD.OUTPUT / "receipt.json").read_text(encoding="utf-8"))
         self.assertTrue(receipt["allGeneratedBytesVerified"])
         self.assertFalse(receipt["runtimeMutationAllowed"])
-        rows = [receipt[key] for key in ("manifest", "unusedAssets", "document", "reviewPage", "contactSheet")]
+        rows = [receipt[key] for key in ("manifest", "ownerApproval", "unusedAssets", "document", "reviewPage", "contactSheet")]
         rows.extend(receipt["previewFiles"])
         self.assertEqual(len(receipt["previewFiles"]), 18)
         for row in rows:
@@ -92,7 +111,8 @@ class DaiVfxReviewCandidateTests(unittest.TestCase):
     def test_four_day_report_uses_the_authority(self):
         report = (MOD.REPO / "materials/hero-model-library/近四日新增模型動作特效清單.md").read_text(encoding="utf-8")
         self.assertIn("generated:infinity-strash-dai-vfx-review-candidates-v1:start", report)
-        self.assertIn("owner 核准 0", report)
+        self.assertIn("owner visual approve 32", report)
+        self.assertIn("`approvedBindings` 0", report)
 
 
 if __name__ == "__main__":

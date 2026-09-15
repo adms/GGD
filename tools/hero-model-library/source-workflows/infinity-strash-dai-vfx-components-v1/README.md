@@ -21,7 +21,7 @@ python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-da
 python3 tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/update_four_day_report.py --write
 ```
 
-後續統一審查頁產生器的權威輸入是 `materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json`；本流程本身不修改統一 portal 產生器。所有 `ownerDecision` 維持 `pending`，`approvedBindings` 維持空陣列。
+統一審查頁的固定指紋輸入仍是 `materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json`；它保留審查前的 `pending` 快照，避免洗掉既有 331 項 owner 決策收據。現在的來源專屬決策權威是同一產生器輸出的 `owner-approval.json`：18 張貼圖、8 顆 mesh 與 6 個 composite 共 32 項均為 owner visual approve；`approvedBindings` 保持空陣列，`runtimeMutationAllowed` 保持 false。
 
 要從已保存的原始 package 重建低體積成品與證據，執行：
 

@@ -823,6 +823,7 @@ def build(git_link_root=ROOT):
     dai_vfx_page_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-components.html'
     dai_vfx_sheet_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-components.png'
     dai_vfx_review_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json'
+    dai_vfx_owner_approval_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/owner-approval.json'
     dai_vfx_unused_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/unused-assets.json'
     dai_vfx_review_receipt_path=base/'priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/receipt.json'
     dai_vfx_review_page_path=ROOT/'apps/client/public/infinity-strash-dai-vfx-review-candidates.html'
@@ -831,6 +832,7 @@ def build(git_link_root=ROOT):
     dai_vfx_policy=read(dai_vfx_policy_path)
     dai_vfx_receipt=read(dai_vfx_receipt_path)
     dai_vfx_review=read(dai_vfx_review_path)
+    dai_vfx_owner_approval=read(dai_vfx_owner_approval_path)
     dai_vfx_unused=read(dai_vfx_unused_path)
     dai_vfx_review_receipt=read(dai_vfx_review_receipt_path)
     if (dai_vfx_candidates.get('schema')!='ggd.infinity-strash-dai-vfx-component-candidates@1'
@@ -860,6 +862,23 @@ def build(git_link_root=ROOT):
         or dai_vfx_review_receipt.get('allGeneratedBytesVerified') is not True
         or dai_vfx_review_receipt.get('runtimeMutationAllowed') is not False):
         raise ValueError('Dai VFX review candidates are absent, stale or overclaim approval/runtime readiness')
+    dai_vfx_owner_summary=dai_vfx_owner_approval.get('summary',{})
+    if (dai_vfx_owner_approval.get('schema')!='ggd.infinity-strash-dai-vfx-owner-approval@1'
+        or dai_vfx_owner_summary.get('ownerVisualApprovedTextureComponents')!=18
+        or dai_vfx_owner_summary.get('ownerVisualApprovedMeshComponents')!=8
+        or dai_vfx_owner_summary.get('ownerVisualApprovedSupportComponents')!=26
+        or dai_vfx_owner_summary.get('ownerVisualApprovedCompositeCandidates')!=6
+        or dai_vfx_owner_summary.get('ownerVisualApprovedItems')!=32
+        or dai_vfx_owner_summary.get('approvedBindings')!=0
+        or dai_vfx_owner_summary.get('runtimeMutations')!=0
+        or dai_vfx_owner_approval.get('approvedBindings')!=[]
+        or dai_vfx_owner_approval.get('boundary',{}).get('runtimeMutationAllowed') is not False
+        or any(row.get('ownerDecision')!='approve' or row.get('visuallyApproved') is not True
+               or row.get('approvedBindings')!=[] or row.get('runtimeMutationAllowed') is not False
+               for row in dai_vfx_owner_approval.get('supportComponents',[])+dai_vfx_owner_approval.get('composites',[]))
+        or len(dai_vfx_owner_approval.get('supportComponents',[]))!=26
+        or len(dai_vfx_owner_approval.get('composites',[]))!=6):
+        raise ValueError('Dai VFX owner visual approval overlay is absent, stale or runtime-active')
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -1186,7 +1205,7 @@ def build(git_link_root=ROOT):
             schema=dai_vfx_candidates['schema'],
             sourceId=dai_vfx_candidates['sourceId'],
             character=dai_vfx_candidates['character'],
-            status='26 policy-passing support components indexed; Niagara reconstruction, owner review, skill binding and runtime remain pending',
+            status='26 policy-passing support components and 6 authored composites owner visually approved; Niagara reconstruction, skill binding and runtime remain pending',
             candidatesGitPath=str(dai_vfx_candidates_path.relative_to(ROOT)),
             candidatesSha256=hashlib.sha256(dai_vfx_candidates_path.read_bytes()).hexdigest(),
             policyGitPath=str(dai_vfx_policy_path.relative_to(ROOT)),
@@ -1203,6 +1222,9 @@ def build(git_link_root=ROOT):
                 schema=dai_vfx_review['schema'],
                 authorityGitPath=str(dai_vfx_review_path.relative_to(ROOT)),
                 authoritySha256=hashlib.sha256(dai_vfx_review_path.read_bytes()).hexdigest(),
+                ownerApprovalGitPath=str(dai_vfx_owner_approval_path.relative_to(ROOT)),
+                ownerApprovalSha256=hashlib.sha256(dai_vfx_owner_approval_path.read_bytes()).hexdigest(),
+                ownerApprovalSummary=dai_vfx_owner_summary,
                 unusedAssetsGitPath=str(dai_vfx_unused_path.relative_to(ROOT)),
                 unusedAssetsSha256=hashlib.sha256(dai_vfx_unused_path.read_bytes()).hexdigest(),
                 receiptGitPath=str(dai_vfx_review_receipt_path.relative_to(ROOT)),
@@ -1214,6 +1236,7 @@ def build(git_link_root=ROOT):
                 summary=dai_vfx_review['summary'],
                 approvedBindings=dai_vfx_review['approvedBindings'],
                 defaultDecision='pending',
+                currentOwnerDecision='approve',
                 runtimeMutationAllowed=False),
             runtimeBindingsCreated=0,
             productionDeploymentVerified=False),
