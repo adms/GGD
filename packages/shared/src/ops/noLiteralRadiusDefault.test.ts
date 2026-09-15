@@ -36,6 +36,7 @@
  * ⚠️ 所以 `).radius ??` 不可以單獨成立 —— 那會把 `transform.get(id)?.radius ?? 0.6` 算進來。
  */
 import { describe, expect, it } from "vitest";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,13 +72,28 @@ function tsFiles(dir: string, out: string[] = []): string[] {
 describe("技能 radius 的預設值只能有一個住處（GH#1246）", () => {
   const perRoot = ROOTS.map((r) => [r, tsFiles(join(REPO, r))] as const);
   const files = perRoot.flatMap(([, fs]) => fs);
+  const texts = new Map(files.map((f) => [f, readFileSync(f, "utf8")] as const));
 
   it("⭐ 量尺自證（兩個方向）：每個根都掃到檔、壞寫法抓得到、別層的 radius 不誤報", () => {
     console.info(
       `[noLiteralRadiusDefault] 掃 ${files.length} 檔 · ${perRoot.map(([r, fs]) => `${r}=${fs.length}`).join(" · ")}`,
     );
     // ⛔ 沒有這一條，一個回空陣列的掃描會讓下面那條**結構上永遠綠**。
-    for (const [r, fs] of perRoot) expect(fs.length, `⛔ ${r} 一個檔都沒掃到`).toBeGreaterThan(0);
+    // ⭐ 逐根下限從**另一個列舉器**推導（git 追蹤、磁碟上還在的同一組檔），⛔ 不寫死魔數 ——
+    //   「每根 >0」看不見「某個根只掃到 1 檔」；少於 git 知道的數就是有子樹沒走到（GH#1246 修正輪補回）。
+    const skip = /(^|\/)(node_modules|__fixtures__|dist)\//;
+    for (const [r, fs] of perRoot) {
+      const tracked = execFileSync("git", ["ls-files", "--", r], { cwd: REPO, encoding: "utf8" })
+        .split("\n")
+        .filter((p) => /\.tsx?$/.test(p) && !/\.test\.tsx?$/.test(p) && !skip.test(p) && existsSync(join(REPO, p)));
+      expect(tracked.length, `⛔ git 在 ${r} 一個檔都沒追蹤 —— 分母塌了`).toBeGreaterThan(0);
+      expect(fs.length, `⛔ ${r} 只掃到 ${fs.length} 檔，git 追蹤 ${tracked.length} 檔`).toBeGreaterThanOrEqual(tracked.length);
+    }
+    // ⭐ 唯一住處本身要在掃描範圍裡（下一條用它當豁免；它搬出範圍 ⇒ 豁免永遠不觸發，而沒有東西會說）。
+    expect(
+      [...texts.values()].some((t) => t.includes("export const TARGETING_RADIUS_WHEN_OMITTED")),
+      "⛔ 掃不到 `TARGETING_RADIUS_WHEN_OMITTED` 的唯一住處 —— 它搬出掃描範圍了？",
+    ).toBe(true);
     for (const bad of [
       "const r = (ability as { radius?: number }).radius ?? 0;",
       "radius: ability.radius ?? 1.2,",
@@ -93,8 +109,7 @@ describe("技能 radius 的預設值只能有一個住處（GH#1246）", () => {
 
   it("⛔ 不准寫 `def.radius ?? <字面值>` —— ⭐ 呼叫 `targetingRadius(def)`／`authoredAoeRadius(def)`", () => {
     const hits: string[] = [];
-    for (const f of files) {
-      const text = readFileSync(f, "utf8");
+    for (const [f, text] of texts) {
       // ⭐ **唯一合法的那一處**：定義那兩支解析器的檔案本身（判準是內容，⛔ 不是檔名 —— 搬家不失效）。
       if (text.includes("export const TARGETING_RADIUS_WHEN_OMITTED")) continue;
       text.split("\n").forEach((line, i) => {
