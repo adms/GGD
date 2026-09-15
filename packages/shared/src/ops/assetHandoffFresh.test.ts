@@ -44,30 +44,44 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
   it("ship34 的 8 組獨立模型元件以精確 identityId 接入，仍維持待英雄整合", () => {
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8"));
     const byId = new Map(doc.heroes.map((hero: any) => [hero.id, hero]));
-    const expected: Record<string, string[]> = {
-      "acquired-zero": ["ssbu-zero-c00-static-skinned-v1"],
-      "acquired-ram": ["rezero-ram-thunderstore-0.1.1-static-skinned-v1"],
-      "acquired-beatrice": ["rezero-beatrice-thunderstore-0.1.1-static-skinned-v1"],
-      "acquired-mario": ["ssbu-mario-c00-static-skinned-v1", "ssbu-mario-c00-ultimate14-motion-v1"],
-      "acquired-mewtwo": ["ssbu-mewtwo-c00-static-skinned-v1"],
-      "acquired-pokemon-trainer": ["ssbu-ptrainer-female-c01-static-skinned-v1", "ssbu-ptrainer-male-c00-static-skinned-v1"],
-      // ⚠️ 8c73fa1e1（09-13 14:53）加了程序化六態動作元件；這一格寫於 180486a9b（同日 09:06）而沒跟上
-      "acquired-ryu": ["ssbu-ryu-c00-procedural-six-state-v1", "ssbu-ryu-c00-static-skinned-v1"],
-      "acquired-minecraft": ["ssbu-pickel-alex-c01-static-skinned-v1", "ssbu-pickel-steve-c00-static-skinned-v1"],
+    const expected: Record<string, { id: string; verified: boolean }[]> = {
+      "acquired-zero": [{ id: "ssbu-zero-c00-static-skinned-v1", verified: true }],
+      "acquired-ram": [{ id: "rezero-ram-thunderstore-0.1.1-static-skinned-v1", verified: true }],
+      "acquired-beatrice": [{ id: "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1", verified: true }],
+      "acquired-mario": [
+        { id: "ssbu-mario-c00-static-skinned-v1", verified: true },
+        { id: "ssbu-mario-c00-static-skinned-v2", verified: false },
+        { id: "ssbu-mario-c00-ultimate14-motion-v1", verified: true },
+      ],
+      "acquired-mewtwo": [{ id: "ssbu-mewtwo-c00-static-skinned-v1", verified: true }],
+      "acquired-pokemon-trainer": [
+        { id: "ssbu-ptrainer-female-c01-formal-decimated-v1", verified: false },
+        { id: "ssbu-ptrainer-female-c01-static-skinned-v1", verified: true },
+        { id: "ssbu-ptrainer-male-c00-formal-decimated-v1", verified: false },
+        { id: "ssbu-ptrainer-male-c00-static-skinned-v1", verified: true },
+      ],
+      "acquired-ryu": [
+        { id: "ssbu-ryu-c00-procedural-six-state-decimated-v1", verified: true },
+        { id: "ssbu-ryu-c00-static-decimated-v1", verified: false },
+        { id: "ssbu-ryu-c00-static-skinned-v1", verified: true },
+      ],
+      "acquired-minecraft": [
+        { id: "ssbu-pickel-alex-c01-static-skinned-v1", verified: true },
+        { id: "ssbu-pickel-steve-c00-static-skinned-v1", verified: true },
+      ],
     };
 
-    for (const [heroId, componentIds] of Object.entries(expected)) {
+    for (const [heroId, components] of Object.entries(expected)) {
       const hero: any = byId.get(heroId);
       expect(hero?.model.componentStatus, heroId).toBe("accepted-independent-components-pending-hero-integration");
       expect(hero?.model.modelKey, heroId).toBeNull();
       expect(hero?.model.severity, heroId).toBe("blocker");
-      expect(hero?.model.components.map((component: any) => component.id), heroId).toEqual(componentIds);
-      expect(hero?.model.components.every((component: any) => component.verified), heroId).toBe(true);
-      expect(hero?.model.componentFilesInRepo, heroId).toBe(hero?.model.componentCount);
+      expect(hero?.model.components.map((component: any) => ({ id: component.id, verified: component.verified })), heroId).toEqual(components);
+      expect(hero?.model.componentFilesInRepo, heroId).toBe(components.filter((component) => component.verified).length);
     }
 
     expect(doc.counts.independentComponentPending).toBe(8);
-    expect(doc.counts.independentComponents).toBe(12);
+    expect(doc.counts.independentComponents).toBe(16);
     expect(doc.counts.modelCompletelyMissing).toBe(0);
     expect((byId.get("acquired-zero") as any).model.components.map((component: any) => component.id)).not.toContain("zero-lancer-p1-static-skinned-v1");
     expect((byId.get("acquired-mario") as any).model.nativeAnimationCount).toBe(5);

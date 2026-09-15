@@ -2,6 +2,7 @@
 """Synchronize FateUBW per-servant conversion facts into resource coverage."""
 import argparse
 import json
+import tempfile
 from pathlib import Path
 
 
@@ -91,7 +92,11 @@ def main():
         # An isolated worktree used to derive the sibling asset-library path
         # from /private/tmp.  Remove only those impossible generated locators;
         # preserve every curated or valid workspace path.
-        paths[:] = [value for value in paths if not value.startswith("/private/tmp/GGD-Asset-Library/")]
+        generated_root = (Path(tempfile.gettempdir()) / "GGD-Asset-Library").resolve()
+        paths[:] = [
+            value for value in paths
+            if not (isinstance(value, str) and Path(value).resolve(strict=False).is_relative_to(generated_root))
+        ]
         add_path(paths, str((source_root / candidate["sourceAnimation"]["path"]).resolve()))
         add_path(paths, attempt.get("body"))
         add_path(paths, attempt.get("contractValidation"))

@@ -443,10 +443,10 @@ function checkModel(champ, id, d = null) {
             files: 0, filesInRepo: 0,
             ...acquired,
             gap: bad.length
-              ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}`
+              ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}；修復前不能選用或宣稱已上架`
               : registered.length
                 ? `中央素材庫已有 ${acquired.componentCount} 個已驗收元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。本尊非預設 model@1 已進 Hero Forge 下拉候選；仍待 Main 合併、正式發布與正式站切換驗證`
-                : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架`,
+                : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架`,
             severity: bad.length || !registered.length ? "blocker" : "warning",
           };
         }

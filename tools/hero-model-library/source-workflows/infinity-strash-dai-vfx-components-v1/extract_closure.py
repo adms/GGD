@@ -15,6 +15,7 @@ import hashlib
 import json
 import struct
 import subprocess
+import tempfile
 from collections import deque
 from pathlib import Path
 
@@ -28,7 +29,7 @@ LIBRARY = next(parent for parent in _SOURCE_INPUT.parents if parent.name == "GGD
 PAK_MANIFEST = LIBRARY / "intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/source-manifest.json"
 PAK = LIBRARY / "intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak"
 REPAK = LIBRARY / "tools/repak-src-v0.2.3/target/release/repak"
-EXTRACTOR = Path("/private/tmp/popp-vfx-extractor-build/release/ggd-infinity-strash-prefix-extractor")
+EXTRACTOR = Path(tempfile.gettempdir()) / "popp-vfx-extractor-build/release/ggd-infinity-strash-prefix-extractor"
 OUTPUT = LIBRARY / "intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1"
 
 ROOT_IDS = (

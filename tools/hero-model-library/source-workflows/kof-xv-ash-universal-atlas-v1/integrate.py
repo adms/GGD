@@ -6,7 +6,7 @@ immutable conversion stage.  It intentionally does not create a hero, model
 option, runtime dropdown entry, default, action set, or deployment claim.
 """
 from __future__ import annotations
-import argparse, hashlib, json, shutil
+import argparse, hashlib, json, shutil, tempfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[4]
@@ -15,7 +15,10 @@ SOURCE_ID='kof-open3dlab-ash-xv-material-v2-budget-candidate-v1'
 SOURCE_CLASS='mod-community-port-derived-budget-candidate'
 STAGE=WORKSPACE/'GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1'
 BACKUP=WORKSPACE/'GGD-Asset-Library/backups/kof-xv-ash-universal-atlas-v1/latest-receipt.json'
-VALIDATIONS={'left-hair':Path('/private/tmp/kof-ash-left-validation.json'),'right-hair':Path('/private/tmp/kof-ash-right-validation.json')}
+VALIDATIONS={
+    variant: Path(tempfile.gettempdir()) / f'kof-ash-{variant.split("-")[0]}-validation.json'
+    for variant in ('left-hair', 'right-hair')
+}
 
 
 def enc(value): return (json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode()

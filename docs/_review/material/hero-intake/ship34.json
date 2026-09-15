@@ -4,7 +4,7 @@
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
  "invocation": "node tools/hero-intake/run.mjs --batch ship34 --from docs/_review/material/hero-intake/ship34.list.json --delivery \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/_reports/community-acquired-heroes/model-delivery-summary.json\" --no-gen-icons",
- "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+ "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
   "modelComponents": 65,
@@ -500,7 +500,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -546,7 +546,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -695,7 +695,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -728,7 +728,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -795,7 +795,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -828,7 +828,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -967,7 +967,7 @@
      "d01specialsdash",
      "d01specialsend"
     ],
-    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1025,7 +1025,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-mario-c00-static-skinned-v2（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1092,7 +1092,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
+    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1138,7 +1138,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
+    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1299,7 +1299,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1332,7 +1332,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-ptrainer-female-c01-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；ssbu-ptrainer-male-c00-formal-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1471,7 +1471,7 @@
      "GGD_procedural_idle",
      "GGD_procedural_run"
     ],
-    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）",
+    "gap": "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1504,7 +1504,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）"
+    "中央素材庫的獨立模型元件驗證失敗：ssbu-ryu-c00-static-decimated-v1（Git 路徑沒有實檔、Git 路徑未追蹤）；修復前不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",
@@ -1601,7 +1601,7 @@
     "nativeAnimationCount": 0,
     "proceduralAnimationCount": 0,
     "animationNames": [],
-    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架",
+    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1634,7 +1634,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架"
+    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",

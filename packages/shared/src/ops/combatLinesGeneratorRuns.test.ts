@@ -47,12 +47,16 @@ describe("戰鬥語音產生器 join 出貨 roster (combat-lines-generator-runs)
     for (const f of ["CATEGORIES.json", "ROSTER.json", "COMBAT_CASTING.json", "COMBAT_GRUNTS.json", "SKILL_READINGS.json", "OWNER_LINES.csv", "COMBAT_ORIGINALS.json"]) {
       cpSync(join(REPO, L, f), join(root, L, f));
     }
-    // the donor wavs are gitignored material; point the sandbox at the real ones via symlink-free copy of ONE hero's donor
+    // The generator only needs stable donor bytes here to compute provenance. Keep this unit
+    // fixture self-contained: clean CI intentionally has no gitignored voice donor library.
     const casting = JSON.parse(readFileSync(join(root, L, "COMBAT_CASTING.json"), "utf8"));
     const heroId = "b2-aladdin";
     const donor = casting.champions[heroId].donor as string;
     mkdirSync(join(root, "voice-reference-pipeline/approved/processed"), { recursive: true });
-    cpSync(join(REPO, "voice-reference-pipeline/approved/processed", `${donor}.wav`), join(root, "voice-reference-pipeline/approved/processed", `${donor}.wav`));
+    writeFileSync(
+      join(root, "voice-reference-pipeline/approved/processed", `${donor}.wav`),
+      Buffer.from("RIFF\u0000\u0000\u0000\u0000WAVEfmt "),
+    );
     // Narrow the sandbox roster to that one hero so the run is fast and the message is about him.
     casting.champions = { [heroId]: casting.champions[heroId] };
     writeFileSync(join(root, L, "COMBAT_CASTING.json"), JSON.stringify(casting));

@@ -9,6 +9,7 @@ import os
 import shutil
 import subprocess
 import tarfile
+import tempfile
 from pathlib import Path
 
 
@@ -114,6 +115,71 @@ def plan(repo: Path, base: str, output: Path) -> dict:
     return result
 
 
+def extend_stage(manifest_path: Path, add_list: Path, output: Path) -> dict:
+    """Restore the verified split into staging and append explicitly listed preparation files."""
+    manifest = verify_manifest(manifest_path)
+    output = output.resolve()
+    if output == ROOT or output.is_relative_to(ROOT):
+        raise ValueError("local split staging must be outside the Git repository")
+    payload = output / "payload"
+    if payload.exists():
+        raise ValueError("split payload already exists; preserve it and use a new output directory")
+    payload.mkdir(parents=True)
+    restored = restore(manifest_path, payload)
+    additions = [
+        row.strip()
+        for row in add_list.read_text().splitlines()
+        if row.strip() and not row.lstrip().startswith("#")
+    ]
+    if len(additions) != len(set(additions)) or not additions:
+        raise ValueError("extension list is empty or contains duplicate paths")
+    existing = {row["repoPath"] for row in manifest["files"]}
+    records = list(manifest["files"])
+    for relative in sorted(additions):
+        if relative in existing:
+            raise ValueError("extension path is already in the split: " + relative)
+        source = (ROOT / relative).resolve()
+        if not source.is_relative_to(ROOT) or not source.is_file():
+            raise ValueError("extension path is not a regular repo file: " + relative)
+        target = payload / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+        records.append({
+            "repoPath": relative,
+            "archiveMember": relative,
+            "bytes": source.stat().st_size,
+            "sha256": sha256(source),
+            "storageRole": "preparation-evidence",
+        })
+    records.sort(key=lambda row: row["archiveMember"])
+    result = {
+        "schema": "ggd.pr1152-s3-split-plan@1",
+        "base": manifest["baseCommit"],
+        "payloadRoot": str(payload),
+        "prefix": PREFIX,
+        "summary": {
+            "files": len(records),
+            "bytes": sum(row["bytes"] for row in records),
+            "unreferencedModelComponents": manifest["summary"]["unreferencedModelComponents"],
+            "preparationEvidenceFiles": (
+                manifest["summary"]["preparationEvidenceFiles"] + len(additions)
+            ),
+        },
+        "gitSummary": manifest["gitSummary"],
+        "files": records,
+        "extension": {
+            "previousArchiveSha256": manifest["archiveSha256"],
+            "previousFiles": manifest["summary"]["files"],
+            "addedFiles": len(additions),
+            "restoredFiles": restored["restored"],
+            "restoredBytes": restored["bytes"],
+        },
+    }
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "plan.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+    return result
+
+
 def finalize(plan_path: Path, receipt_path: Path, output: Path) -> dict:
     plan_data = json.loads(plan_path.read_text())
     receipt = json.loads(receipt_path.read_text())
@@ -134,7 +200,12 @@ def finalize(plan_path: Path, receipt_path: Path, output: Path) -> dict:
     ]
     if backup_manifest.get("files") != expected:
         raise ValueError("S3 archive members differ from the split plan")
-    git_glbs = added_git_glbs(ROOT, plan_data["base"])
+    git_summary = plan_data.get("gitSummary")
+    if git_summary is None:
+        git_summary = {
+            "referencedModelComponents": len(added_git_glbs(ROOT, plan_data["base"])),
+            "unreferencedModelComponents": 0,
+        }
     result = {
         "schema": "ggd.pr1152-s3-preparation-split@1",
         "decisionIssue": "https://github.com/adms/GGD/issues/1252",
@@ -148,10 +219,7 @@ def finalize(plan_path: Path, receipt_path: Path, output: Path) -> dict:
         "profile": "vibe-coding",
         "region": "ap-east-2",
         "summary": plan_data["summary"],
-        "gitSummary": {
-            "referencedModelComponents": len(git_glbs),
-            "unreferencedModelComponents": 0,
-        },
+        "gitSummary": git_summary,
         "files": plan_data["files"],
         "restoreCommand": "python3 tools/hero-model-library/prepare_pr1152_s3_split.py restore --manifest materials/asset-library/pr1152-s3-split.json",
     }
@@ -298,7 +366,7 @@ def restore(path: Path, repo: Path) -> dict:
     arn = aws(["sts", "get-caller-identity", "--query", "Arn", "--output", "text"], "sts:GetCallerIdentity", "configured profile").strip()
     if "assumed-role/vibe-coding-s3-role/" not in arn:
         raise RuntimeError("STOP: configured profile identity mismatch: " + arn)
-    archive = Path("/private/tmp") / (manifest["archiveSha256"] + ".tar.gz")
+    archive = Path(tempfile.gettempdir()) / (manifest["archiveSha256"] + ".tar.gz")
     aws(["s3", "cp", manifest["s3Uri"], str(archive), "--only-show-errors"], "s3:GetObject", manifest["s3Uri"])
     if sha256(archive) != manifest["archiveSha256"]:
         raise ValueError("S3 split archive SHA-256 mismatch")
@@ -343,6 +411,10 @@ def main() -> None:
     stage_parser = subparsers.add_parser("stage")
     stage_parser.add_argument("--base", default="origin/main")
     stage_parser.add_argument("--output", type=Path, required=True)
+    extend_parser = subparsers.add_parser("extend-stage")
+    extend_parser.add_argument("--manifest", type=Path, required=True)
+    extend_parser.add_argument("--add-list", type=Path, required=True)
+    extend_parser.add_argument("--output", type=Path, required=True)
     finalize_parser = subparsers.add_parser("finalize")
     finalize_parser.add_argument("--plan", type=Path, required=True)
     finalize_parser.add_argument("--receipt", type=Path, required=True)
@@ -360,6 +432,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.mode == "stage":
         result = plan(ROOT, args.base, args.output)
+    elif args.mode == "extend-stage":
+        result = extend_stage(args.manifest, args.add_list, args.output)
     elif args.mode == "finalize":
         result = finalize(args.plan, args.receipt, args.output)
     elif args.mode == "check":

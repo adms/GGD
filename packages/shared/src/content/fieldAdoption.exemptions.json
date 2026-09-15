@@ -1947,10 +1947,20 @@
     "since": "2026-09-03",
     "why": "GH#965 —— #838（特效工坊）的**非重疊那一半**：這九個 primitive 是為了讓外部編輯器**寫得出來**才落地的,⇒ ⭐ 今天 0 採用是**對的**,⛔ 不是「做了沒接上」。⚠️ 而它與 S8 的差別在於**誰是消費端**:S8 抓的是「引擎有、⛔ 沒有人會產出它」;這一格的產出端是 **#838 的編輯器**(owner 2026-08-31 逐字:「給 codex 編輯器做,你到時候參考就好」)。⛔ 我**刻意不先手寫一份內容去點亮它** —— 那會是我替編輯器猜一個用法(CLAUDE.md「我的推測會變成他的需求」),而那份猜出來的內容之後會被當成「原作就是這樣」。⭐ 反駁法:30 天寬限到期時如果 #838 還沒產出用到它的內容,這一列就要被重新裁決 ——要嘛編輯器真的產出了(⇒ 這一列自動消失),要嘛這個 primitive 該被撤掉。"
   },
-  "field:vfx#vfx@1.presentation": {
+  "enum:vfx#vfx@1.presentation=decal": {
     "status": "landing",
-    "since": "2026-09-03",
-    "why": "GH#965 —— #838（特效工坊）的**非重疊那一半**：這九個 primitive 是為了讓外部編輯器**寫得出來**才落地的,⇒ ⭐ 今天 0 採用是**對的**,⛔ 不是「做了沒接上」。⚠️ 而它與 S8 的差別在於**誰是消費端**:S8 抓的是「引擎有、⛔ 沒有人會產出它」;這一格的產出端是 **#838 的編輯器**(owner 2026-08-31 逐字:「給 codex 編輯器做,你到時候參考就好」)。⛔ 我**刻意不先手寫一份內容去點亮它** —— 那會是我替編輯器猜一個用法(CLAUDE.md「我的推測會變成他的需求」),而那份猜出來的內容之後會被當成「原作就是這樣」。⭐ 反駁法:30 天寬限到期時如果 #838 還沒產出用到它的內容,這一列就要被重新裁決 ——要嘛編輯器真的產出了(⇒ 這一列自動消失),要嘛這個 primitive 該被撤掉。"
+    "since": "2026-09-15",
+    "why": "Popp 的 24 份來源貼圖 VFX 首次採用 presentation 欄位，但這批只需要 billboard；decal 仍是同一個新 presentation enum 的未採用分支。30 天到期前要由真實內容採用或重新裁決，不能為了普查手寫假效果。"
+  },
+  "enum:vfx#vfx@1.presentation=ribbon": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "Popp 的 24 份來源貼圖 VFX 首次採用 presentation 欄位，但這批只需要 billboard；ribbon 仍是同一個新 presentation enum 的未採用分支。30 天到期前要由真實內容採用或重新裁決，不能為了普查手寫假效果。"
+  },
+  "enum:vfx#vfx@1.presentation=trail": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "Popp 的 24 份來源貼圖 VFX 首次採用 presentation 欄位，但這批只需要 billboard；trail 仍是同一個新 presentation enum 的未採用分支。30 天到期前要由真實內容採用或重新裁決，不能為了普查手寫假效果。"
   },
   "enum:abilities.effects[]#spawnModelFx.path=radial": {
     "status": "landing",

@@ -13,10 +13,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 
 BLENDER_SCRIPT = r'''
-import hashlib,json,os,sys
+import hashlib,json,os,sys,tempfile
 from pathlib import Path
 for key,slug in [('BLENDER_USER_CONFIG','config'),('BLENDER_USER_SCRIPTS','scripts'),('BLENDER_USER_DATAFILES','data')]:
- p=Path('/private/tmp/ggd-ash-universal-atlas-blender')/slug;p.mkdir(parents=True,exist_ok=True);os.environ[key]=str(p)
+ p=Path(tempfile.gettempdir())/'ggd-ash-universal-atlas-blender'/slug;p.mkdir(parents=True,exist_ok=True);os.environ[key]=str(p)
 import bpy
 from mathutils import Vector
 model=Path(sys.argv[-3]);out=Path(sys.argv[-2]);label=sys.argv[-1]
