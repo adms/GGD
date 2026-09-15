@@ -34,9 +34,14 @@ def main() -> None:
     target = RECEIPTS / f"git-backup-{short}.json"
     expected = args.receipt.read_bytes()
     lines = REPORT.read_text().splitlines()
+    base = receipt.get("baseCommit")
+    scope = (
+        f"增量 {receipt['files']} 檔，基底 `{base[:9]}`"
+        if base else f"完整快照 {receipt['files']} 檔"
+    )
     replacement = (
         f"{PREFIX}`materials/hero-model-library/priority-evidence/git-backups/"
-        f"{target.name}`；{receipt['files']} 檔，S3 完整讀回與逐檔 SHA-256 驗證通過"
+        f"{target.name}`；{scope}，S3 完整讀回與逐檔 SHA-256 驗證通過"
     )
     hits = [index for index, line in enumerate(lines) if line.startswith(PREFIX)]
     if len(hits) != 1:
