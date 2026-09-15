@@ -1,0 +1,414 @@
+{
+  "schema": "ggd.approved-derivatives-visual-evidence@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1",
+  "records": [
+    {
+      "id": "albus",
+      "label": "阿爾巴斯",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93.glb",
+      "sourceSha256": "fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 4,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current/front.png",
+          "sha256": "e9d679ea541bd34d203dde3d46f1e296a4c2b25defaeebb132c457b8822a5952"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current/back.png",
+          "sha256": "6db6577130486320949c93b40892d790d93bf30b41a6422d75e737732626dbde"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/albus-current/isometric.png",
+          "sha256": "6ffe1d8862d5a796267c8fae24d5362cabaeaa16b7e43a6a6c0a019b1d931556"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "azazel",
+      "label": "阿薩謝爾",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968.glb",
+      "sourceSha256": "f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/front.png",
+          "sha256": "5e25bfeee060ac6d3dba07ebc9b4db82d18702c50e4d3c9e303e0fb005a98d50"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/back.png",
+          "sha256": "6cdccd94d082b42924e61f5fbacc967f16608f6c28240b8820d0d66e408fd635"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/isometric.png",
+          "sha256": "54bb3c9aed67486b8d3b1e1d5e83b01fa5f02889cc61872e2cc567732f496727"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "bojji",
+      "label": "波吉",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
+      "sourceSha256": "745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/front.png",
+          "sha256": "e9190c861540bf01e0f4284b4d62ca0ccfc8bf0378463e435bd3d9d1e7a845f0"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/back.png",
+          "sha256": "4658e8661b15eeaaeddfe85474b3c42ff71c303e475081b1fcbc7a3e579e739c"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/isometric.png",
+          "sha256": "1fc9d71372366d2f6f2276e869786bb0f595b4eae5f0c6e4d4f7ca08e51054d5"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "goblin",
+      "label": "哥布林殺手",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+      "sourceSha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 4,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current/front.png",
+          "sha256": "6efdc8fab519ea6b8011e933d2d4a6f5406f8dc8c263684cdbf8f4aa9ef2587a"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current/back.png",
+          "sha256": "fbe4db3e80b78bd0a6a476efb83fce2396193ae18f198eb639cafe0bf749aebb"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/goblin-current/isometric.png",
+          "sha256": "19d863a72e0b99da9b0ed7c95dbaf11a2f6a22f7f655468d35a55efdb1629bf9"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "kirby",
+      "label": "卡比",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+      "sourceSha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 6,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current/front.png",
+          "sha256": "5377949f409c6388b92f67787544be185fb081a2a8ca03e48575971498bdabf1"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current/back.png",
+          "sha256": "4f94a0e0319e3c8161b9bf8f8aa9c8b0f56ff1af14f94d95a0a2af7636901811"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/kirby-current/isometric.png",
+          "sha256": "b1df50d98c0f22702c3567b038e5efd10679861d2c2f35a4d4bf2340a8f154bd"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "mai",
+      "label": "不知火舞",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "sourceSha256": "7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current/front.png",
+          "sha256": "2bd0a31035e63e252651b8de99e51cbee3cb084d15b2e8f94284eeb2603a31f3"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current/back.png",
+          "sha256": "f1bb58efbd3d36ac335e4c5240b31860e19792b6d0a97e195373e6e69ff8661f"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-current/isometric.png",
+          "sha256": "039e6c16594ecd48ea59021f3a8a995cdea48345e4370823549ca0c32f9c7e0f"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "mai",
+      "label": "不知火舞",
+      "variant": "decimated-candidate",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "sourceSha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate/front.png",
+          "sha256": "888c3e36111e21086d871f4b37626d8c62975486acbd679b79e32891236d32b7"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate/back.png",
+          "sha256": "a018e457bad2f47b415a8a1c75a6056b5c6047eaeff3bbb372329429eefd7d81"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/mai-decimated-candidate/isometric.png",
+          "sha256": "142b3b0311a1818df483e2c21bbb590c2d417194ac0b9be055ca356c38a96c17"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "misery",
+      "label": "米瑟利",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1.glb",
+      "sourceSha256": "97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current/front.png",
+          "sha256": "a30d04b3f397f8b0094fe2de687a79c19cfbeb7db6bf4db3a275b6d6bb377b18"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current/back.png",
+          "sha256": "79c951d9abb5b305d5cf9bf4c77ae200bc6d7f767acd91ae81e2a1bdf3c4b3de"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/misery-current/isometric.png",
+          "sha256": "a6a4200c300e1f1f47ab3d31b81dac415e1255eec06c70c6cd133cfd4266f42e"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "popp",
+      "label": "何布",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e.glb",
+      "sourceSha256": "7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current/front.png",
+          "sha256": "b3d8a0d3dce635952e58bf16d65e7970844633a781647ae8d4eaaa62f81ed223"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current/back.png",
+          "sha256": "d17ce4e5a1b3a0c2f8e13f8cae6749a2337ee6b50f31e429e3e920acb694fbb9"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/popp-current/isometric.png",
+          "sha256": "8c9f02517cf27802bd230acb0513827a00fabeab188e32bcd6d440282a23f67d"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "sunraku",
+      "label": "SUN樂",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed.glb",
+      "sourceSha256": "f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current/front.png",
+          "sha256": "3d82ee27131f0b587d0719c5d0aef613e88a5f88bad5035c777f4ac640eb6ffe"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current/back.png",
+          "sha256": "3f4ef05be1a94e32bac4820000ed428b9f5dcf9edf4651048551f0bf919847db"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/sunraku-current/isometric.png",
+          "sha256": "60a0216203fb86f0b3e4a7ce06dc22662b7a4556b3e283e42063d30bdda3a2d5"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "takopi",
+      "label": "章魚嗶",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
+      "sourceSha256": "bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 6,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current/front.png",
+          "sha256": "f2c7ea54fbe1ac1bd70e0c4b23a35e922761e7f29ab6f60f0c18986882a69f2a"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current/back.png",
+          "sha256": "f71de8bdf8646c2a18c6ecf3ff72facb1a5099563cf49930bc27052ea34db72c"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/takopi-current/isometric.png",
+          "sha256": "65cff2bfe50665ca8a5ead9fdf234698b256905cc8462529779eb1fec499943b"
+        }
+      ],
+      "complete": true
+    },
+    {
+      "id": "yogiri",
+      "label": "高遠夜霧",
+      "variant": "current",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-approved11-processed-copies-audit/content/assets/models/community/versions/fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689.glb",
+      "sourceSha256": "fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current",
+      "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current/run.json",
+      "proof": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current/proof.json",
+      "babylonVersion": "7.54.3",
+      "animationGroups": 5,
+      "skeletons": 1,
+      "views": [
+        {
+          "name": "front",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current/front.png",
+          "sha256": "378aa880ef0f8eb7cd64baa5dfd7698c5d1a97be0b94f20a2e5a0d0d7e1243e8"
+        },
+        {
+          "name": "back",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current/back.png",
+          "sha256": "b47e18fba6afd27b74ac349b3b84e9a16ac541c9811b8276f4ff8833c8ed42e6"
+        },
+        {
+          "name": "isometric",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/yogiri-current/isometric.png",
+          "sha256": "21a3059c34f4e9138a51669a4b92846082d8159896e860253a9fd8e62e98e4ff"
+        }
+      ],
+      "complete": true
+    }
+  ],
+  "summary": {
+    "requested": 12,
+    "complete": 12,
+    "failed": 0
+  },
+  "gitContactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/approved11-contact-sheet.jpg",
+    "bytes": 437741,
+    "sha256": "9c6aa4c7dd36ea2f2c7345a25164860c03196b62f5c3e02f435a0f1769e15bf6"
+  },
+  "gitMaiDecimationAB": {
+    "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-ab.jpg",
+    "bytes": 160610,
+    "sha256": "9dfb38469f174f788699c47ba7b60123de45e9b5b7f0629509bc6f56b510a488"
+  },
+  "maiFixedCameraPixelDifference": {
+    "front": {
+      "meanAbsoluteRgb": 0.3190609375,
+      "changedPixelPctAbove16": 0.643125,
+      "maxChannelDelta": 192
+    },
+    "back": {
+      "meanAbsoluteRgb": 0.21676666666666666,
+      "changedPixelPctAbove16": 0.4440625,
+      "maxChannelDelta": 172
+    },
+    "isometric": {
+      "meanAbsoluteRgb": 0.40421822916666666,
+      "changedPixelPctAbove16": 0.84359375,
+      "maxChannelDelta": 201
+    }
+  },
+  "staticOnly": true,
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false,
+  "productionDeploymentVerified": false
+}

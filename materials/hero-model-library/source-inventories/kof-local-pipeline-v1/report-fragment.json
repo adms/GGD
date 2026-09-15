@@ -1,0 +1,26 @@
+{
+  "schema": "ggd.kof-local-pipeline-report-fragment@1",
+  "title": "KOF 本機自動化管線",
+  "summary": {
+    "payloadCharacters": 3,
+    "pathIndexedOnlyCharacters": 1,
+    "verifiedPayloadFiles": 1088,
+    "decodedAudioFiles": 474,
+    "baseTextureCandidates": 14,
+    "vfxTextureCandidates": 55,
+    "ownerApprovedVfxTextureCandidates": 55,
+    "ownerApprovedNativeEffectGroups": 71,
+    "nativeFormatProbeFiles": 18,
+    "nativeFormatReaderAcceptedFiles": 0,
+    "runtimeSelectableModels": 0,
+    "runtimeMotionBindings": 0,
+    "runtimeVfxBindings": 0,
+    "productionDeployments": 0
+  },
+  "blockers": [
+    "MAI/IOR/KYO 的 OBAC/OMIR/OSEC 尚無經稽核 reader，模型與骨架不能宣稱已轉換。",
+    "MAI/IOR/KYO 的 OTRA 尚無經稽核 reader，原生動作不能宣稱已轉換。",
+    "71 個 EFF 群組與 55 張 VFX 貼圖已核准，但混合、時序、掛點與技能事件尚未重建，不能建立 runtime VFX 綁定。",
+    "TRY 只有 375 筆 WAD 路徑索引，payload 仍是 0。"
+  ]
+}

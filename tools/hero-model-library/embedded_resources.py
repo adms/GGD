@@ -40,9 +40,13 @@ def wwise_media(data):
 
 
 def extract_embedded_resources(home):
+    assemblies = sorted((home/'extracted').rglob('*.dll'))
+    if not assemblies:
+        (home/'embedded-resources.json').write_text('[]\n')
+        return []
     import dnfile
     records = []
-    for dll in sorted((home/'extracted').rglob('*.dll')):
+    for dll in assemblies:
         assembly = dll.relative_to(home/'extracted')
         dest = home/'embedded-resources'/assembly
         pe = dnfile.dnPE(str(dll))

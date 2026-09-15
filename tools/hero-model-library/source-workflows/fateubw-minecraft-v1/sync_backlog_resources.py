@@ -60,8 +60,9 @@ def main():
         "5個道具／生物仍保留原始幾何JSON。全部待權利、來源引擎比對、事件映射與後台驗收。"
     )
     family["motion"] = (
-        "20個動畫JSON共156項：14名英靈合計132項，已轉換112項原生動作、"
-        "保留20項公式／無時長片段。Heracles的9個靜態旋轉末端骨已採休息姿勢烘焙及完整逆綁定矩陣轉換。"
+        "20個動畫JSON共156項：14名英靈合計132項，已轉換127項原生動作；"
+        "其中15項公式／pre-post片段已用受限語法以60fps烘焙，另保留5項來源未提供時長的姿勢。"
+        "Heracles的9個靜態旋轉末端骨已採休息姿勢烘焙及完整逆綁定矩陣轉換。"
         "5個道具／生物20項及共用4項仍為原始格式；非FUC PSP。"
     )
     for candidate in candidates:
@@ -74,7 +75,8 @@ def main():
             unconverted = native_meta["unconvertedClipCount"]
             override["motion"] = (
                 f"FateUBW Minecraft MOD：來源 {source_count} 個片段，已轉換 {converted} 個原生動作；"
-                f"{unconverted} 個公式／無時長等片段保留未轉換。已通過結構、Khronos 與分段 WebGL 驗證；"
+                f"{unconverted} 個來源未提供時長的姿勢保留未轉換。公式／pre-post片段已用受限語法烘焙，"
+                "並通過結構、Khronos 與分段 WebGL 驗證；"
                 "待來源引擎曲線比對、事件映射、權利與後台驗收；非FUC PSP。"
             )
             attempt = attempts[native_meta["attemptId"]]
@@ -95,9 +97,13 @@ def main():
         add_path(paths, attempt.get("contractValidation"))
         add_path(paths, attempt.get("structuralReadback"))
         add_path(paths, attempt.get("restPoseParity"))
+        add_path(paths, attempt.get("completionEvidence"))
         phase = attempt.get("webglPhaseReview") or {}
         for key in ("proof", "run", "visualAssessment", "manualReview", "contactSheet"):
             add_path(paths, phase.get(key))
+        completion = attempt.get("webglNewCurveReview") or {}
+        for key in ("proof", "run"):
+            add_path(paths, completion.get(key))
         batch = attempt.get("batchEvidence") or {}
         for key in ("manifest", "webgl", "visualAssessment", "manualReview", "contactSheet"):
             add_path(paths, batch.get(key))

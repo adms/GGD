@@ -1,0 +1,233 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "kukuri",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara07_02",
+    "definition": "CharacterDefinitions/Chara07_02.chr",
+    "characterNative": "ククリ",
+    "nativeModel": "Model/Chara07/KukuriMigMig.x",
+    "convertedGlb": "models/Model/Chara07/KukuriMigMig.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+    "bytes": 4824140,
+    "sha256": "bc98efe10be27cc65943a8897e7d3c498c69777e09ede50820ea5443ec13ecb1"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 6,
+    "outputDrawPrimitives": 1,
+    "vertices": 2633,
+    "triangles": 3239,
+    "atlasEdge": 1024,
+    "sourceAtlasEdge": 1024,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 138,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "3": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "4": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "5": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 6,
+      "maxSumDelta": 1.043081283569336e-06
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-batch2-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 68,
+    "originalNames": [
+      "kami_03",
+      "kami_02",
+      "kami_01",
+      "burst_02_02",
+      "burst_02_01",
+      "burst_01_02",
+      "burst_01_01",
+      "sp01_miss_03",
+      "sp01_miss_02",
+      "sp01_miss_01",
+      "sp01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge_01",
+      "attack_01_02",
+      "attack_01_01",
+      "wait",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 24
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 67
+      },
+      {
+        "name": "attack_01_01",
+        "originalIndex": 23
+      },
+      {
+        "name": "sp01",
+        "originalIndex": 10
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 54
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 39
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      1024,
+      1024
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "3a2f897ed2ba74e44f8f5add06398e392715fa76a475aa3f79b7c5794c66c54f",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/kukuri/body-prepared.glb",
+    "bytes": 4653200,
+    "sha256": "e9d04037a0966a33cdc436cf6aa06136dc8a224c0b91ea5a0b6f0c5a65401ee2"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}

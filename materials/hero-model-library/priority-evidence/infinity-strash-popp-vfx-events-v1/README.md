@@ -5,7 +5,13 @@
 - VFX 引用：17；直接套件對已取得：17；GGD 轉換完成：0。
 - VFX 第一層依賴：229 次引用／138 個唯一 package。
 - VFX 非腳本 package 遞迴閉包：發現 309；取得 309；缺失 0；閉包完整：true。
+- VFX 重建支援素材：309 個 package 全數嘗試；203 個有輸出，匯出 789 檔／122299241 bytes（{'.hdr': 12, '.tga': 777}）。
+- VFX 支援素材目錄：789/789 可完整解碼；依 SHA-256 分為 87 個獨立位元組素材，702 個重複 occurrence 的 package／來源關係仍完整保留。
 - VFX 閉包 S3 legacy 歸檔：s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.tar.gz；完整下載讀回與逐成員 SHA-256：通過。
+- VFX 重建支援素材 S3 legacy 歸檔：s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb.tar.gz；完整下載讀回與逐成員 SHA-256：通過。
+- 原先失敗的 StaticMesh：33/33 已恢復為 33 個 GLB，Khronos 0 error / 0 warning；尚未轉換 0。
+- StaticMesh 恢復成果 S3 legacy 歸檔：s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/d6ff7156fea1d831abcf85e58ec367bc6d7c98a599e838dd2da1c95bb79d4141.tar.gz；完整下載讀回與逐成員 SHA-256：通過。
+- 重建候選配方：14 個 Niagara system、3 個支援根、14 份靜態候選配方；87/87 unique image 與 33/33 mesh 已連回來源。
 - 事件引用：41；原始套件對已取得：41。
 - 可播放逐項審查候選：36；使用者已核准：0。
 - 41 筆 PN020 直接事件以外另有 19 筆相依引用；其中 10 筆通用魔法音效事件尚未抽出與對媒體。
@@ -81,7 +87,7 @@
 
 ## 仍缺
 
-- 14 個 NiagaraSystem 的非腳本 package 依賴閉包已取得，但尚無可重現的 GGD 轉換器與原作播放視覺驗收。
+- 17 個根引用精確分為 14 個 NiagaraSystem、2 個 CurveFloat 與 1 個 Material Parameter Collection；貼圖／HDR 與 33 個靜態網格都已連回候選配方。Niagara 程式及原作播放時序仍未轉成 GGD VFX。
 - 2 個 CurveFloat 與 1 個 MaterialParameterCollection 是支援元件，不能單獨冒稱完整特效。
 - 事件到 GGD 技能時點尚未完成；全部音效／語音候選需逐項聽審後才能綁定。
 - 依賴索引另含 10 個通用魔法音效事件；它們不在指定的 41 個 PN020 直接事件內，本批未將名稱當成已取得音檔。

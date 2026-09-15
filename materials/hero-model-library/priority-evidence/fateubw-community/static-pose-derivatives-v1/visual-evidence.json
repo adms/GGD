@@ -1,0 +1,707 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative-visual-evidence@1",
+  "records": [
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+      "bytes": 52276,
+      "renderDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer",
+      "proofSha256": "eb061faac2f08e6de3cf195fe4ad0be088923b9bdf91b8e4f440317c271e181c",
+      "screenshots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-000-front.png",
+          "sha256": "25be715e90ba1624b201073c66f20f9c697fd7dd510a0f262e2e45886aa002bf",
+          "bytes": 25590
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-025-front.png",
+          "sha256": "25be715e90ba1624b201073c66f20f9c697fd7dd510a0f262e2e45886aa002bf",
+          "bytes": 25590
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-050-front.png",
+          "sha256": "25be715e90ba1624b201073c66f20f9c697fd7dd510a0f262e2e45886aa002bf",
+          "bytes": 25590
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-050-side.png",
+          "sha256": "59756ef43493042683c090fca0cbb24a41f9e9648d03cabd1825453c0e3de893",
+          "bytes": 20702
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-075-front.png",
+          "sha256": "25be715e90ba1624b201073c66f20f9c697fd7dd510a0f262e2e45886aa002bf",
+          "bytes": 25590
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-cu_chulainn_lancer/derived-hold-summon-100-front.png",
+          "sha256": "25be715e90ba1624b201073c66f20f9c697fd7dd510a0f262e2e45886aa002bf",
+          "bytes": 25590
+        }
+      ],
+      "frontPhaseDeltas": {
+        "0-to-25": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-50": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-75": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-100": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+      "bytes": 50044,
+      "renderDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer",
+      "proofSha256": "85ad025513712a59c47f95a94c8f2e4583edcfe3244ccffd166e0edbc2827def",
+      "screenshots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-000-front.png",
+          "sha256": "259b3ce8a00054eed865e00696a0bd2c6eb7c65006e75e066125b5797fb803b6",
+          "bytes": 24225
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-025-front.png",
+          "sha256": "259b3ce8a00054eed865e00696a0bd2c6eb7c65006e75e066125b5797fb803b6",
+          "bytes": 24225
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-050-front.png",
+          "sha256": "259b3ce8a00054eed865e00696a0bd2c6eb7c65006e75e066125b5797fb803b6",
+          "bytes": 24225
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-050-side.png",
+          "sha256": "4001180b932a0d0470d5873abb681b3a1e7fa963826c052a8bfd39998da9deb4",
+          "bytes": 23018
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-075-front.png",
+          "sha256": "259b3ce8a00054eed865e00696a0bd2c6eb7c65006e75e066125b5797fb803b6",
+          "bytes": 24225
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-diarmuid_ua_duibhne_lancer/derived-hold-summon-100-front.png",
+          "sha256": "259b3ce8a00054eed865e00696a0bd2c6eb7c65006e75e066125b5797fb803b6",
+          "bytes": 24225
+        }
+      ],
+      "frontPhaseDeltas": {
+        "0-to-25": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-50": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-75": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-100": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "sourceClip": "summon",
+      "derivedClip": "derived-formula-loop-summon",
+      "classification": "derived-procedural-formula-loop",
+      "duration": 2.0,
+      "sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+      "bytes": 85300,
+      "renderDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster",
+      "proofSha256": "d538069c11a439e82db8e34adf86ef69eddc031c08baddf9f9033b6483566003",
+      "screenshots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-000-front.png",
+          "sha256": "f83e45187b5c2abe206957a9db0984226163eb878513a4c09fbadfce36fede2b",
+          "bytes": 27920
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-025-front.png",
+          "sha256": "3de4ec63cf17922c290339b53f401e126a6018d0e435cc18313ee3984dc2a4a7",
+          "bytes": 27635
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-050-front.png",
+          "sha256": "f83e45187b5c2abe206957a9db0984226163eb878513a4c09fbadfce36fede2b",
+          "bytes": 27920
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-050-side.png",
+          "sha256": "eb2e96e2f2034a38de2b72014bc72f42d531c88d0dc646d4d5b8276038f2365e",
+          "bytes": 24509
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-075-front.png",
+          "sha256": "cadea9b3a215c69ba948a7adb1d7b0900c4fb987ff2e846e2a7b2e53068b7f1c",
+          "bytes": 27833
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-medea_caster/derived-formula-loop-summon-100-front.png",
+          "sha256": "40516f8bf35d9749a5726aff9c19c1067a51724984aeecc8cb115337f273fe76",
+          "bytes": 27928
+        }
+      ],
+      "frontPhaseDeltas": {
+        "0-to-25": {
+          "pixelChannelNonzeroCount": 174631,
+          "channelExtrema": [
+            [
+              0,
+              215
+            ],
+            [
+              0,
+              214
+            ],
+            [
+              0,
+              214
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 215,
+          "identicalBytes": false
+        },
+        "0-to-50": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-75": {
+          "pixelChannelNonzeroCount": 21402,
+          "channelExtrema": [
+            [
+              0,
+              214
+            ],
+            [
+              0,
+              207
+            ],
+            [
+              0,
+              205
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 214,
+          "identicalBytes": false
+        },
+        "0-to-100": {
+          "pixelChannelNonzeroCount": 4,
+          "channelExtrema": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 1,
+          "identicalBytes": false
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+      "bytes": 51384,
+      "renderDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin",
+      "proofSha256": "74f75a94ec5408f68c44925f53abca2678dd031a7c8db5eacb44f4f415fbf61d",
+      "screenshots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-000-front.png",
+          "sha256": "f7ac2abc3c46644af45c251dc2631fea25408f6efd5d3f370c443f086104b756",
+          "bytes": 32642
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-025-front.png",
+          "sha256": "f7ac2abc3c46644af45c251dc2631fea25408f6efd5d3f370c443f086104b756",
+          "bytes": 32642
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-050-front.png",
+          "sha256": "f7ac2abc3c46644af45c251dc2631fea25408f6efd5d3f370c443f086104b756",
+          "bytes": 32642
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-050-side.png",
+          "sha256": "e9a39bc461db5cc316ece6e95d42ffa2ef9492cd958ce8d5cddc5ec3285142e0",
+          "bytes": 31055
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-075-front.png",
+          "sha256": "f7ac2abc3c46644af45c251dc2631fea25408f6efd5d3f370c443f086104b756",
+          "bytes": 32642
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-sasaki_kojiro_assassin/derived-hold-summon-100-front.png",
+          "sha256": "f7ac2abc3c46644af45c251dc2631fea25408f6efd5d3f370c443f086104b756",
+          "bytes": 32642
+        }
+      ],
+      "frontPhaseDeltas": {
+        "0-to-25": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-50": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-75": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        },
+        "0-to-100": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "sourceClip": "idle",
+      "derivedClip": "derived-formula-loop-idle",
+      "classification": "derived-procedural-formula-loop",
+      "duration": 4.0,
+      "sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+      "bytes": 78492,
+      "renderDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker",
+      "proofSha256": "1705e70014b051cd255f987b56e156ba39cfed708f8488044f99aa763e7da9d5",
+      "screenshots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-000-front.png",
+          "sha256": "b88a1a664e0f38b7aaf81fcfc7d4c13034c7e5ebb41248de6b0b70d5ed28b095",
+          "bytes": 25147
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-025-front.png",
+          "sha256": "04647b926442b59e3436b20f3cb7fe6759e767172ed9337d672e0a9b009324fd",
+          "bytes": 23778
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-050-front.png",
+          "sha256": "f4825d726a2fe4ed604c0e326f778717f89eb9183af8014f58ed663fd64f3865",
+          "bytes": 23273
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-050-side.png",
+          "sha256": "824339a3355db63c055f9ca8a5cd8897a003770f37620892adf717a765b20ec9",
+          "bytes": 20354
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-075-front.png",
+          "sha256": "17a044cb5479ddc3f9939616f0c12d8545c36598f94776556912691fe72b001b",
+          "bytes": 24115
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/fateubw-heracles_berserker/derived-formula-loop-idle-100-front.png",
+          "sha256": "b88a1a664e0f38b7aaf81fcfc7d4c13034c7e5ebb41248de6b0b70d5ed28b095",
+          "bytes": 25147
+        }
+      ],
+      "frontPhaseDeltas": {
+        "0-to-25": {
+          "pixelChannelNonzeroCount": 92419,
+          "channelExtrema": [
+            [
+              0,
+              148
+            ],
+            [
+              0,
+              153
+            ],
+            [
+              0,
+              163
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 163,
+          "identicalBytes": false
+        },
+        "0-to-50": {
+          "pixelChannelNonzeroCount": 41427,
+          "channelExtrema": [
+            [
+              0,
+              148
+            ],
+            [
+              0,
+              154
+            ],
+            [
+              0,
+              163
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 163,
+          "identicalBytes": false
+        },
+        "0-to-75": {
+          "pixelChannelNonzeroCount": 98459,
+          "channelExtrema": [
+            [
+              0,
+              148
+            ],
+            [
+              0,
+              154
+            ],
+            [
+              0,
+              164
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 164,
+          "identicalBytes": false
+        },
+        "0-to-100": {
+          "pixelChannelNonzeroCount": 0,
+          "channelExtrema": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "maxChannelDelta": 0,
+          "identicalBytes": true
+        }
+      }
+    }
+  ],
+  "contactSheet": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3/contact-sheet.png",
+    "sha256": "c8f05b71e19165153049020b08411ebec90afad62b3fdc66a269f60d8a0aede1",
+    "bytes": 162752,
+    "width": 1500,
+    "height": 1775
+  },
+  "assertions": {
+    "allThreeHoldsVisuallyConstant": true,
+    "bothFormulaLoopsChangeAtQuarterPhase": true,
+    "bothFormulaLoopsVisuallyClose": true
+  },
+  "nativeDurationClaim": false,
+  "sourceEngineCurveParity": false,
+  "gameplayAcceptance": false,
+  "rightsCleared": false,
+  "backendSelectionVerified": false
+}

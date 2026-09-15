@@ -1,0 +1,104 @@
+{
+  "schema": "ggd.jump-force-dai-decimation-validation@2",
+  "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-256-v2",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "deterministicRebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba",
+    "byteIdentical": true
+  },
+  "metrics": {
+    "triangles": 7930,
+    "draws": 20,
+    "textureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "textures": 24,
+    "animations": 0
+  },
+  "preservation": {
+    "allPrimitivesSkinned": true,
+    "skinnedPrimitives": 20,
+    "jointNamesAndHierarchyEquivalent": true,
+    "jointCount": 159,
+    "inverseBindMatricesMaxAbsoluteDelta": 1.0848045349121094e-05,
+    "materialAndTextureSlotMultisetEquivalent": true,
+    "sourceMeshContainers": 6,
+    "candidateMaterialSplitMeshes": 20
+  },
+  "eyeOverlayRepair": {
+    "underlyingEyeTextureRetained": true,
+    "transparentOverlays": {
+      "T_Chr0430_eyeshadow_C": {
+        "size": [
+          256,
+          256
+        ],
+        "alphaExtrema": [
+          0,
+          0
+        ],
+        "sha256": "aebc86755d7beb8b01bcd992ab44e1133afcb473511b7832eb82228be275473f"
+      },
+      "T_Chr0430_lens_C": {
+        "size": [
+          256,
+          256
+        ],
+        "alphaExtrema": [
+          0,
+          0
+        ],
+        "sha256": "aebc86755d7beb8b01bcd992ab44e1133afcb473511b7832eb82228be275473f"
+      }
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 81,
+    "valueCount": 77124
+  },
+  "khronos": {
+    "validator": "gltf-validator@2.0.0-dev.3.10",
+    "errors": 0,
+    "warnings": 58,
+    "infos": 1,
+    "hints": 0,
+    "truncated": false,
+    "issueCodeCounts": {
+      "IMAGE_FEATURES_UNSUPPORTED": 22,
+      "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE": 16,
+      "NODE_SKINNED_MESH_NON_ROOT": 20,
+      "UNUSED_OBJECT": 1
+    }
+  },
+  "currentPolicy": {
+    "source": "packages/shared/src/content/modelUpload/adoptionPolicy.json and runtime budget constants via tools/model-budget/guard.ts",
+    "adoptionEligible": true,
+    "decimateWhenTrianglesAbove": 10000,
+    "decimatedTargetTrianglesMax": 8000,
+    "textureEdgePassed": true,
+    "drawCallPassed": false,
+    "drawCallLimit": 6
+  },
+  "ownerState": {
+    "publicationAuthorization": "approved-all-resources-2026-09-15",
+    "visualQualityReview": "pending-new-v2-render-review",
+    "technicalGatesStillApply": true
+  },
+  "readiness": "converted-and-structurally-validated; owner-publication-authorized; visual-review-pending; draw20-over-limit6; animations0; not-runtime-selectable",
+  "componentAcceptedForGitRuntime": false,
+  "backendRegistered": false,
+  "runtimeSelectable": false,
+  "productionDeployed": false
+}

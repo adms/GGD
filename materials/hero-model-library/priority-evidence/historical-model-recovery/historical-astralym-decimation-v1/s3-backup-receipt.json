@@ -1,15 +1,15 @@
 {
   "schema": "ggd-intake-backup-receipt@1",
-  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
-  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.files.json",
-  "archiveSha256": "ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442",
-  "archiveBytes": 61996744,
-  "fileCount": 91,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/52f4ea57c6ebaa5a27b85d843df1744ba40445072cded730295fc38268599ba6.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/52f4ea57c6ebaa5a27b85d843df1744ba40445072cded730295fc38268599ba6.files.json",
+  "archiveSha256": "52f4ea57c6ebaa5a27b85d843df1744ba40445072cded730295fc38268599ba6",
+  "archiveBytes": 90077252,
+  "fileCount": 164,
   "fullGetVerified": true,
   "allMemberSha256Verified": true,
   "localUnchanged": true,
   "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1",
-  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/b3496415b4a38d3550f7cc2b91e23fcf5867c5384adabbd1b2144a5e7e09d110/source.tar.gz",
-  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/b3496415b4a38d3550f7cc2b91e23fcf5867c5384adabbd1b2144a5e7e09d110/readback.tar.gz",
-  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/b3496415b4a38d3550f7cc2b91e23fcf5867c5384adabbd1b2144a5e7e09d110/manifest.json"
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/6d6a7c59140b724767c1972a5022d4ce0cb28c44b39756155389f978fd8a6aec/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/6d6a7c59140b724767c1972a5022d4ce0cb28c44b39756155389f978fd8a6aec/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-astralym-decimation-v1/6d6a7c59140b724767c1972a5022d4ce0cb28c44b39756155389f978fd8a6aec/manifest.json"
 }

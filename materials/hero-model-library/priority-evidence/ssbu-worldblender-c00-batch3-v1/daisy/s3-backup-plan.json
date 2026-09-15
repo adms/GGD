@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-s3-backup-plan@1",
+  "status": "fulfilled",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "plannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/",
+  "identityRequirement": "assumed-role/vibe-coding-s3-role/",
+  "readbackVerificationRequired": true,
+  "uploaded": true,
+  "actualUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.tar.gz",
+  "actualManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.files.json"
+}

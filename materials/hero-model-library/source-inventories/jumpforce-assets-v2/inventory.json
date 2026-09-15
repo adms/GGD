@@ -1,0 +1,2284 @@
+{
+  "schema": "ggd.jumpforce-acquired-asset-inventory@2",
+  "checkedAt": "2026-09-15",
+  "sourceGame": "JUMP FORCE",
+  "platforms": [
+    "Windows (Steam)",
+    "public audio pack platform unverified"
+  ],
+  "mountSnapshot": {
+    "common": false,
+    "game": false,
+    "pakPayloadReadThisRun": false
+  },
+  "summary": {
+    "publicPackages": 58,
+    "publicCharacterPackages": 57,
+    "publicCommonPackages": 1,
+    "publicPackagesLiveShaVerified": 58,
+    "publicAudioFiles": 15207,
+    "publicAudioBytes": 520589494,
+    "publicAudioDurationSeconds": 26402.028304132662,
+    "steamAwbBanks": 43,
+    "steamDecodedAudioFiles": 4034,
+    "steamVoiceLabelFiles": 1794,
+    "steamSoundEffectFiles": 2170,
+    "steamMusicFiles": 70,
+    "nativeToPublicCharacterMappings": 32,
+    "unresolvedNativeCharacterGroups": 5,
+    "listeningReviewGroups": 89,
+    "publicListeningReviewGroups": 57,
+    "steamListeningReviewGroups": 32,
+    "automaticSpeakerBindings": 0,
+    "automaticEventBindings": 0,
+    "runtimeSelectableAssets": 0,
+    "productionDeployedAssets": 0
+  },
+  "publicAudioPackages": [
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "packagePath": "original/JForce_Asta.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/original/JForce_Asta.7z",
+      "packageBytes": 5763320,
+      "packageSha256": "59499db770e126d9a78f8e444b4bdfdae0aabf35f2a9a652c53da3453cac6663",
+      "groupId": "parallel-ps-jumpforce-audio:JForce_Asta",
+      "groupName": "Asta / 亞斯塔",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/extracted/JForce_Asta",
+      "fileCount": 223,
+      "bytes": 7130095,
+      "durationSeconds": 372.220357,
+      "categoryCounts": {
+        "sound-effect": 13,
+        "voice-source-label-unreviewed": 210
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "packagePath": "original/JForce_Dai.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/original/JForce_Dai.7z",
+      "packageBytes": 6211414,
+      "packageSha256": "c27fcd468fd6061327d0c524176ff6af63618f0152106df59c2c811f1d720664",
+      "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+      "groupName": "小呆／達伊 / Dai",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/extracted/JForce_Dai",
+      "fileCount": 261,
+      "bytes": 7868623,
+      "durationSeconds": 420.93145300000015,
+      "categoryCounts": {
+        "sound-effect": 14,
+        "voice-source-label-unreviewed": 247
+      },
+      "heroIds": [
+        "godie-nbbc"
+      ],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "packagePath": "original/JForce_Kenshiro.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/original/JForce_Kenshiro.7z",
+      "packageBytes": 5312720,
+      "packageSha256": "d16ded5850a42797f205e33c59a97132ee030105d2515f299c3a3ac5f37780ad",
+      "groupId": "parallel-ps-jumpforce-audio:JForce_Kenshiro",
+      "groupName": "Kenshiro / 拳四郎",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/extracted/JForce_Kenshiro",
+      "fileCount": 217,
+      "bytes": 6637110,
+      "durationSeconds": 389.80372499999976,
+      "categoryCounts": {
+        "sound-effect": 3,
+        "voice-source-label-unreviewed": 214
+      },
+      "heroIds": [
+        "godie-umal"
+      ],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Aizen/original/JForce_Aizen.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Aizen/original/JForce_Aizen.7z",
+      "packageBytes": 6522930,
+      "packageSha256": "5699517f7d92efdede008143c3b563e86537511453c42db26d903bc6f1c1e9f8",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-aizen",
+      "groupName": "Aizen",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Aizen/extracted",
+      "fileCount": 239,
+      "bytes": 8051312,
+      "durationSeconds": 419.63785416666633,
+      "categoryCounts": {
+        "unclassified": 239
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Boruto/original/JForce_Boruto.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Boruto/original/JForce_Boruto.7z",
+      "packageBytes": 4438517,
+      "packageSha256": "651e27fd1e79501318a0b62cca3e01702f3e379116fe0f044ce3ffbf61f2d216",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-boruto",
+      "groupName": "Boruto",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Boruto/extracted",
+      "fileCount": 213,
+      "bytes": 5749269,
+      "durationSeconds": 293.21529166666653,
+      "categoryCounts": {
+        "unclassified": 213
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Cell/original/JForce_Cell.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Cell/original/JForce_Cell.7z",
+      "packageBytes": 8076979,
+      "packageSha256": "82bd84d7c6e0588020eff58f8220b7797804fb4bcd6e04803410cb7eb6cea904",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-cell",
+      "groupName": "Cell",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Cell/extracted",
+      "fileCount": 219,
+      "bytes": 9402784,
+      "durationSeconds": 519.2900000000004,
+      "categoryCounts": {
+        "unclassified": 219
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Grimmjow/original/JForce_Grimmjow.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Grimmjow/original/JForce_Grimmjow.7z",
+      "packageBytes": 6130781,
+      "packageSha256": "60cb8beaaf02a910b40ca18d5dc8ca44aa9a1f0e37ca049c28e32d36b896c4f8",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-grimmjow",
+      "groupName": "Grimmjow",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Grimmjow/extracted",
+      "fileCount": 235,
+      "bytes": 7601822,
+      "durationSeconds": 345.42729166666646,
+      "categoryCounts": {
+        "unclassified": 235
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Hitsugaya/original/JForce_Hitsugaya.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hitsugaya/original/JForce_Hitsugaya.7z",
+      "packageBytes": 10998153,
+      "packageSha256": "9a01cb20f8fdb41db67e42c96d40b5ac85de235e86bb3658b059a617be40c1da",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-hitsugaya",
+      "groupName": "Hitsugaya",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hitsugaya/extracted",
+      "fileCount": 435,
+      "bytes": 13661048,
+      "durationSeconds": 669.3382291666663,
+      "categoryCounts": {
+        "unclassified": 435
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Ichigo/original/JForce_Ichigo.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Ichigo/original/JForce_Ichigo.7z",
+      "packageBytes": 4717109,
+      "packageSha256": "b857f21855d37d85280e061753f23eb4b861460151091d6ac083292fed058de5",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-ichigo",
+      "groupName": "Ichigo",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Ichigo/extracted",
+      "fileCount": 222,
+      "bytes": 6070632,
+      "durationSeconds": 326.0256041666666,
+      "categoryCounts": {
+        "unclassified": 222
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Renji/original/JForce_Renji.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Renji/original/JForce_Renji.7z",
+      "packageBytes": 8303343,
+      "packageSha256": "5b189315466162adb22e889e9bd8f9af12c5000ed2c09e3fa85df3b568cb1759",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-renji",
+      "groupName": "Renji",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Renji/extracted",
+      "fileCount": 278,
+      "bytes": 10092279,
+      "durationSeconds": 531.33775,
+      "categoryCounts": {
+        "unclassified": 278
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Rukia/original/JForce_Rukia.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Rukia/original/JForce_Rukia.7z",
+      "packageBytes": 4098768,
+      "packageSha256": "037461d3a8250b74bf1a27ad7d63320d90a935cce2c6ec4064fde891e49ee7b7",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-rukia",
+      "groupName": "Rukia",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Rukia/extracted",
+      "fileCount": 213,
+      "bytes": 5402730,
+      "durationSeconds": 313.35052083333346,
+      "categoryCounts": {
+        "unclassified": 213
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Ryo Saeba/original/JForce_Ryo Saeba.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Ryo Saeba/original/JForce_Ryo Saeba.7z",
+      "packageBytes": 9334054,
+      "packageSha256": "c8cc049fe569d8d06ac289a6f818e163177eb669c8a9b912dc122d86ebd42713",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-ryo-saeba",
+      "groupName": "Ryo Saeba",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Ryo Saeba/extracted",
+      "fileCount": 324,
+      "bytes": 11315808,
+      "durationSeconds": 622.1309583333333,
+      "categoryCounts": {
+        "unclassified": 324
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packagePath": "JForce_Yoruichi/original/JForce_Yoruichi.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yoruichi/original/JForce_Yoruichi.7z",
+      "packageBytes": 5982551,
+      "packageSha256": "5bfa135ce587bb92698da4a71a8216626dc2e3396f1c2721cbce60814d9037c1",
+      "groupId": "parallel-ps-jumpforce-local-10:jumpforce-yoruichi",
+      "groupName": "Yoruichi",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yoruichi/extracted",
+      "fileCount": 234,
+      "bytes": 7459665,
+      "durationSeconds": 369.1135208333333,
+      "categoryCounts": {
+        "unclassified": 234
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "packagePath": "JForce_DIO/original/JForce_DIO.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_DIO/original/JForce_DIO.7z",
+      "packageBytes": 8044185,
+      "packageSha256": "73870b052a28da1db4bf3193b2cf02e952b8bfa008c038bf28cad5799711ae01",
+      "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-dio",
+      "groupName": "DIO",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_DIO/extracted",
+      "fileCount": 243,
+      "bytes": 9568760,
+      "durationSeconds": 503.9011874999998,
+      "categoryCounts": {
+        "unclassified": 243
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "packagePath": "JForce_Kane/original/JForce_Kane.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kane/original/JForce_Kane.7z",
+      "packageBytes": 5889131,
+      "packageSha256": "23d4d1e44bd002e400a5e43b7e0f6920e5a6661cfc2a8935b81a16a113cb3f02",
+      "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-kane",
+      "groupName": "Kane",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kane/extracted",
+      "fileCount": 213,
+      "bytes": 7188406,
+      "durationSeconds": 352.8548125000001,
+      "categoryCounts": {
+        "unclassified": 213
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "packagePath": "JForce__Common Sounds/original/JForce__Common Sounds.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce__Common Sounds/original/JForce__Common Sounds.7z",
+      "packageBytes": 75661692,
+      "packageSha256": "dc24c2bf7a159066d47d9f96713cbf1849b6fcb6247556c086d46344e0144d3e",
+      "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-_common-sounds",
+      "groupName": "_Common Sounds",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce__Common Sounds/extracted",
+      "fileCount": 1815,
+      "bytes": 88605993,
+      "durationSeconds": 4174.596623299325,
+      "categoryCounts": {
+        "unclassified": 1815
+      },
+      "heroIds": [],
+      "isCharacterGroup": false,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_All Might/original/JForce_All Might.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_All Might/original/JForce_All Might.7z",
+      "packageBytes": 7868874,
+      "packageSha256": "dbf1e76931ca33ce5ff35eb4cbc2db1f5089bf1dd4062f431e79629093726288",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-all-might",
+      "groupName": "All Might",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_All Might/extracted",
+      "fileCount": 232,
+      "bytes": 9279117,
+      "durationSeconds": 539.3722708333338,
+      "categoryCounts": {
+        "unclassified": 232
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Bakugo/original/JForce_Bakugo.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Bakugo/original/JForce_Bakugo.7z",
+      "packageBytes": 7774651,
+      "packageSha256": "cea2aa22fac00cb6e951f7ecb33fd5b960457e60fa3c7c1c494949a7d24c5d07",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-bakugo",
+      "groupName": "Bakugo",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Bakugo/extracted",
+      "fileCount": 227,
+      "bytes": 9144564,
+      "durationSeconds": 446.6064791666666,
+      "categoryCounts": {
+        "unclassified": 227
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Blackbeard/original/JForce_Blackbeard.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Blackbeard/original/JForce_Blackbeard.7z",
+      "packageBytes": 6401363,
+      "packageSha256": "d4cf461a47849ded2789df463598a796d0cd9c9535d1cc4732c68b2272fbda00",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-blackbeard",
+      "groupName": "Blackbeard",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Blackbeard/extracted",
+      "fileCount": 215,
+      "bytes": 7745416,
+      "durationSeconds": 398.7186666666665,
+      "categoryCounts": {
+        "unclassified": 215
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Deku/original/JForce_Deku.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Deku/original/JForce_Deku.7z",
+      "packageBytes": 5351840,
+      "packageSha256": "cc22805b23b38c603bf9ee7d091de5ae9830005ccd9e1a102bb2ef75ed2ba32a",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-deku",
+      "groupName": "Deku",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Deku/extracted",
+      "fileCount": 210,
+      "bytes": 6642689,
+      "durationSeconds": 387.56204166666674,
+      "categoryCounts": {
+        "unclassified": 210
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Gaara/original/JForce_Gaara.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gaara/original/JForce_Gaara.7z",
+      "packageBytes": 5864925,
+      "packageSha256": "ab171db2e645a8290fc3b025125d4088b25616faf55c36cfe7c9177e64803cbc",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-gaara",
+      "groupName": "Gaara",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gaara/extracted",
+      "fileCount": 231,
+      "bytes": 7298637,
+      "durationSeconds": 372.48881250000034,
+      "categoryCounts": {
+        "unclassified": 231
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Galena/original/JForce_Galena.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Galena/original/JForce_Galena.7z",
+      "packageBytes": 5850028,
+      "packageSha256": "c4eacab1deec7c4f6e3746a662ccd631c2818943861bba41d2e0ffb7f5f16397",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-galena",
+      "groupName": "Galena",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Galena/extracted",
+      "fileCount": 224,
+      "bytes": 7243514,
+      "durationSeconds": 363.95452083333333,
+      "categoryCounts": {
+        "unclassified": 224
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Giorno/original/JForce_Giorno.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Giorno/original/JForce_Giorno.7z",
+      "packageBytes": 7651431,
+      "packageSha256": "99bcfdbb365f2dc6e40f88bf123325006e86db0df5bc1f192dbc9e90b3e5ffcb",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-giorno",
+      "groupName": "Giorno",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Giorno/extracted",
+      "fileCount": 239,
+      "bytes": 9133303,
+      "durationSeconds": 462.2632500000001,
+      "categoryCounts": {
+        "unclassified": 239
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Gon/original/JForce_Gon.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/original/JForce_Gon.7z",
+      "packageBytes": 5383740,
+      "packageSha256": "44631772cf736a4428d64968435067dc62b87399cb40df10f481a36647ffec7d",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "groupName": "Gon",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted",
+      "fileCount": 225,
+      "bytes": 6765994,
+      "durationSeconds": 371.19743749999986,
+      "categoryCounts": {
+        "unclassified": 225
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Hancock/original/JForce_Hancock.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hancock/original/JForce_Hancock.7z",
+      "packageBytes": 5873737,
+      "packageSha256": "e0de4a7fe58f66302f73fb2a7800db5790917cd5a5a90820e33c18323cea22c0",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-hancock",
+      "groupName": "Hancock",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hancock/extracted",
+      "fileCount": 265,
+      "bytes": 7530232,
+      "durationSeconds": 404.35529166666623,
+      "categoryCounts": {
+        "unclassified": 265
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Hiei/original/JForce_Hiei.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/original/JForce_Hiei.7z",
+      "packageBytes": 6249302,
+      "packageSha256": "49acb22c8278fafa68e0d44af58bd21ae83c854d8248c3eeacebeb61e8836cbb",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+      "groupName": "Hiei",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/extracted",
+      "fileCount": 239,
+      "bytes": 7783696,
+      "durationSeconds": 393.7414375,
+      "categoryCounts": {
+        "unclassified": 239
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Jotaro/original/JForce_Jotaro.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/original/JForce_Jotaro.7z",
+      "packageBytes": 6302497,
+      "packageSha256": "e7056a561be6de938ab5adaba13e761fecf96815964751796b578e9c7d4f456e",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+      "groupName": "Jotaro",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted",
+      "fileCount": 233,
+      "bytes": 7746581,
+      "durationSeconds": 398.6386458333335,
+      "categoryCounts": {
+        "unclassified": 233
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Kaguya/original/JForce_Kaguya.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kaguya/original/JForce_Kaguya.7z",
+      "packageBytes": 5241561,
+      "packageSha256": "5bc3e1680096faf883646c2bd771485a3395c9373362dc77889fb2539a183517",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-kaguya",
+      "groupName": "Kaguya",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kaguya/extracted",
+      "fileCount": 224,
+      "bytes": 6680382,
+      "durationSeconds": 413.0451249999998,
+      "categoryCounts": {
+        "unclassified": 224
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Kaiba/original/JForce_Kaiba.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kaiba/original/JForce_Kaiba.7z",
+      "packageBytes": 8839622,
+      "packageSha256": "310b7b59d44db10bfb8065591c2bb6cc581ae429aa0f87ace9e79b7a1bc3bfbf",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-kaiba",
+      "groupName": "Kaiba",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kaiba/extracted",
+      "fileCount": 254,
+      "bytes": 10410389,
+      "durationSeconds": 519.0095416666669,
+      "categoryCounts": {
+        "unclassified": 254
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Kakashi/original/JForce_Kakashi.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kakashi/original/JForce_Kakashi.7z",
+      "packageBytes": 5186754,
+      "packageSha256": "2e3664e7da74949b0367c6fcc09a5cf07a37aee0b3e02649613a1879643f2096",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-kakashi",
+      "groupName": "Kakashi",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kakashi/extracted",
+      "fileCount": 226,
+      "bytes": 6566394,
+      "durationSeconds": 339.4553333333333,
+      "categoryCounts": {
+        "unclassified": 226
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Kenshin/original/JForce_Kenshin.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kenshin/original/JForce_Kenshin.7z",
+      "packageBytes": 4442556,
+      "packageSha256": "8cd0a7cc1839b499a354812cdf218a4490db28b0284ab89ec48e8cb8ea7007c9",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-kenshin",
+      "groupName": "Kenshin",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kenshin/extracted",
+      "fileCount": 218,
+      "bytes": 5778382,
+      "durationSeconds": 288.8699583333332,
+      "categoryCounts": {
+        "unclassified": 218
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Law/original/JForce_Law.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Law/original/JForce_Law.7z",
+      "packageBytes": 5776437,
+      "packageSha256": "e2ab5cb78e8cc54119a1067970831c65c8f70190a70814403d67d7da520aabdc",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-law",
+      "groupName": "Law",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Law/extracted",
+      "fileCount": 237,
+      "bytes": 7263492,
+      "durationSeconds": 332.9748333333334,
+      "categoryCounts": {
+        "unclassified": 237
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Luffy/original/JForce_Luffy.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/original/JForce_Luffy.7z",
+      "packageBytes": 4897105,
+      "packageSha256": "d6d80c86684a49357fc3eb17090923222f0d75bb0f5d5b4fa96ec9f0f373499c",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+      "groupName": "Luffy",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Luffy/extracted",
+      "fileCount": 227,
+      "bytes": 6297493,
+      "durationSeconds": 324.3703333333333,
+      "categoryCounts": {
+        "unclassified": 227
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Madara/original/JForce_Madara.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Madara/original/JForce_Madara.7z",
+      "packageBytes": 5924823,
+      "packageSha256": "a3bf162f054b43b42d64b792dfc06cee00a4f536de3dfbbc4bb54cfea57b2f0b",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-madara",
+      "groupName": "Madara",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Madara/extracted",
+      "fileCount": 231,
+      "bytes": 7388882,
+      "durationSeconds": 327.74031250000013,
+      "categoryCounts": {
+        "unclassified": 231
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Meruem/original/JForce_Meruem.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Meruem/original/JForce_Meruem.7z",
+      "packageBytes": 6247975,
+      "packageSha256": "3e7b8b7f4dc160ba2d1e07744ccbffce2849e75748106f9052b61167726e652d",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-meruem",
+      "groupName": "Meruem",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Meruem/extracted",
+      "fileCount": 236,
+      "bytes": 7742434,
+      "durationSeconds": 362.50237500000014,
+      "categoryCounts": {
+        "unclassified": 236
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Naruto/original/JForce_Naruto.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Naruto/original/JForce_Naruto.7z",
+      "packageBytes": 4602542,
+      "packageSha256": "a8ab48a882bb2a217d135ca63b7a781574810561e6ae82eb2d75017acfd0834b",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+      "groupName": "Naruto",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Naruto/extracted",
+      "fileCount": 218,
+      "bytes": 5942908,
+      "durationSeconds": 297.61433333333343,
+      "categoryCounts": {
+        "unclassified": 218
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Prometheus/original/JForce_Prometheus.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Prometheus/original/JForce_Prometheus.7z",
+      "packageBytes": 6556868,
+      "packageSha256": "2928fea2ce4edbf95c3f7bac0363240e957fb5488b63f290fdc82348edd0a8d1",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-prometheus",
+      "groupName": "Prometheus",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Prometheus/extracted",
+      "fileCount": 233,
+      "bytes": 7989316,
+      "durationSeconds": 401.57929166666696,
+      "categoryCounts": {
+        "unclassified": 233
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Sabo/original/JForce_Sabo.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sabo/original/JForce_Sabo.7z",
+      "packageBytes": 4884956,
+      "packageSha256": "68e88a8c560044922604170959183d9ddf8fb2b7669c4a314daf0d6f1986fe50",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-sabo",
+      "groupName": "Sabo",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sabo/extracted",
+      "fileCount": 213,
+      "bytes": 6207508,
+      "durationSeconds": 321.21793749999995,
+      "categoryCounts": {
+        "unclassified": 213
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Sanji/original/JForce_Sanji.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sanji/original/JForce_Sanji.7z",
+      "packageBytes": 8002565,
+      "packageSha256": "8ad03b315f9dc973aef998df39d17e424809a924ac57a82eb337f286b74f3a8a",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-sanji",
+      "groupName": "Sanji",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sanji/extracted",
+      "fileCount": 313,
+      "bytes": 10012311,
+      "durationSeconds": 539.6673124999995,
+      "categoryCounts": {
+        "unclassified": 313
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Sasuke/original/JForce_Sasuke.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/original/JForce_Sasuke.7z",
+      "packageBytes": 5039481,
+      "packageSha256": "09fa19b284c00cbde83becdc2885879d2f3e0739610c5f39e65fc4220d580813",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+      "groupName": "Sasuke",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Sasuke/extracted",
+      "fileCount": 225,
+      "bytes": 6425032,
+      "durationSeconds": 305.3198333333333,
+      "categoryCounts": {
+        "unclassified": 225
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Seiya/original/JForce_Seiya.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Seiya/original/JForce_Seiya.7z",
+      "packageBytes": 4727901,
+      "packageSha256": "3f52d5dbfa50bb49bde1c27c7f0d5a055ab720c6feb192da5b3c048844cc196b",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-seiya",
+      "groupName": "Seiya",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Seiya/extracted",
+      "fileCount": 224,
+      "bytes": 6150130,
+      "durationSeconds": 316.7113749999998,
+      "categoryCounts": {
+        "unclassified": 224
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Shiryū/original/JForce_Shiryū.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Shiryū/original/JForce_Shiryū.7z",
+      "packageBytes": 5022887,
+      "packageSha256": "0f8c2e80a94c050b2e2049ff0f04afe91081b6e16d3edcf5b779972777aa2cbd",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-shiryū",
+      "groupName": "Shiryū",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Shiryū/extracted",
+      "fileCount": 221,
+      "bytes": 6398066,
+      "durationSeconds": 328.6324999999998,
+      "categoryCounts": {
+        "unclassified": 221
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Shishio/original/JForce_Shishio.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Shishio/original/JForce_Shishio.7z",
+      "packageBytes": 6933339,
+      "packageSha256": "1f8a4822a9006fe00b9c030ed499aabce6e8e7cd92f1436b0e06e1fd067641e3",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-shishio",
+      "groupName": "Shishio",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Shishio/extracted",
+      "fileCount": 221,
+      "bytes": 8298824,
+      "durationSeconds": 419.06685416666676,
+      "categoryCounts": {
+        "unclassified": 221
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Todoroki/original/JForce_Todoroki.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Todoroki/original/JForce_Todoroki.7z",
+      "packageBytes": 6122379,
+      "packageSha256": "75b5bbdc500dc6d1cfdbf1b563fa18fe3b130c94e8a9739a917d89cb98673490",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-todoroki",
+      "groupName": "Todoroki",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Todoroki/extracted",
+      "fileCount": 237,
+      "bytes": 7565946,
+      "durationSeconds": 330.8499166666666,
+      "categoryCounts": {
+        "unclassified": 237
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Toguro/original/JForce_Toguro.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Toguro/original/JForce_Toguro.7z",
+      "packageBytes": 6821768,
+      "packageSha256": "1cec216cd7b8a0a678c8ae41e335aa26326ab6b44cbca61b30275a8207a00c30",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-toguro",
+      "groupName": "Toguro",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Toguro/extracted",
+      "fileCount": 212,
+      "bytes": 8153614,
+      "durationSeconds": 422.8234166666666,
+      "categoryCounts": {
+        "unclassified": 212
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Yugi/original/JForce_Yugi.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yugi/original/JForce_Yugi.7z",
+      "packageBytes": 6127914,
+      "packageSha256": "37fbac143d47b099681cc1f87f03b581b5ac427f863f701a24375c58421f90b0",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-yugi",
+      "groupName": "Yugi",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yugi/extracted",
+      "fileCount": 244,
+      "bytes": 7632734,
+      "durationSeconds": 410.77343749999994,
+      "categoryCounts": {
+        "unclassified": 244
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Yusuke/original/JForce_Yusuke.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yusuke/original/JForce_Yusuke.7z",
+      "packageBytes": 5429180,
+      "packageSha256": "d0e3c89c6b9d1cc8fc689045a753e1ed425fdf8d49d3027854e548ee9b5b6220",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-yusuke",
+      "groupName": "Yusuke",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Yusuke/extracted",
+      "fileCount": 215,
+      "bytes": 6756210,
+      "durationSeconds": 351.8728541666667,
+      "categoryCounts": {
+        "unclassified": 215
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packagePath": "JForce_Zoro/original/JForce_Zoro.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Zoro/original/JForce_Zoro.7z",
+      "packageBytes": 5280417,
+      "packageSha256": "aea5c77aaf9602c6acebaa1da1fd96d4f25d47fdfeb183809e0123344a4e91e6",
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-zoro",
+      "groupName": "Zoro",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Zoro/extracted",
+      "fileCount": 216,
+      "bytes": 6609659,
+      "durationSeconds": 314.0665416666668,
+      "categoryCounts": {
+        "unclassified": 216
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Biscuit/original/JForce_Biscuit.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Biscuit/original/JForce_Biscuit.7z",
+      "packageBytes": 5819096,
+      "packageSha256": "62efee190bdebc9db46c9a452166d61a1815666fed78ae1fb09280ea5448b817",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-biscuit",
+      "groupName": "Biscuit",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Biscuit/extracted",
+      "fileCount": 221,
+      "bytes": 7168207,
+      "durationSeconds": 356.68175,
+      "categoryCounts": {
+        "unclassified": 221
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Frieza/original/JForce_Frieza.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Frieza/original/JForce_Frieza.7z",
+      "packageBytes": 6171911,
+      "packageSha256": "d5b492ebbb282a988d9df803591798202e1c818cffeccd12465ef27bbb895656",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-frieza",
+      "groupName": "Frieza",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Frieza/extracted",
+      "fileCount": 211,
+      "bytes": 7452823,
+      "durationSeconds": 377.2629791666666,
+      "categoryCounts": {
+        "unclassified": 211
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Goku/original/JForce_Goku.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/original/JForce_Goku.7z",
+      "packageBytes": 5627474,
+      "packageSha256": "79347f137ce036ee850410d5582da5a9277ee338696103d358ebeea6efb607ed",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+      "groupName": "Goku",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Goku/extracted",
+      "fileCount": 228,
+      "bytes": 7023146,
+      "durationSeconds": 364.61381250000017,
+      "categoryCounts": {
+        "unclassified": 228
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Hisoka/original/JForce_Hisoka.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/original/JForce_Hisoka.7z",
+      "packageBytes": 7630032,
+      "packageSha256": "ea00d7fe5e0f34d55db84f16c3267cb92b954c9df8a95771c9647bd8812774af",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+      "groupName": "Hisoka",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted",
+      "fileCount": 215,
+      "bytes": 8937528,
+      "durationSeconds": 458.41777083333335,
+      "categoryCounts": {
+        "unclassified": 215
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Killua/original/JForce_Killua.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Killua/original/JForce_Killua.7z",
+      "packageBytes": 4711551,
+      "packageSha256": "8cfa2d430aec54caff5fd01ab52ab991967c1a34439197f18c9b701dec1aa31d",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-killua",
+      "groupName": "Killua",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Killua/extracted",
+      "fileCount": 226,
+      "bytes": 6092923,
+      "durationSeconds": 349.9399375000001,
+      "categoryCounts": {
+        "unclassified": 226
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Kurapika/original/JForce_Kurapika.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kurapika/original/JForce_Kurapika.7z",
+      "packageBytes": 5967217,
+      "packageSha256": "e0d6963c2ffc2cf5cdb3e05a333e77b367d848f97927dc62a80264e9222af2d1",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-kurapika",
+      "groupName": "Kurapika",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Kurapika/extracted",
+      "fileCount": 251,
+      "bytes": 7530570,
+      "durationSeconds": 376.1310416666668,
+      "categoryCounts": {
+        "unclassified": 251
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Majin Buu/original/JForce_Majin Buu.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/original/JForce_Majin Buu.7z",
+      "packageBytes": 5278455,
+      "packageSha256": "22e1eb851f13e31cbbff38c21a7f827689c4de5b9f346789ce31063fce05c0c7",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+      "groupName": "Majin Buu",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Majin Buu/extracted",
+      "fileCount": 224,
+      "bytes": 6648496,
+      "durationSeconds": 344.4408750000002,
+      "categoryCounts": {
+        "unclassified": 224
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Piccolo/original/JForce_Piccolo.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Piccolo/original/JForce_Piccolo.7z",
+      "packageBytes": 5092112,
+      "packageSha256": "43b90ecf49dc6387d7253bad65926fb137fe8940e3c99e352f253aba6b8547fe",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-piccolo",
+      "groupName": "Piccolo",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Piccolo/extracted",
+      "fileCount": 220,
+      "bytes": 6431912,
+      "durationSeconds": 313.66741666666695,
+      "categoryCounts": {
+        "unclassified": 220
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Trunks/original/JForce_Trunks.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Trunks/original/JForce_Trunks.7z",
+      "packageBytes": 4123122,
+      "packageSha256": "192f78a07fcd97a08be6eead771f84f2d7c19f9238ea7e9b1f1a1747322b0334",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-trunks",
+      "groupName": "Trunks",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Trunks/extracted",
+      "fileCount": 220,
+      "bytes": 5479046,
+      "durationSeconds": 253.60914583333334,
+      "categoryCounts": {
+        "unclassified": 220
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packagePath": "JForce_Vegeta/original/JForce_Vegeta.7z",
+      "packageAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Vegeta/original/JForce_Vegeta.7z",
+      "packageBytes": 6064895,
+      "packageSha256": "585b0bc1b5a227adf3a9042061bedec29ee0678f2d517d019097c8c0ec945007",
+      "groupId": "parallel-ps-jumpforce-local-second10:jumpforce-vegeta",
+      "groupName": "Vegeta",
+      "groupAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Vegeta/extracted",
+      "fileCount": 222,
+      "bytes": 7434658,
+      "durationSeconds": 377.0261249999998,
+      "categoryCounts": {
+        "unclassified": 222
+      },
+      "heroIds": [],
+      "isCharacterGroup": true,
+      "identityEvidence": "exact source package basename and extracted group directory label",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    }
+  ],
+  "identityCrosswalk": [
+    {
+      "nativeCharacterId": "chr0000",
+      "characterName": "Goku",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0000",
+      "steamFileCount": 161,
+      "publicFileCount": 228,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0010",
+      "characterName": "Vegeta",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-vegeta",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0010",
+      "steamFileCount": 33,
+      "publicFileCount": 222,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0020",
+      "characterName": "Trunks",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-trunks",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0020",
+      "steamFileCount": 68,
+      "publicFileCount": 220,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0030",
+      "characterName": "Frieza",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-frieza",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0030",
+      "steamFileCount": 60,
+      "publicFileCount": 211,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0040",
+      "characterName": "Piccolo",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-piccolo",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0040",
+      "steamFileCount": 56,
+      "publicFileCount": 220,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0050",
+      "characterName": "Cell",
+      "publicGroupId": "parallel-ps-jumpforce-local-10:jumpforce-cell",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0050",
+      "steamFileCount": 16,
+      "publicFileCount": 219,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0060",
+      "characterName": "Luffy",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0060",
+      "steamFileCount": 144,
+      "publicFileCount": 227,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0070",
+      "characterName": "Zoro",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-zoro",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0070",
+      "steamFileCount": 15,
+      "publicFileCount": 216,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0080",
+      "characterName": "Sanji",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-sanji",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0080",
+      "steamFileCount": 73,
+      "publicFileCount": 313,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0090",
+      "characterName": "Blackbeard",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-blackbeard",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0090",
+      "steamFileCount": 30,
+      "publicFileCount": 215,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0100",
+      "characterName": "Hancock",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-hancock",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0100",
+      "steamFileCount": 15,
+      "publicFileCount": 265,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0110",
+      "characterName": "Sabo",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-sabo",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0110",
+      "steamFileCount": 20,
+      "publicFileCount": 213,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0120",
+      "characterName": "Naruto",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120",
+      "steamFileCount": 119,
+      "publicFileCount": 218,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0130",
+      "characterName": "Sasuke",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0130",
+      "steamFileCount": 19,
+      "publicFileCount": 225,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0140",
+      "characterName": "Kaguya",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-kaguya",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0140",
+      "steamFileCount": 2,
+      "publicFileCount": 224,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0150",
+      "characterName": "Gaara",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-gaara",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0150",
+      "steamFileCount": 34,
+      "publicFileCount": 231,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0160",
+      "characterName": "Kakashi",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-kakashi",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0160",
+      "steamFileCount": 7,
+      "publicFileCount": 226,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0170",
+      "characterName": "Boruto",
+      "publicGroupId": "parallel-ps-jumpforce-local-10:jumpforce-boruto",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0170",
+      "steamFileCount": 1,
+      "publicFileCount": 213,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0240",
+      "characterName": "Ichigo",
+      "publicGroupId": "parallel-ps-jumpforce-local-10:jumpforce-ichigo",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0240",
+      "steamFileCount": 28,
+      "publicFileCount": 222,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0260",
+      "characterName": "Aizen",
+      "publicGroupId": "parallel-ps-jumpforce-local-10:jumpforce-aizen",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0260",
+      "steamFileCount": 10,
+      "publicFileCount": 239,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0270",
+      "characterName": "Rukia",
+      "publicGroupId": "parallel-ps-jumpforce-local-10:jumpforce-rukia",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0270",
+      "steamFileCount": 15,
+      "publicFileCount": 213,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0300",
+      "characterName": "Gon",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+      "steamFileCount": 25,
+      "publicFileCount": 225,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0310",
+      "characterName": "Killua",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-killua",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0310",
+      "steamFileCount": 18,
+      "publicFileCount": 226,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0320",
+      "characterName": "Kurapika",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-kurapika",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0320",
+      "steamFileCount": 17,
+      "publicFileCount": 251,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0330",
+      "characterName": "Hisoka",
+      "publicGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0330",
+      "steamFileCount": 17,
+      "publicFileCount": 215,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0360",
+      "characterName": "Yusuke",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-yusuke",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0360",
+      "steamFileCount": 15,
+      "publicFileCount": 215,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0370",
+      "characterName": "Toguro",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-toguro",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0370",
+      "steamFileCount": 9,
+      "publicFileCount": 212,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0410",
+      "characterName": "Deku",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-deku",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0410",
+      "steamFileCount": 16,
+      "publicFileCount": 210,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0420",
+      "characterName": "Asta / 亞斯塔",
+      "publicGroupId": "parallel-ps-jumpforce-audio:JForce_Asta",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0420",
+      "steamFileCount": 6,
+      "publicFileCount": 223,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0450",
+      "characterName": "Kane",
+      "publicGroupId": "parallel-ps-jumpforce-local-final3:jumpforce-kane",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0450",
+      "steamFileCount": 143,
+      "publicFileCount": 213,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0460",
+      "characterName": "Galena",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-galena",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0460",
+      "steamFileCount": 89,
+      "publicFileCount": 224,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    },
+    {
+      "nativeCharacterId": "chr0470",
+      "characterName": "Prometheus",
+      "publicGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-prometheus",
+      "steamGroupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0470",
+      "steamFileCount": 77,
+      "publicFileCount": 233,
+      "heroIds": [],
+      "identityEvidence": "native chrNNNN bank label joined to the existing exact source-package group",
+      "clipSpeakerVerified": false,
+      "eventBindingVerified": false
+    }
+  ],
+  "unresolvedNativeCharacterIds": [
+    "chr0440",
+    "chr0490",
+    "chr0500",
+    "chr0510",
+    "chr7000"
+  ],
+  "steamStreaming": {
+    "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+    "appId": "816020",
+    "buildId": "8523149",
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+    "originalAwbFiles": 43,
+    "decodedFiles": 4034,
+    "decoder": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/tools/vgmstream-cli",
+      "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+      "version": "r2117"
+    },
+    "s3": {
+      "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-streaming-audio-816020-build-8523149/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.zip",
+      "bytes": 3202524061,
+      "sha256": "1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035",
+      "archiveMembers": 4123,
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/model-source-backups/steam-jump-force-streaming-audio-816020-build-8523149/verified-receipt-1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.json",
+      "receiptSha256": "bfed61dfb67f04aa01e03a3f2711a01311fe7c79cb6852500c27c115a315a82c"
+    },
+    "speakerLanguageEventReviewComplete": false
+  },
+  "steamPak": {
+    "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+    "containers": [
+      {
+        "name": "pakchunk0-WindowsNoEditor.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+        "bytes": 7279219593,
+        "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+        "order": 0,
+        "entryCount": 140075,
+        "sourceKindCounts": {
+          "animation-package": 1,
+          "audio-package": 54756,
+          "character-config-package": 1734,
+          "character-package": 4362,
+          "other": 38411,
+          "skill-config-package": 792,
+          "vfx-package": 40019
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor.txt"
+      },
+      {
+        "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_0_P.pak",
+        "bytes": 1543894441,
+        "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+        "order": 1,
+        "entryCount": 12906,
+        "sourceKindCounts": {
+          "audio-package": 3472,
+          "character-config-package": 1712,
+          "character-package": 80,
+          "other": 4434,
+          "skill-config-package": 710,
+          "vfx-package": 2498
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor_0_P.txt"
+      },
+      {
+        "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+        "bytes": 2532409095,
+        "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+        "order": 2,
+        "entryCount": 30795,
+        "sourceKindCounts": {
+          "audio-package": 7796,
+          "character-config-package": 2214,
+          "character-package": 37,
+          "other": 7819,
+          "skill-config-package": 1142,
+          "vfx-package": 11787
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor_1_P.txt"
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+        "bytes": 7060715441,
+        "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+        "order": 3,
+        "entryCount": 36537,
+        "sourceKindCounts": {
+          "character-package": 6049,
+          "other": 29828,
+          "vfx-package": 660
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor.txt"
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_0_P.pak",
+        "bytes": 1552635741,
+        "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+        "order": 4,
+        "entryCount": 23755,
+        "sourceKindCounts": {
+          "character-package": 1056,
+          "other": 2342,
+          "vfx-package": 20357
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor_0_P.txt"
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+        "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_1_P.pak",
+        "bytes": 2410586601,
+        "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+        "order": 5,
+        "entryCount": 12551,
+        "sourceKindCounts": {
+          "character-package": 1935,
+          "other": 7604,
+          "vfx-package": 3012
+        },
+        "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor_1_P.txt"
+      }
+    ],
+    "relationCount": 256619,
+    "uniquePathCount": 221877,
+    "selectedPathCounts": {
+      "animation-package": 1,
+      "audio-package": 65614,
+      "character-config-package": 2336,
+      "character-package": 13437,
+      "other": 81379,
+      "skill-config-package": 1240,
+      "vfx-package": 57870
+    },
+    "mountAvailable": false,
+    "payloadReadThisRun": false,
+    "indexKeyRetained": false
+  },
+  "dai": {
+    "nativeCharacterId": "chr0430",
+    "heroIds": [
+      "godie-nbbc",
+      "godie-n01c"
+    ],
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+    "nativePackages": 1942,
+    "modelComponents": 11,
+    "texturePng": 36,
+    "joints": 159,
+    "nativeAnimations": 0,
+    "frozenTreeFiles": 2000,
+    "frozenTreeBytes": 299020729,
+    "originalReviewGlb": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+      "bytes": 76796608,
+      "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+    },
+    "gameConfigSelectedPaths": 40,
+    "gameConfigExtractedPaths": 0,
+    "candidate": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+      "bytes": 76796608,
+      "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+    },
+    "candidateMetrics": {
+      "triangles": 59768,
+      "drawCalls": 20,
+      "maxTextureEdge": 2048,
+      "channelsPerFrame": 0,
+      "skins": 1,
+      "joints": 159,
+      "clips": 0,
+      "embeddedImages": 24
+    },
+    "currentPolicyVerdict": "over",
+    "currentPolicyBlockingAxes": [
+      "triangles",
+      "drawCalls",
+      "maxTextureEdge"
+    ],
+    "rejectedV1Candidate": {
+      "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+      "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+      "triangles": 7947,
+      "maxTextureEdge": 256,
+      "drawPrimitives": 20,
+      "reviewedAt": "2026-09-15",
+      "ownerDecision": "rejected",
+      "ownerFinding": "小呆的臉貼圖似乎有問題，眼睛也不正常。",
+      "priorAutomatedReceiptSuperseded": true,
+      "runtimeRegistered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+        "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      },
+      "evidence": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+          "bytes": 3196,
+          "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+          "bytes": 3618,
+          "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+          "bytes": 8860,
+          "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+          "bytes": 2718,
+          "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/owner-review.json",
+          "bytes": 730,
+          "sha256": "3f4432145e278f0b0e15e02ea90a72a0cb0358b401f47dd4348b966d1a6f7099"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+          "bytes": 1216259,
+          "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+          "bytes": 616849,
+          "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+          "bytes": 1599,
+          "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+        }
+      ]
+    },
+    "formalDecimationCandidate": {
+      "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-256-v2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+      "bytes": 2488032,
+      "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba",
+      "sourceSha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810",
+      "before": {
+        "triangles": 59768,
+        "drawPrimitives": 20,
+        "maxTextureEdge": 2048,
+        "skins": 1,
+        "joints": 159,
+        "textures": 24,
+        "clips": 0
+      },
+      "after": {
+        "triangles": 7930,
+        "drawPrimitives": 20,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 159,
+        "textures": 24,
+        "animations": 0
+      },
+      "byteIdenticalRebuild": true,
+      "khronosErrors": 0,
+      "khronosWarnings": 58,
+      "finiteFloatAccessorsPassed": true,
+      "rigPreserved": true,
+      "technicalVisualInspectionPassed": true,
+      "ownerVisualQualityReview": "pending-new-v2-render-review",
+      "ownerPublicationAuthorized": true,
+      "drawCallLimit": 6,
+      "exactSemanticMaterialGroups": 11,
+      "atlasEligiblePrimitives": 2,
+      "drawCallPassed": false,
+      "hardPolicyPassed": false,
+      "nativeSixStateMotionComplete": false,
+      "runtimeRegistered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "readiness": "converted-and-structurally-validated; owner-publication-authorized; visual-review-pending; draw20-over-limit6; animations0; not-runtime-selectable",
+      "s3Backup": {
+        "state": "pending-v2-upload-and-readback",
+        "s3Uri": null,
+        "fullGetVerified": false,
+        "allMemberSha256Verified": false
+      },
+      "evidence": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/conversion.json",
+          "bytes": 7360,
+          "sha256": "de4f135ccaf0e958ed379351dfffd74861926bcab7ea1585b3f73571b4e2912e"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/validation.json",
+          "bytes": 3484,
+          "sha256": "676f8397b8647e3de711fb7f624f90ce4aa2035597023f8d63333b9d7672dcb7"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/draw-call-audit.json",
+          "bytes": 8903,
+          "sha256": "a1f88c2e751b51ac42b07a9a8a774f394be06e68a1c9d1f4a8f343a8bd5201a5"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/guard.json",
+          "bytes": 1483,
+          "sha256": "7745b73057632d29bec84c7db572bb5b816fb0aa78b92b263bfedfa7c5ab73ed"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/visual-review.json",
+          "bytes": 2315,
+          "sha256": "722736322b8b4636087484961f95c66a394f8dbf5d55b9cacb16505f5e9f8f6f"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/owner-review.json",
+          "bytes": 795,
+          "sha256": "5701f692907e7bf7daf9716b97f88cfdec2b70b64014e488de2a472cfd9e4114"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/front.png",
+          "bytes": 269166,
+          "sha256": "016854430836e9194ba91110bb7e2e69c8db1e8bd2f6957792de1bf066c966af"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/back.png",
+          "bytes": 262534,
+          "sha256": "b3b62a9a94314023c05297a9c76a9b59ec351e973c81d02d2a4c752b14484b9e"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/isometric.png",
+          "bytes": 260923,
+          "sha256": "27f01de5552e2d8d1d468a38c60a30391470cda78871d3ab2238e006ca0b339b"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-source.png",
+          "bytes": 522346,
+          "sha256": "d73823e531b8e2290615a0958207876005853ce76d68418099a564c545ded956"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v1-rejected.png",
+          "bytes": 498725,
+          "sha256": "97b9c8ee959405997bb5522f0a83ae307b650c78b8e147e75f392bfbeb35b583"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v2.png",
+          "bytes": 531753,
+          "sha256": "a78cd73461550f2e0206164b3d7e5cfd1e66a3054b2091ca2debdd2a9de9d561"
+        }
+      ]
+    },
+    "sixDrawCandidate": {
+      "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v6-alpha",
+      "gitPath": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+      "bytes": 3010632,
+      "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d",
+      "sourceSha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+      "after": {
+        "triangles": 7930,
+        "drawPrimitives": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 159,
+        "animations": 0
+      },
+      "byteIdenticalRebuild": true,
+      "khronosErrors": 0,
+      "nonUvVertexAttributesPreserved": true,
+      "transparentEyeHairLayersKeptSeparate": true,
+      "technicalVisualInspectionPassed": true,
+      "ownerVisualQualityReview": "pending-owner-v6-alpha-normalization-review",
+      "ownerPublicationAuthorized": true,
+      "drawCallPassed": true,
+      "nativeSixStateMotionComplete": false,
+      "gitProductFrozen": true,
+      "runtimeRegistered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "s3Backup": {
+        "state": "legacy-stage-backup-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.files.json",
+        "archiveSha256": "9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17",
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      },
+      "remaining": [
+        "No native JUMP FORCE animation clips are present in the extracted GLB.",
+        "No owner-reviewed borrowed motion set is bound; do not register a backend option.",
+        "V5 is retained as the exact predecessor; v6 has a new three-view technical render but needs owner visual approval after alpha metadata normalization."
+      ],
+      "evidence": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/conversion.json",
+          "bytes": 2887,
+          "sha256": "4a77cc71565fc369f59c92280607fe637261e25ffb331361f4bc2465026115ed"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/validation.json",
+          "bytes": 3601,
+          "sha256": "6aa425a4a8505789d34ba51d220dff434702a3ec28319c26fbb0024b6848f2fa"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/guard.json",
+          "bytes": 1484,
+          "sha256": "1a216821ce17f706541d5a7f4f4d51bc8aef1595bd7d2139e5c9bb72394ef8a2"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
+          "bytes": 1084,
+          "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
+          "bytes": 2339,
+          "sha256": "2535706f451eceedee50693f196acac9ce363b8be7b5c977726a27d5aaaa00a4"
+        }
+      ]
+    },
+    "genericPbrVisualReviewAccepted": true,
+    "sourceGameShaderParity": false,
+    "ggdIntakeAccepted": false,
+    "backendSelectable": false,
+    "productionDeployed": false
+  },
+  "stages": {
+    "sourceFound": true,
+    "publicPackagesDownloaded": true,
+    "publicPackagesExtracted": true,
+    "steamStreamingDecoded": true,
+    "daiNativePackagesExtracted": true,
+    "daiModelConvertedCandidate": true,
+    "daiCurrentHardPolicyPassed": false,
+    "daiFormalDecimationGeometryTexturePassed": true,
+    "daiFormalDecimationDrawCallPassed": true,
+    "daiNativeMotionConverted": false,
+    "vfxConverted": false,
+    "audioSpeakerEventBindingVerified": false,
+    "registered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "inputs": [
+    {
+      "gitPath": "materials/hero-model-library/download-sources.json",
+      "bytes": 3505339,
+      "sha256": "befc7afc6a118c0d3e687c6ba7a5e9f042057a5b3b4268c57b91cac9dc063eb8"
+    },
+    {
+      "gitPath": "materials/hero-model-library/public-source-files.json",
+      "bytes": 35420836,
+      "sha256": "e8d211bc747600ae2dc43e0ca1b6d699df0024d4ec71c42e1d5ca31804240e57"
+    },
+    {
+      "gitPath": "materials/hero-model-library/voice-index.json",
+      "bytes": 4300287,
+      "sha256": "4a7800931fbb1fa09619e945914fb39929e808b4fe68a7c386ecaadd0ad3d501"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jumpforce-public-audio-catalog-reconciliation.json",
+      "bytes": 13387,
+      "sha256": "aa3760bfef2d942ab1d2375083940ed75b186e63e796fc4831c80d407a48e92b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+      "bytes": 6419,
+      "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/source-manifest.json",
+      "bytes": 6783,
+      "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/visual-review.json",
+      "bytes": 1863,
+      "sha256": "148566ae5a9515ecacd5f71ac354aa84786baf8fad21cda423464f8e4933b20a"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+      "bytes": 24114,
+      "sha256": "c546a0b8bd503cccff4652891e24db3298199cdc15094bdbd78a8af26cb3a3d1"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jumpforce-steam-streaming-audio/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035/central-verification.json",
+      "bytes": 3510,
+      "sha256": "5227fdc91c2fce455752f821367ca4a1be65a3b7dc14fe6c77abf5b700768cfb"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jumpforce-steam-streaming-audio-v1/character-map.json",
+      "bytes": 4245,
+      "sha256": "508e83974d676f2abf72a8258fa298c166ce1e0fdaed36ef6dc6f1222ff3c345"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/dai-current-policy.json",
+      "bytes": 3137,
+      "sha256": "40429ccb59b28176b0cadc0b7b6e272966566e8e587295db75663239de315650"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/conversion.json",
+      "bytes": 3196,
+      "sha256": "9d3ff877176d7b25d174ce65e9e88e46daea06bc1d93b632b1f5225f05742867"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/validation.json",
+      "bytes": 3618,
+      "sha256": "086e651826845d3080c7b3c6e635ac00987f2aebc7e04170fe6d61edd9b6a081"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/draw-call-audit.json",
+      "bytes": 8860,
+      "sha256": "d2671243b6f7d1a4719d96a42bf6aa4b6c734d01ec788e7332cb446077ce0b97"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+      "bytes": 2718,
+      "sha256": "73ba7d7c30756f9f2cbb4080c8f14c64f47a7b5b71839adc8657963e4526afdf"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/owner-review.json",
+      "bytes": 730,
+      "sha256": "3f4432145e278f0b0e15e02ea90a72a0cb0358b401f47dd4348b966d1a6f7099"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+      "bytes": 1216259,
+      "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+      "bytes": 616849,
+      "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/s3-backup-receipt.json",
+      "bytes": 1599,
+      "sha256": "0732dfc272a661d84b51a1d6e8043e2e9c709492e467c38d023d07b0f16c5ecc"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/conversion.json",
+      "bytes": 7360,
+      "sha256": "de4f135ccaf0e958ed379351dfffd74861926bcab7ea1585b3f73571b4e2912e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/validation.json",
+      "bytes": 3484,
+      "sha256": "676f8397b8647e3de711fb7f624f90ce4aa2035597023f8d63333b9d7672dcb7"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/draw-call-audit.json",
+      "bytes": 8903,
+      "sha256": "a1f88c2e751b51ac42b07a9a8a774f394be06e68a1c9d1f4a8f343a8bd5201a5"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/guard.json",
+      "bytes": 1483,
+      "sha256": "7745b73057632d29bec84c7db572bb5b816fb0aa78b92b263bfedfa7c5ab73ed"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/visual-review.json",
+      "bytes": 2315,
+      "sha256": "722736322b8b4636087484961f95c66a394f8dbf5d55b9cacb16505f5e9f8f6f"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/owner-review.json",
+      "bytes": 795,
+      "sha256": "5701f692907e7bf7daf9716b97f88cfdec2b70b64014e488de2a472cfd9e4114"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/front.png",
+      "bytes": 269166,
+      "sha256": "016854430836e9194ba91110bb7e2e69c8db1e8bd2f6957792de1bf066c966af"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/back.png",
+      "bytes": 262534,
+      "sha256": "b3b62a9a94314023c05297a9c76a9b59ec351e973c81d02d2a4c752b14484b9e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/isometric.png",
+      "bytes": 260923,
+      "sha256": "27f01de5552e2d8d1d468a38c60a30391470cda78871d3ab2238e006ca0b339b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-source.png",
+      "bytes": 522346,
+      "sha256": "d73823e531b8e2290615a0958207876005853ce76d68418099a564c545ded956"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v1-rejected.png",
+      "bytes": 498725,
+      "sha256": "97b9c8ee959405997bb5522f0a83ae307b650c78b8e147e75f392bfbeb35b583"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v2.png",
+      "bytes": 531753,
+      "sha256": "a78cd73461550f2e0206164b3d7e5cfd1e66a3054b2091ca2debdd2a9de9d561"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/conversion.json",
+      "bytes": 2887,
+      "sha256": "4a77cc71565fc369f59c92280607fe637261e25ffb331361f4bc2465026115ed"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/validation.json",
+      "bytes": 3601,
+      "sha256": "6aa425a4a8505789d34ba51d220dff434702a3ec28319c26fbb0024b6848f2fa"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/guard.json",
+      "bytes": 1484,
+      "sha256": "1a216821ce17f706541d5a7f4f4d51bc8aef1595bd7d2139e5c9bb72394ef8a2"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
+      "bytes": 1084,
+      "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
+      "bytes": 2339,
+      "sha256": "2535706f451eceedee50693f196acac9ce363b8be7b5c977726a27d5aaaa00a4"
+    }
+  ]
+}

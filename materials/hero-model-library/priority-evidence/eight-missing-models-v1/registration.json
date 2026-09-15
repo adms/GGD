@@ -1,0 +1,82 @@
+{
+  "schema": "ggd.eight-missing-model-option-registration@1",
+  "registrations": [
+    {
+      "componentId": "ssbu-ryu-c00-procedural-six-state-v1",
+      "heroId": "acquired-ryu",
+      "modelKey": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
+      "label": "Ryu SSBU c00（GGD 程序化六狀態）",
+      "isDefault": false,
+      "motionProvenance": "ggd-procedural-fallback-not-native-or-retargeted",
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+        "bytes": 1069196,
+        "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+      },
+      "modelDocument": {
+        "gitPath": "content/models/community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9.json",
+        "bytes": 524,
+        "sha256": "8ee7ae814bc70a0e827a8884c7c76fd431f36ae1e481f58656845d2fe1599058"
+      },
+      "runtimeSelectable": true,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "blocked": [
+    {
+      "heroId": "acquired-zero",
+      "componentId": "ssbu-zero-c00-static-skinned-v1",
+      "reason": "static-model-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-ram",
+      "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+      "reason": "static-model-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-beatrice",
+      "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+      "reason": "static-model-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-mario",
+      "componentId": "ssbu-mario-c00-static-skinned-v1",
+      "reason": "native-mod-special-clips-incomplete"
+    },
+    {
+      "heroId": "acquired-mario",
+      "componentId": "ssbu-mario-c00-static-skinned-v2",
+      "reason": "native-mod-special-clips-incomplete"
+    },
+    {
+      "heroId": "acquired-mario",
+      "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
+      "reason": "native-mod-special-clips-incomplete"
+    },
+    {
+      "heroId": "acquired-mewtwo",
+      "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
+      "reason": "static-model-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-pokemon-trainer",
+      "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+      "reason": "two-static-model-options-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-pokemon-trainer",
+      "componentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+      "reason": "two-static-model-options-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-minecraft",
+      "componentId": "ssbu-pickel-steve-c00-static-skinned-v1",
+      "reason": "two-static-model-options-ready-actions-missing"
+    },
+    {
+      "heroId": "acquired-minecraft",
+      "componentId": "ssbu-pickel-alex-c01-static-skinned-v1",
+      "reason": "two-static-model-options-ready-actions-missing"
+    }
+  ]
+}

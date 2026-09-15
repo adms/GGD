@@ -376,14 +376,18 @@ def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
             failures.append(f"model:{asset_id}: mat{material_index} texture decode failed: {exc}")
             continue
         if background_share < MIN_BACKGROUND_SHARE:
+            # A solid emissive texture on real 3D geometry is a valid glowing
+            # surface. Carrier-keying is only justified by planar-card geometry
+            # or an explicit effect-model contract; emission alone is not proof.
             if (
-                (material_is_planar_card(gltf, material_index) or emissive > 0 or effect_model)
+                (planar_card or effect_model)
                 and carrier_share >= OPAQUE_CARRIER_TOTAL_SHARE
                 and carrier_edge_share >= OPAQUE_CARRIER_EDGE_SHARE
             ):
+                carrier_kind = "planar" if planar_card else "effect"
                 failures.append(
                     f"model:{asset_id}: MODEL_TEXTURE_BACKDROP mat{material_index}:{material.get('name', '?')} "
-                    f"{alpha_mode} planar carrier={carrier_share * 100:.2f}% edge={carrier_edge_share * 100:.1f}%"
+                    f"{alpha_mode} {carrier_kind} carrier={carrier_share * 100:.2f}% edge={carrier_edge_share * 100:.1f}%"
                 )
             continue
         name = material.get("name", "?")

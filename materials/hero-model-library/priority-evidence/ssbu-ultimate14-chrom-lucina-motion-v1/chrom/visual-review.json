@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-ssbu-ultimate14-matching-motion-visual@1",
+  "componentId": "ssbu-chrom-c00-ultimate14-motion-v1",
+  "webglSamples": 27,
+  "contactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/contact-sheet.jpg",
+    "bytes": 317786,
+    "sha256": "1572fafaac7d84e0af5e1b8b2cd60400967ead7d6464a18c3e9a8d099818f4a6"
+  },
+  "review": "All start/middle/end frames loaded with connected textured geometry and no black frame or missing body. Native root orientation varies by clip; semantic gameplay mapping and user action approval remain pending.",
+  "visualPlaybackSampled": true,
+  "fullGameplayVisualAcceptance": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ggd-worldblender-c00-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "heroBound": false,
+      "runtimeSelectable": false,
+      "deploymentVerified": false,
+      "nativeAnimationCount": 0
+    }
+  ],
+  "limitationsAccepted": [
+    "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+    "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+    "The complete 46-file decimation stage is archived in S3 and passed full-object plus per-member SHA-256 readback verification.",
+    "Main merge and production deployment are not verified."
+  ]
+}

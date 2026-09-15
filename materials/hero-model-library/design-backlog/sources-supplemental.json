@@ -1397,6 +1397,174 @@
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json"
         },
         {
+          "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "label": "枯星龍／7,896面／256px／完整58動作",
+          "character": "枯星龍",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+          "bytes": 17043436,
+          "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+          "format": "glb",
+          "readiness": "validated-registered-non-default-hero-forge-option-production-unverified",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceWork": "幻獸帕魯／Palworld",
+          "heroIds": [
+            "acquired-astralym"
+          ],
+          "relatedHeroIds": [
+            "acquired-astralym"
+          ],
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "componentReady": true,
+          "runtimeSelectable": true,
+          "runtimeDropdownRegistered": true,
+          "runtimeModelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+          "modelDocumentGitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+          "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+          "triangles": 7896,
+          "drawPrimitives": 3,
+          "boneCount": 145,
+          "textureCount": 9,
+          "maxTextureEdge": 256,
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "uniqueAnimationContentCount": 58,
+          "staticPoseClipCount": 1,
+          "animationScope": "complete-source-animation-library",
+          "animationNames": [
+            "Damage",
+            "FarSkill_Action",
+            "FarSkill_ActionLoop",
+            "FarSkill_End",
+            "FarSkill_Start",
+            "FarSkill_StartLoop",
+            "HaloBeam_End",
+            "HaloBeam_End_Ring",
+            "HaloBeam_Loop",
+            "HaloBeam_Loop_Ring",
+            "HaloBeam_Start",
+            "HaloBeam_Start_Ring",
+            "HaloCutter",
+            "HaloCutter_End_Ring",
+            "HaloCutter_Loop_Ring",
+            "HaloCutter_Start_Ring",
+            "Idle",
+            "Idle_Ring",
+            "LaserGliding_End",
+            "LaserGliding_End_Ring",
+            "LaserGliding_Loop",
+            "LaserGliding_Loop_Ring",
+            "LaserGliding_Start",
+            "LaserGliding_Start_Ring",
+            "PaldiumCannon_Attack",
+            "PaldiumCannon_Attack_Loop",
+            "PaldiumCannon_Attack_Loop_Ring",
+            "PaldiumCannon_Attack_Ring",
+            "PaldiumCannon_End",
+            "PaldiumCannon_End_Ring",
+            "PaldiumCannon_Start",
+            "PaldiumCannon_Start_Loop",
+            "PaldiumCannon_Start_Loop_Ring",
+            "PaldiumCannon_Start_Ring",
+            "PaldiumExplosion_Cancel",
+            "PaldiumExplosion_Cancel_Ring",
+            "PaldiumExplosion_End",
+            "PaldiumExplosion_End_Ring",
+            "PaldiumExplosion_Loop",
+            "PaldiumExplosion_Loop_Ring",
+            "PaldiumExplosion_Start",
+            "PaldiumExplosion_Start_Ring",
+            "PaldiumRain_End",
+            "PaldiumRain_Loop",
+            "PaldiumRain_Start",
+            "PaldiumShot_End",
+            "PaldiumShot_End_Ring",
+            "PaldiumShot_Loop",
+            "PaldiumShot_Loop_Ring",
+            "PaldiumShot_Start",
+            "PaldiumShot_Start_Ring",
+            "Supernova_End",
+            "Supernova_End_Ring",
+            "Supernova_Loop",
+            "Supernova_Loop_Ring",
+            "Supernova_Start",
+            "Supernova_Start_Ring",
+            "Walk"
+          ],
+          "proceduralAnimationCount": 0,
+          "retargetedAnimationCount": 0,
+          "sourceSamplePreservationVerified": true,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Walk",
+            "attack": "FarSkill_Action",
+            "cast": "HaloBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "No native Death clip; owner-authorized Damage plus ascend/fade presentation, not a generated animation."
+            }
+          ],
+          "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+          "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+          "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+          "conversionStageBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+            "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+            "archiveBytes": 53102420,
+            "fileCount": 74,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true,
+            "localUnchanged": true,
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1231,
+              "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+            },
+            "manifest": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+              "bytes": 13958,
+              "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+            },
+            "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+            "bytes": 22294,
+            "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+          },
+          "generationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+            "bytes": 5073,
+            "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+            "bytes": 6481,
+            "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+          },
+          "limitations": [
+            "58 clips are preserved, but HaloCutter_Loop_Ring is a fixed pose; 57 clips contain changing samples.",
+            "Each clip has 435 channels: above the live 300 warning and below the 500 hard limit.",
+            "No native Death clip is claimed; Damage plus ascend/fade remains a declared fallback.",
+            "Representative five-clip, three-view A/B passed the 5% contract; low-poly faceting remains visible.",
+            "Original Palworld standalone VFX, skill-specific SFX and production deployment remain unverified.",
+            "The conversion stage is archived in S3 legacy with full download and every member SHA-256 verified; this does not prove production deployment."
+          ],
+          "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json"
+        },
+        {
           "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
           "candidateId": "opgg-palworld-astralym-2026081102.idle-walk-hd",
           "label": "枯星龍／原解析度材質版／待機與行走",
@@ -2955,6 +3123,989 @@
         "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
         "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
         "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+      ]
+    },
+    {
+      "id": "community:ssbu-kirby-c00-standardized-v1",
+      "name": "卡比",
+      "work": "Super Smash Bros. Ultimate",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Kirby",
+        "fighter/kirby"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-kirby-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+          "bytes": 496028,
+          "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/validation.json",
+            "bytes": 13806,
+            "sha256": "28fc829f9d101e5bc1f93b18315ce8f1d52eff69a5116e0c7dcbb3cbc6e2f4ff"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/visual-review.json",
+            "bytes": 628,
+            "sha256": "6c46f1d629471cb94c87e316602d66ecf50339b279c547a4b24f9235f8fcd064"
+          },
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "The Ultimate14 native motion payload has not been retargeted to this 51-joint body or playback accepted.",
+            "This independent component is not bound to the existing Kirby hero, not registered in the backend dropdown and not deployed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported."
+          ]
+        }
+      ],
+      "mappedHeroIds": [
+        "community-review-06-20260907"
+      ],
+      "identityHeroIds": [
+        "community-review-06-20260907"
+      ],
+      "designStatus": "designed",
+      "evidence": [
+        "SSBU Kirby c00 was rebuilt twice byte-identically and passed GGD/Khronos/WebGL static-component checks."
+      ]
+    },
+    {
+      "id": "community:ssbu-mario-c00-standardized-v2",
+      "name": "瑪利歐",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Mario",
+        "瑪利歐",
+        "fighter/mario"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-mario-c00-static-skinned-v2",
+          "label": "瑪利歐 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
+          "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+          "bytes": 865396,
+          "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
+            "bytes": 28111,
+            "sha256": "81ad2daff3112b8dcc650ce616d8c0c53d8191ed0ee29b54cf2fe1ce50b10fd2"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
+            "bytes": 691,
+            "sha256": "d81894e9157775955db17a5c4e08cdf4654383daac4a6331a071a5b986f520dc"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/s3-backup-receipt.json",
+            "bytes": 1556,
+            "sha256": "017397679572131182969b9677144162bed47abc5e475e487823d40533703f50"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/alpha-audit.json",
+            "bytes": 4305,
+            "sha256": "53eed0cbbb72bd2017237fa8498ac52a9df23a86f90acff1d7d32cd93bae8858"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/material-bake-receipt.json",
+            "bytes": 11477,
+            "sha256": "e9af7058b7b0c8cb6f7be19b5d5ee1d3faae52f0c3b67c2f1cfecbfa2663eaad"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Mario identity.",
+      "evidence": [
+        "Mario c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-link-c00-standardized-v1",
+      "name": "林克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Link",
+        "林克",
+        "fighter/link"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-link-c00-static-skinned-v1",
+          "label": "林克 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
+          "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+          "bytes": 1035504,
+          "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/validation.json",
+            "bytes": 18616,
+            "sha256": "a0822aa62dadefcc86e62e272c99784e1baa1f2c3990120a24a9e12d9ebbc4e1"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/visual-review.json",
+            "bytes": 689,
+            "sha256": "4ad56fd7bb61071b7cf70e45c69c0180602350aaf7eb07a4ddfabed24f743475"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/s3-backup-receipt.json",
+            "bytes": 1551,
+            "sha256": "b1dfe8196d7f7147ab72ecefa887bd9a4006d23c4c4edd768d34d99c2129632c"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-audit.json",
+            "bytes": 4057,
+            "sha256": "3ff3336e2f242f016a62584bac4e444f80ffe9655c07bb6effdbe50331d4e7c1"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/material-bake-receipt.json",
+            "bytes": 14874,
+            "sha256": "a0f004da06d350625505b91413b5a2e30421be5e6df8443f8115ccfae7fb3be3"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-atlas-finalization.json",
+            "bytes": 649,
+            "sha256": "906f625085ea7467e76684f676692c7843780a3e1e0e80bae446df8eecbef091"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-link-full-v2/b6529ff2855b5a141c4d62f6db8ddc9f7ae652148365f18820a3758c724538e6.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "Link uses the source low LOD, a 7,900-triangle reduction target, and a two-atlas 256px layout measured at 0.40 atlas quality; the retained source and all conversion stages remain local for later A/B review."
+          ]
+        }
+      ],
+      "mappedHeroIds": [
+        "godie-h00l"
+      ],
+      "identityHeroIds": [
+        "godie-h00l"
+      ],
+      "designStatus": "designed",
+      "noDesignReason": null,
+      "evidence": [
+        "Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-sonic-c00-standardized-v1",
+      "name": "索尼克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Sonic",
+        "索尼克",
+        "fighter/sonic"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v2",
+          "label": "索尼克 SSBU Ultimate c00 正式減面版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+          "bytes": 916024,
+          "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/validation.json",
+            "bytes": 23727,
+            "sha256": "1d1d6cb7a6ed909176f3ff45115f61dbd62746b92c5d509f2e029342f3ecfe6a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-comparison.json",
+            "bytes": 1580,
+            "sha256": "b75da688ac153c7caa20057d2a3f4c86e0e9c6b62bedc78e3bebc651f619c98d"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1483,
+            "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/alpha-audit.json",
+            "bytes": 1893,
+            "sha256": "41bc342073c93db3b9ceb207059013614fcba595ed4746647de94339f42ce0c3"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+          "limitations": [
+            "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+            "Runtime switching and production deployment were not performed.",
+            "Original-game shader parity remains limited to the source-connected Blender materials."
+          ]
+        },
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v1",
+          "label": "索尼克 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+          "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+          "bytes": 936116,
+          "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
+            "bytes": 23819,
+            "sha256": "6ed3bbcc86bd131777c1b699ebecd6f4e870db78df69568d517bf7beed3e22d2"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
+            "bytes": 691,
+            "sha256": "e9adfa1a5ed0194a5a30f8d4b5a0c03626b77a20995d5280ff5ee7ab565ba265"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/s3-backup-receipt.json",
+            "bytes": 1556,
+            "sha256": "3745651265a94b6703230c3d2246b816d8d6e648c9f3c29c31eebc4499e664a2"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/alpha-audit.json",
+            "bytes": 3691,
+            "sha256": "645249dad8d101ccce75ce89397f7ad2e411dc04253a45eaf12d7939e67790b9"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/material-bake-receipt.json",
+            "bytes": 14195,
+            "sha256": "956796b480cd2eb2068c99416e33fafc5e19a98630e390aa048e3f982f0a7773"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-sonic-full-v2/f497a9ab31a668d62a45ac011be758ccaa4b798bff5d9d65917a655e9141aac1.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Sonic identity.",
+      "evidence": [
+        "Sonic c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+        "Sonic c00 was reduced from 8,980 to 7,900 triangles; the byte-identical rebuild, Khronos, GGD budget, alpha audit and fixed-camera A/B review passed."
+      ]
+    },
+    {
+      "id": "community:ssbu-chrom-c00-standardized-v1",
+      "name": "庫洛姆",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Chrom",
+        "庫洛姆",
+        "fighter/chrom"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-chrom-c00-static-skinned-v1",
+          "label": "庫洛姆 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+          "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+          "bytes": 963000,
+          "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/validation.json",
+            "bytes": 19165,
+            "sha256": "d6f986feaf431a1fe3ed883f5c74ca73c2ca40e847e8157c20118f8e8df9f3e2"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/visual-review.json",
+            "bytes": 707,
+            "sha256": "1365de37a0dfc541fd0da4b1e605726ec44a85aaa30e6e29daceb218800a2149"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/s3-backup-receipt.json",
+            "bytes": 1557,
+            "sha256": "6e881dc02a1ff5985114f7dd3a3b33d698f7e8e2f15e4b86740d9b9462816735"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-audit.json",
+            "bytes": 4139,
+            "sha256": "a2365eba085551584ef6c7f0866911c75d63466b9fc769bc83a62112e2b091ad"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-atlas-finalization.json",
+            "bytes": 673,
+            "sha256": "f7409f7230a06979f7cfa17db1ae8910232c190ae2b30a7c767ad25c703db236"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/material-bake-receipt.json",
+            "bytes": 11790,
+            "sha256": "105e779c1a556fd281b97c1f4deb3a7060f02229522bb565a3b8758d700e070e"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Chrom identity.",
+      "evidence": [
+        "Chrom c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-ganondorf-c00-standardized-v1",
+      "name": "加儂多夫",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Ganondorf",
+        "加儂多夫",
+        "fighter/ganon"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-ganondorf-c00-static-skinned-v1",
+          "label": "加儂多夫 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
+          "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+          "bytes": 1264104,
+          "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/validation.json",
+            "bytes": 36532,
+            "sha256": "cdf9836c8360421b8d8f6f38f484bb596bd397e94aad4c84dc7cda2890d3e2d9"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/visual-review.json",
+            "bytes": 704,
+            "sha256": "b7fdd49912b52726a228ec6a6f604a50dc01d9dd12c800a93afca316f25777d6"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/s3-backup-receipt.json",
+            "bytes": 1557,
+            "sha256": "c0e10272ec04ea4690e7b2a6d579e08ef50e5e5d16ddcaade30e48a05b0982a5"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-audit.json",
+            "bytes": 4243,
+            "sha256": "26073cc79416113da9725f8ec440c6e5de525e35333c8ee9eeb985ac81e52e29"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-atlas-finalization.json",
+            "bytes": 348,
+            "sha256": "4e94bae5fe1bb46636433b9026ee446e6b6e4724677cecc8cd9f000890934881"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/material-bake-receipt.json",
+            "bytes": 12790,
+            "sha256": "5f7c72c0f3a86fdda7a08ab81e1389891fef33ea2375310f012d9575cade5903"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Ganondorf identity.",
+      "evidence": [
+        "Ganondorf c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-lucina-c00-standardized-v1",
+      "name": "露琪娜",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Lucina",
+        "露琪娜",
+        "fighter/lucina"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-lucina-c00-static-skinned-v1",
+          "label": "露琪娜 SSBU Ultimate c00 黑底修復版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina/first/body.glb",
+          "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+          "bytes": 895472,
+          "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/validation.json",
+            "bytes": 18883,
+            "sha256": "f180cc21bf286cb85652516f2851f931e8e12d9e05958fdc2827eed32a82ebd0"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/visual-review.json",
+            "bytes": 709,
+            "sha256": "39b2a6a6b69a618e6accc8c973bd3382e67995e9efa1dfb7854dd10a269100ea"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/s3-backup-receipt.json",
+            "bytes": 1562,
+            "sha256": "80ace7a43b4751aaea5f447aa07120e63e66e4e5abc3ab2b068d6f3b936249ff"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-audit.json",
+            "bytes": 4065,
+            "sha256": "a76d01452104d8898f79f11983342ecc00eabc53cbf1c2cb85b0c19457c7062d"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-atlas-finalization.json",
+            "bytes": 691,
+            "sha256": "3e0cb146869e1812b5c6e0bb24e1cdfdaf1927933f212d101f7cc1ca3359122a"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/material-bake-receipt.json",
+            "bytes": 15742,
+            "sha256": "f676610c8a9a8bef483f60f9b2905401e3c689eaa09af3399dad7b0b5012ef3e"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Lucina identity.",
+      "evidence": [
+        "Lucina c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-daisy-c00-standardized-v1",
+      "name": "黛西",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Daisy",
+        "黛西",
+        "fighter/daisy"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-daisy-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+          "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+          "bytes": 846532,
+          "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/validation.json",
+            "bytes": 19245,
+            "sha256": "8e1e7eac41df27bff4b8581fe27d97be0d9ecedac5e2182b41ee6b45ccb084d5"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/visual-review.json",
+            "bytes": 700,
+            "sha256": "1a03de2620ca02089f0917cbb1f1e0c416a4d43542270658442592f7d8fd73f8"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/s3-backup-receipt.json",
+            "bytes": 1557,
+            "sha256": "0c3427190f789cc5ee798a49386d4f2325c844990f36a0d38c5dc17840bcb76b"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The source exposed body_highShape and body_lowShape together; the reproducible candidate excludes body_highShape and retains the low LOD before reduction."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Daisy identity.",
+      "evidence": [
+        "Daisy c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-peach-c00-standardized-v1",
+      "name": "碧姬公主",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Peach",
+        "碧姬公主",
+        "fighter/peach"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-peach-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+          "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+          "bytes": 932380,
+          "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/validation.json",
+            "bytes": 18152,
+            "sha256": "7868f36bfcf29c1656d38e2b722673d071dfad66a3222396dd0caf5c4a799412"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/visual-review.json",
+            "bytes": 698,
+            "sha256": "201d74ef29a653a535b6938599d555d7689d70d48c493aef23b84d7bd67a6761"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/s3-backup-receipt.json",
+            "bytes": 1557,
+            "sha256": "2184a04056589ede1e08bfc3e04faa07ef260641c5439d2ac6dd3fc7484a0355"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Peach identity.",
+      "evidence": [
+        "Peach c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "community:ssbu-toonlink-c00-standardized-v1",
+      "name": "卡通林克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Toon Link",
+        "卡通林克",
+        "fighter/toonlink"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-toonlink-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+          "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+          "bytes": 993100,
+          "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/validation.json",
+            "bytes": 39855,
+            "sha256": "1369ce771dbdd563d98dfcc56bda3f1c3d5640d64adb8de0f11cdb8f7bd26619"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/visual-review.json",
+            "bytes": 744,
+            "sha256": "e79137d0b6c3b5a14cf0aeb8bb8118cc153de9b6ae08d4566dd0c53c8d3515e7"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-receipt.json",
+            "bytes": 1575,
+            "sha256": "dc7fa20563a86684b92af1f2199442dca9f3cdaabd2ecf590e6194ff4a52eac6"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.tar.gz",
+          "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
+            "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Toon Link identity.",
+      "evidence": [
+        "Toon Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ]
+    },
+    {
+      "id": "native:jstars-000",
+      "name": "Monkey D. Luffy",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "蒙其·D·魯夫",
+        "Monkey D. Luffy",
+        "魯夫",
+        "路飛",
+        "モンキー・D・ルフィ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:000.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/i/000_luffy_new_01p_PS3.srdi",
+          "bytes": 1050948,
+          "sha256": "c950d9a55b7ed81c02223dfbe8f5d708dba2b1346105f6bac207cf912cfc7f2e",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "000",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/v/000_luffy_new_01p_PS3.srdv",
+            "bytes": 4064232,
+            "sha256": "b20a0f9fd7a17a141afc38b43966d1cdbacabd8dd75e6e650e0779a4667e5c37"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/m/000_luffy_new_01p_PS3.srd",
+            "bytes": 96464,
+            "sha256": "12b291687153860feaa0276cb33235b3c11ee268434c437712c2801b4c28a90a"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-013",
+      "name": "Toriko",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "阿虜",
+        "Toriko",
+        "特瑞科",
+        "トリコ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:013.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/i/013_toriko_01p_PS3.srdi",
+          "bytes": 1309412,
+          "sha256": "73022b9f1c84ec54dde574e854b9758d81b35fc9d604444c817ada0c626971c1",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "013",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/v/013_toriko_01p_PS3.srdv",
+            "bytes": 4113392,
+            "sha256": "b14f905f7ec268a577b8319e31b2e88fcbc26c62da4f293e40c39d105835a696"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/m/013_toriko_01p_PS3.srd",
+            "bytes": 79504,
+            "sha256": "3a0b37b9df394060a6c1f72bc900b6af6cdfa146da58d3b1e019f7799431d819"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-014",
+      "name": "Zebra",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "澤布拉",
+        "Zebra",
+        "傑布拉",
+        "ゼブラ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:014.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/i/014_zebra_01p_PS3.srdi",
+          "bytes": 964250,
+          "sha256": "c042bfeb223ec8d1bbc16d08f809effca576acc05c784d17ae8eb0c6f36225be",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "014",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/v/014_zebra_01p_PS3.srdv",
+            "bytes": 4839920,
+            "sha256": "11acc0fe6dadc8070389eeca038f40bd6c9ad8706f14f7ef0148a4ae85e2d4f9"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/m/014_zebra_01p_PS3.srd",
+            "bytes": 57584,
+            "sha256": "221a93d1ae0d40199b9d3e2357a0f85d250e500f09ae7a87b2d01face9208757"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-018",
+      "name": "Killua Zoldyck",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "奇犽·揍敵客",
+        "Killua Zoldyck",
+        "奇犽",
+        "キルア＝ゾルディック"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:018.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+          "bytes": 1342172,
+          "sha256": "47f2970809edd99e5faf964d30e01b02fee8ccf5f498ada064871820e474a805",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "018",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv",
+            "bytes": 4687088,
+            "sha256": "cfd1e6d9972a4b709de2e9d5ed217c790b13ec0d83fbe0ffd8fa70ec6e8ae179"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+            "bytes": 67024,
+            "sha256": "7e27a19ff389d81ef0bbb8bd89473bae88455b78ae73598a68f9349f43edc5ce"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
       ]
     }
   ],

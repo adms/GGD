@@ -58,7 +58,32 @@ def plan_sources(data, manifest, policy):
                                      'owner-highest' if entry['heroIds'] else 'needs-roster-mapping')
     return data
 
-def render_sources(data, policy):
+def render_sources(data, policy, source_hero_overrides=None, candidate_overrides=None):
+    """Render source rows without losing a later verified Hero Forge mapping.
+
+    ``download-sources.json`` intentionally preserves the state of every raw
+    source candidate.  A completed Hero Forge package may therefore coexist
+    with a raw FBX/GLB that is still pending material conversion.  The optional
+    mapping makes that identity relationship visible without promoting the raw
+    candidate itself to a selectable runtime model.
+    """
+    source_hero_overrides = source_hero_overrides or {}
+    candidate_overrides = candidate_overrides or {}
+
+    def linked_hero_ids(source):
+        ids = list(source.get('heroIds', []))
+        for hero_id in source_hero_overrides.get(source['id'], {}).get('heroIds', []):
+            if hero_id not in ids:
+                ids.append(hero_id)
+        return ids
+
+    def linked_note(source):
+        link = source_hero_overrides.get(source['id'])
+        if not link:
+            return ''
+        return ('；已對應 ' + '、'.join(f'`{hero_id}`' for hero_id in link['heroIds'])
+                + '，Hero Forge 本機下拉已註冊；正式部署未驗證')
+
     sources = {s['id']: s for s in data['sources']}
     entries = data['entries']
     count = sum(len(e['sources']) for e in entries)
@@ -111,9 +136,10 @@ def render_sources(data, policy):
             '取得範圍只涵蓋表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組查找。付費權限依各工作流的使用者授權判斷。', '',
             '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 檔案保存狀態 | 後台整合 | 購買安排 |', '|---|---|---|---|---|---|']
         for s in public:
+            mapped_ids = linked_hero_ids(s)
             decision = ('**補充素材；角色模型本體缺口繼續查找**' if not is_model_source(s) else
-                        '**已有實檔；保留來源，避免重買**' if s['heroIds'] or s.get('ownerEntryIds') else '素材池；待角色對應，仍須保留整合')
-            ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
+                        '**已有實檔；保留來源，避免重買**' if mapped_ids or s.get('ownerEntryIds') else '素材池；待角色對應，仍須保留整合')
+            ids = '<br>' + '、'.join(f'`{i}`' for i in mapped_ids) if mapped_ids else ''
             if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
             storage = ('**最新修訂僅本機已保存，S3 尚未上傳**；舊版備份仍保留' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' and s.get('backup', {}).get('readbackVerified') is True else
                        '**僅本機已保存，S3 尚未上傳**' if s.get('pendingBackup', {}).get('status') == 'not-uploaded' else
@@ -121,7 +147,7 @@ def render_sources(data, policy):
                        '**本機已保存；S3 封存準備中**' if s.get('publicationStatus') == 'local-only-preparing-s3-backup' else
                        '本機已保存；S3 備份狀態未確認')
             state = s.get('backendIntegration', {}).get('state')
-            integration = {'pending-character-mapping': '必須整合；待角色 ID 對應', 'pending-standardization': '必須整合；待標準化／切換驗收'}.get(state, state or '尚未登記')
+            integration = {'pending-character-mapping': '必須整合；待角色 ID 對應', 'pending-standardization': '必須整合；待標準化／切換驗收'}.get(state, state or '尚未登記') + linked_note(s)
             method = '論壇付費' if s in data.get('paidSources', []) else '免費公開'
             lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{method}；{s["uploader"]}；{s["format"]} | {s["verification"]} | {storage} | {integration} | {decision} |')
         lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources／paidSources`；完整備份的逐檔清單統一在 `public-source-files.json`（沿用檔名，包含付費交付）。`pendingBackup.plannedS3Uri` 只是預定上傳位置，不能當成已存在的 S3 檔案；已上傳以 `backup.readbackVerified=true` 為準。`readiness` 尚未通過的來源只供人工處理，不進入成品自動取用；來源使用條件另行保留，不把下載或付款當成已確認可再散布。', '']
@@ -132,11 +158,22 @@ def render_sources(data, policy):
                 '查詢單一角色或來源包：`python3 tools/hero-model-library/query.py Gourry --candidates --json`；來源 ID 可列出該包全部變體。`sourceLocalPath` 加候選內的相對檔案路徑可定位本機；既有英雄的可用模型仍以本文件下方全角色表為準。', '',
                 '| 原生角色／版本 | 候選 ID | GGD 對應 | 來源包 | 類型與目前狀態 |', '|---|---|---|---|---|']
             for s,c in detailed:
+                candidate_key=c.get('candidateId',c.get('id',''))
+                candidate_override=candidate_overrides.get(candidate_key,{})
                 name=c.get('label',c.get('character',c.get('nativeCharacter',c.get('candidateId',''))))
-                ids='、'.join('`'+i+'`' for i in c.get('heroIds',[])) or '未對應；保留儲備'
-                state=c.get('status',c.get('readyStage',s.get('readiness','待核')))
+                mapped_ids = list(c.get('heroIds', []))
+                for hero_id in source_hero_overrides.get(s['id'], {}).get('heroIds', []):
+                    if hero_id not in mapped_ids:
+                        mapped_ids.append(hero_id)
+                for hero_id in candidate_override.get('heroIds', []):
+                    if hero_id not in mapped_ids:
+                        mapped_ids.append(hero_id)
+                ids='、'.join('`'+i+'`' for i in mapped_ids) or '未對應；保留儲備'
+                state=candidate_override.get('readiness',c.get('status',c.get('readyStage',s.get('readiness','待核'))))
                 role=c.get('resourceRole',c.get('assetKind','model-candidate'))
-                lines.append(f'| {str(name).replace("|","／")} | `{c.get("candidateId",c.get("id",""))}` | {ids} | `{s["id"]}` | {role}；{state} |')
+                linkage = ('；已註冊本機 Hero Forge 選項；正式部署未驗證' if candidate_override.get('runtimeSelectable') else
+                           '；原始候選狀態，非已註冊成品本身' if s['id'] in source_hero_overrides else '')
+                lines.append(f'| {str(name).replace("|","／")} | `{candidate_key}` | {ids} | `{s["id"]}` | {role}；{state}{linkage} |')
             lines.append('')
     if data.get('publicSourceLeads'):
         lines += ['## 已找到來源頁，待取得的素材', '',

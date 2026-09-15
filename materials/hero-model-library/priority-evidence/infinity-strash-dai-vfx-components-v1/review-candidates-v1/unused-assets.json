@@ -1,0 +1,289 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-unbound-components@1",
+  "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+  "summary": {
+    "unboundTextureComponents": 18,
+    "unboundMeshComponents": 8,
+    "previewRecipeReferences": 43,
+    "runtimeBindings": 0
+  },
+  "components": [
+    {
+      "componentId": "dai-vfx-texture-1d983aca2c50",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+      "sha256": "1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-278d1511f567",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+      "sha256": "278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-3334415bf1cf",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+      "sha256": "3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-c040be6be782",
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-35027d881f17",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+      "sha256": "35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874",
+        "dai-pn010-review-c040be6be782",
+        "dai-pn010-review-2682386eefc4",
+        "dai-pn010-review-811a70524aec",
+        "dai-pn010-review-78c1869c7ed9",
+        "dai-pn010-review-446d57b8bd17"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-5e9552e7cdb1",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+      "sha256": "5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874",
+        "dai-pn010-review-c040be6be782",
+        "dai-pn010-review-2682386eefc4",
+        "dai-pn010-review-811a70524aec",
+        "dai-pn010-review-78c1869c7ed9",
+        "dai-pn010-review-446d57b8bd17"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-71e658468dee",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+      "sha256": "71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-723415b1eff0",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+      "sha256": "723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-446d57b8bd17"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-760908689aab",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+      "sha256": "760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-79adb82807ab",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+      "sha256": "79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-9f7867d7fa2a",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+      "sha256": "9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-aa307baadef6",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+      "sha256": "aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-78c1869c7ed9"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-b3c703088417",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+      "sha256": "b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-811a70524aec"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-b4a7e4c1252b",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+      "sha256": "b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-b660aa73e684",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+      "sha256": "b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-78c1869c7ed9"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-c6d05cb7cfc8",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+      "sha256": "c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-caa730676994",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+      "sha256": "caa730676994504155500df2228813205ac9304d435334e0257c04075decba44",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-d3f0cfbb0fe1",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+      "sha256": "d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-texture-e3cf25c6edcd",
+      "kind": "texture",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+      "sha256": "e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874",
+        "dai-pn010-review-c040be6be782",
+        "dai-pn010-review-2682386eefc4",
+        "dai-pn010-review-811a70524aec",
+        "dai-pn010-review-78c1869c7ed9",
+        "dai-pn010-review-446d57b8bd17"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-06d60c9dc509",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795.glb",
+      "sha256": "06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874",
+        "dai-pn010-review-c040be6be782"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-16ad660ce7bf",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe.glb",
+      "sha256": "16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-1afaff4e7a06",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394.glb",
+      "sha256": "1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-5efcc26a6874"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-1f03f74da354",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d.glb",
+      "sha256": "1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-c040be6be782"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-2df98836a4fa",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef.glb",
+      "sha256": "2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-3315cee29bd1",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0.glb",
+      "sha256": "3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-ae3e9d7e829c",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815.glb",
+      "sha256": "ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    },
+    {
+      "componentId": "dai-vfx-mesh-b9c28ede0f0d",
+      "kind": "mesh",
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5.glb",
+      "sha256": "b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5",
+      "usedByReviewCandidates": [
+        "dai-pn010-review-2682386eefc4"
+      ],
+      "runtimeState": "unbound-reserve"
+    }
+  ]
+}

@@ -476,13 +476,24 @@
     "ofOriginal18Missing": 17,
     "stillNoDeliveredNewModel": [],
     "identity": "Other workflow supplied proxies retain similar-proxy class; source acquisition does not prove canonical identity.",
-    "newLocalBodyPendingConversion": [
-      "b2-kaiji"
-    ],
+    "newLocalBodyPendingConversion": [],
     "newBodyReceipt": "../../../GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/delivery-receipt.json",
-    "stillUsingPriorPlaceholder": [
-      "b2-kaiji"
-    ]
+    "stillUsingPriorPlaceholder": [],
+    "kaijiRuntimeIntegration": {
+      "state": "model-converted-procedural-motion-runtime-registered-feature-branch-production-deployment-pending",
+      "heroId": "b2-kaiji",
+      "candidateId": "kaiji-holya-procedural-six-state-v1",
+      "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "sourceAudioCount": 0,
+      "sourceVfxCount": 0,
+      "productionDeployed": false,
+      "receiptEvidence": "priority-evidence/kaiji-community/receipt.json",
+      "registrationEvidence": "priority-evidence/kaiji-community/registration.json",
+      "readbackEvidence": "priority-evidence/kaiji-community/registration-readback.json",
+      "runtimeOptionEvidence": "priority-runtime-options.json"
+    }
   },
   "preservedManualDefaults": 15,
   "preservedApprovedDerivatives": 11,
@@ -511,7 +522,16 @@
     "mainCommittedCombatClips": 1016,
     "sourceReusedCombatClips": 308,
     "syntheticCombatClips": 708,
-    "projectSevenRuntimeCombatBinding": "pending",
+    "projectSevenRuntimeCombatBinding": {
+      "state": "owner-reviewed-runtime-registered-feature-branch-production-deployment-pending",
+      "scopedHeroes": 7,
+      "approvedAndRuntimeRegisteredClips": 311,
+      "pendingOtherEventBoundWavs": 443,
+      "productionDeployed": false,
+      "registrationEvidence": "lol-project-seven/runtime-registration.json",
+      "auditEvidence": "lol-project-seven/runtime-audit.json",
+      "queueEvidence": "lol-project-seven/listening-review-queue.json"
+    },
     "priorityAudit": "priority-evidence/main-81-handoff/audio/per-hero.json",
     "currentBranchCombatClips": 1018,
     "currentBranchSourceReusedCombatClips": 310,

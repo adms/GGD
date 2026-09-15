@@ -1,0 +1,214 @@
+{
+  "schema": "ggd.priority-windows-game-source-access@1",
+  "observedAt": "2026-09-13T19:26:50.548244+00:00",
+  "sourceInventory": {
+    "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
+    "bytes": 65693,
+    "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486"
+  },
+  "mountSnapshot": {
+    "volumes": {
+      "common": false,
+      "game": false
+    },
+    "relevantSmbLines": []
+  },
+  "groups": [
+    {
+      "group": "jump-force",
+      "records": [
+        {
+          "id": "steam:816020",
+          "title": "JUMP FORCE",
+          "platform": "Windows (Steam)",
+          "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\JUMP FORCE",
+          "recordedBytes": 23856777652,
+          "recordedFileCount": 3466,
+          "recordedAssetContainerCandidates": 240,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        }
+      ]
+    },
+    {
+      "group": "jump-crossover",
+      "records": [
+        {
+          "id": "windows-rom-scan:0663",
+          "title": "J-STARS Victory VS (PCSE00595) (NTSC)",
+          "platform": "Sony PS Vita",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS (PCSE00595) (NTSC).7z",
+          "recordedBytes": 1755203440,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        },
+        {
+          "id": "windows-rom-scan:0664",
+          "title": "J-STARS Victory VS+ [PCSE00595] (v01.00) ",
+          "platform": "Sony PS Vita",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
+          "recordedBytes": 1523427255,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        }
+      ]
+    },
+    {
+      "group": "kof",
+      "records": [
+        {
+          "id": "steam:222440",
+          "title": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+          "platform": "Windows (Steam)",
+          "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\The King of Fighters 2002 Unlimited Match",
+          "recordedBytes": 1631439265,
+          "recordedFileCount": 1536,
+          "recordedAssetContainerCandidates": 41,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        },
+        {
+          "id": "steam:571260",
+          "title": "THE KING OF FIGHTERS XIV STEAM EDITION",
+          "platform": "Windows (Steam)",
+          "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\THE KING OF FIGHTERS XIV",
+          "recordedBytes": 17892948304,
+          "recordedFileCount": 10,
+          "recordedAssetContainerCandidates": 1,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        }
+      ]
+    },
+    {
+      "group": "fate-unlimited-codes",
+      "records": [
+        {
+          "id": "windows-rom-scan:0607",
+          "title": "Fate-Unlimited Codes Portable (Japan)",
+          "platform": "Sony PSP",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
+          "recordedBytes": 509977835,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        },
+        {
+          "id": "windows-rom-scan:0608",
+          "title": "Fate_Unlimited_Codes_USA_PSP-EMiNENT",
+          "platform": "Sony PSP",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+          "recordedBytes": 738394112,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        }
+      ]
+    },
+    {
+      "group": "ssbu-nsandns2",
+      "records": [
+        {
+          "id": "windows-rom-scan:0587",
+          "title": "Super Smash Bros Ultimate[01006A800016E000][US][v0]",
+          "platform": "Nintendo Switch",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super Smash Bros Ultimate[01006A800016E000][US][v0].nsp",
+          "recordedBytes": 14638743603,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        },
+        {
+          "id": "windows-rom-scan:0588",
+          "title": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200",
+          "platform": "Nintendo Switch",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200.zip",
+          "recordedBytes": 38366835,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        },
+        {
+          "id": "windows-rom-scan:0589",
+          "title": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500",
+          "platform": "Nintendo Switch",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500.zip",
+          "recordedBytes": 38366835,
+          "recordedFileCount": null,
+          "recordedAssetContainerCandidates": null,
+          "payloadBytesRead": 0,
+          "contentInspected": false,
+          "payloadSha256": null,
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "integrationStatus": "not-registered",
+          "accessNow": "blocked-share-not-mounted"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "records": 10,
+    "payloadBytesRead": 0,
+    "contentInspected": 0,
+    "extracted": 0,
+    "converted": 0,
+    "registered": 0,
+    "blockedByMissingCommon": 3,
+    "blockedByMissingGame": 7
+  },
+  "limitation": "This is an inventory and access receipt. Missing mounts prevent fresh payload reads; file names, sizes and old container counts do not prove extraction or usable assets."
+}

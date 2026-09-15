@@ -1,0 +1,228 @@
+{
+  "schema": "ggd-palworld-astralym-full58-build@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+    "bytes": 25503732,
+    "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+    "bytes": 17043436,
+    "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+  },
+  "stages": {
+    "decimation": {
+      "tool": "tools/model-budget/optimize/decimate-emissive-lock.mjs",
+      "parameters": {
+        "target": 7900,
+        "emissiveThreshold": 192,
+        "errorBound": 0.02,
+        "lockBorder": true,
+        "sanitizeTransparentEmissiveMattes": true
+      },
+      "trianglesBefore": 23928,
+      "trianglesAfter": 7896,
+      "primitiveRecords": [
+        {
+          "primitiveIndex": 0,
+          "material": "MI_WorldTreeDragon_Body",
+          "trianglesBefore": 20594,
+          "trianglesAfter": 6798,
+          "vertices": 13921,
+          "emissiveLockedVertices": 0,
+          "measuredError": 0.0006203224183991551
+        },
+        {
+          "primitiveIndex": 1,
+          "material": "MI_WorldTreeDragon_Extra",
+          "trianglesBefore": 2978,
+          "trianglesAfter": 982,
+          "vertices": 1928,
+          "emissiveLockedVertices": 0,
+          "measuredError": 0.001090358360670507
+        },
+        {
+          "primitiveIndex": 2,
+          "material": "MI_WorldTreeDragon_Eye",
+          "trianglesBefore": 356,
+          "trianglesAfter": 116,
+          "vertices": 248,
+          "emissiveLockedVertices": 0,
+          "measuredError": 0.0013590001035481691
+        }
+      ],
+      "transparentEmissiveMatteSanitization": [
+        {
+          "texture": "MI_WorldTreeDragon_Extra.webp",
+          "width": 1024,
+          "height": 1024,
+          "clearedPixels": 26398,
+          "visiblePixelsChanged": 0,
+          "alphaValuesChanged": 0
+        },
+        {
+          "texture": "MI_WorldTreeDragon_Extra_Emissive.webp",
+          "width": 1024,
+          "height": 1024,
+          "clearedPixels": 26398,
+          "visiblePixelsChanged": 0,
+          "alphaValuesChanged": 0
+        },
+        {
+          "texture": "MI_WorldTreeDragon_Eye.webp",
+          "width": 1024,
+          "height": 1024,
+          "clearedPixels": 37845,
+          "visiblePixelsChanged": 0,
+          "alphaValuesChanged": 0
+        },
+        {
+          "texture": "MI_WorldTreeDragon_Eye_Emissive.webp",
+          "width": 1024,
+          "height": 1024,
+          "clearedPixels": 37845,
+          "visiblePixelsChanged": 0,
+          "alphaValuesChanged": 0
+        }
+      ]
+    },
+    "normalization": {
+      "drawCalls": {
+        "before": 3,
+        "after": 3
+      },
+      "droppedZeroClips": [],
+      "clipIndexMap": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "resizedTextures": [
+        [
+          2048,
+          256
+        ],
+        [
+          2048,
+          256
+        ],
+        [
+          2048,
+          256
+        ],
+        [
+          2048,
+          256
+        ],
+        [
+          1024,
+          256
+        ],
+        [
+          1024,
+          256
+        ],
+        [
+          1024,
+          256
+        ],
+        [
+          1024,
+          256
+        ],
+        [
+          2048,
+          256
+        ]
+      ],
+      "texturesOverCap": [],
+      "changed": true
+    },
+    "uploadCompatibility": {
+      "convertedNormalAccessors": 3,
+      "omittedDefaultLinearSamplers": true,
+      "jsonBytes": 4016368
+    }
+  },
+  "preservationAssertions": {
+    "nativeClipCount": 58,
+    "nativeClipMetadataExact": true,
+    "generatedClips": 0,
+    "retargetedClips": 0,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "jointCounts": [
+      145
+    ]
+  },
+  "measured": {
+    "triangles": 7896,
+    "drawPrimitives": 3,
+    "textureCount": 9,
+    "maxTextureEdge": 256,
+    "clipCount": 58,
+    "maxClipChannels": 435
+  },
+  "dependencies": {
+    "node": "v25.9.0",
+    "gltfTransformCore": "4.4.1",
+    "gltfTransformFunctions": "4.4.1",
+    "meshoptimizer": "1.2.0",
+    "ffmpeg": "required by resizeImageWithFfmpeg"
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.5331799387931824,
+      -0.002149025211110711,
+      -0.21897973120212555
+    ],
+    "max": [
+      0.5331800580024719,
+      1.5594509840011597,
+      0.23257462680339813
+    ],
+    "extent": [
+      1.0663599967956543,
+      1.5616000092122704,
+      0.4515543580055237
+    ]
+  },
+  "geometry": [
+    {
+      "name": "chr0430_form0.001__MI_chr0430_eyeshadow",
+      "vertices": 129,
+      "indices": 600,
+      "worldBounds": {
+        "min": [
+          -0.07348288595676422,
+          1.2748727798461914,
+          0.04358323663473129
+        ],
+        "max": [
+          0.07348288595676422,
+          1.322021722793579,
+          0.0737321749329567
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0.001__MI_chr0430_glass",
+      "vertices": 34,
+      "indices": 120,
+      "worldBounds": {
+        "min": [
+          -0.006286785006523132,
+          0.890251874923706,
+          0.09315253794193268
+        ],
+        "max": [
+          0.013849761337041855,
+          1.0758031606674194,
+          0.1004389300942421
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0.001__MI_chr0430_lens",
+      "vertices": 129,
+      "indices": 600,
+      "worldBounds": {
+        "min": [
+          -0.07361376285552979,
+          1.2747936248779297,
+          0.04371435195207596
+        ],
+        "max": [
+          0.07361376285552979,
+          1.3220276832580566,
+          0.07391878217458725
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_body_atlas",
+      "vertices": 4192,
+      "indices": 15468,
+      "worldBounds": {
+        "min": [
+          -0.5331799387931824,
+          -0.002149025211110711,
+          -0.17638415098190308
+        ],
+        "max": [
+          0.5331800580024719,
+          1.4343490600585938,
+          0.23257462680339813
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head__MI_chr0430_eye",
+      "vertices": 580,
+      "indices": 3102,
+      "worldBounds": {
+        "min": [
+          -0.0730576366186142,
+          1.2751295566558838,
+          0.04315723106265068
+        ],
+        "max": [
+          0.0730576291680336,
+          1.3220021724700928,
+          0.07312582433223724
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head__MI_chr0430_hair",
+      "vertices": 1151,
+      "indices": 3900,
+      "worldBounds": {
+        "min": [
+          -0.1973959505558014,
+          1.1602370738983154,
+          -0.21897973120212555
+        ],
+        "max": [
+          0.19687765836715698,
+          1.5594509840011597,
+          0.18552236258983612
+        ]
+      },
+      "skeleton": "chr0430_form0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "MI_chr0430_eyeshadow",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "metallic": 0,
+      "roughness": 0.800000011920929,
+      "albedoTexture": {
+        "name": "MI_chr0430_eyeshadow (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_glass",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "metallic": 1,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "MI_chr0430_glass (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_glass (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_lens",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "metallic": 0,
+      "roughness": 0.800000011920929,
+      "albedoTexture": {
+        "name": "MI_chr0430_lens (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_body_atlas",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "MI_chr0430_body_atlas (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_body_atlas (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_eye",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 0.800000011920929,
+      "albedoTexture": {
+        "name": "MI_chr0430_eye (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_hair",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "metallic": 1,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "MI_chr0430_hair (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_hair (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 640,
+        "height": 1
+      }
+    },
+    {
+      "name": "MI_chr0430_eyeshadow (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_lens (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_body_atlas (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_body_atlas (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_body_atlas (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_body_atlas (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_eye (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

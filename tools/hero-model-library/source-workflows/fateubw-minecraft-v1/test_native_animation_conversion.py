@@ -26,12 +26,23 @@ class NativeAnimationConversionTest(unittest.TestCase):
         keys = native.source_curve({"0": [0, 0, 0], "1": [2, 4, 6]}, "rotation", 1.0, "clip/bone")
         np.testing.assert_allclose(native.interpolate(keys, 0.25), [0.5, 1.0, 1.5])
 
-    def test_formula_and_pre_post_curves_are_rejected(self):
-        with self.assertRaisesRegex(ValueError, "formula/nonfinite"):
+    def test_bounded_time_formula_uses_molang_degree_trigonometry(self):
+        keys = native.source_curve(["2+math.sin(query.anim_time*90)", 0, 0], "position", 1.0, "formula")
+        np.testing.assert_allclose(native.interpolate(keys, 1.0), [3, 0, 0], atol=1e-8)
+        self.assertGreater(len(native.sampled_times(keys, 1.0, 60, False)), 2)
+
+    def test_unknown_formula_variable_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "outside this converter"):
             native.source_curve(["query.life_time", 0, 0], "position", 1.0, "formula")
-        with self.assertRaisesRegex(ValueError, "pre/post"):
-            native.source_curve({"0": {"pre": [0, 0, 0], "post": [1, 1, 1]}},
-                                "rotation", 1.0, "prepost")
+
+    def test_pre_post_curve_preserves_the_source_discontinuity(self):
+        keys = native.source_curve({"0": [1, 1, 1],
+                                    "0.5": {"pre": [1, 1, 1], "post": [0, 0, 0]},
+                                    "1": [0, 0, 0]}, "scale", 1.0, "prepost")
+        times = native.sampled_times(keys, 1.0, 60, False)
+        self.assertIn(0.5, times)
+        self.assertTrue(any(0 < 0.5 - time <= 1e-4 for time in times))
+        np.testing.assert_allclose(native.interpolate(keys, 0.5), [0, 0, 0])
 
     def test_no_duration_pose_is_retained_without_inventing_playback(self):
         glb = native.GLB()
@@ -43,7 +54,8 @@ class NativeAnimationConversionTest(unittest.TestCase):
         self.assertNotIn("animations", glb.g)
 
     def test_rotation_sampling_keeps_source_keys_and_duration(self):
-        keys = [(0.0, np.zeros(3)), (0.33, np.ones(3)), (1.0, np.zeros(3))]
+        keys = native.source_curve({"0": [0, 0, 0], "0.33": [1, 1, 1], "1": [0, 0, 0]},
+                                   "rotation", 1.0, "clip/bone")
         times = native.sampled_times(keys, 1.0, 10, True)
         self.assertIn(0.33, times)
         self.assertEqual(times[0], 0.0)

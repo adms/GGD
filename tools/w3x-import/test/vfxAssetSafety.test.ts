@@ -86,6 +86,29 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     expect(output).toContain("PASS");
   }, 35_000);
 
+  it("does not alpha-key an opaque carrier colour on non-planar emissive body geometry", () => {
+    const repairer = join(ROOT, "tools", "vfx-asset-safety", "repair_models.py");
+    const probe = [
+      "import importlib.util,io,sys",
+      "from PIL import Image",
+      "p=sys.argv[1]",
+      "s=importlib.util.spec_from_file_location('vfx_model_repair',p)",
+      "m=importlib.util.module_from_spec(s);s.loader.exec_module(m)",
+      "im=Image.new('RGBA',(10,10),(240,128,64,255))",
+      "raw=io.BytesIO();im.save(raw,'PNG');png=raw.getvalue()",
+      "doc={'images':[{'bufferView':0}],'bufferViews':[{'byteOffset':0,'byteLength':len(png)}],'textures':[{'source':0}],'materials':[{'name':'solid-glow','alphaMode':'BLEND','emissiveFactor':[1,1,1],'pbrMetallicRoughness':{'baseColorTexture':{'index':0}}}],'meshes':[{'primitives':[{'material':0,'attributes':{'POSITION':0}}]}],'accessors':[{'min':[-1,-1,-1],'max':[1,1,1]}]}",
+      "replacements,notes=m.replacements_for(doc,png,effect_model=False)",
+      "assert replacements=={} and notes==[]",
+      "print('solid-emissive-body-preserved: PASS')",
+    ].join(";");
+    const output = execFileSync(
+      PYTHON![0]!,
+      [...PYTHON!.slice(1), "-c", probe, repairer],
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
+    );
+    expect(output).toContain("PASS");
+  }, 35_000);
+
   it("detects an opaque matte only on thin carrier geometry", () => {
     const checker = join(ROOT, "tools", "vfx-asset-safety", "check.py");
     const probe = [

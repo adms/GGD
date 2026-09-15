@@ -21,7 +21,8 @@ const CANDIDATE = path.join(ROOT, "materials/hero-model-library/source-artifacts
 const VISUAL = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json");
 const OUTPUT = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json");
 const LOCAL_SOURCE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb";
-const LOCAL_CANDIDATE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb";
+const LOCAL_LEGACY_C45_CANDIDATE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb";
+const EXPECTED_LOCAL_LEGACY_C45 = "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f";
 const EXPECTED_SOURCE = "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8";
 const EXPECTED_CANDIDATE = "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7";
 const CLIPS = ["Idle", "Walk", "FarSkill_Action", "HaloBeam_Loop", "Damage"];
@@ -98,7 +99,9 @@ async function build() {
   assert.equal(digest(fs.readFileSync(SOURCE)), EXPECTED_SOURCE);
   assert.equal(digest(fs.readFileSync(CANDIDATE)), EXPECTED_CANDIDATE);
   assert.equal(digest(fs.readFileSync(LOCAL_SOURCE)), EXPECTED_SOURCE);
-  assert.equal(digest(fs.readFileSync(LOCAL_CANDIDATE)), EXPECTED_CANDIDATE);
+  // The older c45 conversion remains locally archived and has its own frozen
+  // receipt.  The active f77 proof is reproduced from the Git-pinned artifact.
+  assert.equal(digest(fs.readFileSync(LOCAL_LEGACY_C45_CANDIDATE)), EXPECTED_LOCAL_LEGACY_C45);
   const [source, candidate] = await Promise.all([inspectModelUpload(fs.readFileSync(SOURCE)), inspectModelUpload(fs.readFileSync(CANDIDATE))]);
   const budget = heroModelBudgetIssues(candidate);
   const rig = checkRig(SOURCE, CANDIDATE, "fewer");
@@ -120,7 +123,8 @@ async function build() {
     candidateId: "historical-astralym-decimated-f77cf1ee",
     heroId: "acquired-astralym",
     originalRetained: { git: pin(SOURCE), local: localPin(LOCAL_SOURCE) },
-    candidate: { git: pin(CANDIDATE), local: localPin(LOCAL_CANDIDATE) },
+    candidate: { git: pin(CANDIDATE) },
+    preservedLegacyCandidate: { local: localPin(LOCAL_LEGACY_C45_CANDIDATE), sha256: EXPECTED_LOCAL_LEGACY_C45, validation: "validation-c45f111d.json", relation: "separate prior 7,996-triangle candidate; not substituted for f77" },
     parameters: { tool: "tools/model-budget/optimize/decimate-emissive-lock.mjs", target: 7900, actualTriangles: candidate.triangles, emissiveThreshold: 192, errorBound: 0.02, lockBorder: true },
     metrics: { triangles: candidate.triangles, drawPrimitives: candidate.meshes, textures: candidate.textures, skins: candidate.skins, joints: candidate.joints, clips: candidate.clips },
     preservation,

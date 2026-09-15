@@ -1,0 +1,65 @@
+{
+  "schema": "ggd.infinity-strash-popp-vfx-support-catalog-receipt@1",
+  "sourceId": "steam-infinity-strash-popp-vfx-dependency-support-catalog-local-20240328",
+  "catalog": {
+    "path": "dependency-support-catalog.json",
+    "bytes": 867754,
+    "sha256": "9067c118a7e2ab7411fc81c930493a3e603167e033f8dc178f7fc1fe86655c4a"
+  },
+  "contactSheet": {
+    "path": "dependency-support-contact-sheet.png",
+    "bytes": 298891,
+    "sha256": "868efc07e0bb1492eef4218a7bb90785345047b85d20a01aff5008fa91f01094"
+  },
+  "sourceManifest": {
+    "bytes": 1647155,
+    "sha256": "9bd59c6ddff68a0c4b17929b0859fa31e00d128aeaf8efdd077dc1f57221ee9d",
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/source-manifest.json"
+  },
+  "analyzer": {
+    "bytes": 20331,
+    "sha256": "39a119b3caee2d7974ac056fea7d43350950a7abc04ac36be4aa92c5649fee4c",
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/catalog_dependency_assets.py",
+    "python": "3.10+",
+    "Pillow": "12.3.0"
+  },
+  "summary": {
+    "fileOccurrencesInspected": 789,
+    "fileOccurrencesReadable": 789,
+    "uniqueByteAssets": 87,
+    "duplicateOccurrencesCollapsed": 702,
+    "uniqueSemanticGroupCounts": {
+      "Alpha": 70,
+      "Color": 4,
+      "Normal": 2,
+      "HDR": 3,
+      "Flow": 2,
+      "Utility": 4,
+      "Other": 2
+    },
+    "occurrenceFormatCounts": {
+      "Radiance HDR": 12,
+      "TGA": 777
+    },
+    "occurrenceChannelCounts": {
+      "3": 660,
+      "4": 129
+    },
+    "occurrencesWithPhysicalAlphaChannel": 129,
+    "occurrencesWithAnyNonOpaquePixels": 129,
+    "sourcePackageRelationsPreserved": 789
+  },
+  "states": {
+    "supportTexturesCataloged": true,
+    "allExportedTgaHdrReadable": true,
+    "byteDuplicatesGrouped": true,
+    "packageAndSourcePathRelationsPreserved": true,
+    "reconstructionSupportOnly": true,
+    "niagaraSystemsConverted": false,
+    "ggdVfxConverted": false,
+    "skillBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "claim": "This index proves byte-pinned image readability and cataloging of reconstruction support textures only. It does not prove Niagara conversion, a GGD VFX asset, visual equivalence, skill binding, runtime availability, or deployment."
+}

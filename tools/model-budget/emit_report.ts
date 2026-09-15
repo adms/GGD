@@ -1004,9 +1004,10 @@ function main(): void {
   /**
    * THE GATE IS A RATCHET, NOT AN ALARM.
    *
-   * The project's worst-case combat frame is already over three lines today —
-   * but that worst case requires an all-stand-in draft (itself tracked debt,
-   * #81) and is derated by an ASSUMED 3× nobody has measured on a real device.
+   * The project's worst-case combat rows already cross multiple warning lines,
+   * and some exceed the VRAM hard cap today. That worst case requires an
+   * all-stand-in draft (itself tracked debt, #81) and uses the current 2.4×
+   * planning derate, which still has not been measured on the target M1 device.
    * Making CI scream about that on every commit is precisely the "guard rail
    * that reports a fake emergency" the brief said is worse than none.
    *

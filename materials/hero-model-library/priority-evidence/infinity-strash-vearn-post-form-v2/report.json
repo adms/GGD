@@ -1,0 +1,373 @@
+{
+  "schema": "ggd.infinity-strash-vearn-post-form-audit@2",
+  "sourceId": "infinity-strash-vearn-post-form-local-audit-v2",
+  "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+  "platform": "Windows Steam build represented by the user-owned 2024-03-28 source snapshot",
+  "sourceContainers": [
+    {
+      "label": "pakchunk0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+      "bytes": 8332792957,
+      "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+      "indexedEntries": 181304
+    },
+    {
+      "label": "pakchunk1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+      "bytes": 4382548320,
+      "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+      "indexedEntries": 12254
+    }
+  ],
+  "tools": {
+    "repak": {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/repak-src-v0.2.3/target/release/repak",
+      "bytes": 4836032,
+      "sha256": "593a799487b940259d62d29b27ed38364d3a4344d6b71a12f2fc93bf74d31ee2",
+      "category": "related-package"
+    }
+  },
+  "listingEvidence": [
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-vearn-form-audit-v2/pakchunk0-paths.txt.gz",
+      "bytes": 709860,
+      "sha256": "943a2f97c712ca731d77013be7beb431009dfaebcc4d88c1e6e1ebe14b8560b0",
+      "category": "related-package"
+    },
+    {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-vearn-form-audit-v2/pakchunk1-paths.txt.gz",
+      "bytes": 37359,
+      "sha256": "b9fed31d80f7d34125a2db23182b60e5cda01c65337302d521b246b668171d65",
+      "category": "related-package"
+    }
+  ],
+  "sourceLineage": {
+    "priorityExtractionIndex": {
+      "archivePath": null,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json",
+      "bytes": 3241838,
+      "sha256": "5f944696172d33b0e3c97880ceb96a2085de91d1cb42a44402142ca1989ddb24",
+      "category": "related-package"
+    },
+    "priorFormAudit": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json",
+      "bytes": 7150,
+      "sha256": "d9d8d78a98d16978d5f74683e0f275fe25458f1a84d3765bc8f8b48355db5973"
+    },
+    "preTransformationVisualEvidence": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/contact-sheet.png",
+      "bytes": 515075,
+      "sha256": "fcfa19e1b0020853378c721484d2acde9fc2550b925aecc02e6d73734f78c140",
+      "identityConclusion": "EN801/00 is elderly/pre-transformation Vearn"
+    }
+  },
+  "scope": {
+    "indexedEntries": 193558,
+    "uniqueIndexedEntries": 193558,
+    "monsterBodyAssets": 54,
+    "en8xxBodyAssets": [
+      "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uasset"
+    ],
+    "postTransformationNamePatterns": [
+      "young/youth/true/final/shin/post + Vearn",
+      "Vearn + young/youth/true/final/shin/post/transform",
+      "Japanese young/true + Vearn"
+    ],
+    "postTransformationNameHits": []
+  },
+  "identities": {
+    "EN801": {
+      "nameZh": "巴恩大魔王（老年／變身前）",
+      "originalName": "Vearn",
+      "relationship": "target-pre-transformation-form",
+      "identityPath": "strash/Content/WwiseAudio/Events/EN_Boss/EN801_Vearn/EN801_Vearn_FOLDER.uasset",
+      "bodyRoot": "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body",
+      "blueprintRoot": "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a",
+      "indexedPathCount": 902,
+      "indexedCategoryCounts": {
+        "audio": 192,
+        "configuration": 100,
+        "material": 42,
+        "model": 14,
+        "motion": 192,
+        "related-package": 136,
+        "skeleton": 6,
+        "texture": 69,
+        "vfx": 151
+      },
+      "bodyPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uasset",
+        "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uexp"
+      ],
+      "blueprintPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a.uasset",
+        "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a.uexp"
+      ],
+      "criticalProbeFiles": [
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/SK_EN801_00_Body.uasset",
+          "bytes": 9136,
+          "sha256": "9d298433421bb736c90da7efb244a5d1bafeeec9087df067617b97ad39103d8e",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/SK_EN801_00_Body.uexp",
+          "bytes": 9020874,
+          "sha256": "4d06c0aad1618f2a6ee3074e453f7bb22458d709628c550aeb786ac36cc1c9e2",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/CB_EN801_00_a.uasset",
+          "bytes": 12254,
+          "sha256": "a326c34ed56d50333e89da8b8a8ed1057f257f90ee5c890b36da550767b18058",
+          "category": "configuration"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN801/CB_EN801_00_a.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN801/CB_EN801_00_a.uexp",
+          "bytes": 3886,
+          "sha256": "1cf9f33fa172f8e16931e3f0a2252002b707d4695540b28fe02ba18bd2456844",
+          "category": "configuration"
+        }
+      ],
+      "alreadyExtractedFilesRehashed": 902,
+      "alreadyExtractedBytesRehashed": 76493514,
+      "alreadyExtractedCategoryCounts": {
+        "audio": 192,
+        "configuration": 100,
+        "material": 42,
+        "model": 14,
+        "motion": 192,
+        "related-package": 136,
+        "skeleton": 6,
+        "texture": 69,
+        "vfx": 151
+      }
+    },
+    "EN653": {
+      "nameZh": "密斯特巴恩",
+      "originalName": "MystVearn",
+      "relationship": "separate-character-not-post-transformation-vearn",
+      "identityPath": "strash/Content/WwiseAudio/Events/EN_Boss/EN653_MystVearn/Atk01_kugutsusyo/Atk01_kugutsusyo_FOLDER.uasset",
+      "bodyRoot": "strash/Content/Strash/Chara/Monster/EN653/01/SK_EN653_01_model",
+      "blueprintRoot": "strash/Content/Strash/Chara/Monster/EN653/CB_EN653_00_a",
+      "indexedPathCount": 790,
+      "indexedCategoryCounts": {
+        "audio": 190,
+        "configuration": 200,
+        "material": 18,
+        "model": 4,
+        "motion": 172,
+        "related-package": 118,
+        "skeleton": 4,
+        "texture": 24,
+        "vfx": 60
+      },
+      "bodyPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.uasset",
+        "strash/Content/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.uexp"
+      ],
+      "blueprintPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN653/CB_EN653_00_a.uasset",
+        "strash/Content/Strash/Chara/Monster/EN653/CB_EN653_00_a.uexp"
+      ],
+      "criticalProbeFiles": [
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/SK_EN653_01_model.uasset",
+          "bytes": 7302,
+          "sha256": "b3ceafcc6bc588d5d7ecbef05cfef17b7b3adcb50eff78de385e1de4e196d671",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/SK_EN653_01_model.uexp",
+          "bytes": 1124963,
+          "sha256": "5ce35022a1af217f553dbbc89ec83f0a3caebee5162a27059a9f606706e17c5a",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN653/CB_EN653_00_a.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/CB_EN653_00_a.uasset",
+          "bytes": 12443,
+          "sha256": "d60f47318e1fcae87dabaee9351099e906a666b0cb77536220d8ef1f96ec5918",
+          "category": "configuration"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN653/CB_EN653_00_a.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN653/CB_EN653_00_a.uexp",
+          "bytes": 4445,
+          "sha256": "f74d9d18befdb7f09cfad7c6e4a7999b014b6dfaf50993a09d8151d112d0b598",
+          "category": "configuration"
+        }
+      ],
+      "alreadyExtractedFilesRehashed": 790,
+      "alreadyExtractedBytesRehashed": 54626973,
+      "alreadyExtractedCategoryCounts": {
+        "audio": 190,
+        "configuration": 200,
+        "material": 18,
+        "model": 4,
+        "motion": 172,
+        "related-package": 118,
+        "skeleton": 4,
+        "texture": 24,
+        "vfx": 60
+      }
+    },
+    "EN680": {
+      "nameZh": "巴蘭",
+      "originalName": "Baran",
+      "relationship": "separate-character-not-vearn",
+      "identityPath": "strash/Content/WwiseAudio/Events/EN_Boss/EN680_Baran/EN680_Baran_FOLDER.uasset",
+      "bodyRoot": "strash/Content/Strash/Chara/Monster/EN680/00/SK_EN680_00_model",
+      "blueprintRoot": "strash/Content/Strash/Chara/Monster/EN680/CB_EN680_00_a",
+      "indexedPathCount": 1165,
+      "indexedCategoryCounts": {
+        "audio": 250,
+        "configuration": 180,
+        "material": 34,
+        "model": 26,
+        "motion": 182,
+        "related-package": 364,
+        "skeleton": 10,
+        "texture": 57,
+        "vfx": 62
+      },
+      "bodyPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN680/00/SK_EN680_00_model.uasset",
+        "strash/Content/Strash/Chara/Monster/EN680/00/SK_EN680_00_model.uexp"
+      ],
+      "blueprintPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN680/CB_EN680_00_a.uasset",
+        "strash/Content/Strash/Chara/Monster/EN680/CB_EN680_00_a.uexp"
+      ],
+      "criticalProbeFiles": [
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN680/00/SK_EN680_00_model.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/SK_EN680_00_model.uasset",
+          "bytes": 9119,
+          "sha256": "84f0bb0da77e2850e912cd6d48e333cd7ca5a6f831bd95ff369b398a757ba9f6",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN680/00/SK_EN680_00_model.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/SK_EN680_00_model.uexp",
+          "bytes": 13847476,
+          "sha256": "731d5343cb71231ed349c97d951ffd86c5f303d3165612a21802c094bd7e279a",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN680/CB_EN680_00_a.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/CB_EN680_00_a.uasset",
+          "bytes": 13009,
+          "sha256": "3564f10550e8c336b1624a15f61b1aa68125a5f59fbec4b47344f311a8946c89",
+          "category": "configuration"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN680/CB_EN680_00_a.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN680/CB_EN680_00_a.uexp",
+          "bytes": 4251,
+          "sha256": "638b2cfcf8a00757fd406c84f1bb23a997b504048cbb43e20ccf8bfdcfad164a",
+          "category": "configuration"
+        }
+      ],
+      "alreadyExtractedFilesRehashed": 0,
+      "alreadyExtractedBytesRehashed": 0,
+      "alreadyExtractedCategoryCounts": {}
+    },
+    "EN681": {
+      "nameZh": "龍魔人巴蘭",
+      "originalName": "Ryu Baran / Baran_ma",
+      "relationship": "separate-baran-form-not-vearn",
+      "identityPath": "strash/Content/Strash/LevelDesign/Spawner/AISpawnerData/BG17_FM0007_FG16_ADDBOSS0018/BG17_FM0008_FG19_ADDBOSS0012_StrashAISpawner_W2_EN681_RyuBaran.uasset",
+      "bodyRoot": "strash/Content/Strash/Chara/Monster/EN681/00/SK_EN681_00_model",
+      "blueprintRoot": "strash/Content/Strash/Chara/Monster/EN681/CB_EN681_00_a",
+      "indexedPathCount": 1216,
+      "indexedCategoryCounts": {
+        "audio": 214,
+        "configuration": 184,
+        "material": 32,
+        "model": 20,
+        "motion": 232,
+        "related-package": 410,
+        "skeleton": 4,
+        "texture": 36,
+        "vfx": 84
+      },
+      "bodyPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN681/00/SK_EN681_00_model.uasset",
+        "strash/Content/Strash/Chara/Monster/EN681/00/SK_EN681_00_model.uexp"
+      ],
+      "blueprintPackageMembers": [
+        "strash/Content/Strash/Chara/Monster/EN681/CB_EN681_00_a.uasset",
+        "strash/Content/Strash/Chara/Monster/EN681/CB_EN681_00_a.uexp"
+      ],
+      "criticalProbeFiles": [
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN681/00/SK_EN681_00_model.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/SK_EN681_00_model.uasset",
+          "bytes": 8420,
+          "sha256": "7949398bafafa909f3f7bf69ece47af5bc2e8e634569fa39ab6bb7ab7c26e795",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN681/00/SK_EN681_00_model.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/SK_EN681_00_model.uexp",
+          "bytes": 12358962,
+          "sha256": "e866c110e6230dbc85667f2b4394295fcdfdb70eb39e69bedc162d77f0837ed9",
+          "category": "model"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN681/CB_EN681_00_a.uasset",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/CB_EN681_00_a.uasset",
+          "bytes": 12798,
+          "sha256": "209c14ca9d010d2f4b53d5010ab1c254d480ec2a9fc28824b410470b89695bea",
+          "category": "configuration"
+        },
+        {
+          "archivePath": "strash/Content/Strash/Chara/Monster/EN681/CB_EN681_00_a.uexp",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final/serialized-probes/EN681/CB_EN681_00_a.uexp",
+          "bytes": 4228,
+          "sha256": "2df02b62b2ecb6daa6fc76bd76e0bd949d9b73fb2fed2ed955431673e4c3b77c",
+          "category": "configuration"
+        }
+      ],
+      "alreadyExtractedFilesRehashed": 0,
+      "alreadyExtractedBytesRehashed": 0,
+      "alreadyExtractedCategoryCounts": {}
+    }
+  },
+  "criticalProbeSummary": {
+    "files": 16,
+    "bytes": 36453566,
+    "allFilesSha256Recorded": true
+  },
+  "result": {
+    "preTransformationOldVearnNativeBodyLocated": true,
+    "postTransformationYoungTrueBodyLocated": false,
+    "convertedPostTransformationModelCount": 0,
+    "postTransformationRuntimeOptionCount": 0,
+    "status": "identity-separated-source-gap-confirmed",
+    "nextAction": "retain post-transformation Vearn as not-located and acquire an explicitly identified licensed source"
+  },
+  "identityRules": [
+    "EN801 is Vearn and the shipped body has already been visually accepted only as elderly/pre-transformation Vearn.",
+    "EN653 is MystVearn, a separate character; its static component cannot fill Vearn's post-transformation gap.",
+    "EN680 is Baran and EN681 is a Baran form; neither is Vearn.",
+    "Kaizer Phoenix is a skill/helper mesh and cannot be counted as a second character body.",
+    "No unconfirmed EN native ID may be assigned to young/post-transformation Vearn from numeric proximity alone."
+  ],
+  "limitations": [
+    "This audit establishes the state of the two preserved primary PAKs and existing local acquisition index only.",
+    "A zero result does not prove that no separately licensed community or other-game model exists.",
+    "No new post-transformation model was found, so conversion, validation, dropdown registration and deployment remain zero.",
+    "The EN680/EN681 probes are identity evidence only and are not conversion or hero-registration work."
+  ]
+}

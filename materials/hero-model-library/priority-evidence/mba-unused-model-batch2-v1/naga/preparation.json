@@ -1,0 +1,251 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "naga",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara08",
+    "definition": "CharacterDefinitions/Chara08.chr",
+    "characterNative": "白蛇のナーガ",
+    "nativeModel": "Model/Chara08/Naga.x",
+    "convertedGlb": "models/Model/Chara08/Naga.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara08/Naga.glb",
+    "bytes": 7618544,
+    "sha256": "eeeaccdd0fdff24be7c27f09c04fdd3dc9f00030c4a3aeae15780b2a438a1d9d"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 6,
+    "outputDrawPrimitives": 1,
+    "vertices": 2838,
+    "triangles": 3587,
+    "atlasEdge": 1024,
+    "sourceAtlasEdge": 1024,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 192,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "3": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "4": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "5": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 0,
+      "maxSumDelta": 5.960464477539063e-08
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-batch2-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 86,
+    "originalNames": [
+      "manto_center_nomal",
+      "manto_center_high",
+      "manto_up_nomal",
+      "manto_up_high",
+      "manto_down_nomal",
+      "manto_down_high",
+      "manto_right_high",
+      "manto_left_high",
+      "kami_center_nomal",
+      "kami_center_high",
+      "kami_up_nomal",
+      "kami_up_high",
+      "kami_down_nomal",
+      "kami_down_high",
+      "burst_02_03",
+      "burst_02_02",
+      "burst_02_01",
+      "burst_01_05",
+      "burst_01_04",
+      "burst_01_03",
+      "burst_01_02",
+      "burst_01_01",
+      "sp03_01",
+      "sp02_01",
+      "sp01_01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge",
+      "attack_05",
+      "attack_04",
+      "attack_03",
+      "attack_02",
+      "attack_01",
+      "wait",
+      "start_01",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 41
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 85
+      },
+      {
+        "name": "attack_01",
+        "originalIndex": 40
+      },
+      {
+        "name": "sp01_01",
+        "originalIndex": 24
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 72
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 57
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      1024,
+      1024
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "552eb6bd52b3aef8c50b14a981e1ff230d03c3ce059e0c2419a17699f5aecf22",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/naga/body-prepared.glb",
+    "bytes": 7246916,
+    "sha256": "558638e3c1527a2cb9300c66675cdb3b17ac33c18edc6aed6863c788ada96b36"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}

@@ -40,7 +40,7 @@ def record_pending(args, repo):
     initial = [path.read_bytes() for path in paths]
     downloads, index = [json.loads(blob) for blob in initial]
     key = (args.id, digest)
-    if any((row['id'], row['sha256']) == key for row in index['sources']):
+    if any((row.get('id'), row.get('sha256')) == key for row in index['sources']):
         raise ValueError('Cannot downgrade verified supplemental snapshot')
     entry = dict(id=args.id, sourceId=args.source_id, resourceRole=args.role,
         localPath=source_root.relative_to(workspace_root).as_posix(), localArchive=str(archive),
@@ -85,10 +85,14 @@ def main(argv=None, repo=None):
                         help='workspace containing GGD-Asset-Library when the Git checkout is an isolated worktree')
     parser.add_argument('--primary-source-backup', action='store_true',
                         help='Attach this verified archive as the source primary backup; requires --id == --source-id.')
+    parser.add_argument('--local-verification-authority', action='store_true',
+                        help='Use this verified supplemental manifest for the source current-local verification.')
     parser.add_argument('--pending-manifest', action='store_true', help='The positional path is an intake manifest; remote readback is not yet verified.')
     args = parser.parse_args(argv)
     repo = Path(repo).resolve() if repo is not None else Path(__file__).resolve().parents[2]
     if args.pending_manifest:
+        if args.local_verification_authority:
+            raise ValueError('Pending upload cannot become local verification authority')
         return record_pending(args, repo)
     receipt = json.loads(args.receipt.read_text())
     schema = receipt.get('schema')
@@ -169,12 +173,17 @@ def main(argv=None, repo=None):
         receiptPath=str(args.receipt.resolve()), receiptSha256=sha(args.receipt),
         manifestSha256=sha(manifest_path), s3Use='backup-only-not-runtime-entry')
     same_id = [row for row in index['sources'] if row['id'] == entry['id']]
-    if any((row.get('resourceRole'), row.get('sourceId'), row.get('s3Use')) !=
-           (entry['resourceRole'], entry['sourceId'], entry['s3Use']) for row in same_id):
+    if any((row.get('resourceRole'), row.get('sourceId'), row.get('s3Use')) not in (
+           (entry['resourceRole'], entry['sourceId'], entry['s3Use']),
+           (entry['resourceRole'], None, entry['s3Use'])) for row in same_id):
         raise ValueError('Supplemental ID would shadow a different original source or backup role')
-    prior = [row for row in index['sources'] if (row['id'], row['sha256']) == (entry['id'], entry['sha256'])]
+    prior = [row for row in index['sources'] if (row.get('id'), row.get('sha256')) == (entry['id'], entry['sha256'])]
     if prior and prior != [entry]:
-        raise ValueError('Different supplemental record already exists')
+        unlinked = dict(entry, sourceId=None)
+        if args.source_id and prior == [unlinked]:
+            prior[0]['sourceId'] = args.source_id
+        else:
+            raise ValueError('Different supplemental record already exists')
     if not prior:
         index['sources'].append(entry)
     if 'pendingUploads' in index:
@@ -187,6 +196,16 @@ def main(argv=None, repo=None):
         if len(matches) != 1:
             raise ValueError('Expected one existing source for supplemental delivery')
         source = matches[0]
+        if args.local_verification_authority:
+            if args.primary_source_backup or args.role != 'integration-evidence-backup':
+                raise ValueError('Local verification authority must be a verified integration evidence backup')
+            source_local = source.get('localPath') or source.get('localRoot') or source.get('upstreamLocalRoot')
+            if source_local != entry['localPath']:
+                raise ValueError('Local verification authority must describe the same local source root')
+            prior_authority = source.get('localVerificationManifestId')
+            if prior_authority not in (None, args.id):
+                raise ValueError('Different local verification authority already recorded')
+            source['localVerificationManifestId'] = args.id
         if 'pendingSupplementalDeliveries' in source:
             source['pendingSupplementalDeliveries'] = [row for row in source['pendingSupplementalDeliveries'] if (row['id'], row['sha256']) != (entry['id'], entry['sha256'])]
         if args.primary_source_backup:
@@ -222,7 +241,13 @@ def main(argv=None, repo=None):
             if not prior:
                 source['supplementalDeliveries'].append(link)
         for candidate in source.get('componentCandidates', []):
-            local = Path(candidate['absolutePath']).resolve()
+            absolute_path = candidate.get('absolutePath')
+            if not absolute_path:
+                # A source may also carry catalog-only or blocked candidates.
+                # Only candidates with a concrete local payload can be linked
+                # to an archive member.
+                continue
+            local = Path(absolute_path).resolve()
             if not local.is_relative_to(source_root):
                 continue
             member = local.relative_to(source_root).as_posix()

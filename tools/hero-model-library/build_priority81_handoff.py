@@ -326,6 +326,44 @@ class Builder:
         audio_by_id = {row["heroId"]: row for row in audio_rows}
         if len(audio_by_id) != len(audio_rows):
             raise ValueError("Duplicate hero IDs in audio audit")
+        # The general 81-hero audit predates the owner-approved LoL combat
+        # subset.  Its generic category pack is deliberately incomplete for
+        # those seven heroes, so treat it as a reserve inventory instead of
+        # reporting an already-reviewed runtime registration as a gap.
+        lol_root = self.repo / BASE / "lol-project-seven"
+        lol_registration_path = lol_root / "runtime-registration.json"
+        lol_audit_path = lol_root / "runtime-audit.json"
+        lol_registration_evidence = self.evidence(lol_registration_path)
+        lol_audit_evidence = self.evidence(lol_audit_path)
+        lol_registration = self.read(lol_registration_path)
+        lol_audit = self.read(lol_audit_path)
+        if (lol_registration.get("schema") != "ggd-lol-approved-battle-runtime-registration@1"
+                or lol_audit.get("schema") != "ggd-lol-seven-approved-runtime-audit@1"):
+            raise ValueError("Unsupported LoL approved runtime registration evidence")
+        lol_summary = lol_registration.get("summary", {})
+        audit_summary = lol_audit.get("summary", {})
+        if (lol_summary.get("approved") != 311 or lol_summary.get("runtimeRegistered") != 311
+                or audit_summary.get("approvedSourceWavsVerified") != 311
+                or audit_summary.get("runtimeMp3sVerified") != 311
+                or audit_summary.get("runtimeGitBlobsVerified") != 311
+                or audit_summary.get("runtimeManifestRowsVerified") != 311
+                or lol_summary.get("productionDeployed") is not False
+                or audit_summary.get("productionDeployed") is not False):
+            raise ValueError("LoL approved runtime totals are incomplete or overclaim deployment")
+        lol_records_by_id = {}
+        for record in lol_registration.get("records", []):
+            lol_records_by_id.setdefault(record["runtimeHeroId"], []).append(record)
+        lol_audit_by_id = {row["heroId"]: row for row in lol_audit.get("perHero", [])}
+        if set(lol_records_by_id) != set(lol_audit_by_id) or len(lol_records_by_id) != 7:
+            raise ValueError("LoL runtime records do not cover exactly the audited seven heroes")
+        for runtime_id, records in lol_records_by_id.items():
+            audit_row = lol_audit_by_id[runtime_id]
+            expected_count = audit_row.get("runtimeMp3s")
+            if (len(records) != expected_count
+                    or audit_row.get("approvedSourceWavs") != expected_count
+                    or audit_row.get("runtimeGitBlobs") != expected_count
+                    or audit_row.get("manifestRows") != expected_count):
+                raise ValueError(f"LoL per-hero runtime receipt drift: {runtime_id}")
         audio_artifacts = []
         for name in ("summary.json", "files.sha256.json", "group-audit.json", "input-index-pins.json",
                      "content-audio-files.json", "main-committed-clip-audit.json",
@@ -349,6 +387,7 @@ class Builder:
         overlay_path = self.audio_report.parent.parent / "current-branch-audio/overlay.json"
         overlay_evidence = self.evidence(overlay_path)
         overlay, overlay_by_id, overlay_files_by_id = {}, {}, {}
+        overlay_replacements_by_id = {}
         main_synchronized_by_clip = {}
         if overlay_evidence["existsLocal"]:
             overlay = self.read(overlay_path)
@@ -378,6 +417,16 @@ class Builder:
                 if row.get("mainMerged") is not False:
                     raise ValueError("Branch audio additions must not claim Main merged")
                 overlay_files_by_id.setdefault(row["heroId"], []).append(row)
+            for row in overlay.get("approvedBranchReplacementFiles", []):
+                if (row.get("mainMerged") is not False
+                        or row.get("classification") != "owner-reviewed-runtime-registered-replacement"):
+                    raise ValueError("Owner-reviewed branch replacement has invalid publication state")
+                ev = self.evidence(self.repo / "content" / row["clip"])
+                if ev["sha256"] != row["sha256"] or ev["bytes"] != row["bytes"]:
+                    raise ValueError("Owner-reviewed branch replacement differs from overlay: " + row["clip"])
+                if row["clip"] in overlay_replacements_by_id:
+                    raise ValueError("Duplicate owner-reviewed branch replacement: " + row["clip"])
+                overlay_replacements_by_id[row["clip"]] = row
             for row in overlay.get("mainSynchronizedFiles", []):
                 if row.get("mainMerged") is not True:
                     raise ValueError("Current-Main audio replacements must claim Main merged")
@@ -419,7 +468,11 @@ class Builder:
                             or hashlib.sha256(data).hexdigest() != blob["sha256"]):
                         raise ValueError("Current-Main audio Git blob differs from overlay: " + row["clip"])
         current_main_files = overlay.get("currentMainFiles", main_files)
-        current_audio_paths = {f["clip"] for f in current_main_files} | {f["clip"] for f in overlay.get("files", [])}
+        current_audio_paths = (
+            {f["clip"] for f in current_main_files}
+            | {f["clip"] for f in overlay.get("files", [])}
+            | set(overlay_replacements_by_id)
+        )
         if overlay and overlay["summary"]["currentUniqueClipPaths"] != len(current_audio_paths):
             raise ValueError("Audio overlay count does not match distinct current paths")
         derivatives = policy.get("approvedDerivatives", [])
@@ -461,9 +514,41 @@ class Builder:
             a = audio_by_id.get(hero_id) or audio_by_id.get(runtime_id)
             branch = overlay_by_id.get(hero_id) or overlay_by_id.get(runtime_id)
             branch_voice = branch["currentBranchVoice"] if branch else None
+            lol_records = lol_records_by_id.get(runtime_id, [])
+            lol_runtime_files = []
+            lol_runtime_status = None
+            if lol_records:
+                audit_row = lol_audit_by_id[runtime_id]
+                for record in lol_records:
+                    runtime_path = self.repo / record["runtimePath"]
+                    ev = self.evidence(runtime_path)
+                    if (ev["sha256"] != record["runtimeSha256"]
+                            or ev["bytes"] != record["runtimeBytes"]
+                            or not ev["gitTracked"]):
+                        raise ValueError("LoL runtime MP3 differs from approved registration: " + record["runtimePath"])
+                    lol_runtime_files.append({
+                        **ev,
+                        "reviewKey": record["reviewKey"],
+                        "nativeId": record["nativeId"],
+                        "nativeTarget": record["candidateRuntimeTarget"],
+                        "runtimeCategory": record["runtimeCategory"],
+                        "runtimeTakeKey": record["runtimeTakeKey"],
+                        "sourceSha256": record["sourceSha256"],
+                        "ownerReviewed": True,
+                        "runtimeRegistered": True,
+                    })
+                lol_runtime_status = {
+                    "state": "owner-reviewed-runtime-registered-feature-branch-production-deployment-pending",
+                    "approvedRuntimeMp3s": len(lol_runtime_files),
+                    "pendingOtherEventBoundWavs": audit_summary.get("pendingOtherEventBoundWavs"),
+                    "perHeroAudit": audit_row,
+                    "registrationEvidence": lol_registration_evidence,
+                    "auditEvidence": lol_audit_evidence,
+                    "productionDeployed": False,
+                }
             if a is None:
                 gaps.append("per-hero audio audit not available")
-            else:
+            elif not lol_records:
                 pack = branch_voice or a.get("mainCommittedVoice") or {}
                 jp = a.get("projectSevenJapaneseSupplement") or {}
                 if jp.get("localShaVerifiedFiles", 0) and not pack.get("uniqueClipCount", 0):
@@ -498,6 +583,19 @@ class Builder:
                                          "speakerVerified": False, "originalCharacterPerformance": False,
                                          "excludedFromSpeechInput": f.get("excludedFromSpeechInput", False),
                                          "originalFile": f["originalFile"], "sourceMetadata": f["sourceMetadata"]})
+            branch_replacements = []
+            for f in overlay_replacements_by_id.values():
+                if f["heroId"] not in {hero_id, runtime_id}:
+                    continue
+                ev = self.evidence(self.repo / "content" / f["clip"])
+                branch_replacements.append({
+                    **ev, "classification": f["classification"], "categories": f["categories"],
+                    "auditSha256": f["sha256"], "currentMatchesAudit": True,
+                    "publicationState": f["publicationState"], "mainMerged": False,
+                    "speakerVerified": True, "originalCharacterPerformance": True,
+                    "runtimeRegistration": f.get("runtimeRegistration"),
+                    "replacedMainSha256": (f.get("currentMainBlob") or {}).get("sha256"),
+                })
             runtime_audio = []
             for p in sorted(audio_paths({"voice": (a or {}).get("runtimeVoice"),
                                          "sfx": (a or {}).get("runtimeSfx")})):
@@ -528,8 +626,11 @@ class Builder:
                 "audio": {"auditReport": audio_evidence, "auditHeroId": a.get("heroId") if a else None,
                           "status": "per-hero-audited" if a else "pending-audit", "data": a,
                           "mainCommittedFiles": finished_audio, "runtimeAudioFiles": runtime_audio,
+                          "lolOwnerReviewedRuntime": lol_runtime_status,
+                          "lolOwnerReviewedRuntimeFiles": lol_runtime_files,
                           "currentBranchVoice": branch_voice, "currentBranchAdditions": branch_additions,
-                          "currentBranchFiles": finished_audio + branch_additions},
+                          "currentBranchOwnerReviewedReplacements": branch_replacements,
+                          "currentBranchFiles": finished_audio + branch_additions + branch_replacements},
                 "gaps": gaps,
             })
         supplements = self.raw_supplements(heroes, runtime_options)
@@ -562,8 +663,9 @@ class Builder:
                         "perHeroAudioAudits": sum(h["audio"]["status"] == "per-hero-audited" for h in heroes),
                         "heroesWithReportedGaps": sum(bool(h["gaps"]) for h in heroes),
                         "mainBaselineAudioFiles": len({f["clip"] for f in main_files}),
-                        "currentMainAudioFiles": len({f["clip"] for f in current_main_files}),
+                        "currentMainAudioFiles": len({f["clip"] for f in current_main_files}) + len(overlay_replacements_by_id),
                         "currentBranchAudioAdditions": len(overlay.get("files", [])),
+                        "currentBranchOwnerReviewedAudioReplacements": len(overlay_replacements_by_id),
                         "currentMainAudioUpdatesAfterFrozenBaseline": len(overlay.get("mainSynchronizedFiles", [])),
                         "currentMainAudioAddedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainAddedPathsAfterBaseline", 0),
                         "currentMainAudioRemovedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainRemovedPathsAfterBaseline", 0),
@@ -672,17 +774,23 @@ def render(data):
         path = (model.get("document") or {}).get("gitPath")
         link = f"[{label}](../../{quote(path, safe='/.-_')})" if path else cell(label)
         audio = hero["audio"].get("data") or {}
+        lol_runtime = hero["audio"].get("lolOwnerReviewedRuntime")
         branch_voice = hero["audio"].get("currentBranchVoice")
         pack = branch_voice or audio.get("mainCommittedVoice") or {}
         jp = audio.get("projectSevenJapaneseSupplement") or {}
         total, original, synthetic = (pack.get(k, 0) for k in
                                       ("uniqueClipCount", "originalSourceLabelledCount", "syntheticCount"))
         jp_count = jp.get("localShaVerifiedFiles", 0)
-        audio_label = f"{total}（原{original}／合{synthetic}）"
+        audio_label = (f"{lol_runtime['approvedRuntimeMp3s']}（LOL 日文逐項聽審／runtime）"
+                       if lol_runtime else f"{total}（原{original}／合{synthetic}）")
         if hero["audio"]["currentBranchAdditions"]:
             audio_label += f"；新增{len(hero['audio']['currentBranchAdditions'])}待合併"
-        if jp_count:
+        if hero["audio"].get("currentBranchOwnerReviewedReplacements"):
+            audio_label += f"；已聽審替換{len(hero['audio']['currentBranchOwnerReviewedReplacements'])}待合併"
+        if jp_count and not lol_runtime:
             audio_label += f"；JP {jp_count} 未綁"
+        elif lol_runtime and lol_runtime.get("pendingOtherEventBoundWavs"):
+            audio_label += f"；另 {lol_runtime['pendingOtherEventBoundWavs']} 段待事件配對"
         gaps = ["佔位；新來源待轉換" if g == "engine placeholder remains in model provenance" else g
                 for g in hero["gaps"]]
         source_label = f"{hero.get('work') or '未標'}；{source.get('character') or '未標'}／{source.get('library') or '未標'}"

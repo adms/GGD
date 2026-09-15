@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-ssbu-ultimate14-matching-motion-rebuild@1",
+  "componentId": "ssbu-lucina-c00-ultimate14-motion-v1",
+  "first": {
+    "local": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "bytes": 2731060,
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744"
+    },
+    "validation": {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/validation.json",
+      "bytes": 14333,
+      "sha256": "6099e2a31aba414ae29335f29d402e55e590ae370fbf059ce11de250a5a8613b"
+    }
+  },
+  "second": {
+    "local": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-02/body.glb",
+      "bytes": 2731060,
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744"
+    },
+    "validation": {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/rebuild-validation.json",
+      "bytes": 14333,
+      "sha256": "0678838b4c98c1e62eeb1a3a364260c900234a2b49cd06a66dd8e1846e053d59"
+    }
+  },
+  "finalGlbByteIdenticalRebuild": true,
+  "outputSha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+  "toolPins": [
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "sha256": "589370d739d4d5f926d9e9f2facfe1d5ca03ef6a76a359e88aa8270db3fab8b9"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/run_matching_motion_batch.py",
+      "sha256": "d349fa39fff457e09a9324b1eef4a23300f972699b1e3907d265d7eedad5c4a1"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/optimize_matching_motion_component.py",
+      "sha256": "c921547f9910b002c0d69f89f89b4cf53d401bb220b62d1811cc78ec0ff288db"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/validate_matching_motion_component.mts",
+      "sha256": "8f0ffe61d079cac7ddc0623266bc675cb648318fd3e6e24eda7e9f07fe5f05b2"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/render_motion_glb.py",
+      "sha256": "8721fa183c09afdf91bfbe9dfc243e1063c770a0634a3bee35dcb2eebf60f5bc"
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+{
+  "schema": "ggd.popp-vfx-runtime-release@1",
+  "heroId": "b2-popp",
+  "nativeCharacterId": "PN020",
+  "source": {
+    "candidateManifest": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
+      "bytes": 24509,
+      "sha256": "a2caf04a35d7a04126870cd122853a51d55eb34cf5c61ac3898037c5c7e4ff27"
+    },
+    "reconstruction": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "bytes": 1311582,
+      "sha256": "b67d7657b6d451aaa8320980deeddd05e60bd7a8a47d80dbfe21895309c3f888"
+    },
+    "staticMeshRecovery": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
+      "bytes": 123031,
+      "sha256": "c3e6d37f788ab8519372e1fdbf5cb643a16053028491ace3d12e00349ff9549a"
+    },
+    "bindingConfig": {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/runtime-bindings.json",
+      "bytes": 2113,
+      "sha256": "5faef015fc7779328d15938df08e01c865f1147ee8e9ead75ca0fe292de1ad3d"
+    },
+    "bindingProposals": {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json",
+      "bytes": 2026,
+      "sha256": "2aba04b0263dfdad60955f0753562c88c055127504a6aae866188411982c5e0e"
+    },
+    "ownerDecisions": {
+      "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
+      "bytes": 108481,
+      "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+    },
+    "generator": {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/publish_vfx_runtime.py",
+      "bytes": 11344,
+      "sha256": "0a8b08b5c0d93031298822111e28e5d0961c6f54707747f0cb93b33bc42e923e"
+    },
+    "pipeline": {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/run_vfx_runtime_release.py",
+      "bytes": 1446,
+      "sha256": "d646cec09d940145fd322a34d1b5e9c34468919583937f16fc53cf5af6763d6e"
+    }
+  },
+  "summary": {
+    "ownerApprovedVfxReleased": 12,
+    "abilityBindingsCreated": 3,
+    "candidateRelationshipsBound": 7,
+    "reserveCandidatesReleasedUnbound": 5,
+    "sourceTexturesRetained": 9,
+    "staticMeshSupportGlbsRetained": 33
+  },
+  "timing": {
+    "basis": "GGD ability castTimeSec plus reconstructed source phase name",
+    "nativeNiagaraTimingClaim": false,
+    "note": "Delay values are deterministic GGD playback timing. The Unreal Niagara emitter timeline was not decoded and is not claimed as native timing.",
+    "validatedRule": "every layer delayMs is between zero and its ability castTimeSec"
+  },
+  "meshLayerBoundary": {
+    "sourceSupportGlbs": 33,
+    "rootSpecificAttributions": 0,
+    "runtimeModelFxBindingsCreated": 0,
+    "status": "blocked-no-root-specific-mesh-attribution",
+    "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven skill relationships."
+  },
+  "materials": {
+    "documentsUseReviewedTexture": true,
+    "documentsUseExplicitBlendMode": true,
+    "aimOrientedDirectedDocuments": 4
+  },
+  "releasedVfx": [
+    {
+      "candidateId": "popp-vfx-candidate-01",
+      "releaseVfxId": "fx.strash.popp.nps-hyadaruko-core",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+      "family": "ice",
+      "phase": "core",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-hyadaruko-core.json",
+        "bytes": 1192,
+        "sha256": "9106fcbd682b5e11d0ba0f39f1122707c07264fb8b9faaf620a9fe2d61b06676"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png",
+        "bytes": 28540,
+        "sha256": "7a27baed885c49b6efd022cb028ecbf3553ae06a9dfdbdefd051be6f6e45b39d"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-02",
+      "releaseVfxId": "fx.strash.popp.nps-hyadaruko-hit",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+      "family": "ice",
+      "phase": "hit",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-hyadaruko-hit.json",
+        "bytes": 1190,
+        "sha256": "c786c3ce328572751b7c2b8f013affff1d79a6993f5358b855ffb35b7155729d"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png",
+        "bytes": 28540,
+        "sha256": "7a27baed885c49b6efd022cb028ecbf3553ae06a9dfdbdefd051be6f6e45b39d"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-03",
+      "releaseVfxId": "fx.strash.popp.nps-io-bullet-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+      "family": "explosion",
+      "phase": "projectile",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-io-bullet-00.json",
+        "bytes": 1307,
+        "sha256": "9f013539375d50e41bab4865a76c2db37cc82158ddec3a70fa772a921b2edc82"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png",
+        "bytes": 9757,
+        "sha256": "118da4bd3d539208e275458391860a04b7c9cb8f1d97a5c1fc332183f53db40c"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png"
+      },
+      "aimOriented": true,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": false
+    },
+    {
+      "candidateId": "popp-vfx-candidate-04",
+      "releaseVfxId": "fx.strash.popp.nps-io-explosive-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+      "family": "explosion",
+      "phase": "impact",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-io-explosive-00.json",
+        "bytes": 1192,
+        "sha256": "c4c61e0daffdafd06c621fbd8240b731c1d6d38d3f3d4cbd1c0ee252530c0cb3"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/04b77c0f47df2b449de6afaeba667a7e96fda4c66556a907e1db15e92d47b591.png",
+        "bytes": 41217,
+        "sha256": "c42c9c88db39b5249f50816cc48e151b3c6883a099bc8b0233f463c853e1a39e"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/04b77c0f47df2b449de6afaeba667a7e96fda4c66556a907e1db15e92d47b591.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": false
+    },
+    {
+      "candidateId": "popp-vfx-candidate-05",
+      "releaseVfxId": "fx.strash.popp.nps-iora-explosive-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+      "family": "explosion",
+      "phase": "impact",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-iora-explosive-00.json",
+        "bytes": 1194,
+        "sha256": "20ad29611d69ee30b1044b268c867a0849bdca60c26377cc331bdfa794f68ed7"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/1373eaa81028e020ed40568c22704bae246b8ccf846d2436e3a904dfe7811b9e.png",
+        "bytes": 20525,
+        "sha256": "b724daf1be1d9a498ca50fc9d56538de6fa9be1b40bfe2f8927e2dc510333a99"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/1373eaa81028e020ed40568c22704bae246b8ccf846d2436e3a904dfe7811b9e.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": false
+    },
+    {
+      "candidateId": "popp-vfx-candidate-06",
+      "releaseVfxId": "fx.strash.popp.nps-mera-firetrail-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+      "family": "fire",
+      "phase": "firetrail",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-mera-firetrail-00.json",
+        "bytes": 1315,
+        "sha256": "c970f134e0c5430545b017c38f216df8b7865e57dfa3a1b2d0c2e22836ee4cee"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+        "bytes": 43928,
+        "sha256": "fbb12248f2cf224fa8d7bcf84d0d070e4b6ca221d6d69aad6db1971556e98e43"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png"
+      },
+      "aimOriented": true,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-07",
+      "releaseVfxId": "fx.strash.popp.nps-merami-firetrail-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+      "family": "fire",
+      "phase": "firetrail",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-merami-firetrail-00.json",
+        "bytes": 1317,
+        "sha256": "e4bc2619b3966b0c306a3cac3c74b3d57e5ab1c2d8cf17732e395f6703c4c97f"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+        "bytes": 43928,
+        "sha256": "fbb12248f2cf224fa8d7bcf84d0d070e4b6ca221d6d69aad6db1971556e98e43"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png"
+      },
+      "aimOriented": true,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-08",
+      "releaseVfxId": "fx.strash.popp.nps-merami-landing-2",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+      "family": "fire",
+      "phase": "landing",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-merami-landing-2.json",
+        "bytes": 1237,
+        "sha256": "73761fff3491ab6be9cfae67c95861f1eed854299539ee1fd5c9b09cef2dbfa2"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900.png",
+        "bytes": 1438,
+        "sha256": "ef1e24382fb17adc25696668bbda009758f0867a1c08e7ea309b84fea509c052"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-09",
+      "releaseVfxId": "fx.strash.popp.nps-merami-muzzle",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+      "family": "fire",
+      "phase": "muzzle",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-merami-muzzle.json",
+        "bytes": 1311,
+        "sha256": "3042fc280aae633abc7e92aa0baa1a09a4df4236674f5f1b66132a8005d41fd5"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png",
+        "bytes": 24418,
+        "sha256": "a5b30a3e48c19b3675fcd5e92da3771e665cb366f6e6aef37355cee19073620b"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png"
+      },
+      "aimOriented": true,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-10",
+      "releaseVfxId": "fx.strash.popp.nps-merami-core",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+      "family": "fire",
+      "phase": "core",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-merami-core.json",
+        "bytes": 1192,
+        "sha256": "e3457bf649aa61f444c858ed03011480ab9203deb0ae250e410a1886c55764a6"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png",
+        "bytes": 24418,
+        "sha256": "a5b30a3e48c19b3675fcd5e92da3771e665cb366f6e6aef37355cee19073620b"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": true
+    },
+    {
+      "candidateId": "popp-vfx-candidate-11",
+      "releaseVfxId": "fx.strash.popp.nps-raidein-charge-core",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+      "family": "lightning",
+      "phase": "charge",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-raidein-charge-core.json",
+        "bytes": 1188,
+        "sha256": "5cc39ffdd240b464848f89db4150aa6d648f2529e0d9f7d6ab0646e06c7e3877"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/10ca29dd3933579d618ac28b75390f404dbf222141dfad0753ee631ee2d3647c.png",
+        "bytes": 9794,
+        "sha256": "9902dac224e1dd5da1cb283b9520aaf886658cccee50eeefa317f48dd8b076cc"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/10ca29dd3933579d618ac28b75390f404dbf222141dfad0753ee631ee2d3647c.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": false
+    },
+    {
+      "candidateId": "popp-vfx-candidate-12",
+      "releaseVfxId": "fx.strash.popp.nps-ionazun-explosive-00",
+      "sourceRootReference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+      "family": "explosion",
+      "phase": "impact",
+      "releaseDocument": {
+        "gitPath": "content/vfx/fx.strash.popp.nps-ionazun-explosive-00.json",
+        "bytes": 1197,
+        "sha256": "4719223d7bccb6b61ba51f26e4c041b986a43035fd28fc85cbfcd9f744e15edd"
+      },
+      "runtimeTexture": {
+        "gitPath": "content/assets/textures/particles/strash/popp/c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3.png",
+        "bytes": 1639,
+        "sha256": "044710f2da438c97bbf5f1b635f979e0364f42104d04d88cf6204b289d05c8b9"
+      },
+      "material": {
+        "presentation": "billboard",
+        "blendMode": "additive",
+        "texture": "assets/textures/particles/strash/popp/c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3.png"
+      },
+      "aimOriented": false,
+      "nativeNiagaraTimingRecovered": false,
+      "rootSpecificMeshLayerRecovered": false,
+      "ownerVisualDecision": "approve",
+      "skillBound": false
+    }
+  ],
+  "abilityBindings": [
+    {
+      "abilityId": "b2-popp.q",
+      "castTimeSec": 0.5,
+      "primaryVfxId": "fx.strash.popp.nps-mera-firetrail-00",
+      "layers": [
+        {
+          "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+          "attachTo": "point",
+          "delayMs": 0
+        }
+      ],
+      "abilityDocument": {
+        "gitPath": "content/abilities/b2-popp.q.json",
+        "bytes": 1682,
+        "sha256": "6196cece133da85e74487335b2887ba659811fecf344d8fa18e957c4dcb8216d"
+      }
+    },
+    {
+      "abilityId": "b2-popp.w",
+      "castTimeSec": 1,
+      "primaryVfxId": "fx.strash.popp.nps-hyadaruko-core",
+      "layers": [
+        {
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
+          "attachTo": "point",
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-hit",
+          "attachTo": "point",
+          "delayMs": 1000
+        }
+      ],
+      "abilityDocument": {
+        "gitPath": "content/abilities/b2-popp.w.json",
+        "bytes": 2535,
+        "sha256": "c2429e55e1c4f938dd93ba37f5769fb9bbd0f60d1a50d9689454af5edb657c77"
+      }
+    },
+    {
+      "abilityId": "b2-popp.r",
+      "castTimeSec": 1,
+      "primaryVfxId": "fx.strash.popp.nps-merami-muzzle",
+      "layers": [
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-muzzle",
+          "attachTo": "caster",
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-core",
+          "attachTo": "caster",
+          "delayMs": 100
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-firetrail-00",
+          "attachTo": "caster",
+          "delayMs": 180
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-landing-2",
+          "attachTo": "point",
+          "delayMs": 1000
+        }
+      ],
+      "abilityDocument": {
+        "gitPath": "content/abilities/b2-popp.r.json",
+        "bytes": 1959,
+        "sha256": "ab9ad3977f2abf1d9eaff0c1dc280c7d4ac5924d6bf8f847b3aff0fdfb8121da"
+      }
+    }
+  ],
+  "reserveCandidateIds": [
+    "popp-vfx-candidate-03",
+    "popp-vfx-candidate-04",
+    "popp-vfx-candidate-05",
+    "popp-vfx-candidate-11",
+    "popp-vfx-candidate-12"
+  ],
+  "championMirror": {
+    "gitPath": "content/champions/b2-popp.json",
+    "bytes": 19400,
+    "sha256": "72779598f7d0d94254b0d8ad35af74d3b026057b34e27fbd90397a9acb241abc"
+  },
+  "states": {
+    "featureBranchVfxDocumentsResolvable": true,
+    "featureBranchSkillBindingsCreated": true,
+    "nativeNiagaraTimingRecovered": false,
+    "rootSpecificMeshLayersBound": false,
+    "fullCombatPlaybackVerified": false,
+    "productionDeploymentVerified": false
+  }
+}

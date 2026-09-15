@@ -1,0 +1,92 @@
+{
+  "id": "fx.strash.popp.nps-merami-core.candidate",
+  "schema": "vfx@1",
+  "presentation": "billboard",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.16
+  },
+  "mode": "burst",
+  "burstCount": 30,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.56
+  },
+  "size": {
+    "start": 0.18,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.88,
+      0.42,
+      1.0
+    ],
+    "end": [
+      0.68,
+      0.08,
+      0.015,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1.0,
+        0.88,
+        0.42,
+        1.0
+      ]
+    ],
+    [
+      0.22,
+      [
+        1.0,
+        0.88,
+        0.42,
+        0.95
+      ]
+    ],
+    [
+      0.68,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.38
+      ]
+    ],
+    [
+      1,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.18
+    ],
+    [
+      0.18,
+      0.324
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0.8,
+  "speed": {
+    "min": 1.0,
+    "max": 3.8
+  },
+  "texture": "assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png"
+}

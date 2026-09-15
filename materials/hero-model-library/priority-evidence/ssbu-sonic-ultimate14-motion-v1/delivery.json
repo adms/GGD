@@ -1,0 +1,234 @@
+{
+  "schema": "ggd.ssbu-sonic-ultimate14-motion-delivery@1",
+  "componentId": "ssbu-sonic-c00-ultimate14-motion-v1",
+  "character": {
+    "nameZh": "Sonic／索尼克",
+    "originalName": "Sonic",
+    "nativeId": "fighter/sonic/body/c00",
+    "variant": "c00",
+    "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+    "platform": "Nintendo Switch MOD"
+  },
+  "sourceIds": [
+    "gitlab-ssbu-models",
+    "parallel-ns-ultimate14"
+  ],
+  "bodySource": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/sonic/model/body/c00/sonic-c00.blend",
+    "bytes": 8502840,
+    "sha256": "670fcfa00a5fedf91344c3a9dac599130f51c44c0bc655ca710efe75e054cfc5"
+  },
+  "motionSources": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c04attacklw4.nuanmb",
+      "bytes": 95195,
+      "sha256": "18f4ffc8159afd19251bd6580027829e6f31972f35747640973662cb8496f7bb",
+      "action": "c04attacklw4",
+      "frameRange": [
+        1.0,
+        73.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c04attacklw4charge.nuanmb",
+      "bytes": 66233,
+      "sha256": "0aad65af18c802b1982c9b5a4e228377e37b793ecc2ea9bc0cd70165756816f9",
+      "action": "c04attacklw4charge",
+      "frameRange": [
+        1.0,
+        61.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05attackairf.nuanmb",
+      "bytes": 86047,
+      "sha256": "26a8539517a0c11df82eb91a851e7380b188fcfe4fc733e81246d709998eb719",
+      "action": "c05attackairf",
+      "frameRange": [
+        1.0,
+        56.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05attackairn.nuanmb",
+      "bytes": 76554,
+      "sha256": "2ed50046b6c26933c6d858b5c4502dd256acabb7d4e2665af80c9e812e82ad67",
+      "action": "c05attackairn",
+      "frameRange": [
+        1.0,
+        59.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05landingairf.nuanmb",
+      "bytes": 59083,
+      "sha256": "98a1bde423f938dea36e42a554fdf45c3d5ef5c7bd4253a2460c643061d24dd5",
+      "action": "c05landingairf",
+      "frameRange": [
+        1.0,
+        31.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d01specialshold.nuanmb",
+      "bytes": 69083,
+      "sha256": "1ad42ea0ed720b8554c8d929eba44cf3a9a976baf31195eaf955e956bb38b7cd",
+      "action": "d01specialshold",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d01specialsstart.nuanmb",
+      "bytes": 49956,
+      "sha256": "8736d522f9eff4f408f12e953a45feda4ca7abe2bff286d2315cf4718d1c9e1e",
+      "action": "d01specialsstart",
+      "frameRange": [
+        1.0,
+        15.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d02specialhisquat.nuanmb",
+      "bytes": 48786,
+      "sha256": "fd616cb68b8822aede0998802514b711876ce0f8ed5882127ca7a129811b51a7",
+      "action": "d02specialhisquat",
+      "frameRange": [
+        1.0,
+        15.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d03speciallwhold.nuanmb",
+      "bytes": 73904,
+      "sha256": "1c044b79d5414ff4c01e9318c1f5d366f9d930a664ce4ecb210fa4377a064bc7",
+      "action": "d03speciallwhold",
+      "frameRange": [
+        1.0,
+        61.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d03speciallwstart.nuanmb",
+      "bytes": 45504,
+      "sha256": "cbde428c7835dc8132a34e58c6f595be48be6a67e5484a6b8a0d57e6773d5106",
+      "action": "d03speciallwstart",
+      "frameRange": [
+        1.0,
+        8.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    }
+  ],
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 2000388,
+    "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9"
+  },
+  "metrics": {
+    "triangles": 8980,
+    "drawPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 115,
+    "textureCount": 5,
+    "nativeMotionCount": 10,
+    "animationChannelCountPerClip": 345
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdHardBudgetErrors": 0,
+    "ggdWarnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+      "單段動作通道 345 高於警戒值 300，送審時需檢查演出負載。"
+    ],
+    "finiteFloatValuesChecked": 228800,
+    "webglSamplesReviewed": 30,
+    "visualPlaybackAccepted": true
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeGameplayActionSet": false,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.files.json",
+    "archiveSha256": "03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f",
+    "archiveBytes": 18383235,
+    "fileCount": 67,
+    "fullReadbackVerified": true
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "sha256": "589370d739d4d5f926d9e9f2facfe1d5ca03ef6a76a359e88aa8270db3fab8b9"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/validate_motion_component.mts",
+      "sha256": "58e53fbba549ca2dc7df6f838a426ac79bf3bd2847ce8b9d18cac7fb9eb40e11"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/render_motion_glb.py",
+      "sha256": "8721fa183c09afdf91bfbe9dfc243e1063c770a0634a3bee35dcb2eebf60f5bc"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/render_motion_glb.mjs",
+      "sha256": "ce8260b2dfb09d5a1cd820578bab5ccb8be96819e79eb77ce2657bba7ffe92fc"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/make_contact_sheet.py",
+      "sha256": "3b55911c529d9dd063784651527e9f07bcc382828eca4bbb02440ef5c4d759fe"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/integrate_sonic.py",
+      "sha256": "1e1368c6e0bf1557bab123bad8f0269a34f56502448e3bcdb30fe3f2b4ae59c4"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "1d773f0422883f0caba5d10114c17f99f6eacecc82f7efc7b6413cadb9c532ab"
+    }
+  ],
+  "gaps": [
+    "The ten acquired Sonic motions are an incomplete gameplay set; idle, run, hurt, death and semantic GGD state mapping are still missing.",
+    "These Transform motions are native to the acquired Ultimate14 community MOD package, not verified Nintendo-original animations and not retargeted animations.",
+    "The source NUANMB visibility and material tracks were deliberately not imported into this Transform-only component.",
+    "Sonic has no verified GGD hero definition in this integration, so no backend dropdown option, runtime switch or deployment is claimed.",
+    "The model passes hard limits at 8,980 triangles and 256px textures; 5 draw primitives and 345 channels per clip exceed the 3/300 warning thresholds and require runtime load review before adoption."
+  ]
+}

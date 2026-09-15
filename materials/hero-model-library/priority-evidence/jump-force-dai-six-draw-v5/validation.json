@@ -1,0 +1,126 @@
+{
+  "schema": "ggd.jump-force-dai-material-faithful-six-draw-validation@1",
+  "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v5",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-a/dai-chr0430-six-draw.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+  },
+  "deterministicRebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-b/dai-chr0430-six-draw.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+    "byteIdentical": true
+  },
+  "metrics": {
+    "triangles": 7930,
+    "drawPrimitives": 6,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "animations": 0
+  },
+  "preservation": {
+    "all20SourceMeshObjectsRemainAsGeometry": true,
+    "damageMeshesRemoved": false,
+    "perMaterialAtlasTiles": 15,
+    "representativeTextureReuse": false,
+    "nonUvVertexAttributesByteEquivalentAsMultiset": true,
+    "preservedEyeLensHairGlassPrimitives": 5
+  },
+  "khronos": {
+    "validator": "gltf-validator@2.0.0-dev.3.10",
+    "errors": 0,
+    "warnings": 31,
+    "infos": 119,
+    "hints": 0,
+    "truncated": false,
+    "issueCodeCounts": {
+      "IMAGE_FEATURES_UNSUPPORTED": 22,
+      "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE": 3,
+      "NODE_EMPTY": 14,
+      "NODE_SKINNED_MESH_NON_ROOT": 6,
+      "UNUSED_OBJECT": 105
+    }
+  },
+  "policy": {
+    "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-a/dai-chr0430-six-draw.glb",
+    "role": "champion",
+    "roleSource": "flag",
+    "worst": "warn",
+    "adoption": {
+      "status": "eligible",
+      "triggerTrianglesAbove": 10000,
+      "targetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5
+    },
+    "metrics": {
+      "triangles": 7930,
+      "meshes": 6,
+      "maxTextureEdge": 256,
+      "channelsPerFrame": 0,
+      "vramBytes": 9437175
+    },
+    "axes": [
+      {
+        "key": "triangles",
+        "label": "每實例三角面",
+        "value": 7930,
+        "warn": 16000,
+        "limit": 28000,
+        "verdict": "ok"
+      },
+      {
+        "key": "drawCalls",
+        "label": "每模型 mesh / draw call",
+        "value": 6,
+        "warn": 3,
+        "limit": 6,
+        "verdict": "warn"
+      },
+      {
+        "key": "maxTextureEdge",
+        "label": "貼圖最長邊 (px)",
+        "value": 256,
+        "warn": 256,
+        "limit": 256,
+        "verdict": "ok"
+      },
+      {
+        "key": "animChannels",
+        "label": "每幀動畫通道",
+        "value": 0,
+        "warn": 300,
+        "limit": 500,
+        "verdict": "ok"
+      }
+    ]
+  },
+  "webgl": {
+    "complete": true,
+    "views": 3,
+    "rendererBundleSha256": "c61a4840cbe01dcbf1ca66289535bd68405b10598687f850784c638efee15823",
+    "sourceSha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+    "reviewState": "pending-owner-v5-visual-review"
+  },
+  "states": {
+    "geometryTargetPassed": true,
+    "drawCallLimitPassed": true,
+    "textureEdgePassed": true,
+    "khronosPassed": true,
+    "visualReview": "pending-owner-review",
+    "motionReview": "blocked-no-reviewed-motion-binding",
+    "backendOptionRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "rejectedExperiment": {
+    "id": "six-draw-v4-v-shift",
+    "reason": "The V-shift renderer showed full-body material corruption; no asset path or registry points to it."
+  }
+}

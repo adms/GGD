@@ -1,6 +1,6 @@
 {
   "schema": "ggd.borrowed-motion-review@1",
-  "sourceFingerprint": "a2872f97b8b4a552d6019305c4e86eab2981b3617c396905143e8ad46ae68844",
+  "sourceFingerprint": "1ae6e909c59e428e809daedd22fb859a1a9d864c1e08d3f8629364d45335c8d9",
   "sourceInput": {
     "gitPath": "materials/hero-model-library/motion-review/borrowed-motion-candidates.json",
     "bytes": 6454,
@@ -34,94 +34,33 @@
     "reviewRule": "Only candidates with a target-side audition model, a resolvable clip and pinned validation evidence enter the playable queue. Every playable candidate requires an explicit approve or reject decision. Approval is review evidence only and never changes runtime or hero configuration automatically."
   },
   "summary": {
-    "playableCandidateCount": 1,
+    "playableCandidateCount": 0,
     "blockedLeadCount": 2,
-    "approvedCount": 0,
+    "resolvedCandidateCount": 1,
+    "approvedCount": 1,
     "rejectedCount": 0,
-    "pendingDecisionCount": 1,
-    "runtimeBindingsChanged": 0
+    "pendingDecisionCount": 0,
+    "runtimeBindingsChanged": 1
   },
-  "candidates": [
+  "candidates": [],
+  "resolvedCandidates": [
     {
-      "id": "popp-native-hurt-ascend-fade-v1",
-      "labelZh": "何布／波普：原生受傷倒地＋升天淡出",
-      "motionKind": "native",
-      "deathSubstitutionMode": "hurt-ascend-fade",
-      "sameWorkBorrowed": false,
-      "source": {
-        "heroId": "b2-popp",
-        "heroNameZh": "何布／波普",
-        "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-        "nativeCharacterId": "PN020/00",
-        "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
-        "modelDocument": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json",
-        "modelDocumentEvidence": {
-          "gitPath": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json",
-          "bytes": 484,
-          "sha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc"
-        }
-      },
-      "target": {
-        "heroId": "b2-popp",
-        "heroNameZh": "何布／波普",
-        "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-        "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
-        "modelDocument": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json",
-        "modelDocumentEvidence": {
-          "gitPath": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json",
-          "bytes": 484,
-          "sha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc"
-        }
-      },
-      "clip": {
-        "state": "hurt",
-        "embeddedName": "GGD_native_down",
-        "sourceKind": "native PN020 down loop",
-        "loopIntent": false
-      },
-      "skeletonCompatibility": {
-        "status": "compatible-verified",
-        "method": "exact-same-model-and-skeleton",
-        "sourceSkeleton": "PN020 SK_PN020_Skeleton converted into the accepted target GLB",
-        "targetSkeleton": "same accepted PN020/00 target GLB",
-        "mappingEvidence": "No retarget map is used because source and target are the same accepted model."
-      },
-      "presentation": {
-        "mode": "hurt-ascend-fade",
-        "durationMs": 2200,
-        "fadeStartRatio": 0.35,
-        "translateYPixels": -80,
-        "previewScope": "whole-iframe compositing mockup",
-        "runtimeWorldSpaceCalibrationRequired": true
-      },
-      "validationEvidence": [
-        {
-          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
-          "bytes": 7162,
-          "sha256": "45fceada138dbd02ecb611f1606986f15e1766e7aa02e4daf5c69b0ef2adb2d3"
-        },
-        {
-          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/runtime-webgl-proof.json",
-          "bytes": 9706,
-          "sha256": "fd199307119f036a77fcd5d69fbde0703016cf4f65a255dd9b37e171a99a49f0"
-        },
-        {
-          "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
-          "bytes": 2367208,
-          "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe"
-        }
-      ],
-      "blockers": [
-        "Owner review decision is pending.",
-        "The ascend/fade presentation is a browser compositing preview; runtime world-space timing and opacity handling are not implemented.",
-        "Approval does not establish full combat or production deployment readiness."
-      ],
-      "review": {
-        "decision": null,
-        "reviewRequired": true,
-        "runtimeBindingChanged": false,
-        "heroConfigChanged": false,
-        "productionDeployed": false
+      "proposalId": "popp-native-hurt-ascend-fade-v1",
+      "appliedCandidateId": "popp-native-down-rise-fade-v1",
+      "heroId": "b2-popp",
+      "decision": "approve",
+      "status": "resolved-by-owner-decision-and-existing-runtime",
+      "selectedModelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+      "selectedModelBinarySha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "motion": "GGD_native_down",
+      "motionProvenance": "native PN020 down loop",
+      "presentation": "existing global ChampionView corpse dissolve: lie 3 seconds, rise 3.2 world units while fading for 1.4 seconds, then hide",
+      "runtimeBindingChanged": true,
+      "productionDeployed": false,
+      "receipt": {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+        "bytes": 3123,
+        "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
       }
     }
   ],
@@ -196,8 +135,8 @@
         },
         {
           "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-          "bytes": 43391,
-          "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
+          "bytes": 65351,
+          "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f"
         }
       ],
       "blockers": [

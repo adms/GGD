@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.files.json",
+  "archiveSha256": "e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4",
+  "archiveBytes": 10031328,
+  "fileCount": 51,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/366de015fe11d0b401f3d36933962597ee6ea8b8a5d2c0d7eb2880571cdff9e4/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/366de015fe11d0b401f3d36933962597ee6ea8b8a5d2c0d7eb2880571cdff9e4/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/366de015fe11d0b401f3d36933962597ee6ea8b8a5d2c0d7eb2880571cdff9e4/manifest.json"
+}

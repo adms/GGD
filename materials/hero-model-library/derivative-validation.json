@@ -7,12 +7,12 @@
       "derivativeId": "derivative:mai",
       "sourceId": "community:community-review-03-20260907",
       "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
-      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
       "physicalCopy": true,
       "embeddedResources": true,
       "skinAndAnimationPayloadUnchanged": true,
-      "geometryPayloadUnchanged": true,
-      "geometryNote": "Complete source geometry retained",
+      "geometryPayloadUnchanged": false,
+      "geometryNote": "Complete edited source reduced from 13796 to 7994 triangles; accepted source remains a separate dropdown option",
       "textures": [
         {
           "index": 0,
@@ -40,7 +40,9 @@
         }
       ],
       "attachments": [],
-      "runtime": "outputs/hero-model-derivatives-20260910/copies-v3/mai/runtime"
+      "runtime": "content/assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+      "sourceBodySkinAndAnimationPayloadUnchanged": true,
+      "evidence": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-acceptance.json"
     },
     {
       "id": "community-review-06-20260907",

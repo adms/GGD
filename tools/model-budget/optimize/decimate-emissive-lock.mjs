@@ -29,6 +29,7 @@ if (!input || !output) {
 const target = Number(option("--target", "7900"));
 const emissiveThreshold = Number(option("--emissive-threshold", "192"));
 const errorBound = Number(option("--error", "0.02"));
+const sanitizeEmissiveMattes = argv.includes("--sanitize-transparent-emissive-mattes");
 if (!Number.isFinite(target) || target < 4) throw new Error("--target must be >= 4");
 if (!Number.isFinite(emissiveThreshold) || emissiveThreshold < 0 || emissiveThreshold > 255) throw new Error("--emissive-threshold must be 0..255");
 if (!Number.isFinite(errorBound) || errorBound < 0) throw new Error("--error must be >= 0");
@@ -42,6 +43,59 @@ function decodeRgba(texture) {
   );
   if (pixels.length !== width * height * 4) throw new Error(`decoded image length ${pixels.length} != ${width}x${height}x4`);
   return { width, height, pixels };
+}
+
+function encodeRgbaPng({ width, height, pixels }) {
+  return execFileSync(
+    "ffmpeg",
+    [
+      "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgba",
+      "-video_size", `${width}x${height}`, "-i", "pipe:0",
+      "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "pipe:1",
+    ],
+    { input: pixels, maxBuffer: width * height * 8 + 1024 * 1024 },
+  );
+}
+
+/**
+ * Emissive materials can expose RGB stored underneath transparent texels in
+ * Babylon even when the base-colour alpha test rejects those texels.  Clearing
+ * only that hidden RGB preserves every visible pixel and alpha value while
+ * preventing a bright rectangular matte.  Source images remain untouched; the
+ * operation applies only to the separately generated candidate.
+ */
+function sanitizeTransparentEmissiveMattes(document) {
+  const touched = new Set();
+  const records = [];
+  for (const material of document.getRoot().listMaterials()) {
+    if (Math.max(...material.getEmissiveFactor()) <= 0) continue;
+    for (const texture of [material.getBaseColorTexture(), material.getEmissiveTexture()]) {
+      if (!texture || touched.has(texture)) continue;
+      touched.add(texture);
+      const image = decodeRgba(texture);
+      let clearedPixels = 0;
+      for (let offset = 0; offset < image.pixels.length; offset += 4) {
+        if (image.pixels[offset + 3] > 5) continue;
+        if (Math.max(image.pixels[offset], image.pixels[offset + 1], image.pixels[offset + 2]) <= 8) continue;
+        image.pixels[offset] = 0;
+        image.pixels[offset + 1] = 0;
+        image.pixels[offset + 2] = 0;
+        clearedPixels += 1;
+      }
+      if (!clearedPixels) continue;
+      texture.setImage(encodeRgbaPng(image));
+      texture.setMimeType("image/png");
+      records.push({
+        texture: texture.getName() || null,
+        width: image.width,
+        height: image.height,
+        clearedPixels,
+        visiblePixelsChanged: 0,
+        alphaValuesChanged: 0,
+      });
+    }
+  }
+  return records;
 }
 
 function repeat(value) {
@@ -113,15 +167,17 @@ for (const [primitiveIndex, primitive] of primitives.entries()) {
   });
 }
 
+const emissiveMatteSanitization = sanitizeEmissiveMattes ? sanitizeTransparentEmissiveMattes(document) : [];
 await io.write(output, document);
 const trianglesAfter = records.reduce((sum, record) => sum + record.trianglesAfter, 0);
 console.log(JSON.stringify({
   tool: "model-budget/decimate-emissive-lock@1",
   input,
   output,
-  parameters: { target, emissiveThreshold, errorBound, lockBorder: true },
+  parameters: { target, emissiveThreshold, errorBound, lockBorder: true, sanitizeTransparentEmissiveMattes: sanitizeEmissiveMattes },
   trianglesBefore: beforeIndices / 3,
   trianglesAfter,
+  emissiveMatteSanitization,
   records,
 }));
 if (trianglesAfter > 8000) process.exit(1);

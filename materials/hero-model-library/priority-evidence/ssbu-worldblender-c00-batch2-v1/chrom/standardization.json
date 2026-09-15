@@ -1,0 +1,203 @@
+{
+  "schema": "ggd-worldblender-c00-standardization@2",
+  "candidateId": "ssbu-chrom-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/chrom/model/body/c00/chrom-c00.blend",
+    "bytes": 6981308,
+    "sha256": "315b422197357a96d5d3bc71532a4902f4a0e58d2f3287871e8e36e9764b83ad"
+  },
+  "sourceActionCount": 0,
+  "stages": {
+    "lodSelection": {
+      "excludedVisibleMeshPrefixes": []
+    },
+    "decimation": {
+      "targetTriangles": 7900,
+      "errorBound": 0.02
+    },
+    "coalescingReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/coalescing.json",
+    "attributeHarmonizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/attribute-harmonization.json",
+    "primitiveMergeReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/primitive-merge.json",
+    "atlas": {
+      "src": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/merged.glb",
+      "beforeDraws": 7,
+      "edge": 256,
+      "pad": 4,
+      "prims": [
+        {
+          "mesh": 0,
+          "prim": 0,
+          "material": 0,
+          "image": 0,
+          "uv": [
+            0.0,
+            0.98926,
+            0.323,
+            0.79639
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 1,
+          "material": 1,
+          "image": 1,
+          "uv": [
+            0.0,
+            0.98926,
+            0.323,
+            0.79639
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 2,
+          "material": 2,
+          "image": 2,
+          "uv": [
+            0.00565,
+            0.99268,
+            0.00583,
+            0.99512
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 3,
+          "material": 3,
+          "image": 3,
+          "uv": [
+            0.00607,
+            1.05273,
+            0.0,
+            0.91943
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[0.00607, 1.05273, 0.0, 0.91943]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 4,
+          "material": 4,
+          "image": 4,
+          "uv": [
+            -0.6377,
+            1.98438,
+            -0.52832,
+            0.99756
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-0.6377, 1.98438, -0.52832, 0.99756]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 5,
+          "material": 5,
+          "image": 5,
+          "uv": [
+            0.00203,
+            2.85547,
+            0.00203,
+            0.99658
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[0.00203, 2.85547, 0.00203, 0.99658]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 6,
+          "material": 6,
+          "image": 6,
+          "uv": [
+            -1.98926,
+            2.96875,
+            -1.98926,
+            2.98633
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-1.98926, 2.96875, -1.98926, 2.98633]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        }
+      ],
+      "quality": 1.0,
+      "atlases": 2,
+      "cells": {
+        "0": {
+          "cell": [
+            64,
+            64
+          ],
+          "at": [
+            1,
+            0,
+            0
+          ],
+          "from": [
+            64,
+            64
+          ]
+        },
+        "1": {
+          "cell": [
+            64,
+            64
+          ],
+          "at": [
+            1,
+            64,
+            0
+          ],
+          "from": [
+            64,
+            64
+          ]
+        },
+        "2": {
+          "cell": [
+            256,
+            256
+          ],
+          "at": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            256,
+            256
+          ]
+        }
+      },
+      "afterDrawsPredicted": 6,
+      "out": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+      "merge": "⭐ draw call 7 → 6",
+      "gc": {
+        "images": 6,
+        "materials": 6,
+        "draws": 6
+      },
+      "afterDraws": 6
+    },
+    "alphaAtlasFinalizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/alpha-atlas-finalization.json"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+    "bytes": 963000,
+    "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587"
+  },
+  "ultimate14MotionCandidate": {
+    "nuanmbPaths": 9,
+    "bodyMotionPaths": 9,
+    "uniqueTransformPayloads": 9,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false
+}

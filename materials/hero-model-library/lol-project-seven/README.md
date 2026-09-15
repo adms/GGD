@@ -47,7 +47,7 @@ python3 materials/hero-model-library/lol-project-seven/tools/serve_listening_rev
 
 頁面預設只顯示 Q／W／E／R、攻擊與死亡的戰鬥候選，可切換全部原生用途或全部 754 檔。它逐檔播放、逐檔寫入核准／拒絕／待更多上下文決定；正式核准同時記錄說話者、實際語言、原生事件用途及增益。伺服器只監聽 loopback 並只供應佇列已登記的 WAV。
 
-已核准戰鬥項目由下列命令轉換並註冊。固定映射只有 `ability-Q/W/E/R → skill-name.q/w/e/r`、`attack → attack-light`、`death → defeat`；不從檔名或時長推定 hurt、crit、kill 或其他事件。`runtime-registration.json` 記錄 311 個來源／輸出 SHA-256、runtime 類別與 manifest 讀回驗證。Karthus 缺 Q、MissFortune 缺 E、Xerath 缺 Q，七人都沒有 EX 原生候選，維持缺口。
+已核准戰鬥項目由下列命令轉換並註冊。固定映射只有 `ability-Q/W/E/R → skill-name.q/w/e/r`、`attack → attack-light`、`death → defeat`；不從檔名或時長推定 hurt、crit、kill 或其他事件。`runtime-registration.json` 記錄 311 個來源／輸出 SHA-256、runtime 類別與 manifest 讀回驗證。Karthus 的 Q 與 MissFortune 的 E 沒有單一原生事件候選；Xerath 的 4 個 Q 來源同時對應技能與其他事件類別，維持未註冊。七人都沒有 EX 原生候選，以上缺口不猜配。
 
 ```sh
 python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_battle_runtime.py \
@@ -55,3 +55,14 @@ python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_batt
 ```
 
 `runtimeApproved=311` 與 `runtimeRegistered=311` 表示核准及本分支 runtime manifest 註冊完成；`productionDeployed=false`，不能把這份本機／Git 交付稱為正式站已部署。
+
+交付索引由 `tools/make_seven_handoff.py` 重建。在隔離 worktree 執行時，使用 `--metadata-link-root` 指定整合 checkout 的固定共編路徑，避免把暫存 worktree 路徑寫入 `seven-voice-index.json` 與收據。
+
+核准後的範圍稽核由 `tools/audit_approved_battle_runtime.py` 重建。它會逐檔核對已核准來源 WAV 與 runtime MP3 的 bytes／SHA-256、MP3 44.1 kHz mono 容器、Git index blob、`COMBAT_ORIGINALS.json`、runtime manifest 與中央語音索引；可重現收據為 `runtime-audit.json`。
+
+```sh
+python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_battle_runtime.py \
+  --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT" --check
+python3 materials/hero-model-library/lol-project-seven/tools/audit_approved_battle_runtime.py \
+  --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT"
+```

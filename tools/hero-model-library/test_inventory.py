@@ -118,10 +118,20 @@ class InventoryHandoff(unittest.TestCase):
         for entry in sources['entries']:
             self.assertIn(entry['target'], report)
             for source in entry['sources']: self.assertIn(source['submittedUrl'], report)
+        reconciled = {
+            'b2-popp': 'runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1',
+        }
         for approved in policy['approvedDerivatives']:
             default = heroes[approved['heroId']]['default']
-            self.assertEqual(default['id'], approved['sourceId'])
-            self.assertEqual(default['asset']['sha256'], approved['sha256'])
+            expected = reconciled.get(approved['heroId'], approved['sourceId'])
+            self.assertEqual(default['id'], expected)
+            if expected == approved['sourceId']:
+                self.assertEqual(default['asset']['sha256'], approved['sha256'])
+        # The only derivative replacement is pinned by a review receipt and is
+        # intentionally not treated as a blanket override for other heroes.
+        popp_receipt = DATA/'priority-evidence/infinity-strash-popp-review-decision/receipt.json'
+        self.assertTrue(popp_receipt.is_file())
+        self.assertEqual(heroes['b2-popp']['default']['id'], reconciled['b2-popp'])
         for hero in heroes.values():
             if hero['default'] and hero['defaultSelectionMode'] != 'manual': self.assertTrue(hero['default']['defaultEligible'])
             if hero['defaultSelectionMode'] == 'manual':
@@ -201,7 +211,7 @@ class InventoryHandoff(unittest.TestCase):
             script=target/'tools/hero-model-library/inventory.py'
             subprocess.run([sys.executable,str(script),'--check'],check=True,capture_output=True)
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'b2-popp','--json'],text=True)
-            self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'derivative:popp')
+            self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1')
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'小傑','--downloads','--json'],text=True)
             self.assertEqual(json.loads(result)['entries'][0]['purchaseHoldFor'],['godie-ucrl'])
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'岩谷尚文','--downloads','--json'],text=True)

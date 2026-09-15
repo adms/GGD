@@ -1,0 +1,408 @@
+{
+  "schema": "ggd-worldblender-c00-candidate-rows@1",
+  "candidates": [
+    {
+      "id": "ssbu-daisy-c00-static-skinned-v1",
+      "label": "黛西 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-daisy-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "黛西",
+      "originalName": "Daisy",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/daisy/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+      "bytes": 846532,
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-daisy"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 136,
+      "textureCount": 7,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Daisy c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 13,
+        "bodyMotionPaths": 13,
+        "uniqueTransformPayloads": 13,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The source exposed body_highShape and body_lowShape together; the reproducible candidate excludes body_highShape and retains the low LOD before reduction."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/delivery.json",
+        "bytes": 3901,
+        "sha256": "d835564929a1e707c082de2a5d152e903616c6e85ceb078434cb75aa585c77c9"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/validation.json",
+        "bytes": 19245,
+        "sha256": "8e1e7eac41df27bff4b8581fe27d97be0d9ecedac5e2182b41ee6b45ccb084d5"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/acceptance.json",
+        "bytes": 408,
+        "sha256": "ebf60ea80f5aa3526d2e33e0b18e485cb875099135fb940a9fc3fe5cb38be2c3"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/visual-review.json",
+        "bytes": 700,
+        "sha256": "1a03de2620ca02089f0917cbb1f1e0c416a4d43542270658442592f7d8fd73f8"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/webgl-proof.json",
+        "bytes": 7702,
+        "sha256": "54eab85f51ead3830c005557bceee8c57af81d5b8e49a289e032c029f554b1b4"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "d749b4e89f31729aaf3afdfdf6e5280dff26a3083b4b1ee6b8ad817405b15bca"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/standardization.json",
+        "bytes": 6475,
+        "sha256": "ec8b2582171d03251138eeb5bea7202bcc6e0330ea03d0504707ef63fa87e83b"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/s3-backup-plan.json",
+        "bytes": 823,
+        "sha256": "931e260a116d5f2edc5ce170af500475b449d17880301b5d3622145d9aa50e81"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/s3-backup-receipt.json",
+        "bytes": 1557,
+        "sha256": "0c3427190f789cc5ee798a49386d4f2325c844990f36a0d38c5dc17840bcb76b"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/alpha-audit.json",
+        "bytes": 4175,
+        "sha256": "f37b03108d4a3755c195e6dbe1a54072a140f7b00f194ae932ebd921e4f2d629"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/alpha-atlas-finalization.json",
+        "bytes": 673,
+        "sha256": "4aa88d7bffb7fe2f723d2bf8368e6071daa3cb030a09b56976411c24dee1a42f"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/material-bake-receipt.json",
+        "bytes": 15037,
+        "sha256": "7bbd6aff356e5e21897e41cd1b08c7414b93cbafd539b967897d85e148bcdace"
+      }
+    },
+    {
+      "id": "ssbu-peach-c00-static-skinned-v1",
+      "label": "碧姬公主 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-peach-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "碧姬公主",
+      "originalName": "Peach",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/peach/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+      "bytes": 932380,
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-peach"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7888,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 134,
+      "textureCount": 6,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Peach c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 1,
+        "bodyMotionPaths": 1,
+        "uniqueTransformPayloads": 1,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/delivery.json",
+        "bytes": 3748,
+        "sha256": "800c001d1365eb2e9b48d39f87cded2781ad87f6496f159d2d77a74a8df76b0e"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/validation.json",
+        "bytes": 18152,
+        "sha256": "7868f36bfcf29c1656d38e2b722673d071dfad66a3222396dd0caf5c4a799412"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/acceptance.json",
+        "bytes": 408,
+        "sha256": "01d99df08d70566c8b2cda0f0c97475da63d4fba605da77ea26cbf97277ec7d2"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/visual-review.json",
+        "bytes": 698,
+        "sha256": "201d74ef29a653a535b6938599d555d7689d70d48c493aef23b84d7bd67a6761"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/webgl-proof.json",
+        "bytes": 7717,
+        "sha256": "e24b6dac7fcb0dd5a4fc81d337458e9733c8cd40b878dcb3501350ab8049abd5"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "840b635fa6562e71e58471d50470395b3064b16c341e3c518c11bae4e9d8122c"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/standardization.json",
+        "bytes": 6083,
+        "sha256": "dff8318481fb5de0ffd3b973ad5fb3527ffb7324ada49530394859efe9f4c744"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/s3-backup-plan.json",
+        "bytes": 823,
+        "sha256": "24a0025deae1c46279de5634b39ebafb684afcc919bef8b24700d8d662dd1b7c"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/s3-backup-receipt.json",
+        "bytes": 1557,
+        "sha256": "2184a04056589ede1e08bfc3e04faa07ef260641c5439d2ac6dd3fc7484a0355"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/alpha-audit.json",
+        "bytes": 4081,
+        "sha256": "b9c72a84a1d153794d05622e8873ebe71aaedb93d397fab11f7e8dec925b0d3b"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/alpha-atlas-finalization.json",
+        "bytes": 690,
+        "sha256": "add4fa5bf81ac6832555819b798d217b9e130661463d72c194637e5cc7073910"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/material-bake-receipt.json",
+        "bytes": 14940,
+        "sha256": "089b7f8c25d09c5a69b85405eae49b028a54850173ba7f11aa11a87be90b852a"
+      },
+      "nearDuplicateMaterialFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/near-duplicate-material-finalization.json",
+        "bytes": 1734,
+        "sha256": "5b2f52554ac50db668ea9360d97b41e82763cb8ac009043327bc06a8b966401d"
+      }
+    },
+    {
+      "id": "ssbu-toonlink-c00-static-skinned-v1",
+      "label": "卡通林克 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-toonlink-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "卡通林克",
+      "originalName": "Toon Link",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/toonlink/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+      "bytes": 993100,
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-toonlink"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7894,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 96,
+      "textureCount": 7,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Toon Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 3,
+        "bodyMotionPaths": 3,
+        "uniqueTransformPayloads": 3,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
+        "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/delivery.json",
+        "bytes": 4151,
+        "sha256": "d9a9c617fb5a8273a5421f8ea251cfb567080f34bc55c9cb4ff2de4e08405e17"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/validation.json",
+        "bytes": 39855,
+        "sha256": "1369ce771dbdd563d98dfcc56bda3f1c3d5640d64adb8de0f11cdb8f7bd26619"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/acceptance.json",
+        "bytes": 411,
+        "sha256": "2d66b29c8200fac97469ca734b0ada079dcb5fbf656d610b6dc10ae44c38e62e"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/visual-review.json",
+        "bytes": 744,
+        "sha256": "e79137d0b6c3b5a14cf0aeb8bb8118cc153de9b6ae08d4566dd0c53c8d3515e7"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/webgl-proof.json",
+        "bytes": 7757,
+        "sha256": "6dfdb4e7f988705860bea0aedee2b33421234ec6c870839e5e9ec526e2095711"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/source-rebuild.json",
+        "bytes": 1027,
+        "sha256": "f64a9a5393d02d3762ea064dfeb0d85421c2d13e2bf17aa3056ac3e02b98f20a"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/standardization.json",
+        "bytes": 2538,
+        "sha256": "0d3840c2041129253297278236f8ecdf707f6051c710a52607785fb0dd0bf8af"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-plan.json",
+        "bytes": 832,
+        "sha256": "78ae8d2d344743db956d77877af7569e1827dd62ebf4faed7ca69a7603fc410d"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-receipt.json",
+        "bytes": 1575,
+        "sha256": "dc7fa20563a86684b92af1f2199442dca9f3cdaabd2ecf590e6194ff4a52eac6"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/alpha-audit.json",
+        "bytes": 4899,
+        "sha256": "0fc875fba2c72c2937fed10f4fc3a0054664ead2f8fecd5fe18867a0cf081ffc"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/alpha-atlas-finalization.json",
+        "bytes": 351,
+        "sha256": "c89ce0d362279901abf8bd9c2687c8c5d146b076ec4ee9b32e172182883367a5"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/material-bake-receipt.json",
+        "bytes": 14309,
+        "sha256": "24e4a54faacc9468b78c9f00f0639ceb7f3e746233c010444d5f3ade5db8e7f6"
+      },
+      "nearDuplicateMaterialFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/near-duplicate-material-finalization.json",
+        "bytes": 1744,
+        "sha256": "fba142ee1a2e251f73a946998b120b74cff390ca85c11afb3ae91fbc8f09d8f3"
+      }
+    }
+  ]
+}

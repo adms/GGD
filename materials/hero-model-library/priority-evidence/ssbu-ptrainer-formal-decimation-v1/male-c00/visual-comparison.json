@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-ssbu-ptrainer-static-visual-comparison@1",
+  "variant": "male-c00",
+  "source": {
+    "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+    "bytes": 1317084,
+    "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b"
+  },
+  "candidate": {
+    "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/male-c00/candidate.glb",
+    "bytes": 1178320,
+    "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91"
+  },
+  "sampling": {
+    "views": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "renderer": "Babylon WebGL right-handed scene; identical lighting and per-model CPU-skinned bounds camera fitting"
+  },
+  "metric": {
+    "contractMaxPct": 5,
+    "changedPixelDefinition": "any RGB channel delta > 10 / all 800x800 pixels",
+    "litPixelDefinition": "XOR of luma >= 128 / all pixels"
+  },
+  "rows": [
+    {
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 0.300156,
+      "meanAbsoluteChannelDelta": 0.131199,
+      "litClassificationXorPctAtLuma128": 0.0775,
+      "maxChannelDelta": 111
+    },
+    {
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 0.122969,
+      "meanAbsoluteChannelDelta": 0.047888,
+      "litClassificationXorPctAtLuma128": 0.034063,
+      "maxChannelDelta": 98
+    },
+    {
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 0.207969,
+      "meanAbsoluteChannelDelta": 0.100434,
+      "litClassificationXorPctAtLuma128": 0.048125,
+      "maxChannelDelta": 160
+    }
+  ],
+  "maxChangedPixelPctAtChannelDeltaGt10": 0.300156,
+  "maxLitClassificationXorPctAtLuma128": 0.0775,
+  "underFivePercentContract": true,
+  "contactSheet": {
+    "file": "visual-ab-contact-sheet.png",
+    "bytes": 526293,
+    "sha256": "2f631c18b51acbfb04cdeb4f05237abcdcc6d00f1f102c935e25aaf3c8a43798"
+  },
+  "worstDifferenceOverview": {
+    "file": "worst-difference-overview.png",
+    "bytes": 236876,
+    "sha256": "2040a88a7ff866e85c38864197f107a6d0de5b7d7baf82016c5c9ce443f54268",
+    "view": "front",
+    "heatmapScale": "max RGB delta x4"
+  },
+  "rawRendersRetainedLocally": true,
+  "pillowVersion": "12.3.0",
+  "humanReview": {
+    "reviewer": "Codex visual inspection",
+    "result": "accepted",
+    "scope": "front/back/isometric silhouette, face, clothes, bag, thin parts and material identity"
+  }
+}

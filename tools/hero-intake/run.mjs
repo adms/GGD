@@ -215,7 +215,7 @@ function deliveryFileAtDeclaredPath(file) {
  * 交付表的 `identityIds` 與中央元件的 `identityIds` 做完全相等 join。
  * ⛔ 不用名字模糊比對；`zero-megaman` 因此不會誤接 `Zero Lancer`。
  */
-function acceptedComponentsFor(d) {
+function acceptedComponentsFor(d, heroId = null) {
   const identities = [...new Set((d?.identityIds ?? []).map(String).filter(Boolean))];
   const found = new Map();
   for (const identity of identities) for (const c of componentIndex.byIdentity.get(identity) ?? []) found.set(String(c.id), c);
@@ -230,19 +230,23 @@ function acceptedComponentsFor(d) {
     const actualSha256 = exists ? sha256(readFileSync(abs)) : null;
     const accepted = c.componentReady === true && c.converted === true && c.structuralValidationPassed === true && c.visualValidationPassed === true;
     const independent = c.fullHeroModel === false && c.runtimeSelectable === false && c.runtimeDropdownRegistered === false && (c.heroIds ?? []).length === 0;
+    const registered = c.runtimeSelectable === true && c.runtimeDropdownRegistered === true && Boolean(heroId) && (c.heroIds ?? []).includes(heroId);
     const tracked = Boolean(gitPath && trackedHere.has(gitPath));
     const bytesMatch = exists && Number(c.bytes) === bytes;
     const sha256Match = exists && String(c.sha256 ?? "") === actualSha256;
-    const verified = accepted && independent && tracked && bytesMatch && sha256Match;
+    const verified = accepted && (independent || registered) && tracked && bytesMatch && sha256Match;
     const problems = [];
     if (!accepted) problems.push("未通過完整元件驗收旗標");
-    if (!independent) problems.push("不是未綁定的獨立元件");
+    if (!independent && !registered) problems.push("既非未綁定獨立元件，也不是此英雄已登記候選");
     if (!exists) problems.push("Git 路徑沒有實檔");
     if (!tracked) problems.push("Git 路徑未追蹤");
     if (exists && !bytesMatch) problems.push("位元組數不符");
     if (exists && !sha256Match) problems.push("SHA-256 不符");
     return {
       id: String(c.id), sourceId: c.sourceId ?? null, sourceGame: c.sourceGame ?? null,
+      runtimeSelectable: c.runtimeSelectable === true,
+      runtimeDropdownRegistered: c.runtimeDropdownRegistered === true,
+      runtimeModelKey: c.runtimeModelKey ?? null,
       nativeId: c.nativeId ?? null, readiness: c.readiness ?? null,
       gitPath: gitPath || null, bytes, sha256: c.sha256 ?? null, verified, problems,
       nativeAnimationCount: Number(c.nativeAnimationCount ?? 0),
@@ -415,23 +419,27 @@ function checkModel(champ, id, d = null) {
     //    ② 有 modelKey ⇒ 檔**本來就在這個 repo**（`existing-finished-files-copied-byte-identical`）⇒ 去查那把 key
     if (files.length === 0) {
       if (!key) {
-        const acquired = acceptedComponentsFor(d);
+        const acquired = acceptedComponentsFor(d, id);
         if (acquired) {
           const actionSummary = acquired.nativeAnimationCount > 0
             ? `原生／來源動作 ${acquired.nativeAnimationCount} 段${acquired.animationNames.length ? `（${acquired.animationNames.join("、")}）` : ""}`
             : "原生動作 0 段";
           const bad = acquired.components.filter((c) => !c.verified);
+          const registered = acquired.components.filter((c) => c.runtimeDropdownRegistered && c.runtimeSelectable);
           return {
-            ok: false, modelKey: null, clipMap: null,
-            deliveryStatus: status, deliveryStatusText: statusText,
+            ok: registered.length > 0, modelKey: registered[0]?.runtimeModelKey ?? null, clipMap: null,
+            deliveryStatus: status,
+            deliveryStatusText: "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
             componentStatus: "accepted-independent-components-pending-hero-integration",
-            componentStatusText: "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+            componentStatusText: "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
             files: 0, filesInRepo: 0,
             ...acquired,
             gap: bad.length
               ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}`
-              : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架`,
-            severity: "blocker",
+              : registered.length
+                ? `中央素材庫已有 ${acquired.componentCount} 個已驗收元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。本尊非預設 model@1 已進 Hero Forge 下拉候選；仍待 Main 合併、正式發布與正式站切換驗證`
+                : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能宣稱已上架`,
+            severity: bad.length || !registered.length ? "blocker" : "warning",
           };
         }
         return {

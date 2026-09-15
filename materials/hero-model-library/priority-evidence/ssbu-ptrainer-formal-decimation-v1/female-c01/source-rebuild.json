@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-worldblender-c00-source-rebuild@1",
+  "componentId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+  "input": {
+    "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+    "bytes": 1373732,
+    "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec"
+  },
+  "first": {
+    "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/female-c01/candidate.glb",
+    "bytes": 1221592,
+    "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a"
+  },
+  "second": {
+    "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/female-c01/candidate-rebuild.glb",
+    "bytes": 1221592,
+    "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a"
+  },
+  "byteIdenticalRebuild": true,
+  "bothValidationsPassed": true,
+  "outputSha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+  "toolAndParameters": {
+    "tool": {
+      "worker": {
+        "path": "tools/model-budget/optimize/decimate.mjs",
+        "bytes": 3340,
+        "sha256": "d92e1b84969c243574630959350664a7992742fe5b64ee5746434bed4e777bab"
+      },
+      "packageJson": {
+        "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/decimate-runtime/package.json",
+        "bytes": 183,
+        "sha256": "0142aa4b54623afc7883acb56268b3acb28b20e3e7bef180b7df200da8465227"
+      },
+      "packageLock": {
+        "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/decimate-runtime/package-lock.json",
+        "bytes": 25779,
+        "sha256": "5411b7fee57e6e7279c25e559c2eaf92f05782b4dd15f5e0161223c58cda61db"
+      }
+    },
+    "parameters": {
+      "targetTriangles": 7900,
+      "errorBound": 0.02
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "ggd-worldblender-c00-component-delivery@1",
+  "componentId": "ssbu-toonlink-c00-static-skinned-v1",
+  "label": "卡通林克 SSBU Ultimate c00 黑底修復版",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "nameZh": "卡通林克",
+    "originalName": "Toon Link",
+    "nativeId": "fighter/toonlink/model/body/c00",
+    "variant": "c00"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/toonlink/model/body/c00/toonlink-c00.blend",
+    "bytes": 5256416,
+    "sha256": "c20a96b41fb5dfcf2e2c6a2d017b3248775efa6dc97d5a68ab92b9b01a4aafb6"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+    "bytes": 993100,
+    "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/rebuild/body.glb",
+    "bytes": 993100,
+    "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540"
+  },
+  "metrics": {
+    "triangles": 7894,
+    "drawPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 96,
+    "textureCount": 7,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "budgetErrors": 0,
+    "finiteFloatValuesChecked": 99416,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "ultimate14MotionCandidate": {
+    "sourceId": "parallel-ns-ultimate14",
+    "nuanmbPaths": 3,
+    "bodyMotionPaths": 3,
+    "uniqueTransformPayloads": 3,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "s3Backup": {
+    "status": "uploaded-and-readback-verified",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.files.json",
+    "archiveSha256": "e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4",
+    "archiveBytes": 10031328,
+    "fileCount": 51,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "gaps": [
+    "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+    "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+    "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+    "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+    "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
+    "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
+  ]
+}

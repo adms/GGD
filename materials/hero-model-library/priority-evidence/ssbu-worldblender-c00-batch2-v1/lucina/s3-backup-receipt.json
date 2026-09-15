@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.files.json",
+  "archiveSha256": "8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605",
+  "archiveBytes": 9776266,
+  "fileCount": 49,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/448277c3784b4e7f88494e44d956dc78649ff5a00e70830e6fbf58848df0473e/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/448277c3784b4e7f88494e44d956dc78649ff5a00e70830e6fbf58848df0473e/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/448277c3784b4e7f88494e44d956dc78649ff5a00e70830e6fbf58848df0473e/manifest.json"
+}

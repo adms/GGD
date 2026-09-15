@@ -3,15 +3,15 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "8f0eac926b06ea838b36c5c7a56f1bb4882f02a44fd1e6be54200bd7ab442953"
+      "sha256": "dc9dd1fbf7e337e5cad55a939656b9cc0789ea6f8a62a71ce664383f5dd66718"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "sha256": "92a49fe5735b60644a2529c0c56921ea07320ea4cd81c9ff10ec708b18c11fa3"
+      "sha256": "e8d211bc747600ae2dc43e0ca1b6d699df0024d4ec71c42e1d5ca31804240e57"
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "4318599ddd99e47edac7afa7df5aee1d6ac2de752fd60da70ae9d6c07f680a27"
+      "sha256": "b90164efd9e2e1420fc1f96c0a318486d75f8f931ddb8e91e0f4ac7c1c55f098"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",
@@ -19,15 +19,39 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "a0724d4293b908a14d71065d519aaf8a541a5e74088206f825dc50104e91d50c"
+      "sha256": "7b5428a964374a5cfce3c94886326b21af831bc053245a70ebaef2b35fa706d2"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
+      "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+      "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
     }
   ],
   "characterCount": 3,
   "modelSourceCount": 5,
-  "preservedModelFileCount": 22,
+  "preservedModelFileCount": 23,
   "distinctCryCount": 18,
   "characterSettingsGitPath": "materials/hero-model-library/palworld/character-settings.json",
   "heroIntegrationReceipt": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+  "approvedRuntimeReceipt": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json",
+  "approvedRuntimeBindings": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+  "approvedRuntimeSummary": {
+    "characters": 3,
+    "ownerApprovedCandidates": 36,
+    "motionSemanticStatesRuntimeSelectable": 18,
+    "approvedGenericMotionBindingsReachable": 14,
+    "approvedPerSkillMotionOverlaysPendingRouter": 0,
+    "approvedPerSkillMotionOverlaysRuntimeBound": 4,
+    "approvedCryProductsInGit": 18,
+    "approvedCryRuntimeBindings": 18,
+    "backendDropdownRegisteredHeroes": 3,
+    "standaloneOriginalVfx": 0,
+    "skillSpecificOriginalSfx": 0,
+    "productionDeploymentVerifiedHeroes": 0
+  },
   "characters": [
     {
       "id": "jetragon",
@@ -236,17 +260,19 @@
           "bytes": 4297580,
           "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
           "format": "glb",
-          "readiness": "material-bound-component-pending-hero-binding",
+          "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
           "existsLocal": true,
           "resourceRole": "character-body",
           "sourceId": "opgg-palworld-jetragon",
           "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
           "sourceWork": "幻獸帕魯／Palworld",
-          "heroIds": [],
+          "heroIds": [
+            "acquired-jetragon"
+          ],
           "defaultEligible": false,
           "automaticEligible": false,
           "componentReady": true,
-          "runtimeSelectable": false,
+          "runtimeSelectable": true,
           "boneCount": 75,
           "nativeAnimationCount": 29,
           "animationClipCount": 29,
@@ -295,7 +321,10 @@
           ],
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
           "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb"
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+          "runtimeDropdownRegistered": true,
+          "runtimeModelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+          "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json"
         }
       ],
       "modelSources": [
@@ -794,7 +823,8 @@
         "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
         "modelOptions": [
           "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+          "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
         ],
         "contentSchema": {
           "modelSchema": "model@1",
@@ -818,7 +848,8 @@
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
             "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+            "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
           ],
           "defaultModelPolicyEligible": true,
           "registeredOptionPreserved": true,
@@ -858,6 +889,23 @@
               "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
               "bytes": 3222184
             }
+          },
+          {
+            "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+            "isDefault": false,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
+              "sha256": "ae20eb8288f99324f8b978611b6c0413fea4d6cf4ad3c99a635776a69f4171ef",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+              "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+              "bytes": 4297580
+            }
           }
         ],
         "modelDocument": {
@@ -882,9 +930,9 @@
         "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
         "package": {
           "status": "passed",
-          "digest": "sha256:8d107d4328438767e12f0cc8f5d999dcd832327e17fb03d5c6cd0b0740d4800b",
-          "zipSha256": "sha256:01e11b427ef2be1a762ceb77ab45f1ffbb4c91d2727ba6688e13dc71bc08269d",
-          "zipBytes": 6288568,
+          "digest": "sha256:c79e34d3b7ecda6266f7d89d736a874b2eb2201c88a86a7b11a246232b60f77b",
+          "zipSha256": "sha256:ec8005ecb0c6f114c763a57b96b0a913d03d953890fcbcb4553a03784be72ad2",
+          "zipBytes": 6289284,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
         },
@@ -902,6 +950,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 4,
+        "skillMotionOverlays": 2,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 8468,
         "triggerTrianglesAbove": 10000,
@@ -910,7 +966,8 @@
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
           "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+          "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
         ],
         "defaultModelPolicyEligible": true,
         "registeredOptionPreserved": true,
@@ -1522,6 +1579,175 @@
           ],
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb"
+        },
+        {
+          "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "label": "枯星龍／7,896面／256px／完整58動作",
+          "character": "枯星龍",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+          "bytes": 17043436,
+          "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+          "format": "glb",
+          "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceWork": "幻獸帕魯／Palworld",
+          "heroIds": [
+            "acquired-astralym"
+          ],
+          "relatedHeroIds": [
+            "acquired-astralym"
+          ],
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "componentReady": true,
+          "runtimeSelectable": true,
+          "runtimeDropdownRegistered": true,
+          "runtimeModelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+          "modelDocumentGitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+          "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+          "triangles": 7896,
+          "drawPrimitives": 3,
+          "boneCount": 145,
+          "textureCount": 9,
+          "maxTextureEdge": 256,
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "uniqueAnimationContentCount": 58,
+          "staticPoseClipCount": 1,
+          "animationScope": "complete-source-animation-library",
+          "animationNames": [
+            "Damage",
+            "FarSkill_Action",
+            "FarSkill_ActionLoop",
+            "FarSkill_End",
+            "FarSkill_Start",
+            "FarSkill_StartLoop",
+            "HaloBeam_End",
+            "HaloBeam_End_Ring",
+            "HaloBeam_Loop",
+            "HaloBeam_Loop_Ring",
+            "HaloBeam_Start",
+            "HaloBeam_Start_Ring",
+            "HaloCutter",
+            "HaloCutter_End_Ring",
+            "HaloCutter_Loop_Ring",
+            "HaloCutter_Start_Ring",
+            "Idle",
+            "Idle_Ring",
+            "LaserGliding_End",
+            "LaserGliding_End_Ring",
+            "LaserGliding_Loop",
+            "LaserGliding_Loop_Ring",
+            "LaserGliding_Start",
+            "LaserGliding_Start_Ring",
+            "PaldiumCannon_Attack",
+            "PaldiumCannon_Attack_Loop",
+            "PaldiumCannon_Attack_Loop_Ring",
+            "PaldiumCannon_Attack_Ring",
+            "PaldiumCannon_End",
+            "PaldiumCannon_End_Ring",
+            "PaldiumCannon_Start",
+            "PaldiumCannon_Start_Loop",
+            "PaldiumCannon_Start_Loop_Ring",
+            "PaldiumCannon_Start_Ring",
+            "PaldiumExplosion_Cancel",
+            "PaldiumExplosion_Cancel_Ring",
+            "PaldiumExplosion_End",
+            "PaldiumExplosion_End_Ring",
+            "PaldiumExplosion_Loop",
+            "PaldiumExplosion_Loop_Ring",
+            "PaldiumExplosion_Start",
+            "PaldiumExplosion_Start_Ring",
+            "PaldiumRain_End",
+            "PaldiumRain_Loop",
+            "PaldiumRain_Start",
+            "PaldiumShot_End",
+            "PaldiumShot_End_Ring",
+            "PaldiumShot_Loop",
+            "PaldiumShot_Loop_Ring",
+            "PaldiumShot_Start",
+            "PaldiumShot_Start_Ring",
+            "Supernova_End",
+            "Supernova_End_Ring",
+            "Supernova_Loop",
+            "Supernova_Loop_Ring",
+            "Supernova_Start",
+            "Supernova_Start_Ring",
+            "Walk"
+          ],
+          "proceduralAnimationCount": 0,
+          "retargetedAnimationCount": 0,
+          "sourceSamplePreservationVerified": true,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Walk",
+            "attack": "FarSkill_Action",
+            "cast": "HaloBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "No native Death clip; owner-authorized Damage plus ascend/fade presentation, not a generated animation."
+            }
+          ],
+          "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+          "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+          "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+          "conversionStageBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+            "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+            "archiveBytes": 53102420,
+            "fileCount": 74,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true,
+            "localUnchanged": true,
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1231,
+              "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+            },
+            "manifest": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+              "bytes": 13958,
+              "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+            },
+            "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+            "bytes": 22294,
+            "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+          },
+          "generationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+            "bytes": 5073,
+            "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+            "bytes": 6481,
+            "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+          },
+          "limitations": [
+            "58 clips are preserved, but HaloCutter_Loop_Ring is a fixed pose; 57 clips contain changing samples.",
+            "Each clip has 435 channels: above the live 300 warning and below the 500 hard limit.",
+            "No native Death clip is claimed; Damage plus ascend/fade remains a declared fallback.",
+            "Representative five-clip, three-view A/B passed the 5% contract; low-poly faceting remains visible.",
+            "Original Palworld standalone VFX, skill-specific SFX and production deployment remain unverified.",
+            "The conversion stage is archived in S3 legacy with full download and every member SHA-256 verified; this does not prove production deployment."
+          ],
+          "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb"
         },
         {
           "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
@@ -2254,7 +2480,8 @@
         "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
         "modelOptions": [
           "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
-          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
         ],
         "contentSchema": {
           "modelSchema": "model@1",
@@ -2277,7 +2504,8 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,
@@ -2302,20 +2530,37 @@
             }
           },
           {
-            "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+            "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
             "isDefault": false,
             "triangles": 7996,
             "status": "eligible",
             "currentPolicyEligible": true,
             "modelDocument": {
-              "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
-              "sha256": "9ca3bf8dd347205417edca5e973e2029aa50ec322a4d94d2f7e60d224d3ec149",
+              "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+              "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c",
               "bytes": 456
             },
             "modelGlb": {
-              "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
-              "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
-              "bytes": 3782388
+              "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+              "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+              "bytes": 3793672
+            }
+          },
+          {
+            "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+            "isDefault": false,
+            "triangles": 7896,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+              "sha256": "ffe2ef5c49f792b0d4ad663999c55f049455f55c5debebeab6072fef348dfa0c",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+              "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+              "bytes": 17043436
             }
           }
         ],
@@ -2341,9 +2586,9 @@
         "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
         "package": {
           "status": "passed",
-          "digest": "sha256:1614e7b64496762f822991e1aa87505c6f41a3b9cb8c0152498ef2b814b8935b",
-          "zipSha256": "sha256:c91efc4520fa3736b5603f4bccd934401ee656897b0469a0a0263611ca4c0f35",
-          "zipBytes": 6855714,
+          "digest": "sha256:389bda157537732fb1eea487f3c99b8fc6731f3ccc802783d682ffaeb1f70627",
+          "zipSha256": "sha256:fd8b3a1e43dd8c2303f304c98ecb57ca4e016ffcef48ae33b2650a4237bc5c09",
+          "zipBytes": 6856430,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
         },
@@ -2361,6 +2606,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 5,
+        "skillMotionOverlays": 1,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 23928,
         "triggerTrianglesAbove": 10000,
@@ -2368,7 +2621,8 @@
         "status": "eligible-registered-alternative",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
         ],
         "defaultModelPolicyEligible": false,
         "registeredOptionPreserved": true,
@@ -3001,17 +3255,19 @@
           "bytes": 2148052,
           "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
           "format": "glb",
-          "readiness": "material-bound-component-pending-hero-binding",
+          "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
           "existsLocal": true,
           "resourceRole": "character-body",
           "sourceId": "palworld-cattiva-opgg",
           "sourceUrl": "https://op.gg/palworld/pals/cattiva",
           "sourceWork": "幻獸帕魯／Palworld",
-          "heroIds": [],
+          "heroIds": [
+            "acquired-cattiva"
+          ],
           "defaultEligible": false,
           "automaticEligible": false,
           "componentReady": true,
-          "runtimeSelectable": false,
+          "runtimeSelectable": true,
           "boneCount": 43,
           "nativeAnimationCount": 33,
           "animationClipCount": 33,
@@ -3064,7 +3320,10 @@
           ],
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
           "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb"
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+          "runtimeDropdownRegistered": true,
+          "runtimeModelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+          "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json"
         }
       ],
       "modelSources": [
@@ -3447,7 +3706,8 @@
         "localHeroForgeModelSelectable": true,
         "defaultModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
         "modelOptions": [
-          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+          "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
         ],
         "contentSchema": {
           "modelSchema": "model@1",
@@ -3470,7 +3730,8 @@
           "status": "eligible-default",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+            "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
           ],
           "defaultModelPolicyEligible": true,
           "registeredOptionPreserved": true,
@@ -3492,6 +3753,23 @@
               "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
               "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
               "bytes": 1428876
+            }
+          },
+          {
+            "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+            "isDefault": false,
+            "triangles": 5798,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
+              "sha256": "fbd88023ac63b21c01d7189168d59e50b873f527bfae92d41c7614421bcb72d3",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+              "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+              "bytes": 2148052
             }
           }
         ],
@@ -3517,9 +3795,9 @@
         "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
         "package": {
           "status": "passed",
-          "digest": "sha256:49a29cdbc9ae9d5e27c8948f9a2ee49c6e9b23b32fb9321f10afef84db43a78d",
-          "zipSha256": "sha256:ae6eddfae0b3d56daab3c819d08cce48337343ed96f5ee8e6bbda4db12b6516b",
-          "zipBytes": 4401433,
+          "digest": "sha256:75c56090f4db6c849175574e86b799fbb9206c5469d73b4e7d1502a13ef5d064",
+          "zipSha256": "sha256:70a211d8e26ba2fecbaeaf83f7f4b67040644b6175b181e1f1af4cb44f58cfc9",
+          "zipBytes": 4402149,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
         },
@@ -3537,6 +3815,14 @@
       "ggdHeroAuthoringComplete": true,
       "localHeroForgeModelSelectable": true,
       "sourceFaithfulAudiovisualComplete": false,
+      "approvedRuntime": {
+        "crySourceBindings": 6,
+        "voiceCategoryRoutes": 14,
+        "motionSemanticBindings": 6,
+        "genericMotionBindings": 5,
+        "skillMotionOverlays": 1,
+        "productionDeploymentVerified": false
+      },
       "formalModelAdoption": {
         "defaultModelTriangles": 5798,
         "triggerTrianglesAbove": 10000,
@@ -3544,7 +3830,8 @@
         "status": "eligible-default",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+          "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
         ],
         "defaultModelPolicyEligible": true,
         "registeredOptionPreserved": true,
@@ -3559,11 +3846,12 @@
     "Creature cries are sound effects, not Japanese or English spoken dialogue.",
     "PalDB settings are community snapshots, not original game DataTables or GGD abilities.",
     "Khronos structural validation does not prove material fidelity or GGD runtime acceptance.",
-    "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.",
+    "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym has a separately validated 7,996-triangle historical five-motion candidate and a 7,896-triangle 256px full-58-motion candidate registered as non-default options; production deployment remains unverified.",
+    "The 18 owner-approved creature cries and 18 motion semantic candidates are locally runtime-bound; this does not supply original standalone skill VFX or skill-specific SFX and does not prove production deployment.",
     "Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.",
     "Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified."
   ],
-  "gitModelComponentCount": 3,
+  "gitModelComponentCount": 4,
   "gitModelComponents": [
     {
       "id": "opgg-palworld-jetragon.material-bound-256-v1",
@@ -3575,17 +3863,19 @@
       "bytes": 4297580,
       "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
       "format": "glb",
-      "readiness": "material-bound-component-pending-hero-binding",
+      "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
       "existsLocal": true,
       "resourceRole": "character-body",
       "sourceId": "opgg-palworld-jetragon",
       "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
       "sourceWork": "幻獸帕魯／Palworld",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-jetragon"
+      ],
       "defaultEligible": false,
       "automaticEligible": false,
       "componentReady": true,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "boneCount": 75,
       "nativeAnimationCount": 29,
       "animationClipCount": 29,
@@ -3635,11 +3925,203 @@
       "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
       "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+      "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
-      "ggdHeroImplemented": false,
-      "runtimeDropdownRegistered": false
+      "ggdHeroImplemented": true,
+      "relatedHeroIds": [
+        "acquired-jetragon"
+      ],
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-jetragon",
+        "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+        "isDefault": false,
+        "productionDeploymentVerified": false
+      }
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+      "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+      "label": "枯星龍／7,896面／256px／完整58動作",
+      "character": "枯星龍",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+      "bytes": 17043436,
+      "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+      "format": "glb",
+      "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [
+        "acquired-astralym"
+      ],
+      "relatedHeroIds": [
+        "acquired-astralym"
+      ],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": true,
+      "runtimeSelectable": true,
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+      "modelDocumentGitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+      "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "triangles": 7896,
+      "drawPrimitives": 3,
+      "boneCount": 145,
+      "textureCount": 9,
+      "maxTextureEdge": 256,
+      "nativeAnimationCount": 57,
+      "animationClipCount": 58,
+      "uniqueAnimationContentCount": 58,
+      "staticPoseClipCount": 1,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Damage",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "HaloBeam_End",
+        "HaloBeam_End_Ring",
+        "HaloBeam_Loop",
+        "HaloBeam_Loop_Ring",
+        "HaloBeam_Start",
+        "HaloBeam_Start_Ring",
+        "HaloCutter",
+        "HaloCutter_End_Ring",
+        "HaloCutter_Loop_Ring",
+        "HaloCutter_Start_Ring",
+        "Idle",
+        "Idle_Ring",
+        "LaserGliding_End",
+        "LaserGliding_End_Ring",
+        "LaserGliding_Loop",
+        "LaserGliding_Loop_Ring",
+        "LaserGliding_Start",
+        "LaserGliding_Start_Ring",
+        "PaldiumCannon_Attack",
+        "PaldiumCannon_Attack_Loop",
+        "PaldiumCannon_Attack_Loop_Ring",
+        "PaldiumCannon_Attack_Ring",
+        "PaldiumCannon_End",
+        "PaldiumCannon_End_Ring",
+        "PaldiumCannon_Start",
+        "PaldiumCannon_Start_Loop",
+        "PaldiumCannon_Start_Loop_Ring",
+        "PaldiumCannon_Start_Ring",
+        "PaldiumExplosion_Cancel",
+        "PaldiumExplosion_Cancel_Ring",
+        "PaldiumExplosion_End",
+        "PaldiumExplosion_End_Ring",
+        "PaldiumExplosion_Loop",
+        "PaldiumExplosion_Loop_Ring",
+        "PaldiumExplosion_Start",
+        "PaldiumExplosion_Start_Ring",
+        "PaldiumRain_End",
+        "PaldiumRain_Loop",
+        "PaldiumRain_Start",
+        "PaldiumShot_End",
+        "PaldiumShot_End_Ring",
+        "PaldiumShot_Loop",
+        "PaldiumShot_Loop_Ring",
+        "PaldiumShot_Start",
+        "PaldiumShot_Start_Ring",
+        "Supernova_End",
+        "Supernova_End_Ring",
+        "Supernova_Loop",
+        "Supernova_Loop_Ring",
+        "Supernova_Start",
+        "Supernova_Start_Ring",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "retargetedAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "clip": "Damage",
+          "reason": "No native Death clip; owner-authorized Damage plus ascend/fade presentation, not a generated animation."
+        }
+      ],
+      "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+      "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+      "conversionStageBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+        "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+        "archiveBytes": 53102420,
+        "fileCount": 74,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "receipt": {
+          "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+          "bytes": 1231,
+          "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+        },
+        "manifest": {
+          "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+          "bytes": 13958,
+          "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+        },
+        "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+        "bytes": 22294,
+        "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+      },
+      "generationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+        "bytes": 5073,
+        "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+        "bytes": 6481,
+        "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+      },
+      "limitations": [
+        "58 clips are preserved, but HaloCutter_Loop_Ring is a fixed pose; 57 clips contain changing samples.",
+        "Each clip has 435 channels: above the live 300 warning and below the 500 hard limit.",
+        "No native Death clip is claimed; Damage plus ascend/fade remains a declared fallback.",
+        "Representative five-clip, three-view A/B passed the 5% contract; low-poly faceting remains visible.",
+        "Original Palworld standalone VFX, skill-specific SFX and production deployment remain unverified.",
+        "The conversion stage is archived in S3 legacy with full download and every member SHA-256 verified; this does not prove production deployment."
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+      "characterIdentity": "community:palworld-astralym",
+      "characterName": "枯星龍",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "ggdHeroImplemented": true,
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-astralym",
+        "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+        "isDefault": false,
+        "productionDeploymentVerified": false
+      }
     },
     {
       "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
@@ -3701,17 +4183,19 @@
       "bytes": 2148052,
       "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
       "format": "glb",
-      "readiness": "material-bound-component-pending-hero-binding",
+      "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
       "existsLocal": true,
       "resourceRole": "character-body",
       "sourceId": "palworld-cattiva-opgg",
       "sourceUrl": "https://op.gg/palworld/pals/cattiva",
       "sourceWork": "幻獸帕魯／Palworld",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-cattiva"
+      ],
       "defaultEligible": false,
       "automaticEligible": false,
       "componentReady": true,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "boneCount": 43,
       "nativeAnimationCount": 33,
       "animationClipCount": 33,
@@ -3765,11 +4249,23 @@
       "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
       "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+      "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
-      "ggdHeroImplemented": false,
-      "runtimeDropdownRegistered": false
+      "ggdHeroImplemented": true,
+      "relatedHeroIds": [
+        "acquired-cattiva"
+      ],
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-cattiva",
+        "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+        "isDefault": false,
+        "productionDeploymentVerified": false
+      }
     }
   ]
 }

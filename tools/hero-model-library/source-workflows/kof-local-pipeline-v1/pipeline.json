@@ -1,0 +1,42 @@
+{
+  "schema": "ggd.kof-local-pipeline-definition@1",
+  "pipelineId": "kof-local-pipeline-v1",
+  "scope": {
+    "sourceIds": [
+      "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "steam-kofxiv-terry-path-index-v1"
+    ],
+    "nativeCharacterIdsWithPayload": ["MAI", "IOR", "KYO"],
+    "nativeCharacterIdsPathIndexedOnly": ["TRY"],
+    "remoteLibraryReadAllowed": false
+  },
+  "paths": {
+    "priorityLocalRoot": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+    "priorityEvidence": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1",
+    "kof3dEvidence": "materials/hero-model-library/source-inventories/kof-3d-sources-v1",
+    "coverageEvidence": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1",
+    "terryEvidence": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1",
+    "ownerDecisions": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+  },
+  "stages": [
+    {"id": "source-verify", "dependsOn": []},
+    {"id": "extract-reuse", "dependsOn": ["source-verify"]},
+    {"id": "texture", "dependsOn": ["extract-reuse"]},
+    {"id": "audio", "dependsOn": ["extract-reuse"]},
+    {"id": "vfx", "dependsOn": ["texture"]},
+    {"id": "native-format-probe", "dependsOn": ["extract-reuse"]},
+    {"id": "policy", "dependsOn": ["texture", "native-format-probe"]},
+    {"id": "review", "dependsOn": ["vfx"]},
+    {"id": "register", "dependsOn": ["audio", "policy", "review"]},
+    {"id": "index", "dependsOn": ["register"]},
+    {"id": "report", "dependsOn": ["index"]}
+  ],
+  "failClosed": {
+    "nativeModelFormats": ["OBAC", "OMIR", "OSEC"],
+    "nativeMotionFormats": ["OTRA"],
+    "nativeVfxFormats": ["EFF", "LEFF", "OBAC", "ONC"],
+    "requiredModelConverter": "audited OBAC/OMIR/OSEC reader",
+    "requiredMotionConverter": "audited OTRA reader",
+    "runtimeClaimWithoutConverter": false
+  }
+}

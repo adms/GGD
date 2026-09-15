@@ -44290,7 +44290,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "voice-source-label-unreviewed": 125
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-english_us-voice",
@@ -44461,7 +44465,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "voice-source-label-unreviewed": 123
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-japanese-voice",
@@ -44804,7 +44812,11 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "sound-effect": 60
-      }
+      },
+      "poppOwnerReviewedCandidateRelationships": 12,
+      "poppGameFormatConverted": true,
+      "poppGgdRuntimeBindings": 0,
+      "poppRuntimeBindingStatus": "blocked-no-owner-approved-unique-ggd-runtime-target"
     },
     {
       "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-en801-nonlocalized-sound-effect",
@@ -45667,11 +45679,11 @@
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "cd23ab2091042d93d222126f9dc1556d12ca9e5f0125248ceb1ec59f4a52bbbf"
+      "sha256": "dc64986198050b7ae4f19f36c7a1ffcf9b798970b334ed7cf0c34b618d27058a"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "92a49fe5735b60644a2529c0c56921ea07320ea4cd81c9ff10ec708b18c11fa3"
+      "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
@@ -46124,6 +46136,22 @@
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
       "sha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+      "sha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+      "sha256": "0f66b19b2c47ac27e4708229b23fbb4fba0e6eb5bbf04e140da3219625c0eced"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+      "sha256": "fdceaf4955fa41d756709ad9828dc57ca4637f2eae9f1bed1c35263fb055a0ba"
+    },
+    {
+      "path": "content/assets/audio/original/strash/popp/MANIFEST.json",
+      "sha256": "7e7511adc82707ddf4be521fb43450ff5df44c3a1b3cf05272b83caf3eda5627"
     }
   ],
   "audioSourceLeads": [
@@ -46208,21 +46236,34 @@
       "heroIds": [],
       "ownerEntryIds": [],
       "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
-      "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+      "checkedAt": "2026-09-14",
       "accessStatus": "public-catalog",
-      "acquisitionStatus": "remaining-packages-in-progress",
+      "acquisitionStatus": "downloaded-verified-in-five-batches",
       "defaultEligible": false,
       "resourceRole": "audio-supplement",
       "assetKinds": [
         "audio"
       ],
-      "verification": "58 原始包共 424,652,930 bytes；Asta／Dai／Kenshiro 三包已歸檔，其餘 55 包由平行工作流持續下載。後續交付驗證並完成 S3 備份後逐批入共用索引，尚未發布者不計入本批檔數。作者逐包 SHA、大小與下載頁見 console-audio-source-catalogs.json。",
+      "verification": "58 original packages are present as 3+10+10+32+3 distinct archive members across five immutable source batches. Every batch has an S3 readback receipt and per-member SHA-256 in public-source-files.json; the newer four batches also carry explicit full-member readback flags. This reconciles package acquisition only; speaker, language, event binding and per-clip listening review remain pending.",
       "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
       "backendIntegration": {
         "required": true,
-        "state": "not-acquired",
+        "state": "audio-listening-review-and-event-binding-pending",
         "heroIds": [],
         "selectionVerified": false
+      },
+      "readiness": "complete-original-package-catalog-acquired-listening-review-pending",
+      "packageCount": 58,
+      "deliverySourceIds": [
+        "parallel-ps-jumpforce-audio",
+        "parallel-ps-jumpforce-local-10",
+        "parallel-ps-jumpforce-local-second10",
+        "parallel-ps-jumpforce-local-next32",
+        "parallel-ps-jumpforce-local-final3"
+      ],
+      "reconciliationEvidence": {
+        "gitPath": "materials/hero-model-library/source-inventories/jumpforce-public-audio-catalog-reconciliation.json",
+        "sha256": "aa3760bfef2d942ab1d2375083940ed75b186e63e796fc4831c80d407a48e92b"
       }
     },
     {
@@ -96867,8 +96908,25 @@
     "listeningReviewUniqueFiles": 754,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 311
+    "listeningReviewApprovedFiles": 311,
+    "poppOwnerApprovedCandidates": 36,
+    "poppGameAudioFiles": 35,
+    "poppNativeEventRows": 8,
+    "poppRuntimeBindings": 0
   },
-  "sourceFileManifestSha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469",
-  "uncompressedFileManifestSha256": "cff2d35e1ea68e0a333f798a047e289258e8657f1d8ea2cf094da1c8b01f73eb"
+  "sourceFileManifestSha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0",
+  "uncompressedFileManifestSha256": "25e57d5ab087d1695f09465ada46283a1f5c555e6f1e97af321ccc13f6349163",
+  "poppApprovedAudio": {
+    "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
+    "receiptSha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51",
+    "eventTablePath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json",
+    "blockersPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/candidate-blockers.json",
+    "ownerApprovedCandidates": 36,
+    "uniqueSourceWavFiles": 35,
+    "gameAudioFiles": 35,
+    "nativeEventRows": 8,
+    "runtimeBindings": 0,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
 }

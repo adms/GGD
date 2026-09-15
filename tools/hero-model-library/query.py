@@ -141,6 +141,20 @@ def candidate_records(sources, query):
                             record[field] = current_component[field]
                     record['currentResourceIndexOverlayApplied'] = True
                 result.append(record)
+            # A conversion stage may be retained after a later material repair
+            # or formal decimation supersedes it.  Surface it for provenance
+            # queries, but preserve its explicit non-runtime state instead of
+            # treating it as another selectable model candidate.
+            for legacy in candidate.get('legacyConversionVersions', []):
+                if not query or whole_source or candidate_matches(legacy, query):
+                    result.append(dict(
+                        legacy,
+                        sourceId=source['id'], sourceUrl=source['url'],
+                        sourceLocalPath=source['localPath'], sourceReadiness=source['readiness'],
+                        sourceBackendIntegration=source.get('backendIntegration', {}),
+                        legacyConversionVersion=True,
+                        currentCandidateId=candidate.get('id'),
+                    ))
     return result
 
 
