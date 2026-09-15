@@ -435,7 +435,33 @@ def decided(ticket_cell: str) -> bool:
     ⛔ 仍然拒絕：留空、`⏸ 未對票`（兩者都沒有數字）。
     """
     s = ticket_cell.strip()
-    return bool(re.search(r"(?<!\d)#?\d{2,4}(?!\d)", s)) or s.startswith(("—", "–"))
+    return bool(re.search(TICKET_NO, s)) or s.startswith(("—", "–"))
+
+
+#: 票號那一格裡「一個票號」的樣子：`#877` 或 `877`（`#` 是排版 ⛔ 不是語意，見 `decided()`）。唯一住處。
+TICKET_NO = r"(?<!\d)#?(\d{2,4})(?!\d)"
+
+#: 票號那一格「**整格都是票號**」的樣子（`1157 1158`、`#1243,#1246`、`991、1024`）—— 只有這種格的裸數字算提到。
+PURE_TICKET_CELL = r"#?\d{2,4}(?:(?:\s*[,，、/]\s*|\s+)#?\d{2,4})*"
+
+
+def board_tickets(text: str) -> set[int]:
+    """一份戰情版（或帳本）**提到**的票號（GH#1256，`bmpndd.sh` 的 M 步問它）。
+
+    · 任何地方的 `#n`。
+    · 逐則對票列（第一格 `HH:MM`）的票號格**整格都是票號**時，沒寫 `#` 的也算（`| 1157 1158 |`）。
+    · ⛔ 散文裡的裸數字**不算**（「同 17:00 那一串」「117 列」「130 名」「2026」）——
+      ⭐ 算進去是**空轉綠燈的方向**：一張開著的票剛好撞到散文裡的數字 ⇒ M 靜默不報它。
+    ⚠️ 量到（a3a179e09 的 `戰情版-20260914.md`，204 列）：只認 `#n` 106 張；這一支 132 張（純票號格補回 26 張）。
+      ⛔ 上一版（96e6ede6b）寫「181 張、舊寫法誤報 75 張」是**被散文數字灌大的** ——
+      那 75 張裡 49 張來自票號格的散文（時間拆出來的 0／2、列數、年份），只有 26 張是真的沒寫 `#` 的票號（修正輪審查抓到）。
+    """
+    out = {int(n) for n in re.findall(r"#(\d{2,4})(?!\d)", text)}
+    for ln in text.split("\n"):
+        if ln.startswith("|") and len(c := cells(ln)) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
+            if re.fullmatch(PURE_TICKET_CELL, c[-1].strip()):
+                out.update(int(n) for n in re.findall(TICKET_NO, c[-1]))
+    return out
 
 
 def _pipes(line: str) -> list[int]:

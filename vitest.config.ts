@@ -1,5 +1,5 @@
 import { configDefaults, defineConfig } from "vitest/config";
-import { RESOLVE_TS_FIRST } from "./vitest.shared";
+import { RESOLVE_TS_FIRST, VITEST_WATCHDOG } from "./vitest.shared";
 
 /**
  * Root config — governs ad-hoc `npx vitest run <path>` from the repo root,
@@ -64,6 +64,8 @@ import { RESOLVE_TS_FIRST } from "./vitest.shared";
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
   test: {
+    // ⏲️ GH#1257 —— 卡死（整棵樹 CPU≈0）時自己停下來、印出還沒跑完的檔。理由在 `vitest.shared.ts`。
+    ...VITEST_WATCHDOG,
     exclude: [
       ...configDefaults.exclude,
       "**/.backup*/**",
