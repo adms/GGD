@@ -5,6 +5,7 @@ import { asSeatId, asTeamId, type EntityId, type StatusId, type ChampionId } fro
 import { Abilities, SimWorld, rankUpAbility, registerChampion, spawnChampion, type IntentFrame, type SimEvent } from "../../sim";
 import { extendRegistryContext, withRegistryContext } from "../../sim/content/registryContext";
 import { runEffects } from "../../sim/effects/effectRunner";
+import { mobRulesFromConfig, type MobWavesConfigLike } from "../../sim/mobs";
 import type { TemplateDoc } from "../schema/template";
 import type { VfxSubtypeDoc } from "../schema/vfxSubtype";
 import { createCommunityHeroRecipe } from "./communityExamples";
@@ -20,7 +21,7 @@ const vfxSubtypes = [...catalog.documents].filter(([key]) => key.startsWith("vfx
 const compiled = new Map<string, Extract<CompiledHeroDraftResult, { ok: true }>>();
 
 beforeAll(() => {
-  for (const id of ["sett", "fiddlesticks", "ornn", "ahri", "thresh"]) {
+  for (const id of ["sett", "fiddlesticks", "ornn", "ahri", "thresh", "velkoz"]) {
     const recipe = COMMUNITY_LOL_BATCH2_EXAMPLES.find((entry) => entry.id === id)!;
     const project = createCommunityHeroRecipe(recipe, `lol-mechanics-${id}`, templates);
     const generated = generateHeroDraft(project.acceptedPlan!, {
@@ -209,6 +210,59 @@ describe("LoL batch 2 corrected recipe mechanics", () => {
         rig.step(cast("R", ahead));
         expect(rejected(rig, "R")).toEqual(["cooldown"]);
       }
+    });
+  });
+
+  // GH#1191【持續引導】—— 正常指令開始 W／R；打斷的那一 tick 之後⛔ 一發都不再落下、⛔ 不收割；撐滿才收割；受傷不打斷。
+  // ⭐ 打斷那兩臂的身體仍站在圈內（移動只橫移 1 格）⇒ 若波次沒作廢一定還打得到 —— 負向不是空轉。
+  it.each(["complete", "whiff", "move", "stun"] as const)("channel: Fiddlesticks W %s", (arm) => {
+    withHero("fiddlesticks", [arm === "whiff" ? [6, 0] : [2, 0]], (rig) => {
+      const { world, hero, foes, events } = rig;
+      expect(rankUpAbility(world, hero, "W")).toBe(true);
+      const arena = configs.find((doc) => (doc as { id?: string }).id === "arena-rules") as { mobWaves: MobWavesConfigLike };
+      world.mobRules = mobRulesFromConfig(arena.mobWaves, world.dt, 1, undefined, undefined, new Set([asSeatId(0)]));
+      rig.step(); // 升級觸發的屬性重算先跑完，再把血條撐大、打一半（滿血時回血是 0，「不空吸」會變空轉）
+      Object.assign(world.health.get(hero)!, { maxHp: 1_000_000, hp: 500_000 });
+      const c = { ...world.transform.get(hero)!.pos };
+      const waves = (COMMUNITY_LOL_BATCH2_EXAMPLES.find((r) => r.id === "fiddlesticks")!.moves.W.params.effects as { count: number }[])[0]!.count;
+      rig.step({ commands: [{ kind: "castAbility", slot: "W", target: { type: "self" } }], order: { kind: "hold" } });
+      for (let t = 0; t < 2 * TICK_HZ && damageFrom(rig, "W").length === 0; t++) rig.step();
+      if (arm !== "whiff") expect(world.abilities.get(hero)!.channel, "第一波落下時仍在引導").toBeTruthy();
+      rig.step();
+      const cut = world.tick;
+      if (arm === "complete") runEffects([{ kind: "damage", damageType: "true", amount: { flat: 100 } }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: "fixture:poke", rng: world.rng });
+      if (arm === "stun") runEffects([{ kind: "applyStatus", statusId: "fixture.stun" as StatusId, duration: 0.3, stun: true }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: "fixture:stun", rng: world.rng });
+      // 移動臂：像推著搖桿一樣連送一秒的 move（harness 預設每拍送 hold，只送一拍會被下一拍的 hold 取消）
+      for (let t = 0; t < TICK_HZ; t++) rig.step(arm === "move" ? { commands: [], order: { kind: "move", point: { x: c.x, z: c.z + 1 } } } : undefined);
+      settle(rig, 2 * TICK_HZ);
+      const hits = damageFrom(rig, "W");
+      const heals = events.filter((e) => e.type === "heal" && e.data.target === hero && String(e.data.origin).includes(rig.draft.abilityDrafts.W.id));
+      const hp = world.health.get(hero)!;
+      expect(world.abilities.get(hero)!.channel, "結束後不留引導").toBeFalsy();
+      if (arm === "whiff") expect([hits.length, heals.length, hp.hp < hp.maxHp], "打空不回血（而且有得回）").toEqual([0, 0, true]);
+      else if (arm === "complete") expect([hits.length, heals.length, hp.hp < hp.maxHp], "每波一命中一回血＋撐滿收割一次（不回血）；受傷不打斷").toEqual([waves + 1, waves, true]);
+      else {
+        expect(hits.filter((e) => e.tick > cut), "打斷後排好的波次與收割⛔ 不落下").toEqual([]);
+        if (arm === "move") expect(world.transform.get(hero)!.pos.z - c.z, "腳鬆開、走得出去").toBeGreaterThan(0.5);
+      }
+    });
+  });
+
+  it("channel: Velkoz R turns to the re-aimed direction mid-channel and stops at the end", () => {
+    withHero("velkoz", [[5, 0], [0, 5]], (rig) => {
+      const { world, hero, foes } = rig;
+      expect(rankUpAbility(world, hero, "R")).toBe(true);
+      const on = (id: EntityId) => damageFrom(rig, "R").filter((e) => e.data.target === id);
+      rig.step({ commands: [{ kind: "castAbility", slot: "R", target: { type: "dir", dir: { x: 1, z: 0 } } }] });
+      for (let t = 0; t < 2 * TICK_HZ && on(foes[0]!).length === 0; t++) rig.step();
+      const turned = world.tick;
+      rig.step({ commands: [{ kind: "castAbility", slot: "R", target: { type: "dir", dir: { x: 0, z: 1 } } }] });
+      settle(rig, 3 * TICK_HZ);
+      expect(rejected(rig, "R"), "引導中同一格再按＝轉向，⛔ 不是被拒").toEqual([]);
+      expect([on(foes[0]!).length > 0, on(foes[0]!).every((e) => e.tick <= turned), on(foes[1]!).length > 0]).toEqual([true, true, true]);
+      const total = damageFrom(rig, "R").length;
+      settle(rig, TICK_HZ);
+      expect([world.abilities.get(hero)!.channel ?? null, damageFrom(rig, "R").length], "撐滿後不留引導、不再射出").toEqual([null, total]);
     });
   });
 

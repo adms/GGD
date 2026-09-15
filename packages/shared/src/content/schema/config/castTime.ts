@@ -70,6 +70,14 @@ export const zConfigCastTimeDoc = z
       "@opt commit 按下那一刻（出貨・卡面成立）\n" +
       "@opt resolve 吟唱結束那一刻（2026-09-06 前的行為）",
     ),
+    /**
+     * ⭐ GH#1191 —— 引導中的主動移動／攻擊指令要不要打斷【持續引導】。出貨 true。
+     * `.optional()` 與上面兩格同一個理由（舊覆蓋層缺格 ⇒ 出貨值）。
+     */
+    channelCancelOnMoveOrder: z.boolean().optional().describe(
+      "@zh 走開會打斷持續引導\n" +
+      "@note 【持續引導】（稻草人 W 汲取、威寇茲 R 射線這一族，技能 JSON 的 `channel`）效果開始之後，玩家再下一條**移動／攻擊指令**要不要把引導打斷。打開（出貨）＝走開就斷：這一次排好的後續波次全部作廢、收尾段不跑。關掉＝引導期間移動指令被忽略、引導一定撐完（＝這個機制出現之前「定身＋延遲波次」近似的手感，一鍵回頭）。⚠️ 只管**移動**這一個原因，暈眩／沉默／擊倒／死亡照技能自己的 `channel.cancelOn`；只管真人座位（bot 每一拍都在下指令）。⚠️ 搖桿／虛擬搖桿**推著**時每一拍都送一條移動指令，所以「按住搖桿同時放 W」會在下一個 tick 就斷。",
+    ),
   })
   .strict();
 
@@ -82,4 +90,5 @@ export const DEFAULT_CAST_TIME_DOC = {
   capSec: DEFAULT_CAST_TIME_RULES.capSec,
   castTimeMaxSec: DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
   comboWindowFrom: DEFAULT_CAST_TIME_RULES.comboWindowFrom,
+  channelCancelOnMoveOrder: DEFAULT_CAST_TIME_RULES.channelCancelOnMoveOrder,
 } as const;

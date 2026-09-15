@@ -6,7 +6,7 @@
       "id": "recast-ahri",
       "status": "bound",
       "boundIn": "GH#1187：ahri.R 加 abilityOverrides.recast{charges:2, windowSec:10, cooldownAt:end}；後段重跑同一個 leap（不抄第二份）",
-      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常 castAbility 輸入三次各自瞄準的短衝、第四按撞冷卻、冷卻在三段衝完才開始" ,
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常 castAbility 輸入三次各自瞄準的短衝、第四按撞冷卻、冷卻在三段衝完才開始",
       "notVerified": "擊殺參與增加次數不做（adaptations 明示）；HUD 段數顯示與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
@@ -84,7 +84,10 @@
     },
     {
       "id": "interruptible-sustained-channel",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1191：fiddlesticks.W / velkoz.R 加 abilityOverrides.channel（W durationSec 2＋onComplete 收割；R durationSec 2.5、castType 改 skillshot）；移除自套定身狀態（引導本身定住腳）；W 每波改 damageArea＋onHitTargets perTarget 回血",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「channel:」 —— 正常 castAbility／移動指令：W 撐滿＝每波一命中一回血＋收割一次且受傷不打斷、打空不回血、移動或暈眩打斷後不再落波不收割；R 引導中同一格再按轉向後改打另一側、撐滿後不再射出",
+      "notVerified": "R 沒有轉速上限（再按或搖桿即時轉向）；滑鼠不串流連續瞄準（要再按 R）；搖桿推著時按技能會在下一 tick 被移動指令打斷（後台 cast-time.channelCancelOnMoveOrder 可關）；擊飛（非擊倒）不打斷；吟唱條／特效／編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "slots": [
         "fiddlesticks.W",
         "velkoz.R"

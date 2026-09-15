@@ -290,6 +290,11 @@ export interface AbilityDef {
   recast?: AbilityRecast;
   recastEffects?: EffectDef[];
   /**
+   * 【持續引導】（GH#1191）—— 效果開始之後仍要撐住的那一段（稻草人 W · 威寇茲 R）。
+   * Mirrors `zAbilityChannel` in content/schema/ability.ts（語意住那裡）；執行期在 `sim/abilities/channel.ts`。
+   */
+  channel?: AbilityChannel;
+  /**
    * ⭐ G6 —— 【跨技能強化】：這支技能改寫**另一支**技能的數字
    *（70-002 / 77-002 / 92-002 那一族的 EX）。Mirrors `zAbilityAugment`；
    * ⛔ 授權契約（欄位語意、界、為什麼操作是 enum 而不是 JSON Pointer）住在
@@ -319,6 +324,14 @@ export interface AbilityRecast {
   costPerRecast?: number;
   /** firstCast：後段釘在首段的落點／方向（威寇茲 W）；firstHit：後段目標＝首段命中的第一人（瑟雷西 Q）。缺 = press */
   anchor?: "press" | "firstCast" | "firstHit";
+}
+
+/** 【持續引導】—— mirrors `zAbilityChannel`（content/schema/ability.ts）。 */
+export interface AbilityChannel {
+  durationSec: number;
+  /** 省略 = `DEFAULT_CHANNEL_CANCEL_ON`（move／stun／silence／knockdown／death）。 */
+  cancelOn?: readonly ("move" | "stun" | "silence" | "knockdown" | "death" | "damage")[];
+  onComplete?: EffectDef[];
 }
 
 export interface AbilityToggle {

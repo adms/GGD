@@ -126,6 +126,30 @@ export interface CastState {
 }
 
 /**
+ * 【持續引導】的執行期狀態（GH#1191）—— 效果已經開始、身體還要撐住的那一段。
+ * 缺席／null = 沒有在引導。⭐ 全部是**絕對 tick**；語意與生命週期在 `sim/abilities/channel.ts`。
+ * ⛔ 不複製 `durationSec`／`cancelOn` 這類**設定值**：每 tick 現讀 `def.channel`（一個住處）。
+ */
+export interface ChannelState {
+  slot: CastableSlot;
+  abilityId: AbilityId;
+  rank: number;
+  /** 這一次施放的身分 —— 取消時只作廢**這一次**排出去的波次。 */
+  castInstance?: import("../content/castInstance").CastInstance;
+  /** 效果開始那一 tick（`castCommitTick` 仍是按下那一刻，存在 {@link commitTick}）。 */
+  beganTick: number;
+  commitTick: number;
+  /** `world.tick >= endTick` ⇒ 完成。 */
+  endTick: number;
+  /** `cancelOn:"damage"` 的基準：開始引導那一 tick 的血量。 */
+  hpAtStart: number;
+  /** 收尾（onComplete）用的施放脈絡 —— 施放那一刻解析出來的。 */
+  targets: EntityId[];
+  point?: Vec2;
+  direction?: Vec2;
+}
+
+/**
  * The caster's post-resolve COMMITMENT (後搖) — armed at the END of startup by
  * `armRecovery`, aged by `recoveryDecaySystem`, and CANCELLED the moment the
  * ability lands a hit on an enemy (`noteAbilityConnect`). That hit-cancel is the
@@ -218,6 +242,8 @@ export interface AbilitiesComp {
   unspentPoints: number;
   /** active ability cast (cast time > 0); null/undefined when not casting */
   cast?: CastState | null;
+  /** 【持續引導】（GH#1191）效果開始之後還在撐的那一段；null/undefined = 沒有在引導。見 {@link ChannelState}。 */
+  channel?: ChannelState | null;
   /** active basic-attack wind-up; null/undefined when not winding up */
   windup?: AttackWindup | null;
   /**

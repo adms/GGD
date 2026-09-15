@@ -489,7 +489,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。",
       "Q：不額外給未被看見時群體恐懼。",
-      "W：重大簡化：不是引導中斷系統；回血暫為每波每命中者固定量，末段斬殺未加入。",
+      "W：持續引導 2 秒（channel）：每半秒以自身為圓心打一圈，每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
       "E：弧形與中央命中改為窄直帶，整條帶吃沉默。",
       "R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。",
       "EX：只會既有代理普攻，不是三具複製 QWER 的分身。"
@@ -541,7 +541,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "W": {
         "name": "豐收之魘",
-        "purpose": "站定兩秒，周圍敵人每半秒受傷，每次脈衝自身回血。",
+        "purpose": "站定引導兩秒，周圍敵人每半秒受傷、每打中一人自身回血；撐滿兩秒再收割一次。移動、暈眩、沉默、擊倒或死亡會打斷，打斷後不再汲取也不收割。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "self",
@@ -550,43 +550,50 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
           "side": "enemies",
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "$hero.drain-root",
-              "duration": 2,
-              "sourceScope": "caster",
-              "applyTo": "self",
-              "root": true
-            },
-            {
               "kind": "delayed",
-              "shape": "circle",
+              "shape": "single",
               "delaySec": 0.1,
               "count": 4,
               "intervalSec": 0.5,
               "effects": [
                 {
-                  "kind": "damage",
+                  "kind": "damageArea",
                   "damageType": "magic",
                   "amount": {
                     "damageTier": "極小"
-                  }
-                },
-                {
-                  "kind": "heal",
-                  "amount": {
-                    "flat": 20,
-                    "ratios": []
                   },
-                  "applyTo": "self"
+                  "radius": 2.5,
+                  "onHitTargets": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 20,
+                        "ratios": []
+                      },
+                      "applyTo": "self"
+                    }
+                  ],
+                  "onHitTargetsMode": "perTarget"
                 }
               ],
-              "stopOnCasterDeath": true,
-              "radius": 2.5,
-              "side": "enemies",
-              "targetMode": "reresolve",
-              "anchor": "caster"
+              "stopOnCasterDeath": true
             }
           ]
+        },
+        "abilityOverrides": {
+          "channel": {
+            "durationSec": 2,
+            "onComplete": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小"
+                },
+                "radius": 2.5
+              }
+            ]
+          }
         }
       },
       "E": {
@@ -2364,7 +2371,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       "Q：重大簡化：沒有再按分裂、左右90度支彈；保留直線消耗。",
       "W：已確認 delayed.point 不被 damageLine 當作幾何起點；第二段仍讀施法者當下位置/面向，缺固定裂痕及兩次充能，列為來源核心缺口。",
       "E：近遠受害者都同一小推移；沒有額外專用判斷。",
-      "R：重大簡化：非可轉向可中斷的正式channel；不能宣稱沉默/移動會取消已排程射線。",
+      "R：持續引導 2.5 秒（channel）朝施放方向射線；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡會打斷，打斷後排好的射線作廢；普通受傷不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
       "EX：會失去該目標R真傷資格，真有交換代價。"
     ],
     "moves": {
@@ -2523,22 +2530,14 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "R": {
         "name": "生化射線",
-        "purpose": "站定2.5秒，前方射線五次判定；研究完成目標吃真傷。",
+        "purpose": "朝瞄準方向站定引導2.5秒，射線五次判定，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒或死亡會打斷，打斷後不再射出。",
         "ref": "tpl-effect-sequence",
         "params": {
-          "castType": "self",
+          "castType": "skillshot",
           "castTimeSec": 0.3,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
-            {
-              "kind": "applyStatus",
-              "statusId": "$hero.ray-root",
-              "duration": 2.5,
-              "sourceScope": "caster",
-              "applyTo": "self",
-              "root": true
-            },
             {
               "kind": "delayed",
               "shape": "single",
@@ -2588,6 +2587,11 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
               "stopOnCasterDeath": true
             }
           ]
+        },
+        "abilityOverrides": {
+          "channel": {
+            "durationSec": 2.5
+          }
         },
         "cooldown": "極大"
       },

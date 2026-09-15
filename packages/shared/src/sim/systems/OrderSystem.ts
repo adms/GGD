@@ -22,6 +22,7 @@ import { charmDropsOrders, charmPass } from "../charm";
 import { chaosDropsOrders, chaosPass } from "../chaos";
 import { reachTo } from "./BasicAttackSystem";
 import { cancelRecoveryByOrder } from "../abilities/abilityRecovery";
+import { aimChannel, cancelChannelByOrder } from "../abilities/channel";
 import {
   ACQUIRE_LEASH,
   acquireRadius,
@@ -226,6 +227,9 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
           // 退化向量(長度 0)不算瞄準:它進不了這個 if,所以「手放開類比」不會
           // 被誤判成「還在瞄」而永久壓住出手轉向。
           world.aimTick.set(id, world.tick);
+          // ⭐ GH#1191【持續引導】—— 搖桿的連續瞄準在引導中也轉動引導方向（並鎖到引導結束，
+          //   ⛔ 放開搖桿時不彈回施放那一刻的方向）。沒有在引導 ⇒ no-op。
+          aimChannel(world, id, t.facing);
         }
       }
 
@@ -251,6 +255,10 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
         break; // one entity per seat
       const order = frame.order;
       if (!order) continue;
+      // ⭐ GH#1191【持續引導】—— 主動移動／攻擊指令打斷引導（S／H 是「站著」，⛔ 不打斷）。
+      //   三道閘在 cancelChannelByOrder 裡：後台開關 channelCancelOnMoveOrder、真人座位、技能 cancelOn 有 move。
+      //   ⚠️ 位置在 movementSystem（step 5）之前 ⇒ 打斷的這一 tick 腳就鬆開、這一 tick 的波次也不會落下。
+      if (order.kind === "move" || order.kind === "attackMove" || order.kind === "attackTarget") cancelChannelByOrder(world, id, seatId);
       nav.order = order;
       // ⭐ owner 2026-08-28 —— `idleAutoEngageSec` 的計時器：指令歸零。
       //    （成功施法的那一半在 `castAbility`；兩邊寫同一張 map。）

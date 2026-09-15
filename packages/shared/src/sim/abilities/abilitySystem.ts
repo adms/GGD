@@ -30,6 +30,7 @@ import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 import { armRecast, bindRecastSerial, consumeRecastCharge, finishRecast, liveRecastAnchor, recastPressGate, sweepRecast } from "./recast";
+import { aimChannel, beginChannel } from "./channel";
 import { splitLiveProjectiles } from "../projectileSplit";
 import { armProjectileRedirects } from "../projectileRedirect";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
@@ -638,6 +639,14 @@ export function castAbility(
   if ((world.knockdown.get(caster) ?? 0) > 0) return "stunned";
   // already mid-cast (another ability's cast time) — animation-locked
   if (ab.cast) return "cooldown";
+  // ⭐ GH#1191【持續引導】—— 引導中別的技能按不出來（同上一行的施法鎖）；
+  //   同一格再按 ⇒ **只更新瞄準**（⛔ 不付成本、不重跑效果）：滑鼠／觸控沒有連續 aim，這是它們轉動射線的入口。
+  if (ab.channel) {
+    if (ab.channel.slot !== slot) return "cooldown";
+    const aim = target.type === "dir" ? target.dir : target.type === "point" ? sub(target.point, t.pos) : undefined;
+    if (aim) aimChannel(world, caster, normalize(aim));
+    return "ok";
+  }
   // ⭐ GH#1187【再次施放】—— 窗口內的按鍵是「後段」：⛔ 不撞冷卻、耗魔走 costPerRecast、
   //   效果走 recastEffects（沒寫就重跑 effects —— 阿璃 R 三段同一個衝刺）。
   //   放在冷卻閘**前面**是這個機制存在的全部意義：`cooldownAt:"first"` 時冷卻已經在跑。
@@ -1031,6 +1040,8 @@ export function castAbility(
       castCommitTick: world.tick,
       rng: world.rng,
     });
+    // ⭐ GH#1191 —— 效果開始了 ⇒ 開始引導（`def.channel` 缺席 ⇒ no-op）。有吟唱的雙胞胎在 CastResolveSystem。
+    if (!isRecast) beginChannel(world, caster, inst.abilityId, def, { slot, rank: inst.rank, ...(castInstance !== undefined ? { castInstance } : {}), commitTick: world.tick, targets, ...(point !== undefined ? { point } : {}), ...(direction !== undefined ? { direction } : {}) });
   }
 
   // ⛔ `onAbilityCast` **不**受整發攔截影響：他確實放了一發（魔力也扣了）。
