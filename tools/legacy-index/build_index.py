@@ -130,6 +130,9 @@ CURATED: dict[str, tuple[str, str]] = {
         "`validate_glb.mts` 的 tsc 編譯產物（同上）", "⛔ **`.mts` 是活的出貨工具**（`package.json` 的 `validate:glb` 真的在跑它），這裡歸檔的只有編譯殘留"),
     "docs/legacy/code/tools/w3x-import/validate_glb.mjs.map": (
         "上一項的 sourcemap", "同上"),
+    "docs/legacy/code/packages/shared/src/content/castTimeFormula.ts": (
+        "20 階吟唱公式（原 `packages/shared/src/content/`，commit `a12ffab93` 搬入，#1243 · #1260）",
+        "⛔ 已被吟唱五級距（`content/config/cast-time-tiers.json`，GH#943）取代，而它的階梯仍爬到 4 秒 —— 2026-09-12 拿它比照級距寫的內容，報出 182 支假「不一致」。owner 2026-09-12：「移到 legacy 區不要再被看到了」。規則說明在 `docs/legacy/_cast-time-20-step-ladder.md`"),
 }
 
 # `content/_legacy` 的整批語意（逐檔簡介由 JSON 推導，見 describe_content_doc）

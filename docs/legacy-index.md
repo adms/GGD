@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 4035 個檔案**，分佈在 2 個隔離區。
+**目前共 4038 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 3595 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 3598 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 3595 檔
+## `docs/legacy/` —— 3598 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -68,6 +68,7 @@ owner 2026-08-13：
 | `_kit-fidelity-audit-247.md` | 114 位英雄技能組・描述 vs 實作對帳清單 | 同一個 w3x 保真度年代的產物 |
 | `_live-progress.md` | 即時進度看板 | 自稱「每有工作流回報就更新」，最後更新停在 **07-26**。已上線欄寫 v0.5.10（實際 v0.15.x）；「誠實覆蓋率 16.9%」今天是 100% |
 | `_outstanding-20260802.md` | 08-02 的待辦帳本 | 自稱「當下的待辦帳本，不是歷史紀錄」，標題卻釘死 08-02。用 11 天前的 T0 清單覆蓋現在的優先序 |
+| `_owner-knobs-note-2026-09-15.md` | owner-knobs.json note 全文另存 —— 2026-09-15（GH#1260 B2） —— ⚠️ `config.owner-knobs@1.note` 有 2000 字上限（Zod）。依 CLAUDE.md 第一·五守則「撞到字數上限時：另存，不是壓縮取代」，這一段全文住這裡， | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_proportionality-owner-cell-20260819.md` | 退休：owner 2026-08-19 手填的相稱性那一格（範圍・極小 →「大」） —— owner 2026-08-20（GH#465 逐字裁決）： | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_range-tier-writeback.md` | 施法距離級距寫回前的原始 `range` 值（GH#414 / GH#438） —— owner 2026-08-19：「先把已有的那軸寫回去」。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_release-note-v0.18.1-superseded.md` | v0.18.1 release note —— **被取代的原始版本** —— ⚠️ **這一份是被取代的舊 body，⛔ 不是現行的 release note。** | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -79,6 +80,7 @@ owner 2026-08-13：
 | `_session-handover-2026-07-29.md` | session 交接（07-29） | 兩次要求「下次開機第一件事：線上打一場」—— **直接違反現行守則**（owner 2026-08-09 已退掉手動打一場） |
 | `_skill-mechanics-coverage-20260808.md` | 90 支重製技能 → 機制覆蓋矩陣 | 檔頭釘死查證 commit `8cfb22d3`，而**下一個** commit 就把 kinds 27→34、hooks 9→15。照它會判斷一堆「引擎做不到」而去繞路。現行權威是 `GET /capabilities` |
 | `_superseded-rulings.md` | 被取代的 owner 裁決（存檔，⛔ 不要刪） —— ⭐ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第〇·六守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_valhalla-card-dev-notes-full.md` | 英靈殿稽核：44 張英雄卡被剝掉的開發流程樣板（原文全文） —— 由 `tools/valhalla-intro/strip_dev_notes.py` 在剝除**之前**寫下（GH#1258 ②）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_vfx-ability-art-authoring-notes.md` | 逐技能特效綁定 —— 搬家前的作者註記（GH#384） —— ⚠️ 這一份是**知識的備份**，⛔ 不是資料。資料在 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_vfx-fidelity-w3x.md` | w3x 特效保真度對照 | 「資料來源（權威順序）」逐條是 w3a / AbilityFunc.txt / war3map.j / w3u —— 定義上就是階梯第 3–5 層 |
 | `_w3x-fidelity-superseded.md` | 被 owner 新版設計取代的原作數值 | 定義上就是「已被取代」。留著是因為知識不可以無聲消失 |
@@ -3631,6 +3633,7 @@ owner 2026-08-13：
 | `code/apps/game-server/src/match/__autoattack_probe.test.ts` | 自動攻擊調查用的探測檔（同上） | 180 行、唯一的 expect 是夾具健檢。接班守衛 `autoAcquireWhileMoving.test.ts`（25 個 expect）已經很厚 |
 | `code/apps/game-server/src/match/__mana_probe.test.ts` | 魔力倍率調查用的探測檔（原 `apps/game-server/src/match/`） | 267 行、`expect(` **0 次**、`console.log` 8 次 —— 永遠不會紅，卻把「跑一場真比賽」掛在每次 pnpm test 上 |
 | `code/apps/game-server/src/match/__pacing_probe.test.ts` | 回合節奏 TTK 傾印（同上） | 39 行、`expect(` **0 次**。結論已寫進 docs，回合節奏改由 config 驅動 |
+| `code/packages/shared/src/content/castTimeFormula.ts` | 20 階吟唱公式（原 `packages/shared/src/content/`，commit `a12ffab93` 搬入，#1243 · #1260） | ⛔ 已被吟唱五級距（`content/config/cast-time-tiers.json`，GH#943）取代，而它的階梯仍爬到 4 秒 —— 2026-09-12 拿它比照級距寫的內容，報出 182 支假「不一致」。owner 2026-09-12：「移到 legacy 區不要再被看到了」。規則說明在 `docs/legacy/_cast-time-20-step-ladder.md` |
 | `code/tools/model-budget/optimize/_decim-test.mjs` | meshopt 減面參數探測（07-22，原 `tools/model-budget/optimize/`） | ⚠️ 它**會真的寫出一個 glb** —— 有人拿它順手減模型就會產出沒走出貨路徑的資產。出貨的是 `decimate.mjs` |
 | `code/tools/model-budget/optimize/_decim-test2.mjs` | 上一支的第二版（同上） | 同一支探測腳本留了兩代，**兩代都不是出貨的那一支** |
 | `code/tools/model-budget/optimize/_diag.mjs` | glb 統計傾印 + error 掃描（同上） | 它算三角形只認 `mode===4`，隔壁那支還處理 5/6 —— 同一個資料夾兩支對「幾個三角形」給不同答案 |

@@ -9,9 +9,10 @@
 #
 # a＝玩家預設拿得到的有問題顆數（任何問題 × 身體／場景／道具／執行期載入）· b＝可切換、非預設的有問題顆數
 # a_body_tex＝(a) 裡更嚴的一格：玩家**預設載入**的身體（英雄 modelKey＋Hero Forge 範例預設）貼圖超過上限的**格數**
-#   ＝ 9 位英雄＋1 個 Forge 範例：b2-maple-alt-9769eb88b85b · godie-h01u · godie-huth · godie-n003 · godie-n00b ·
-#     godie-o030 · godie-orkn · godie-u00n · godie-u00o ＋ Forge「imported.herobuu」（7 個唯一檔）
-#   ⭐ 待 ggd-dc 的 256 轉檔（新檔→新版本→切作用中）落地後逐格降，目標 0；a／b 跟著降。
-a=265
+#   ＝ 3 位英雄＋1 個 Forge 範例：godie-n00b · godie-o030 · godie-orkn ＋ Forge「imported.herobuu」
+#     （2026-09-15 `model_intake.py` 實跑列出的 4 格；n00b／o030／orkn 共用 2 個 512 的唯一檔）
+#   ⭐ 2026-09-15 10 → 4、a 265 → 261：`5dc32cc3c`（tex256，6 位預設身體走 `ModelVersions.prepare` 降到 256：
+#     b2-maple-alt-9769eb88b85b · godie-h01u · godie-huth · godie-n003 · godie-u00n · godie-u00o）。剩下的逐格降，目標 0；a／b 跟著降。
+a=261
 b=69
-a_body_tex=10
+a_body_tex=4

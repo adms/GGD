@@ -29,7 +29,9 @@
  *    同一天血量倍率走旋鈕：owner「好吧 先開票 血量倍率4x, M=15 K=1000」（09-06 12:28；`docs/_daily/2026-09-06.md:52`）——
  *    ⛔⛔ **這句的後半「M=15 K=1000」同日稍晚已被取代**（GH#1029 整份改寫；取代註記在
  *    `content/config/owner-knobs.json` 的 note，GH#1093）⇒ ⛔ 不要拿它當 AP 曲線的值，出貨曲線住
- *    `content/config/ap-damage-scaling.json`（⛔ 這裡不抄數字，第〇·四守則）。仍然成立的只有前半「血量倍率4x」。
+ *    `content/config/ap-damage-scaling.json`（⛔ 這裡不抄數字，第〇·四守則；⚠️ 那一份是 `apdmg:build` 的產物 ——
+ *    `bash scripts/genguard.sh content/config/ap-damage-scaling.json` 查擁有者，要改就改來源再
+ *    `bash scripts/genrun.sh apdmg:build`，⛔ 直接改出貨 JSON 會被下一次 sync 打回來）。仍然成立的只有前半「血量倍率4x」。
  *    之後 owner 2026-09-15 對「幾發打死」逐字：「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」。
  * ⚠️ 2026-09-15 第二次更正（#1260 審查）：commit `f9519be05` 的版本把上面那句整句寫成「當天定案」，
  *    ⛔ 沒標出後半已被取代，出處也寫成 `:27,52`（:27 是 01:30 那則）；後台 `@note` 還直接寫「B ⛔ 不動」、沒標是推論。
