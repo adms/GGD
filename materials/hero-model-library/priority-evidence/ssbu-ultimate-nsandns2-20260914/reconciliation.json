@@ -1,6 +1,6 @@
 {
   "schema": "ggd-ssbu-ultimate-nsandns2-compact-evidence@1",
-  "auditedAt": "2026-09-13T16:45:55.857038+00:00",
+  "auditedAt": "2026-09-15T00:30:11.678980+00:00",
   "sourceId": "parallel-ns-ultimate14",
   "sourceGame": "Super Smash Bros. Ultimate / Ultimate14 community MOD",
   "platform": "Nintendo Switch",
@@ -15,7 +15,7 @@
   },
   "sourceCatalog": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45"
+    "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387"
   },
   "motionSummary": {
     "pathCount": 435,
@@ -876,8 +876,7 @@
     "mountSnapshot": {
       "gameVolumePresent": false,
       "mountedRelevantSmbVolumes": [
-        "//ggd-read@lv99/common on /Volumes/common (smbfs, nodev, nosuid, mounted by Takuro)",
-        "//ggd-read@lv99/common on /private/tmp/ggd-common-ro (smbfs, nodev, nosuid, read-only, nobrowse, mounted by Takuro)"
+        "//ggd-read@192.168.0.127/common on /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/.mounts/common-lv99-ip (smbfs, nodev, nosuid, read-only, mounted by Takuro)"
       ]
     },
     "limitation": "Historical metadata only; NSP title/version/DLC, archive members and payload hashes remain unverified."
@@ -890,8 +889,8 @@
     "marioExperimentNote": "A separate five-body-motion local conversion experiment does not establish a complete original moveset or 16-character completion."
   },
   "localDetailReport": {
-    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260914-v1/reconciliation.json",
-    "sha256": "92b7dfc1e614afd73787dee3159cf907f87f2c879e662f744223f451b58a5bd7"
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260915-v1/reconciliation.json",
+    "sha256": "0eb5e0c1d639c7557e268652e63ebce61763c3acab229992b8b0f7711cd2e4de"
   },
   "workflowGitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1",
   "largeEvidencePolicy": "Archives, all-file hashes and full reconciliation remain local. This is a compact view of existing fixed indexes."

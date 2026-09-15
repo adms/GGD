@@ -16,13 +16,13 @@
   "inputs": [
     {
       "location": "materials/hero-model-library/download-sources.json",
-      "bytes": 3073427,
-      "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155"
+      "bytes": 3412456,
+      "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387"
     },
     {
       "location": "materials/hero-model-library/public-source-files.json",
-      "bytes": 35213925,
-      "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
+      "bytes": 35390720,
+      "sha256": "33fc4408ad0e28f4e3a55cf390fa2f0caa6e5b63734528e5a1062b8303b83e64"
     },
     {
       "location": "GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -38,8 +38,8 @@
     },
     {
       "location": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
-      "bytes": 32621,
-      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae"
+      "bytes": 32591,
+      "sha256": "37a71da786f2fc75af08d44c6176b49a2fd45e5a253e6c10e82ecbddae9df625"
     }
   ],
   "nintendo64": {
@@ -261,7 +261,7 @@
   },
   "perFileSha256Index": {
     "gitPath": "materials/hero-model-library/public-source-files.json",
-    "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af",
+    "sha256": "33fc4408ad0e28f4e3a55cf390fa2f0caa6e5b63734528e5a1062b8303b83e64",
     "sourceIds": [
       "parallel-voice-ssbm-kirby",
       "parallel-voice-ssbm-pikachu",
@@ -277,7 +277,7 @@
     "sourceGame": "Super Smash Bros. Ultimate",
     "platform": "Nintendo Switch",
     "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
-    "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+    "sha256": "37a71da786f2fc75af08d44c6176b49a2fd45e5a253e6c10e82ecbddae9df625",
     "sourceId": "parallel-ns-ultimate14",
     "status": "separate-current-generation-source; see linked reconciliation",
     "sourceStageCounts": {

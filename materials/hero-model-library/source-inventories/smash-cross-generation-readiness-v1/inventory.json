@@ -28,13 +28,13 @@
       "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json"
     },
     "ultimateReconciliation": {
-      "bytes": 32621,
-      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+      "bytes": 32591,
+      "sha256": "37a71da786f2fc75af08d44c6176b49a2fd45e5a253e6c10e82ecbddae9df625",
       "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json"
     },
     "downloadSources": {
-      "bytes": 3339978,
-      "sha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
+      "bytes": 3412456,
+      "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
       "gitPath": "materials/hero-model-library/download-sources.json"
     },
     "samusMacosBlender522Blocker": {
@@ -44,10 +44,10 @@
     }
   },
   "inputConsistency": {
-    "ultimateReconciliationPinnedDownloadSourcesSha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45",
-    "currentDownloadSourcesSha256": "41319ca89e4108d94ca0fcb5240809a41d87a8a64e746b193b950dfdba6d57d2",
-    "ultimateReconciliationMatchesCurrentCatalog": false,
-    "status": "stale-upstream-reconciliation-rebuild-required",
+    "ultimateReconciliationPinnedDownloadSourcesSha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
+    "currentDownloadSourcesSha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
+    "ultimateReconciliationMatchesCurrentCatalog": true,
+    "status": "current",
     "effect": "The cross-generation counts retain the current checked-in reconciliation values, but its source-catalog pin must be rebuilt before treating that reconciliation as a fresh full-pipeline check."
   },
   "workspace": {

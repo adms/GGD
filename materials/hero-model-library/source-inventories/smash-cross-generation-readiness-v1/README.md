@@ -7,7 +7,7 @@
 - Switch 社群來源：**698** 個 Worldblender body／avatar 候選、**175** 個 Ultimate14 motion payload；已有 **18** 個獨立元件，後台可切換仍為 0。
 - 本次新增轉換候選：**0**；正式站部署驗證：**否**。
 - macOS Blender 工具初始化阻塞收據：**1**；不計入轉換候選或可切換模型。
-- Ultimate reconciliation 的 `download-sources.json` pin：**已過期，需重建**。
+- Ultimate reconciliation 的 `download-sources.json` pin：**一致**。
 
 | 世代／來源層 | 已登記來源檔 | 現在可讀 payload | 模型候選 | 動作候選 | VFX | 已驗證音訊 | 已轉換元件 | 後台可選 | 狀態 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|
@@ -26,7 +26,6 @@
 
 ## 限制與下一步
 
-- The cross-generation counts retain the current checked-in reconciliation values, but its source-catalog pin must be rebuilt before treating that reconciliation as a fresh full-pipeline check.
 - The GameCube and Wii counts are locally verified audio source members, not full game extractions.
 - The Switch model and motion counts are community-source candidates. They are not Nintendo base-game payloads.
 - NSandNS2 containers are inventory metadata only until their local bytes, headers and member table are actually read.
