@@ -32,6 +32,7 @@ def source_entry(row: dict) -> dict:
     body, accessories, props = [], [], []
     for index, model in enumerate(row["modelGroups"]):
         role = model["role"]
+        geometry = model["coreGeometry"]
         candidate = {
             "id": row["sourceId"] + f".mdl49-{index + 1}",
             "sourceId": row["sourceId"],
@@ -44,11 +45,13 @@ def source_entry(row: dict) -> dict:
             "nativeAnimationCount": 0,
             "proceduralAnimationCount": 0,
             "textureTableCount": model["textureCount"],
+            "sourceCoreGeometry": geometry,
             "converted": False,
             "defaultEligible": False,
             "runtimeSelectable": False,
-            "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+            "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
             "limitations": [
+                "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
                 "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
                 "No GLB geometry/material/skin conversion or visual acceptance exists.",
             ],
@@ -80,7 +83,7 @@ def source_entry(row: dict) -> dict:
         "accessStatus": "public-steam-file-url",
         "checkedAt": source["checkedAt"],
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+        "readiness": "source1-vpk-core-geometry-audited-pending-glb-standardization",
         "purchaseDecision": "hold-purchase-review-acquired-source",
         "defaultEligible": False,
         "resourceRole": "character-body-and-weapon-prop-collection",
@@ -101,8 +104,8 @@ def source_entry(row: dict) -> dict:
         "vfxCount": 0,
         "audioCount": 0,
         "publicationStatus": "local-extracted-awaiting-legacy-backup",
-        "backendIntegration": {"required": True, "state": "pending-source-mdl-standardization", "heroIds": ["godie-nbbc", "godie-n01c"], "ownerEntryIds": [], "release": None, "selectionVerified": False},
-        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。",
+        "backendIntegration": {"required": True, "state": "pending-source-mdl-glb-standardization", "heroIds": ["godie-nbbc", "godie-n01c"], "ownerEntryIds": [], "release": None, "selectionVerified": False},
+        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。",
         "limitations": row["blockers"],
     }
 

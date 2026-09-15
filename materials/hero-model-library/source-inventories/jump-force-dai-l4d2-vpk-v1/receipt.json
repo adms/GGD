@@ -82,6 +82,68 @@
             "readerAccepted": false,
             "exitCode": 3,
             "reason": "source-mdl-reader-not-available"
+          },
+          "coreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 54440,
+            "referencedVertexCount": 12020,
+            "triangleCount": 89833,
+            "stripGroupPrimitiveCount": 27,
+            "materialCount": 22,
+            "referencedMaterialIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21
+            ],
+            "referencedMaterialNames": [
+              "Hair4",
+              "Face",
+              "Skin",
+              "Hair3",
+              "effect",
+              "Hair",
+              "Hair1",
+              "Hair2",
+              "Glass",
+              "Body3",
+              "face1",
+              "Body",
+              "Face2",
+              "Pants1",
+              "PantsRip",
+              "Pants",
+              "Body4",
+              "Weapon",
+              "Skin 1",
+              "EyeShadow",
+              "EyesHighlight",
+              "eyes"
+            ],
+            "boneCount": 87,
+            "weightedVertexCount": 12020,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
           }
         },
         {
@@ -119,6 +181,28 @@
             "readerAccepted": false,
             "exitCode": 3,
             "reason": "source-mdl-reader-not-available"
+          },
+          "coreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 3900,
+            "referencedVertexCount": 3900,
+            "triangleCount": 6714,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "skin fix",
+              "Body fix"
+            ],
+            "boneCount": 59,
+            "weightedVertexCount": 3900,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
           }
         }
       ],
@@ -214,6 +298,28 @@
             "readerAccepted": false,
             "exitCode": 3,
             "reason": "source-mdl-reader-not-available"
+          },
+          "coreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 1277,
+            "referencedVertexCount": 1277,
+            "triangleCount": 1854,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "Glass",
+              "Weapon"
+            ],
+            "boneCount": 1,
+            "weightedVertexCount": 1277,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
           }
         },
         {
@@ -251,6 +357,28 @@
             "readerAccepted": false,
             "exitCode": 3,
             "reason": "source-mdl-reader-not-available"
+          },
+          "coreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 1277,
+            "referencedVertexCount": 1277,
+            "triangleCount": 1854,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "Glass",
+              "Weapon"
+            ],
+            "boneCount": 63,
+            "weightedVertexCount": 1277,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
           }
         }
       ],

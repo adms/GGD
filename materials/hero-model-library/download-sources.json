@@ -65950,7 +65950,7 @@
       "accessStatus": "public-steam-file-url",
       "checkedAt": "2026-09-15T00:48:36+00:00",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+      "readiness": "source1-vpk-core-geometry-audited-pending-glb-standardization",
       "purchaseDecision": "hold-purchase-review-acquired-source",
       "defaultEligible": false,
       "resourceRole": "character-body-and-weapon-prop-collection",
@@ -65978,7 +65978,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
+        "sha256": "d3eacfd269f153aa7740ca83caf9b17ac9d4a78b5a8b401b366a497d9c3c191b"
       },
       "modelCandidates": [
         {
@@ -65993,11 +65993,74 @@
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "textureTableCount": 22,
+          "sourceCoreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 54440,
+            "referencedVertexCount": 12020,
+            "triangleCount": 89833,
+            "stripGroupPrimitiveCount": 27,
+            "materialCount": 22,
+            "referencedMaterialIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21
+            ],
+            "referencedMaterialNames": [
+              "Hair4",
+              "Face",
+              "Skin",
+              "Hair3",
+              "effect",
+              "Hair",
+              "Hair1",
+              "Hair2",
+              "Glass",
+              "Body3",
+              "face1",
+              "Body",
+              "Face2",
+              "Pants1",
+              "PantsRip",
+              "Pants",
+              "Body4",
+              "Weapon",
+              "Skin 1",
+              "EyeShadow",
+              "EyesHighlight",
+              "eyes"
+            ],
+            "boneCount": 87,
+            "weightedVertexCount": 12020,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
+          },
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+          "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
           "limitations": [
+            "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
             "No GLB geometry/material/skin conversion or visual acceptance exists."
           ],
@@ -66016,11 +66079,34 @@
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "textureTableCount": 2,
+          "sourceCoreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 3900,
+            "referencedVertexCount": 3900,
+            "triangleCount": 6714,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "skin fix",
+              "Body fix"
+            ],
+            "boneCount": 59,
+            "weightedVertexCount": 3900,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
+          },
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+          "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
           "limitations": [
+            "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
             "No GLB geometry/material/skin conversion or visual acceptance exists."
           ],
@@ -66035,7 +66121,7 @@
       "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
-        "state": "pending-source-mdl-standardization",
+        "state": "pending-source-mdl-glb-standardization",
         "heroIds": [
           "godie-nbbc",
           "godie-n01c"
@@ -66044,7 +66130,7 @@
         "release": null,
         "selectionVerified": false
       },
-      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
         "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
@@ -66075,7 +66161,7 @@
       "accessStatus": "public-steam-file-url",
       "checkedAt": "2026-09-15T00:48:51+00:00",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "source1-vpk-extracted-pending-audited-mdl-reader-and-standardization",
+      "readiness": "source1-vpk-core-geometry-audited-pending-glb-standardization",
       "purchaseDecision": "hold-purchase-review-acquired-source",
       "defaultEligible": false,
       "resourceRole": "character-body-and-weapon-prop-collection",
@@ -66103,7 +66189,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "529a147f6899c9d14b572e52209b27a7dbef9dce432c7317bf98fab7be3895c5"
+        "sha256": "d3eacfd269f153aa7740ca83caf9b17ac9d4a78b5a8b401b366a497d9c3c191b"
       },
       "modelCandidates": [
         {
@@ -66118,11 +66204,34 @@
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "textureTableCount": 2,
+          "sourceCoreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 1277,
+            "referencedVertexCount": 1277,
+            "triangleCount": 1854,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "Glass",
+              "Weapon"
+            ],
+            "boneCount": 1,
+            "weightedVertexCount": 1277,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
+          },
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+          "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
           "limitations": [
+            "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
             "No GLB geometry/material/skin conversion or visual acceptance exists."
           ],
@@ -66140,11 +66249,34 @@
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "textureTableCount": 2,
+          "sourceCoreGeometry": {
+            "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+            "lod": 0,
+            "sourceVertexCount": 1277,
+            "referencedVertexCount": 1277,
+            "triangleCount": 1854,
+            "stripGroupPrimitiveCount": 2,
+            "materialCount": 2,
+            "referencedMaterialIndices": [
+              0,
+              1
+            ],
+            "referencedMaterialNames": [
+              "Glass",
+              "Weapon"
+            ],
+            "boneCount": 63,
+            "weightedVertexCount": 1277,
+            "weightsSumToOne": true,
+            "finitePositionNormalUv": true,
+            "skeletonParentsInRange": true
+          },
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "blocked-no-installed-or-audited-source-mdl-reader",
+          "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
           "limitations": [
+            "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
             "No GLB geometry/material/skin conversion or visual acceptance exists."
           ],
@@ -66159,7 +66291,7 @@
       "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
-        "state": "pending-source-mdl-standardization",
+        "state": "pending-source-mdl-glb-standardization",
         "heroIds": [
           "godie-nbbc",
           "godie-n01c"
@@ -66168,7 +66300,7 @@
         "release": null,
         "selectionVerified": false
       },
-      "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。MDL49 reader 尚未可用，故模型、材質、蒙皮、動作、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
         "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",

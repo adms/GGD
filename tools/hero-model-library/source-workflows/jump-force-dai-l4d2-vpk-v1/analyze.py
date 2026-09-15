@@ -13,6 +13,7 @@ import hashlib
 import json
 import struct
 import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -107,7 +108,92 @@ def assimp(path: Path) -> dict[str, Any]:
     }
 
 
-def source_row(workspace: Path, item: dict[str, Any], preflight: dict[str, Any]) -> dict[str, Any]:
+def core_geometry(path: Path, vvd_path: Path, vtx_path: Path, sourceio_root: Path) -> dict[str, Any]:
+    """Audit SourceIO's non-Blender MDL49/VVD/VTX parser output.
+
+    This is deliberately an audit of source geometry, not a GLB conversion.
+    It proves the bounded parser can recover mesh, material and skin facts even
+    when Blender cannot initialize in background mode.
+    """
+    import numpy as np
+
+    import_root = sourceio_root.parent / "SourceIO"
+    if not import_root.is_dir() or import_root.resolve() != sourceio_root.resolve():
+        raise ValueError(f"SourceIO import alias is absent or mismatched: {import_root}")
+    if str(sourceio_root.parent) not in sys.path:
+        sys.path.insert(0, str(sourceio_root.parent))
+    from SourceIO.library.models.mdl.v49 import MdlV49
+    from SourceIO.library.models.vtx import open_vtx
+    from SourceIO.library.models.vvd import Vvd
+    from SourceIO.library.utils import FileBuffer
+
+    mdl = MdlV49.from_buffer(FileBuffer(path))
+    vtx = open_vtx(FileBuffer(vtx_path))
+    vvd = Vvd.from_buffer(FileBuffer(vvd_path))
+    if len(mdl.body_parts) != len(vtx.body_parts) or not vvd.lod_data:
+        raise ValueError("Source geometry containers disagree on body-part or LOD structure")
+    vertices = vvd.lod_data[0]
+    if not np.isfinite(vertices["vertex"]).all() or not np.isfinite(vertices["normal"]).all() or not np.isfinite(vertices["uv"]).all():
+        raise ValueError("Non-finite Source vertex data")
+    selected: list[int] = []
+    triangle_count = 0
+    primitive_count = 0
+    material_indices: set[int] = set()
+    for vtx_part, body_part in zip(vtx.body_parts, mdl.body_parts):
+        if len(vtx_part.models) != len(body_part.models):
+            raise ValueError("Source geometry containers disagree on model structure")
+        for vtx_model, model in zip(vtx_part.models, body_part.models):
+            if not vtx_model.model_lods:
+                continue
+            lod = vtx_model.model_lods[0]
+            if len(lod.meshes) != len(model.meshes):
+                raise ValueError("Source geometry containers disagree on mesh structure")
+            for vtx_mesh, mesh in zip(lod.meshes, model.meshes):
+                for group in vtx_mesh.strip_groups:
+                    if len(group.indices) % 3:
+                        raise ValueError("Non-triangle Source index group")
+                    if len(group.indices) and int(group.indices.max()) >= len(group.vertexes):
+                        raise ValueError("Source index points outside its strip group")
+                    remapped = group.vertexes["original_mesh_vertex_index"].reshape(-1).astype(np.int64) + mesh.vertex_index_start
+                    if len(remapped) and (int(remapped.min()) < 0 or int(remapped.max()) >= len(vertices)):
+                        raise ValueError("Source vertex remap points outside VVD LOD0")
+                    selected.extend(int(value) for value in remapped)
+                    triangle_count += len(group.indices) // 3
+                    primitive_count += 1
+                    material_indices.add(int(mesh.material_index))
+    if not selected or triangle_count <= 0 or any(index < 0 or index >= len(mdl.materials) for index in material_indices):
+        raise ValueError("Source geometry has no valid drawable mesh/material relation")
+    unique = np.unique(np.asarray(selected, dtype=np.int64))
+    selected_vertices = vertices[unique]
+    active = selected_vertices["weight"] > 0
+    active_bones = selected_vertices["bone_id"][active]
+    if len(active_bones) and int(active_bones.max()) >= len(mdl.bones):
+        raise ValueError("Source skin weights reference an absent bone")
+    weight_sums = selected_vertices["weight"].sum(axis=1)
+    nonzero = weight_sums > 0
+    if not np.allclose(weight_sums[nonzero], 1.0, atol=0.002):
+        raise ValueError("Source skin weights do not sum to one")
+    if any(bone.parent_id >= len(mdl.bones) or bone.parent_id < -1 for bone in mdl.bones):
+        raise ValueError("Source skeleton parent is outside bone range")
+    return {
+        "parser": "SourceIO core Python MDL49/VVD/VTX parser; Blender not invoked",
+        "lod": 0,
+        "sourceVertexCount": int(len(vertices)),
+        "referencedVertexCount": int(len(unique)),
+        "triangleCount": int(triangle_count),
+        "stripGroupPrimitiveCount": int(primitive_count),
+        "materialCount": int(len(mdl.materials)),
+        "referencedMaterialIndices": sorted(material_indices),
+        "referencedMaterialNames": [mdl.materials[index].name for index in sorted(material_indices)],
+        "boneCount": int(len(mdl.bones)),
+        "weightedVertexCount": int(nonzero.sum()),
+        "weightsSumToOne": True,
+        "finitePositionNormalUv": True,
+        "skeletonParentsInRange": True,
+    }
+
+
+def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
     root = workspace / "GGD-Asset-Library/intake/public-sources" / item["folder"]
     members = validated_members(root)
     acquisition = json.loads((root / "acquisition.json").read_text(encoding="utf-8"))
@@ -115,6 +201,11 @@ def source_row(workspace: Path, item: dict[str, Any], preflight: dict[str, Any])
     if acquisition.get("sha256") != sha256(root / "raw" / f"workshop-{acquisition['itemId']}.bin"):
         raise ValueError(f"raw archive SHA mismatch for {item['sourceId']}")
     extracted = root / "extracted"
+    preflight_path = SOURCEIO_PREFLIGHT
+    if not preflight_path.is_file():
+        raise FileNotFoundError(f"Missing SourceIO preflight: {preflight_path}")
+    preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+    sourceio_root = Path(preflight["toolchain"]["sourceio"]["absolutePath"])
     models = []
     for stem, role in item["roles"].items():
         mdl = extracted / (stem + ".mdl")
@@ -123,7 +214,7 @@ def source_row(workspace: Path, item: dict[str, Any], preflight: dict[str, Any])
         for required in (mdl, vvd, vtx):
             if not required.is_file():
                 raise FileNotFoundError(required)
-        models.append({"role": role, **mdl_header(mdl, root), "vvd": file_record(vvd, root), "vtx": file_record(vtx, root), "assimp": assimp(mdl)})
+        models.append({"role": role, **mdl_header(mdl, root), "vvd": file_record(vvd, root), "vtx": file_record(vtx, root), "assimp": assimp(mdl), "coreGeometry": core_geometry(mdl, vvd, vtx, sourceio_root)})
     suffixes = Counter(Path(row["path"]).suffix.lower() for row in members if row["path"].startswith("extracted/"))
     vmts = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vmt")]
     vtfs = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vtf")]
@@ -153,10 +244,7 @@ def source_row(workspace: Path, item: dict[str, Any], preflight: dict[str, Any])
 
 
 def build(workspace: Path) -> dict[str, Any]:
-    if not SOURCEIO_PREFLIGHT.is_file():
-        raise FileNotFoundError(f"Missing SourceIO preflight: {SOURCEIO_PREFLIGHT}")
-    preflight = json.loads(SOURCEIO_PREFLIGHT.read_text(encoding="utf-8"))
-    rows = [source_row(workspace, item, preflight) for item in WORKFLOWS]
+    rows = [source_row(workspace, item) for item in WORKFLOWS]
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",

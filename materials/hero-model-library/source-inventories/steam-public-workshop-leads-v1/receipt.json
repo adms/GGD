@@ -2,7 +2,7 @@
   "schema": "ggd.steam-public-workshop-lead-revalidation@1",
   "sourceConfig": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "498fc4d6cc3a8789c13d7982a2f7a3999eef0c0e00057ecb96fca9e9ed8e6e3e"
+    "sha256": "264904c47b58726a57d379a77e8599b1c8f1b49fea06554eaf5727eeb6a8013c"
   },
   "scope": "Official Steam public metadata API revalidation. A missing API file_url remains an acquisition blocker.",
   "summary": {
