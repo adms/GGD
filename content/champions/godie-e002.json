@@ -692,6 +692,26 @@
         "reference": "300heroes:e7ac718fdf90602320f8d391",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+      "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+      "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+      "modelSha256": "4d1468eebf4ab8363beccbf7a95151d9edc40455bdede41f18c42ddfc14481b7",
+      "binarySha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "registeredAt": "2026-09-15T05:08:48.345Z",
+      "source": {
+        "kind": "exact",
+        "character": "Artoria Pendragon (Saber)",
+        "work": "Fate/stay night",
+        "library": "Fate/Unlimited Block Works",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "manual"

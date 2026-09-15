@@ -1,0 +1,191 @@
+{
+  "schema": "ggd-palworld-astralym-full58-visual-comparison@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+    "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+  },
+  "candidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+    "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+  },
+  "sampling": {
+    "clips": [
+      "Idle",
+      "Walk",
+      "FarSkill_Action",
+      "HaloBeam_Loop",
+      "Damage"
+    ],
+    "clipFraction": 0.2,
+    "views": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "renderer": "Babylon WebGL right-handed scene with CPU-skinned bounds and identical lights/camera fitting"
+  },
+  "metric": {
+    "contractMaxPct": 5,
+    "changedPixelDefinition": "any RGB channel delta > 10 divided by all 800x800 pixels",
+    "litPixelDefinition": "exclusive-or of luma >= 128 classification divided by all pixels"
+  },
+  "rows": [
+    {
+      "clip": "Idle",
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 3.385625,
+      "meanAbsoluteChannelDelta": 2.06079,
+      "litClassificationXorPctAtLuma128": 1.093281,
+      "maxChannelDelta": 239
+    },
+    {
+      "clip": "Idle",
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 3.365,
+      "meanAbsoluteChannelDelta": 1.906657,
+      "litClassificationXorPctAtLuma128": 1.302188,
+      "maxChannelDelta": 242
+    },
+    {
+      "clip": "Idle",
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 4.933906,
+      "meanAbsoluteChannelDelta": 3.816757,
+      "litClassificationXorPctAtLuma128": 2.285469,
+      "maxChannelDelta": 239
+    },
+    {
+      "clip": "Walk",
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 2.441094,
+      "meanAbsoluteChannelDelta": 1.461664,
+      "litClassificationXorPctAtLuma128": 0.817188,
+      "maxChannelDelta": 242
+    },
+    {
+      "clip": "Walk",
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 2.281719,
+      "meanAbsoluteChannelDelta": 1.282144,
+      "litClassificationXorPctAtLuma128": 0.868594,
+      "maxChannelDelta": 241
+    },
+    {
+      "clip": "Walk",
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 2.46875,
+      "meanAbsoluteChannelDelta": 1.493664,
+      "litClassificationXorPctAtLuma128": 0.854844,
+      "maxChannelDelta": 241
+    },
+    {
+      "clip": "FarSkill_Action",
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 1.172813,
+      "meanAbsoluteChannelDelta": 0.691701,
+      "litClassificationXorPctAtLuma128": 0.386563,
+      "maxChannelDelta": 240
+    },
+    {
+      "clip": "FarSkill_Action",
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 0.986094,
+      "meanAbsoluteChannelDelta": 0.439188,
+      "litClassificationXorPctAtLuma128": 0.30375,
+      "maxChannelDelta": 239
+    },
+    {
+      "clip": "FarSkill_Action",
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 2.306406,
+      "meanAbsoluteChannelDelta": 1.715871,
+      "litClassificationXorPctAtLuma128": 1.022188,
+      "maxChannelDelta": 241
+    },
+    {
+      "clip": "HaloBeam_Loop",
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 1.550156,
+      "meanAbsoluteChannelDelta": 0.960823,
+      "litClassificationXorPctAtLuma128": 0.4975,
+      "maxChannelDelta": 241
+    },
+    {
+      "clip": "HaloBeam_Loop",
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 1.362656,
+      "meanAbsoluteChannelDelta": 0.78729,
+      "litClassificationXorPctAtLuma128": 0.482031,
+      "maxChannelDelta": 240
+    },
+    {
+      "clip": "HaloBeam_Loop",
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 1.751406,
+      "meanAbsoluteChannelDelta": 1.246766,
+      "litClassificationXorPctAtLuma128": 0.711719,
+      "maxChannelDelta": 237
+    },
+    {
+      "clip": "Damage",
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 2.153594,
+      "meanAbsoluteChannelDelta": 1.255927,
+      "litClassificationXorPctAtLuma128": 0.722969,
+      "maxChannelDelta": 244
+    },
+    {
+      "clip": "Damage",
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 2.189844,
+      "meanAbsoluteChannelDelta": 1.274211,
+      "litClassificationXorPctAtLuma128": 0.9625,
+      "maxChannelDelta": 239
+    },
+    {
+      "clip": "Damage",
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 3.927031,
+      "meanAbsoluteChannelDelta": 2.941736,
+      "litClassificationXorPctAtLuma128": 1.861406,
+      "maxChannelDelta": 239
+    }
+  ],
+  "allChangedPixelPctAtChannelDeltaGt10Under5": true,
+  "maxChangedPixelPctAtChannelDeltaGt10": 4.933906,
+  "allLitClassificationXorPctAtLuma128Under5": true,
+  "maxLitClassificationXorPctAtLuma128": 2.285469,
+  "contactSheets": [
+    {
+      "path": "back-contact-sheet.png",
+      "bytes": 1019592,
+      "sha256": "b797718a8bb2b1b24c133092d91eb1ae5a5dca69f368e69c56b431f3b89aa8b0"
+    },
+    {
+      "path": "front-contact-sheet.png",
+      "bytes": 1125882,
+      "sha256": "5e6fead1b413ae3416dfeeab68eca44399c1dcd1334f18c63b28d932184ea163"
+    },
+    {
+      "path": "isometric-contact-sheet.png",
+      "bytes": 1187475,
+      "sha256": "4fce03a97174a1b5a351219e987136c4a5ea4fcf17182209b190429767afb606"
+    }
+  ],
+  "worstDifferenceOverview": {
+    "clip": "Idle",
+    "view": "isometric",
+    "path": "worst-difference-overview.png",
+    "bytes": 500689,
+    "sha256": "8b7ebcdf9b599438d4a0cfe869374a52d60eb5ca036fd36894034815b3430064",
+    "heatmapScale": "per-pixel maximum RGB channel delta multiplied by 4"
+  },
+  "rawEvidenceLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/visual-renders-v2",
+  "rawRendersRetainedLocally": true,
+  "pillowVersion": "12.3.0",
+  "humanReview": {
+    "reviewer": "Codex visual inspection",
+    "result": "accepted",
+    "scope": "All five source/candidate rows in front and isometric contact sheets, plus back contact sheet; silhouette, thin appendages, eye/emissive materials and pose identity remain intact. Expected low-poly faceting is visible. Source-game shader parity is not claimed."
+  }
+}

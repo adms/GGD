@@ -1,0 +1,80 @@
+{
+  "schema": "ggd.fateubw-runtime-option-plan@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+  "projectApproval": "owner-2026-09-15-all-resources-may-be-registered",
+  "defaultPolicy": "candidate-only",
+  "semanticPolicy": "same-source-semantic-fallback",
+  "characters": [
+    {
+      "characterId": "artoria_pendragon_saber",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "summon", "run": "one_hand_1", "attack": "two_hand_1", "cast": "excalibur", "hurt": "invisible_burst_hit", "death": "invisible_burst_hit"}
+    },
+    {
+      "characterId": "cu_chulainn_lancer",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "spear_1", "run": "spear_2", "attack": "spear_3", "cast": "gae_bolg", "hurt": "spear_5", "death": "spear_5"}
+    },
+    {
+      "characterId": "diarmuid_ua_duibhne_lancer",
+      "work": "Fate/Zero",
+      "clipMap": {"idle": "blink", "run": "dual_spear_1", "attack": "dual_spear_2", "cast": "hogou_unseal", "hurt": "dual_spear_5", "death": "dual_spear_5"}
+    },
+    {
+      "characterId": "emiya_archer",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "summon", "run": "dual_slash_1", "attack": "dual_slash_2", "cast": "caladbolg", "hurt": "dual_slash_6", "death": "dual_slash_6"}
+    },
+    {
+      "characterId": "gilgamesh_archer",
+      "work": "Fate",
+      "clipMap": {"idle": "summon", "run": "one_hand_1", "attack": "one_hand_2", "cast": "ea", "hurt": "guard", "death": "guard"}
+    },
+    {
+      "characterId": "gilles_de_rais_caster",
+      "work": "Fate/Zero",
+      "clipMap": {"idle": "summon", "run": "shoot", "attack": "summon_monster", "cast": "summon_tentacle", "hurt": "shoot", "death": "summon_monster"}
+    },
+    {
+      "characterId": "hassan-i-sabbah_assassin",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "summon", "run": "dupe", "attack": "dagger_1", "cast": "dagger_throw", "hurt": "top_stab", "death": "top_stab"}
+    },
+    {
+      "characterId": "heracles_berserker",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "walk", "run": "run", "attack": "one_hand_heavy_1", "cast": "leap_slash", "hurt": "fake_death", "death": "death"}
+    },
+    {
+      "characterId": "iskander_rider",
+      "work": "Fate/Zero",
+      "clipMap": {"idle": "summon", "run": "chariot_summon", "attack": "one_hand_1", "cast": "chariot_summon", "hurt": "one_hand_7", "death": "one_hand_7"}
+    },
+    {
+      "characterId": "lancelot_berserker",
+      "work": "Fate/Zero",
+      "clipMap": {"idle": "summon", "run": "jump", "attack": "two_hand_1", "cast": "gun", "hurt": "jump_land", "death": "jump_land"}
+    },
+    {
+      "characterId": "medea_caster",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "magic_circle", "run": "cast_1", "attack": "rule_breaker", "cast": "magic_circle", "hurt": "cast_4", "death": "cast_4"}
+    },
+    {
+      "characterId": "medusa_rider",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "summon", "run": "jump", "attack": "dual_reverse_1", "cast": "bellerophon", "hurt": "land", "death": "land"}
+    },
+    {
+      "characterId": "nero_claudius_saber",
+      "work": "Fate/EXTRA",
+      "clipMap": {"idle": "summon", "run": "horizontal_slashes", "attack": "vertical_slashes", "cast": "aestus_domus_aurea_full", "hurt": "stab", "death": "stab"}
+    },
+    {
+      "characterId": "sasaki_kojiro_assassin",
+      "work": "Fate/stay night",
+      "clipMap": {"idle": "one_hand_1", "run": "katana_1", "attack": "two_hand_1", "cast": "tsubame_gaeshi", "hurt": "two_hand_7", "death": "two_hand_7"}
+    }
+  ]
+}

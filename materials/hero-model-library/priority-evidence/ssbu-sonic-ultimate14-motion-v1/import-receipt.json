@@ -1,0 +1,293 @@
+{
+  "schema": "ggd-ssbu-ultimate14-action-import@1",
+  "fighterId": "sonic",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/sonic/model/body/c00/sonic-c00.blend",
+    "bytes": 8502840,
+    "sha256": "670fcfa00a5fedf91344c3a9dac599130f51c44c0bc655ca710efe75e054cfc5"
+  },
+  "motionIndex": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+    "bytes": 593008,
+    "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23"
+  },
+  "tool": {
+    "blenderVersion": "4.5.13 LTS",
+    "addon": "Smash Ultimate Blender",
+    "addonVersion": "3.0.4",
+    "addonRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/extracted/smash-ultimate-blender",
+    "addonZip": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/smash-ultimate-blender-3_0_4.zip",
+    "addonZipSha256": "813cd5af33b5c74d7bdc88a81095ee09cff3662d0ac50f858d8d6dc596237248",
+    "embeddedScriptsExecuted": false,
+    "transformTracksOnly": true
+  },
+  "armature": {
+    "name": "model-armature",
+    "boneCount": 115,
+    "boneNames": [
+      "ArmL",
+      "ArmR",
+      "Bust",
+      "ClavicleC",
+      "ClavicleL",
+      "ClavicleR",
+      "DownlipC",
+      "DownlipC_offset",
+      "DownlipL",
+      "DownlipL_offset",
+      "DownlipR",
+      "DownlipR_offset",
+      "Face",
+      "FingerL10",
+      "FingerL11",
+      "FingerL12",
+      "FingerL13",
+      "FingerL20",
+      "FingerL21",
+      "FingerL22",
+      "FingerL23",
+      "FingerL30",
+      "FingerL31",
+      "FingerL32",
+      "FingerL33",
+      "FingerL40",
+      "FingerL41",
+      "FingerL42",
+      "FingerL43",
+      "FingerL51",
+      "FingerL52",
+      "FingerL53",
+      "FingerR10",
+      "FingerR11",
+      "FingerR12",
+      "FingerR13",
+      "FingerR20",
+      "FingerR21",
+      "FingerR22",
+      "FingerR23",
+      "FingerR30",
+      "FingerR31",
+      "FingerR32",
+      "FingerR33",
+      "FingerR40",
+      "FingerR41",
+      "FingerR42",
+      "FingerR43",
+      "FingerR51",
+      "FingerR52",
+      "FingerR53",
+      "FootL",
+      "FootR",
+      "HandL",
+      "HandR",
+      "HaveL",
+      "HaveR",
+      "Head",
+      "Hip",
+      "Jaw",
+      "Jaw_offset",
+      "KneeL",
+      "KneeR",
+      "LegC",
+      "LegL",
+      "LegR",
+      "Mouth_group",
+      "Neck",
+      "Rot",
+      "S_FinL1",
+      "S_FinL2_null",
+      "S_FinR1",
+      "S_FinR2_null",
+      "S_StingBL1",
+      "S_StingBL2",
+      "S_StingBL3_null",
+      "S_StingBR1",
+      "S_StingBR2",
+      "S_StingBR3_null",
+      "S_StingD1",
+      "S_StingD2",
+      "S_StingD3_null",
+      "S_StingU1",
+      "S_StingU2",
+      "S_StingU3",
+      "S_StingU4_null",
+      "S_Tail1",
+      "S_Tail2_null",
+      "ShoulderL",
+      "ShoulderR",
+      "Sphere",
+      "SphereRot",
+      "StingL1",
+      "StingL2",
+      "StingL3_null",
+      "StingR1",
+      "StingR2",
+      "StingR3_null",
+      "Throw",
+      "ToeL",
+      "ToeR",
+      "Tongue",
+      "Tongue_offset",
+      "Trans",
+      "UplipC",
+      "UplipC_offset",
+      "UplipL1",
+      "UplipL1_offset",
+      "UplipL2",
+      "UplipL2_offset",
+      "UplipR1",
+      "UplipR1_offset",
+      "UplipR2",
+      "UplipR2_offset",
+      "Waist"
+    ]
+  },
+  "imports": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c04attacklw4.nuanmb",
+      "bytes": 95195,
+      "sha256": "18f4ffc8159afd19251bd6580027829e6f31972f35747640973662cb8496f7bb",
+      "action": "c04attacklw4",
+      "frameRange": [
+        1.0,
+        73.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c04attacklw4charge.nuanmb",
+      "bytes": 66233,
+      "sha256": "0aad65af18c802b1982c9b5a4e228377e37b793ecc2ea9bc0cd70165756816f9",
+      "action": "c04attacklw4charge",
+      "frameRange": [
+        1.0,
+        61.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05attackairf.nuanmb",
+      "bytes": 86047,
+      "sha256": "26a8539517a0c11df82eb91a851e7380b188fcfe4fc733e81246d709998eb719",
+      "action": "c05attackairf",
+      "frameRange": [
+        1.0,
+        56.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05attackairn.nuanmb",
+      "bytes": 76554,
+      "sha256": "2ed50046b6c26933c6d858b5c4502dd256acabb7d4e2665af80c9e812e82ad67",
+      "action": "c05attackairn",
+      "frameRange": [
+        1.0,
+        59.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/c05landingairf.nuanmb",
+      "bytes": 59083,
+      "sha256": "98a1bde423f938dea36e42a554fdf45c3d5ef5c7bd4253a2460c643061d24dd5",
+      "action": "c05landingairf",
+      "frameRange": [
+        1.0,
+        31.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d01specialshold.nuanmb",
+      "bytes": 69083,
+      "sha256": "1ad42ea0ed720b8554c8d929eba44cf3a9a976baf31195eaf955e956bb38b7cd",
+      "action": "d01specialshold",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d01specialsstart.nuanmb",
+      "bytes": 49956,
+      "sha256": "8736d522f9eff4f408f12e953a45feda4ca7abe2bff286d2315cf4718d1c9e1e",
+      "action": "d01specialsstart",
+      "frameRange": [
+        1.0,
+        15.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d02specialhisquat.nuanmb",
+      "bytes": 48786,
+      "sha256": "fd616cb68b8822aede0998802514b711876ce0f8ed5882127ca7a129811b51a7",
+      "action": "d02specialhisquat",
+      "frameRange": [
+        1.0,
+        15.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d03speciallwhold.nuanmb",
+      "bytes": 73904,
+      "sha256": "1c044b79d5414ff4c01e9318c1f5d366f9d930a664ce4ecb210fa4377a064bc7",
+      "action": "d03speciallwhold",
+      "frameRange": [
+        1.0,
+        61.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/sonic/motion/body/c00/d03speciallwstart.nuanmb",
+      "bytes": 45504,
+      "sha256": "cbde428c7835dc8132a34e58c6f595be48be6a67e5484a6b8a0d57e6773d5106",
+      "action": "d03speciallwstart",
+      "frameRange": [
+        1.0,
+        8.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    }
+  ],
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/import-01/sonic-c00-ultimate14-actions.blend",
+    "bytes": 38460573,
+    "sha256": "b393ebe79d00a7f4f5dd8d2e36ef2acbd6f71c7107325acdec2ee8032c9a9f9c"
+  },
+  "status": {
+    "nativeTransformTracksImported": true,
+    "visualPlaybackValidated": false,
+    "convertedToGgdGlb": false,
+    "runtimeSelectable": false
+  },
+  "gaps": [
+    "Ultimate14 contains 10 distinct sonic body motion payloads in this batch, not a complete gameplay action set.",
+    "Visibility and material tracks are preserved in the original NUANMB files but are not imported into this body-motion intermediate.",
+    "Visual playback, normalized GLB export, GGD validation, semantic action mapping, hero binding, runtime selection and deployment remain pending."
+  ]
+}

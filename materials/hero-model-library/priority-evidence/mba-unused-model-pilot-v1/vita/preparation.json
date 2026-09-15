@@ -1,0 +1,260 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "vita",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara11",
+    "definition": "CharacterDefinitions/Chara11.chr",
+    "characterNative": "D-Down",
+    "nativeModel": "Model/Chara11/Vita.x",
+    "convertedGlb": "models/Model/Chara11/Vita.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara11/Vita.glb",
+    "bytes": 6108960,
+    "sha256": "02814a9992181579ece78b5b993fe87edbc8dc1093fd3f10af4f259bd36c57de"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 6,
+    "outputDrawPrimitives": 1,
+    "vertices": 4470,
+    "triangles": 4412,
+    "atlasEdge": 1024,
+    "sourceAtlasEdge": 1024,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 141,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "3": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "4": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "5": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 3,
+      "maxSumDelta": 9.834766387939453e-07
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-pilot-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 95,
+    "originalNames": [
+      "ribon_d_02",
+      "ribon_d_01",
+      "ribon_u_02",
+      "ribon_u_01",
+      "ribon_c_02",
+      "ribon_c_01",
+      "kami_u_02",
+      "kami_u_01",
+      "kami_c_02",
+      "kami_c_01",
+      "burst_02_06",
+      "burst_02_05",
+      "burst_02_04",
+      "burst_02_03",
+      "burst_02_02",
+      "burst_02_01",
+      "burst_01_04",
+      "burst_01_03",
+      "burst_01_02",
+      "sp01_04",
+      "sp01_03",
+      "sp01_02",
+      "sp01_01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_03",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge",
+      "attack_07",
+      "attack_06",
+      "attack_05",
+      "attack_04",
+      "attack_03",
+      "attack_02",
+      "attack_01",
+      "wait",
+      "start",
+      "burst_02_08",
+      "burst_02_07",
+      "burst_01_01",
+      "sp03_02",
+      "sp03_01",
+      "sp02_03",
+      "sp02_02",
+      "sp02_01",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 42
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 94
+      },
+      {
+        "name": "attack_01",
+        "originalIndex": 41
+      },
+      {
+        "name": "sp01_01",
+        "originalIndex": 22
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 81
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 66
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      1024,
+      1024
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "aadf1ea81f31ec024cbb785ee40172e25681a9b6fea2dcc18d1c556f0f1703d7",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-pilot-v1/prepared-e/vita/body-prepared.glb",
+    "bytes": 5880092,
+    "sha256": "5c9ae63aa87e0f27fc426a47a3492ee34a2521bee30707d9f1e559441727514c"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}

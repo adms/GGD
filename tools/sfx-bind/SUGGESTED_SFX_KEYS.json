@@ -31,8 +31,8 @@
     "census": {
       "overlay": 0,
       "sfxKey": 72,
-      "element": 99,
-      "generic": 736
+      "element": 98,
+      "generic": 737
     },
     "suggested": 107,
     "applicable": 15,
@@ -42,8 +42,8 @@
     },
     "noSuggestion": 728,
     "byCause": {
-      "element-whoosh-already": 97,
-      "no-source-audio": 621,
+      "element-whoosh-already": 96,
+      "no-source-audio": 622,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -3449,10 +3449,10 @@
       "ability": "b2-popp.w",
       "name": "冷氣帳單換定身",
       "champion": "b2-popp",
-      "todayPlays": "magicIce",
-      "cause": "element-whoosh-already",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
       "evidence": {
-        "elementCue": "magicIce"
+        "base": null
       }
     },
     {

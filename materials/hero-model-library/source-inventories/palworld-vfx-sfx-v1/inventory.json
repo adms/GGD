@@ -1,0 +1,2371 @@
+{
+  "schema": "ggd.palworld-vfx-sfx-inventory@1",
+  "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+  "source": {
+    "steamAppId": "1623730",
+    "buildId": "25094871",
+    "platform": "Windows (Steam)",
+    "windowsPath": "F:\\SteamLibrary\\steamapps\\common\\Palworld",
+    "catalogRole": "game-asset-source",
+    "inventoryStatus": "inventory-only",
+    "containerInventoryStatus": "not-scanned-inside-install"
+  },
+  "inputs": [
+    {
+      "gitPath": "materials/hero-model-library/palworld/character-settings.json",
+      "sha256": "c72f2ae21f85f960d49b78689d5744d202f5e918f93eb44522b13e5d2dfc8e17"
+    },
+    {
+      "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
+      "sha256": "cb1915759afd7b65f313d49d9f893b8064270d354023ec2091c9fc5e9f83224b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
+      "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/source-config.json",
+      "sha256": "c1cd4efff138ae9816ebc98bcd0d72494964ac7be81b341cc823066f120662bd"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/intake-snapshot.json",
+      "sha256": "1874cb6b9883b3337c853e6e7cf5f06dc532a6f15f40c1a1a1b4d6e5b5057f4c"
+    }
+  ],
+  "summary": {
+    "characters": 3,
+    "distinctSourceSkills": 27,
+    "sourceSkillMotionCandidates": 70,
+    "nativeNameStemSkillMotionCandidates": 30,
+    "translatedAliasSkillMotionCandidates": 3,
+    "genericCryCandidates": 18,
+    "acquiredStandaloneVfx": 0,
+    "acquiredSkillSpecificSfx": 0,
+    "convertedVfx": 0,
+    "decodedSkillSpecificSfx": 0,
+    "approvedAudio": 0,
+    "runtimeBindingsAdded": 0,
+    "productionDeployed": 0
+  },
+  "intakeSnapshot": {
+    "schema": "ggd.palworld-vfx-sfx-intake-snapshot@1",
+    "observedAt": "2026-09-14T00:00:00+08:00",
+    "observationScope": "Current Mac workspace, currently mounted volumes, preserved GGD-Asset-Library, and the normalized Windows game inventory",
+    "windowsInventory": {
+      "steamAppId": "1623730",
+      "buildId": "25094871",
+      "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\Palworld",
+      "inventoryStatus": "inventory-only",
+      "containerInventoryStatus": "not-scanned-inside-install"
+    },
+    "mountedShare": {
+      "expectedShare": "smb://lv99/common",
+      "availableDuringAudit": false,
+      "mountedVolumeNames": [
+        "Blender",
+        "Blender 1",
+        "Macintosh HD",
+        "R"
+      ],
+      "payloadBytesRead": 0
+    },
+    "preservedLibrarySearch": {
+      "palworldContainerFiles": 0,
+      "palworldExtractedUnrealAssets": 0,
+      "skillSpecificAudioFiles": 0,
+      "standaloneVfxFiles": 0,
+      "existingGenericCreatureCries": 18,
+      "existingSourceMotionClips": 120
+    },
+    "packageListing": {
+      "provided": false,
+      "path": null,
+      "sha256": null,
+      "entries": 0
+    },
+    "extractedAssetScan": {
+      "provided": false,
+      "path": null,
+      "sha256": null,
+      "matchedFiles": 0
+    },
+    "stage": {
+      "sourceInstalled": true,
+      "sourceMountedToMac": false,
+      "containersEnumerated": false,
+      "packagesListed": false,
+      "assetsExtracted": false,
+      "vfxConverted": false,
+      "sfxDecoded": false,
+      "ownerReviewed": false,
+      "runtimeBound": false,
+      "productionDeployed": false
+    }
+  },
+  "characters": [
+    {
+      "id": "jetragon",
+      "nameZh": "空渦龍",
+      "nameEn": "Jetragon",
+      "nativeId": "JetDragon",
+      "heroId": "acquired-jetragon",
+      "motionPrefixes": [
+        "FarSkill",
+        "JumpBeam"
+      ],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "JumpBeam",
+          "skillCode": "Unique_JetDragon_JumpBeam",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        }
+      ],
+      "packageTokens": [
+        "JetDragon",
+        "JumpBeam",
+        "BeamComet"
+      ],
+      "skills": [
+        {
+          "code": "FireSeed",
+          "name": "烈焰濺射",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Spirit_Fire",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "DragonWave",
+          "name": "龍之波動",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Burst",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "FlareTornado",
+          "name": "烈焰風暴",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Flare_Storm",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "DragonBreath",
+          "name": "龍息",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Breath",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "Unique_JetDragon_JumpBeam",
+          "name": "光束彗星",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Beam_Comet",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "FireBall",
+          "name": "烈焰球",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Fire_Ball",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "DragonMeteor",
+          "name": "龍彗星",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Meteor",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "BeamSlicer",
+          "name": "切割龍息",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Beam_Slicer",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "CommetRain",
+          "name": "隕星雨",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Meteorain",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "StarMine",
+          "name": "詭雷繁星",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Star_Mine",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        }
+      ],
+      "sourceMotionContainer": {
+        "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+        "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+        "bytes": 4297580,
+        "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+        "animationClipCount": 29,
+        "allAnimationChannelCount": 6525,
+        "allAnimationChannelsPerClipMax": 225,
+        "hashVerified": true
+      },
+      "sourceSkillMotionCandidates": [
+        {
+          "clip": "FarSkill_Action",
+          "durationSeconds": 0.416667,
+          "animationChannelCount": 225,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_ActionLoop",
+          "durationSeconds": 1.0,
+          "animationChannelCount": 225,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_End",
+          "durationSeconds": 1.041667,
+          "animationChannelCount": 225,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_Start",
+          "durationSeconds": 1.041667,
+          "animationChannelCount": 225,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_StartLoop",
+          "durationSeconds": 1.25,
+          "animationChannelCount": 225,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "JumpBeam_End",
+          "durationSeconds": 0.625,
+          "animationChannelCount": 225,
+          "prefix": "JumpBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "JumpBeam_Loop",
+          "durationSeconds": 1.0,
+          "animationChannelCount": 225,
+          "prefix": "JumpBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "JumpBeam_Start",
+          "durationSeconds": 0.708333,
+          "animationChannelCount": 225,
+          "prefix": "JumpBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "bytes": 4297580,
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+          },
+          "sourceSkillCodeCandidate": "Unique_JetDragon_JumpBeam",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "genericCryCandidates": [
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Normal",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/474464904.mp3",
+          "bytes": 11745,
+          "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.40805,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Joy",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/93212890.mp3",
+          "bytes": 9447,
+          "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.113107,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Anger",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/53353968.mp3",
+          "bytes": 13417,
+          "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.612449,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Sorrow",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/543820472.mp3",
+          "bytes": 10074,
+          "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.198027,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Pain",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/144271513.mp3",
+          "bytes": 10283,
+          "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.204195,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "jetragon",
+          "heroId": "acquired-jetragon",
+          "eventLabel": "Death",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-jetragon-cries",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/audio/977109776.mp3",
+          "bytes": 14462,
+          "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.749206,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "packageSearchTokens": [
+        "BeamComet",
+        "BeamSlicer",
+        "CommetRain",
+        "DragonBreath",
+        "DragonMeteor",
+        "DragonWave",
+        "FireBall",
+        "FireSeed",
+        "FlareTornado",
+        "JetDragon",
+        "JumpBeam",
+        "StarMine",
+        "Unique_JetDragon_JumpBeam"
+      ],
+      "vfxCandidates": [],
+      "skillSpecificSfxCandidates": [],
+      "dependencyCandidates": [],
+      "stage": "source-install-known-package-payload-unavailable",
+      "runtimeBindingsAdded": 0
+    },
+    {
+      "id": "astralym",
+      "nameZh": "枯星龍",
+      "nameEn": "Astralym",
+      "nativeId": "WorldTreeDragon",
+      "heroId": "acquired-astralym",
+      "motionPrefixes": [
+        "FarSkill",
+        "HaloBeam",
+        "HaloCutter",
+        "LaserGliding",
+        "Paldium",
+        "Supernova"
+      ],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "PaldiumShot",
+          "skillCode": "Unique_WorldTreeDragon_PaldiumShot",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        },
+        {
+          "motionPrefix": "PaldiumCannon",
+          "skillCode": "Unique_WorldTreeDragon_PaldiumCannon",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        },
+        {
+          "motionPrefix": "PaldiumRain",
+          "skillCode": "Unique_WorldTreeDragon_PaldiumRain",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        },
+        {
+          "motionPrefix": "PaldiumExplosion",
+          "skillCode": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "confidence": "native-name-stem-exact",
+          "bindingApproved": false
+        }
+      ],
+      "packageTokens": [
+        "WorldTreeDragon",
+        "PaldiumShot",
+        "PaldiumCannon",
+        "PaldiumRain",
+        "PaldiumExplosion"
+      ],
+      "skills": [
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumShot",
+          "name": "Unique_WorldTreeDragon_PaldiumShot",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumShot",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumCannon",
+          "name": "Unique_WorldTreeDragon_PaldiumCannon",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumCannon",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumRain",
+          "name": "Unique_WorldTreeDragon_PaldiumRain",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumRain",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "name": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumExplosion",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "RockBeat",
+          "name": "震岩",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Rocky_Impact",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "HolyBlast",
+          "name": "光擊陣",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Holy_Burst",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "DragonMeteor",
+          "name": "龍彗星",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Meteor",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "CommetRain",
+          "name": "隕星雨",
+          "forms": [
+            "Nullstar_Calamity_Zenara_%26_Astralym",
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Meteorain",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "Psychokinesis",
+          "name": "念動引力",
+          "forms": [
+            "Blightstar_Calamity_Zenara_%26_Astralym"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Psycho_Gravity",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        }
+      ],
+      "sourceMotionContainer": {
+        "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+        "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+        "bytes": 17043436,
+        "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+        "animationClipCount": 58,
+        "allAnimationChannelCount": 25230,
+        "allAnimationChannelsPerClipMax": 435,
+        "hashVerified": true
+      },
+      "sourceSkillMotionCandidates": [
+        {
+          "clip": "FarSkill_Action",
+          "durationSeconds": 0.416667,
+          "animationChannelCount": 435,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_ActionLoop",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_End",
+          "durationSeconds": 1.458333,
+          "animationChannelCount": 435,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_Start",
+          "durationSeconds": 1.458333,
+          "animationChannelCount": 435,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_StartLoop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_End",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_End_Ring",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_Loop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_Loop_Ring",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_Start",
+          "durationSeconds": 2.083333,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloBeam_Start_Ring",
+          "durationSeconds": 2.083333,
+          "animationChannelCount": 435,
+          "prefix": "HaloBeam",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloCutter",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "HaloCutter",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloCutter_End_Ring",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "HaloCutter",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloCutter_Loop_Ring",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "HaloCutter",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "HaloCutter_Start_Ring",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "HaloCutter",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_End",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_End_Ring",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_Loop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_Loop_Ring",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_Start",
+          "durationSeconds": 3.541667,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "LaserGliding_Start_Ring",
+          "durationSeconds": 3.541667,
+          "animationChannelCount": 435,
+          "prefix": "LaserGliding",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Attack",
+          "durationSeconds": 0.416667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Attack_Loop",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Attack_Loop_Ring",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Attack_Ring",
+          "durationSeconds": 0.416667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_End",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_End_Ring",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Start",
+          "durationSeconds": 2.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Start_Loop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Start_Loop_Ring",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumCannon_Start_Ring",
+          "durationSeconds": 2.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumCannon",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Cancel",
+          "durationSeconds": 3.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Cancel_Ring",
+          "durationSeconds": 3.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_End",
+          "durationSeconds": 3.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_End_Ring",
+          "durationSeconds": 3.75,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Loop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Loop_Ring",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Start",
+          "durationSeconds": 3.125,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumExplosion_Start_Ring",
+          "durationSeconds": 3.125,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumRain_End",
+          "durationSeconds": 1.25,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumRain_Loop",
+          "durationSeconds": 3.125,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumRain_Start",
+          "durationSeconds": 2.916667,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumRain",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_End",
+          "durationSeconds": 1.458333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_End_Ring",
+          "durationSeconds": 1.458333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_Loop",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_Loop_Ring",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_Start",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "PaldiumShot_Start_Ring",
+          "durationSeconds": 1.875,
+          "animationChannelCount": 435,
+          "prefix": "Paldium",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": "Unique_WorldTreeDragon_PaldiumShot",
+          "relationshipConfidence": "native-name-stem-exact",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_End",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_End_Ring",
+          "durationSeconds": 4.375,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_Loop",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_Loop_Ring",
+          "durationSeconds": 1.666667,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_Start",
+          "durationSeconds": 2.5,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "Supernova_Start_Ring",
+          "durationSeconds": 2.5,
+          "animationChannelCount": 435,
+          "prefix": "Supernova",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "bytes": 17043436,
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "genericCryCandidates": [
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Normal",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/692273765.mp3",
+          "bytes": 25956,
+          "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 3.183333,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Joy",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/490600725.mp3",
+          "bytes": 13208,
+          "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.583333,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Anger",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/334845214.mp3",
+          "bytes": 29718,
+          "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 3.65,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Sorrow",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/825892274.mp3",
+          "bytes": 18224,
+          "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 2.216667,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Pain",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/646052.mp3",
+          "bytes": 19687,
+          "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 2.383333,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "astralym",
+          "heroId": "acquired-astralym",
+          "eventLabel": "Death",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "gamevault-palworld-astralym-audio",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/118059401.mp3",
+          "bytes": 56258,
+          "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+          "codec": "mp3",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 6.95,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "packageSearchTokens": [
+        "CommetRain",
+        "DragonMeteor",
+        "HolyBlast",
+        "PaldiumCannon",
+        "PaldiumExplosion",
+        "PaldiumRain",
+        "PaldiumShot",
+        "Psychokinesis",
+        "RockBeat",
+        "Unique_WorldTreeDragon_PaldiumCannon",
+        "Unique_WorldTreeDragon_PaldiumExplosion",
+        "Unique_WorldTreeDragon_PaldiumRain",
+        "Unique_WorldTreeDragon_PaldiumShot",
+        "WorldTreeDragon"
+      ],
+      "vfxCandidates": [],
+      "skillSpecificSfxCandidates": [],
+      "dependencyCandidates": [],
+      "stage": "source-install-known-package-payload-unavailable",
+      "runtimeBindingsAdded": 0
+    },
+    {
+      "id": "cattiva",
+      "nameZh": "搗蛋貓",
+      "nameEn": "Cattiva",
+      "nativeId": "PinkCat",
+      "heroId": "acquired-cattiva",
+      "motionPrefixes": [
+        "FarSkill",
+        "NekoPunch"
+      ],
+      "motionSkillRelationships": [
+        {
+          "motionPrefix": "NekoPunch",
+          "skillCode": "Unique_PinkCat_CatPunch",
+          "confidence": "translated-name-alias-only",
+          "bindingApproved": false
+        }
+      ],
+      "packageTokens": [
+        "PinkCat",
+        "CatPunch",
+        "NekoPunch"
+      ],
+      "skills": [
+        {
+          "code": "Unique_PinkCat_CatPunch",
+          "name": "喵喵拳",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Punch_Flurry",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "AirCanon",
+          "name": "空氣彈",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Air_Cannon",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "MudShot",
+          "name": "泥漿投擲",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Bog_Blast",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "PowerShot",
+          "name": "能量射擊",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Power_Shot",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "WindCutter",
+          "name": "風刃",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Wind_Cutter",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "SeedMachinegun",
+          "name": "種子機關槍",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Seed_Machine_Gun",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "HyperBeam",
+          "name": "帕魯光束",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Pal_Blast",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        },
+        {
+          "code": "HolyBlast",
+          "name": "光擊陣",
+          "forms": [
+            "normal"
+          ],
+          "sourceUrl": "https://paldb.cc/tw/Holy_Burst",
+          "vfxAssetState": "not-acquired",
+          "skillSpecificSfxState": "not-acquired",
+          "runtimeBinding": false
+        }
+      ],
+      "sourceMotionContainer": {
+        "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+        "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+        "bytes": 2148052,
+        "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+        "animationClipCount": 33,
+        "allAnimationChannelCount": 4257,
+        "allAnimationChannelsPerClipMax": 129,
+        "hashVerified": true
+      },
+      "sourceSkillMotionCandidates": [
+        {
+          "clip": "FarSkill_Action",
+          "durationSeconds": 0.416667,
+          "animationChannelCount": 129,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_ActionLoop",
+          "durationSeconds": 0.833333,
+          "animationChannelCount": 129,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_End",
+          "durationSeconds": 1.041667,
+          "animationChannelCount": 129,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_Start",
+          "durationSeconds": 1.041667,
+          "animationChannelCount": 129,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "FarSkill_StartLoop",
+          "durationSeconds": 1.25,
+          "animationChannelCount": 129,
+          "prefix": "FarSkill",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": null,
+          "relationshipConfidence": "motion-family-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "NekoPunch_End",
+          "durationSeconds": 1.25,
+          "animationChannelCount": 129,
+          "prefix": "NekoPunch",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+          "relationshipConfidence": "translated-name-alias-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "NekoPunch_Loop",
+          "durationSeconds": 0.666667,
+          "animationChannelCount": 129,
+          "prefix": "NekoPunch",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+          "relationshipConfidence": "translated-name-alias-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "clip": "NekoPunch_Start",
+          "durationSeconds": 0.625,
+          "animationChannelCount": 129,
+          "prefix": "NekoPunch",
+          "origin": "source-supplied-model-animation",
+          "sourceContainer": {
+            "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "bytes": 2148052,
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+          },
+          "sourceSkillCodeCandidate": "Unique_PinkCat_CatPunch",
+          "relationshipConfidence": "translated-name-alias-only",
+          "vfxAsset": false,
+          "skillSpecificSfx": false,
+          "reviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "genericCryCandidates": [
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Normal",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/717847191.wav",
+          "bytes": 103576,
+          "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 0.5866439909297052,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Joy",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/573810681.wav",
+          "bytes": 131896,
+          "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 0.74718820861678,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Anger",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/477932227.wav",
+          "bytes": 147040,
+          "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 0.8330385487528345,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Sorrow",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/942072444.wav",
+          "bytes": 223052,
+          "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 1.2639455782312925,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Pain",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/980873458.wav",
+          "bytes": 107200,
+          "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 0.60718820861678,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        },
+        {
+          "characterId": "cattiva",
+          "heroId": "acquired-cattiva",
+          "eventLabel": "Death",
+          "category": "nonverbal-creature-cry",
+          "sourceId": "palworld-cattiva-gamevault",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-gamevault/decoded/842808624.wav",
+          "bytes": 165196,
+          "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+          "codec": "wav",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "durationSeconds": 0.9359637188208617,
+          "decodeToNullPassed": true,
+          "skillCode": null,
+          "skillEventVerified": false,
+          "ownerReviewStatus": "pending",
+          "runtimeBinding": false
+        }
+      ],
+      "packageSearchTokens": [
+        "AirCanon",
+        "CatPunch",
+        "HolyBlast",
+        "HyperBeam",
+        "MudShot",
+        "NekoPunch",
+        "PinkCat",
+        "PowerShot",
+        "SeedMachinegun",
+        "Unique_PinkCat_CatPunch",
+        "WindCutter"
+      ],
+      "vfxCandidates": [],
+      "skillSpecificSfxCandidates": [],
+      "dependencyCandidates": [],
+      "stage": "source-install-known-package-payload-unavailable",
+      "runtimeBindingsAdded": 0
+    }
+  ],
+  "blockers": [
+    "The Windows inventory proves the Palworld client install exists but contains no per-file package inventory.",
+    "The SMB common share was not mounted during this audit, so Palworld PAK/IoStore payload bytes read is zero.",
+    "Existing OP.GG exports contain model animations and material textures, not standalone original skill VFX.",
+    "Existing GameVault audio contains six generic creature cries per character and no verified skill-event mapping.",
+    "Numeric Wwise media cannot be bound until its bank/event relation is recovered and each proposed pairing is owner-reviewed."
+  ],
+  "nextReplay": {
+    "windowsProbe": "powershell -ExecutionPolicy Bypass -File scan_palworld_packages.ps1",
+    "extractedScan": "python3 scan_extracted_assets.py --root <already-extracted-Pal-root> --out scan.json",
+    "packageListScan": "python3 scan_extracted_assets.py --package-list package-list.txt --out scan.json"
+  }
+}

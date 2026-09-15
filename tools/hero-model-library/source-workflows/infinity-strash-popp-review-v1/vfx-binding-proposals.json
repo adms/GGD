@@ -1,0 +1,52 @@
+{
+  "schema": "ggd.popp-vfx-binding-proposals@1",
+  "heroId": "b2-popp",
+  "policy": {
+    "basis": "source-spell-name-and-phase-only",
+    "confidence": "medium-unverified",
+    "visuallyApproved": false,
+    "runtimeMutationAllowed": false,
+    "note": "這些列只縮小逐項視覺審查範圍。未恢復 Niagara 時序與 mesh layer，也沒有 owner 視覺決策，因此不得直接綁技能。"
+  },
+  "abilities": [
+    {
+      "abilityId": "b2-popp.q",
+      "abilityNameZh": "先幫你預熱",
+      "semantic": "小級火焰打擊",
+      "candidateIds": [
+        "popp-vfx-candidate-06"
+      ],
+      "rationale": "Mera 是目前 PN020 依賴閉包中最接近小級火焰的來源命名；只有 firetrail phase，仍缺 muzzle、impact 與時序核對。"
+    },
+    {
+      "abilityId": "b2-popp.w",
+      "abilityNameZh": "冷氣帳單換定身",
+      "semantic": "冰擊與命中",
+      "candidateIds": [
+        "popp-vfx-candidate-01",
+        "popp-vfx-candidate-02"
+      ],
+      "rationale": "Hyadaruko 來源同時保留 core 與 hit phase，語意與目前冰擊最接近；播放比例、命中範圍與 root 呈現仍待核對。"
+    },
+    {
+      "abilityId": "b2-popp.r",
+      "abilityNameZh": "美拉佐瑪烤肉吃到飽",
+      "semantic": "中級直線火焰",
+      "candidateIds": [
+        "popp-vfx-candidate-07",
+        "popp-vfx-candidate-08",
+        "popp-vfx-candidate-09",
+        "popp-vfx-candidate-10"
+      ],
+      "rationale": "Merami 來源有 firetrail、landing、muzzle、core 四個 phase，最接近目前直線火焰演出；名稱並非 GGD 技能文案中的 Merazoma，不能視為原作一對一證明。"
+    }
+  ],
+  "reserveCandidateIds": [
+    "popp-vfx-candidate-03",
+    "popp-vfx-candidate-04",
+    "popp-vfx-candidate-05",
+    "popp-vfx-candidate-11",
+    "popp-vfx-candidate-12"
+  ],
+  "reserveReason": "Io、Iora、Raidein、Ionazun 與目前 Q/W/E/R/EX 的技能語意沒有可直接採用的一對一關係，先保留為未使用候選。"
+}

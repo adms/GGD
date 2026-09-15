@@ -1,0 +1,1390 @@
+{
+  "schema": "ggd.jump-force-dai-l4d2-wholemesh-topology-validation@2",
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+    "bytes": 2351028,
+    "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+    "bytes": 5852664,
+    "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
+  },
+  "structural": {
+    "check": true,
+    "candidate": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+      "bytes": 2351028,
+      "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+    },
+    "triangleCount": 7616,
+    "drawPrimitives": 26,
+    "meshCount": 15,
+    "materialCount": 22,
+    "embeddedImageCount": 22,
+    "maxTextureEdge": 256,
+    "skinCount": 1,
+    "jointCount": 87,
+    "animationCount": 2,
+    "skinnedPrimitives": 26,
+    "allPrimitivesSkinned": true,
+    "jointNamesAndHierarchyEquivalent": true,
+    "materialAndBaseTextureSlotsEquivalent": true,
+    "budget": {
+      "decimateWhenTrianglesAbove": 10000,
+      "requiredOutputBelow": 8000,
+      "trianglePassed": true,
+      "texturePassed": true
+    }
+  },
+  "khronos": {
+    "candidate": {
+      "validator": "gltf-validator@2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 15,
+      "infos": 29,
+      "hints": 0,
+      "truncated": false,
+      "issueCodeCounts": {
+        "NODE_EMPTY": 29,
+        "NODE_SKINNED_MESH_NON_ROOT": 15
+      }
+    },
+    "source": {
+      "validator": "gltf-validator@2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 15,
+      "infos": 29,
+      "hints": 0,
+      "truncated": false,
+      "issueCodeCounts": {
+        "NODE_EMPTY": 29,
+        "NODE_SKINNED_MESH_NON_ROOT": 15
+      }
+    },
+    "sameIssueCodeCounts": true
+  },
+  "ggdBudget": {
+    "tool": "model-budget/guard",
+    "role": "champion",
+    "results": [
+      {
+        "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+        "role": "champion",
+        "roleSource": "flag",
+        "worst": "over",
+        "adoption": {
+          "status": "eligible",
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMax": 8000,
+          "visualLitPixelDeltaPctMax": 5
+        },
+        "metrics": {
+          "triangles": 7616,
+          "meshes": 26,
+          "maxTextureEdge": 256,
+          "channelsPerFrame": 261,
+          "vramBytes": 7689550
+        },
+        "axes": [
+          {
+            "key": "triangles",
+            "label": "每實例三角面",
+            "value": 7616,
+            "warn": 16000,
+            "limit": 28000,
+            "verdict": "ok"
+          },
+          {
+            "key": "drawCalls",
+            "label": "每模型 mesh / draw call",
+            "value": 26,
+            "warn": 3,
+            "limit": 6,
+            "verdict": "over"
+          },
+          {
+            "key": "maxTextureEdge",
+            "label": "貼圖最長邊 (px)",
+            "value": 256,
+            "warn": 256,
+            "limit": 256,
+            "verdict": "ok"
+          },
+          {
+            "key": "animChannels",
+            "label": "每幀動畫通道",
+            "value": 261,
+            "warn": 300,
+            "limit": 500,
+            "verdict": "ok"
+          }
+        ]
+      }
+    ]
+  },
+  "webglReview": {
+    "run": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1/run.json",
+      "bytes": 686,
+      "sha256": "465e4563ad3d1d8f915f38777f7f3567b32e726f4d565a5699039c81d3a53c3e"
+    },
+    "proof": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1/proof.json",
+      "bytes": 25986,
+      "sha256": "cefa8ec7b3d21ea7ccee3ea9129a001b139952a1683a400e5f129c610776d7ce"
+    },
+    "proofSummary": {
+      "schema": "ggd.ssbu-static-webgl@1",
+      "babylonVersion": "7.54.3",
+      "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+      "worldSkinnedBounds": {
+        "min": [
+          -0.38391169905662537,
+          -0.018083104863762856,
+          -0.24788422882556915
+        ],
+        "max": [
+          0.44668126106262207,
+          1.6525635719299316,
+          0.24358981847763062
+        ],
+        "extent": [
+          0.8305929601192474,
+          1.6706466767936945,
+          0.49147404730319977
+        ]
+      },
+      "geometry": [
+        {
+          "name": "2.smd_primitive0",
+          "vertices": 22,
+          "indices": 63,
+          "worldBounds": {
+            "min": [
+              -0.29103565216064453,
+              1.0900473594665527,
+              -0.20221325755119324
+            ],
+            "max": [
+              -0.04823777824640274,
+              1.391553282737732,
+              -0.1250961273908615
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "2.smd_primitive1",
+          "vertices": 775,
+          "indices": 1887,
+          "worldBounds": {
+            "min": [
+              -0.30842325091362,
+              0.45422041416168213,
+              -0.19022250175476074
+            ],
+            "max": [
+              0.44668126106262207,
+              1.4086027145385742,
+              0.09291161596775055
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "3.smd_primitive0",
+          "vertices": 233,
+          "indices": 807,
+          "worldBounds": {
+            "min": [
+              -0.38391169905662537,
+              0.6249952912330627,
+              -0.11060886085033417
+            ],
+            "max": [
+              0.37736791372299194,
+              1.1974973678588867,
+              0.05596473067998886
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "3.smd_primitive1",
+          "vertices": 935,
+          "indices": 2529,
+          "worldBounds": {
+            "min": [
+              -0.20297521352767944,
+              1.1775025129318237,
+              -0.24788422882556915
+            ],
+            "max": [
+              0.20650428533554077,
+              1.6525635719299316,
+              0.11787606030702591
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "3.smd_primitive2",
+          "vertices": 62,
+          "indices": 114,
+          "worldBounds": {
+            "min": [
+              -0.1719246357679367,
+              1.3625144958496094,
+              0.03163577988743782
+            ],
+            "max": [
+              0.1719193011522293,
+              1.6051300764083862,
+              0.1217465028166771
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "4.smd_primitive0",
+          "vertices": 27,
+          "indices": 87,
+          "worldBounds": {
+            "min": [
+              -0.100555919110775,
+              1.2526742219924927,
+              -0.12926237285137177
+            ],
+            "max": [
+              0.1005530059337616,
+              1.379023790359497,
+              -0.004408800043165684
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "4.smd_primitive1",
+          "vertices": 408,
+          "indices": 1563,
+          "worldBounds": {
+            "min": [
+              -0.3801397979259491,
+              0.6246001720428467,
+              -0.1184442788362503
+            ],
+            "max": [
+              0.3768644332885742,
+              1.2563426494598389,
+              0.0740421712398529
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "arms.smd_primitive0",
+          "vertices": 40,
+          "indices": 138,
+          "worldBounds": {
+            "min": [
+              -0.10073491185903549,
+              1.173859715461731,
+              -0.12774576246738434
+            ],
+            "max": [
+              0.10073189437389374,
+              1.381477952003479,
+              0.022356705740094185
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "arms.smd_primitive1",
+          "vertices": 820,
+          "indices": 2484,
+          "worldBounds": {
+            "min": [
+              -0.3513123095035553,
+              0.7749496102333069,
+              -0.1251252144575119
+            ],
+            "max": [
+              0.3479345440864563,
+              1.2421993017196655,
+              0.08531281352043152
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "arms.smd_primitive2",
+          "vertices": 25,
+          "indices": 78,
+          "worldBounds": {
+            "min": [
+              -0.10073493421077728,
+              1.254903793334961,
+              -0.12861208617687225
+            ],
+            "max": [
+              0.10073195397853851,
+              1.3814778327941895,
+              -0.0035286990460008383
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "eyes.smd_primitive0",
+          "vertices": 57,
+          "indices": 189,
+          "worldBounds": {
+            "min": [
+              -0.07526834309101105,
+              1.3058627843856812,
+              0.03993099927902222
+            ],
+            "max": [
+              0.07526658475399017,
+              1.3541268110275269,
+              0.07111188769340515
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "eyes.smd_primitive1",
+          "vertices": 57,
+          "indices": 186,
+          "worldBounds": {
+            "min": [
+              -0.07540255039930344,
+              1.3056833744049072,
+              0.04006518796086311
+            ],
+            "max": [
+              0.07540079951286316,
+              1.3541330099105835,
+              0.07156756520271301
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "eyes.smd_primitive2",
+          "vertices": 112,
+          "indices": 345,
+          "worldBounds": {
+            "min": [
+              -0.07483304291963577,
+              1.3060815334320068,
+              0.03949466347694397
+            ],
+            "max": [
+              0.0748312920331955,
+              1.3541064262390137,
+              0.07049132138490677
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "face.smd_primitive0",
+          "vertices": 26,
+          "indices": 72,
+          "worldBounds": {
+            "min": [
+              -0.07639089971780777,
+              1.3303841352462769,
+              0.047813721001148224
+            ],
+            "max": [
+              0.0771050676703453,
+              1.3594355583190918,
+              0.0838373601436615
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "face.smd_primitive1",
+          "vertices": 630,
+          "indices": 2478,
+          "worldBounds": {
+            "min": [
+              -0.11891278624534607,
+              1.2265840768814087,
+              -0.1289827674627304
+            ],
+            "max": [
+              0.11905819922685623,
+              1.4690102338790894,
+              0.0976857990026474
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "glass1.smd",
+          "vertices": 65,
+          "indices": 177,
+          "worldBounds": {
+            "min": [
+              -0.09802711755037308,
+              1.3419796228408813,
+              -0.13370560109615326
+            ],
+            "max": [
+              0.09789730608463287,
+              1.4167613983154297,
+              0.09827134013175964
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "glass.smd",
+          "vertices": 16,
+          "indices": 60,
+          "worldBounds": {
+            "min": [
+              -0.014484766870737076,
+              1.3672791719436646,
+              0.09874778240919113
+            ],
+            "max": [
+              0.014878170564770699,
+              1.3965508937835693,
+              0.11156381666660309
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "hair1.smd",
+          "vertices": 279,
+          "indices": 1050,
+          "worldBounds": {
+            "min": [
+              -0.13050414621829987,
+              1.3010220527648926,
+              -0.18196040391921997
+            ],
+            "max": [
+              0.13240353763103485,
+              1.424797534942627,
+              0.13338026404380798
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "hair2.smd",
+          "vertices": 123,
+          "indices": 480,
+          "worldBounds": {
+            "min": [
+              -0.10148703306913376,
+              1.3039615154266357,
+              0.02884664759039879
+            ],
+            "max": [
+              0.09765398502349854,
+              1.4282892942428589,
+              0.12125895917415619
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "hairJ.smd",
+          "vertices": 1121,
+          "indices": 3900,
+          "worldBounds": {
+            "min": [
+              -0.20358309149742126,
+              1.1944833993911743,
+              -0.22272925078868866
+            ],
+            "max": [
+              0.2009105384349823,
+              1.593643069267273,
+              0.1864977777004242
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "legs.smd",
+          "vertices": 148,
+          "indices": 597,
+          "worldBounds": {
+            "min": [
+              -0.16208571195602417,
+              0.09853821992874146,
+              -0.08590040355920792
+            ],
+            "max": [
+              0.15519092977046967,
+              0.6619161367416382,
+              0.0783080905675888
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "pants.smd_primitive0",
+          "vertices": 78,
+          "indices": 183,
+          "worldBounds": {
+            "min": [
+              -0.1777372509241104,
+              0.11639579385519028,
+              -0.12574073672294617
+            ],
+            "max": [
+              0.184719979763031,
+              0.6343668699264526,
+              0.11066216975450516
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "pants.smd_primitive1",
+          "vertices": 233,
+          "indices": 597,
+          "worldBounds": {
+            "min": [
+              -0.18769529461860657,
+              0.11578092724084854,
+              -0.15881991386413574
+            ],
+            "max": [
+              0.17938794195652008,
+              0.630132257938385,
+              0.14713631570339203
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "pants.smd_primitive2",
+          "vertices": 516,
+          "indices": 1620,
+          "worldBounds": {
+            "min": [
+              -0.21596960723400116,
+              -0.018083104863762856,
+              -0.1321769654750824
+            ],
+            "max": [
+              0.21596595644950867,
+              0.9380885362625122,
+              0.24358981847763062
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "shirtrip.smd",
+          "vertices": 263,
+          "indices": 810,
+          "worldBounds": {
+            "min": [
+              -0.34672462940216064,
+              0.7754636406898499,
+              -0.129377543926239
+            ],
+            "max": [
+              0.34340375661849976,
+              0.9762537479400635,
+              0.1292969286441803
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        },
+        {
+          "name": "up.smd",
+          "vertices": 80,
+          "indices": 354,
+          "worldBounds": {
+            "min": [
+              -0.0313396230340004,
+              1.269083023071289,
+              0.02127809077501297
+            ],
+            "max": [
+              0.031390659511089325,
+              1.2941014766693115,
+              0.07781966775655746
+            ]
+          },
+          "skeleton": "survivor_coach_ARM",
+          "bones": 87,
+          "numBoneInfluencers": 4,
+          "gpuSkinning": true
+        }
+      ],
+      "animationGroups": 2,
+      "skeletons": 1,
+      "materials": [
+        {
+          "name": "Glass",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Glass (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Weapon",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Weapon (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Skin",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Skin (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Hair3",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Hair3 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "effect",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "effect (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Face2",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Face2 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Skin 1",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Skin 1 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "face1",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "face1 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Body",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Body (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "EyeShadow",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "EyeShadow (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "EyesHighlight",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "EyesHighlight (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "eyes",
+          "alpha": 1,
+          "transparencyMode": 2,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "eyes (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Hair4",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Hair4 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Face",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Face (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Body3",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Body3 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Hair1",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Hair1 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Hair2",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Hair2 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Hair",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Hair (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Pants1",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Pants1 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "PantsRip",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "PantsRip (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Pants",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Pants (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        },
+        {
+          "name": "Body4",
+          "alpha": 1,
+          "transparencyMode": 0,
+          "backFaceCulling": false,
+          "metallic": 0,
+          "roughness": 0.5,
+          "albedoTexture": {
+            "name": "Body4 (Base Color)",
+            "ready": true,
+            "gammaSpace": false,
+            "size": {
+              "width": 256,
+              "height": 256
+            }
+          },
+          "normalTexture": null
+        }
+      ],
+      "textures": [
+        {
+          "name": "data:EnvironmentBRDFTexture0",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "",
+          "ready": true,
+          "gammaSpace": true,
+          "size": {
+            "width": 352,
+            "height": 1
+          }
+        },
+        {
+          "name": "Glass (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Weapon (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Skin (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Hair3 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "effect (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Face2 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Skin 1 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "face1 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Body (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "EyeShadow (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "EyesHighlight (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "eyes (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Hair4 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Face (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Body3 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Hair1 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Hair2 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Hair (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Pants1 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "PantsRip (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Pants (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        },
+        {
+          "name": "Body4 (Base Color)",
+          "ready": true,
+          "gammaSpace": false,
+          "size": {
+            "width": 256,
+            "height": 256
+          }
+        }
+      ],
+      "shots": [
+        {
+          "name": "front",
+          "alpha": 1.5707963267948966,
+          "beta": 1.5707963267948966
+        },
+        {
+          "name": "back",
+          "alpha": -1.5707963267948966,
+          "beta": 1.5707963267948966
+        },
+        {
+          "name": "isometric",
+          "alpha": 0.7853981633974483,
+          "beta": 1.1635528346628863
+        }
+      ],
+      "sourceGameShaderParity": false,
+      "gameplayAcceptance": false
+    },
+    "images": [
+      {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1/front.png",
+        "bytes": 267191,
+        "sha256": "aee4e3b9720b592d7f28b3a608bbe80381de85b06ffa4daa3dace51d7394aee1"
+      },
+      {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1/back.png",
+        "bytes": 261894,
+        "sha256": "42bb6936881779f39cca1a6dcbac03aa2f287fa06c4a64e271ab8a73419397d2"
+      },
+      {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1/isometric.png",
+        "bytes": 245368,
+        "sha256": "c76e1653624885e535659314bc2c89753257ee55565241dda9f33549e9bd8aa1"
+      }
+    ]
+  },
+  "visualComparison": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json",
+    "bytes": 1966,
+    "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427",
+    "metricScope": "fixed Babylon WebGL front/back/isometric pixels; diagnostic only, not owner visual approval",
+    "maxForegroundDeltaGt20Pct": 25.6767,
+    "policyVisualLitPixelDeltaPctMax": 5,
+    "passedDiagnosticThreshold": false
+  },
+  "gates": {
+    "trianglesUnder8000": true,
+    "textureAtMost256": true,
+    "khronosErrorsZero": true,
+    "webglThreeViewsComplete": true,
+    "drawCallsAtMost6": false,
+    "visualDiagnosticAtMostPolicyThreshold": false
+  },
+  "shapeKeyStatus": "basis-bind-pose-only; 29 source expression keys intentionally removed before topology change and not advertised as preserved",
+  "acceptedForRuntime": false,
+  "backendRegistered": false,
+  "runtimeSelectable": false,
+  "productionDeployed": false,
+  "status": "rejected-technical-budget-and-visual-diagnostic; preserve-as-alternative-conversion-candidate",
+  "blockingReasons": [
+    "drawCalls=26 exceeds GGD guard limit=6 while keeping 22 source materials/texture slots.",
+    "fixed WebGL RGB diagnostic max=25.6767% exceeds policy visual threshold=5% (diagnostic is not owner acceptance).",
+    "source facial expression shape keys cannot coexist with topology-changing decimation; candidate retains only bind-pose Basis."
+  ]
+}

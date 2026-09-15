@@ -2,7 +2,7 @@
   "schema": "ggd.priority81.audio-overlay-receipt@1",
   "summary": {
     "baselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-    "currentMainRevision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+    "currentMainRevision": "dd986901652dac20bd4d1599950e3f30357f12b3",
     "baselineUniqueClipPaths": 1016,
     "currentMainUniqueClipPaths": 1247,
     "unchangedFrozenBaselinePaths": 73,
@@ -10,6 +10,7 @@
     "currentMainAddedPathsAfterBaseline": 314,
     "currentMainRemovedPathsAfterBaseline": 83,
     "currentBranchAdditionalFiles": 2,
+    "currentBranchOwnerReviewedReplacementFiles": 13,
     "currentUniqueClipPaths": 1249,
     "currentHeroesCompleteExtended11": 74,
     "mainMergedAdditions": false,
@@ -21,7 +22,8 @@
     "statusSha": true,
     "runtimeManifestSha": true,
     "combatOriginalsSha": true,
-    "allCurrentMainManifestFilesMatchGitAndWorktree": true,
+    "allCurrentMainManifestFilesMatchGitAndWorktree": false,
+    "ownerReviewedBranchReplacementFiles": 13,
     "frozenBaselineFileCount": 1016,
     "currentMainFileCount": 1247,
     "currentMainDeltaBalances": true
@@ -29,13 +31,13 @@
   "products": [
     {
       "path": "overlay.json",
-      "bytes": 6313764,
-      "sha256": "9b36c10c2daec96523270cce66551dd4060e6db3443763cb1bdff4f386aa0291"
+      "bytes": 8917908,
+      "sha256": "f8931cbea9e86c4d84096bba9617a45eb33d36fccba3cfb118cd2e6614f1d78a"
     },
     {
       "path": "current-per-hero.json",
-      "bytes": 589035,
-      "sha256": "6843c2d7acc1ba1ce6bc851a3025f033e6a21bf52106800a3d07fe9755108fce"
+      "bytes": 589734,
+      "sha256": "ead4e9eba1ad5974245ac567c87dc170dda105da25bb3665938faf55dab6308a"
     }
   ]
 }

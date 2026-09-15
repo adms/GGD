@@ -1,0 +1,16 @@
+{
+  "id": "community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "jump",
+    "attack": "two_hand_1",
+    "cast": "gun",
+    "hurt": "jump_land",
+    "death": "jump_land"
+  },
+  "yawOffsetDeg": 0
+}

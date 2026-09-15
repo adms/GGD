@@ -1,0 +1,37 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative-reproducibility@1",
+  "rebuildCount": 5,
+  "allGlbHashesIdentical": true,
+  "records": [
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "v2Sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+      "v3Sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+      "identical": true
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "v2Sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+      "v3Sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+      "identical": true
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "v2Sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+      "v3Sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+      "identical": true
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "v2Sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+      "v3Sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+      "identical": true
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "v2Sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+      "v3Sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+      "identical": true
+    }
+  ]
+}

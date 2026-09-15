@@ -40,6 +40,21 @@ class InventoryHandoff(unittest.TestCase):
                     with self.subTest(source=source['id'], group=group['id'], hero=hero_id):
                         self.assertIn(source['id'], [s['id'] for s in heroes[hero_id]['audioSources']])
 
+    def test_registered_non_default_options_remain_selectable_without_becoming_default(self):
+        inventory=json.loads((DATA/'inventory.json').read_text())
+        for hero in inventory['heroes']:
+            champion=REPO/'content/champions'/f"{hero['runtimeHeroId']}.json"
+            if not champion.exists(): continue
+            registered=json.loads(champion.read_text()).get('modelVersions',[])
+            for option in hero['options']:
+                matches=[v for v in registered if v['sourceModelKey']==option['key']]
+                if matches and all(v.get('automaticEligible') is False for v in matches):
+                    with self.subTest(hero=hero['id'],model=option['key']):
+                        self.assertFalse(option['defaultEligible'])
+                        self.assertNotEqual((hero['automaticDefault'] or {}).get('key'),option['key'])
+        kenshiro=next(h for h in inventory['heroes'] if h['id']=='godie-umal')
+        self.assertIn('ou99.464696-standard-v1',[o['key'] for o in kenshiro['options']])
+
     def test_source_release_priority_uses_verified_calendar_dates(self):
         from default_policy import source_release_rank
         newest={'sourceGameReleasedAt':'2018-12-07'}
@@ -118,10 +133,20 @@ class InventoryHandoff(unittest.TestCase):
         for entry in sources['entries']:
             self.assertIn(entry['target'], report)
             for source in entry['sources']: self.assertIn(source['submittedUrl'], report)
+        reconciled = {
+            'b2-popp': 'runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1',
+        }
         for approved in policy['approvedDerivatives']:
             default = heroes[approved['heroId']]['default']
-            self.assertEqual(default['id'], approved['sourceId'])
-            self.assertEqual(default['asset']['sha256'], approved['sha256'])
+            expected = reconciled.get(approved['heroId'], approved['sourceId'])
+            self.assertEqual(default['id'], expected)
+            if expected == approved['sourceId']:
+                self.assertEqual(default['asset']['sha256'], approved['sha256'])
+        # The only derivative replacement is pinned by a review receipt and is
+        # intentionally not treated as a blanket override for other heroes.
+        popp_receipt = DATA/'priority-evidence/infinity-strash-popp-review-decision/receipt.json'
+        self.assertTrue(popp_receipt.is_file())
+        self.assertEqual(heroes['b2-popp']['default']['id'], reconciled['b2-popp'])
         for hero in heroes.values():
             if hero['default'] and hero['defaultSelectionMode'] != 'manual': self.assertTrue(hero['default']['defaultEligible'])
             if hero['defaultSelectionMode'] == 'manual':
@@ -201,7 +226,7 @@ class InventoryHandoff(unittest.TestCase):
             script=target/'tools/hero-model-library/inventory.py'
             subprocess.run([sys.executable,str(script),'--check'],check=True,capture_output=True)
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'b2-popp','--json'],text=True)
-            self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'derivative:popp')
+            self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1')
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'小傑','--downloads','--json'],text=True)
             self.assertEqual(json.loads(result)['entries'][0]['purchaseHoldFor'],['godie-ucrl'])
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'岩谷尚文','--downloads','--json'],text=True)

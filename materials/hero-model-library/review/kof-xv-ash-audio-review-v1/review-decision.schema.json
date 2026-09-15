@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ggd.local/schema/kof-xv-ash-audio-review-decisions-v1.json",
+  "title": "KOF XV Ash per-clip listening decisions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "sourceFingerprint",
+    "reviewer",
+    "reviewedAt",
+    "runtimeMutationAllowed",
+    "decisions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ggd.kof-xv-ash-audio-listening-decisions@1"
+    },
+    "sourceFingerprint": {
+      "const": "8829db6c57f2cab605cae18b383a0f47eafc433723349f5de69a04532aef09e4"
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "runtimeMutationAllowed": {
+      "const": false
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 86,
+      "maxItems": 86,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidateId",
+          "listeningDecision",
+          "note",
+          "runtimeBindingAuthorized"
+        ],
+        "properties": {
+          "candidateId": {
+            "enum": [
+              "kof-xv-ash:1003528277",
+              "kof-xv-ash:1015054898",
+              "kof-xv-ash:1029677784",
+              "kof-xv-ash:1038048311",
+              "kof-xv-ash:1052984836",
+              "kof-xv-ash:121473550",
+              "kof-xv-ash:139502674",
+              "kof-xv-ash:161874140",
+              "kof-xv-ash:166298135",
+              "kof-xv-ash:175565711",
+              "kof-xv-ash:194490618",
+              "kof-xv-ash:209349635",
+              "kof-xv-ash:209913130",
+              "kof-xv-ash:216215522",
+              "kof-xv-ash:217705206",
+              "kof-xv-ash:226020996",
+              "kof-xv-ash:230814102",
+              "kof-xv-ash:231345151",
+              "kof-xv-ash:259611516",
+              "kof-xv-ash:276383484",
+              "kof-xv-ash:28406789",
+              "kof-xv-ash:284548473",
+              "kof-xv-ash:289080647",
+              "kof-xv-ash:308358693",
+              "kof-xv-ash:332406344",
+              "kof-xv-ash:341515386",
+              "kof-xv-ash:343558111",
+              "kof-xv-ash:35104084",
+              "kof-xv-ash:38492578",
+              "kof-xv-ash:385299439",
+              "kof-xv-ash:387442766",
+              "kof-xv-ash:3952716",
+              "kof-xv-ash:419866120",
+              "kof-xv-ash:431953123",
+              "kof-xv-ash:452741644",
+              "kof-xv-ash:45573332",
+              "kof-xv-ash:471749442",
+              "kof-xv-ash:511491144",
+              "kof-xv-ash:511650731",
+              "kof-xv-ash:518421855",
+              "kof-xv-ash:557019827",
+              "kof-xv-ash:558685684",
+              "kof-xv-ash:564671950",
+              "kof-xv-ash:568014308",
+              "kof-xv-ash:595531507",
+              "kof-xv-ash:599050362",
+              "kof-xv-ash:602004777",
+              "kof-xv-ash:623149594",
+              "kof-xv-ash:63093480",
+              "kof-xv-ash:647978648",
+              "kof-xv-ash:661510578",
+              "kof-xv-ash:671264410",
+              "kof-xv-ash:671628956",
+              "kof-xv-ash:676042652",
+              "kof-xv-ash:69463021",
+              "kof-xv-ash:702065729",
+              "kof-xv-ash:720725343",
+              "kof-xv-ash:737991623",
+              "kof-xv-ash:741334178",
+              "kof-xv-ash:750166558",
+              "kof-xv-ash:764593727",
+              "kof-xv-ash:764709521",
+              "kof-xv-ash:78005144",
+              "kof-xv-ash:784453333",
+              "kof-xv-ash:812664334",
+              "kof-xv-ash:821792270",
+              "kof-xv-ash:827871758",
+              "kof-xv-ash:844357734",
+              "kof-xv-ash:855165166",
+              "kof-xv-ash:856904937",
+              "kof-xv-ash:868741735",
+              "kof-xv-ash:87048175",
+              "kof-xv-ash:882484982",
+              "kof-xv-ash:908526792",
+              "kof-xv-ash:909844039",
+              "kof-xv-ash:935155286",
+              "kof-xv-ash:939894985",
+              "kof-xv-ash:943285579",
+              "kof-xv-ash:943596459",
+              "kof-xv-ash:952246165",
+              "kof-xv-ash:963578792",
+              "kof-xv-ash:965025921",
+              "kof-xv-ash:966204347",
+              "kof-xv-ash:973907177",
+              "kof-xv-ash:975346941",
+              "kof-xv-ash:998323975"
+            ]
+          },
+          "listeningDecision": {
+            "enum": [
+              "pending",
+              "auditioned-needs-classification",
+              "exclude-from-voice-candidates"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "runtimeBindingAuthorized": {
+            "const": false
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "ggd.kenshiro-ou99-static-visual-comparison@1",
+  "policyAuthority": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+  "litPixelContractMaxPct": 5.0,
+  "rows": [
+    {
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 3.482656,
+      "litClassificationXorPctAtLuma128": 2.433594,
+      "meanAbsoluteChannelDelta": 3.349146,
+      "maxChannelDelta": 172
+    },
+    {
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 3.665938,
+      "litClassificationXorPctAtLuma128": 2.403906,
+      "meanAbsoluteChannelDelta": 3.397008,
+      "maxChannelDelta": 170
+    },
+    {
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 7.761719,
+      "litClassificationXorPctAtLuma128": 2.83625,
+      "meanAbsoluteChannelDelta": 5.098514,
+      "maxChannelDelta": 208
+    }
+  ],
+  "maxLitClassificationXorPctAtLuma128": 2.83625,
+  "litPixelContractPassed": true,
+  "technicalInspection": {
+    "reviewer": "Codex bounded visual inspection",
+    "result": "passed",
+    "scope": "front, back and isometric silhouette, head, hair, hands, clothing, feet, materials and missing-part regression",
+    "finding": "No missing body section, material loss or whole-model breakup was observed; reduced edge detail is acceptable for this non-default candidate."
+  },
+  "contactSheet": {
+    "path": "evidence/ab-contact-sheet.png",
+    "bytes": 355428,
+    "sha256": "b1ce2bd7a729eb607664915d410c43e6fa58ed5b5bf646c915c4711e83052ced"
+  },
+  "sourceGameShaderParity": false,
+  "productionDeploymentVerified": false
+}

@@ -1,0 +1,16 @@
+{
+  "id": "community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "shoot",
+    "attack": "summon_monster",
+    "cast": "summon_tentacle",
+    "hurt": "shoot",
+    "death": "summon_monster"
+  },
+  "yawOffsetDeg": 0
+}

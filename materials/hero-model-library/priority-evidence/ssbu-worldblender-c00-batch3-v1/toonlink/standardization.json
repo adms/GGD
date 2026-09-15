@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-worldblender-c00-standardization@2",
+  "candidateId": "ssbu-toonlink-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/toonlink/model/body/c00/toonlink-c00.blend",
+    "bytes": 5256416,
+    "sha256": "c20a96b41fb5dfcf2e2c6a2d017b3248775efa6dc97d5a68ab92b9b01a4aafb6"
+  },
+  "sourceActionCount": 0,
+  "stages": {
+    "lodSelection": {
+      "excludedVisibleMeshPrefixes": [
+        "toonlink_LMabuta_VIS_O_OBJShape",
+        "toonlink_RMabuta_VIS_O_OBJShape"
+      ]
+    },
+    "decimation": {
+      "targetTriangles": 7900,
+      "errorBound": 0.02
+    },
+    "coalescingReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/coalescing.json",
+    "attributeHarmonizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/attribute-harmonization.json",
+    "nearDuplicateMaterialFinalizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/near-duplicate-material-finalization.json",
+    "primitiveMergeReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/primitive-merge.json",
+    "atlas": null,
+    "alphaAtlasFinalizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/alpha-atlas-finalization.json"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+    "bytes": 993100,
+    "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540"
+  },
+  "ultimate14MotionCandidate": {
+    "nuanmbPaths": 3,
+    "bodyMotionPaths": 3,
+    "uniqueTransformPayloads": 3,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false
+}

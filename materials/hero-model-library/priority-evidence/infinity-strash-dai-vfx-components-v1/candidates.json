@@ -1,0 +1,1860 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-component-candidates@1",
+  "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+  "character": {
+    "nativeId": "PN010",
+    "heroIds": [
+      "godie-nbbc",
+      "godie-n01c"
+    ],
+    "nameZh": "小呆／達伊",
+    "form": "PN010 source family; skill/form binding pending"
+  },
+  "inputs": {
+    "closure": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/source-manifest.json",
+      "bytes": 198636,
+      "sha256": "0c590b86a2350e017fcf14ea4b5a4799f525ef54436bcea88d5c0a04ad37aee6"
+    },
+    "textureUmodel": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v1-texture-export-fix/umodel",
+      "bytes": 1280976,
+      "sha256": "4fc7f059613f40fe380d196bd06a3703e423e1fff1dd5158fc4bb16e61c98bd1"
+    },
+    "meshUmodel": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/umodel",
+      "bytes": 1280976,
+      "sha256": "880600582a8b69a7d2872a76805be30e883694d30b7491d027a418d6656c95a1"
+    },
+    "assimp": {
+      "absolutePath": "/usr/local/Cellar/assimp/6.0.5/bin/assimp",
+      "bytes": 125040,
+      "sha256": "5e3ec1da224641cf22f941be4c387d59b640a11ac10ceddd15a779bdbfc233e1"
+    },
+    "generator": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/build_candidates.py",
+      "bytes": 25405,
+      "sha256": "0f3fa93d76b83a8f2a72620e25ace67e9b425ae0672e2bb5f25c53c41e27516c",
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-dai-vfx-components-v1/build_candidates.py"
+    }
+  },
+  "conversionParameters": {
+    "texture": {
+      "format": "PNG RGBA",
+      "maxEdge": 256,
+      "maxEdgeSource": "live vfx-model gate supplied by build.mts",
+      "resample": "Pillow LANCZOS",
+      "pillowVersion": "12.3.0"
+    },
+    "mesh": {
+      "source": "patched UModel glTF",
+      "container": "Assimp glb2"
+    }
+  },
+  "summary": {
+    "boundedRoots": 6,
+    "sourcePackageReferences": 94,
+    "textureOccurrencesExported": 25,
+    "textureComponents": 18,
+    "textureUtilitiesRetainedLocally": 7,
+    "textureComponentsWithinConfiguredEdge": 18,
+    "staticMeshPackages": 8,
+    "meshComponentsConverted": 8,
+    "niagaraSystemsConverted": 0,
+    "skillBindingsCreated": 0
+  },
+  "roots": [
+    {
+      "candidateId": "infinity-strash-vfx-pn010-00da6b3c486d",
+      "nativePackageStem": "NPS_Skl01_Flash_00",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uasset",
+          "bytes": 23131,
+          "sha256": "8e113598da1cdd58842da78f74e5f1e1b2a7c23fd204316a330bb0f2c636a123",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uexp",
+          "bytes": 182684,
+          "sha256": "e6e692d320a4ff2a011ce648ca2a1ec01107877de25a61c2f81be7f039bec121",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00",
+      "metrics": {
+        "emitters": 3,
+        "spriteRenderers": 0,
+        "meshRenderers": 3
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-b4a7e4c1252b",
+          "dai-vfx-texture-d3f0cfbb0fe1",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-06d60c9dc509",
+          "dai-vfx-mesh-1afaff4e7a06"
+        ],
+        "textures": 5,
+        "meshes": 2
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vfx-pn010-afbe0d0928c6",
+      "nativePackageStem": "NPS_PN010_Special02_Flash_00",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uasset",
+          "bytes": 22321,
+          "sha256": "10938fc8658be643d963071a113ba161cf07c07c4c939b3cb18c0d516c444177",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uexp",
+          "bytes": 149701,
+          "sha256": "d36787bb3d8ca8f1862707fd4279b74c107a42d1b048733ade8f6fd3c2ef45fe",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00",
+      "metrics": {
+        "emitters": 3,
+        "spriteRenderers": 0,
+        "meshRenderers": 3
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-3334415bf1cf",
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-06d60c9dc509",
+          "dai-vfx-mesh-1f03f74da354"
+        ],
+        "textures": 4,
+        "meshes": 2
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vfx-pn010-da25b103b4ab",
+      "nativePackageStem": "NPS_PN010_Special03_Slash_00",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uasset",
+          "bytes": 48615,
+          "sha256": "68853e4f8ef39cb498f1780c4e79169961879b8e81194ac0e68345caa559a45e",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uexp",
+          "bytes": 385364,
+          "sha256": "48d2105b193c4adfc00dd9dc452588e65066270ce0cfe685279b9779bcd70ff9",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00",
+      "metrics": {
+        "emitters": 7,
+        "spriteRenderers": 0,
+        "meshRenderers": 5
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-1d983aca2c50",
+          "dai-vfx-texture-278d1511f567",
+          "dai-vfx-texture-3334415bf1cf",
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-71e658468dee",
+          "dai-vfx-texture-760908689aab",
+          "dai-vfx-texture-79adb82807ab",
+          "dai-vfx-texture-9f7867d7fa2a",
+          "dai-vfx-texture-c6d05cb7cfc8",
+          "dai-vfx-texture-caa730676994",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-16ad660ce7bf",
+          "dai-vfx-mesh-2df98836a4fa",
+          "dai-vfx-mesh-3315cee29bd1",
+          "dai-vfx-mesh-ae3e9d7e829c",
+          "dai-vfx-mesh-b9c28ede0f0d"
+        ],
+        "textures": 12,
+        "meshes": 5
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vfx-pn010-4ffeb18ca7ae",
+      "nativePackageStem": "NPS_PN010_Special03_EnergyThunderA",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uasset",
+          "bytes": 17669,
+          "sha256": "f1214c993a673b18d3ddbbe570e47794337ebaa1c3837fa598ec9cf18202f1b4",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uexp",
+          "bytes": 114888,
+          "sha256": "61d1459db05f15e596f66c06d1e6b858b82fbfe287653dc1b1d40abda8e16256",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA",
+      "metrics": {
+        "emitters": 2,
+        "spriteRenderers": 2,
+        "meshRenderers": 0
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-b3c703088417",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [],
+        "textures": 4,
+        "meshes": 0
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vfx-pn010-5f482bb94989",
+      "nativePackageStem": "NPS_PN010_Special03_Jump_00",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uasset",
+          "bytes": 12576,
+          "sha256": "c44cd3a63a65f3c8a4e0f6a56d6182baf1cb9871b6f6bc53c4090e3b42e906ce",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uexp",
+          "bytes": 53340,
+          "sha256": "062cfa7b95b96e8679aeb609837b095025c021c28d1148e8fe9a8e044e7cd6f6",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00",
+      "metrics": {
+        "emitters": 1,
+        "spriteRenderers": 1,
+        "meshRenderers": 0
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-aa307baadef6",
+          "dai-vfx-texture-b660aa73e684",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [],
+        "textures": 5,
+        "meshes": 0
+      }
+    },
+    {
+      "candidateId": "infinity-strash-vfx-pn010-dc2a51f5b215",
+      "nativePackageStem": "NPS_PN010_Special03_Shuchusen_00",
+      "sourcePaths": [
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uasset",
+        "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uexp"
+      ],
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uasset",
+          "bytes": 13646,
+          "sha256": "8e9e507708bb5673a592e4ecc2132ae6bb89cd424887bae5f26a805bc42c281e",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uasset"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uexp",
+          "bytes": 75859,
+          "sha256": "d28221810316f669be2410ff54469c9ffb52b7dca7f818607eb90cf3802eb30a",
+          "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uexp"
+        }
+      ],
+      "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00",
+      "metrics": {
+        "emitters": 2,
+        "spriteRenderers": 2,
+        "meshRenderers": 0
+      },
+      "linkedComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-723415b1eff0",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "meshIds": [],
+        "textures": 4,
+        "meshes": 0
+      }
+    }
+  ],
+  "textureComponents": [
+    {
+      "reference": "/Engine/EngineMaterials/DefaultDiffuse",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/000-8abafab56a/EngineMaterials/DefaultDiffuse.tga",
+        "bytes": 2581912,
+        "sha256": "6fc942f6cd1dd4d79f155d42475088af3ff51de571c47d90b38e4fe3637a281a",
+        "path": "texture-export/000-8abafab56a/EngineMaterials/DefaultDiffuse.tga"
+      },
+      "componentId": "dai-vfx-texture-edc60f6df569",
+      "classification": "engine-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/6fc942f6cd1dd4d79f155d42475088af3ff51de571c47d90b38e4fe3637a281a.png",
+        "bytes": 127500,
+        "sha256": "edc60f6df56953045b56b8ef78ebcb75e255351fee301cf0765dd6697ba78e33",
+        "path": "normalized/6fc942f6cd1dd4d79f155d42475088af3ff51de571c47d90b38e4fe3637a281a.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 1024,
+          "height": 1024,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "8463e3cc32d6074fe605b56268bc5c5a17b1d9a07a0477c71d6fff665f781df7",
+      "sourceRelations": [
+        {
+          "reference": "/Engine/EngineMaterials/DefaultDiffuse",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/000-8abafab56a/EngineMaterials/DefaultDiffuse.tga",
+            "bytes": 2581912,
+            "sha256": "6fc942f6cd1dd4d79f155d42475088af3ff51de571c47d90b38e4fe3637a281a",
+            "path": "texture-export/000-8abafab56a/EngineMaterials/DefaultDiffuse.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/DebugNumberStrip",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/004-3a286f415e/DebugNumberStrip.tga",
+        "bytes": 32451,
+        "sha256": "55a60a6bd938fb39fb10b57dfb6af747c855acb92d8e0debcefcc5b865053311",
+        "path": "texture-export/004-3a286f415e/DebugNumberStrip.tga"
+      },
+      "componentId": "dai-vfx-texture-912a554e9634",
+      "classification": "engine-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/55a60a6bd938fb39fb10b57dfb6af747c855acb92d8e0debcefcc5b865053311.png",
+        "bytes": 8414,
+        "sha256": "912a554e96344ec47972dce507124eff08b5c41ecaabdb939f8a6e8bf5f28996",
+        "path": "normalized/55a60a6bd938fb39fb10b57dfb6af747c855acb92d8e0debcefcc5b865053311.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 128,
+          "height": 1024,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 32,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "2ba555226bc1c7a63643d8a2dd4eff448e621dcf9990d21fe91ae08f3759d417",
+      "sourceRelations": [
+        {
+          "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/DebugNumberStrip",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/004-3a286f415e/DebugNumberStrip.tga",
+            "bytes": 32451,
+            "sha256": "55a60a6bd938fb39fb10b57dfb6af747c855acb92d8e0debcefcc5b865053311",
+            "path": "texture-export/004-3a286f415e/DebugNumberStrip.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/Textures/DebugNumberPeriod",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/005-e3e26f07dd/Textures/DebugNumberPeriod.tga",
+        "bytes": 1117,
+        "sha256": "e6821bce0c931dc67e8f3d285251c82d5743734ee20355428d33b4b5ef7f94bf",
+        "path": "texture-export/005-e3e26f07dd/Textures/DebugNumberPeriod.tga"
+      },
+      "componentId": "dai-vfx-texture-39cb26958cd7",
+      "classification": "engine-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/e6821bce0c931dc67e8f3d285251c82d5743734ee20355428d33b4b5ef7f94bf.png",
+        "bytes": 471,
+        "sha256": "39cb26958cd7a6e2dee9804a0a434d9c9f59a48dbd348a92921557cc7ace0d3f",
+        "path": "normalized/e6821bce0c931dc67e8f3d285251c82d5743734ee20355428d33b4b5ef7f94bf.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "6d49dacc6e1ba36088e5446a66aed21d49546eb7937dc01d32ed17bad3b0c3b2",
+      "sourceRelations": [
+        {
+          "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/Textures/DebugNumberPeriod",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/005-e3e26f07dd/Textures/DebugNumberPeriod.tga",
+            "bytes": 1117,
+            "sha256": "e6821bce0c931dc67e8f3d285251c82d5743734ee20355428d33b4b5ef7f94bf",
+            "path": "texture-export/005-e3e26f07dd/Textures/DebugNumberPeriod.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/Textures/flipbook",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/006-e663ef990b/Textures/flipbook.tga",
+        "bytes": 4172,
+        "sha256": "45511cb83b1baee76722dacf06a70ee4f0fdfa06cdd7360bdf0b986b8b2aee9e",
+        "path": "texture-export/006-e663ef990b/Textures/flipbook.tga"
+      },
+      "componentId": "dai-vfx-texture-218f1a369639",
+      "classification": "engine-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/45511cb83b1baee76722dacf06a70ee4f0fdfa06cdd7360bdf0b986b8b2aee9e.png",
+        "bytes": 1656,
+        "sha256": "218f1a3696394c37ab5f485014d2932c7ce03aef6a83d09c4f0da066a4580175",
+        "path": "normalized/45511cb83b1baee76722dacf06a70ee4f0fdfa06cdd7360bdf0b986b8b2aee9e.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "cddef571e8724a16ef40340a002bab925fb64f6367bdfd74cb2f59f11bda1658",
+      "sourceRelations": [
+        {
+          "reference": "/Engine/Functions/Engine_MaterialFunctions02/ExampleContent/Textures/flipbook",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/006-e663ef990b/Textures/flipbook.tga",
+            "bytes": 4172,
+            "sha256": "45511cb83b1baee76722dacf06a70ee4f0fdfa06cdd7360bdf0b986b8b2aee9e",
+            "path": "texture-export/006-e663ef990b/Textures/flipbook.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/073-6d76009243/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf.tga",
+        "bytes": 1241,
+        "sha256": "73c09caea22972a55e6e44488fd8eb217661d448f22dc3609828cd7536f52527",
+        "path": "texture-export/073-6d76009243/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf.tga"
+      },
+      "componentId": "dai-vfx-texture-3334415bf1cf",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/73c09caea22972a55e6e44488fd8eb217661d448f22dc3609828cd7536f52527.png",
+        "bytes": 316,
+        "sha256": "3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6",
+        "path": "normalized/73c09caea22972a55e6e44488fd8eb217661d448f22dc3609828cd7536f52527.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+        "bytes": 316,
+        "sha256": "3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 512,
+          "height": 1,
+          "mode": "RGBA",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 1,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "1d29f58bfc485f9fe8ec2329cbf8003433307d2bcc74ff856c460b4ef36e6d86",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/073-6d76009243/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf.tga",
+            "bytes": 1241,
+            "sha256": "73c09caea22972a55e6e44488fd8eb217661d448f22dc3609828cd7536f52527",
+            "path": "texture-export/073-6d76009243/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradation_00_A_Tf.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/074-8cd749b246/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00.tga",
+        "bytes": 2066,
+        "sha256": "4d7f56829a1b6bf85b4697741fecf98d5fd5570f192338a7366b35773f4e453d",
+        "path": "texture-export/074-8cd749b246/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-b4a7e4c1252b",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/4d7f56829a1b6bf85b4697741fecf98d5fd5570f192338a7366b35773f4e453d.png",
+        "bytes": 302,
+        "sha256": "b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572",
+        "path": "normalized/4d7f56829a1b6bf85b4697741fecf98d5fd5570f192338a7366b35773f4e453d.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+        "bytes": 302,
+        "sha256": "b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 2,
+          "mode": "RGBA",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 2,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "6f9f859f93cde3f77a8d5ce5025f19052381f8367d4b793962cbafbaf9dcb66b",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/074-8cd749b246/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00.tga",
+            "bytes": 2066,
+            "sha256": "4d7f56829a1b6bf85b4697741fecf98d5fd5570f192338a7366b35773f4e453d",
+            "path": "texture-export/074-8cd749b246/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_U_Center_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/075-f35db46795/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00.tga",
+        "bytes": 1830,
+        "sha256": "ea3ac9494cefc1d6c00fd2ff037e9e82d29c683aa5b4157001c6d1588b7c753c",
+        "path": "texture-export/075-f35db46795/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-760908689aab",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/ea3ac9494cefc1d6c00fd2ff037e9e82d29c683aa5b4157001c6d1588b7c753c.png",
+        "bytes": 357,
+        "sha256": "760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b",
+        "path": "normalized/ea3ac9494cefc1d6c00fd2ff037e9e82d29c683aa5b4157001c6d1588b7c753c.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+        "bytes": 357,
+        "sha256": "760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 2,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 2,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "17f983edfa9175ccea3d97096d12c861ae135b6e509ed4e537c1af7de98a4a2e",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/075-f35db46795/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00.tga",
+            "bytes": 1830,
+            "sha256": "ea3ac9494cefc1d6c00fd2ff037e9e82d29c683aa5b4157001c6d1588b7c753c",
+            "path": "texture-export/075-f35db46795/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/076-d00479c7a3/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01.tga",
+        "bytes": 1658,
+        "sha256": "1ee173506c8d518ee1a455201069eb3f39e979a1ea3e514c01370a3c0a3e0a7e",
+        "path": "texture-export/076-d00479c7a3/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01.tga"
+      },
+      "componentId": "dai-vfx-texture-caa730676994",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/1ee173506c8d518ee1a455201069eb3f39e979a1ea3e514c01370a3c0a3e0a7e.png",
+        "bytes": 424,
+        "sha256": "caa730676994504155500df2228813205ac9304d435334e0257c04075decba44",
+        "path": "normalized/1ee173506c8d518ee1a455201069eb3f39e979a1ea3e514c01370a3c0a3e0a7e.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+        "bytes": 424,
+        "sha256": "caa730676994504155500df2228813205ac9304d435334e0257c04075decba44",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 2,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 2,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "9170b3a1606bff01e4a5280de8417b920be5c4bbc9d6ec1b1968ff93abfa7a05",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/076-d00479c7a3/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01.tga",
+            "bytes": 1658,
+            "sha256": "1ee173506c8d518ee1a455201069eb3f39e979a1ea3e514c01370a3c0a3e0a7e",
+            "path": "texture-export/076-d00479c7a3/Strash/VFX/Texture/Alpha/Gradient/T_ef_Gradient_V_Center_Tk_01.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/077-bda8b1bcab/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga",
+        "bytes": 63720,
+        "sha256": "debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34",
+        "path": "texture-export/077-bda8b1bcab/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-5e9552e7cdb1",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png",
+        "bytes": 9797,
+        "sha256": "5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289",
+        "path": "normalized/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+        "bytes": 9797,
+        "sha256": "5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 128,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 128,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "6091c12ee674cb5d6de9c9149507428978f090844867f670772aed2151146fb1",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/077-bda8b1bcab/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga",
+            "bytes": 63720,
+            "sha256": "debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34",
+            "path": "texture-export/077-bda8b1bcab/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/078-f174ba447b/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00.tga",
+        "bytes": 80897,
+        "sha256": "783e9ec97edd8f43fcbab30087858fe82a4f6bf8086ac41e3f067daa95502363",
+        "path": "texture-export/078-f174ba447b/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-9f7867d7fa2a",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/783e9ec97edd8f43fcbab30087858fe82a4f6bf8086ac41e3f067daa95502363.png",
+        "bytes": 17088,
+        "sha256": "9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3",
+        "path": "normalized/783e9ec97edd8f43fcbab30087858fe82a4f6bf8086ac41e3f067daa95502363.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+        "bytes": 17088,
+        "sha256": "9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "4a4738e1b8f1d043dd5c7779aa254095fc790b4f7b8ed90cfe84947d47378b58",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/078-f174ba447b/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00.tga",
+            "bytes": 80897,
+            "sha256": "783e9ec97edd8f43fcbab30087858fe82a4f6bf8086ac41e3f067daa95502363",
+            "path": "texture-export/078-f174ba447b/Strash/VFX/Texture/Alpha/Mask/T_ef_Mask00_tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/079-c2ab829ef0/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk.tga",
+        "bytes": 32618,
+        "sha256": "c9fa6be756f7f22bc3d261b04d9000e1a23e51313996b50379bb5041059cf5ef",
+        "path": "texture-export/079-c2ab829ef0/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk.tga"
+      },
+      "componentId": "dai-vfx-texture-278d1511f567",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/c9fa6be756f7f22bc3d261b04d9000e1a23e51313996b50379bb5041059cf5ef.png",
+        "bytes": 6739,
+        "sha256": "278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e",
+        "path": "normalized/c9fa6be756f7f22bc3d261b04d9000e1a23e51313996b50379bb5041059cf5ef.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+        "bytes": 6739,
+        "sha256": "278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 128,
+          "height": 128,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "bbce4befeee6bb864de05ef1aaa99e471d5fc987d4724e0268cef5ac7153b1e9",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/079-c2ab829ef0/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk.tga",
+            "bytes": 32618,
+            "sha256": "c9fa6be756f7f22bc3d261b04d9000e1a23e51313996b50379bb5041059cf5ef",
+            "path": "texture-export/079-c2ab829ef0/Strash/VFX/Texture/Alpha/Mask/T_ef_Radial_00_tk.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/080-3a3166793e/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01.tga",
+        "bytes": 5663,
+        "sha256": "00b1d08fa057802d6404ca5eb0128e53c54089eac0674e9af55c065b17cc9aaa",
+        "path": "texture-export/080-3a3166793e/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01.tga"
+      },
+      "componentId": "dai-vfx-texture-aa307baadef6",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/00b1d08fa057802d6404ca5eb0128e53c54089eac0674e9af55c065b17cc9aaa.png",
+        "bytes": 3837,
+        "sha256": "aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06",
+        "path": "normalized/00b1d08fa057802d6404ca5eb0128e53c54089eac0674e9af55c065b17cc9aaa.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+        "bytes": 3837,
+        "sha256": "aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 128,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 128,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "a8682538c06081484521d420b3a337d6a12444ca532a8c4e42ced32f06298b9b",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/080-3a3166793e/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01.tga",
+            "bytes": 5663,
+            "sha256": "00b1d08fa057802d6404ca5eb0128e53c54089eac0674e9af55c065b17cc9aaa",
+            "path": "texture-export/080-3a3166793e/Strash/VFX/Texture/Alpha/Mask/T_ef_Shock_ny_01.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/081-0e430c09aa/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00.tga",
+        "bytes": 89529,
+        "sha256": "a1d2de99acfca05664444fe9c702a945dc681dd584e1c6b17168b5c9ff6f050b",
+        "path": "texture-export/081-0e430c09aa/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00.tga"
+      },
+      "componentId": "dai-vfx-texture-d3f0cfbb0fe1",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/a1d2de99acfca05664444fe9c702a945dc681dd584e1c6b17168b5c9ff6f050b.png",
+        "bytes": 27825,
+        "sha256": "d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83",
+        "path": "normalized/a1d2de99acfca05664444fe9c702a945dc681dd584e1c6b17168b5c9ff6f050b.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+        "bytes": 27825,
+        "sha256": "d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "0317bf5c0f657ce59fcb005f3ba21f461a384fee013531852bcfac8653c7c691",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/081-0e430c09aa/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00.tga",
+            "bytes": 89529,
+            "sha256": "a1d2de99acfca05664444fe9c702a945dc681dd584e1c6b17168b5c9ff6f050b",
+            "path": "texture-export/081-0e430c09aa/Strash/VFX/Texture/Alpha/Mask/T_ef_mask_hf_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/082-44053cac7e/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00.tga",
+        "bytes": 641804,
+        "sha256": "805ed32a9525acd7689cb5d8b33d3da06c4168baf343ef0af629c2b6b7b36747",
+        "path": "texture-export/082-44053cac7e/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00.tga"
+      },
+      "componentId": "dai-vfx-texture-b660aa73e684",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/805ed32a9525acd7689cb5d8b33d3da06c4168baf343ef0af629c2b6b7b36747.png",
+        "bytes": 37723,
+        "sha256": "b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2",
+        "path": "normalized/805ed32a9525acd7689cb5d8b33d3da06c4168baf343ef0af629c2b6b7b36747.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+        "bytes": 37723,
+        "sha256": "b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 512,
+          "height": 512,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "8f0d3645ba7ed30fa63d1aa5f8c213f9996dbbaae75f9cc227b678ccd35a2ab1",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/082-44053cac7e/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00.tga",
+            "bytes": 641804,
+            "sha256": "805ed32a9525acd7689cb5d8b33d3da06c4168baf343ef0af629c2b6b7b36747",
+            "path": "texture-export/082-44053cac7e/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Aura_ny_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/083-bbe962ac13/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01.tga",
+        "bytes": 633854,
+        "sha256": "cb0add68e8809c58af70f3f39ed798e651b8301da5e6f96daa637a65f2b813bb",
+        "path": "texture-export/083-bbe962ac13/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01.tga"
+      },
+      "componentId": "dai-vfx-texture-c6d05cb7cfc8",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/cb0add68e8809c58af70f3f39ed798e651b8301da5e6f96daa637a65f2b813bb.png",
+        "bytes": 37716,
+        "sha256": "c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38",
+        "path": "normalized/cb0add68e8809c58af70f3f39ed798e651b8301da5e6f96daa637a65f2b813bb.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+        "bytes": 37716,
+        "sha256": "c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 512,
+          "height": 512,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "7d2f2c982519f120e6507a7dae68b83bf9feb25c9887778782b9b454094cbe4b",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/083-bbe962ac13/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01.tga",
+            "bytes": 633854,
+            "sha256": "cb0add68e8809c58af70f3f39ed798e651b8301da5e6f96daa637a65f2b813bb",
+            "path": "texture-export/083-bbe962ac13/Strash/VFX/Texture/Alpha/SeemLess/T_ef_SlashVanish_ny_01.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/084-549e277bf7/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00.tga",
+        "bytes": 154207,
+        "sha256": "aebef0a7904fc493a6356528721714b72be3ffd182d2e6aa417604d3af26210e",
+        "path": "texture-export/084-549e277bf7/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00.tga"
+      },
+      "componentId": "dai-vfx-texture-71e658468dee",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/aebef0a7904fc493a6356528721714b72be3ffd182d2e6aa417604d3af26210e.png",
+        "bytes": 46838,
+        "sha256": "71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c",
+        "path": "normalized/aebef0a7904fc493a6356528721714b72be3ffd182d2e6aa417604d3af26210e.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+        "bytes": 46838,
+        "sha256": "71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "7e24e620de69d729a3c9c58f0ea5800f0e212ee4c6b668448d46b1dd3c946578",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/084-549e277bf7/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00.tga",
+            "bytes": 154207,
+            "sha256": "aebef0a7904fc493a6356528721714b72be3ffd182d2e6aa417604d3af26210e",
+            "path": "texture-export/084-549e277bf7/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/085-24418aa86d/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01.tga",
+        "bytes": 97179,
+        "sha256": "8436f94db0f49e549e9c271ca3f76a21eccbc0dbf5db0e70a42947383a47513b",
+        "path": "texture-export/085-24418aa86d/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01.tga"
+      },
+      "componentId": "dai-vfx-texture-1d983aca2c50",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/8436f94db0f49e549e9c271ca3f76a21eccbc0dbf5db0e70a42947383a47513b.png",
+        "bytes": 22223,
+        "sha256": "1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e",
+        "path": "normalized/8436f94db0f49e549e9c271ca3f76a21eccbc0dbf5db0e70a42947383a47513b.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+        "bytes": 22223,
+        "sha256": "1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "6bd0dc344b2233807fdf01ba93a46eaf022a97a4214700c23a414e397f36d23e",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/085-24418aa86d/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01.tga",
+            "bytes": 97179,
+            "sha256": "8436f94db0f49e549e9c271ca3f76a21eccbc0dbf5db0e70a42947383a47513b",
+            "path": "texture-export/085-24418aa86d/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_sy_01.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/086-2c340bac22/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01.tga",
+        "bytes": 602061,
+        "sha256": "c79c1f07aae8349a5cb62b618e6e6bdb5b2e7def86d0c2a8e219489a359a280e",
+        "path": "texture-export/086-2c340bac22/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01.tga"
+      },
+      "componentId": "dai-vfx-texture-79adb82807ab",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/c79c1f07aae8349a5cb62b618e6e6bdb5b2e7def86d0c2a8e219489a359a280e.png",
+        "bytes": 28292,
+        "sha256": "79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d",
+        "path": "normalized/c79c1f07aae8349a5cb62b618e6e6bdb5b2e7def86d0c2a8e219489a359a280e.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+        "bytes": 28292,
+        "sha256": "79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 512,
+          "height": 512,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "46d206bf332302dec990a2d8c0b1f51e818d1e60c9ee656d4f713ece1332746d",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/086-2c340bac22/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01.tga",
+            "bytes": 602061,
+            "sha256": "c79c1f07aae8349a5cb62b618e6e6bdb5b2e7def86d0c2a8e219489a359a280e",
+            "path": "texture-export/086-2c340bac22/Strash/VFX/Texture/Alpha/SeemLess/T_ef_Vanish_tk_01.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/087-6eba9fddd7/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00.tga",
+        "bytes": 66122,
+        "sha256": "1e52dbcd5dc7e562b5648b3236d757617975486c8f718c1efc5bddf0cbe72da8",
+        "path": "texture-export/087-6eba9fddd7/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00.tga"
+      },
+      "componentId": "dai-vfx-texture-723415b1eff0",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/1e52dbcd5dc7e562b5648b3236d757617975486c8f718c1efc5bddf0cbe72da8.png",
+        "bytes": 16309,
+        "sha256": "723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62",
+        "path": "normalized/1e52dbcd5dc7e562b5648b3236d757617975486c8f718c1efc5bddf0cbe72da8.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+        "bytes": 16309,
+        "sha256": "723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 128,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 128,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "6e8778646ab790b5f340ba723d8382724c94fea75ff9e8659325213bf4561743",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/087-6eba9fddd7/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00.tga",
+            "bytes": 66122,
+            "sha256": "1e52dbcd5dc7e562b5648b3236d757617975486c8f718c1efc5bddf0cbe72da8",
+            "path": "texture-export/087-6eba9fddd7/Strash/VFX/Texture/Alpha/Speed/T_ef_Shock_ts_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/088-3986a9a0a1/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00.tga",
+        "bytes": 21,
+        "sha256": "eb03e7d82f33461756602993ef466b7d05c15463607198246b59904f9ec6d43b",
+        "path": "texture-export/088-3986a9a0a1/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-dc5687b50f70",
+      "classification": "vfx-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/eb03e7d82f33461756602993ef466b7d05c15463607198246b59904f9ec6d43b.png",
+        "bytes": 70,
+        "sha256": "dc5687b50f70cb95379bfced5a0eae768dd4382cd6b393ee77d65bbdd6373fbf",
+        "path": "normalized/eb03e7d82f33461756602993ef466b7d05c15463607198246b59904f9ec6d43b.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 1,
+          "height": 1,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 1,
+          "height": 1,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "1aa6df6407f665a9bd9b35a0c5fa7db2b13966095a94736558bde04f9d0ea30f",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/088-3986a9a0a1/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00.tga",
+            "bytes": 21,
+            "sha256": "eb03e7d82f33461756602993ef466b7d05c15463607198246b59904f9ec6d43b",
+            "path": "texture-export/088-3986a9a0a1/Strash/VFX/Texture/Alpha/T_ef_Black_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/089-6aacad9936/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02.tga",
+        "bytes": 75698,
+        "sha256": "dacbc48ed83fe9fb5a8ee9d0dfd21fc0c3e8072a890a2292053c372375d73888",
+        "path": "texture-export/089-6aacad9936/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02.tga"
+      },
+      "componentId": "dai-vfx-texture-b3c703088417",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/dacbc48ed83fe9fb5a8ee9d0dfd21fc0c3e8072a890a2292053c372375d73888.png",
+        "bytes": 25203,
+        "sha256": "b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9",
+        "path": "normalized/dacbc48ed83fe9fb5a8ee9d0dfd21fc0c3e8072a890a2292053c372375d73888.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+        "bytes": 25203,
+        "sha256": "b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 512,
+          "height": 512,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "c2bf5967c1c8ed3311f4596981474d3262e634db257e2a319c862fe07713379a",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/089-6aacad9936/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02.tga",
+            "bytes": 75698,
+            "sha256": "dacbc48ed83fe9fb5a8ee9d0dfd21fc0c3e8072a890a2292053c372375d73888",
+            "path": "texture-export/089-6aacad9936/Strash/VFX/Texture/Alpha/Thunder/T_ef_Thunder_ts_02.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/090-40e6ebcdee/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00.tga",
+        "bytes": 21,
+        "sha256": "dc73fb231994954f992db70429477e816915927fcf7128b3d841ccd661724e2c",
+        "path": "texture-export/090-40e6ebcdee/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-0cc4acc2e9ab",
+      "classification": "vfx-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/dc73fb231994954f992db70429477e816915927fcf7128b3d841ccd661724e2c.png",
+        "bytes": 70,
+        "sha256": "0cc4acc2e9abb600ff3fa032daa5e68cd6a0be87ec7c9de61dbf366fc87de0fc",
+        "path": "normalized/dc73fb231994954f992db70429477e816915927fcf7128b3d841ccd661724e2c.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 1,
+          "height": 1,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 1,
+          "height": 1,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "2c9ddb45ddff7072b524b5dc83b8dc6d8ec2517bcc3e95eb0f2cfacf110b465b",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/090-40e6ebcdee/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00.tga",
+            "bytes": 21,
+            "sha256": "dc73fb231994954f992db70429477e816915927fcf7128b3d841ccd661724e2c",
+            "path": "texture-export/090-40e6ebcdee/Strash/VFX/Texture/Alpha/system/T_ef_Blank_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Color/T_Flowmap_Tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/091-9762810553/Strash/VFX/Texture/Color/T_Flowmap_Tk_00.tga",
+        "bytes": 210618,
+        "sha256": "ee7abb832dbcaffd820a639747384525386d1a360f20753af734ddee6cc42f90",
+        "path": "texture-export/091-9762810553/Strash/VFX/Texture/Color/T_Flowmap_Tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-35027d881f17",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/ee7abb832dbcaffd820a639747384525386d1a360f20753af734ddee6cc42f90.png",
+        "bytes": 43862,
+        "sha256": "35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f",
+        "path": "normalized/ee7abb832dbcaffd820a639747384525386d1a360f20753af734ddee6cc42f90.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+        "bytes": 43862,
+        "sha256": "35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "66dcf05cdbf52e1f6645e17f582d209f6a3d9ed9e6732079f59353df6f9074b4",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Color/T_Flowmap_Tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/091-9762810553/Strash/VFX/Texture/Color/T_Flowmap_Tk_00.tga",
+            "bytes": 210618,
+            "sha256": "ee7abb832dbcaffd820a639747384525386d1a360f20753af734ddee6cc42f90",
+            "path": "texture-export/091-9762810553/Strash/VFX/Texture/Color/T_Flowmap_Tk_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Color/T_OverRay_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/092-b070ee20a6/Strash/VFX/Texture/Color/T_OverRay_00.tga",
+        "bytes": 135061,
+        "sha256": "f0fd7c5e269d3919459926bc3cfcb7124ef35d5229b0d2e10468c0fd1bd002a2",
+        "path": "texture-export/092-b070ee20a6/Strash/VFX/Texture/Color/T_OverRay_00.tga"
+      },
+      "componentId": "dai-vfx-texture-e3cf25c6edcd",
+      "classification": "vfx-texture-component",
+      "componentEligible": true,
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/f0fd7c5e269d3919459926bc3cfcb7124ef35d5229b0d2e10468c0fd1bd002a2.png",
+        "bytes": 61350,
+        "sha256": "e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118",
+        "path": "normalized/f0fd7c5e269d3919459926bc3cfcb7124ef35d5229b0d2e10468c0fd1bd002a2.png"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+        "bytes": 61350,
+        "sha256": "e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118",
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png"
+      },
+      "metrics": {
+        "source": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "a3bf773ba42f94102622cf98a5b7cecce21ddf17ddfeb509c19c8daceeb8fb20",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Color/T_OverRay_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/092-b070ee20a6/Strash/VFX/Texture/Color/T_OverRay_00.tga",
+            "bytes": 135061,
+            "sha256": "f0fd7c5e269d3919459926bc3cfcb7124ef35d5229b0d2e10468c0fd1bd002a2",
+            "path": "texture-export/092-b070ee20a6/Strash/VFX/Texture/Color/T_OverRay_00.tga"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "/Game/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/093-608696b142/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00.tga",
+        "bytes": 306219,
+        "sha256": "1d008d64d51b2a5490c705f15d254aa3e3ec033227aeefad45ea8bee891dffca",
+        "path": "texture-export/093-608696b142/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00.tga"
+      },
+      "componentId": "dai-vfx-texture-73526ebed7e5",
+      "classification": "vfx-utility",
+      "componentEligible": false,
+      "gitPath": null,
+      "normalizedLocal": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/normalized/1d008d64d51b2a5490c705f15d254aa3e3ec033227aeefad45ea8bee891dffca.png",
+        "bytes": 20315,
+        "sha256": "73526ebed7e598f5520ce010a3d9d7e01aa227d2f6b563ff6b91e19932c2b71e",
+        "path": "normalized/1d008d64d51b2a5490c705f15d254aa3e3ec033227aeefad45ea8bee891dffca.png"
+      },
+      "output": null,
+      "metrics": {
+        "source": {
+          "width": 1024,
+          "height": 1024,
+          "mode": "RGB",
+          "format": "TGA"
+        },
+        "output": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "format": "PNG"
+        }
+      },
+      "umodelReturnCode": 0,
+      "logSha256": "47c933e8126d8ad3631f731c191cb602582c5451998739d17447b075b145837d",
+      "sourceRelations": [
+        {
+          "reference": "/Game/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00",
+          "source": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/texture-export/093-608696b142/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00.tga",
+            "bytes": 306219,
+            "sha256": "1d008d64d51b2a5490c705f15d254aa3e3ec033227aeefad45ea8bee891dffca",
+            "path": "texture-export/093-608696b142/Strash/VFX/Texture/Color/T_ef_C_Check_tk_00.tga"
+          }
+        }
+      ]
+    }
+  ],
+  "meshComponents": [
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_CrossPlane_Offset_ny_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_CrossPlane_Offset_ny_01.uasset",
+        "bytes": 2528,
+        "sha256": "06b76ec07a6ea5007d9c8b87d43a2e30b930de5a21429bee49619afe016f5ad5"
+      },
+      "componentId": "dai-vfx-mesh-1afaff4e7a06",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/065-e76a993e84/SM_CrossPlane_Offset_ny_01.glb",
+        "bytes": 2456,
+        "sha256": "1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394",
+        "path": "glb/065-e76a993e84/SM_CrossPlane_Offset_ny_01.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394.glb",
+      "metrics": {
+        "triangles": 4,
+        "vertices": 8,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "06473c014950c3f6ef738231201a40dd0ddbac853adfb23577a64367c5a54bc2"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Disk_ts_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Disk_ts_00.uasset",
+        "bytes": 2467,
+        "sha256": "9f4ccedfacce5986bded240e5eea093adc75a63d8ea7f5aa762118bd6f958791"
+      },
+      "componentId": "dai-vfx-mesh-1f03f74da354",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/066-3d25d4792b/SM_ef_Disk_ts_00.glb",
+        "bytes": 9116,
+        "sha256": "1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d",
+        "path": "glb/066-3d25d4792b/SM_ef_Disk_ts_00.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d.glb",
+      "metrics": {
+        "triangles": 48,
+        "vertices": 142,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "c9e87ecb3e9260bc36dbc9ca46bb883e97070a81e6e544e195521bcd3db1f43b"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00.uasset",
+        "bytes": 2477,
+        "sha256": "90b962668a6b948bd0e549ddb6e1b836a1cb5ff95c0704024cb86142b09d8136"
+      },
+      "componentId": "dai-vfx-mesh-2df98836a4fa",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/067-97a5bff0aa/SM_ef_Simple_Plane_tk_00.glb",
+        "bytes": 1868,
+        "sha256": "2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef",
+        "path": "glb/067-97a5bff0aa/SM_ef_Simple_Plane_tk_00.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef.glb",
+      "metrics": {
+        "triangles": 2,
+        "vertices": 4,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "177100e54f650250a26ab6edaf2c38e71cd5d9f0caa3fd8f544213e2babec326"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00.uasset",
+        "bytes": 2499,
+        "sha256": "21786abab197c647139e5ebfd4866ba75b999c49751afbf38905f7d06bac0d67"
+      },
+      "componentId": "dai-vfx-mesh-06d60c9dc509",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/068-8a78c6efca/SM_Flash_tk_00.glb",
+        "bytes": 9652,
+        "sha256": "06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795",
+        "path": "glb/068-8a78c6efca/SM_Flash_tk_00.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795.glb",
+      "metrics": {
+        "triangles": 136,
+        "vertices": 108,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "ce31d1495a00cebbe40f891dcd438295cac3ce99444261271f6c7514759fbbec"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Slash/SM_SlashHead_tk_02",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/SM_SlashHead_tk_02.uasset",
+        "bytes": 2460,
+        "sha256": "479766486f46f83e2516a78716b86c94207411562dbd32fa9c6e5b71776c503d"
+      },
+      "componentId": "dai-vfx-mesh-b9c28ede0f0d",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/069-d1be24e266/SM_SlashHead_tk_02.glb",
+        "bytes": 57148,
+        "sha256": "b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5",
+        "path": "glb/069-d1be24e266/SM_SlashHead_tk_02.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5.glb",
+      "metrics": {
+        "triangles": 512,
+        "vertices": 1024,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "9d1304b599d70a52b3ae614c9a16fd84928db3fc25f7f856abf8cf6bbb68a7d6"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Slash/SM_SlashHead_tk_04",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/SM_SlashHead_tk_04.uasset",
+        "bytes": 2460,
+        "sha256": "98764d7d39cf13737fef18893cf76a905974d9b345c0950f69257fbd00dfd7cb"
+      },
+      "componentId": "dai-vfx-mesh-16ad660ce7bf",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/070-046e1b17da/SM_SlashHead_tk_04.glb",
+        "bytes": 26476,
+        "sha256": "16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe",
+        "path": "glb/070-046e1b17da/SM_SlashHead_tk_04.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe.glb",
+      "metrics": {
+        "triangles": 512,
+        "vertices": 387,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "e37f48b84c01b2c2fda30a5d6e02becee21fcaa7b14c145011cfe389695515a4"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Slash/SM_Slash_ny_01",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/SM_Slash_ny_01.uasset",
+        "bytes": 2452,
+        "sha256": "244f4680a7285ad196dabc8ad4003722800b8e3951916fed0be9eb56018e515c"
+      },
+      "componentId": "dai-vfx-mesh-ae3e9d7e829c",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/071-05964d7582/SM_Slash_ny_01.glb",
+        "bytes": 57140,
+        "sha256": "ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815",
+        "path": "glb/071-05964d7582/SM_Slash_ny_01.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815.glb",
+      "metrics": {
+        "triangles": 512,
+        "vertices": 1024,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "323615875cd4f7126f7d5a4db8c46365673e59e9eb5ea2728e30291dcb6af093"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Slash/S_Slash_tk_00",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/S_Slash_tk_00.uasset",
+        "bytes": 2450,
+        "sha256": "17fda40ecbc81f3f36c19a929eb60a3af5012ec1f7585bf1c73267e89386d2f1"
+      },
+      "componentId": "dai-vfx-mesh-3315cee29bd1",
+      "converted": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-vfx-components-v1/glb/072-bb24aacae7/S_Slash_tk_00.glb",
+        "bytes": 3792,
+        "sha256": "3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0",
+        "path": "glb/072-bb24aacae7/S_Slash_tk_00.glb"
+      },
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0.glb",
+      "metrics": {
+        "triangles": 40,
+        "vertices": 33,
+        "drawPrimitives": 1,
+        "materials": 2,
+        "animations": 0,
+        "embeddedImages": 0
+      },
+      "policyRole": "vfx-model",
+      "policyCheck": "generated-separately-from-live-gate",
+      "umodelReturnCode": 0,
+      "assimpReturnCode": 0,
+      "logSha256": "36c3601a61dae8caf3a34c946e0de813d209e550108dc8a0166c885b812eb2b9"
+    }
+  ],
+  "states": {
+    "sourceClosureComplete": true,
+    "supportComponentsConverted": true,
+    "niagaraTimingRecovered": false,
+    "ggdVfxBuilt": false,
+    "visualAcceptance": "pending-owner-review-of-static-components",
+    "skillBindingsCreated": 0,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3": {
+    "rawAndConversionBackup": "s3-full-readback-and-member-sha256-verified",
+    "source": {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-intakes/infinity-strash-dai-vfx-components-v1/2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-intakes/infinity-strash-dai-vfx-components-v1/2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8.files.json",
+      "bytes": 2733605,
+      "sha256": "2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8",
+      "fileCount": 213
+    },
+    "conversion": {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-dai-vfx-components-v1/0fb0eeaab765269ea880b66dc9e4c4f0a19c5e894044bd1f5d73a25f8c21b777.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-dai-vfx-components-v1/0fb0eeaab765269ea880b66dc9e4c4f0a19c5e894044bd1f5d73a25f8c21b777.files.json",
+      "bytes": 3271600,
+      "sha256": "0fb0eeaab765269ea880b66dc9e4c4f0a19c5e894044bd1f5d73a25f8c21b777",
+      "fileCount": 115
+    },
+    "s3Use": "backup-only-not-runtime-entry"
+  },
+  "blockers": [
+    "Cooked Niagara emitter execution order, burst/spawn timing, lifetime and curve semantics are not decoded.",
+    "Material dynamic parameters and renderer bindings are not reconstructed.",
+    "The six source-native names identify PN010 skill families but do not prove a GGD ability-slot mapping."
+  ],
+  "claim": "PNG and GLB rows are byte-pinned support-component candidates only. They are not complete VFX and have no skill/runtime binding.",
+  "createdAt": "2026-09-14T00:13:28.435008+00:00"
+}

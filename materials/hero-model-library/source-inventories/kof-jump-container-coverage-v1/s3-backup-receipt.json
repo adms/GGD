@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.files.json",
+  "archiveSha256": "64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36",
+  "archiveBytes": 3571119,
+  "fileCount": 56,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xiv-priority-vfx-textures-20260914-v1/82330854028c145925fd3db84065351d43ac19e8593fafe0c84aa9a6047f77bf/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xiv-priority-vfx-textures-20260914-v1/82330854028c145925fd3db84065351d43ac19e8593fafe0c84aa9a6047f77bf/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kof-xiv-priority-vfx-textures-20260914-v1/82330854028c145925fd3db84065351d43ac19e8593fafe0c84aa9a6047f77bf/manifest.json"
+}

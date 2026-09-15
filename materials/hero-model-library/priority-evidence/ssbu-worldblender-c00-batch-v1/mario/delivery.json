@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-worldblender-c00-component-delivery@1",
+  "componentId": "ssbu-mario-c00-static-skinned-v2",
+  "label": "瑪利歐 SSBU Ultimate c00 黑底修復版",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "nameZh": "瑪利歐",
+    "originalName": "Mario",
+    "nativeId": "fighter/mario/model/body/c00",
+    "variant": "c00"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+    "bytes": 9190080,
+    "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
+    "bytes": 865396,
+    "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/rebuild/body.glb",
+    "bytes": 865396,
+    "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257"
+  },
+  "metrics": {
+    "triangles": 7189,
+    "drawPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 98,
+    "textureCount": 6,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "budgetErrors": 0,
+    "finiteFloatValuesChecked": 101330,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.files.json",
+    "archiveSha256": "4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686",
+    "archiveBytes": 4705821,
+    "fileCount": 31,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true
+  },
+  "gaps": [
+    "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+    "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+    "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+  ]
+}

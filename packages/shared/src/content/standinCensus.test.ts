@@ -128,9 +128,10 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   //   ⛔ 而刪掉會讓「又有人搬回來」變成靜默（這一條原本就寫在 rogue 那一格上）。
   "champ.sela": ["sela"],
   "champ.thorne": ["thorne"],
-  // blocky-barbarian.glb —— ⭐ 這一格**還有兩位**，⛔ 而它們不是「借替身」：
-  //   `godie-h02k` 與 `godie-umal` 共用同一顆，那是既有的共用，⛔ 不是回退。
-  "champ.skin.barbarian": ["godie-h02k", "godie-umal"],
+  // blocky-barbarian.glb —— `godie-h02k` 仍直接借用這顆共享 rig。
+  // `godie-umal` 已改指版本模型文件；該文件的 glb 仍是生成替身，所以在下面的
+  // 非 rig／間接替身名單逐位列出，避免把 modelKey 關係與實際 glb 身分混在一起。
+  "champ.skin.barbarian": ["godie-h02k"],
   "champ.skin.rogue": [],
 };
 
@@ -166,7 +167,7 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     // 替身徽章／身分排序／對外 resolved-appearance 讀的是 `standInBody`（看 glb 住在哪）。
     // ⛔ 兩個分母在此之前沒有任何一條對起來 ⇒ `godie-zombiex`（blocky-undead.glb，不是 rig）兩邊各說各話。
     // ⭐ 非 rig 的替身逐位列名：換成本人模型的那一位從這裡劃掉；多出一位 ⇒ 紅並指名。
-    const NON_RIG_STAND_INS = ["godie-zombiex"];
+    const NON_RIG_STAND_INS = ["godie-umal", "godie-zombiex"];
     const models = readShippedModelDocs(CONTENT);
     const derived = ROSTER.filter((c) => isStandInModel(c.modelKey, models.get(c.modelKey ?? "") ?? null)).map((c) => c.id);
     const rigTenants = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);

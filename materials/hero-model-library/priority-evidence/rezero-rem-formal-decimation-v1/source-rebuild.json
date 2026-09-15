@@ -1,0 +1,20 @@
+{
+  "schema": "ggd.rezero-rem-formal-decimation-rebuild@1",
+  "componentId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+    "bytes": 1041264,
+    "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/rebuild/rem-weighted-7990.glb",
+    "bytes": 1041264,
+    "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+  },
+  "byteIdenticalRebuild": true,
+  "validationEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/validation.json",
+    "bytes": 2110,
+    "sha256": "ebde6551891b00ce13be39cb9d3fa03ac15a7a790d66aa5e27875b2d93c7c6bb"
+  }
+}

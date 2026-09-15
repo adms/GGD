@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.files.json",
+  "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+  "archiveBytes": 123378,
+  "fileCount": 28,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-static-pose-derivatives-v2/5b7f191a8e6cfd99467e11dd3e1b0979db63dbc60fcbf744541778321ba64cd0/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-static-pose-derivatives-v2/5b7f191a8e6cfd99467e11dd3e1b0979db63dbc60fcbf744541778321ba64cd0/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-static-pose-derivatives-v2/5b7f191a8e6cfd99467e11dd3e1b0979db63dbc60fcbf744541778321ba64cd0/manifest.json"
+}

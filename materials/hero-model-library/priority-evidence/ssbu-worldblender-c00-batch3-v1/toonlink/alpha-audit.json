@@ -1,0 +1,161 @@
+{
+  "schema": "ggd-worldblender-material-alpha-audit@1",
+  "files": [
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "skin_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "skin_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "alp_toonlink_001",
+          "alphaMode": "BLEND",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "alp_toonlink_001_col",
+          "alphaMinimum": 254,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "def_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "def_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "metal_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "metal_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": "mouth_toonlink_002",
+          "alphaMode": "BLEND",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "skin_toonlink_002_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 5,
+          "materialName": "EyeL",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 5,
+          "imageIndex": 5,
+          "imageName": "EyeL.ggd-opaque-base-color",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 6,
+          "materialName": "EyeR",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 5,
+          "imageIndex": 5,
+          "imageName": "EyeL.ggd-opaque-base-color",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    },
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/rebuild/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "skin_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "skin_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "alp_toonlink_001",
+          "alphaMode": "BLEND",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "alp_toonlink_001_col",
+          "alphaMinimum": 254,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "def_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "def_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "metal_toonlink_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "metal_toonlink_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": "mouth_toonlink_002",
+          "alphaMode": "BLEND",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "skin_toonlink_002_col.png.ggd-256",
+          "alphaMinimum": 0,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 5,
+          "materialName": "EyeL",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 5,
+          "imageIndex": 5,
+          "imageName": "EyeL.ggd-opaque-base-color",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 6,
+          "materialName": "EyeR",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 5,
+          "imageIndex": 5,
+          "imageName": "EyeL.ggd-opaque-base-color",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "opaqueTransparentBlockers": 0
+}

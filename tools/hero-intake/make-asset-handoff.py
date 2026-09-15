@@ -81,13 +81,21 @@ for h in ship34.get('heroes', []):
             print("   ⇒ 用 ship34.json 檔頭的 invocation 重跑 hero-intake，再重產交接單")
             raise SystemExit(2)
         asset = R/current.get('gitPath', '')
-        if not asset.is_file():
-            print(f"⛔ 中央元件的 Git 實檔不存在：{h['id']}／{cid}／{current.get('gitPath')}")
-            raise SystemExit(2)
-        payload = asset.read_bytes()
-        if len(payload) != current.get('bytes') or hashlib.sha256(payload).hexdigest() != current.get('sha256'):
-            print(f"⛔ 中央元件的位元組數或 SHA-256 不符：{h['id']}／{cid}／{current.get('gitPath')}")
-            raise SystemExit(2)
+        if current.get('storageClass') == 's3-legacy-preparation':
+            split = component_index.get('s3PreparationSplit', {})
+            if (split.get('fullGetAndEveryFileVerified') is not True
+                    or current.get('s3Uri') != split.get('s3Uri')
+                    or not current.get('s3ArchiveMember')):
+                print(f"⛔ 中央元件的 S3 分割收據不完整：{h['id']}／{cid}")
+                raise SystemExit(2)
+        else:
+            if not asset.is_file():
+                print(f"⛔ 中央元件的 Git 實檔不存在：{h['id']}／{cid}／{current.get('gitPath')}")
+                raise SystemExit(2)
+            payload = asset.read_bytes()
+            if len(payload) != current.get('bytes') or hashlib.sha256(payload).hexdigest() != current.get('sha256'):
+                print(f"⛔ 中央元件的位元組數或 SHA-256 不符：{h['id']}／{cid}／{current.get('gitPath')}")
+                raise SystemExit(2)
 
 rig = [x for x in A if x['rig'][0].startswith('⛔')]
 voice_gap = [x for x in A if x['voice'][0].startswith('⛔') and x['id'] not in NON]
@@ -361,7 +369,7 @@ for h in s34_components:
     actions = f"{native} 段" + (f"（{names}）" if names else "")
     w(f"| {h['name']} | `{h['id']}` | {components} | {actions} | GGD 英雄定義、技能綁定、model@1／標準六動作映射、後台選項與實際切換驗證 |")
 w("")
-w(f"⭐ 這 {len(s34_components)} 支共有 {sum(h['model'].get('componentCount', 0) for h in s34_components)} 個元件；Git 實檔、位元組數與 SHA-256 均由 `hero-intake` 產生器重驗。")
+w(f"⭐ 這 {len(s34_components)} 支共有 {sum(h['model'].get('componentCount', 0) for h in s34_components)} 個元件；Git 實檔或 #1252 已完整讀回的 S3 成員、位元組數與 SHA-256 均由產生器重驗。")
 w("⛔ `fullHeroModel=false`、`heroIds=[]`、`runtimeSelectable=false`：它們是成品庫裡的合格獨立元件，仍不是完整英雄，也還不能在後台切換。")
 w("⇒ 繼續補標準動作集與角色／技能設計，再建立 model@1、角色綁定和後台選項；不能重複下載已有的模型元件。")
 if s34_nomodel:

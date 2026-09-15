@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-ssbu-ultimate14-matching-motion-delivery@1",
+  "componentId": "ssbu-chrom-c00-ultimate14-motion-v1",
+  "fighterId": "chrom",
+  "model": {
+    "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+    "bytes": 1942664,
+    "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e"
+  },
+  "validation": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/validation.json",
+    "bytes": 11758,
+    "sha256": "c1587e9d5088a3db4cdc4d0558f2b0219d304211668d278b46781b13532e415c"
+  },
+  "optimization": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/optimization.json",
+    "bytes": 4049,
+    "sha256": "304ec073b1bb78b53c2b3a5584b8294d148337608a347881bdcc31a0dec31409"
+  },
+  "webgl": {
+    "proof": {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/webgl-proof.json",
+      "bytes": 18469,
+      "sha256": "c751e2419dfeb208825dd8d78d52c1dcb112bc370a6a73908586620ecc0491a9"
+    },
+    "run": {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/webgl-run.json",
+      "bytes": 350,
+      "sha256": "a8f087138e3bf95001afd3a33066f9b1b6d3e383a0f83bd794e7db68fb1616c4"
+    },
+    "contactSheet": {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/contact-sheet.jpg",
+      "bytes": 317786,
+      "sha256": "1572fafaac7d84e0af5e1b8b2cd60400967ead7d6464a18c3e9a8d099818f4a6"
+    }
+  },
+  "sourceRebuild": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/source-rebuild.json",
+    "bytes": 2507,
+    "sha256": "6b724dd4741f8f86ad09285b899e4945818fea8c105572cf71fcdcedf20a8f51"
+  },
+  "s3Backup": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/s3-backup-receipt.json",
+    "bytes": 1460,
+    "sha256": "40f08fd3a6145f3d12fddf670d2a7cb6e84dc5dbeb9dd84f7100af364c647913"
+  },
+  "s3BackupStatus": "full-get-and-all-member-sha256-verified",
+  "runtimeSelectable": false,
+  "deployed": false
+}

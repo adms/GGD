@@ -4,7 +4,7 @@
 Uses local tracked model documents/GLBs plus the other workflow's source and
 wiring ledgers. Does not infer identity from a matching filename.
 """
-import argparse, hashlib, json, subprocess
+import argparse, hashlib, json, subprocess, runpy
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -77,6 +77,8 @@ def main():
   option(old,'lol:'+old.split(':')[1],c['modelKey'],name+'（LOL 原生模型）','exact','original','canonical-game',f'content/champions/{runtime}.json',name,'英雄聯盟 League of Legends','native-game-character')
  result=dict(schema='ggd-workflow-model-options@1',sourceCommit=a.main_commit,originalSourceCommit=a.original_commit,aliases=aliases,models=list(models.values()),heroes=list(heroes.values()),
    candidates=candidates,scope='Other workflow delivered models retained as independent candidates; original immutable S3 release unchanged. Backend readiness and current website are separate records.')
+ local_integrator=ROOT/'tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/integrate_source.py'
+ if local_integrator.exists():result=runpy.run_path(str(local_integrator))['integrate'](result)
  (OUT/'workflow-model-options.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  print(json.dumps(dict(models=len(models),heroMappings=len(heroes),options=len(candidates))))
 if __name__=='__main__':main()

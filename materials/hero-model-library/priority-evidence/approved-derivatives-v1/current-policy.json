@@ -1,0 +1,1068 @@
+{
+  "schema": "ggd.approved-derivatives-current-policy@1",
+  "policySource": "packages/shared/src/content/modelUpload/heroModel.ts",
+  "adoptionPolicy": {
+    "decimateWhenTrianglesAbove": 10000,
+    "decimatedTargetTrianglesMax": 8000,
+    "visualLitPixelDeltaPctMax": 5,
+    "preserveOriginalLocally": true,
+    "archiveOriginalToS3Legacy": true,
+    "gitOnlyAfterAcceptance": true
+  },
+  "runtimeBudget": {
+    "tris": {
+      "warn": 16000,
+      "limit": 28000
+    },
+    "meshes": {
+      "warn": 3,
+      "limit": 6
+    },
+    "texEdge": {
+      "warn": 256,
+      "limit": 256
+    },
+    "channels": {
+      "warn": 300,
+      "limit": 500
+    }
+  },
+  "count": 11,
+  "passed": 11,
+  "failed": 0,
+  "rows": [
+    {
+      "id": "mai",
+      "heroId": "community-review-03-20260907",
+      "name": "不知火舞",
+      "sourceId": "community:community-review-03-20260907",
+      "changes": "白色衣料改紅色",
+      "championPath": "content/champions/community-review-03-20260907.json",
+      "currentModelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 3,
+      "latestDerivativeModelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+      "latestDerivativeSourceModelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 2,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+      "binaryBytes": 1149836,
+      "binarySha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+      "embedded": {
+        "buffers": 1,
+        "images": 4,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 7994,
+        "drawPrimitives": 4,
+        "skins": 1,
+        "skinnedPrimitives": 4,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 117
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 117
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 117
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 117
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01a",
+          "duration": 1.375,
+          "channels": 117
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 2,
+          "channels": 117
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": [
+          "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "metadata": {
+        "id": "mai",
+        "heroId": "community-review-03-20260907",
+        "sourceId": "community:community-review-03-20260907",
+        "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+        "copyMode": "independent-embedded-copy",
+        "changes": "白色衣料改紅色"
+      }
+    },
+    {
+      "id": "kirby",
+      "heroId": "community-review-06-20260907",
+      "name": "卡比",
+      "sourceId": "community:community-review-06-20260907",
+      "changes": "完整複製 pink-round 程序化替身",
+      "championPath": "content/champions/community-review-06-20260907.json",
+      "currentModelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+      "latestDerivativeSourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+      "binaryBytes": 199920,
+      "binarySha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "embedded": {
+        "buffers": 1,
+        "images": 1,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 2920,
+        "drawPrimitives": 1,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "maxTextureEdge": 16,
+        "sourceClipCount": 6,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 6,
+        "maxChannelsPerClip": 18
+      },
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "idle",
+          "duration": 1.600000023841858,
+          "channels": 18
+        },
+        {
+          "index": 1,
+          "name": "run",
+          "duration": 0.800000011920929,
+          "channels": 18
+        },
+        {
+          "index": 2,
+          "name": "attack",
+          "duration": 0.699999988079071,
+          "channels": 18
+        },
+        {
+          "index": 3,
+          "name": "cast",
+          "duration": 1,
+          "channels": 18
+        },
+        {
+          "index": 4,
+          "name": "hurt",
+          "duration": 0.5,
+          "channels": 18
+        },
+        {
+          "index": 5,
+          "name": "death",
+          "duration": 1.2000000476837158,
+          "channels": 18
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "kirby",
+        "heroId": "community-review-06-20260907",
+        "sourceId": "community:community-review-06-20260907",
+        "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製 pink-round 程序化替身"
+      }
+    },
+    {
+      "id": "sunraku",
+      "heroId": "community-review-31-20260907",
+      "name": "SUN樂",
+      "sourceId": "community:community-review-31-20260907",
+      "changes": "褲子與頭改藍色，上半身改膚色",
+      "championPath": "content/champions/community-review-31-20260907.json",
+      "currentModelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+      "latestDerivativeSourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed.glb",
+      "binaryBytes": 723800,
+      "binarySha256": "f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed",
+      "embedded": {
+        "buffers": 1,
+        "images": 3,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 4686,
+        "drawPrimitives": 3,
+        "skins": 1,
+        "skinnedPrimitives": 3,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 76
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 76
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 76
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 76
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.4375,
+          "channels": 76
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 1.96875,
+          "channels": 76
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "sunraku",
+        "heroId": "community-review-31-20260907",
+        "sourceId": "community:community-review-31-20260907",
+        "sourceSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+        "copyMode": "independent-embedded-copy",
+        "changes": "褲子與頭改藍色，上半身改膚色"
+      }
+    },
+    {
+      "id": "azazel",
+      "heroId": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "sourceId": "community:community-review-32-20260907",
+      "changes": "上半身咖啡色、下半身深咖啡色",
+      "championPath": "content/champions/community-review-32-20260907.json",
+      "currentModelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+      "latestDerivativeSourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968.glb",
+      "binaryBytes": 459576,
+      "binarySha256": "f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968",
+      "embedded": {
+        "buffers": 1,
+        "images": 1,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 5681,
+        "drawPrimitives": 1,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 42
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 42
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.28125,
+          "channels": 42
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 1.0625,
+          "channels": 42
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "azazel",
+        "heroId": "community-review-32-20260907",
+        "sourceId": "community:community-review-32-20260907",
+        "sourceSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+        "copyMode": "independent-embedded-copy",
+        "changes": "上半身咖啡色、下半身深咖啡色"
+      }
+    },
+    {
+      "id": "popp",
+      "heroId": "b2-popp",
+      "name": "何布",
+      "sourceId": "300heroes:119",
+      "changes": "完整複製李小狼模型與貼圖",
+      "championPath": "content/champions/b2-popp.json",
+      "currentModelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+      "modelSelectionMode": "manual",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+      "latestDerivativeSourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "latestDerivativeSelected": false,
+      "nonDefaultDerivativeOptionCount": 2,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e.glb",
+      "binaryBytes": 673276,
+      "binarySha256": "7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e",
+      "embedded": {
+        "buffers": 1,
+        "images": 1,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 5500,
+        "drawPrimitives": 1,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 58
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 1.84375,
+          "channels": 58
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.78125,
+          "channels": 58
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 58
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 1.375,
+          "channels": 58
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 2.15625,
+          "channels": 58
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "popp",
+        "heroId": "b2-popp",
+        "sourceId": "300heroes:119",
+        "sourceSha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製李小狼模型與貼圖"
+      }
+    },
+    {
+      "id": "albus",
+      "heroId": "b2-albus",
+      "name": "阿爾巴斯",
+      "sourceId": "300heroes:269",
+      "changes": "完整複製尤吉歐模型與貼圖",
+      "championPath": "content/champions/b2-albus.json",
+      "currentModelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+      "latestDerivativeSourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93.glb",
+      "binaryBytes": 997640,
+      "binarySha256": "fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93",
+      "embedded": {
+        "buffers": 1,
+        "images": 4,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 8455,
+        "drawPrimitives": 4,
+        "skins": 1,
+        "skinnedPrimitives": 4,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 4,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 4,
+        "maxChannelsPerClip": 70
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 70
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 70
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.71875,
+          "channels": 70
+        },
+        {
+          "index": 3,
+          "name": "dead",
+          "duration": 2.21875,
+          "channels": 70
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": [
+          "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "metadata": {
+        "id": "albus",
+        "heroId": "b2-albus",
+        "sourceId": "300heroes:269",
+        "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製尤吉歐模型與貼圖"
+      }
+    },
+    {
+      "id": "goblin",
+      "heroId": "b2-goblin",
+      "name": "哥布林殺手",
+      "sourceId": "300heroes:269",
+      "changes": "完整複製尤吉歐，右手小劍、左手小盾",
+      "championPath": "content/champions/b2-goblin.json",
+      "currentModelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+      "latestDerivativeSourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+      "binaryBytes": 1008048,
+      "binarySha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+      "embedded": {
+        "buffers": 1,
+        "images": 4,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 8515,
+        "drawPrimitives": 3,
+        "skins": 1,
+        "skinnedPrimitives": 3,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 4,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 4,
+        "maxChannelsPerClip": 70
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 70
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 70
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.71875,
+          "channels": 70
+        },
+        {
+          "index": 3,
+          "name": "dead",
+          "duration": 2.21875,
+          "channels": 70
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "goblin",
+        "heroId": "b2-goblin",
+        "sourceId": "300heroes:269",
+        "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製尤吉歐，右手小劍、左手小盾"
+      }
+    },
+    {
+      "id": "yogiri",
+      "heroId": "b2-yogiri",
+      "name": "高遠夜霧",
+      "sourceId": "300heroes:36",
+      "changes": "完整複製富樫勇太模型與貼圖",
+      "championPath": "content/champions/b2-yogiri.json",
+      "currentModelKey": "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec",
+      "latestDerivativeSourceModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689.glb",
+      "binaryBytes": 619056,
+      "binarySha256": "fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689",
+      "embedded": {
+        "buffers": 1,
+        "images": 1,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 4900,
+        "drawPrimitives": 1,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 54
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 1.84375,
+          "channels": 54
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 54
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.71875,
+          "channels": 54
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.71875,
+          "channels": 54
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 3.15625,
+          "channels": 54
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "yogiri",
+        "heroId": "b2-yogiri",
+        "sourceId": "300heroes:36",
+        "sourceSha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製富樫勇太模型與貼圖"
+      }
+    },
+    {
+      "id": "takopi",
+      "heroId": "b2-takopi",
+      "name": "章魚嗶",
+      "sourceId": "pet:octopus",
+      "changes": "八爪魚全身粉紅，修復原生損壞動畫",
+      "championPath": "content/champions/b2-takopi.json",
+      "currentModelKey": "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
+      "latestDerivativeSourceModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
+      "binaryBytes": 743568,
+      "binarySha256": "bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717",
+      "embedded": {
+        "buffers": 1,
+        "images": 1,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 1192,
+        "drawPrimitives": 1,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 6,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 6,
+        "maxChannelsPerClip": 70
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_hit",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 7.15625,
+          "channels": 70
+        },
+        {
+          "index": 1,
+          "name": "bat_run",
+          "duration": 0.90625,
+          "channels": 70
+        },
+        {
+          "index": 2,
+          "name": "bat_dance1",
+          "duration": 3.09375,
+          "channels": 70
+        },
+        {
+          "index": 3,
+          "name": "bat_dance2",
+          "duration": 4.125,
+          "channels": 70
+        },
+        {
+          "index": 4,
+          "name": "bat_hit",
+          "duration": 0.78125,
+          "channels": 70
+        },
+        {
+          "index": 5,
+          "name": "dead",
+          "duration": 0.28125,
+          "channels": 70
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "takopi",
+        "heroId": "b2-takopi",
+        "sourceId": "pet:octopus",
+        "sourceSha256": "2e50327ee16753849cd5add1c414300095bc433124b6c1a79bd741364faa70c1",
+        "copyMode": "independent-embedded-copy",
+        "changes": "八爪魚全身粉紅，修復原生損壞動畫"
+      }
+    },
+    {
+      "id": "misery",
+      "heroId": "b2-misery",
+      "name": "米瑟利",
+      "sourceId": "300heroes:199",
+      "changes": "完整複製優克莉伍德模型與貼圖",
+      "championPath": "content/champions/b2-misery.json",
+      "currentModelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+      "latestDerivativeSourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1.glb",
+      "binaryBytes": 1189084,
+      "binarySha256": "97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1",
+      "embedded": {
+        "buffers": 1,
+        "images": 2,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 8602,
+        "drawPrimitives": 4,
+        "skins": 1,
+        "skinnedPrimitives": 4,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 132
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 132
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 132
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 1.375,
+          "channels": 132
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.90625,
+          "channels": 132
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 1.25,
+          "channels": 132
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": [
+          "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "metadata": {
+        "id": "misery",
+        "heroId": "b2-misery",
+        "sourceId": "300heroes:199",
+        "sourceSha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
+        "copyMode": "independent-embedded-copy",
+        "changes": "完整複製優克莉伍德模型與貼圖"
+      }
+    },
+    {
+      "id": "bojji",
+      "heroId": "b2-bojji",
+      "name": "波吉",
+      "sourceId": "pet:tiny-kirito",
+      "changes": "小桐人上半身藍色、下半身白色",
+      "championPath": "content/champions/b2-bojji.json",
+      "currentModelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+      "modelSelectionMode": "automatic",
+      "derivativeOptionCount": 2,
+      "latestDerivativeModelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+      "latestDerivativeSourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "latestDerivativeSelected": true,
+      "nonDefaultDerivativeOptionCount": 1,
+      "sourceSelectionClass": "manual",
+      "modelDocumentPath": "content/models/version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a.json",
+      "modelDocumentSchema": "model@1",
+      "binaryPath": "content/assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
+      "binaryBytes": 829412,
+      "binarySha256": "745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581",
+      "embedded": {
+        "buffers": 1,
+        "images": 2,
+        "externalUris": 0
+      },
+      "metrics": {
+        "triangles": 7165,
+        "drawPrimitives": 2,
+        "skins": 1,
+        "skinnedPrimitives": 2,
+        "maxTextureEdge": 256,
+        "sourceClipCount": 5,
+        "ggdStateBindings": 6,
+        "distinctMappedClips": 5,
+        "maxChannelsPerClip": 66
+      },
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_idle",
+        "death": "bat_dead"
+      },
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 1.21875,
+          "channels": 66
+        },
+        {
+          "index": 1,
+          "name": "bat_run",
+          "duration": 0.59375,
+          "channels": 66
+        },
+        {
+          "index": 2,
+          "name": "bat_dance1",
+          "duration": 4.34375,
+          "channels": 66
+        },
+        {
+          "index": 3,
+          "name": "bat_dance2",
+          "duration": 2.625,
+          "channels": 66
+        },
+        {
+          "index": 4,
+          "name": "bat_dead",
+          "duration": 0.90625,
+          "channels": 66
+        }
+      ],
+      "hardPolicy": {
+        "passed": true,
+        "errors": [],
+        "warnings": []
+      },
+      "metadata": {
+        "id": "bojji",
+        "heroId": "b2-bojji",
+        "sourceId": "pet:tiny-kirito",
+        "sourceSha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
+        "copyMode": "independent-embedded-copy",
+        "changes": "小桐人上半身藍色、下半身白色"
+      }
+    }
+  ],
+  "maiDecimatedCandidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+    "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+    "bytes": 1149836,
+    "sourceSha256": "7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2",
+    "metrics": {
+      "triangles": 7994,
+      "drawPrimitives": 4,
+      "skins": 1,
+      "skinnedPrimitives": 4,
+      "maxTextureEdge": 256,
+      "sourceClipCount": 5,
+      "maxChannelsPerClip": 117
+    },
+    "hardPolicy": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    },
+    "preservation": {
+      "sourcePath": "assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "sourceTriangles": 13796,
+      "jointCount": 141,
+      "skinCountUnchanged": true,
+      "namedClipsUnchanged": true,
+      "embeddedResources": true
+    },
+    "khronos": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "hints": 0,
+      "truncated": false
+    }
+  }
+}

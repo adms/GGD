@@ -1,0 +1,59 @@
+{
+  "schema": "ggd.remaining-integration-gaps@1",
+  "recordedAt": "2026-09-15",
+  "ownerReported": {
+    "branchOnlyPoppOriginalVfxRelationships": 7,
+    "branchOnlyDecimatedDefaultCharacters": [
+      "小呆／達伊",
+      "巴恩（變身前／老巴恩）",
+      "不知火舞"
+    ],
+    "lolSevenCalloutCoverage": "partial-by-skin; skill callout slots remain incomplete",
+    "notIntegratedIntoGame": [
+      "KOF"
+    ],
+    "originalVoiceDirectFilenameGapGroups": [
+      {
+        "count": 11,
+        "examples": [
+          "洛克人",
+          "赫蘿",
+          "殺老師",
+          "菜月昴"
+        ]
+      },
+      {
+        "count": 23,
+        "examples": [
+          "哆啦A夢",
+          "臭作",
+          "夜神月",
+          "呂布",
+          "藏馬"
+        ]
+      }
+    ],
+    "jumpForceAmbiguousStoryVoice": {
+      "possibleCharacter": "夜神月",
+      "filenameIdentity": "numeric-only",
+      "directMatchAllowed": false,
+      "status": "pending-speaker-listening-review"
+    }
+  },
+  "ownerScopeDecision": {
+    "date": "2026-09-15",
+    "quote": "沒關係 不知道就別做了",
+    "items": [
+      5,
+      6
+    ],
+    "status": "paused-missing-full-roster",
+    "boundary": "Do not invent the missing 11/23 character rosters; retain acquired material and existing gaps."
+  },
+  "costBoundaries": {
+    "kofXiv": "blocked-reader-development: OBAC/OMIR/OSEC/OTRA reader is separate high-cost work",
+    "jumpStoryIdentity": "pending-speaker-evidence; no reliable numeric-file-to-Light identity mapping",
+    "lolMissingNativeSlots": "Karthus Q, MissFortune E and seven EX slots have no directly mapped native candidate in the current source",
+    "lolAmbiguousReview": "owner-approved-4-of-4; canonical decisions: materials/hero-model-library/lol-project-seven/gap-listening-decisions.json"
+  }
+}

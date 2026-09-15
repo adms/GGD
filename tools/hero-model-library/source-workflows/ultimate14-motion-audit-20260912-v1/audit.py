@@ -148,7 +148,7 @@ def summarize_fighter(rows: list[dict], payloads: dict[str, dict]) -> dict:
     }
 
 
-def make_motion_label(fighter_rows: list[tuple[str, dict]]) -> str:
+def make_motion_label(fighter_rows: list[tuple[str, dict]], converted: dict[str, int]) -> str:
     parts = []
     for fighter, row in fighter_rows:
         segments = []
@@ -167,11 +167,20 @@ def make_motion_label(fighter_rows: list[tuple[str, dict]]) -> str:
                 f"{row['uniqueModelAnimationMetadataPayloadCount']}種內容"
             )
         parts.append(f"{fighter}: " + "、".join(segments))
-    return (
+    base = (
         "Ultimate14 NUANMB 已逐檔解析："
         + "；".join(parts)
-        + "；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。"
+        + "；來源是社群 MOD 覆寫片段。"
     )
+    accepted = [(fighter, converted[fighter]) for fighter, _ in fighter_rows if converted.get(fighter, 0) > 0]
+    pending = [fighter for fighter, _ in fighter_rows if converted.get(fighter, 0) == 0]
+    if accepted:
+        base += " 已轉成 GGD 並完成骨架／WebGL 播放驗收：" + "、".join(
+            f"{fighter} {count}段" for fighter, count in accepted
+        ) + "；維持獨立元件，尚未完成 GGD 語意動作映射、後台綁定或部署。"
+    if pending:
+        base += " 尚未轉成 GGD 或完成本體骨架播放驗收：" + "、".join(pending) + "。"
+    return base
 
 
 def without_existing_motion_label(value: object) -> str:
@@ -323,6 +332,8 @@ def build(source_root: Path, audited_at: str) -> dict:
 def sync_download_source(download_path: Path, report_path: Path, report: dict) -> None:
     data = json.loads(download_path.read_text())
     source = next(item for item in data["publicSources"] if item.get("id") == SOURCE_ID)
+    converted_count = sum(row.get("nativeAnimationCount", 0) for row in source.get("componentCandidates", []) if row.get("converted") is True)
+    runtime_count = sum(row.get("nativeAnimationCount", 0) for row in source.get("componentCandidates", []) if row.get("runtimeSelectable") is True)
     source["nativeMotionIndex"] = {
         "schema": report["schema"],
         "gitPath": report_path.as_posix(),
@@ -338,8 +349,8 @@ def sync_download_source(download_path: Path, report_path: Path, report: dict) -
         "uniqueTransformMotionPayloadCount": report["summary"]["uniqueTransformMotionPayloadCount"],
         "parseErrorPathCount": report["summary"]["parseErrorPathCount"],
         "parseErrorUniquePayloadCount": report["summary"]["parseErrorUniquePayloadCount"],
-        "convertedToGgdCount": 0,
-        "runtimeSelectableCount": 0,
+        "convertedToGgdCount": converted_count,
+        "runtimeSelectableCount": runtime_count,
         "dependencyReceiptGitPath": DEPENDENCY_RECEIPT_GIT_PATH,
         "dependency": {
             "name": "ssbh_data_py",
@@ -356,8 +367,17 @@ def sync_download_source(download_path: Path, report_path: Path, report: dict) -
     download_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
 
-def sync_resource_coverage(resource_path: Path, report_path: Path, report: dict) -> None:
+def sync_resource_coverage(resource_path: Path, download_path: Path, report_path: Path, report: dict) -> None:
     data = json.loads(resource_path.read_text())
+    downloads = json.loads(download_path.read_text())
+    source = next(item for item in downloads["publicSources"] if item.get("id") == SOURCE_ID)
+    converted: dict[str, int] = defaultdict(int)
+    for candidate in source.get("componentCandidates", []):
+        if candidate.get("converted") is not True or candidate.get("visualValidationPassed") is not True:
+            continue
+        match = re.search(r"fighter/([a-z0-9_]+)/", candidate.get("nativeId", ""))
+        if match:
+            converted[match.group(1)] += int(candidate.get("nativeAnimationCount", 0))
     grouped: dict[str, list[tuple[str, dict]]] = defaultdict(list)
     for fighter, row in report["fighters"].items():
         backlog_id = FIGHTER_TO_BACKLOG.get(fighter)
@@ -370,7 +390,7 @@ def sync_resource_coverage(resource_path: Path, report_path: Path, report: dict)
         prefix = without_existing_motion_label(override.get("motion"))
         if prefix and not prefix.endswith(" "):
             prefix += " "
-        override["motion"] = prefix + make_motion_label(sorted(fighter_rows))
+        override["motion"] = prefix + make_motion_label(sorted(fighter_rows), converted)
         paths = [path for path in override.setdefault("evidencePaths", []) if not str(path).endswith(report_path.as_posix())]
         if evidence not in paths:
             paths.append(evidence)
@@ -382,7 +402,8 @@ def sync_resource_coverage(resource_path: Path, report_path: Path, report: dict)
                 f"Ultimate14 {s['pathCount']} NUANMB 路徑／{s['uniquePayloadCount']} 種內容，"
                 f"其中 {s['motionDirectoryPathCount']} 路徑在 motion/、"
                 f"{s['modelAnimationMetadataPathCount']} 路徑是 model/ 預設資料；"
-                "全部解析成功但尚未轉 GGD。Bowser 38/5；Alucard 112/105。"
+                f"全部解析成功；已驗收獨立元件 {sum(converted.values())} 段，"
+                "後台可切換與部署仍為 0。Bowser 38/5；Alucard 112/105。"
             )
     data.setdefault("inputFiles", [])
     data["inputFiles"] = [item for item in data["inputFiles"] if item.get("path") != report_path.as_posix()]
@@ -419,7 +440,12 @@ def main() -> None:
         repo = args.repo.resolve()
         report_path = args.output.resolve().relative_to(repo)
         sync_download_source(repo / "materials/hero-model-library/download-sources.json", report_path, report)
-        sync_resource_coverage(repo / "materials/hero-model-library/design-backlog/resource-coverage.json", report_path, report)
+        sync_resource_coverage(
+            repo / "materials/hero-model-library/design-backlog/resource-coverage.json",
+            repo / "materials/hero-model-library/download-sources.json",
+            report_path,
+            report,
+        )
     print(json.dumps(report["summary"], ensure_ascii=False, indent=2))
 
 

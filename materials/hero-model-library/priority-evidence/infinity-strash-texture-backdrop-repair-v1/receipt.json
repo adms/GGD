@@ -1,0 +1,356 @@
+{
+  "schema": "ggd.infinity-strash-texture-backdrop-repair-batch@1",
+  "sourceWorkflow": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/repair_texture_backdrops.py",
+  "records": [
+    {
+      "schema": "ggd.infinity-strash-texture-backdrop-repair@1",
+      "candidateId": "dai-pn010-02",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/02",
+      "mode": "key-planar-face-decal",
+      "source": {
+        "bytes": 2000480,
+        "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "bytes": 1986068,
+        "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/final/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "changedBufferViews": [
+        1110
+      ],
+      "notes": [
+        "image3 keyed opaque carrier ← mat2:GGD_faceDecal1"
+      ],
+      "changedAlphaTexels": null,
+      "materialPostcondition": {
+        "name": "GGD_faceDecal1",
+        "alphaMode": "BLEND"
+      },
+      "imagePostcondition": {
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "transparentBackgroundShare": 0.862152099609375,
+        "brightTransparentBackgroundShare": 0.0,
+        "opaqueCarrierShare": 0.009063720703125,
+        "opaqueCarrierEdgeShare": 7.913896802785692e-05
+      },
+      "nonImagePayloadIdentical": true,
+      "runtimeRegistration": false,
+      "productionDeploymentVerified": false,
+      "visualEvidence": {
+        "views": [
+          {
+            "view": "front",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-source/front.png",
+              "sha256": "1e96b78cf1fba10d53781693000d955a98650d76d1bd1808236a99fff509495b"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-fixed-2/front.png",
+              "sha256": "1e96b78cf1fba10d53781693000d955a98650d76d1bd1808236a99fff509495b"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "back",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-source/back.png",
+              "sha256": "0bd96ef17dcdb88e743deeae7113c273ba84cebd677885c725efe82bc8b46cfc"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-fixed-2/back.png",
+              "sha256": "0bd96ef17dcdb88e743deeae7113c273ba84cebd677885c725efe82bc8b46cfc"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "isometric",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-source/isometric.png",
+              "sha256": "a41dcd5933a6368c4bc2046f9bd88bd8a7f4a9407b3ccbe8498119a9d0875760"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/render-fixed-2/isometric.png",
+              "sha256": "a41dcd5933a6368c4bc2046f9bd88bd8a7f4a9407b3ccbe8498119a9d0875760"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          }
+        ],
+        "allExactRgbMatches": true,
+        "contactSheet": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02-visual-comparison.png",
+          "sha256": "fefd41785f18ff7ea420ae5a93ee120219986e0ed009a8ba770afe595886bc14"
+        }
+      },
+      "runtimeBudgetEvidence": {
+        "triangles": 16035,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "animationChannels": 266,
+        "runtimeHardLimitsPassed": true,
+        "formalAdoptionStatus": "needs-decimation",
+        "formalAdoptionTriggerTriangles": 10000,
+        "formalAdoptionTargetTriangles": 8000
+      },
+      "status": "repaired-candidate-generated-pending-decimation-and-registration"
+    },
+    {
+      "schema": "ggd.infinity-strash-texture-backdrop-repair@1",
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/05 + Dai no Tsurugi",
+      "mode": "key-planar-face-decal",
+      "source": {
+        "bytes": 2206692,
+        "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "bytes": 2192280,
+        "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05-daino-tsurugi/final/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "changedBufferViews": [
+        1116
+      ],
+      "notes": [
+        "image3 keyed opaque carrier ← mat2:GGD_faceDecal1"
+      ],
+      "changedAlphaTexels": null,
+      "materialPostcondition": {
+        "name": "GGD_faceDecal1",
+        "alphaMode": "BLEND"
+      },
+      "imagePostcondition": {
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "transparentBackgroundShare": 0.862152099609375,
+        "brightTransparentBackgroundShare": 0.0,
+        "opaqueCarrierShare": 0.009063720703125,
+        "opaqueCarrierEdgeShare": 7.913896802785692e-05
+      },
+      "nonImagePayloadIdentical": true,
+      "runtimeRegistration": false,
+      "productionDeploymentVerified": false,
+      "visualEvidence": {
+        "views": [
+          {
+            "view": "front",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-source/front.png",
+              "sha256": "5f5d96ad6552fc1841d6f159c3e52d9951c43d6cbc9e92789b200931140c9cdc"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-fixed-2/front.png",
+              "sha256": "5f5d96ad6552fc1841d6f159c3e52d9951c43d6cbc9e92789b200931140c9cdc"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "back",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-source/back.png",
+              "sha256": "939003fe93123808f5af9ed40de4f40839d9060f03f6ad9d97efb6d781d4690f"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-fixed-2/back.png",
+              "sha256": "939003fe93123808f5af9ed40de4f40839d9060f03f6ad9d97efb6d781d4690f"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "isometric",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-source/isometric.png",
+              "sha256": "255c0052586bcd17b0a60a387ea548e444632e87260f82d4eb4b9c8dc0b5326c"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05/render-fixed-2/isometric.png",
+              "sha256": "255c0052586bcd17b0a60a387ea548e444632e87260f82d4eb4b9c8dc0b5326c"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          }
+        ],
+        "allExactRgbMatches": true,
+        "contactSheet": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05-daino-tsurugi-visual-comparison.png",
+          "sha256": "4c287fe001fe3e0e2a545db684aea41922c80f50da7f473dcaba456a85eb80d4"
+        }
+      },
+      "runtimeBudgetEvidence": {
+        "triangles": 16882,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "animationChannels": 266,
+        "runtimeHardLimitsPassed": true,
+        "formalAdoptionStatus": "needs-decimation",
+        "formalAdoptionTriggerTriangles": 10000,
+        "formalAdoptionTargetTriangles": 8000
+      },
+      "status": "repaired-candidate-generated-pending-decimation-and-registration"
+    },
+    {
+      "schema": "ggd.infinity-strash-texture-backdrop-repair@1",
+      "candidateId": "vearn-en801-pre-transformation",
+      "heroId": "godie-ubal",
+      "character": "老巴恩",
+      "form": "EN801 變身前",
+      "mode": "flatten-unused-opaque-alpha",
+      "source": {
+        "bytes": 3011048,
+        "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "bytes": 3004016,
+        "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+        "basePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "frozenPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801-pre-transformation/final/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "baseFrozenByteIdentical": true
+      },
+      "changedBufferViews": [
+        1131
+      ],
+      "notes": [
+        "image1 flattened 14725 unused alpha texels ← mat0:GGD_body"
+      ],
+      "changedAlphaTexels": 14725,
+      "materialPostcondition": {
+        "name": "GGD_body",
+        "alphaMode": "OPAQUE"
+      },
+      "imagePostcondition": {
+        "alphaExtrema": [
+          255,
+          255
+        ],
+        "transparentBackgroundShare": 0.0,
+        "brightTransparentBackgroundShare": 0.0,
+        "opaqueCarrierShare": 0.5752410888671875,
+        "opaqueCarrierEdgeShare": 0.5683760683760684
+      },
+      "nonImagePayloadIdentical": true,
+      "runtimeRegistration": false,
+      "productionDeploymentVerified": false,
+      "visualEvidence": {
+        "views": [
+          {
+            "view": "front",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-source/front.png",
+              "sha256": "b8506fb9b962130c5ed0fd6125ce413d5d613491161bb6c77d1be6e83b97562d"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-alpha-flattened/front.png",
+              "sha256": "b8506fb9b962130c5ed0fd6125ce413d5d613491161bb6c77d1be6e83b97562d"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "back",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-source/back.png",
+              "sha256": "881c9a521f759218c433610f8f952348c7bc863010577b044673d58ceae5b364"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-alpha-flattened/back.png",
+              "sha256": "881c9a521f759218c433610f8f952348c7bc863010577b044673d58ceae5b364"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          },
+          {
+            "view": "isometric",
+            "source": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-source/isometric.png",
+              "sha256": "ed86d750e5f39962733fae962561683e3de18c938a5c8dcf5f309a8347c97ff9"
+            },
+            "repaired": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801/render-alpha-flattened/isometric.png",
+              "sha256": "ed86d750e5f39962733fae962561683e3de18c938a5c8dcf5f309a8347c97ff9"
+            },
+            "differingPixels": 0,
+            "pixelCount": 640000,
+            "maxRgbDelta": 0,
+            "exactRgbMatch": true
+          }
+        ],
+        "allExactRgbMatches": true,
+        "contactSheet": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/vearn-en801-pre-transformation-visual-comparison.png",
+          "sha256": "f2715576c835ceb626ecf683b0f70aac44a87714a9e2ecf4d965d4d64e860fc1"
+        }
+      },
+      "runtimeBudgetEvidence": {
+        "triangles": 16760,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "animationChannels": 281,
+        "runtimeHardLimitsPassed": true,
+        "formalAdoptionStatus": "needs-decimation",
+        "formalAdoptionTriggerTriangles": 10000,
+        "formalAdoptionTargetTriangles": 8000
+      },
+      "status": "repaired-candidate-generated-pending-decimation-and-registration"
+    }
+  ],
+  "counts": {
+    "sourceModels": 3,
+    "originalBlockers": 6,
+    "repairedBaseFiles": 3,
+    "repairedFrozenFiles": 3
+  },
+  "boundaries": {
+    "oldVersionsRetained": true,
+    "centralIndexesModified": false,
+    "championModelPointersModified": false,
+    "runtimeSelectable": false,
+    "productionDeploymentVerified": false,
+    "remainingBlocker": "Each repaired model exceeds 10,000 triangles and requires a <=8,000-triangle accepted derivative before formal adoption."
+  }
+}

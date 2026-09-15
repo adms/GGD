@@ -1,0 +1,16 @@
+{
+  "id": "community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "dupe",
+    "attack": "dagger_1",
+    "cast": "dagger_throw",
+    "hurt": "top_stab",
+    "death": "top_stab"
+  },
+  "yawOffsetDeg": 0
+}

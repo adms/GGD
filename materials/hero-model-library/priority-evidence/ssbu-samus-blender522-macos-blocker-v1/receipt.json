@@ -1,0 +1,57 @@
+{
+  "schema": "ggd-ssbu-macos-blender522-blocker@1",
+  "candidateId": "ssbu-samus-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/samus/model/body/c00/samus-c00.blend",
+    "bytes": 4295156,
+    "sha256": "fa0866aa0ce4b374d352320618721758851e1a1335f8ee0689c36daa61257b6a"
+  },
+  "converter": {
+    "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+    "bytes": 32669,
+    "sha256": "1d773f0422883f0caba5d10114c17f99f6eacecc82f7efc7b6413cadb9c532ab"
+  },
+  "blender": {
+    "absolutePath": "/Applications/Blender.app/Contents/MacOS/Blender",
+    "versionFirstLine": "Blender 5.2.1 LTS"
+  },
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "--background",
+    "--factory-startup",
+    "--python",
+    "/private/tmp/ggd-ssbu-conversion-proof/tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+    "--",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/samus/model/body/c00/samus-c00.blend",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-samus-c00-proof-v1/first",
+    "--expected-sha256",
+    "fa0866aa0ce4b374d352320618721758851e1a1335f8ee0689c36daa61257b6a",
+    "--candidate-id",
+    "ssbu-samus-c00-static-skinned-v1"
+  ],
+  "attempt": {
+    "processReturnCode": -11,
+    "stdoutSha256": "3003c92aa1ff86f6cbc0034a1be851359027c232868fac4d78c6e8a67a8c71f0",
+    "stderrSha256": "8b31e471651115f45082e3fd771ba04507ef8aa81e45f3d46bec4aeb282c0a86",
+    "outputRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-samus-c00-proof-v1/first",
+    "bodyGlbExists": false,
+    "crashReport": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-samus-c00-proof-v1/blender-5.2.1-crash.txt",
+      "bytes": 1557,
+      "sha256": "d997d7bf0d68704a1bf0e7f45179202b739814b76c4c4e28bfb9fb8721fd7ee3"
+    },
+    "capturedCrashReport": {
+      "absolutePath": "/private/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/blender.crash.txt",
+      "bytes": 1557,
+      "sha256": "d997d7bf0d68704a1bf0e7f45179202b739814b76c4c4e28bfb9fb8721fd7ee3"
+    },
+    "failure": "Blender 5.2.1 crashes in Metal/GPU backend initialization before the converter can open the source; no GLB, conversion receipt, candidate, registration, runtime option, or deployment exists."
+  },
+  "status": "blocked-tool-init-crash",
+  "converted": false,
+  "componentReady": false,
+  "runtimeSelectable": false,
+  "deployed": false,
+  "nextAction": "Re-run this exact source with a supported Blender build that completes --background --factory-startup without the Metal initialization crash, then use the normal Worldblender conversion and visual-review workflow."
+}

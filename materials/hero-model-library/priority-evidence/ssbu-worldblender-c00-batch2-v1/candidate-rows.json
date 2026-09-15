@@ -1,0 +1,396 @@
+{
+  "schema": "ggd-worldblender-c00-candidate-rows@1",
+  "candidates": [
+    {
+      "id": "ssbu-chrom-c00-static-skinned-v1",
+      "label": "庫洛姆 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-chrom-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/chrom/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+      "bytes": 963000,
+      "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-chrom"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 123,
+      "textureCount": 7,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Chrom c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 9,
+        "bodyMotionPaths": 9,
+        "uniqueTransformPayloads": 9,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/delivery.json",
+        "bytes": 3742,
+        "sha256": "e3f9bb9abbc46559c300eac31bb468a130488c4dbe762eebe1a583139b94dd31"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/validation.json",
+        "bytes": 19165,
+        "sha256": "d6f986feaf431a1fe3ed883f5c74ca73c2ca40e847e8157c20118f8e8df9f3e2"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/acceptance.json",
+        "bytes": 408,
+        "sha256": "22d72eb9fa83febb87cec86fed427c24ca28280c5a1e5561b03401b09e2a10f8"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/visual-review.json",
+        "bytes": 707,
+        "sha256": "1365de37a0dfc541fd0da4b1e605726ec44a85aaa30e6e29daceb218800a2149"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/webgl-proof.json",
+        "bytes": 7809,
+        "sha256": "39adb7fcd848e9401b829744d55efa7d3368f51e104d39e1027cab7acfd1dbdb"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "f97f5275deed627acfe3f45367bbb670ee1eb07aaccc19e022e023949fe4e31f"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/standardization.json",
+        "bytes": 5856,
+        "sha256": "0e762f487fd25e98c6c797c056b825c12e1f920ba024ab1a4f6283ebdef7fd02"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/s3-backup-plan.json",
+        "bytes": 823,
+        "sha256": "0bcd1a2af081a70ca5414fa72c8b703b7904f188ef37c51a73bab7f4fdde7755"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/s3-backup-receipt.json",
+        "bytes": 1557,
+        "sha256": "6e881dc02a1ff5985114f7dd3a3b33d698f7e8e2f15e4b86740d9b9462816735"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-audit.json",
+        "bytes": 4139,
+        "sha256": "a2365eba085551584ef6c7f0866911c75d63466b9fc769bc83a62112e2b091ad"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-atlas-finalization.json",
+        "bytes": 673,
+        "sha256": "f7409f7230a06979f7cfa17db1ae8910232c190ae2b30a7c767ad25c703db236"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/material-bake-receipt.json",
+        "bytes": 11790,
+        "sha256": "105e779c1a556fd281b97c1f4deb3a7060f02229522bb565a3b8758d700e070e"
+      }
+    },
+    {
+      "id": "ssbu-ganondorf-c00-static-skinned-v1",
+      "label": "加儂多夫 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-ganondorf-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "加儂多夫",
+      "originalName": "Ganondorf",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/ganon/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
+      "bytes": 1264104,
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-ganon"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 90,
+      "textureCount": 6,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Ganondorf c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 10,
+        "bodyMotionPaths": 10,
+        "uniqueTransformPayloads": 10,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/delivery.json",
+        "bytes": 3761,
+        "sha256": "bfa37cd95e04a95c538ee75e7e372a1b575a050952e974ca7b11b781ece96e0d"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/validation.json",
+        "bytes": 36532,
+        "sha256": "cdf9836c8360421b8d8f6f38f484bb596bd397e94aad4c84dc7cda2890d3e2d9"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/acceptance.json",
+        "bytes": 412,
+        "sha256": "01aa1a639c2a10b75367193e464981ccfc9299dd7a384e354e07236cefdf4e62"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/visual-review.json",
+        "bytes": 704,
+        "sha256": "b7fdd49912b52726a228ec6a6f604a50dc01d9dd12c800a93afca316f25777d6"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/webgl-proof.json",
+        "bytes": 7669,
+        "sha256": "744d5a499311dcb1826245d74d2fac83b6f5da562213887513fc9132d1783d0f"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/source-rebuild.json",
+        "bytes": 1024,
+        "sha256": "c1d3cfd1f8b94ceb9554f210d42634e5dd91306f3291e45dda11fc2288a1409c"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/standardization.json",
+        "bytes": 2178,
+        "sha256": "ff2d93ed6b3e7983ee9e3c4d921cdae2d8d67e6324ec5d25cf92ce6b9cb0ff63"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/s3-backup-plan.json",
+        "bytes": 823,
+        "sha256": "e6085346b143b1b286f32e2239a8fe0515bd7b253a38c62016fc094ac0cf133a"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/s3-backup-receipt.json",
+        "bytes": 1557,
+        "sha256": "c0e10272ec04ea4690e7b2a6d579e08ef50e5e5d16ddcaade30e48a05b0982a5"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-audit.json",
+        "bytes": 4243,
+        "sha256": "26073cc79416113da9725f8ec440c6e5de525e35333c8ee9eeb985ac81e52e29"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-atlas-finalization.json",
+        "bytes": 348,
+        "sha256": "4e94bae5fe1bb46636433b9026ee446e6b6e4724677cecc8cd9f000890934881"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/material-bake-receipt.json",
+        "bytes": 12790,
+        "sha256": "5f7c72c0f3a86fdda7a08ab81e1389891fef33ea2375310f012d9575cade5903"
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-static-skinned-v1",
+      "label": "露琪娜 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-lucina-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/lucina/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina/first/body.glb",
+      "bytes": 895472,
+      "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-lucina"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7927,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 156,
+      "textureCount": 5,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Lucina c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "ultimate14MotionCandidate": {
+        "sourceId": "parallel-ns-ultimate14",
+        "nuanmbPaths": 105,
+        "bodyMotionPaths": 41,
+        "uniqueTransformPayloads": 19,
+        "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+        "sixStateCoverageClaimed": false
+      },
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.files.json",
+      "s3PlannedPrefix": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/delivery.json",
+        "bytes": 3861,
+        "sha256": "dc223f673d41a22404d1bf3002a932863ac4e7ccc41c0955a9aaba3f218baed2"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/validation.json",
+        "bytes": 18883,
+        "sha256": "f180cc21bf286cb85652516f2851f931e8e12d9e05958fdc2827eed32a82ebd0"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/acceptance.json",
+        "bytes": 409,
+        "sha256": "6ab68530a3fe82c2682c42d2c664378e4dee2f62826e14a3857a4c12d99e07da"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/visual-review.json",
+        "bytes": 709,
+        "sha256": "39b2a6a6b69a618e6accc8c973bd3382e67995e9efa1dfb7854dd10a269100ea"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/webgl-proof.json",
+        "bytes": 7667,
+        "sha256": "f3d5262daa61479b7b89bf792cf4979d57d23b7abf01585020c5d8587684da5c"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/source-rebuild.json",
+        "bytes": 1021,
+        "sha256": "b75ed8f41be28cc55a332be3377d223e4b847fc4a63bdbcc486d9f1aff089213"
+      },
+      "standardizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/standardization.json",
+        "bytes": 6484,
+        "sha256": "fe04ede61242cf622fde32d0d6985e97af784f815d08f7685591462fa766434e"
+      },
+      "s3BackupPlanEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/s3-backup-plan.json",
+        "bytes": 826,
+        "sha256": "4855eb0fcb157a5abaa68cc6940234257265bbe7b6ccda70a505c81346142420"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/s3-backup-receipt.json",
+        "bytes": 1562,
+        "sha256": "80ace7a43b4751aaea5f447aa07120e63e66e4e5abc3ab2b068d6f3b936249ff"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-audit.json",
+        "bytes": 4065,
+        "sha256": "a76d01452104d8898f79f11983342ecc00eabc53cbf1c2cb85b0c19457c7062d"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-atlas-finalization.json",
+        "bytes": 691,
+        "sha256": "3e0cb146869e1812b5c6e0bb24e1cdfdaf1927933f212d101f7cc1ca3359122a"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/material-bake-receipt.json",
+        "bytes": 15742,
+        "sha256": "f676610c8a9a8bef483f60f9b2905401e3c689eaa09af3399dad7b0b5012ef3e"
+      }
+    }
+  ]
+}

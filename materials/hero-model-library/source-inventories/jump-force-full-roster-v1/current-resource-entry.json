@@ -1,0 +1,132 @@
+{
+  "schema": "ggd.jumpforce-full-roster-current-resource@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "status": "63-high-confidence-character-families-path-indexed; local mirror verified 3466 files and 6/6 authority PAKs; 4034 loose Streaming WAV verified and 12 public audio groups source-linked; encrypted PAK extraction/model-motion-vfx conversion/runtime registration/deployment pending",
+  "planGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json",
+  "planSha256": "79493d0df7482392438274ec64ed24e42abc3e8650fb46bef1572559c7d44972",
+  "detailIndexGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+  "detailIndexSha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
+  "documentGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/README.md",
+  "documentSha256": "35a6ca63774e04e1b3db7f1781d76e8fd223639d05ca7f300af9ba5b6f0d87c7",
+  "localMirrorEvidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
+  "localMirrorEvidenceSha256": "19f540d6c46596b4ba517955030022ab32ffd984c9f0da5334fb60f524f79e94",
+  "localMirrorAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
+  "localMirrorFileCount": 3466,
+  "localMirrorBytes": 23856777652,
+  "verifiedPakCount": 6,
+  "s3Status": "s3-readback-verified",
+  "lv99ShareRequired": false,
+  "batchOneReadiness": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/batch-01-readiness.json",
+    "sha256": "7d03b0aa76a54d5e664e3626874dd9cc8615ce9c0302b595d10ff9fa7d6158f5",
+    "extraction": "blocked-awaiting-owner-or-runtime-key-injection",
+    "keyState": "not-supplied",
+    "authorityPakSha256LiveVerified": true,
+    "plannedMemberRelations": 14031
+  },
+  "looseStreamingAudio": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/loose-streaming-audio-batch.json",
+    "sha256": "f8258c20c501f470a32cd200d7ee3f281a7efafee85c55595be3eacb7c4ece09",
+    "summary": {
+      "decodedWavFilesVerified": 4034,
+      "decodedWavBytesVerified": 3212604542,
+      "decodedVoiceLabelFiles": 1794,
+      "decodedSoundEffectFiles": 2170,
+      "decodedMusicFiles": 70,
+      "nativeCharacterGroups": 37,
+      "highConfidenceCharacterGroups": 32,
+      "unresolvedNativeIdGroups": 5,
+      "characterFiles": 1796,
+      "commonMusicAndSfxFiles": 2238,
+      "characterGroupsLinkedToExistingHeroes": 8,
+      "distinctExistingHeroIdsLinked": 12,
+      "modelsConverted": 0,
+      "motionsConverted": 0,
+      "vfxConverted": 0,
+      "runtimeAudioBindingsCreated": 0,
+      "backendOptionsAdded": 0,
+      "productionDeployments": 0
+    },
+    "runtimeSelectable": false
+  },
+  "audioIdentityBindings": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/audio-identity-bindings.json",
+    "sha256": "f410f11cd2b567da4d177b3df67585f73d09065f854fc605f9a7016a95e8bdb0",
+    "summary": {
+      "nativeCharacterGroupsBound": 12,
+      "distinctHeroIds": 17,
+      "publicPackageGroupsBound": 12,
+      "steamLooseGroupsBound": 8,
+      "sourceGroupRelationshipsUpdated": 20,
+      "publicPackageAudioFilesLinked": 2724,
+      "steamLooseAudioFilesLinked": 427,
+      "speakerApprovedClips": 0,
+      "eventBindingsCreated": 0,
+      "runtimeBindingsCreated": 0,
+      "backendOptionsAdded": 0,
+      "productionDeployments": 0
+    },
+    "runtimeBindingsCreated": 0
+  },
+  "summary": {
+    "characters": 63,
+    "highConfidenceIdentities": 63,
+    "duplicateCharacterFamilyNames": [
+      "Galena",
+      "Giorno",
+      "Kane",
+      "Naruto",
+      "Prometheus",
+      "Yugi"
+    ],
+    "selectedMemberRelations": 86238,
+    "assetClasses": {
+      "model": {
+        "packages": 954,
+        "memberRelations": 1908,
+        "charactersWithCandidates": 63
+      },
+      "texture": {
+        "packages": 1929,
+        "memberRelations": 3868,
+        "charactersWithCandidates": 63
+      },
+      "skeleton": {
+        "packages": 63,
+        "memberRelations": 126,
+        "charactersWithCandidates": 63
+      },
+      "motion": {
+        "packages": 414,
+        "memberRelations": 828,
+        "charactersWithCandidates": 63
+      },
+      "vfx": {
+        "packages": 22515,
+        "memberRelations": 45106,
+        "charactersWithCandidates": 60
+      },
+      "audio": {
+        "packages": 16593,
+        "memberRelations": 33186,
+        "charactersWithCandidates": 63
+      },
+      "metadata": {
+        "packages": 608,
+        "memberRelations": 1216,
+        "charactersWithCandidates": 63
+      }
+    },
+    "paksMirroredThisRun": 6,
+    "payloadFilesExtractedThisRun": 0,
+    "convertedModelsThisRun": 0,
+    "convertedMotionsThisRun": 0,
+    "convertedVfxThisRun": 0,
+    "decodedAudioThisRun": 0,
+    "runtimeBindingsAdded": 0,
+    "backendOptionsAdded": 0,
+    "productionDeployments": 0
+  },
+  "runtimeSelectable": false,
+  "productionDeploymentVerified": false
+}

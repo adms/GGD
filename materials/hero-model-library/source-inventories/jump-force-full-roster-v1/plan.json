@@ -1,0 +1,4875 @@
+{
+  "schema": "ggd.jumpforce-full-roster-plan@1",
+  "asOfDate": "2026-09-15",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "scope": {
+    "highConfidenceNativeCharacterIds": 63,
+    "batchSize": 7,
+    "batchCount": 9,
+    "fullSteamLibraryRescanRequired": false,
+    "fullGameDirectoryRescanRequired": false,
+    "requiredUserPayload": "JUMP_FORCE/Content/Paks only; six authority-pinned PAK files",
+    "identityScope": "character-family; exact costume/form may remain unresolved"
+  },
+  "localMirrorTarget": {
+    "rawGameRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
+    "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
+    "completionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
+    "stateAtPlanGeneration": "verified-local-and-s3-readback-verified",
+    "evidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
+    "evidenceSha256": "19f540d6c46596b4ba517955030022ab32ffd984c9f0da5334fb60f524f79e94",
+    "fileCount": 3466,
+    "bytes": 23856777652,
+    "verifiedPakCount": 6,
+    "s3Status": "s3-readback-verified",
+    "lv99ShareRequired": false
+  },
+  "inputs": {
+    "identityMap": {
+      "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "bytes": 556429,
+      "sha256": "86ea37571fa74492ee1a9643127a29685654f23bfc7a851ab95548a46617b2a7"
+    },
+    "pakAuthority": {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+      "bytes": 6419,
+      "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964"
+    },
+    "fullPathIndex": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz",
+      "bytes": 1161500,
+      "sha256": "9ea256eb40ad1589c5577c857c81d27d242238c5ded740147143fbd1f9880fef"
+    }
+  },
+  "pakContainers": [
+    {
+      "name": "pakchunk0-WindowsNoEditor.pak",
+      "order": 0,
+      "bytes": 7279219593,
+      "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8"
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+      "order": 1,
+      "bytes": 1543894441,
+      "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d"
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "order": 2,
+      "bytes": 2532409095,
+      "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor.pak",
+      "order": 3,
+      "bytes": 7060715441,
+      "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+      "order": 4,
+      "bytes": 1552635741,
+      "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+      "order": 5,
+      "bytes": 2410586601,
+      "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09"
+    }
+  ],
+  "workflowTools": [
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/common.py",
+      "sha256": "6e55e4f350e6542bcd988709cca1748fa4320f5596a6a3d6df0f1b665376c492"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/build_plan.py",
+      "sha256": "48186a929cd90d3ba053baed4b2f71c1ad99a5ca616855fed9e64c6832d6a91d"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prepare_mirror.py",
+      "sha256": "79f4ecdada20c1b6cb76dca6cdd0893d5092e51202b6576f19aa0988e3a1555b"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py",
+      "sha256": "61f8b638622d2a0d0beafd43a4ef7947cd268f949c76fdf6b8d67c930ace8957"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
+      "sha256": "f1107afccbae868a989151aa4478d30e81480b1c4d6b26e42044f011d8f05203"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py",
+      "sha256": "34a10ffa1b09e4aee2aac43ec85ab006423604001cfa7270d08f6029b9099769"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py",
+      "sha256": "6dbf173451ac74f6f0e460da4633bc7c4aea43c6da36c733dfbef376fcd88f98"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/audio-hero-bindings.json",
+      "sha256": "14ad1ff5a6f75af3e989863f8cc3e81e3de4fd656e1062074ebb85f14e8a2e95"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/register_audio_identity_bindings.py",
+      "sha256": "61519ba33a8cfb4079acd4eee92c20cbbed84dfc46d3b2408675c804fd9594bb"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/audit_loose_audio_batch.py",
+      "sha256": "93831245adcf32a41cc806f421c3014733027cb5f9300a4bdba00c9c20a40c71"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
+      "sha256": "e194e570adeba80bced362b2eeedf972c9c1c764bc33786de76a62a993f838e9"
+    }
+  ],
+  "conversionReferences": [
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/compose_glb.py",
+      "sha256": "8204a97fd81714ad89920434a52a109429851b3a8f092ce331bcfa8dd7d1134e"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/convert_blender.py",
+      "sha256": "e7e4ffa89954547838cc8cc947f8ee590170efe3640f5584f4a93462c522e155"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/validate_glb.py",
+      "sha256": "4e59afe1d0796cc25adabd31c548abc8917edc74a53fb177b81326e72416ef00"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/blender_decimate.py",
+      "sha256": "47546978164eaaaaaf6c6df88528c7cf58ff9e735c030ca28fb5b72601a38ea2"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/make_eye_layers.py",
+      "sha256": "ee121d317dfe2db810e76609addc9fb4be1b1fffd163fa5abf5038ea7069d2ae"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/validate_candidate.py",
+      "sha256": "7f1e1827792071303890aecca6c8c31e272d86d2267491cbc57c2cc46d292bb3"
+    }
+  ],
+  "summary": {
+    "characters": 63,
+    "highConfidenceIdentities": 63,
+    "duplicateCharacterFamilyNames": [
+      "Galena",
+      "Giorno",
+      "Kane",
+      "Naruto",
+      "Prometheus",
+      "Yugi"
+    ],
+    "selectedMemberRelations": 86238,
+    "assetClasses": {
+      "model": {
+        "packages": 954,
+        "memberRelations": 1908,
+        "charactersWithCandidates": 63
+      },
+      "texture": {
+        "packages": 1929,
+        "memberRelations": 3868,
+        "charactersWithCandidates": 63
+      },
+      "skeleton": {
+        "packages": 63,
+        "memberRelations": 126,
+        "charactersWithCandidates": 63
+      },
+      "motion": {
+        "packages": 414,
+        "memberRelations": 828,
+        "charactersWithCandidates": 63
+      },
+      "vfx": {
+        "packages": 22515,
+        "memberRelations": 45106,
+        "charactersWithCandidates": 60
+      },
+      "audio": {
+        "packages": 16593,
+        "memberRelations": 33186,
+        "charactersWithCandidates": 63
+      },
+      "metadata": {
+        "packages": 608,
+        "memberRelations": 1216,
+        "charactersWithCandidates": 63
+      }
+    },
+    "paksMirroredThisRun": 6,
+    "payloadFilesExtractedThisRun": 0,
+    "convertedModelsThisRun": 0,
+    "convertedMotionsThisRun": 0,
+    "convertedVfxThisRun": 0,
+    "decodedAudioThisRun": 0,
+    "runtimeBindingsAdded": 0,
+    "backendOptionsAdded": 0,
+    "productionDeployments": 0
+  },
+  "securityAndRights": {
+    "usesOnlyOwnedOrAuthorizedInstallation": true,
+    "aesKeyStored": false,
+    "aesKeyDiscoveryImplemented": false,
+    "authenticationBypassImplemented": false,
+    "runnerRequiresAuthorizedKeyEnvironment": "UNREAL_PAK_AES_KEY"
+  },
+  "batchOneReadiness": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/batch-01-readiness.json",
+    "sha256": "7d03b0aa76a54d5e664e3626874dd9cc8615ce9c0302b595d10ff9fa7d6158f5",
+    "extraction": "blocked-awaiting-owner-or-runtime-key-injection",
+    "keyState": "not-supplied",
+    "authorityPakSha256LiveVerified": true,
+    "plannedMemberRelations": 14031
+  },
+  "states": {
+    "source": "path-indexed-and-container-sha-authority-pinned",
+    "mirror": "verified-local-6-of-6-authority-paks",
+    "extraction": "planned-not-extracted",
+    "conversion": "not-started",
+    "validation": "not-started",
+    "registration": "not-started",
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "characters": [
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0000",
+      "characterName": "Goku",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-o00x",
+        "godie-ogrh"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 689,
+          "memberCount": 1378,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 547,
+          "memberCount": 1094,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0010",
+      "characterName": "Vegeta",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 792,
+          "memberCount": 1584,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 267,
+          "memberCount": 534,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0020",
+      "characterName": "Trunks",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 19,
+          "memberCount": 38,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 33,
+          "memberCount": 66,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 557,
+          "memberCount": 1114,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 329,
+          "memberCount": 658,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0030",
+      "characterName": "Frieza",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 22,
+          "memberCount": 44,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 624,
+          "memberCount": 1248,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 400,
+          "memberCount": 800,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0040",
+      "characterName": "Piccolo",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 31,
+          "memberCount": 62,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 599,
+          "memberCount": 1198,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 294,
+          "memberCount": 588,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0050",
+      "characterName": "Cell",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 25,
+          "memberCount": 50,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 452,
+          "memberCount": 904,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 240,
+          "memberCount": 480,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 1,
+      "nativeCharacterId": "chr0060",
+      "characterName": "Luffy",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 25,
+          "memberCount": 50,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 276,
+          "memberCount": 559,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 503,
+          "memberCount": 1006,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0070",
+      "characterName": "Zoro",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-u01u",
+        "godie-udre"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 18,
+          "memberCount": 36,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 41,
+          "memberCount": 82,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 323,
+          "memberCount": 646,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 346,
+          "memberCount": 692,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0080",
+      "characterName": "Sanji",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 295,
+          "memberCount": 608,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 407,
+          "memberCount": 814,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0090",
+      "characterName": "Blackbeard",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 33,
+          "memberCount": 66,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 369,
+          "memberCount": 745,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 249,
+          "memberCount": 498,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0100",
+      "characterName": "Hancock",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 25,
+          "memberCount": 50,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 277,
+          "memberCount": 556,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 293,
+          "memberCount": 586,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0110",
+      "characterName": "Sabo",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 40,
+          "memberCount": 80,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 275,
+          "memberCount": 550,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 239,
+          "memberCount": 478,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0120",
+      "characterName": "Naruto",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 489,
+          "memberCount": 980,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 469,
+          "memberCount": 938,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 2,
+      "nativeCharacterId": "chr0130",
+      "characterName": "Sasuke",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-edem"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 15,
+          "memberCount": 30,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 41,
+          "memberCount": 82,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 408,
+          "memberCount": 818,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 355,
+          "memberCount": 710,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0140",
+      "characterName": "Kaguya",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 17,
+          "memberCount": 34,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 27,
+          "memberCount": 54,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 401,
+          "memberCount": 802,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 229,
+          "memberCount": 458,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0150",
+      "characterName": "Gaara",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 20,
+          "memberCount": 40,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 37,
+          "memberCount": 74,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 252,
+          "memberCount": 504,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 274,
+          "memberCount": 548,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0160",
+      "characterName": "Kakashi",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 39,
+          "memberCount": 81,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 422,
+          "memberCount": 844,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 237,
+          "memberCount": 474,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0170",
+      "characterName": "Boruto",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 18,
+          "memberCount": 36,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 254,
+          "memberCount": 508,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 218,
+          "memberCount": 436,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0180",
+      "characterName": "Seiya",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 31,
+          "memberCount": 62,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 499,
+          "memberCount": 999,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 222,
+          "memberCount": 444,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0190",
+      "characterName": "Shiryū",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 38,
+          "memberCount": 76,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 502,
+          "memberCount": 1004,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 219,
+          "memberCount": 438,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 3,
+      "nativeCharacterId": "chr0220",
+      "characterName": "Ryo Saeba",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 53,
+          "memberCount": 106,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 39,
+          "memberCount": 78,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 165,
+          "memberCount": 330,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 315,
+          "memberCount": 630,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0230",
+      "characterName": "Kenshiro",
+      "identityState": "fixed-authority-and-named-audio-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-umal"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 23,
+          "memberCount": 46,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 435,
+          "memberCount": 870,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 220,
+          "memberCount": 440,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0240",
+      "characterName": "Ichigo",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-h01n",
+        "godie-h01o"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 22,
+          "memberCount": 44,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 50,
+          "memberCount": 100,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 467,
+          "memberCount": 934,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 262,
+          "memberCount": 524,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0250",
+      "characterName": "Renji",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 20,
+          "memberCount": 40,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 36,
+          "memberCount": 72,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 338,
+          "memberCount": 678,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 281,
+          "memberCount": 562,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0260",
+      "characterName": "Aizen",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 25,
+          "memberCount": 50,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 350,
+          "memberCount": 700,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 254,
+          "memberCount": 508,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0270",
+      "characterName": "Rukia",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 29,
+          "memberCount": 58,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 35,
+          "memberCount": 70,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 250,
+          "memberCount": 500,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 234,
+          "memberCount": 468,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0300",
+      "characterName": "Gon",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 30,
+          "memberCount": 60,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 508,
+          "memberCount": 1025,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 255,
+          "memberCount": 510,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 4,
+      "nativeCharacterId": "chr0310",
+      "characterName": "Killua",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "community-review-24-20260907"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 26,
+          "memberCount": 53,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 364,
+          "memberCount": 728,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 245,
+          "memberCount": 490,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0320",
+      "characterName": "Kurapika",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 30,
+          "memberCount": 60,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 31,
+          "memberCount": 62,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 212,
+          "memberCount": 425,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 272,
+          "memberCount": 544,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0330",
+      "characterName": "Hisoka",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "community-review-07-20260907"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 25,
+          "memberCount": 50,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 26,
+          "memberCount": 52,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 173,
+          "memberCount": 346,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 235,
+          "memberCount": 470,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0340",
+      "characterName": "Jotaro",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "community-review-04-20260907"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 6,
+          "memberCount": 12,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 29,
+          "memberCount": 58,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 118,
+          "memberCount": 236,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 236,
+          "memberCount": 472,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0350",
+      "characterName": "DIO",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 30,
+          "memberCount": 60,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 151,
+          "memberCount": 302,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 246,
+          "memberCount": 492,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0360",
+      "characterName": "Yusuke",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 27,
+          "memberCount": 54,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 432,
+          "memberCount": 864,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 242,
+          "memberCount": 484,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0370",
+      "characterName": "Toguro",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 191,
+          "memberCount": 382,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 226,
+          "memberCount": 452,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 5,
+      "nativeCharacterId": "chr0380",
+      "characterName": "Kenshin",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 17,
+          "memberCount": 34,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 412,
+          "memberCount": 831,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 221,
+          "memberCount": 442,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0390",
+      "characterName": "Shishio",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 270,
+          "memberCount": 540,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 224,
+          "memberCount": 448,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0400",
+      "characterName": "Yugi",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [
+        "community-review-01-20260907"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 532,
+          "memberCount": 1066,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 236,
+          "memberCount": 472,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0410",
+      "characterName": "Deku",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 23,
+          "memberCount": 46,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 439,
+          "memberCount": 878,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 232,
+          "memberCount": 464,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0420",
+      "characterName": "Asta",
+      "identityState": "fixed-authority-and-named-audio-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 44,
+          "memberCount": 88,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 469,
+          "memberCount": 943,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 237,
+          "memberCount": 474,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0430",
+      "characterName": "Dai",
+      "identityState": "fixed-authority-and-named-audio-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 20,
+          "memberCount": 40,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 36,
+          "memberCount": 72,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 642,
+          "memberCount": 1284,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 264,
+          "memberCount": 528,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0450",
+      "characterName": "Kane",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 35,
+          "memberCount": 70,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 3,
+          "memberCount": 6,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 189,
+          "memberCount": 381,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 399,
+          "memberCount": 798,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 6,
+      "nativeCharacterId": "chr0460",
+      "characterName": "Galena",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 3,
+          "memberCount": 6,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 310,
+          "memberCount": 620,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 344,
+          "memberCount": 688,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr0470",
+      "characterName": "Prometheus",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 15,
+          "memberCount": 30,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 3,
+          "memberCount": 6,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 404,
+          "memberCount": 809,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 368,
+          "memberCount": 736,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 13,
+          "memberCount": 26,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr0480",
+      "characterName": "Kaiba",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 512,
+          "memberCount": 1024,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 256,
+          "memberCount": 512,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr1000",
+      "characterName": "Hitsugaya",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 18,
+          "memberCount": 36,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 40,
+          "memberCount": 80,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 250,
+          "memberCount": 500,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 435,
+          "memberCount": 870,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr1010",
+      "characterName": "Biscuit",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 24,
+          "memberCount": 48,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 333,
+          "memberCount": 666,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 224,
+          "memberCount": 448,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr1020",
+      "characterName": "All Might",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 29,
+          "memberCount": 58,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 385,
+          "memberCount": 770,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 235,
+          "memberCount": 470,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr1030",
+      "characterName": "Majin Buu",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-huth"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 23,
+          "memberCount": 46,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 29,
+          "memberCount": 58,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 408,
+          "memberCount": 816,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 227,
+          "memberCount": 454,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 7,
+      "nativeCharacterId": "chr1040",
+      "characterName": "Bakugo",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 26,
+          "memberCount": 52,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 352,
+          "memberCount": 704,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 227,
+          "memberCount": 454,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1050",
+      "characterName": "Madara",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 43,
+          "memberCount": 86,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 376,
+          "memberCount": 752,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 234,
+          "memberCount": 468,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1060",
+      "characterName": "Grimmjow",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 30,
+          "memberCount": 60,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 433,
+          "memberCount": 866,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 238,
+          "memberCount": 476,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1070",
+      "characterName": "Law",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 14,
+          "memberCount": 28,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 44,
+          "memberCount": 94,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 345,
+          "memberCount": 690,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 239,
+          "memberCount": 478,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1080",
+      "characterName": "Kane",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 34,
+          "memberCount": 68,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 192,
+          "memberCount": 384,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 213,
+          "memberCount": 426,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1090",
+      "characterName": "Galena",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 313,
+          "memberCount": 626,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 225,
+          "memberCount": 450,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1100",
+      "characterName": "Prometheus",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 15,
+          "memberCount": 30,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 404,
+          "memberCount": 808,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 233,
+          "memberCount": 466,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 8,
+      "nativeCharacterId": "chr1140",
+      "characterName": "Todoroki",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 24,
+          "memberCount": 48,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 356,
+          "memberCount": 712,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 244,
+          "memberCount": 488,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr1150",
+      "characterName": "Meruem",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 325,
+          "memberCount": 651,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 239,
+          "memberCount": 478,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr1160",
+      "characterName": "Hiei",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 28,
+          "memberCount": 56,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 359,
+          "memberCount": 718,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 242,
+          "memberCount": 484,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 8,
+          "memberCount": 16,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr1170",
+      "characterName": "Yoruichi",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family; exact costume/form remains unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 15,
+          "memberCount": 30,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 32,
+          "memberCount": 64,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 290,
+          "memberCount": 582,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 235,
+          "memberCount": 470,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr1180",
+      "characterName": "Giorno",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 11,
+          "memberCount": 22,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 30,
+          "memberCount": 60,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 7,
+          "memberCount": 14,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 306,
+          "memberCount": 616,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 236,
+          "memberCount": 472,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 10,
+          "memberCount": 20,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr2121",
+      "characterName": "Naruto",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 2,
+          "memberCount": 4,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 2,
+          "memberCount": 4,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 0,
+          "memberCount": 0,
+          "state": "not-identified-in-current-path-index",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 2,
+          "memberCount": 4,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr2401",
+      "characterName": "Yugi",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [
+        "community-review-01-20260907"
+      ],
+      "assetClasses": {
+        "model": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 16,
+          "memberCount": 32,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 2,
+          "memberCount": 4,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 0,
+          "memberCount": 0,
+          "state": "not-identified-in-current-path-index",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    },
+    {
+      "batch": 9,
+      "nativeCharacterId": "chr3180",
+      "characterName": "Giorno",
+      "identityState": "exact-named-audio-source-crosswalk",
+      "identityConfidence": "high",
+      "identityScope": "character-family-only; multiple native tokens share this source label, exact form/role unresolved",
+      "heroIds": [],
+      "assetClasses": {
+        "model": {
+          "packageCount": 3,
+          "memberCount": 6,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "texture": {
+          "packageCount": 12,
+          "memberCount": 24,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "skeleton": {
+          "packageCount": 1,
+          "memberCount": 2,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "motion": {
+          "packageCount": 2,
+          "memberCount": 4,
+          "state": "path-indexed-extraction-planned",
+          "note": "AnimBP and *_anim packages are dependency roots; native AnimSequence clips require post-extraction dependency closure."
+        },
+        "vfx": {
+          "packageCount": 0,
+          "memberCount": 0,
+          "state": "not-identified-in-current-path-index",
+          "note": null
+        },
+        "audio": {
+          "packageCount": 9,
+          "memberCount": 18,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        },
+        "metadata": {
+          "packageCount": 5,
+          "memberCount": 10,
+          "state": "path-indexed-extraction-planned",
+          "note": null
+        }
+      },
+      "stages": {
+        "sourceIdentity": "verified-high-confidence-character-family",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
+        "extraction": "planned-not-extracted",
+        "dependencyClosure": "not-started",
+        "conversion": "not-started",
+        "validation": "not-started",
+        "registration": "not-started",
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      },
+      "conversionPlan": [
+        "extract selected current-version package members by container and native ID",
+        "resolve package dependency closure without guessing identity",
+        "export skeletal meshes, skeletons, textures and native animation clips with UE Viewer for UE 4.19",
+        "decode audio containers while preserving original files and unverified event labels",
+        "convert model and textures through the JUMP-specific UV/material workflow",
+        "apply GGD policy checks; models above 10,000 triangles must be reduced to at most 8,000",
+        "create visual/audio/motion review evidence before any runtime binding"
+      ]
+    }
+  ]
+}

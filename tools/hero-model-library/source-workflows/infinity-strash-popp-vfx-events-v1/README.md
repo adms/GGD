@@ -68,10 +68,28 @@ S3 prefix. `build.py` requires the committed full-download and per-member
 SHA-256 readback receipt. That receipt proves preservation only and never
 changes `vfxConverted`, visual acceptance, runtime selection or deployment.
 
+The preserved project-specific UModel build can still export many support
+assets even though it cannot emit the 17 Niagara roots. Run the bounded batch
+export against the verified closure:
+
+```bash
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py --check
+```
+
+The output is retained at
+`GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/`.
+Its manifest records every package result, emitted file path, size and SHA-256.
+The current run attempted all 309 packages and exported 789 support files from
+203 packages. These files are reconstruction inputs; the manifest keeps
+`niagaraSystemsConverted=false` and `ggdVfxConverted=false` until a GGD effect
+and visual acceptance evidence exist.
+
 Rebuild and verify:
 
 ```bash
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py --check
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py \
   --raw-vfx ../GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content \
   --output materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json
@@ -104,3 +122,19 @@ The server exposes only the 36 WAV files enumerated by the generated queue.
 Every candidate starts pending with `runtimeSelectable=false`. Exported browser
 decisions are review input; another validated integration step must consume an
 owner-approved receipt before any skill binding can exist.
+
+## GGD runtime reconstruction candidates
+
+Build the bounded, unbound `vfx@1` candidates from the retained reconstruction
+recipes and byte-verified exported textures:
+
+```bash
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build_runtime_candidates.py
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build_runtime_candidates.py --check
+```
+
+The builder reads the current `HERO_TEXTURE_EDGE.limit` from
+`packages/shared/src/content/modelUpload/budget.ts`, resizes output textures to
+that cap, and records the policy source hash in its manifest. It does not bind a
+skill or audio event and does not claim Niagara timing, mesh-layer parity,
+visual acceptance, runtime selection, or production deployment.

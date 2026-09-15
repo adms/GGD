@@ -1,0 +1,704 @@
+{
+  "schema": "ggd.jumpforce-loose-streaming-audio-batch@1",
+  "asOfDate": "2026-09-15",
+  "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+  "scope": {
+    "source": "user-owned Steam App 816020 build 8523149 loose Streaming AWB",
+    "excludesEncryptedPakPayload": true,
+    "excludedRepeatedCharacters": [
+      "Dai/chr0430",
+      "Popp",
+      "Vearn"
+    ]
+  },
+  "inputs": {
+    "audioFileIndex": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/audio-file-index.json",
+      "bytes": 4067040,
+      "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+    },
+    "sourceSummary": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/source-summary.json",
+      "bytes": 1614,
+      "sha256": "ed3323b69c03d8e0e5307c7a2fc7568b84d5af920d65197e5487cf8289f63641"
+    },
+    "identityMap": {
+      "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "sha256": "86ea37571fa74492ee1a9643127a29685654f23bfc7a851ab95548a46617b2a7"
+    },
+    "identityBindings": {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/audio-identity-bindings.json",
+      "sha256": "f410f11cd2b567da4d177b3df67585f73d09065f854fc605f9a7016a95e8bdb0"
+    }
+  },
+  "summary": {
+    "decodedWavFilesVerified": 4034,
+    "decodedWavBytesVerified": 3212604542,
+    "decodedVoiceLabelFiles": 1794,
+    "decodedSoundEffectFiles": 2170,
+    "decodedMusicFiles": 70,
+    "nativeCharacterGroups": 37,
+    "highConfidenceCharacterGroups": 32,
+    "unresolvedNativeIdGroups": 5,
+    "characterFiles": 1796,
+    "commonMusicAndSfxFiles": 2238,
+    "characterGroupsLinkedToExistingHeroes": 8,
+    "distinctExistingHeroIdsLinked": 12,
+    "modelsConverted": 0,
+    "motionsConverted": 0,
+    "vfxConverted": 0,
+    "runtimeAudioBindingsCreated": 0,
+    "backendOptionsAdded": 0,
+    "productionDeployments": 0
+  },
+  "modelPolicyForFutureExtractedPayload": {
+    "sourceTrianglesAbove": 10000,
+    "targetTrianglesStrictlyBelow": 8000,
+    "protectedPrimitives": [
+      "face",
+      "eyes",
+      "eye-shadow",
+      "lens",
+      "mouth",
+      "transparent-overlay"
+    ],
+    "appliedToThisAudioOnlyBatch": false
+  },
+  "characters": [
+    {
+      "nativeCharacterId": "chr0000",
+      "characterName": "Goku",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-ogrh",
+        "godie-o00x"
+      ],
+      "decodedFiles": 161,
+      "decodedBytes": 43652242,
+      "durationSeconds": 454.6370624999999,
+      "sourceCategoryCounts": {
+        "voice": 161
+      },
+      "fileSetSha256": "553cfb78fe1859632a8b74b71b688bcd35b41b84181f36fc22df9c0ebb786b0c",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0010",
+      "characterName": "Vegeta",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 33,
+      "decodedBytes": 11510198,
+      "durationSeconds": 119.88277083333334,
+      "sourceCategoryCounts": {
+        "voice": 33
+      },
+      "fileSetSha256": "46a4e2dadbb93cbb072bf37426aef8490851ba5c12c7be8d8343966d64ca4c1e",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0020",
+      "characterName": "Trunks",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 68,
+      "decodedBytes": 20888156,
+      "durationSeconds": 217.55379166666665,
+      "sourceCategoryCounts": {
+        "voice": 68
+      },
+      "fileSetSha256": "271b0d1dea50d654a08ef263b5b424f3d76516bb66d7f2d6f6bfc3f1f4bbcf51",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0030",
+      "characterName": "Frieza",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 60,
+      "decodedBytes": 21823536,
+      "durationSeconds": 227.30100000000002,
+      "sourceCategoryCounts": {
+        "voice": 60
+      },
+      "fileSetSha256": "73fec4849206d103bd166f6732b70337949e2c3c24f48b94a2cdc95f6638aaed",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0040",
+      "characterName": "Piccolo",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 56,
+      "decodedBytes": 13328014,
+      "durationSeconds": 138.8078125,
+      "sourceCategoryCounts": {
+        "voice": 56
+      },
+      "fileSetSha256": "10c9b61de0fe1ad839dcb13b6a9115ca43c398cbaf261cdfc528d0e1f16fbf24",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0050",
+      "characterName": "Cell",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 16,
+      "decodedBytes": 11160484,
+      "durationSeconds": 116.24770833333334,
+      "sourceCategoryCounts": {
+        "voice": 16
+      },
+      "fileSetSha256": "face227ccdf85067557552755987ae625e1e7049ac26cc59ebf6bcc911e3f0b6",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0060",
+      "characterName": "Luffy",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "decodedFiles": 144,
+      "decodedBytes": 32516762,
+      "durationSeconds": 335.96693750000014,
+      "sourceCategoryCounts": {
+        "sfx": 1,
+        "voice": 143
+      },
+      "fileSetSha256": "c53b09b7b3b2981a7ba62510607a5499977c7407dd9aaf09fcb9a6904ceaa12f",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0070",
+      "characterName": "Zoro",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-udre",
+        "godie-u01u"
+      ],
+      "decodedFiles": 15,
+      "decodedBytes": 4519052,
+      "durationSeconds": 47.066583333333334,
+      "sourceCategoryCounts": {
+        "voice": 15
+      },
+      "fileSetSha256": "74bff43969dd765124559e8ad3dbe02bca582a6aa25dde51aeae9bfcbb8b28a5",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0080",
+      "characterName": "Sanji",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 73,
+      "decodedBytes": 21323270,
+      "durationSeconds": 222.08393749999996,
+      "sourceCategoryCounts": {
+        "voice": 73
+      },
+      "fileSetSha256": "6ca261445bbb8f6d4eb852c26c08fcabd105c30ee96208fb56ffe6b93fb8d4cc",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0090",
+      "characterName": "Blackbeard",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 30,
+      "decodedBytes": 14384084,
+      "durationSeconds": 149.82045833333333,
+      "sourceCategoryCounts": {
+        "voice": 30
+      },
+      "fileSetSha256": "c0880fecb4c2077aa9eb3d91baef23e6d01f0159acd323407ed9dd15c54775f1",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0100",
+      "characterName": "Hancock",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 15,
+      "decodedBytes": 5951952,
+      "durationSeconds": 61.992625000000004,
+      "sourceCategoryCounts": {
+        "voice": 15
+      },
+      "fileSetSha256": "d7aaa8a07fb86fa4f5ce1b09aa2107481f87f5ce6469225df2ca288182251185",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0110",
+      "characterName": "Sabo",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 20,
+      "decodedBytes": 4910518,
+      "durationSeconds": 51.142062499999994,
+      "sourceCategoryCounts": {
+        "voice": 20
+      },
+      "fileSetSha256": "36073eb710b7840032c2724f7eac6dc92c80e0c44f85936723d129edd864b031",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0120",
+      "characterName": "Naruto",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 119,
+      "decodedBytes": 27899578,
+      "durationSeconds": 290.56606249999993,
+      "sourceCategoryCounts": {
+        "voice": 119
+      },
+      "fileSetSha256": "1cd15218919c4cf8e368d11e5b4dfc4d4e7cf0e45737d91449ec186efbbadaff",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0130",
+      "characterName": "Sasuke",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-edem"
+      ],
+      "decodedFiles": 19,
+      "decodedBytes": 4636078,
+      "durationSeconds": 48.28377083333333,
+      "sourceCategoryCounts": {
+        "voice": 19
+      },
+      "fileSetSha256": "fb619a30c6a2ed7d7e2482a2ff14d59911a72c96626d6d07a5b5446a6ea9cef9",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0140",
+      "characterName": "Kaguya",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 2,
+      "decodedBytes": 1314046,
+      "durationSeconds": 13.6870625,
+      "sourceCategoryCounts": {
+        "voice": 2
+      },
+      "fileSetSha256": "2b3330a26d4c08de82980d3f8671f77470fa8a118370cb29b4dfc7991d3821e2",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0150",
+      "characterName": "Gaara",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 34,
+      "decodedBytes": 10251070,
+      "durationSeconds": 106.76639583333332,
+      "sourceCategoryCounts": {
+        "voice": 34
+      },
+      "fileSetSha256": "97ddf37cf83c710ac825ae5f1c14bbd9b1026264445c15743cab8b177342354a",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0160",
+      "characterName": "Kakashi",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 7,
+      "decodedBytes": 2022462,
+      "durationSeconds": 21.064104166666667,
+      "sourceCategoryCounts": {
+        "voice": 7
+      },
+      "fileSetSha256": "c2ea81fe4ec266183d836bacf5d91265d2d01c7c187c00322ffbecad900fda6b",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0170",
+      "characterName": "Boruto",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 1,
+      "decodedBytes": 426780,
+      "durationSeconds": 4.445166666666666,
+      "sourceCategoryCounts": {
+        "voice": 1
+      },
+      "fileSetSha256": "0ee9fd21fd718f31d99015831fac8b7e7e2f8683152cbfc902b6e98efe6ad1f2",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0240",
+      "characterName": "Ichigo",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-h01n",
+        "godie-h01o"
+      ],
+      "decodedFiles": 28,
+      "decodedBytes": 6992980,
+      "durationSeconds": 72.83070833333333,
+      "sourceCategoryCounts": {
+        "voice": 28
+      },
+      "fileSetSha256": "ccfcc19262991f7ecfb9159da1ef668b98149f005763717575b417bb97c85780",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0260",
+      "characterName": "Aizen",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 10,
+      "decodedBytes": 4766326,
+      "durationSeconds": 49.644645833333335,
+      "sourceCategoryCounts": {
+        "voice": 10
+      },
+      "fileSetSha256": "1b57acf2fc87c51e54c06c5b965b2b84eccc2bce7919f13d2b2213ed3b8f19a3",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0270",
+      "characterName": "Rukia",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 15,
+      "decodedBytes": 5161884,
+      "durationSeconds": 53.76275,
+      "sourceCategoryCounts": {
+        "voice": 15
+      },
+      "fileSetSha256": "7f1df1e62c3dcc9a55590d9ed6d626620ff6ca9e0143632d4d9d8970d8deef45",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0300",
+      "characterName": "Gon",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "decodedFiles": 25,
+      "decodedBytes": 6579860,
+      "durationSeconds": 68.52875,
+      "sourceCategoryCounts": {
+        "voice": 25
+      },
+      "fileSetSha256": "e88bfbbe75202c5686e19253a827855ff4bbe1c0ab18221164c2d2c7f566f433",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0310",
+      "characterName": "Killua",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "community-review-24-20260907"
+      ],
+      "decodedFiles": 18,
+      "decodedBytes": 5419748,
+      "durationSeconds": 56.447458333333344,
+      "sourceCategoryCounts": {
+        "voice": 18
+      },
+      "fileSetSha256": "e1e1bfddc0ef1eace2c47b658b59889558d324a06abd37739ee4eabda7426699",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0320",
+      "characterName": "Kurapika",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 17,
+      "decodedBytes": 5764632,
+      "durationSeconds": 60.04045833333334,
+      "sourceCategoryCounts": {
+        "voice": 17
+      },
+      "fileSetSha256": "0e4bcfbb4e4b270c838c6492be7329f4252a4ea8764391b67c3b0f0f47fec20c",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0330",
+      "characterName": "Hisoka",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [
+        "community-review-07-20260907"
+      ],
+      "decodedFiles": 17,
+      "decodedBytes": 6603896,
+      "durationSeconds": 68.78279166666665,
+      "sourceCategoryCounts": {
+        "voice": 17
+      },
+      "fileSetSha256": "b7097c9522f0059b9e4d8f7463722f25f45606c9d0632e872c308cae5c97132a",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0360",
+      "characterName": "Yusuke",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 15,
+      "decodedBytes": 3698398,
+      "durationSeconds": 38.51810416666666,
+      "sourceCategoryCounts": {
+        "voice": 15
+      },
+      "fileSetSha256": "5363dc8f18a70f9c56786423e1922af6f78a85da64f5bfdafa7478571e42243a",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0370",
+      "characterName": "Toguro",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 9,
+      "decodedBytes": 3592790,
+      "durationSeconds": 37.420770833333336,
+      "sourceCategoryCounts": {
+        "sfx": 1,
+        "voice": 8
+      },
+      "fileSetSha256": "1e74099be5bf59c7c34433b52f0c88f32b48477bdc63f5813ab0b9d3c658351c",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0410",
+      "characterName": "Deku",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 16,
+      "decodedBytes": 3749810,
+      "durationSeconds": 39.0531875,
+      "sourceCategoryCounts": {
+        "voice": 16
+      },
+      "fileSetSha256": "0e095affd004c31f004cf7ffd1fcf0dd1dfe4eeef413d0b3a5c4b1a59d6cbfeb",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0420",
+      "characterName": "Asta / 亞斯塔",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 6,
+      "decodedBytes": 2193132,
+      "durationSeconds": 22.842375,
+      "sourceCategoryCounts": {
+        "voice": 6
+      },
+      "fileSetSha256": "75f1f67450d0ba4317cdcbc1e809a5a6ed2af7a67c6ea70be2475d5d87f106d7",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0440",
+      "characterName": "原生角色 ID chr0440",
+      "identityState": "unresolved-native-id-retained",
+      "heroIds": [],
+      "decodedFiles": 107,
+      "decodedBytes": 44804866,
+      "durationSeconds": 466.66831250000007,
+      "sourceCategoryCounts": {
+        "voice": 107
+      },
+      "fileSetSha256": "a46c98c646417d96a06c59c67a511a6441399ab7995c8ac35ab79fc3cf2093b6",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0450",
+      "characterName": "Kane",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 143,
+      "decodedBytes": 68044904,
+      "durationSeconds": 708.735541666667,
+      "sourceCategoryCounts": {
+        "voice": 143
+      },
+      "fileSetSha256": "efd0b70f569efd00aa104e06c1a4b5e7de22d522e12ce85012fed28a65af349d",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0460",
+      "characterName": "Galena",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 89,
+      "decodedBytes": 37162374,
+      "durationSeconds": 387.0672708333333,
+      "sourceCategoryCounts": {
+        "voice": 89
+      },
+      "fileSetSha256": "38ac2c1953a5ba8990fe45c5e9212ad0b83dc297a0816cc2a4debc83b61f3102",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0470",
+      "characterName": "Prometheus",
+      "identityState": "verified-high-confidence-character-family",
+      "heroIds": [],
+      "decodedFiles": 77,
+      "decodedBytes": 34336650,
+      "durationSeconds": 357.6381458333333,
+      "sourceCategoryCounts": {
+        "voice": 77
+      },
+      "fileSetSha256": "6b59b89685342a94d2c491b6fb6ed788ddb7f5925ffb2f8e81fd4a5f426ea680",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0490",
+      "characterName": "原生角色 ID chr0490",
+      "identityState": "unresolved-native-id-retained",
+      "heroIds": [],
+      "decodedFiles": 65,
+      "decodedBytes": 18882820,
+      "durationSeconds": 196.66625000000008,
+      "sourceCategoryCounts": {
+        "voice": 65
+      },
+      "fileSetSha256": "a21ed6258ef786d78338808fccd2050fc47df8a6fff9c1a87990f66d9e0d40f1",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0500",
+      "characterName": "原生角色 ID chr0500",
+      "identityState": "unresolved-native-id-retained",
+      "heroIds": [],
+      "decodedFiles": 42,
+      "decodedBytes": 13728702,
+      "durationSeconds": 142.9880625,
+      "sourceCategoryCounts": {
+        "voice": 42
+      },
+      "fileSetSha256": "7d851bc0d9ae7d63c6bdfa90d957010121f6cbf84c2b2c04a031cea3a13afdd0",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0510",
+      "characterName": "原生角色 ID chr0510",
+      "identityState": "unresolved-native-id-retained",
+      "heroIds": [],
+      "decodedFiles": 220,
+      "decodedBytes": 77374718,
+      "durationSeconds": 805.8858125000003,
+      "sourceCategoryCounts": {
+        "voice": 220
+      },
+      "fileSetSha256": "ccdf7de4ca27e4d73833b3438fb89628f9cd2d43eb44c758916b60b3248474eb",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr7000",
+      "characterName": "原生角色 ID chr7000",
+      "identityState": "unresolved-native-id-retained",
+      "heroIds": [],
+      "decodedFiles": 4,
+      "decodedBytes": 2032498,
+      "durationSeconds": 21.170020833333336,
+      "sourceCategoryCounts": {
+        "voice": 4
+      },
+      "fileSetSha256": "80daf811ba0565aee51c5e62f68e551af18ab5343b6ed0a202b61f681e67b45e",
+      "sourceCatalogRegistered": true,
+      "clipListeningReviewed": false,
+      "runtimeBindingCreated": false
+    }
+  ],
+  "commonAudio": {
+    "decodedFiles": 2238,
+    "decodedBytes": 2609195272,
+    "durationSeconds": 15850.28750000014,
+    "sourceCategoryCounts": {
+      "music": 70,
+      "sfx": 2168
+    },
+    "fileSetSha256": "3bf8cba1b087a40273b6fa588dd601491e18bb428c2706f424e10faab7d4e766"
+  },
+  "stages": {
+    "sourceAwbPreserved": "completed-before-this-batch",
+    "decodeToWav": "completed-and-full-local-sha256-verified",
+    "sourceCatalogRegistration": "completed-for-37-character-groups-and-common-audio",
+    "characterFamilyHeroAssociation": "completed-for-8-exact-groups",
+    "clipListeningReview": "pending",
+    "speakerLanguageEventMapping": "pending",
+    "runtimeBinding": "not-started",
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

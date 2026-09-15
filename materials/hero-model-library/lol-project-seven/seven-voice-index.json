@@ -1,7 +1,7 @@
 {
   "schema": "ggd.project-seven-voice-subset@1",
   "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/lol-project-seven",
   "sourceMetadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
   "scopeConfig": "project-seven-config.json",
   "sourceDelivery": {
@@ -20,13 +20,16 @@
     "queueSha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf",
     "pagePath": "listening-review.html",
     "decisionsPath": "listening-review-decisions.json",
+    "gapDecisionsPath": "gap-listening-decisions.json",
     "runtimeRegistrationPath": "runtime-registration.json",
-    "runtimeRegistrationSha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719",
+    "runtimeRegistrationSha256": "cbec858fa630ec2446abc73b3451db21c341ff21e7c271bd83b415b16e5a2620",
     "uniqueWavFiles": 754,
     "nativeTargetCandidates": 566,
     "battleReviewCandidates": 311,
-    "runtimeApproved": 311,
-    "runtimeRegistered": 311,
+    "baseRuntimeApproved": 311,
+    "gapRuntimeApproved": 4,
+    "runtimeApproved": 315,
+    "runtimeRegistered": 315,
     "runtimeConfigChanged": true,
     "productionDeployed": false
   },
@@ -259,8 +262,8 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 26,
-      "runtimeRegisteredFiles": 26,
+      "listeningReviewApprovedFiles": 30,
+      "runtimeRegisteredFiles": 30,
       "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
@@ -524,8 +527,8 @@
     "nativeEventMappedEvents": 232,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 311,
-    "runtimeRegisteredFiles": 311
+    "listeningReviewApprovedFiles": 315,
+    "runtimeRegisteredFiles": 315
   },
   "scope": {
     "fullRosterEnabled": false,

@@ -47,6 +47,18 @@ REPAIRS = {
         "gateBefore": "MODEL_TEXTURE_BACKDROP emissive bright-matte=1.41%／2.18%",
         "gateAfter": "emissive 亮藏色 0.000%／0.000%（MASK 材質 ⇒ 底色可見處一個像素都沒動，只清掉自發光照得到的藏色）",
         "visualNote": "⚠️ 15 組三視角 A/B 是對修補前的位元組跑的；這次只清 alpha≤5 的藏色，基底色可見像素不變，自發光的暈點會消失 —— 需要重跑 A/B 才能宣稱像素差不變",
+        "archiveGitPins": [
+            {
+                "field": "backupReceipt",
+                "gitCommit": "49fed2882ce9e2b77ef6e892f36e9bc161a36e11",
+                "archivePath": f"{ARCHIVE_7BC}/astralym-f77cf1ee-s3-backup-receipt.json",
+            },
+            {
+                "field": "backupManifest",
+                "gitCommit": "49fed2882ce9e2b77ef6e892f36e9bc161a36e11",
+                "archivePath": f"{ARCHIVE_7BC}/astralym-f77cf1ee-s3-backup-manifest.json",
+            },
+        ],
     },
 }
 
@@ -147,9 +159,9 @@ def before_bytes(archive_rel: str | None, commit: str, git_path: str, digest: st
     return data
 
 
-def build(index: dict, runtime: dict):
+def build(index: dict, runtime: dict, scope: str = "all"):
     updated = copy.deepcopy(index); rows = []; writes = []; found = set()
-    for sec in ("publicSources", "paidSources"):
+    for sec in ("publicSources", "paidSources") if scope in ("all", "historical") else ():
         for source in updated.get(sec, []):
             for c in source.get("componentCandidates", []):
                 r = REPAIRS.get(c.get("id"))
@@ -173,11 +185,24 @@ def build(index: dict, runtime: dict):
                     src["gitArchivePath"] = f"{ARCHIVE_7BC}/{r['beforeSha256']}.glb"
                     writes.append((REPO / src["gitArchivePath"], before))
                 proof = non_image_data_identical(before, after)
-                c.update({"bytes": len(after), "sha256": r["afterSha256"], "gitPath": after_rel, "sourceArtifact": src,
+                # The top-level path is the current, normalized candidate.  Keep the
+                # pre-repair local path only in sourceArtifact so local verification
+                # does not compare the new digest with the preserved old bytes.
+                current_absolute = str((REPO / after_rel).resolve())
+                c.update({"bytes": len(after), "sha256": r["afterSha256"], "gitPath": after_rel,
+                          "absolutePath": current_absolute, "path": current_absolute, "sourceArtifact": src,
                           "materialNormalization": {
                               "schema": "ggd-model-texture-backdrop-repair@1", "revision": 1,
                               "changes": r["changes"], "binaryChunkByteIdentical": False,
                               "nonMaterialJsonByteSemanticIdentical": False, **proof}})
+                for archived_pin in r.get("archiveGitPins", []):
+                    field = archived_pin["field"]
+                    old_pin = c[field]
+                    archived = before_bytes(
+                        archived_pin["archivePath"], archived_pin["gitCommit"], old_pin["gitPath"], old_pin["sha256"]
+                    )
+                    writes.append((REPO / archived_pin["archivePath"], archived))
+                    c[field] = {**old_pin, "gitPath": archived_pin["archivePath"]}
                 rows.append({"candidateId": c["id"], "schema": "ggd-model-texture-backdrop-repair@1",
                              "source": {"sha256": r["beforeSha256"], "bytes": len(before), "gitCommit": r["gitCommitOfBefore"], "gitPath": before_git,
                                         "gitArchivePath": src.get("gitArchivePath")},
@@ -185,11 +210,12 @@ def build(index: dict, runtime: dict):
                              "changes": r["changes"], "gateBefore": r["gateBefore"], "gateAfter": r["gateAfter"],
                              "binaryChunkByteIdentical": False, **proof,
                              **({"visualNote": r["visualNote"]} if r.get("visualNote") else {})})
-    assert found == set(REPAIRS), (found, set(REPAIRS))
+    if scope in ("all", "historical"):
+        assert found == set(REPAIRS), (found, set(REPAIRS))
 
     # ── 執行期交付 ────────────────────────────────────────────────────────
     updated_runtime = copy.deepcopy(runtime); runtime_found = set()
-    for row in updated_runtime["models"]:
+    for row in updated_runtime["models"] if scope in ("all", "runtime") else ():
         r = RUNTIME_REPAIRS.get(row.get("id"))
         if not r: continue
         runtime_found.add(row["id"])
@@ -232,7 +258,14 @@ def build(index: dict, runtime: dict):
                      "changes": r["changes"], "gateBefore": r["gateBefore"], "gateAfter": r["gateAfter"],
                      "binaryChunkByteIdentical": False, "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
                      **proof, "visualNote": r["visualNote"]})
-    assert runtime_found == set(RUNTIME_REPAIRS), (runtime_found, set(RUNTIME_REPAIRS))
+    if scope in ("all", "runtime"):
+        assert runtime_found == set(RUNTIME_REPAIRS), (runtime_found, set(RUNTIME_REPAIRS))
+    if scope != "all" and EVIDENCE.is_file():
+        preserved_ids = set(RUNTIME_REPAIRS if scope == "historical" else REPAIRS)
+        rows.extend(
+            row for row in json.loads(EVIDENCE.read_text(encoding="utf-8")).get("records", [])
+            if row.get("candidateId") in preserved_ids
+        )
     evidence = {"schema": "ggd-model-texture-backdrop-repair-batch@1",
                 "tool": "tools/model-fix/fix_glb_textures.py",
                 "gate": "tools/vfx-asset-safety/check.py MODEL_TEXTURE_BACKDROP",
@@ -253,10 +286,12 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     m = ap.add_mutually_exclusive_group(required=True)
     m.add_argument("--check", action="store_true"); m.add_argument("--write", action="store_true")
+    ap.add_argument("--scope", choices=("all", "historical", "runtime"), default="all",
+                    help="limit regeneration to one independent catalog")
     a = ap.parse_args()
     current = json.loads(INDEX.read_text(encoding="utf-8"))
     runtime = json.loads(RUNTIME_INDEX.read_text(encoding="utf-8"))
-    updated, updated_runtime, eb, writes = build(current, runtime)
+    updated, updated_runtime, eb, writes = build(current, runtime, a.scope)
     if a.check:
         assert current == updated, "download-sources.json 還沒記下貼圖背板修補"
         assert runtime == updated_runtime, "priority-runtime-options.json 還沒記下貼圖背板修補"
@@ -270,7 +305,8 @@ def main() -> int:
         EVIDENCE.parent.mkdir(parents=True, exist_ok=True); EVIDENCE.write_bytes(eb)
         INDEX.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         RUNTIME_INDEX.write_text(json.dumps(updated_runtime, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"records": len(REPAIRS) + len(RUNTIME_REPAIRS), "written": a.write}, ensure_ascii=False))
+    record_count = len(REPAIRS) + len(RUNTIME_REPAIRS) if a.scope == "all" else len(REPAIRS if a.scope == "historical" else RUNTIME_REPAIRS)
+    print(json.dumps({"scope": a.scope, "records": record_count, "written": a.write}, ensure_ascii=False))
     return 0
 
 

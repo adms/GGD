@@ -5,6 +5,7 @@ const canvas=document.querySelector('canvas'),engine=new Engine(canvas,true,{pre
 const save=async(name,data)=>{const r=await fetch('/save/'+name,{method:'POST',body:JSON.stringify(data)});if(!r.ok)throw Error('save '+name)};
 const slug=value=>value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 try{
+ const config=await (await fetch('/config.json')).json();
  const scene=new Scene(engine);scene.useRightHandedSystem=true;scene.clearColor=new Color4(.73,.75,.79,1);
  const camera=new ArcRotateCamera('camera',Math.PI/2,Math.PI/2,8,Vector3.Zero(),scene);
  camera.mode=Camera.ORTHOGRAPHIC_CAMERA;camera.minZ=.001;camera.maxZ=100;
@@ -44,7 +45,9 @@ try{
   return {name,phase,frame,view,worldSkinnedBounds:{min:bounds.min.asArray(),max:bounds.max.asArray(),extent:bounds.extent.asArray()}};
  };
  const groups=[];
- for(const group of container.animationGroups){
+ const selected=config.includeClips.length?container.animationGroups.filter(group=>config.includeClips.includes(group.name)):container.animationGroups;
+ if(config.includeClips.length&&selected.length!==config.includeClips.length)throw Error('Requested animation group missing');
+ for(const group of selected){
   const shots=[];
   for(const phase of [0,.5,1])shots.push(await framePose(group,phase,'front'));
   shots.push(await framePose(group,.5,'side'));
@@ -55,7 +58,7 @@ try{
   renderer:'actual Babylon WebGL glTF loader in right-handed scene; each native group posed at start/middle/end plus middle side view; CPU-skinned bounds frame every shot',
   model:{meshes:meshes.map(mesh=>({name:mesh.name,vertices:mesh.getTotalVertices(),indices:mesh.getTotalIndices(),
    skeleton:mesh.skeleton?.name,bones:mesh.skeleton?.bones.length,numBoneInfluencers:mesh.numBoneInfluencers,gpuSkinning:mesh.computeBonesUsingShaders})),
-   skeletons:container.skeletons.length,animationGroups:container.animationGroups.length},
+   skeletons:container.skeletons.length,animationGroups:selected.length,totalModelAnimationGroups:container.animationGroups.length},
   groups,sourceEngineCurveParity:false,gameplayAcceptance:false,rightsCleared:false,backendSelectionVerified:false});
  scene.dispose();engine.dispose();await fetch('/done',{method:'POST'});
 }catch(error){await save('error.json',{message:String(error),stack:error.stack});await fetch('/done',{method:'POST'})}

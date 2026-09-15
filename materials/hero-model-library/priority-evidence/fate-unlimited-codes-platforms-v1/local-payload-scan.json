@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-fuc-local-payload-scan@1",
+  "scope": {
+    "readOnly": true,
+    "copiesCreated": 0,
+    "filesExtracted": 0,
+    "contentInspectionPerformed": false,
+    "matchRequiresBasenameAndRecordedSize": true
+  },
+  "roots": [
+    {
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library",
+      "exists": true,
+      "filesVisited": 810184,
+      "directoriesVisited": 39522,
+      "permissionErrors": 0
+    },
+    {
+      "root": "/Volumes/R",
+      "exists": true,
+      "filesVisited": 16,
+      "directoriesVisited": 3,
+      "permissionErrors": 0
+    }
+  ],
+  "candidates": [
+    {
+      "sourceId": "lv99-fuc-psp-japan-portable-zip",
+      "inventoryId": "windows-rom-scan:0607",
+      "releasePlatform": "Sony PSP",
+      "region": "Japan",
+      "container": "ZIP",
+      "expectedBasename": "Fate-Unlimited Codes Portable (Japan).zip",
+      "expectedBytes": 509977835,
+      "windowsSourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
+      "matches": [],
+      "matchCount": 0,
+      "payloadLocated": false,
+      "payloadBytesRead": 0,
+      "acquisitionStatus": "inventory-metadata-only"
+    },
+    {
+      "sourceId": "lv99-fuc-psp-usa-portable-iso",
+      "inventoryId": "windows-rom-scan:0608",
+      "releasePlatform": "Sony PSP",
+      "region": "USA",
+      "container": "ISO",
+      "expectedBasename": "Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+      "expectedBytes": 738394112,
+      "windowsSourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+      "matches": [],
+      "matchCount": 0,
+      "payloadLocated": false,
+      "payloadBytesRead": 0,
+      "acquisitionStatus": "inventory-metadata-only"
+    }
+  ],
+  "nameSizeMismatches": [],
+  "summary": {
+    "rootsRequested": 2,
+    "rootsReadable": 2,
+    "filesVisited": 810200,
+    "directoriesVisited": 39525,
+    "permissionErrors": 0,
+    "expectedPayloads": 2,
+    "exactPayloadMatches": 0,
+    "nameSizeMismatches": 0,
+    "payloadBytesRead": 0,
+    "filesExtracted": 0,
+    "filesConverted": 0
+  }
+}

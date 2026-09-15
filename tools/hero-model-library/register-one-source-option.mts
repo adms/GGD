@@ -43,13 +43,29 @@ const service = new ModelVersions(root);
 const before = service.state(runtimeHeroId);
 for (const version of before.versions) service.verify(version);
 const option = { ...input, source: selectionSource(heroId, input) };
+const automaticEligible = input.automaticEligible ?? defaultEligible(heroId, option);
+const existing = before.versions.find((version: any) =>
+  version.sourceModelKey === option.sourceModelKey
+  && version.label === option.label
+  && version.automaticEligible === automaticEligible
+  && contentSha256(version.source) === contentSha256(option.source)
+);
+if (existing) {
+  console.log(JSON.stringify({
+    heroId, runtimeHeroId, sourceId, unchanged: true,
+    beforeVersions: before.versions.length, afterVersions: before.versions.length,
+    activeModelKey: before.activeModelKey, preferredModelKey: before.preferredModelKey,
+    existing,
+  }, null, 2));
+  process.exit(0);
+}
 const prepared = await service.prepare(runtimeHeroId, zModelVersionCommand.parse({
   action: 'register',
   expectedHash: before.expectedHash,
   sourceModelKey: option.sourceModelKey,
   label: option.label,
   source: option.source,
-  automaticEligible: defaultEligible(heroId, option),
+  automaticEligible,
 }));
 service.assertCurrent(runtimeHeroId, before.expectedHash);
 service.writeArtifacts(prepared.artifacts);

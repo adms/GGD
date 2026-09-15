@@ -1,0 +1,20 @@
+{
+  "id": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "one_hand_1",
+    "attack": "two_hand_1",
+    "cast": "excalibur",
+    "hurt": "invisible_burst_hit",
+    "death": "invisible_burst_hit"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "ggd.mystvearn-en653-decimation-rejection@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+  "source": {
+    "path": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+    "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+    "triangles": 13128
+  },
+  "policy": {
+    "triggerTrianglesAbove": 10000,
+    "targetTrianglesMax": 8000,
+    "visualLitPixelDeltaPctMax": 5
+  },
+  "attempts": [
+    {
+      "id": "meshopt-whole-v1",
+      "output": "run-a/component-ggd-normalized.glb",
+      "sha256": "25c534e2ead51364caaa669541c0fb92ee15b6acf17dabc98789ff468dacc4c1",
+      "triangles": 7996,
+      "skins": 1,
+      "joints": 175,
+      "drawPrimitives": 3,
+      "structuralValidation": "passed",
+      "visualComparison": "rejected: visible robe holes in front/back/isometric renders"
+    },
+    {
+      "id": "material-weighted-v1",
+      "output": "material-weighted-v1/component-ggd-normalized.glb",
+      "triangles": 10236,
+      "status": "rejected: cannot reach target at 0.005 error bound"
+    },
+    {
+      "id": "material-weighted-v2",
+      "output": "material-weighted-v2/component-ggd-normalized.glb",
+      "triangles": 9530,
+      "status": "rejected: cannot reach target at 0.02 error bound"
+    },
+    {
+      "id": "material-weighted-v3",
+      "output": "material-weighted-v3/component-ggd-normalized.glb",
+      "triangles": 9178,
+      "status": "rejected: cannot reach target at 0.08 error bound"
+    },
+    {
+      "id": "blender-whole-v1",
+      "output": "blender-v1/component.glb",
+      "sha256": "b9a617f3b0caa518b3a6d0b827818d6db23fb1698d8d6dc3f6bf3aaa992044e8",
+      "triangles": 7875,
+      "skins": 1,
+      "joints": 175,
+      "drawPrimitives": 3,
+      "structuralValidation": "passed",
+      "visualComparison": "rejected: visible robe holes; exporter also reduced vertices with more than four joint influences"
+    },
+    {
+      "id": "blender-face-only-v1",
+      "output": "blender-face-only-v1/component.glb",
+      "triangles": 12632,
+      "skins": 1,
+      "joints": 175,
+      "drawPrimitives": 3,
+      "structuralValidation": "passed",
+      "visualComparison": "not adopted: visual topology intact but still exceeds target"
+    }
+  ],
+  "acceptedCandidate": null,
+  "status": "conversion-attempts-archived-no-accepted-candidate",
+  "nextAction": "Require a source-aware topology/LOD method that keeps robe coverage and all weighted influences. Do not register any attempted GLB as a dropdown option.",
+  "localReport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mystvearn-en653-decimation-v1/conversion-attempts.json",
+    "bytes": 7821,
+    "sha256": "3f3caf26fa0e607b3e771649d970a8c50f0a250dabb447ff43b2318a60bdbd2e"
+  },
+  "legacyBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.files.json",
+    "archiveSha256": "aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e",
+    "archiveBytes": 12783486,
+    "fileCount": 33,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "ggd.jump-force-dai-alpha-normalization@1",
+  "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v6-alpha",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b/run-a/dai-chr0430-six-draw.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+    "gitPathAtIngest": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb"
+  },
+  "retainedPredecessors": [
+    {
+      "gitPathAtIngest": "content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+      "bytes": 3010392,
+      "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c",
+      "relationship": "v3-six-draw-predecessor-retained-before-v5-material-faithful-rebuild"
+    },
+    {
+      "gitPathAtIngest": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+      "bytes": 3010392,
+      "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+      "relationship": "direct-v5-predecessor-alpha-normalized-to-v6"
+    }
+  ],
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v6-alpha/run-a/dai-chr0430-six-draw.glb",
+    "gitPath": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+    "bytes": 3010632,
+    "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d"
+  },
+  "deterministicRebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v6-alpha/run-b/dai-chr0430-six-draw.glb",
+    "bytes": 3010632,
+    "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d",
+    "byteIdentical": true
+  },
+  "materialChanges": [
+    "mat3:MI_chr0430_pants transparent=22.72%",
+    "mat7:MI_chr0430_face transparent=76.08%",
+    "mat9:MI_chr0430_oral transparent=76.08%",
+    "mat10:MI_chr0430_cloth transparent=24.06%",
+    "mat11:MI_chr0430_pants.001 transparent=22.72%",
+    "mat12:MI_chr0430_cloth.001 transparent=24.06%",
+    "mat13:MI_chr0430_pants.002 transparent=22.72%",
+    "mat14:MI_chr0430_skin transparent=35.60%",
+    "mat15:MI_chr0430_cloth.002 transparent=24.06%",
+    "mat16:MI_chr0430_face.001 transparent=76.08%",
+    "mat17:MI_chr0430_pants.003 transparent=22.72%",
+    "mat18:MI_chr0430_skin.001 transparent=35.60%"
+  ],
+  "binaryChunkByteIdentical": true,
+  "nonMaterialJsonByteSemanticIdentical": true,
+  "visualReview": "pending-v6-alpha-normalization-review",
+  "runtimeSelectable": false,
+  "productionDeployed": false
+}

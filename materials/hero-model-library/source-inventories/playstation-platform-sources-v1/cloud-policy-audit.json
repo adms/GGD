@@ -1,0 +1,86 @@
+{
+  "schema": "ggd.playstation-cloud-policy-audit@1",
+  "sourceId": "psp-cloud-native-motion-batch4",
+  "candidateId": "psp-gmo-cloud-native-13-motions-batch4",
+  "sourceGame": "unknown",
+  "platform": "PSP",
+  "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/psp-cloud-native-motion-batch4/converted/cloud-native-13-motions.glb",
+  "bytes": 1918924,
+  "sha256": "c9173ae6dce7099b20e1f15eada95fc4868db4dea675a41c67c0c83a8e5095a7",
+  "generatedFrom": {
+    "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+    "adoptionPolicySha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf",
+    "runtimeBudget": "packages/shared/src/content/modelUpload/budget.ts",
+    "runtimeBudgetSha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4",
+    "roleGate": "tools/model-budget/roles.ts",
+    "roleGateSha256": "0a064e7381df15d8df50a99afaecc67b3c59f3f65efefbdc30a1a7676edf6258",
+    "glbMeasurement": "tools/model-budget/glb.ts",
+    "glbMeasurementSha256": "aea1f9d648bc5306e9a01c7f71accaf12bac45e41e4086e1a49817c71f1316ce"
+  },
+  "metrics": {
+    "triangles": 1881,
+    "vertices": 5131,
+    "meshes": 4,
+    "materials": 4,
+    "skins": 1,
+    "joints": 44,
+    "clips": 13,
+    "channelsPerFrame": 162,
+    "maxTextureEdge": 256,
+    "imageCount": 4,
+    "textureDiskBytes": 179335,
+    "vramBytes": 611668
+  },
+  "formalAdoption": {
+    "eligibleByTriangleRule": true,
+    "decimateWhenTrianglesAbove": 10000,
+    "decimatedTargetTrianglesMax": 8000
+  },
+  "runtimeGate": {
+    "role": "champion",
+    "worst": "warn",
+    "axes": [
+      {
+        "key": "triangles",
+        "label": "每實例三角面",
+        "value": 1881,
+        "warn": 16000,
+        "limit": 28000,
+        "verdict": "ok"
+      },
+      {
+        "key": "drawCalls",
+        "label": "每模型 mesh / draw call",
+        "value": 4,
+        "warn": 3,
+        "limit": 6,
+        "verdict": "warn"
+      },
+      {
+        "key": "maxTextureEdge",
+        "label": "貼圖最長邊 (px)",
+        "value": 256,
+        "warn": 256,
+        "limit": 256,
+        "verdict": "ok"
+      },
+      {
+        "key": "animChannels",
+        "label": "每幀動畫通道",
+        "value": 162,
+        "warn": 300,
+        "limit": 500,
+        "verdict": "ok"
+      }
+    ]
+  },
+  "readiness": {
+    "sourceIdentityVerified": false,
+    "semanticClipMappingVerified": false,
+    "metricScaleVerified": false,
+    "backendPlaybackVerified": false,
+    "runtimeReady": false,
+    "productionDeployed": false,
+    "note": "Capacity measurement does not establish the exact source game, clip semantics, scale, backend playback or deployment."
+  }
+}

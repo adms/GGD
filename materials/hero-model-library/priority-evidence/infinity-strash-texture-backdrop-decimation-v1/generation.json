@@ -1,0 +1,403 @@
+{
+  "schema": "ggd.infinity-strash-texture-backdrop-decimation-generation@1",
+  "records": [
+    {
+      "candidateId": "dai-pn010-02",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/02",
+      "sourceSha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+      "outputSha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6",
+      "worker": "emissive-lock",
+      "modelTemplate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02/uploaded-model.json",
+        "bytes": 381,
+        "sha256": "392fa3742380687dbf8601e61431b23b5e701a2896a8a2e59e588b5409c3b719"
+      },
+      "source": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+          "bytes": 1986068,
+          "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+          "bytes": 1986068,
+          "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+          "bytes": 1880364,
+          "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+          "bytes": 1880364,
+          "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+        },
+        "local": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/final/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+          "bytes": 1880364,
+          "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "reviewModels": {
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/source-review-model.json",
+          "bytes": 381,
+          "sha256": "22badc64a345de3ef1657b4f30569dcd51c56c4669ee68dd6fc2dde085b4727c"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/candidate-final-review-model.json",
+          "bytes": 381,
+          "sha256": "ae22097d7ab04aa3cd270271b8474c1b58776d22db29b69912cae518fd4c25d8"
+        }
+      },
+      "parameters": {
+        "worker": "tools/model-budget/optimize/decimate-emissive-lock.mjs",
+        "targetTriangles": 7900,
+        "emissiveThreshold": 192,
+        "errorBound": 0.02,
+        "lockBorder": true
+      },
+      "workerResult": {
+        "tool": "model-budget/decimate-emissive-lock@1",
+        "skipped": "receipt-and-sha-verified",
+        "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/rebuild/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "parameters": {
+          "target": 7900,
+          "emissiveThreshold": 192,
+          "errorBound": 0.02,
+          "lockBorder": true
+        }
+      },
+      "status": "generated-pending-visual-and-structural-validation",
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "heroId": "godie-nbbc",
+      "character": "小呆",
+      "form": "PN010/05 + Dai no Tsurugi",
+      "sourceSha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+      "outputSha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540",
+      "worker": "emissive-lock",
+      "modelTemplate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/uploaded-model.json",
+        "bytes": 381,
+        "sha256": "12316fcd7582b65fe4c7c84a398f4d29e4d97263468566b09769b10b56c265c3"
+      },
+      "source": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+          "bytes": 2192280,
+          "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+          "bytes": 2192280,
+          "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+          "bytes": 2081176,
+          "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+          "bytes": 2081176,
+          "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+        },
+        "local": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/final/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+          "bytes": 2081176,
+          "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "reviewModels": {
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/source-review-model.json",
+          "bytes": 381,
+          "sha256": "e8501f4638597129308fbbb43c7267fad2e9dd54535dfab97713d7ec65d0bc4f"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/candidate-final-review-model.json",
+          "bytes": 381,
+          "sha256": "1499ebd7221070f8a73750e5887ae0e8fcfb1b20d35c07a57ab805afedc71d2c"
+        }
+      },
+      "parameters": {
+        "worker": "tools/model-budget/optimize/decimate-emissive-lock.mjs",
+        "targetTriangles": 7900,
+        "emissiveThreshold": 192,
+        "errorBound": 0.02,
+        "lockBorder": true
+      },
+      "workerResult": {
+        "tool": "model-budget/decimate-emissive-lock@1",
+        "skipped": "receipt-and-sha-verified",
+        "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/rebuild/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "parameters": {
+          "target": 7900,
+          "emissiveThreshold": 192,
+          "errorBound": 0.02,
+          "lockBorder": true
+        }
+      },
+      "status": "generated-pending-visual-and-structural-validation",
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "heroId": "godie-ubal",
+      "character": "老巴恩",
+      "form": "EN801 變身前",
+      "sourceSha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "outputSha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00",
+      "worker": "material-weighted",
+      "materialTargets": {
+        "GGD_body": 6420,
+        "GGD_faceDecal1": 40,
+        "GGD_faceDecal2": 50,
+        "GGD_face": 250,
+        "GGD_hair": 150,
+        "GGD_faceDecal3": 50
+      },
+      "materialErrors": {
+        "GGD_body": 0.05,
+        "GGD_face": 0.2,
+        "GGD_hair": 0.2,
+        "GGD_faceDecal2": 0.1,
+        "GGD_faceDecal3": 0.1
+      },
+      "modelTemplate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation/uploaded-model.json",
+        "bytes": 383,
+        "sha256": "582610a1d7eed1f23ecab4087a2b78ae941ea1803ec458246599aac74baad559"
+      },
+      "source": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+          "bytes": 3004016,
+          "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+          "bytes": 3004016,
+          "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "output": {
+        "base": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+          "bytes": 2899468,
+          "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+        },
+        "frozen": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/versions/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+          "bytes": 2899468,
+          "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+        },
+        "local": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/final/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+          "bytes": 2899468,
+          "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+        },
+        "baseFrozenByteIdentical": true
+      },
+      "reviewModels": {
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/source-review-model.json",
+          "bytes": 383,
+          "sha256": "cbff509986fc8fe3e4d03d4018c53406844956c17108d25df6827a31521324b0"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/candidate-final-review-model.json",
+          "bytes": 383,
+          "sha256": "93f12baa204331440cdef7209532d14d3e94f4d2eeeeeace20c967996b5624f8"
+        }
+      },
+      "parameters": {
+        "worker": "tools/model-budget/optimize/decimate-material-weighted.mjs",
+        "targetTrianglesMax": 8000,
+        "materialTargets": {
+          "GGD_body": 6420,
+          "GGD_faceDecal1": 40,
+          "GGD_faceDecal2": 50,
+          "GGD_face": 250,
+          "GGD_hair": 150,
+          "GGD_faceDecal3": 50
+        },
+        "materialErrors": {
+          "GGD_body": 0.05,
+          "GGD_face": 0.2,
+          "GGD_hair": 0.2,
+          "GGD_faceDecal2": 0.1,
+          "GGD_faceDecal3": 0.1
+        },
+        "baseErrorBound": 0.02,
+        "preservedSimplificationAttributes": [
+          "NORMAL",
+          "TEXCOORD_0",
+          "WEIGHTS_0",
+          "JOINTS_0"
+        ],
+        "lockBorder": true
+      },
+      "workerResult": {
+        "tool": "model-budget/decimate-material-weighted@1",
+        "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/rebuild/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "parameters": {
+          "materialTargets": {
+            "GGD_body": 6420,
+            "GGD_faceDecal1": 40,
+            "GGD_faceDecal2": 50,
+            "GGD_face": 250,
+            "GGD_hair": 150,
+            "GGD_faceDecal3": 50
+          },
+          "errorBound": 0.02,
+          "materialErrors": {
+            "GGD_body": 0.05,
+            "GGD_face": 0.2,
+            "GGD_hair": 0.2,
+            "GGD_faceDecal2": 0.1,
+            "GGD_faceDecal3": 0.1
+          },
+          "lockBorder": true
+        },
+        "trianglesBefore": 16760,
+        "trianglesAfter": 7998,
+        "records": [
+          {
+            "primitiveIndex": 0,
+            "material": "GGD_body",
+            "trianglesBefore": 12030,
+            "trianglesAfter": 6420,
+            "target": 6420,
+            "errorBound": 0.05,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0.02214951254427433
+          },
+          {
+            "primitiveIndex": 1,
+            "material": "GGD_faceDecal1",
+            "trianglesBefore": 40,
+            "trianglesAfter": 40,
+            "target": 40,
+            "errorBound": 0.02,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0
+          },
+          {
+            "primitiveIndex": 2,
+            "material": "GGD_faceDecal2",
+            "trianglesBefore": 134,
+            "trianglesAfter": 86,
+            "target": 50,
+            "errorBound": 0.1,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0.05361602082848549
+          },
+          {
+            "primitiveIndex": 3,
+            "material": "GGD_face",
+            "trianglesBefore": 2646,
+            "trianglesAfter": 878,
+            "target": 250,
+            "errorBound": 0.2,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0.19483855366706848
+          },
+          {
+            "primitiveIndex": 4,
+            "material": "GGD_hair",
+            "trianglesBefore": 1822,
+            "trianglesAfter": 488,
+            "target": 150,
+            "errorBound": 0.2,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0.1944957673549652
+          },
+          {
+            "primitiveIndex": 5,
+            "material": "GGD_faceDecal3",
+            "trianglesBefore": 88,
+            "trianglesAfter": 86,
+            "target": 50,
+            "errorBound": 0.1,
+            "preservationSemantics": [
+              "NORMAL",
+              "TEXCOORD_0",
+              "WEIGHTS_0",
+              "JOINTS_0"
+            ],
+            "measuredError": 0.09171032905578613
+          }
+        ]
+      },
+      "status": "generated-pending-visual-and-structural-validation",
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "counts": {
+    "sources": 3,
+    "generatedBaseFiles": 3,
+    "generatedFrozenFiles": 3
+  },
+  "supersededExperimentsRetained": [
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "sha256": "da6d43f1990275eeae6091c16d99370b164d74de261699ea4416a969ed787e14",
+      "reason": "proportional position-only simplification passed numeric limits but showed visible cloth holes and exceeded the conservative changed-pixel metric"
+    }
+  ],
+  "boundaries": {
+    "backdropRepairedSourcesRetained": true,
+    "originalPreRepairSourcesRetained": true,
+    "centralIndexesModified": false,
+    "championPointersModified": false,
+    "runtimeSelectable": false,
+    "productionDeploymentVerified": false
+  }
+}

@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from current_resource_index import apply_hero_integration_overlay, apply_option_registration_overlay, component_git_evidence, verify_git_contents
+from current_resource_index import apply_hero_integration_overlay, apply_option_registration_overlay, apply_s3_preparation_split, component_git_evidence, fateubw_runtime_components, rebase_git_absolute_paths, verify_git_contents, verify_popp_approval_boundary
 
 
 class CurrentResourceGitFilesTest(unittest.TestCase):
@@ -114,6 +114,16 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
                 'sha256': component['sha256'],
             },
             'modelDocument': {'gitPath': 'content/models/community.body.pal.json'},
+            'modelOptionEvidence': [{
+                'modelKey': 'community.body.pal',
+                'isDefault': True,
+                'modelGlb': {
+                    'gitPath': component['gitPath'],
+                    'bytes': component['bytes'],
+                    'sha256': component['sha256'],
+                },
+                'modelDocument': {'gitPath': 'content/models/community.body.pal.json'},
+            }],
             'productionDeploymentVerified': False,
         }]}
         [current] = apply_hero_integration_overlay([dict(component)], receipt, 'receipt.json')
@@ -121,6 +131,113 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         self.assertTrue(current['runtimeDropdownRegistered'])
         self.assertEqual(current['heroIds'], ['acquired-pal'])
         self.assertEqual(current['modelDocumentGitPath'], 'content/models/community.body.pal.json')
+
+    def test_git_absolute_links_can_target_the_integration_checkout(self):
+        source = self.repo / 'isolated'
+        target = self.repo / 'integration'
+        value = {'gitAbsolutePath': str(source / 'content/model.glb'),
+                 'sourceAbsolutePath': str(source / 'raw/source.glb')}
+        rebase_git_absolute_paths(value, source, target)
+        self.assertEqual(str((target / 'content/model.glb').resolve()), value['gitAbsolutePath'])
+        self.assertEqual(str(source / 'raw/source.glb'), value['sourceAbsolutePath'])
+
+    def test_fate_components_keep_mapped_and_unmapped_states_distinct(self):
+        manifest_path = self.repo / 'materials/hero-model-library/priority-evidence/fateubw-community/runtime-components-v1/manifest.json'
+        receipt_path = manifest_path.with_name('registration-receipt.json')
+        manifest_path.parent.mkdir(parents=True)
+        manifest = {'components': [
+            {'characterId':'saber','authorLabel':'Saber','heroIds':['hero-saber'],'sourceId':'fate-source','upstreamLicense':'ARR','projectApproval':'approved','modelKey':'community.body.saber','clipMap':{'idle':'idle'},'motionSemantics':'source-native','nativeAnimationCount':3,'glb':{'gitPath':'content/saber.glb','bytes':3,'sha256':'1'*64},'modelDocument':{'gitPath':'content/saber.json'}},
+            {'characterId':'caster','authorLabel':'Caster','heroIds':[],'sourceId':'fate-source','upstreamLicense':'ARR','projectApproval':'approved','modelKey':'community.body.caster','clipMap':{'idle':'idle'},'motionSemantics':'source-native','nativeAnimationCount':2,'glb':{'gitPath':'content/caster.glb','bytes':4,'sha256':'2'*64},'modelDocument':{'gitPath':'content/caster.json'}},
+        ]}
+        receipt = {'registrations': []}
+        manifest_path.write_text(__import__('json').dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+        receipt_path.write_text(__import__('json').dumps(receipt,ensure_ascii=False,indent=2)+'\n')
+        inventory = {'minecraftCommunity': {'sourceUrl':'https://example.test/fate','servants':[
+            {'characterId':'saber','standardizedModelWithNativeMotion':{'absolutePath':'/source/saber.glb','liveVerified':True}},
+            {'characterId':'caster','standardizedModelWithNativeMotion':{'absolutePath':'/source/caster.glb','liveVerified':True}},
+        ]}}
+        mapped, unmapped = fateubw_runtime_components(inventory,manifest,receipt,self.repo)
+        self.assertTrue(mapped['runtimeDropdownRegistered'])
+        self.assertEqual(mapped['heroIds'],['hero-saber'])
+        self.assertFalse(unmapped['runtimeDropdownRegistered'])
+        self.assertFalse(unmapped['ggdHeroImplemented'])
+
+    def test_s3_split_replaces_git_claim_and_disables_unreferenced_component(self):
+        component = {
+            'gitPath':'content/assets/models/community/reserve.glb',
+            'gitAbsolutePath':'/repo/content/assets/models/community/reserve.glb',
+            'bytes':3,
+            'sha256':'1'*64,
+            'runtimeSelectable':True,
+            'runtimeDropdownRegistered':True,
+        }
+        manifest = {
+            's3Uri':'s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/archive.tar.gz',
+            'manifestUri':'s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/archive.files.json',
+            'files':[{
+                'repoPath':component['gitPath'],
+                'archiveMember':component['gitPath'],
+                'bytes':3,
+                'sha256':'1'*64,
+                'storageRole':'unreferenced-model-component',
+            }],
+        }
+        apply_s3_preparation_split(component,manifest)
+        self.assertEqual(component['gitPath'],'content/assets/models/community/reserve.glb')
+        self.assertFalse(component['gitTracked'])
+        self.assertNotIn('gitAbsolutePath',component)
+        self.assertEqual(component['restorePath'],'content/assets/models/community/reserve.glb')
+        self.assertFalse(component['runtimeSelectable'])
+        self.assertEqual(component['storageClass'],'s3-legacy-preparation')
+
+    def test_popp_adaptation_authority_keeps_original_audio_and_native_claims_unbound(self):
+        ledger = {'summary': {
+            'eventAudioCandidates': 36, 'eventAudioReviewed': 36,
+            'ggdVfxCandidates': 12, 'vfxVisuallyAccepted': 12,
+            'runtimeBindingsAddedByThisWorkflow': 7,
+        }}
+        contract = {
+            'schema': 'ggd.popp-integration-review@1',
+            'vfxRuntimeAdaptation': {'authority': {'decision': 'owner-requested-completion-of-reviewed-vfx-adaptation', 'ownerQuotes': ['做完 1~7 阿']}, 'summary': {'candidateRelationshipsBound': 7, 'abilityBindingsCreated': 3}},
+            'portalOwnerReview': {
+                'audio': {'candidateCount': 36, 'approvedCount': 36, 'runtimeBindingAuthorizedCount': 0},
+                'vfx': {'candidateCount': 12, 'visuallyApprovedCount': 12, 'bindingApprovedCount': 0, 'runtimeBindingAuthorizedCount': 0},
+                'runtimeMutationAllowed': False,
+                'runtimeMutationAuthorizedForAll': False,
+            },
+            'eventAudioReviewGate': {
+                'candidateCount': 36, 'reviewedCount': 36, 'sourceQueueReviewedCount': 0,
+                'automaticBindingAllowed': False, 'runtimeSelectable': False,
+            },
+            'vfxRuntimeCandidates': {'summary': {
+                'ggdVfxDocumentsBuilt': 12, 'visuallyAccepted': 12,
+                'sourceManifestVisuallyAccepted': 0, 'skillBindingsCreated': 7,
+                'sourceManifestSkillBindingsCreated': 0, 'releasedDocuments': 12,
+                'releaseDocumentsRuntimeResolvable': 12, 'runtimeSelectable': 7,
+                'productionDeployed': 0,
+            }},
+        }
+        proposals = {
+            'runtimeBindingsCreated': 7, 'runtimeAbilityBindingsCreated': 3,
+            'policy': {'runtimeMutationAllowed': True, 'nativeNiagaraTimingClaim': False},
+        }
+        verify_popp_approval_boundary(ledger, contract, proposals)
+        ledger['summary']['eventAudioReviewed'] = 0
+        with self.assertRaisesRegex(ValueError, 'Popp owner approvals are stale'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
+        ledger['summary']['eventAudioReviewed'] = 36
+        proposals['runtimeBindingsCreated'] = 1
+        with self.assertRaisesRegex(ValueError, 'overclaim runtime binding'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
+
+        proposals['runtimeBindingsCreated'] = 7
+        proposals['policy']['nativeNiagaraTimingClaim'] = True
+        with self.assertRaisesRegex(ValueError, 'overclaim runtime binding'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
+        proposals['policy']['nativeNiagaraTimingClaim'] = False
+        contract.pop('vfxRuntimeAdaptation')
+        with self.assertRaisesRegex(ValueError, 'adaptation authorization'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ RUNTIME_CATEGORY_MAP = {
 }
 MANAGED_CATEGORIES = frozenset(RUNTIME_CATEGORY_MAP.values()) | {"attack-heavy"}
 RUNTIME_NOTE = (
-    " ⭐ 2026-09-14 LoL 七角色戰鬥候選逐項聽審：311 檔依原生事件固定映射註冊；"
+    " ⭐ 2026-09-14～15 LoL 七角色戰鬥候選逐項聽審：315 檔依原生事件與 owner 缺格裁決固定映射註冊；"
     "這一批依決策保留來源增益，只轉為 128k/44.1k/mono MP3，未套 loudnorm。"
 )
 
@@ -84,16 +84,55 @@ def approved_decision(row: dict, decision: dict) -> bool:
     )
 
 
-def expected_originals(queue: dict, decisions: dict, current: dict) -> tuple[dict, list[dict]]:
-    if RUNTIME_NOTE.strip() not in current.get("note", ""):
-        current["note"] = current.get("note", "") + RUNTIME_NOTE
-    champions = current.setdefault("champions", {})
-    rows = battle_rows(queue)
-    grouped: dict[tuple[str, str], list[dict]] = defaultdict(list)
-    for row in rows:
+def approved_gap_decision(row: dict, decision: dict) -> bool:
+    return (
+        decision.get("runtimeApproved") is True
+        and decision.get("decision") == "approve"
+        and decision.get("reviewer") == "owner"
+        and decision.get("nativeId") == row["nativeId"]
+        and decision.get("speaker") == row["nativeId"]
+        and decision.get("language") == "ja"
+        and decision.get("proposedTarget") == row["candidateRuntimeTarget"]
+        and decision.get("gainDecision") == "keep-source-gain"
+        and decision.get("sha256") == row["sha256"]
+        and decision.get("bytes") == row["bytes"]
+        and decision.get("eventBindings") == row["eventBindings"]
+    )
+
+
+def approved_rows(queue: dict, decisions: dict, gap_decisions: dict) -> list[dict]:
+    rows = []
+    for source in battle_rows(queue):
+        row = dict(source)
         decision = decisions["decisions"].get(row["key"], {})
         if not approved_decision(row, decision):
             raise ValueError(f"Battle review is not completely approved: {row['key']}")
+        row["approvalAuthority"] = "listening-review-decisions.json"
+        row["reviewedAt"] = decision["reviewedAt"]
+        rows.append(row)
+    by_key = {row["key"]: row for row in queue["records"]}
+    for decision in gap_decisions["decisions"]:
+        if not decision.get("runtimeApproved"):
+            continue
+        row = dict(by_key[decision["key"]])
+        row["candidateRuntimeTarget"] = decision["proposedTarget"]
+        if not approved_gap_decision(row, decision):
+            raise ValueError(f"Gap review approval differs from source evidence: {row['key']}")
+        row["approvalAuthority"] = "gap-listening-decisions.json"
+        row["reviewedAt"] = decision["reviewedAt"]
+        rows.append(row)
+    if len({row["key"] for row in rows}) != len(rows):
+        raise ValueError("duplicate approved review key")
+    return rows
+
+
+def expected_originals(queue: dict, decisions: dict, gap_decisions: dict, current: dict) -> tuple[dict, list[dict]]:
+    if RUNTIME_NOTE.strip() not in current.get("note", ""):
+        current["note"] = current.get("note", "") + RUNTIME_NOTE
+    champions = current.setdefault("champions", {})
+    rows = approved_rows(queue, decisions, gap_decisions)
+    grouped: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for row in rows:
         grouped[(NATIVE_TO_RUNTIME[row["nativeId"]], RUNTIME_CATEGORY_MAP[row["candidateRuntimeTarget"]])].append(row)
 
     for hero_id in NATIVE_TO_RUNTIME.values():
@@ -120,7 +159,8 @@ def expected_originals(queue: dict, decisions: dict, current: dict) -> tuple[dic
                 "assignedBy": "owner-listening-review",
                 "why": f"approved native event target {row['candidateRuntimeTarget']}",
                 "reviewKey": row["key"],
-                "reviewedAt": REVIEW_DATE,
+                "reviewedAt": row["reviewedAt"],
+                "approvalAuthority": row["approvalAuthority"],
                 "gainDecision": "keep-source-gain",
                 "nativeEventBindings": row["eventBindings"],
             }
@@ -137,6 +177,8 @@ def expected_originals(queue: dict, decisions: dict, current: dict) -> tuple[dic
                 "sourceBytes": row["bytes"],
                 "sourceSeconds": row["seconds"],
                 "nativeEventBindings": row["eventBindings"],
+                "approvalAuthority": row["approvalAuthority"],
+                "reviewedAt": row["reviewedAt"],
             })
     registrations.sort(key=lambda row: (row["runtimeHeroId"], row["runtimeCategory"], row["runtimeTakeKey"]))
     return current, registrations
@@ -163,9 +205,38 @@ def verify_manifest(repo: Path, registrations: list[dict]) -> str:
     for row in registrations:
         clips = manifest["champions"][row["runtimeHeroId"]]["lines"][row["runtimeCategory"]]
         expected = f"assets/audio/voices/lines/{row['runtimeHeroId']}/{row['runtimeTakeKey']}.mp3"
-        if expected not in {clip["clip"] for clip in clips}:
+        matches = [clip for clip in clips if clip["clip"] == expected]
+        if len(matches) != 1:
             raise ValueError(f"Runtime manifest does not register {row['reviewKey']}: {expected}")
+        clip = matches[0]
+        if clip.get("hash") != row["runtimeSha256"] or clip.get("lang") != "ja":
+            raise ValueError(f"Runtime manifest metadata drift: {row['reviewKey']}")
+        # MP3 encoder delay/padding can move the probed container duration by
+        # about one millisecond relative to the source WAV. The manifest value
+        # is rounded to six decimals, so retain a narrow two-millisecond bound.
+        if abs(float(clip.get("durationSec", -1)) - row["sourceSeconds"]) > 0.002:
+            raise ValueError(f"Runtime manifest duration drift: {row['reviewKey']}")
     return sha256(path)
+
+
+def verify_central_voice_index(repo: Path, registrations: list[dict]) -> None:
+    index_path = repo / "materials/hero-model-library/voice-index.json"
+    file_manifest = repo / "materials/hero-model-library/voice-files.jsonl.gz"
+    index = read_json(index_path)
+    review = index.get("listeningReview", {})
+    if review.get("runtimeApproved") != len(registrations) or review.get("runtimeRegistered") != len(registrations):
+        raise ValueError("Central voice index does not expose all approved runtime registrations")
+    if review.get("decisionsPath") != "materials/hero-model-library/lol-project-seven/listening-review-decisions.json":
+        raise ValueError("Central voice index points at a different approval authority")
+    if index.get("sourceFileManifestSha256") != sha256(file_manifest):
+        raise ValueError("Central voice file manifest SHA drift")
+
+
+def verify_runtime_git_blobs(repo: Path, registrations: list[dict]) -> None:
+    for row in registrations:
+        result = subprocess.run(["git", "show", ":" + row["runtimePath"]], cwd=repo, capture_output=True)
+        if result.returncode or hashlib.sha256(result.stdout).hexdigest() != row["runtimeSha256"]:
+            raise ValueError(f"Runtime MP3 is absent or differs in Git index: {row['runtimePath']}")
 
 
 def main() -> None:
@@ -181,16 +252,33 @@ def main() -> None:
     base = repo / "materials/hero-model-library/lol-project-seven"
     queue_path = base / "listening-review-queue.json"
     decisions_path = base / "listening-review-decisions.json"
+    gap_decisions_path = base / "gap-listening-decisions.json"
     originals_path = repo / "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json"
     receipt_path = base / "runtime-registration.json"
-    queue, decisions, originals = map(read_json, (queue_path, decisions_path, originals_path))
+    queue, decisions, gap_decisions, originals = map(
+        read_json, (queue_path, decisions_path, gap_decisions_path, originals_path)
+    )
     if queue.get("sourceId") != SOURCE_ID or decisions.get("sourceId") != SOURCE_ID:
         raise ValueError("Review inputs do not target the fixed LoL seven source")
     if queue["inputs"]["decisions"]["sha256"] != sha256(decisions_path):
         raise ValueError("Listening queue is stale against decisions")
-    expected, registrations = expected_originals(queue, decisions, originals)
-    if len(registrations) != queue["summary"]["battleReviewCandidates"]:
-        raise ValueError("Approved runtime rows do not equal the battle review scope")
+    if gap_decisions.get("sourceId") != SOURCE_ID:
+        raise ValueError("Gap review input does not target the fixed LoL seven source")
+    if gap_decisions.get("sourceQueueSha256") != sha256(queue_path):
+        raise ValueError("Gap review input is stale against the listening queue")
+    expected, registrations = expected_originals(queue, decisions, gap_decisions, originals)
+    expected_count = queue["summary"]["battleReviewCandidates"] + gap_decisions["summary"]["approved"]
+    if len(registrations) != expected_count:
+        raise ValueError("Approved runtime rows do not equal the base plus gap review scope")
+    approved_keys = {
+        key for key, decision in decisions["decisions"].items()
+        if decision.get("runtimeApproved") is True
+    }
+    approved_keys.update(
+        row["key"] for row in gap_decisions["decisions"] if row.get("runtimeApproved") is True
+    )
+    if approved_keys != {row["reviewKey"] for row in registrations}:
+        raise ValueError("Runtime approval authority contains rows outside the fixed battle review scope")
 
     rendered = render_json(expected, indent=1)
     if args.check:
@@ -223,13 +311,19 @@ def main() -> None:
         row["runtimeSha256"] = sha256(output)
 
     if not args.skip_runtime_index and not args.check:
+        # Use the repository wrapper so generated products are unlocked and
+        # relocked under the same quarantine contract as CI.
         subprocess.run([
-            "node", "--import", "tsx", "tools/voice-gen/src/build-combat-lines.mjs",
-            "--use-pinned-reference-status",
+            "bash", "scripts/genrun.sh", "combat:build", "combat:build:pinned:raw"
         ], cwd=repo, check=True)
-        subprocess.run(["node", "--import", "tsx", "tools/voice-gen/index-lines.mjs"], cwd=repo, check=True)
 
     manifest_sha = verify_manifest(repo, registrations) if not args.skip_runtime_index else None
+    if args.check and not args.skip_runtime_index:
+        subprocess.run([
+            "python3", str(base / "tools/sync_gap_runtime_indexes.py")
+        ], cwd=repo, check=True)
+        verify_central_voice_index(repo, registrations)
+        verify_runtime_git_blobs(repo, registrations)
     per_hero = Counter(row["runtimeHeroId"] for row in registrations)
     per_target = Counter(row["candidateRuntimeTarget"] for row in registrations)
     receipt = {
@@ -240,6 +334,13 @@ def main() -> None:
             "sha256": sha256(decisions_path),
             "reviewer": "owner",
             "reviewedAt": REVIEW_DATE,
+        },
+        "gapApprovalAuthority": {
+            "path": gap_decisions_path.relative_to(repo).as_posix(),
+            "sha256": sha256(gap_decisions_path),
+            "reviewer": gap_decisions["reviewer"],
+            "reviewedAt": gap_decisions["reviewedAt"],
+            "approved": gap_decisions["summary"]["approved"],
         },
         "queue": {"path": queue_path.relative_to(repo).as_posix(), "sha256": sha256(queue_path)},
         "runtimeAuthority": {"path": originals_path.relative_to(repo).as_posix(), "sha256": sha256(originals_path)},
@@ -273,6 +374,10 @@ def main() -> None:
             raise ValueError("runtime-registration.json is stale")
     else:
         receipt_path.write_text(rendered_receipt, encoding="utf-8")
+        if not args.skip_runtime_index:
+            subprocess.run([
+                "python3", str(base / "tools/sync_gap_runtime_indexes.py"), "--write"
+            ], cwd=repo, check=True)
     print(json.dumps(receipt["summary"], ensure_ascii=False))
 
 

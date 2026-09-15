@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-worldblender-c00-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-ganondorf-c00-static-skinned-v1",
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "heroBound": false,
+      "runtimeSelectable": false,
+      "deploymentVerified": false
+    }
+  ]
+}

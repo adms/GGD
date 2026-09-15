@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "champ.skin.barbarian",
+  "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -316,5 +316,44 @@
     "祕孔",
     "普攻觸發"
   ],
-  "pitch": "貼住目標連續出拳，用普攻與祕孔效果一路壓制單一敵人。"
+  "pitch": "貼住目標連續出拳，用普攻與祕孔效果一路壓制單一敵人。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.skin.barbarian",
+      "modelSha256": "9fb1cc06f717a04ab2dd4203aca48cf4827e59ec33052de91904ed7c736f4dba",
+      "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+      "registeredAt": "2026-09-15T09:39:17.634Z",
+      "source": {
+        "kind": "previous",
+        "character": "北斗神拳掌門人 - 拳四郎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.skin.barbarian.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b",
+      "label": "ou99 拳四郎（本尊／62 段原生動作／減面版）",
+      "sourceModelKey": "ou99.464696-standard-v1",
+      "modelSha256": "36d8ad96baba76da04a0692a176795edd143f63a0a0bf0dd774fd3844059ab8a",
+      "binarySha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42",
+      "registeredAt": "2026-09-15T09:39:17.659Z",
+      "source": {
+        "kind": "exact",
+        "character": "拳四郎",
+        "work": "北斗神拳",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-464696-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

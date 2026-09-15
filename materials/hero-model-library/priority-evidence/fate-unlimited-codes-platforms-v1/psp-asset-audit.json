@@ -1,0 +1,937 @@
+{
+  "schema": "ggd-fuc-psp-asset-audit@1",
+  "scope": {
+    "pspPs2AndUnknownSeparated": true,
+    "sourceFilesReadOnly": true,
+    "inventoryMetadataIsNotPayload": true,
+    "communityPortIsNotNativePsp": true,
+    "conversionCandidateIsNotRuntimeRegistration": true
+  },
+  "generatedFrom": {
+    "downloadSources": {
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 3518189,
+      "sha256": "31d3ae1e6bcd8e0e25ad804400fb60004a8acdb2138ecdf79557055e32ef12ba"
+    },
+    "platformIndex": {
+      "path": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
+      "bytes": 25656,
+      "sha256": "4cca7399211afba09c3016f9c257a6d05af045b5af5f1ed4b295ab6e3ba1c0ce"
+    },
+    "generator": {
+      "path": "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py",
+      "bytes": 18060,
+      "sha256": "04e51dfde1390f4e86d2f03bc53324ea46366bcf8a5d28681ad9546c75d58ddd"
+    }
+  },
+  "originalPsp": [
+    {
+      "sourceId": "lv99-fuc-psp-japan-portable-zip",
+      "inventoryId": "windows-rom-scan:0607",
+      "game": "Fate/unlimited codes",
+      "releasePlatform": "Sony PSP",
+      "region": "Japan",
+      "edition": "Portable",
+      "container": "ZIP",
+      "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
+      "inventoryRecordedBytes": 509977835,
+      "inventoryRecordedAt": "2026-09-11T19:06:37.1477340+00:00",
+      "payloadLocalPath": null,
+      "payloadExistsLocal": false,
+      "payloadBytesRead": 0,
+      "payloadSha256": null,
+      "contentInspected": false,
+      "nativeCharacterIds": [],
+      "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+      "assetReadiness": {
+        "model": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "texture": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "skeleton": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "motion": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "vfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "sfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "voice": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        }
+      },
+      "acquisitionStatus": "inventory-metadata-only",
+      "extractionStatus": "not-started",
+      "conversionStatus": "not-started",
+      "validationStatus": "not-started",
+      "registrationStatus": "not-registered",
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "lv99-fuc-psp-usa-portable-iso",
+      "inventoryId": "windows-rom-scan:0608",
+      "game": "Fate/unlimited codes",
+      "releasePlatform": "Sony PSP",
+      "region": "USA",
+      "edition": "Portable",
+      "container": "ISO",
+      "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+      "inventoryRecordedBytes": 738394112,
+      "inventoryRecordedAt": "2026-09-11T19:06:37.1477340+00:00",
+      "payloadLocalPath": null,
+      "payloadExistsLocal": false,
+      "payloadBytesRead": 0,
+      "payloadSha256": null,
+      "contentInspected": false,
+      "nativeCharacterIds": [],
+      "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+      "assetReadiness": {
+        "model": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "texture": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "skeleton": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "motion": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "vfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "sfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "voice": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        }
+      },
+      "acquisitionStatus": "inventory-metadata-only",
+      "extractionStatus": "not-started",
+      "conversionStatus": "not-started",
+      "validationStatus": "not-started",
+      "registrationStatus": "not-registered",
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "spritedatabase-fate-ps2-archer",
+      "target": "Fate/unlimited codes PS2／Archer 音訊",
+      "sourceUrl": "https://spritedatabase.net/file/4521",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PS2",
+      "platformClass": "confirmed-ps2-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "audio"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer/files.sha256.json",
+          "bytes": 38696,
+          "sha256": "c81042c51f53287239dd3c12b03d7066a575703249a2a80313e9ff9944324b08"
+        },
+        "verifiedFiles": 186,
+        "verifiedBytes": 69246564,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [],
+      "modelCandidateCount": 0,
+      "skeletonCandidateCount": 0,
+      "candidateTextureReferences": 0,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 180,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/spritedatabase-fate-ps2-archer/9bb3165f1bc9f96eea8f9f7cf7b24e81d93e70940ed3e8fb71ab7edd3bbcc973.zip",
+        "bytes": 56696755,
+        "sha256": "9bb3165f1bc9f96eea8f9f7cf7b24e81d93e70940ed3e8fb71ab7edd3bbcc973",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "spritedatabase-fate-ps2-saber",
+      "target": "Fate/unlimited codes PS2／saber 音訊",
+      "sourceUrl": "https://spritedatabase.net/file/4522",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PS2",
+      "platformClass": "confirmed-ps2-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "audio"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/files.sha256.json",
+          "bytes": 53475,
+          "sha256": "e6a36af7f3c1d4948b7e685a7c41f632d4a061077cc29d8c422ad59ed8cc77a2"
+        },
+        "verifiedFiles": 258,
+        "verifiedBytes": 84224299,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [],
+      "modelCandidateCount": 0,
+      "skeletonCandidateCount": 0,
+      "candidateTextureReferences": 0,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 251,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/spritedatabase-fate-ps2-saber/0b13d2c81725d88e2f7e4a940c7f66e14ec3bc4ec9445412c978191d8147d9d6.zip",
+        "bytes": 65582259,
+        "sha256": "0b13d2c81725d88e2f7e4a940c7f66e14ec3bc4ec9445412c978191d8147d9d6",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "spritedatabase-fate-ps2-shirou",
+      "target": "Fate/unlimited codes PS2／shirou 音訊",
+      "sourceUrl": "https://spritedatabase.net/file/4520",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PS2",
+      "platformClass": "confirmed-ps2-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "audio"
+      ],
+      "heroIds": [
+        "community-review-12-20260907"
+      ],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/files.sha256.json",
+          "bytes": 47647,
+          "sha256": "163ad87d626932fbbaa7ccd5d741f8a5c195aa1dad5cdf86eb17bb43b5794c3c"
+        },
+        "verifiedFiles": 229,
+        "verifiedBytes": 91927257,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [],
+      "modelCandidateCount": 0,
+      "skeletonCandidateCount": 0,
+      "candidateTextureReferences": 0,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 222,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/spritedatabase-fate-ps2-shirou/ee3d651383d0f665979aae5d8819c3e82087346558ad344d56a807edd34e4eac.zip",
+        "bytes": 76576087,
+        "sha256": "ee3d651383d0f665979aae5d8819c3e82087346558ad344d56a807edd34e4eac",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "github-udienzebeer-fate-uc-hd-c8c2d52b",
+      "target": "Fate/unlimited codes PSP／103張社群替換貼圖儲備",
+      "sourceUrl": "https://github.com/UdienZebeer/Fate-UC-HD",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PSP",
+      "platformClass": "confirmed-psp-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "texture",
+        "portrait",
+        "ui"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-texture-recovery-batch6",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-texture-recovery-batch6/files.sha256.json",
+          "bytes": 29919,
+          "sha256": "b73c771127661342b0b86132d870a3dbbbb05007609728938ceecd2bb6249062"
+        },
+        "verifiedFiles": 144,
+        "verifiedBytes": 89629847,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [],
+      "modelCandidateCount": 0,
+      "skeletonCandidateCount": 0,
+      "candidateTextureReferences": 0,
+      "communityReplacementTextureFiles": 103,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 0,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "no-audio-in-source-index",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/github-udienzebeer-fate-uc-hd-c8c2d52b/005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001.zip",
+        "bytes": 89129051,
+        "sha256": "005899a99d260ff4ed4fc768322d79adb268519a7bf8069080431ac847140001",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-fate-bgm-dnf-62195",
+      "target": "Fate/unlimited codes 音樂 MOD（非角色語音）",
+      "sourceUrl": "https://gamebanana.com/sounds/62195",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "audio"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-bgm-dnf",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-bgm-dnf/files.sha256.json",
+          "bytes": 32448,
+          "sha256": "1c6239a2ee19e95614e08954916f59a1f0d434a6c18a2f0b6acd30c14490f57a"
+        },
+        "verifiedFiles": 174,
+        "verifiedBytes": 386999545,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [],
+      "modelCandidateCount": 0,
+      "skeletonCandidateCount": 0,
+      "candidateTextureReferences": 0,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 60,
+      "audioRole": "music-not-voice",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fate-bgm-dnf-62195/1d2df366aee8ae078047b40343056b60abf9968da3f511f209ae6e85e80c1dba.zip",
+        "bytes": 377962096,
+        "sha256": "1d2df366aee8ae078047b40343056b60abf9968da3f511f209ae6e85e80c1dba",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-fuc-dark-sakura-492607",
+      "target": "間桐櫻（黑櫻）／Fate UC MOD兩配色及音訊",
+      "sourceUrl": "https://gamebanana.com/mods/492607",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "model",
+        "texture",
+        "skeleton",
+        "audio"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/files.sha256.json",
+          "bytes": 82484,
+          "sha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632"
+        },
+        "verifiedFiles": 377,
+        "verifiedBytes": 6279504,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fuc-mod-dark-sakura-p1",
+          "character": "Dark Sakura / 間桐櫻（黑櫻）",
+          "heroIds": [],
+          "variant": "P1",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/converted/models/01-p1/body.glb",
+          "bytes": 307032,
+          "sha256": "db1038b27795660802f7701195ddf48ab8b5a520f63f7d5bc0cbacff1dd108eb",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-dark-sakura-p2",
+          "character": "Dark Sakura / 間桐櫻（黑櫻）",
+          "heroIds": [],
+          "variant": "P2",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/converted/models/02-p2/body.glb",
+          "bytes": 309512,
+          "sha256": "a60f1b30d613f16c95d20579aaadce672bddc0fe0f8d084979aa01d835eee247",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        }
+      ],
+      "modelCandidateCount": 2,
+      "skeletonCandidateCount": 2,
+      "candidateTextureReferences": 2,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 15,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-dark-sakura-492607/45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4.zip",
+        "bytes": 3979145,
+        "sha256": "45d1a54205d658b4d9e1b1df8b8d4c2d77db756d4ded01139a4c23e1cc1b63a4",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+      "target": "言峰綺禮／Fate UC Sven MOD骨架與動作",
+      "sourceUrl": "https://gamebanana.com/mods/291438",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "model",
+        "texture",
+        "skeleton",
+        "animation"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/files.sha256.json",
+          "bytes": 82484,
+          "sha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632"
+        },
+        "verifiedFiles": 33,
+        "verifiedBytes": 43051345,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fuc-mod-kotomine-kirei-sven",
+          "character": "Kotomine Kirei / 言峰綺禮",
+          "heroIds": [],
+          "variant": null,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei/converted/kotomine-kirei-standard.glb",
+          "bytes": 18728816,
+          "sha256": "cf5f5d84cf6c8419c8d8a006771d5ce1d6206ddbb97701cb24b8ef4450190ac3",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "Sven Co-op/GoldSrc MOD rig",
+          "skeletonCandidate": true,
+          "animationEntries": 349,
+          "textureReferences": 4,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        }
+      ],
+      "modelCandidateCount": 1,
+      "skeletonCandidateCount": 1,
+      "candidateTextureReferences": 4,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 349,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 0,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "no-audio-in-source-index",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
+        "bytes": 8828637,
+        "sha256": "a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-fuc-rin-474593",
+      "target": "Rin Tohsaka / 遠坂凜／Fate UC MOD 4服裝",
+      "sourceUrl": "https://gamebanana.com/mods/474593",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "model",
+        "skeleton",
+        "texture",
+        "audio"
+      ],
+      "heroIds": [
+        "b2-rin"
+      ],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/files.sha256.json",
+          "bytes": 62294,
+          "sha256": "876d543f8f11bb9d4ed9c17b788cf1c2021b673afda6ab231ad38e9c87c07dbd"
+        },
+        "verifiedFiles": 341,
+        "verifiedBytes": 7032998,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fuc-mod-rin-rin",
+          "character": "Rin Tohsaka / 遠坂凜",
+          "heroIds": [
+            "b2-rin"
+          ],
+          "variant": "Rin",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/01-rin/body.glb",
+          "bytes": 351712,
+          "sha256": "c79d8e3dc652ad4049a704bc3fbd6a2108a9acf05d79069ffc4a7a01d6a3591a",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-rin-homurahara",
+          "character": "Rin Tohsaka / 遠坂凜",
+          "heroIds": [
+            "b2-rin"
+          ],
+          "variant": "Homurahara",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/02-homurahara/body.glb",
+          "bytes": 326624,
+          "sha256": "c01588bd7e8a57144c75e977837923b3e383e26ff5ed1db9a1b78757dbd26c29",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-rin-rinb",
+          "character": "Rin Tohsaka / 遠坂凜",
+          "heroIds": [
+            "b2-rin"
+          ],
+          "variant": "RinB",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/03-rinb/body.glb",
+          "bytes": 350520,
+          "sha256": "a29efb2969360a6140d63aa384008456332d2998f6ab0d0e34ed138873dd8a6b",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-rin-extra",
+          "character": "Rin Tohsaka / 遠坂凜",
+          "heroIds": [
+            "b2-rin"
+          ],
+          "variant": "Extra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/04-extra/body.glb",
+          "bytes": 338012,
+          "sha256": "cead2370d211d2705e4296475d62b05e16d0879328d652449a5378f8f54beacd",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        }
+      ],
+      "modelCandidateCount": 4,
+      "skeletonCandidateCount": 4,
+      "candidateTextureReferences": 4,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 12,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-rin-474593/6a2af492e7df0e96a1f7ed6bc2b04df8c5322e724bb5cb9ae4bf4d379a68988e.zip",
+        "bytes": 3366210,
+        "sha256": "6a2af492e7df0e96a1f7ed6bc2b04df8c5322e724bb5cb9ae4bf4d379a68988e",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-fuc-shirou-473819",
+      "target": "Shirou Emiya / 衛宮士郎／Fate UC MOD 4服裝",
+      "sourceUrl": "https://gamebanana.com/mods/473819",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "model",
+        "skeleton",
+        "texture",
+        "audio"
+      ],
+      "heroIds": [
+        "community-review-12-20260907"
+      ],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/files.sha256.json",
+          "bytes": 62422,
+          "sha256": "133d3f6393cb4d31278ee50ee07d655584ddbf6f1c1b93cd51260610bfea061a"
+        },
+        "verifiedFiles": 340,
+        "verifiedBytes": 6324397,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fuc-mod-shirou-casual",
+          "character": "Shirou Emiya / 衛宮士郎",
+          "heroIds": [
+            "community-review-12-20260907"
+          ],
+          "variant": "Casual",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/01-casual/body.glb",
+          "bytes": 265432,
+          "sha256": "4144b7480e638f2749b6a9731a1fa68d19dd7e79afb2ea689043425f3eeabad0",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-shirou-homurahara",
+          "character": "Shirou Emiya / 衛宮士郎",
+          "heroIds": [
+            "community-review-12-20260907"
+          ],
+          "variant": "Homurahara",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/02-homurahara/body.glb",
+          "bytes": 283920,
+          "sha256": "7227e2e6473af1a421fbda807b925701e86308db06a194e8f0d692e396611bfd",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-shirou-casual-b",
+          "character": "Shirou Emiya / 衛宮士郎",
+          "heroIds": [
+            "community-review-12-20260907"
+          ],
+          "variant": "Casual B",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/03-casual-b/body.glb",
+          "bytes": 263308,
+          "sha256": "d9032ab91ef51d44d0192caf5e8522c7a6577d7c3ec557482f4e876d04895f43",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-shirou-satsujinki",
+          "character": "Shirou Emiya / 衛宮士郎",
+          "heroIds": [
+            "community-review-12-20260907"
+          ],
+          "variant": "Satsujinki",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/04-satsujinki/body.glb",
+          "bytes": 273544,
+          "sha256": "d8c3e6114f5c3dcc94272983f11c8ec46d752c7240047ee89aea697635c3a027",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        }
+      ],
+      "modelCandidateCount": 4,
+      "skeletonCandidateCount": 4,
+      "candidateTextureReferences": 4,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 16,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-shirou-473819/1efab5148cd6c209b07d4fb60cb9836edb0f29f1bfd30680df56fe474bc52fd0.zip",
+        "bytes": 3339762,
+        "sha256": "1efab5148cd6c209b07d4fb60cb9836edb0f29f1bfd30680df56fe474bc52fd0",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "sourceId": "gamebanana-zero-lancer-493444",
+      "target": "Fate/unlimited codes／Zero Lancer（作者標示迪爾姆德）P1／P2",
+      "sourceUrl": "https://gamebanana.com/mods/493444",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "unknown",
+      "platformClass": "platform-unverified-community-supplemental",
+      "platformBoundary": "A source label or MOD port does not prove PSP/PS2 native origin.",
+      "assetKindsDeclared": [
+        "model",
+        "skeleton",
+        "texture",
+        "audio"
+      ],
+      "heroIds": [],
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer",
+      "fileVerification": {
+        "manifest": {
+          "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer/files.sha256.json",
+          "bytes": 65769,
+          "sha256": "a48f0ecd0d4d0cb631ca8e9a7d009d856a21c8dd1a0b5ce4f86072e6a6c3eac9"
+        },
+        "verifiedFiles": 358,
+        "verifiedBytes": 4772223,
+        "allMemberSha256Verified": true
+      },
+      "modelCandidates": [
+        {
+          "candidateId": "fuc-mod-zero-lancer-p1",
+          "character": "Diarmuid Ua Duibhne / Zero Lancer",
+          "heroIds": [],
+          "variant": "P1",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer/converted/diarmuid-p1-textured/body.glb",
+          "bytes": 336732,
+          "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        },
+        {
+          "candidateId": "fuc-mod-zero-lancer-p2",
+          "character": "Diarmuid Ua Duibhne / Zero Lancer",
+          "heroIds": [],
+          "variant": "P2",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer/converted/diarmuid-p2-textured/body.glb",
+          "bytes": 337856,
+          "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+          "sourcePlatform": "unknown",
+          "sourceSkeleton": "MOD-retargeted",
+          "skeletonCandidate": true,
+          "animationEntries": 0,
+          "textureReferences": 1,
+          "conversionStatus": "standard-glb-candidate",
+          "runtimeReady": false,
+          "backendSelectionVerified": false
+        }
+      ],
+      "modelCandidateCount": 2,
+      "skeletonCandidateCount": 2,
+      "candidateTextureReferences": 2,
+      "communityReplacementTextureFiles": 0,
+      "motionEntries": 0,
+      "nativeFucMotionEntries": 0,
+      "nativeFucVfxEntries": 0,
+      "nativeFucPackages": 0,
+      "audioFiles": 13,
+      "audioRole": "unclassified-audio-pending-listening",
+      "voiceIdentityStatus": "pending-listening-review",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-zero-lancer-493444/b6f62cd511049ca4175d31b35cbb1320931dae763e46605e13830c40d9275835.zip",
+        "bytes": 2671973,
+        "sha256": "b6f62cd511049ca4175d31b35cbb1320931dae763e46605e13830c40d9275835",
+        "readbackVerified": true,
+        "usage": "manual-only legacy backup; not runtime-ready"
+      },
+      "s3ReadbackVerified": true,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "summary": {
+    "originalPspInventoryRows": 2,
+    "originalPspPayloadsPresent": 0,
+    "originalPspPayloadBytesRead": 0,
+    "originalPspPayloadsExtracted": 0,
+    "originalPspNativeModelsConverted": 0,
+    "originalPspNativeAnimationsConverted": 0,
+    "originalPspNativeVfxConverted": 0,
+    "originalPspNativeAudioConverted": 0,
+    "centralFucSources": 10,
+    "confirmedPspSupplementalSources": 1,
+    "confirmedPs2SupplementalSources": 3,
+    "unknownPlatformSources": 6,
+    "pspCommunityReplacementTextures": 103,
+    "standardGlbCandidates": 13,
+    "standardGlbCandidatesVerified": 13,
+    "skeletonCandidates": 13,
+    "communityMotionEntries": 349,
+    "nativeFucMotionEntries": 0,
+    "nativeFucVfxEntries": 0,
+    "nativeFucPackages": 0,
+    "ps2AudioFiles": 653,
+    "unknownPlatformCharacterAudioFiles": 56,
+    "musicFiles": 60,
+    "sourceFilesShaVerified": 2440,
+    "sourceBytesShaVerified": 789487979,
+    "s3ReadbackVerifiedSources": 10,
+    "runtimeSelectableSources": 0,
+    "productionDeployedSources": 0
+  },
+  "gaps": [
+    "Original Japan ZIP and USA ISO payloads are not locally readable on this Mac.",
+    "No original FUC FPK/GMO/GIM member list or native character identity has been inspected.",
+    "No FUC-native skeleton, motion, VFX, SFX or voice event map is verified.",
+    "Community model/audio candidates require platform provenance and human visual/listening review.",
+    "No backend option, runtime selection or production deployment was performed."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "jump",
+    "attack": "dual_reverse_1",
+    "cast": "bellerophon",
+    "hurt": "land",
+    "death": "land"
+  },
+  "yawOffsetDeg": 0
+}

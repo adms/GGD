@@ -1,0 +1,345 @@
+{
+  "schema": "ggd.jump-force-dai-draw-call-audit@1",
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2619896,
+    "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23"
+  },
+  "currentChampionDrawCallPolicy": {
+    "warning": 3,
+    "limit": 6
+  },
+  "observed": {
+    "meshObjects": 6,
+    "drawPrimitives": 20,
+    "exactSemanticMaterialGroups": 11,
+    "atlasEligiblePrimitives": 2,
+    "atlasIneligiblePrimitives": 18
+  },
+  "exactSemanticGroups": [
+    [
+      {
+        "index": 0,
+        "name": "MI_chr0430_lens"
+      }
+    ],
+    [
+      {
+        "index": 1,
+        "name": "MI_chr0430_eyeshadow"
+      }
+    ],
+    [
+      {
+        "index": 2,
+        "name": "MI_chr0430_pants"
+      },
+      {
+        "index": 10,
+        "name": "MI_chr0430_pants"
+      },
+      {
+        "index": 14,
+        "name": "MI_chr0430_pants"
+      },
+      {
+        "index": 18,
+        "name": "MI_chr0430_pants"
+      }
+    ],
+    [
+      {
+        "index": 3,
+        "name": "MI_chr0430_weapon"
+      },
+      {
+        "index": 19,
+        "name": "MI_chr0430_weapon"
+      }
+    ],
+    [
+      {
+        "index": 4,
+        "name": "MI_chr0430_glass"
+      }
+    ],
+    [
+      {
+        "index": 5,
+        "name": "MI_chr0430_face"
+      },
+      {
+        "index": 8,
+        "name": "MI_chr0430_oral"
+      },
+      {
+        "index": 15,
+        "name": "MI_chr0430_face"
+      }
+    ],
+    [
+      {
+        "index": 6,
+        "name": "MI_chr0430_hair"
+      }
+    ],
+    [
+      {
+        "index": 7,
+        "name": "MI_chr0430_eye"
+      }
+    ],
+    [
+      {
+        "index": 9,
+        "name": "MI_chr0430_damage_blood"
+      }
+    ],
+    [
+      {
+        "index": 11,
+        "name": "MI_chr0430_cloth"
+      },
+      {
+        "index": 13,
+        "name": "MI_chr0430_cloth"
+      },
+      {
+        "index": 17,
+        "name": "MI_chr0430_cloth"
+      }
+    ],
+    [
+      {
+        "index": 12,
+        "name": "MI_chr0430_skin"
+      },
+      {
+        "index": 16,
+        "name": "MI_chr0430_skin"
+      }
+    ]
+  ],
+  "atlasEligibility": {
+    "rows": [
+      {
+        "mesh": 0,
+        "prim": 0,
+        "material": 0,
+        "image": 0,
+        "uv": [
+          -0.12842,
+          1.18652,
+          0.18726,
+          0.99902
+        ],
+        "eligible": false,
+        "why": "UV 超出 [0,1]（[-0.12842, 1.18652, 0.18726, 0.99902]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+      },
+      {
+        "mesh": 0,
+        "prim": 1,
+        "material": 1,
+        "image": 1,
+        "uv": [
+          0.03003,
+          0.99561,
+          0.17041,
+          0.84082
+        ],
+        "eligible": true,
+        "why": ""
+      },
+      {
+        "mesh": 0,
+        "prim": 2,
+        "material": 2,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 0,
+        "prim": 3,
+        "material": 3,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 0,
+        "prim": 4,
+        "material": 4,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 1,
+        "prim": 0,
+        "material": 5,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 1,
+        "prim": 1,
+        "material": 6,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 1,
+        "prim": 2,
+        "material": 7,
+        "image": 17,
+        "uv": [
+          0.03168,
+          0.98633,
+          0.02527,
+          0.98438
+        ],
+        "eligible": true,
+        "why": ""
+      },
+      {
+        "mesh": 1,
+        "prim": 3,
+        "material": 8,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 1,
+        "prim": 4,
+        "material": 9,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "沒有 baseColorTexture"
+      },
+      {
+        "mesh": 2,
+        "prim": 0,
+        "material": 10,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 2,
+        "prim": 1,
+        "material": 11,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 3,
+        "prim": 0,
+        "material": 12,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 3,
+        "prim": 1,
+        "material": 13,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 3,
+        "prim": 2,
+        "material": 14,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 4,
+        "prim": 0,
+        "material": 15,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 4,
+        "prim": 1,
+        "material": 16,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 4,
+        "prim": 2,
+        "material": 17,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 4,
+        "prim": 3,
+        "material": 18,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      },
+      {
+        "mesh": 5,
+        "prim": 0,
+        "material": 19,
+        "image": null,
+        "uv": null,
+        "eligible": false,
+        "why": "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做"
+      }
+    ],
+    "reasonCounts": {
+      "UV 超出 [0,1]（[-0.12842, 1.18652, 0.18726, 0.99902]）⇒ 這張貼圖會 tile,⛔ 不可進圖集": 1,
+      "eligible": 2,
+      "材質有第二張貼圖（normal/MR/occlusion/emissive）—— ⛔ 版面要一起搬,今天不做": 16,
+      "沒有 baseColorTexture": 1
+    },
+    "tool": {
+      "gitPath": "tools/model-budget/optimize/atlas_pack.py",
+      "bytes": 24233,
+      "sha256": "ab2a511af2c9df18da61cee531626c64e4c14bfa665334853748f41592b0556f"
+    }
+  },
+  "decision": {
+    "safeCurrentAutomationCanReachSix": false,
+    "losslessExactMaterialMergeLowerBound": 11,
+    "losslessLowerBoundExceedsLimit": true,
+    "reason": "The model has six skinned mesh nodes. Sixteen primitives use normal/MR/AO texture channels that the current single-channel atlas cannot remap safely; one additional MASK primitive tiles outside 0..1. Exact equivalent-material merging could only reduce 20 states to 11, still above six.",
+    "requiredFollowup": "A source-specific multi-channel atlas with alpha-mode separation and skinned-node merge must be implemented and visually reviewed before this can become a selectable hero model."
+  },
+  "states": {
+    "ggdHardPolicyPassed": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

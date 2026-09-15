@@ -1,0 +1,116 @@
+{
+  "schema": "ggd.ssbu-ryu-procedural-decimation-registration@1",
+  "componentId": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
+  "sourceComponentId": "ssbu-ryu-c00-procedural-six-state-v1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+    "triangles": 14621,
+    "retained": true,
+    "runtimeSelectable": false,
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+    "s3ArchiveMember": "body.glb"
+  },
+  "candidate": {
+    "gitPath": "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb",
+    "bytes": 748828,
+    "sha256": "c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c",
+    "triangles": 7894,
+    "drawPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 154,
+    "textures": [
+      [
+        256,
+        256
+      ],
+      [
+        256,
+        256
+      ],
+      [
+        256,
+        256
+      ],
+      [
+        256,
+        256
+      ],
+      [
+        256,
+        256
+      ]
+    ],
+    "clips": [
+      {
+        "name": "GGD_procedural_idle",
+        "channels": 12
+      },
+      {
+        "name": "GGD_procedural_run",
+        "channels": 12
+      },
+      {
+        "name": "GGD_procedural_attack",
+        "channels": 12
+      },
+      {
+        "name": "GGD_procedural_cast",
+        "channels": 12
+      },
+      {
+        "name": "GGD_procedural_hurt",
+        "channels": 12
+      },
+      {
+        "name": "GGD_procedural_death",
+        "channels": 12
+      }
+    ]
+  },
+  "rebuild": {
+    "runs": 2,
+    "byteIdentical": true,
+    "parameters": {
+      "tool": "ggd.ssbu-ryu-procedural-decimation@1",
+      "beforeTriangles": 14621,
+      "afterTriangles": 7894,
+      "targetTriangles": 7900,
+      "ratio": 0.5403187196498187,
+      "errorBound": 0.02,
+      "dependencyVersions": {
+        "gltfTransform": "4.2.1",
+        "meshoptimizer": "1.0.1"
+      }
+    },
+    "dependencyLock": {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ryu-procedural-decimation-v1/package-lock.json",
+      "sha256": "edf1a1b319b9b3a7b2ce91b14dff339ae83cf419d8494828c4c400695c65a5ad"
+    },
+    "worker": {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-ryu-procedural-decimation-v1/decimate.mjs",
+      "sha256": "fb051e78a91cd30532503c6feb0dd6f6902d56348d1248473a7e0e37e29428d0"
+    }
+  },
+  "registration": {
+    "heroId": "acquired-ryu",
+    "modelKey": "community.body.02b6e37dfb4f8a061e3244a48707a55a43c91d95c83f99c7",
+    "default": false,
+    "runtimeSelectable": true,
+    "activeDefaultPreserved": "imported.herokyo",
+    "modelDocument": {
+      "gitPath": "content/models/community.body.02b6e37dfb4f8a061e3244a48707a55a43c91d95c83f99c7.json",
+      "bytes": 524,
+      "sha256": "07441db7de9d1fe15e67f123731c11d0a0e16551cac8c6faa8c8f6d43a0b0314"
+    }
+  },
+  "validation": {
+    "singleModelIntakeExpected": "clean",
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "animationProvenance": "ggd-procedural-fallback-not-native-or-retargeted",
+    "formalAdoptionTrianglePolicyPassed": true
+  },
+  "deploymentVerified": false
+}

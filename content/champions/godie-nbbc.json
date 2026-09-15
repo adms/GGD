@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+  "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -422,6 +422,46 @@
       "modelSha256": "d3521dfbaaf5697631f0cd58b2770d7a3c11df3730540a4543da6f2eab9fad91",
       "binarySha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
       "registeredAt": "2026-09-13T14:33:42.246Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/05，達伊之劍）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f639b84a136f628fdd6e87378e152f3df74d6ad73842f541",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復＋7,917 面正式採用減面）",
+      "sourceModelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+      "modelSha256": "b13f3d682fe4dd96ba3dee9641ae6c0a2ed007a01fafd3b65f55b9f9699779b1",
+      "binarySha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6",
+      "registeredAt": "2026-09-13T20:17:06.186Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復＋7,918 面正式採用減面）",
+      "sourceModelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+      "modelSha256": "0656d0797f9797731c74e16dffa61bde6990350ac4b90c2c39cb588aeea80a93",
+      "binarySha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540",
+      "registeredAt": "2026-09-13T20:17:08.178Z",
       "source": {
         "kind": "exact",
         "character": "小呆／達伊（PN010/05，達伊之劍）",

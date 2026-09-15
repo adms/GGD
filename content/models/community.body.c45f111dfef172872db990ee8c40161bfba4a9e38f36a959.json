@@ -1,0 +1,17 @@
+{
+  "id": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "Idle",
+    "run": "Walk",
+    "attack": "FarSkill_Action",
+    "cast": "HaloBeam_Loop",
+    "hurt": "Damage",
+    "death": "Damage"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

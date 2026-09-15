@@ -1,0 +1,137 @@
+{
+  "schema": "ggd.infinity-strash-decimated-option-integration-plan@1",
+  "mode": "applied-in-functional-branch",
+  "scope": "Register three accepted content-addressed GLBs as additional runtime options while retaining every predecessor option and model version.",
+  "generatedFrom": {
+    "integrationScriptSha256": "f76d8d74d592a0a25723c3dec2bd2c1876d032d813c1e7484596893ab495d2c5",
+    "generationSha256": "26bbac84b748ee5c28b25e0e0e80411fdd1f2921451134ccbeb86c0bab8245c4",
+    "validationSha256": "472e0a4fd0bfa864e6b2f2b6b3809dc683bb5066defe7ea04c3f6e0ace3c5169",
+    "s3ReceiptSha256": "736902befcaf568d78d76b627e556d9a2d33076ace101591f0b1f0dca8a22c07",
+    "s3ManifestSha256": "3dc529ad0777e7fc7e30002ea4e9cfb93f17ac391aaebd55d32ce02409436bc4",
+    "s3IdentityVerificationSha256": "3c20373dcf4bc6c7e203d0ea0e2a6b5a4a0fc191a6820976dd959b0ca3e7936c"
+  },
+  "s3": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+    "archiveSha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+    "archiveBytes": 93874421,
+    "fileCount": 277,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "records": [
+    {
+      "candidateId": "dai-pn010-02",
+      "heroId": "godie-nbbc",
+      "predecessor": {
+        "runtimeId": "runtime:infinity-strash-dai-pn010-02-native-v1",
+        "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+        "originalSha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "currentSha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+        "retained": true
+      },
+      "candidate": {
+        "runtimeId": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+        "modelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+        "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6",
+        "modelIdLength": 63,
+        "archiveMember": "dai-pn010-02/final/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb"
+      },
+      "registerCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/register-one-source-option.mts",
+        "godie-nbbc",
+        "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1"
+      ]
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "heroId": "godie-nbbc",
+      "predecessor": {
+        "runtimeId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+        "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+        "originalSha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "currentSha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+        "retained": true
+      },
+      "candidate": {
+        "runtimeId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+        "modelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+        "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540",
+        "modelIdLength": 63,
+        "archiveMember": "dai-pn010-05-daino-tsurugi/final/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb"
+      },
+      "registerCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/register-one-source-option.mts",
+        "godie-nbbc",
+        "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1"
+      ]
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "heroId": "godie-ubal",
+      "predecessor": {
+        "runtimeId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+        "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+        "originalSha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "currentSha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+        "retained": true
+      },
+      "candidate": {
+        "runtimeId": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+        "modelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+        "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00",
+        "modelIdLength": 63,
+        "archiveMember": "vearn-en801-pre-transformation/final/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb"
+      },
+      "registerCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/register-one-source-option.mts",
+        "godie-ubal",
+        "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "path": "content/models/community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81.json",
+      "bytes": 484,
+      "sha256": "a4c2e9098e58cf23385a9a9a51454a92c7a4b41b6ff68f6b204af6914a9bb905"
+    },
+    {
+      "path": "content/models/community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563.json",
+      "bytes": 486,
+      "sha256": "0fcdc24f250ce4b1b70af73d1529ab1a6c5f8d4e64e0d1ce47bc31111e6667b3"
+    },
+    {
+      "path": "content/models/community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561.json",
+      "bytes": 484,
+      "sha256": "d31b69dc516c1b42210d44f79089bb425469921bc7ad41ec7b64084f0e4fce08"
+    },
+    {
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 3052967,
+      "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
+    },
+    {
+      "path": "materials/hero-model-library/priority-runtime-options.json",
+      "bytes": 64447,
+      "sha256": "646275b8ff12438bccbd28ab010bb0ea4fb26131a195830222e3a2868a5cd342"
+    }
+  ],
+  "boundaries": {
+    "predecessorsRetained": true,
+    "centralIndexGeneratorsRun": true,
+    "applied": true,
+    "runtimeSelectable": true,
+    "productionDeploymentVerified": false
+  }
+}

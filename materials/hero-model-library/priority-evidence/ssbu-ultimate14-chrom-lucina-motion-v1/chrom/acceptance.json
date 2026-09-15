@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-animated-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "accepted": true,
+      "scope": "independent-skinned-model-motion-component",
+      "completeGameplayActionSet": false,
+      "note": "Accepted as a structurally valid, WebGL-sampled independent component only; no semantic action binding, dropdown or deployment."
+    }
+  ]
+}

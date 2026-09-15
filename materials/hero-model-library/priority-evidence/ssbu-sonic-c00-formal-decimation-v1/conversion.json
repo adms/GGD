@@ -1,0 +1,27 @@
+{
+  "schema": "ggd-ssbu-sonic-formal-decimation@1",
+  "candidateId": "ssbu-sonic-c00-static-skinned-v2",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+    "bytes": 936116,
+    "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+    "bytes": 916024,
+    "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3"
+  },
+  "sourceActionCount": 0,
+  "decimationReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/decimation.json",
+    "sha256": "5bd63f56e5174d5f167c427ca1b7bdd6e3a0c42e9962d8f14e99b9c3d38a997d"
+  },
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Static skinned component only; no source action is present.",
+    "Visual A/B acceptance is recorded separately; no hero or backend registration is implied."
+  ]
+}

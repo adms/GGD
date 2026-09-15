@@ -1,0 +1,427 @@
+{
+  "schema": "ggd-historical-model-lineage-audit@1",
+  "scope": "Exact historical Git-byte retention, current GLB validation, standardized descendant relationship, local non-default dropdown registration and default preservation. Production deployment is not asserted.",
+  "historicalCommit": "7bc2fa3f8",
+  "currentPolicy": {
+    "adoption": {
+      "decimateWhenTrianglesAbove": 10000,
+      "decimatedTargetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5,
+      "preserveOriginalLocally": true,
+      "archiveOriginalToS3Legacy": true,
+      "gitOnlyAfterAcceptance": true
+    },
+    "runtimeBudget": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "inputs": [
+    {
+      "gitPath": "materials/hero-model-library/download-sources.json",
+      "bytes": 3412456,
+      "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
+      "bytes": 7190,
+      "sha256": "845c0c77421d02bba7e37eae619729401711c3f19f3cf03d124849671d521110"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
+      "bytes": 16081,
+      "sha256": "cdf5953408a9b7eeab9d983f9471b52ce8c0cee05dc19c6603e7563cb9454f42"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+      "bytes": 14624,
+      "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+      "bytes": 292,
+      "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/budget.ts",
+      "bytes": 6864,
+      "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "bytes": 7221,
+      "sha256": "cbe02b46bc509c73a9fa642a728d89f0729303304a18457253a18738457fd5cd"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/inspect.ts",
+      "bytes": 4337,
+      "sha256": "1640e153471ab996673982124f45a5d7c4a325e035602cb599dff6b8604ab757"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/glb.ts",
+      "bytes": 10394,
+      "sha256": "91623b9233905592690b54d592b8f8829cec36bf0991104a1277d934e3f40ff6"
+    },
+    {
+      "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
+      "bytes": 5612,
+      "sha256": "e217f6c21962fe2dac430df88e0f8058513d7882f34ce2bca60d73bf20e97ceb"
+    },
+    {
+      "gitPath": "tools/hero-model-library/audit_historical_model_lineage.mts",
+      "bytes": 13671,
+      "sha256": "f824fa229bbfa54c047df23b949916ebd4ca50d220fb4b072e8f09826c9cdee3"
+    }
+  ],
+  "records": [
+    {
+      "id": "historical-jetragon-7bc2fa3f8",
+      "heroId": "acquired-jetragon",
+      "nameZh": "空渦龍",
+      "recoveredFrom": {
+        "commit": "7bc2fa3f8",
+        "gitObject": "7bc2fa3f8:content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "originalGitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "retainedGitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "bytes": 3224424,
+        "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+        "byteIdentical": true
+      },
+      "exactSourceValidation": {
+        "khronos": {
+          "errors": 0,
+          "warnings": 10,
+          "truncated": false
+        },
+        "metrics": {
+          "triangles": 8468,
+          "drawPrimitives": 3,
+          "maxTextureEdge": 256,
+          "clipCount": 5,
+          "maxAnimationChannels": 225
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "directlySelectable": true,
+        "reason": "exact historical bytes satisfy current adoption policy and are the registered lineage option"
+      },
+      "adoptedLineageOption": {
+        "transformation": "exact-historical-source",
+        "componentId": "historical-jetragon-7bc2fa3f8",
+        "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+        "modelDocument": {
+          "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
+          "bytes": 455,
+          "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a"
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "bytes": 3224424,
+          "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6"
+        },
+        "byteIdenticalToExactSource": true,
+        "clipNamesPreserved": true,
+        "metrics": {
+          "triangles": 8468,
+          "drawPrimitives": 3,
+          "maxTextureEdge": 256,
+          "clipCount": 5,
+          "maxAnimationChannels": 225
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 10,
+          "truncated": false
+        },
+        "dropdown": {
+          "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+          "optionIndex": 1,
+          "isDefault": false,
+          "locallyRegistered": true,
+          "productionDeploymentVerified": false
+        }
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "readbackReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "readbackReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    },
+    {
+      "id": "historical-astralym-7bc2fa3f8",
+      "heroId": "acquired-astralym",
+      "nameZh": "枯星龍",
+      "recoveredFrom": {
+        "commit": "7bc2fa3f8",
+        "gitObject": "7bc2fa3f8:content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "originalGitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "retainedGitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "bytes": 3889188,
+        "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+        "byteIdentical": true
+      },
+      "exactSourceValidation": {
+        "khronos": {
+          "errors": 0,
+          "warnings": 10,
+          "truncated": false
+        },
+        "metrics": {
+          "triangles": 23928,
+          "drawPrimitives": 3,
+          "maxTextureEdge": 256,
+          "clipCount": 5,
+          "maxAnimationChannels": 435
+        },
+        "runtimeBudget": {
+          "errors": [
+            "三角面 23928 超過素材正式採用門檻 10000；請從保留的原始檔另產生不超過 8000 面的減面候選，並完成視覺與骨架驗收。"
+          ],
+          "warnings": [
+            "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+          ]
+        },
+        "directlySelectable": false,
+        "reason": "exact source is preserved but exceeds the current 10,000-triangle adoption trigger; the validated 7,996-triangle descendant is registered"
+      },
+      "adoptedLineageOption": {
+        "transformation": "emissive-locked-decimation",
+        "componentId": "historical-astralym-decimated-c45f111d",
+        "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+        "modelDocument": {
+          "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+          "bytes": 456,
+          "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c"
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+          "bytes": 3793672,
+          "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
+        },
+        "byteIdenticalToExactSource": false,
+        "clipNamesPreserved": true,
+        "metrics": {
+          "triangles": 7996,
+          "drawPrimitives": 3,
+          "maxTextureEdge": 256,
+          "clipCount": 5,
+          "maxAnimationChannels": 435
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": [
+            "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+          ]
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 10,
+          "truncated": false
+        },
+        "dropdown": {
+          "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+          "optionIndex": 1,
+          "isDefault": false,
+          "locallyRegistered": true,
+          "productionDeploymentVerified": false
+        }
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "readbackReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "readbackReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    },
+    {
+      "id": "historical-kita-kita-7bc2fa3f8",
+      "heroId": "acquired-kita-kita",
+      "nameZh": "吉他吉他老伯",
+      "recoveredFrom": {
+        "commit": "7bc2fa3f8",
+        "gitObject": "7bc2fa3f8:content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "originalGitPath": "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "retainedGitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "bytes": 373464,
+        "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+        "byteIdentical": true
+      },
+      "exactSourceValidation": {
+        "khronos": {
+          "errors": 0,
+          "warnings": 21,
+          "truncated": false
+        },
+        "metrics": {
+          "triangles": 1202,
+          "drawPrimitives": 1,
+          "maxTextureEdge": 256,
+          "clipCount": 6,
+          "maxAnimationChannels": 54
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "directlySelectable": false,
+        "reason": "exact source is preserved as a Git source artifact; the material-normalized descendant is registered because the source atlas alpha made the raw presentation unsuitable"
+      },
+      "adoptedLineageOption": {
+        "transformation": "material-alpha-normalization",
+        "componentId": "historical-kita-kita-7bc2fa3f8",
+        "modelKey": "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
+        "modelDocument": {
+          "gitPath": "content/models/community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9.json",
+          "bytes": 448,
+          "sha256": "361c39ebddb1cb13c8b464f869520141ea0a129d822fd88e4772c7467c95c4f0"
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+          "bytes": 373212,
+          "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e"
+        },
+        "byteIdenticalToExactSource": false,
+        "clipNamesPreserved": true,
+        "metrics": {
+          "triangles": 1202,
+          "drawPrimitives": 1,
+          "maxTextureEdge": 256,
+          "clipCount": 6,
+          "maxAnimationChannels": 54
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 21,
+          "truncated": false
+        },
+        "dropdown": {
+          "defaultModelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+          "optionIndex": 1,
+          "isDefault": false,
+          "locallyRegistered": true,
+          "productionDeploymentVerified": false
+        }
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "readbackReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "readbackReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8",
+      "heroId": "acquired-lord-nightmares",
+      "nameZh": "金色魔王／惡夢之王",
+      "recoveredFrom": {
+        "commit": "7bc2fa3f8",
+        "gitObject": "7bc2fa3f8:content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "originalGitPath": "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "retainedGitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "bytes": 695600,
+        "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+        "byteIdentical": true
+      },
+      "exactSourceValidation": {
+        "khronos": {
+          "errors": 0,
+          "warnings": 21,
+          "truncated": false
+        },
+        "metrics": {
+          "triangles": 3274,
+          "drawPrimitives": 1,
+          "maxTextureEdge": 256,
+          "clipCount": 6,
+          "maxAnimationChannels": 96
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "directlySelectable": false,
+        "reason": "exact source is preserved as a Git source artifact; the material-normalized descendant is registered because the source atlas alpha made the raw presentation unsuitable"
+      },
+      "adoptedLineageOption": {
+        "transformation": "material-alpha-normalization",
+        "componentId": "historical-lord-nightmares-7bc2fa3f8",
+        "modelKey": "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
+        "modelDocument": {
+          "gitPath": "content/models/community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd.json",
+          "bytes": 452,
+          "sha256": "96cdb58fb688baae6b657dc41bfc308934a891832adb63f9f24782b9d6fdeaf6"
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+          "bytes": 695020,
+          "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c"
+        },
+        "byteIdenticalToExactSource": false,
+        "clipNamesPreserved": true,
+        "metrics": {
+          "triangles": 3274,
+          "drawPrimitives": 1,
+          "maxTextureEdge": 256,
+          "clipCount": 6,
+          "maxAnimationChannels": 96
+        },
+        "runtimeBudget": {
+          "errors": [],
+          "warnings": []
+        },
+        "khronos": {
+          "errors": 0,
+          "warnings": 21,
+          "truncated": false
+        },
+        "dropdown": {
+          "defaultModelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+          "optionIndex": 1,
+          "isDefault": false,
+          "locallyRegistered": true,
+          "productionDeploymentVerified": false
+        }
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "readbackReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "readbackReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    }
+  ],
+  "summary": {
+    "exactHistoricalGlbsRetained": 4,
+    "exactHistoricalGlbsByteIdentical": 4,
+    "exactHistoricalGlbsKhronosPassed": 4,
+    "exactHistoricalGlbsDirectlySelectable": 1,
+    "standardizedLineageOptionsRegistered": 4,
+    "defaultsChanged": 0,
+    "productionDeploymentVerified": false
+  }
+}

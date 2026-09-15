@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.files.json",
+  "archiveSha256": "03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f",
+  "archiveBytes": 18383235,
+  "fileCount": 67,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/manifest.json"
+}

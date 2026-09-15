@@ -1,0 +1,18 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-ryu-c00-static-decimated-v1",
+      "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "acceptedAt": "2026-09-15",
+      "limitationsAccepted": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+        "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed."
+      ]
+    }
+  ]
+}

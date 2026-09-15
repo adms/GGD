@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.files.json",
+  "archiveSha256": "3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b",
+  "archiveBytes": 10297995,
+  "fileCount": 28,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-c00-formal-decimation-v1/073444655dd7b3a134de971156e5a77d6adad7e5dbb132972761d30448d7c0be/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-c00-formal-decimation-v1/073444655dd7b3a134de971156e5a77d6adad7e5dbb132972761d30448d7c0be/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-c00-formal-decimation-v1/073444655dd7b3a134de971156e5a77d6adad7e5dbb132972761d30448d7c0be/manifest.json"
+}

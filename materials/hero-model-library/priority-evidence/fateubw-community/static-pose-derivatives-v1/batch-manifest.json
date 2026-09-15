@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative-batch@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "counts": {
+    "candidates": 5,
+    "staticPoseHolds": 3,
+    "proceduralFormulaLoops": 2,
+    "nativeDurationClips": 0
+  },
+  "records": [
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+      "bytes": 52276
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+      "bytes": 50044
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "sourceClip": "summon",
+      "derivedClip": "derived-formula-loop-summon",
+      "classification": "derived-procedural-formula-loop",
+      "duration": 2.0,
+      "sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+      "bytes": 85300
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "duration": 1.0,
+      "sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+      "bytes": 51384
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "sourceClip": "idle",
+      "derivedClip": "derived-formula-loop-idle",
+      "classification": "derived-procedural-formula-loop",
+      "duration": 4.0,
+      "sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+      "bytes": 78492
+    }
+  ],
+  "nativeDurationClaim": false,
+  "runtimeReady": false,
+  "scope": "Five durationless source entries converted only as clearly labelled derivatives. No action mapping, selection, rights, deployment, or source-engine parity is claimed."
+}

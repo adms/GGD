@@ -1,0 +1,74 @@
+{
+  "schema": "ggd-ssbu-ultimate14-motion-optimization@1",
+  "candidateId": "ssbu-lucina-c00-ultimate14-motion-v1",
+  "fighterId": "lucina",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 3196140,
+    "sha256": "aed41560f0b0508f988d47349b90bcbc2ef2bfd6ac22df5b66aa3af6559db256"
+  },
+  "inputConversion": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/converted-01/conversion.json",
+    "bytes": 15640,
+    "sha256": "039d98ac15a539789430f3a05ebc1bf3b5f39f0bfd907ef7318661ee8de484c2"
+  },
+  "parameters": {
+    "targetTriangles": 7900,
+    "errorBound": 0.02,
+    "maxDraws": 6,
+    "textureEdge": 256,
+    "harmonizeAttributes": false
+  },
+  "dependencyRuntime": {
+    "worker": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/decimate.mjs",
+      "bytes": 3340,
+      "sha256": "d92e1b84969c243574630959350664a7992742fe5b64ee5746434bed4e777bab"
+    },
+    "packageLock": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/package-lock.json",
+      "bytes": 25779,
+      "sha256": "5411b7fee57e6e7279c25e559c2eaf92f05782b4dd15f5e0161223c58cda61db"
+    },
+    "packageJson": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/package.json",
+      "bytes": 183,
+      "sha256": "0142aa4b54623afc7883acb56268b3acb28b20e3e7bef180b7df200da8465227"
+    }
+  },
+  "stages": {
+    "decimation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/decimation.json",
+      "bytes": 137,
+      "sha256": "7d5a74c883d7125f39c369f26266b203bd114319f4bea9d637d7ff3fa8a5e153"
+    },
+    "coalescing": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/coalescing.json",
+      "bytes": 1016,
+      "sha256": "a1a2da09b0ca43e9cda9033fc9c05175cbf480694e7cdfa0a2b500f0b5cb821b"
+    },
+    "attributeHarmonization": null,
+    "primitiveMerge": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/primitive-merge.json",
+      "bytes": 733,
+      "sha256": "5cb1c3ae597bd5866e70a90784d59a5487120888714dba7b075e194676ea66ce"
+    },
+    "atlas": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/atlas.json",
+      "bytes": 3586,
+      "sha256": "5f4a5b587475b84c5481f954373311778376e02f03abd015278dfe9f63665e06"
+    },
+    "alphaAtlasFinalization": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/alpha-atlas-finalization.json",
+      "bytes": 683,
+      "sha256": "e1031e63de20990473689698e7e684d9cd0ba7f37ba22533e0dbde6b05418731"
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+    "bytes": 2731060,
+    "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744"
+  },
+  "runtimeSelectable": false,
+  "deployed": false
+}

@@ -1,0 +1,695 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative-validation@1",
+  "records": [
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "durationSeconds": 1,
+      "sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+      "bytes": 52276,
+      "samplerEvidence": [
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        }
+      ],
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "ggdBudgetErrors": 0,
+      "ggdInspection": {
+        "triangles": 336,
+        "meshes": 1,
+        "textures": [
+          {
+            "width": 128,
+            "height": 128,
+            "bytes": 4054,
+            "sha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "derived-hold-summon",
+            "duration": 1,
+            "channels": 7
+          }
+        ],
+        "report": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 0,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "GGD Bedrock geometry converter",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 45312
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 128,
+                  "height": 128,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 1,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 672,
+            "totalTriangleCount": 336,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "durationSeconds": 1,
+      "sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+      "bytes": 50044,
+      "samplerEvidence": [
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        }
+      ],
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "ggdBudgetErrors": 0,
+      "ggdInspection": {
+        "triangles": 336,
+        "meshes": 1,
+        "textures": [
+          {
+            "width": 128,
+            "height": 128,
+            "bytes": 2138,
+            "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "derived-hold-summon",
+            "duration": 1,
+            "channels": 6
+          }
+        ],
+        "report": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 0,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "GGD Bedrock geometry converter",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 43372
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 128,
+                  "height": 128,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 1,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 672,
+            "totalTriangleCount": 336,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "sourceClip": "summon",
+      "derivedClip": "derived-formula-loop-summon",
+      "classification": "derived-procedural-formula-loop",
+      "durationSeconds": 2,
+      "sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+      "bytes": 85300,
+      "samplerEvidence": [
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0.0625
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 121,
+          "start": 0,
+          "end": 2,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        }
+      ],
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "ggdBudgetErrors": 0,
+      "ggdInspection": {
+        "triangles": 456,
+        "meshes": 1,
+        "textures": [
+          {
+            "width": 128,
+            "height": 128,
+            "bytes": 2892,
+            "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "derived-formula-loop-summon",
+            "duration": 2,
+            "channels": 9
+          }
+        ],
+        "report": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 0,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "GGD Bedrock geometry converter",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 77208
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 128,
+                  "height": 128,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 1,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 912,
+            "totalTriangleCount": 456,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "sourceClip": "summon",
+      "derivedClip": "derived-hold-summon",
+      "classification": "derived-static-pose-hold",
+      "durationSeconds": 1,
+      "sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+      "bytes": 51384,
+      "samplerEvidence": [
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        },
+        {
+          "keyCount": 2,
+          "start": 0,
+          "end": 1,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0
+        }
+      ],
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "ggdBudgetErrors": 0,
+      "ggdInspection": {
+        "triangles": 336,
+        "meshes": 1,
+        "textures": [
+          {
+            "width": 128,
+            "height": 128,
+            "bytes": 1963,
+            "sha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "derived-hold-summon",
+            "duration": 1,
+            "channels": 10
+          }
+        ],
+        "report": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 0,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "GGD Bedrock geometry converter",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 43348
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 128,
+                  "height": 128,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 1,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 672,
+            "totalTriangleCount": 336,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        }
+      }
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "sourceClip": "idle",
+      "derivedClip": "derived-formula-loop-idle",
+      "classification": "derived-procedural-formula-loop",
+      "durationSeconds": 4,
+      "sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+      "bytes": 78492,
+      "samplerEvidence": [
+        {
+          "keyCount": 241,
+          "start": 0,
+          "end": 4,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0.034845031797885895
+        },
+        {
+          "keyCount": 241,
+          "start": 0,
+          "end": 4,
+          "startEndDelta": 0,
+          "maxDeltaFromStart": 0.034845031797885895
+        }
+      ],
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "ggdBudgetErrors": 0,
+      "ggdInspection": {
+        "triangles": 480,
+        "meshes": 1,
+        "textures": [
+          {
+            "width": 128,
+            "height": 128,
+            "bytes": 2657,
+            "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "derived-formula-loop-idle",
+            "duration": 4,
+            "channels": 2
+          }
+        ],
+        "report": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 0,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "GGD Bedrock geometry converter",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 71244
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 128,
+                  "height": 128,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 1,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 960,
+            "totalTriangleCount": 480,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        },
+        "budget": {
+          "errors": [],
+          "warnings": []
+        }
+      }
+    }
+  ],
+  "counts": {
+    "candidates": 5,
+    "holds": 3,
+    "formulaLoops": 2,
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0
+  },
+  "assertions": {
+    "allOutputsClearlyDerived": true,
+    "noNativeDurationClaim": true,
+    "holdsHaveTwoIdenticalEndpointKeys": true,
+    "formulaLoopsMoveAndClose": true,
+    "allKhronosErrorsZero": true,
+    "allGgdBudgetErrorsZero": true
+  },
+  "scope": "GLB structure, derivative metadata, hold/loop sample behavior, Khronos validation, and GGD upload budgets only. Visual quality, action mapping, rights, backend selection, and deployment remain unverified."
+}

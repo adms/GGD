@@ -1,0 +1,423 @@
+{
+  "schema": "ggd.kof-local-pipeline-receipt@1",
+  "pipelineId": "kof-local-pipeline-v1",
+  "definition": {
+    "bytes": 1961,
+    "sha256": "19bb753a3c3d59e2d362be7b1e68d5fddbd25e48a84997b94f3117d4679c409a",
+    "gitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/pipeline.json"
+  },
+  "scope": {
+    "sourceIds": [
+      "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "steam-kofxiv-terry-path-index-v1"
+    ],
+    "nativeCharacterIdsWithPayload": [
+      "MAI",
+      "IOR",
+      "KYO"
+    ],
+    "nativeCharacterIdsPathIndexedOnly": [
+      "TRY"
+    ],
+    "remoteLibraryReadAllowed": false
+  },
+  "stages": [
+    {
+      "id": "source-verify",
+      "status": "passed-local-only",
+      "inputs": [
+        {
+          "bytes": 5088,
+          "sha256": "3b379bd1dec8715c230d56c92a2741665febcbdb956a028f6b0c6b482d9e6f3d",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/source-manifest.json"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 65628,
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/files.jsonl.gz"
+        }
+      ]
+    },
+    {
+      "id": "extract-reuse",
+      "status": "passed-rehashed-existing-extraction",
+      "inputs": [
+        {
+          "bytes": 65628,
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/files.jsonl.gz"
+        }
+      ],
+      "outputs": [
+        {
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237",
+          "verifiedFiles": 1088,
+          "verifiedBytes": 424539810,
+          "perCharacterFiles": {
+            "IOR": 365,
+            "KYO": 354,
+            "MAI": 369
+          },
+          "assetKindCounts": {
+            "animation": 9,
+            "audio": 474,
+            "audio-metadata": 21,
+            "configuration": 90,
+            "model": 78,
+            "skeleton": 20,
+            "texture": 319,
+            "vfx": 77
+          }
+        }
+      ]
+    },
+    {
+      "id": "texture",
+      "status": "converted-review-candidates",
+      "inputs": [
+        {
+          "bytes": 65628,
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/files.jsonl.gz"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 14257,
+          "sha256": "f03b31f79423d05ed85624e4f27981d4d716647dea2d017281fd7a2c2e80b100",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json"
+        },
+        {
+          "bytes": 69371,
+          "sha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json"
+        }
+      ],
+      "summary": {
+        "base": {
+          "manifest": {
+            "bytes": 14257,
+            "sha256": "f03b31f79423d05ed85624e4f27981d4d716647dea2d017281fd7a2c2e80b100",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json"
+          },
+          "files": 14,
+          "maxEdge": 256
+        },
+        "vfx": {
+          "manifest": {
+            "bytes": 69371,
+            "sha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json"
+          },
+          "files": 55,
+          "maxEdge": 256
+        }
+      }
+    },
+    {
+      "id": "audio",
+      "status": "decoded-source-labels-unreviewed-for-binding",
+      "inputs": [
+        {
+          "bytes": 28265,
+          "sha256": "c7ae294a46e1917b9d3b7dc039de8079d1b6f35e0147c1dad03e603ad6031577",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-files.jsonl.gz"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 455383,
+          "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-analysis-v2.json"
+        }
+      ],
+      "decodedFiles": 474
+    },
+    {
+      "id": "vfx",
+      "status": "owner-approved-support-components-runtime-reconstruction-blocked",
+      "inputs": [
+        {
+          "bytes": 69371,
+          "sha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 1088832,
+          "sha256": "5592185f369e2e78a12fd2787f23575b03801abd6d4d91853ea86013de623eb6",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json"
+        }
+      ],
+      "nativeEffectGroups": 71,
+      "runtimeVfxCandidates": 0
+    },
+    {
+      "id": "native-format-probe",
+      "status": "blocked-no-audited-reader",
+      "inputs": [
+        {
+          "bytes": 65628,
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/files.jsonl.gz"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 17614,
+          "sha256": "03204b7212c86ec0bce17d644c0774063a5eace3f2dfb2b1b032fe7ee02af424",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
+        }
+      ],
+      "summary": {
+        "probe": {
+          "bytes": 17614,
+          "sha256": "03204b7212c86ec0bce17d644c0774063a5eace3f2dfb2b1b032fe7ee02af424",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
+        },
+        "nativeFiles": 18,
+        "readerAcceptedFiles": 0,
+        "conversionState": {
+          "modelAndSkeleton": "blocked-proprietary-obac-omir-osec-no-reader",
+          "nativeAnimation": "blocked-proprietary-otra-no-reader",
+          "vfx": "blocked-proprietary-eff-obac-runtime-reconstruction"
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "status": "texture-pass-model-motion-vfx-not-eligible",
+      "inputs": [
+        {
+          "bytes": 292,
+          "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf",
+          "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json"
+        },
+        {
+          "bytes": 17614,
+          "sha256": "03204b7212c86ec0bce17d644c0774063a5eace3f2dfb2b1b032fe7ee02af424",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 219698,
+          "sha256": "34407ae256991a0451f5cb59800304621e28339c77e0cf764bd4d4e80a5b367e",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+        }
+      ],
+      "runtimeEligibleModels": 0
+    },
+    {
+      "id": "review",
+      "status": "owner-approved-runtime-binding-not-authorized",
+      "inputs": [
+        {
+          "bytes": 1088832,
+          "sha256": "5592185f369e2e78a12fd2787f23575b03801abd6d4d91853ea86013de623eb6",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 108481,
+          "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+        }
+      ],
+      "summary": {
+        "receipt": {
+          "bytes": 108481,
+          "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+        },
+        "approvedTextureCandidates": 55,
+        "approvedNativeEffectGroups": 71,
+        "runtimeBindingsAuthorized": 0
+      }
+    },
+    {
+      "id": "register",
+      "status": "source-registered-conversion-pending",
+      "inputs": [
+        {
+          "bytes": 5088,
+          "sha256": "3b379bd1dec8715c230d56c92a2741665febcbdb956a028f6b0c6b482d9e6f3d",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json"
+        },
+        {
+          "bytes": 10184,
+          "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
+        }
+      ],
+      "outputs": [
+        {
+          "bytes": 3516282,
+          "sha256": "3d2733750efadee3434e5361b4a566167f795997f20842bd3223ce1aecff565a",
+          "gitPath": "materials/hero-model-library/download-sources.json"
+        }
+      ],
+      "registeredSourceIds": [
+        "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+        "steam-kofxiv-terry-path-index-v1"
+      ],
+      "backendSelectableModels": 0
+    },
+    {
+      "id": "index",
+      "status": "entry-generated",
+      "inputs": [
+        {
+          "bytes": 219698,
+          "sha256": "34407ae256991a0451f5cb59800304621e28339c77e0cf764bd4d4e80a5b367e",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+        },
+        {
+          "bytes": 10184,
+          "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
+        }
+      ],
+      "outputs": [
+        {
+          "sha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json"
+        }
+      ]
+    },
+    {
+      "id": "report",
+      "status": "fragment-generated",
+      "inputs": [
+        {
+          "sha256": "26a3dcddfd5e2e403d90b85beec835dfaf2ed0de3893ebf81bacfdf444668d36",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/current-resource-entry.json"
+        }
+      ],
+      "outputs": [
+        {
+          "sha256": "6835c4e396d7f6160489f498ed9676a8b3f226fc721a48c0662c22d0a02dae35",
+          "gitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/report-fragment.json"
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-xiv-priority-v1/audit_audio.py",
+        "--root",
+        "$WORKSPACE/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"check\": \"ok\", \"files\": 474, \"seconds\": 1057.5713541666669}"
+    },
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-3d-sources-v1/convert_xiv_textures.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"files\": 14, \"bytes\": 1878218, \"maxEdge\": 256}"
+    },
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/convert_kof_xiv_vfx_textures.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"characters\": 3, \"sourceDdsFiles\": 55, \"convertedPngFiles\": 55, \"outputBytes\": 3563069, \"maxOutputEdge\": 256, \"overTextureLimit\": 0}"
+    },
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/probe_kof_xiv_effects.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"characters\": 3, \"acquiredEffectDirectoryFiles\": 256, \"sourceFormatCounts\": {\".dds\": 55, \".eff\": 71, \".obac\": 68, \".onc\": 21, \".png\": 41}, \"sourceFilesCoveredBySha256Evidence\": 256, \"allEffectDirectoryFilesSha256Covered\": true, \"sourceNativeEffectGroups\": 71, \"groupsWithAnyExactDependencyReference\": 71, \"groupsWithConvertedTexture\": 64, \"convertedTexturesDirectlyReferenced\": 48, \"convertedTexturesWithoutDirectEffReference\": 7, \"blendCarrierCompatibleTextureCounts\": {\"additive\": 35, \"alpha\": 30, \"modulate\": 31}, \"texturesWithNoSafeWhiteTintCarrierMode\": 16, \"exactReferenceOccurrences\": 1080, \"uniqueReferencedSourceFiles\": 178, \"sourceNativeGroupCandidates\": 71, \"ggdRuntimeVfxCandidates\": 0, \"skillBindingsCreated\": 0, \"productionDeploymentVerified\": false}"
+    },
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-3d-sources-v1/build_inventory.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"schema\": \"ggd.kof-3d-source-inventory@1\", \"sourceId\": \"kof-3d-source-audit-20260914-v1\", \"output\": \"$REPO/materials/hero-model-library/source-inventories/kof-3d-sources-v1\", \"xivWadFiles\": 39889, \"xivExtractedVerified\": 1088, \"xvSources\": 11, \"maximumImpactPayloads\": 0, \"errors\": 0}"
+    },
+    {
+      "command": [
+        "/usr/local/bin/python3",
+        "$REPO/tools/hero-model-library/source-workflows/kof-xiv-terry-path-index-v1/build_inventory.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutLastLine": "{\"sourceId\": \"steam-kofxiv-terry-path-index-v1\", \"paths\": 375, \"listedBytes\": 239511922, \"check\": true}"
+    }
+  ],
+  "summary": {
+    "payloadCharacters": 3,
+    "pathIndexedOnlyCharacters": 1,
+    "verifiedPayloadFiles": 1088,
+    "decodedAudioFiles": 474,
+    "baseTextureCandidates": 14,
+    "vfxTextureCandidates": 55,
+    "ownerApprovedVfxTextureCandidates": 55,
+    "ownerApprovedNativeEffectGroups": 71,
+    "nativeFormatProbeFiles": 18,
+    "nativeFormatReaderAcceptedFiles": 0,
+    "runtimeSelectableModels": 0,
+    "runtimeMotionBindings": 0,
+    "runtimeVfxBindings": 0,
+    "productionDeployments": 0
+  },
+  "blockers": [
+    "MAI/IOR/KYO 的 OBAC/OMIR/OSEC 尚無經稽核 reader，模型與骨架不能宣稱已轉換。",
+    "MAI/IOR/KYO 的 OTRA 尚無經稽核 reader，原生動作不能宣稱已轉換。",
+    "71 個 EFF 群組與 55 張 VFX 貼圖已核准，但混合、時序、掛點與技能事件尚未重建，不能建立 runtime VFX 綁定。",
+    "TRY 只有 375 筆 WAD 路徑索引，payload 仍是 0。"
+  ],
+  "claims": {
+    "localSourcePayloadCompleteFor": [
+      "MAI",
+      "IOR",
+      "KYO"
+    ],
+    "pathIndexedOnly": [
+      "TRY"
+    ],
+    "convertedRuntimeModels": 0,
+    "convertedNativeMotionClips": 0,
+    "convertedRuntimeVfx": 0,
+    "backendSelectableModels": 0,
+    "productionDeploymentVerified": false
+  }
+}

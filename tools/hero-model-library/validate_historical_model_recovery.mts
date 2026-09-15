@@ -29,6 +29,7 @@ const require = createRequire(join(repo, 'packages/shared/package.json'));
 const validator = require('gltf-validator');
 const {inspectModelUpload} = await import(join(repo, 'packages/shared/src/content/modelUpload/inspect.ts'));
 const {heroModelBudgetIssues} = await import(join(repo, 'packages/shared/src/content/modelUpload/heroModel.ts'));
+const {HERO_MODEL_ADOPTION_POLICY} = await import(join(repo, 'packages/shared/src/content/modelUpload/budget.ts'));
 
 const contractPaths = [
   'packages/shared/src/content/modelUpload/normalize.ts',
@@ -63,7 +64,13 @@ for (const historical of delivery.heroes) {
   const budget = heroModelBudgetIssues(inspection);
   assert.equal(khronos.issues.numErrors, 0, `${historical.hero}: Khronos errors`);
   assert.equal(khronos.issues.truncated, false, `${historical.hero}: truncated Khronos report`);
-  assert.deepEqual(budget.errors, [], `${historical.hero}: current GGD budget errors`);
+  const directAdoptionEligible = inspection.triangles <= HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove;
+  if (directAdoptionEligible) {
+    assert.deepEqual(budget.errors, [], `${historical.hero}: current GGD budget errors`);
+  } else {
+    assert.equal(target.id, 'historical-astralym-7bc2fa3f8', `${historical.hero}: unexpected direct-adoption blocker`);
+    assert(budget.errors.length > 0, `${historical.hero}: over-trigger source must require a decimated candidate`);
+  }
   assert(inspection.clips.length > 0, `${historical.hero}: historical native clips missing`);
   const currentModelPath = join(repo, 'content/models', `${historical.defaultModelKey}.json`);
   const currentModelBytes = readFileSync(currentModelPath);
@@ -95,6 +102,7 @@ for (const historical of delivery.heroes) {
       skinCount: inspection.json.skins?.length ?? 0,
       joints: inspection.json.skins?.map((skin: {joints: number[]}) => skin.joints.length) ?? [],
       budget,
+      directAdoptionEligible,
       uploadReport: inspection.report,
     },
     historicalMetrics: historical.metrics,
@@ -133,8 +141,9 @@ const result = {
   records,
   allRecoveredBytesMatchHistoricalGit: true,
   allKhronosErrorsZero: true,
-  allCurrentGgdBudgetErrorsZero: true,
-  scope: 'Exact historical GLB recovery plus current structural and budget validation. Models remain independent historical body components until a real GGD hero definition, immutable option registration, runtime switching, visual review and deployment are completed.',
+  allCurrentGgdBudgetErrorsZero: records.every(record => record.ggdInspection.budget.errors.length === 0),
+  directAdoptionEligibleCount: records.filter(record => record.ggdInspection.directAdoptionEligible).length,
+  scope: 'Exact historical GLB recovery plus current structural and direct-adoption validation. An over-trigger original remains valid retained source evidence while its separately validated decimated descendant carries runtime registration. Production deployment is not asserted.',
 };
 mkdirSync(dirname(output), {recursive: true});
 writeFileSync(output, JSON.stringify(result, null, 2) + '\n');

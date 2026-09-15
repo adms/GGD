@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jump-force-dai-decimation-v1/fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e.files.json",
+  "archiveSha256": "fe23f2981b244b17bcd2e01ccbcdb22513de9fd65e4ae5bc4744c8fe26006c1e",
+  "archiveBytes": 12001636,
+  "fileCount": 30,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-decimation-v1/19ae49e0b93983a561f4a6171626b1d0a12912b89db915c185619d28da69d115/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-decimation-v1/19ae49e0b93983a561f4a6171626b1d0a12912b89db915c185619d28da69d115/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-decimation-v1/19ae49e0b93983a561f4a6171626b1d0a12912b89db915c185619d28da69d115/manifest.json",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789372240"
+}

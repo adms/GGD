@@ -1,0 +1,60 @@
+{
+  "schema": "ggd.jumpforce-full-roster-extraction-readiness@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "filters": {
+    "batches": [
+      1
+    ],
+    "nativeCharacterIds": [
+      "chr0000",
+      "chr0010",
+      "chr0020",
+      "chr0030",
+      "chr0040",
+      "chr0050",
+      "chr0060"
+    ],
+    "characterNames": [
+      "Cell",
+      "Frieza",
+      "Goku",
+      "Luffy",
+      "Piccolo",
+      "Trunks",
+      "Vegeta"
+    ]
+  },
+  "source": {
+    "authorityPakCount": 6,
+    "authorityPakSha256LiveVerified": true,
+    "plannedContainerCount": 6,
+    "plannedMemberRelations": 14031,
+    "uniqueContainerMembers": 14031,
+    "existingOutputMembersNotCountedAsNewExtraction": 0
+  },
+  "tool": {
+    "repakAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/repak-src-v0.2.3/target/release/repak",
+    "repakBytes": 4836032,
+    "repakSha256": "593a799487b940259d62d29b27ed38364d3a4344d6b71a12f2fc93bf74d31ee2"
+  },
+  "authorization": {
+    "requiredEnvironmentVariable": "UNREAL_PAK_AES_KEY",
+    "keyState": "not-supplied",
+    "keyValueStored": false,
+    "keyValuePrinted": false,
+    "keyDiscoveryAttempted": false,
+    "keyDerivationAttempted": false,
+    "nextAuthorizedAction": "owner/runtime injects the already-authorized key only; rerun extract_batch.py without --preflight"
+  },
+  "stages": {
+    "pakMirror": "verified-local-6-of-6-authority-paks",
+    "selectedPathRelations": "verified-patch-winner-plan",
+    "extraction": "blocked-awaiting-owner-or-runtime-key-injection",
+    "dependencyClosure": "not-started",
+    "conversion": "not-started",
+    "validation": "not-started",
+    "registration": "not-started",
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

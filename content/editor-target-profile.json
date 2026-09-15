@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_8e53cfc05d69",
+    "contentVersion": "cv_f29707d7a67d",
     "collections": {
       "champions": {
-        "hash": "5851bc7d108e",
+        "hash": "df007ac2fece",
         "count": 153
       },
       "abilities": {
-        "hash": "0cf535753e2c",
+        "hash": "8ba8049b08c4",
         "count": 907
       },
       "items": {
@@ -46,12 +46,12 @@
         "count": 104
       },
       "models": {
-        "hash": "94c711dc8b56",
-        "count": 1012
+        "hash": "3818eff98fe8",
+        "count": 1047
       },
       "vfx": {
-        "hash": "7df129081586",
-        "count": 702
+        "hash": "b8f430d12052",
+        "count": 726
       },
       "skins": {
         "hash": "5ea08c605fea",
@@ -7206,7 +7206,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 702,
+      "docCount": 726,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -7344,6 +7344,9 @@
         "fx.prim.wind.tornado-lg",
         "fx.root-snare",
         "fx.scorch-ring",
+        "fx.strash.popp.nps-hyadaruko-core",
+        "fx.strash.popp.nps-mera-firetrail-00",
+        "fx.strash.popp.nps-merami-muzzle",
         "fx.thorn-lash",
         "fx.w3x.locust.boomnl.p01",
         "fx.w3x.locust.frostnova.p01",
@@ -8397,11 +8400,11 @@
       }
     ]
   },
-  "assetManifestDigest": "99bc53c61730",
+  "assetManifestDigest": "641fb7550951",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2871,
-    "totalBytes": 1108018602
+    "entries": 2914,
+    "totalBytes": 1166231222
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8489,5 +8492,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "6c547bf5f960"
+  "profileDigest": "1e6d14933728"
 }

@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T19:03:37.161324+00:00",
+  "generatedAt": "2026-09-13T22:41:30.334362+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next",
-  "revision": "4dbafce0cf6d059cfe22a6429d4ed6e0eaeb7fe9",
+  "revision": "233b0c768a308767cbe941f0d5f6c371b7109d93",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5567,8 +5567,8 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "bytes": 12890,
-      "sha256": "842623dc374a64f44f3134e3f16ca6ca12874b9990f8f1b20f4abad7c204deed"
+      "bytes": 15242,
+      "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -5682,8 +5682,8 @@
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "bytes": 9602,
-      "sha256": "eb90d876732f99014ea5db8e20a1c22ffce7b2cd4057e8cd08badc1c7bae6c17"
+      "bytes": 10791,
+      "sha256": "09d231c1c50a5461508d6daed10e627b8316e7a88f1dc9ebfd44d4a68aedfcaf"
     },
     {
       "path": "content/champions/godie-ucrl.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "f367f2ff5390fc337af1a41577e3d227685974a71b3fdef028ce7b0cd07b344c",
-      "bytes": 8909612
+      "sha256": "9eaa05378d9d1e4e893d5dd050390e71bbbfb7a497faaf2238e13e01de30a0f0",
+      "bytes": 9709168
     },
     {
       "path": "package.json",
@@ -6942,8 +6942,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "bytes": 5344,
-      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
+      "bytes": 5478,
+      "sha256": "5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -7722,8 +7722,8 @@
     },
     {
       "path": "packages/shared/src/content/modelRollbackNeverLost.test.ts",
-      "bytes": 7550,
-      "sha256": "16b994a7f9c5312b6c7f8de2a3caa3ef4c7aeeac9bd1a2a794fc236331578606"
+      "bytes": 7564,
+      "sha256": "6c75c3bee2e74b4379eda7d23f7bf503e252ee2989a9bb1876dc55e6cdd319c7"
     },
     {
       "path": "packages/shared/src/content/modelScale.fixture.json",
@@ -14738,7 +14738,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "aead74dc4a48f5b7320e0d1bfed1c2f7ebf05cdb36c3640659319a81b74cfc6e"
+    "sha256": "fddac06f3aed7a6fd2daa7498446048f8ade97e276f4c35f949ece884c429999"
   },
   "heroes": [
     {
@@ -28410,8 +28410,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-nbbc.json",
-        "sha256": "842623dc374a64f44f3134e3f16ca6ca12874b9990f8f1b20f4abad7c204deed",
-        "bytes": 12890
+        "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114",
+        "bytes": 15242
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",
@@ -31179,8 +31179,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-ubal.json",
-        "sha256": "eb90d876732f99014ea5db8e20a1c22ffce7b2cd4057e8cd08badc1c7bae6c17",
-        "bytes": 9602
+        "sha256": "09d231c1c50a5461508d6daed10e627b8316e7a88f1dc9ebfd44d4a68aedfcaf",
+        "bytes": 10791
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

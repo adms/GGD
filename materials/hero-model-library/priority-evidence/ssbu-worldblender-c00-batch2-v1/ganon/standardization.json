@@ -1,0 +1,40 @@
+{
+  "schema": "ggd-worldblender-c00-standardization@2",
+  "candidateId": "ssbu-ganondorf-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ganon/model/body/c00/ganon-c00.blend",
+    "bytes": 8533372,
+    "sha256": "cefa74a20064364df875275345b06ef399182c9f98aec816ad7bc27143283613"
+  },
+  "sourceActionCount": 0,
+  "stages": {
+    "lodSelection": {
+      "excludedVisibleMeshPrefixes": []
+    },
+    "decimation": {
+      "targetTriangles": 7900,
+      "errorBound": 0.02
+    },
+    "coalescingReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/coalescing.json",
+    "attributeHarmonizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/attribute-harmonization.json",
+    "primitiveMergeReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/primitive-merge.json",
+    "atlas": null,
+    "alphaAtlasFinalizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/alpha-atlas-finalization.json"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
+    "bytes": 1264104,
+    "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b"
+  },
+  "ultimate14MotionCandidate": {
+    "nuanmbPaths": 10,
+    "bodyMotionPaths": 10,
+    "uniqueTransformPayloads": 10,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false
+}

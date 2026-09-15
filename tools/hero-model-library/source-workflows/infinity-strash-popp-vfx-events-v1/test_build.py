@@ -19,6 +19,7 @@ EXTRACT = module("extract")
 SERVER = module("serve_review")
 PROBE = module("probe_conversion")
 CLOSURE = module("extract_dependency_closure")
+EXPORT = module("export_dependency_assets")
 
 
 class PoppVfxEventAuditTests(unittest.TestCase):
@@ -54,6 +55,14 @@ class PoppVfxEventAuditTests(unittest.TestCase):
         self.assertEqual(receipt["summary"]["vfxClosurePackageReferencesAcquired"], 309)
         self.assertEqual(receipt["summary"]["vfxClosurePackageReferencesMissing"], 0)
         self.assertTrue(receipt["summary"]["vfxNonScriptPackageDependencyClosureComplete"])
+        self.assertEqual(receipt["summary"]["vfxDependencyPackagesAttempted"], 309)
+        self.assertEqual(receipt["summary"]["vfxDependencyPackagesExported"], 203)
+        self.assertEqual(receipt["summary"]["vfxDependencyPackagesWithoutExportableOutput"], 73)
+        self.assertEqual(receipt["summary"]["vfxDependencyPackagesFailed"], 33)
+        self.assertEqual(receipt["summary"]["vfxDependencyPackagesTimedOut"], 0)
+        self.assertEqual(receipt["summary"]["vfxDependencySupportFilesExported"], 789)
+        self.assertEqual(receipt["summary"]["vfxDependencySupportBytesExported"], 122299241)
+        self.assertEqual(receipt["summary"]["vfxDependencySupportExtensionCounts"], {".hdr": 12, ".tga": 777})
         self.assertEqual(receipt["summary"]["eventReferences"], 41)
         self.assertEqual(receipt["summary"]["eventPairsAcquired"], 41)
         self.assertEqual(receipt["summary"]["runtimeBindingsCreated"], 0)
@@ -74,6 +83,14 @@ class PoppVfxEventAuditTests(unittest.TestCase):
         receipt = json.loads((BUILD.OUTPUT / "receipt.json").read_text())
         self.assertEqual(receipt["summary"]["vfxConverted"], 0)
         self.assertTrue(all(row["conversion"]["status"] == "dependency-closure-acquired-conversion-blocked" for row in receipt["vfx"]))
+
+    def test_dependency_support_export_is_byte_verified_and_not_a_vfx_claim(self):
+        manifest = EXPORT.check_export(EXPORT.RECEIPT, EXPORT.RAW, EXPORT.UMODEL, EXPORT.OUTPUT)
+        self.assertTrue(manifest["states"]["dependencySupportAssetsExported"])
+        self.assertFalse(manifest["states"]["niagaraSystemsConverted"])
+        self.assertFalse(manifest["states"]["ggdVfxConverted"])
+        self.assertEqual(manifest["summary"]["packagesAttempted"], 309)
+        self.assertEqual(manifest["summary"]["filesExported"], 789)
 
     def test_virtual_mount_mapping_covers_game_engine_and_niagara(self):
         self.assertEqual(CLOSURE.mount_reference("strash/Content/A/B.uasset"), "/Game/A/B")

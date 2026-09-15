@@ -1,0 +1,16 @@
+{
+  "id": "community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "blink",
+    "run": "dual_spear_1",
+    "attack": "dual_spear_2",
+    "cast": "hogou_unseal",
+    "hurt": "dual_spear_5",
+    "death": "dual_spear_5"
+  },
+  "yawOffsetDeg": 0
+}

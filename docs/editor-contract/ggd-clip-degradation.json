@@ -56,46 +56,46 @@
     }
   },
   "population": {
-    "glbFiles": 1105,
-    "animatedModels": 929,
+    "glbFiles": 1136,
+    "animatedModels": 960,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 810,
-      "pct": 87.2
+      "models": 823,
+      "pct": 85.7
     },
     "cast": {
-      "models": 542,
-      "pct": 58.3
+      "models": 546,
+      "pct": 56.9
     },
     "celebrate": {
       "models": 38,
-      "pct": 4.1
+      "pct": 4
     },
     "death": {
-      "models": 609,
-      "pct": 65.6
+      "models": 616,
+      "pct": 64.2
     },
     "dodge": {
-      "models": 516,
-      "pct": 55.5
+      "models": 522,
+      "pct": 54.4
     },
     "guard": {
-      "models": 10,
-      "pct": 1.1
+      "models": 12,
+      "pct": 1.3
     },
     "hurt": {
-      "models": 92,
-      "pct": 9.9
+      "models": 99,
+      "pct": 10.3
     },
     "idle": {
-      "models": 894,
-      "pct": 96.2
+      "models": 907,
+      "pct": 94.5
     },
     "run": {
-      "models": 842,
-      "pct": 90.6
+      "models": 857,
+      "pct": 89.3
     }
   },
   "degradesTo": "idle",
@@ -162,6 +162,17 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb": [
       "cast",
       "celebrate",
@@ -175,6 +186,17 @@
       "dodge",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb": [
       "cast",
@@ -215,6 +237,13 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "guard",
+      "idle"
+    ],
     "content/assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb": [
       "celebrate",
       "guard",
@@ -230,6 +259,28 @@
       "celebrate",
       "dodge",
       "guard"
+    ],
+    "content/assets/models/community/18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb": [
       "celebrate",
@@ -253,6 +304,14 @@
       "guard",
       "hurt",
       "idle"
+    ],
+    "content/assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/community/229c2dce4a639b861c7b55084a2f9f5bae41e4225646d028c05899992aa2f607.glb": [
       "cast",
@@ -416,6 +475,16 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb": [
       "cast",
       "celebrate",
@@ -441,6 +510,17 @@
       "celebrate",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb": [
       "celebrate",
@@ -520,6 +600,17 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb": [
       "celebrate",
       "guard",
@@ -536,6 +627,25 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb": [
       "attack",
       "cast",
@@ -548,6 +658,16 @@
       "celebrate",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb.glb": [
       "cast",
@@ -735,6 +855,16 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb": [
       "celebrate",
       "dodge",
@@ -803,6 +933,13 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb": [
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb": [
       "cast",
       "celebrate",
@@ -838,6 +975,27 @@
       "dodge",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/community/9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6.glb": [
+      "attack",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb": [
       "celebrate",
@@ -1014,6 +1172,14 @@
       "idle",
       "run"
     ],
+    "content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb": [
       "cast",
       "celebrate",
@@ -1033,6 +1199,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb": [
       "cast",
       "celebrate",
@@ -1046,6 +1220,11 @@
       "dodge",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb": [
+      "celebrate",
+      "dodge",
+      "guard"
     ],
     "content/assets/models/community/cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047.glb": [
       "cast",
@@ -1093,6 +1272,13 @@
     "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb": [
       "celebrate",
       "guard"
+    ],
+    "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/community/d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8.glb": [
       "celebrate",
@@ -1230,6 +1416,17 @@
       "dodge",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb": [
       "celebrate",
@@ -1539,6 +1736,13 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "guard",
+      "idle"
+    ],
     "content/assets/models/community/versions/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb": [
       "celebrate",
       "guard",
@@ -1586,6 +1790,14 @@
     ],
     "content/assets/models/community/versions/226f31c83d149dc843be270fb79116e4ab8067516bd74139c0c0558e7b3faffb.glb": [
       "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
       "guard",
       "hurt"
     ],
@@ -1764,6 +1976,16 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/versions/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb": [
       "cast",
       "celebrate",
@@ -1932,6 +2154,17 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/versions/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb": [
       "celebrate",
       "guard",
@@ -1950,6 +2183,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/6366819222e94aafad8f76fa73a8f12c48b726aa8464fb0c92344e1779ee5b1b.glb": [
       "cast",
       "celebrate",
@@ -1962,6 +2203,16 @@
       "celebrate",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/community/versions/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "idle",
+      "run"
     ],
     "content/assets/models/community/versions/686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a.glb": [
       "celebrate",
@@ -2313,6 +2564,13 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb": [
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb": [
       "cast",
       "celebrate",
@@ -2617,6 +2875,14 @@
       "death",
       "dodge",
       "guard"
+    ],
+    "content/assets/models/community/versions/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/community/versions/c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67.glb": [
       "cast",
@@ -5144,6 +5410,10 @@
       "celebrate",
       "guard"
     ],
+    "content/assets/models/ou99/ou99_464696_standard_v1.glb": [
+      "celebrate",
+      "guard"
+    ],
     "content/assets/models/ou99/ou99_465205.glb": [
       "celebrate",
       "guard",
@@ -5786,6 +6056,10 @@
       "celebrate",
       "guard",
       "hurt"
+    ],
+    "content/assets/models/ou99/versions/9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42.glb": [
+      "celebrate",
+      "guard"
     ],
     "content/assets/models/ou99/versions/91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33.glb": [
       "celebrate",

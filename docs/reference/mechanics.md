@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_8e53cfc05d69`
+contentVersion `cv_f29707d7a67d`
 
 ---
 
@@ -249,7 +249,7 @@ contentVersion `cv_8e53cfc05d69`
 | `witch-form` | `witch-form` |
 | `wound` | `grievous-wounds`、`no-heal` |
 
-## 特效（vfx）—— 702 份
+## 特效（vfx）—— 726 份
 
 由 `spawnVfx.vfxId`、技能的 `vfxKey`、彈道的 `vfxKey` 引用。
 
@@ -313,7 +313,13 @@ contentVersion `cv_8e53cfc05d69`
 - `fx.prim.void.swarm-lg` · `fx.prim.wind.arc` · `fx.prim.wind.beam` · `fx.prim.wind.nova`
 - `fx.prim.wind.pulse` · `fx.prim.wind.pulse-lg` · `fx.prim.wind.pulse-sm` · `fx.prim.wind.slash`
 - `fx.prim.wind.summon-lg` · `fx.prim.wind.tornado` · `fx.prim.wind.tornado-lg` · `fx.ribbon-slash`
-- `fx.root-snare` · `fx.saber.gold-dust` · `fx.scorch-ring` · `fx.thorn`
+- `fx.root-snare` · `fx.saber.gold-dust` · `fx.scorch-ring` · `fx.strash.popp.nps-hyadaruko-core`
+- `fx.strash.popp.nps-hyadaruko-core.candidate` · `fx.strash.popp.nps-hyadaruko-hit` · `fx.strash.popp.nps-hyadaruko-hit.candidate` · `fx.strash.popp.nps-io-bullet-00`
+- `fx.strash.popp.nps-io-bullet-00.candidate` · `fx.strash.popp.nps-io-explosive-00` · `fx.strash.popp.nps-io-explosive-00.candidate` · `fx.strash.popp.nps-ionazun-explosive-00`
+- `fx.strash.popp.nps-ionazun-explosive-00.candidate` · `fx.strash.popp.nps-iora-explosive-00` · `fx.strash.popp.nps-iora-explosive-00.candidate` · `fx.strash.popp.nps-mera-firetrail-00`
+- `fx.strash.popp.nps-mera-firetrail-00.candidate` · `fx.strash.popp.nps-merami-core` · `fx.strash.popp.nps-merami-core.candidate` · `fx.strash.popp.nps-merami-firetrail-00`
+- `fx.strash.popp.nps-merami-firetrail-00.candidate` · `fx.strash.popp.nps-merami-landing-2` · `fx.strash.popp.nps-merami-landing-2.candidate` · `fx.strash.popp.nps-merami-muzzle`
+- `fx.strash.popp.nps-merami-muzzle.candidate` · `fx.strash.popp.nps-raidein-charge-core` · `fx.strash.popp.nps-raidein-charge-core.candidate` · `fx.thorn`
 - `fx.thorn-lash` · `fx.trail.berserk-beam` · `fx.w3x.locust.boomnl.p00` · `fx.w3x.locust.boomnl.p01`
 - `fx.w3x.locust.boomnl.p02` · `fx.w3x.locust.boomnl.p03` · `fx.w3x.locust.boomnl.p04` · `fx.w3x.locust.darkraor.p00`
 - `fx.w3x.locust.darkraor.p01` · `fx.w3x.locust.darkraor.p02` · `fx.w3x.locust.frostnova.p00` · `fx.w3x.locust.frostnova.p01`

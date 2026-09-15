@@ -20,6 +20,9 @@ SOURCE = REPO / "materials/hero-model-library/motion-review/borrowed-motion-cand
 QUEUE = REPO / "materials/hero-model-library/motion-review/borrowed-motion-review.json"
 PAGE = REPO / "apps/client/public/borrowed-motion-review.html"
 ANIM_STATES = {"idle", "run", "attack", "cast", "hurt", "death"}
+RESOLVED_RECEIPTS = {
+    "popp-native-hurt-ascend-fade-v1": REPO / "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+}
 
 
 def canonical_json(value: Any) -> str:
@@ -52,11 +55,39 @@ def build_contract(source: dict[str, Any]) -> dict[str, Any]:
     require(policy.get("decisionValues") == ["approve", "reject"], "decisionValues must be approve/reject")
 
     candidates: list[dict[str, Any]] = []
+    resolved: list[dict[str, Any]] = []
     seen: set[str] = set()
     for raw in source.get("candidates", []):
         cid = raw.get("id")
         require(isinstance(cid, str) and cid and cid not in seen, f"invalid or duplicate candidate id: {cid}")
         seen.add(cid)
+        if cid in RESOLVED_RECEIPTS:
+            receipt_path = RESOLVED_RECEIPTS[cid]
+            receipt_record = file_record(receipt_path.relative_to(REPO).as_posix())
+            receipt = json.loads(receipt_path.read_text())
+            require(receipt.get("schema") == "ggd.popp-integration-review-decision-receipt@1",
+                    f"{cid}: unexpected resolution receipt schema")
+            death = receipt.get("deathPresentation", {})
+            require(receipt.get("ownerDecision", {}).get("deathCandidateId") == "popp-native-down-rise-fade-v1",
+                    f"{cid}: owner decision no longer resolves this proposal")
+            require(death.get("runtimeAlreadyImplemented") is True,
+                    f"{cid}: resolution receipt does not prove runtime implementation")
+            resolved.append({
+                "proposalId": cid,
+                "appliedCandidateId": death["candidateId"],
+                "heroId": receipt["heroId"],
+                "decision": "approve",
+                "status": "resolved-by-owner-decision-and-existing-runtime",
+                "selectedModelKey": receipt["selectionAfter"]["sourceModelKey"],
+                "selectedModelBinarySha256": receipt["selectionAfter"]["binarySha256"],
+                "motion": death["motion"],
+                "motionProvenance": death["motionProvenance"],
+                "presentation": death["presentation"],
+                "runtimeBindingChanged": True,
+                "productionDeployed": False,
+                "receipt": receipt_record,
+            })
+            continue
         require(raw.get("motionKind") in policy["candidateKinds"], f"{cid}: unsupported motionKind")
         require(
             raw.get("deathSubstitutionMode") in policy["deathSubstitutionModes"],
@@ -138,6 +169,7 @@ def build_contract(source: dict[str, Any]) -> dict[str, Any]:
         "source": source_record,
         "candidateEvidence": [row["validationEvidence"] for row in candidates],
         "blockedEvidence": [row["validationEvidence"] for row in blocked],
+        "resolvedEvidence": [row["receipt"] for row in resolved],
     }).encode()
     fingerprint = hashlib.sha256(digest_input).hexdigest()
     return {
@@ -148,12 +180,14 @@ def build_contract(source: dict[str, Any]) -> dict[str, Any]:
         "summary": {
             "playableCandidateCount": len(candidates),
             "blockedLeadCount": len(blocked),
-            "approvedCount": 0,
+            "resolvedCandidateCount": len(resolved),
+            "approvedCount": sum(row["decision"] == "approve" for row in resolved),
             "rejectedCount": 0,
             "pendingDecisionCount": len(candidates),
-            "runtimeBindingsChanged": 0,
+            "runtimeBindingsChanged": sum(row["runtimeBindingChanged"] for row in resolved),
         },
         "candidates": candidates,
+        "resolvedCandidates": resolved,
         "blockedLeads": blocked,
     }
 
@@ -182,6 +216,7 @@ button[data-decision="approve"]{{color:var(--ok)}}button[data-decision="reject"]
 </style></head><body><header><h1>借用／重定向動作逐項審查</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · 核准只產生審查收據，不改 runtime 或英雄設定</div></header>
 <main><div class="warn">每個可播放候選都必須明確選「核准」或「不核准」。頁面沿用 <code>champion-model-audition.html</code>，播放的是已嵌入目標 GLB 的 clip；來源動畫本身不會被假裝成已重定向。框內與「全頁查看」都保留完整真實戰鬥鏡頭。死亡的升天淡出目前只是整個預覽框的合成示意，核准後仍需實作與遊戲內校準。</div>
 <h2>可播放候選 <span id="count"></span></h2><div id="queue" class="grid"></div>
+<h2>已有正式收據的完成項目</h2><div id="resolved" class="grid"></div>
 <h2>尚不可播放的線索</h2><div id="blocked" class="grid"></div>
 <h2>匯出裁決</h2><p id="decisionStatus" class="dim"></p><div class="buttons"><button id="export">下載逐項裁決 JSON</button><button id="clear">清除本機草稿</button></div></main>
 <script id="contract" type="application/json">{data}</script>
@@ -193,6 +228,7 @@ const audition=c=>'/champion-model-audition.html?hud=0&cam=combat&live=1&model='
 function save(){{localStorage.setItem(storageKey,JSON.stringify(draft));renderStatus()}}function renderStatus(){{const n=D.candidates.filter(c=>draft.decisions[c.id]?.decision).length;document.getElementById('decisionStatus').textContent=`已裁決 ${{n}}/${{D.candidates.length}}；未逐項完成仍可匯出草稿，但不可當成 runtime 綁定授權。`;document.getElementById('count').textContent=`(${{D.candidates.length}})`}}
 const queue=document.getElementById('queue');
 for(const c of D.candidates){{const card=document.createElement('section');card.className='card';card.dataset.id=c.id;const url=audition(c);card.innerHTML=`<h3>${{esc(c.labelZh)}}</h3><div><span class="tag">${{esc(c.motionKind)}}</span><span class="tag">${{esc(c.deathSubstitutionMode)}}</span><span class="tag">骨架 ${{esc(c.skeletonCompatibility.status)}}</span></div><dl><dt>來源</dt><dd>${{esc(c.source.heroNameZh)}} · ${{esc(c.source.modelKey)}}</dd><dt>目標</dt><dd>${{esc(c.target.heroNameZh)}} · ${{esc(c.target.modelKey)}}</dd><dt>clip</dt><dd>${{esc(c.clip.state)}} → <code>${{esc(c.clip.embeddedName)}}</code></dd><dt>骨架方法</dt><dd>${{esc(c.skeletonCompatibility.method)}}；${{esc(c.skeletonCompatibility.mappingEvidence)}}</dd></dl><div class="viewer"><iframe loading="lazy" title="${{esc(c.labelZh)}}"></iframe><div class="viewer-status" role="status">載入模型與動作中…</div></div><div class="buttons"><button data-play>重新播放原始 clip</button>${{c.presentation.mode==='hurt-ascend-fade'?'<button data-presentation>播放升天淡出替代演出</button>':''}}<a class="button-link" data-fullscreen target="_blank" rel="noopener">全頁查看</a><button data-decision="approve">核准</button><button data-decision="reject">不核准</button></div><b>驗證證據</b><ul>${{c.validationEvidence.map(e=>`<li><code>${{esc(e.gitPath)}}</code><br><span class="dim">${{esc(e.sha256)}}</span></li>`).join('')}}</ul><b>仍有阻擋</b><ul>${{c.blockers.map(x=>`<li>${{esc(x)}}</li>`).join('')}}</ul><textarea placeholder="此候選的裁決理由或修改要求"></textarea>`;const viewer=card.querySelector('.viewer'),frame=card.querySelector('iframe'),status=card.querySelector('.viewer-status'),note=card.querySelector('textarea');card.querySelector('[data-fullscreen]').href=url;const old=draft.decisions[c.id];if(old){{card.classList.add(old.decision);note.value=old.note||''}}let generation=0,presentationAnimation=null;const loadAndWait=async(reload=false)=>{{const mine=++generation;presentationAnimation?.cancel();presentationAnimation=null;status.hidden=false;status.classList.remove('error');status.textContent='載入模型與動作中…';if(reload||frame.getAttribute('src')!==url)frame.src=url;for(let i=0;i<450;i++){{if(mine!==generation)return false;try{{const child=frame.contentWindow;if(child?.__settled===true){{const probe=child.__probe?.()||{{}};if(probe.error||!(Number(probe.triangles)>0)){{status.textContent='載入失敗：'+(probe.error||'畫面上沒有可見三角形');status.classList.add('error');return false}}status.hidden=true;return true}}}}catch{{}}await new Promise(resolve=>setTimeout(resolve,100))}}status.textContent='載入逾時；請重新播放或用全頁查看確認錯誤。';status.classList.add('error');return false}};card.querySelector('[data-play]').onclick=()=>void loadAndWait(true);const presentation=card.querySelector('[data-presentation]');if(presentation)presentation.onclick=async()=>{{if(!await loadAndWait(true))return;presentationAnimation=viewer.animate([{{opacity:1,transform:'translateY(0)',offset:0}},{{opacity:1,transform:'translateY(0)',offset:c.presentation.fadeStartRatio}},{{opacity:.08,transform:`translateY(${{c.presentation.translateYPixels}}px)`,offset:1}}],{{duration:c.presentation.durationMs,easing:'ease-in',fill:'forwards'}})}};card.querySelectorAll('[data-decision]').forEach(b=>b.onclick=()=>{{card.classList.remove('approve','reject');card.classList.add(b.dataset.decision);draft.decisions[c.id]={{decision:b.dataset.decision,note:note.value}};save()}});note.oninput=()=>{{if(draft.decisions[c.id]){{draft.decisions[c.id].note=note.value;save()}}}};queue.append(card);void loadAndWait(false)}}
+const resolved=document.getElementById('resolved');for(const c of D.resolvedCandidates){{const card=document.createElement('section');card.className='card approve';card.innerHTML=`<h3>${{esc(c.heroId)}} · ${{esc(c.appliedCandidateId)}}</h3><div><span class="tag">已核准</span><span class="tag">runtime 已存在</span></div><dl><dt>模型</dt><dd><code>${{esc(c.selectedModelKey)}}</code></dd><dt>動作</dt><dd><code>${{esc(c.motion)}}</code> · ${{esc(c.motionProvenance)}}</dd><dt>演出</dt><dd>${{esc(c.presentation)}}</dd><dt>收據</dt><dd><code>${{esc(c.receipt.gitPath)}}</code><br><span class="dim">${{esc(c.receipt.sha256)}}</span></dd></dl><p class="dim">此項已有 owner 決定，不再列入 pending 佇列；正式站部署仍未驗證。</p>`;resolved.append(card)}}
 const blocked=document.getElementById('blocked');for(const c of D.blockedLeads){{const card=document.createElement('section');card.className='card blocked';card.innerHTML=`<h3>${{esc(c.id)}}</h3><div><span class="tag">${{esc(c.motionKind)}}</span><span class="tag">不可進入裁決</span></div><dl><dt>來源</dt><dd>${{esc(c.sourceHero)}} · ${{esc(c.sourceModel)}}</dd><dt>目標</dt><dd>${{esc(c.targetHero)}} · ${{esc(c.targetModel)}}</dd><dt>clip</dt><dd>${{c.clips.map(esc).join('<br>')}}</dd><dt>骨架</dt><dd>${{esc(c.skeletonCompatibility)}}</dd></dl><b>阻擋</b><ul>${{c.blockers.map(x=>`<li>${{esc(x)}}</li>`).join('')}}</ul>`;blocked.append(card)}}
 document.getElementById('export').onclick=()=>{{const rows=D.candidates.map(c=>({{candidateId:c.id,decision:draft.decisions[c.id]?.decision??null,note:draft.decisions[c.id]?.note??'',runtimeBindingAuthorized:false}}));const receipt={{schema:'ggd.borrowed-motion-review-decisions@1',sourceFingerprint:D.sourceFingerprint,complete:rows.every(x=>x.decision==='approve'||x.decision==='reject'),runtimeMutationAllowed:false,decisions:rows}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\\n'],{{type:'application/json'}}));a.download='borrowed-motion-review-decisions.json';a.click();URL.revokeObjectURL(a.href)}};
 document.getElementById('clear').onclick=()=>{{localStorage.removeItem(storageKey);location.reload()}};renderStatus();window.__borrowedMotionReview={{contract:D,getDraft:()=>JSON.parse(JSON.stringify(draft))}};

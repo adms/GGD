@@ -1,0 +1,92 @@
+{
+  "id": "fx.strash.popp.nps-ionazun-explosive-00.candidate",
+  "schema": "vfx@1",
+  "presentation": "billboard",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.24
+  },
+  "mode": "burst",
+  "burstCount": 48,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.72
+  },
+  "size": {
+    "start": 0.26,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.76,
+      0.28,
+      1.0
+    ],
+    "end": [
+      0.42,
+      0.08,
+      0.18,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1.0,
+        0.76,
+        0.28,
+        1.0
+      ]
+    ],
+    [
+      0.22,
+      [
+        1.0,
+        0.76,
+        0.28,
+        0.95
+      ]
+    ],
+    [
+      0.68,
+      [
+        0.42,
+        0.08,
+        0.18,
+        0.38
+      ]
+    ],
+    [
+      1,
+      [
+        0.42,
+        0.08,
+        0.18,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.26
+    ],
+    [
+      0.18,
+      0.65
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0.2,
+  "speed": {
+    "min": 1.0,
+    "max": 3.8
+  },
+  "texture": "assets/textures/particles/strash/popp/c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3.png"
+}

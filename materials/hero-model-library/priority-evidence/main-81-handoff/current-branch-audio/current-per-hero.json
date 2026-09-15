@@ -2,7 +2,7 @@
   "schema": "ggd.priority81.current-branch-audio@1",
   "summary": {
     "baselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-    "currentMainRevision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+    "currentMainRevision": "dd986901652dac20bd4d1599950e3f30357f12b3",
     "baselineUniqueClipPaths": 1016,
     "currentMainUniqueClipPaths": 1247,
     "unchangedFrozenBaselinePaths": 73,
@@ -10,6 +10,7 @@
     "currentMainAddedPathsAfterBaseline": 314,
     "currentMainRemovedPathsAfterBaseline": 83,
     "currentBranchAdditionalFiles": 2,
+    "currentBranchOwnerReviewedReplacementFiles": 13,
     "currentUniqueClipPaths": 1249,
     "currentHeroesCompleteExtended11": 74,
     "mainMergedAdditions": false,
@@ -110,7 +111,7 @@
       "currentMainVoice": {
         "heroId": "community-review-01-20260907",
         "runtimeHeroId": "community-review-01-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 30,
@@ -180,7 +181,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-01-20260907",
         "runtimeHeroId": "community-review-01-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 30,
@@ -342,7 +343,7 @@
       "currentMainVoice": {
         "heroId": "community-review-02-20260907",
         "runtimeHeroId": "community-review-02-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 23,
@@ -412,7 +413,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-02-20260907",
         "runtimeHeroId": "community-review-02-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 23,
@@ -574,7 +575,7 @@
       "currentMainVoice": {
         "heroId": "community-review-03-20260907",
         "runtimeHeroId": "community-review-03-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 33,
@@ -644,7 +645,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-03-20260907",
         "runtimeHeroId": "community-review-03-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 33,
@@ -808,7 +809,7 @@
       "currentMainVoice": {
         "heroId": "community-review-04-20260907",
         "runtimeHeroId": "community-review-04-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 27,
@@ -878,7 +879,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-04-20260907",
         "runtimeHeroId": "community-review-04-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 27,
@@ -1040,7 +1041,7 @@
       "currentMainVoice": {
         "heroId": "community-review-05-20260907",
         "runtimeHeroId": "community-review-05-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -1110,7 +1111,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-05-20260907",
         "runtimeHeroId": "community-review-05-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -1274,7 +1275,7 @@
       "currentMainVoice": {
         "heroId": "community-review-06-20260907",
         "runtimeHeroId": "community-review-06-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 34,
@@ -1344,7 +1345,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-06-20260907",
         "runtimeHeroId": "community-review-06-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 34,
@@ -1506,7 +1507,7 @@
       "currentMainVoice": {
         "heroId": "community-review-07-20260907",
         "runtimeHeroId": "community-review-07-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 23,
@@ -1576,7 +1577,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-07-20260907",
         "runtimeHeroId": "community-review-07-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 23,
@@ -1740,7 +1741,7 @@
       "currentMainVoice": {
         "heroId": "community-review-08-20260907",
         "runtimeHeroId": "community-review-08-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -1810,7 +1811,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-08-20260907",
         "runtimeHeroId": "community-review-08-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -1972,7 +1973,7 @@
       "currentMainVoice": {
         "heroId": "community-review-09-20260907",
         "runtimeHeroId": "community-review-09-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -2042,7 +2043,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-09-20260907",
         "runtimeHeroId": "community-review-09-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -2206,7 +2207,7 @@
       "currentMainVoice": {
         "heroId": "community-review-10-20260907",
         "runtimeHeroId": "community-review-10-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
@@ -2276,7 +2277,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-10-20260907",
         "runtimeHeroId": "community-review-10-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
@@ -2438,7 +2439,7 @@
       "currentMainVoice": {
         "heroId": "community-review-11-20260907",
         "runtimeHeroId": "community-review-11-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -2508,7 +2509,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-11-20260907",
         "runtimeHeroId": "community-review-11-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -2670,7 +2671,7 @@
       "currentMainVoice": {
         "heroId": "community-review-12-20260907",
         "runtimeHeroId": "community-review-12-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 30,
@@ -2740,7 +2741,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-12-20260907",
         "runtimeHeroId": "community-review-12-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 30,
@@ -2904,7 +2905,7 @@
       "currentMainVoice": {
         "heroId": "community-review-13-20260907",
         "runtimeHeroId": "community-review-13-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -2974,7 +2975,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-13-20260907",
         "runtimeHeroId": "community-review-13-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -3136,7 +3137,7 @@
       "currentMainVoice": {
         "heroId": "community-review-14-20260907",
         "runtimeHeroId": "community-review-14-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -3206,7 +3207,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-14-20260907",
         "runtimeHeroId": "community-review-14-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -3368,7 +3369,7 @@
       "currentMainVoice": {
         "heroId": "community-review-15-20260907",
         "runtimeHeroId": "community-review-15-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -3438,7 +3439,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-15-20260907",
         "runtimeHeroId": "community-review-15-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -3602,7 +3603,7 @@
       "currentMainVoice": {
         "heroId": "community-review-16-20260907",
         "runtimeHeroId": "community-review-16-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -3672,7 +3673,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-16-20260907",
         "runtimeHeroId": "community-review-16-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -3836,7 +3837,7 @@
       "currentMainVoice": {
         "heroId": "community-review-17-20260907",
         "runtimeHeroId": "community-review-17-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -3906,7 +3907,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-17-20260907",
         "runtimeHeroId": "community-review-17-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -4070,7 +4071,7 @@
       "currentMainVoice": {
         "heroId": "community-review-18-20260907",
         "runtimeHeroId": "community-review-18-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -4140,7 +4141,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-18-20260907",
         "runtimeHeroId": "community-review-18-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -4304,7 +4305,7 @@
       "currentMainVoice": {
         "heroId": "community-review-19-20260907",
         "runtimeHeroId": "community-review-19-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -4374,7 +4375,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-19-20260907",
         "runtimeHeroId": "community-review-19-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -4538,7 +4539,7 @@
       "currentMainVoice": {
         "heroId": "community-review-20-20260907",
         "runtimeHeroId": "community-review-20-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 13,
@@ -4608,7 +4609,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-20-20260907",
         "runtimeHeroId": "community-review-20-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 13,
@@ -4772,7 +4773,7 @@
       "currentMainVoice": {
         "heroId": "community-review-21-20260907",
         "runtimeHeroId": "community-review-21-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -4842,7 +4843,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-21-20260907",
         "runtimeHeroId": "community-review-21-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -5004,7 +5005,7 @@
       "currentMainVoice": {
         "heroId": "community-review-22-20260907",
         "runtimeHeroId": "community-review-22-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -5074,7 +5075,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-22-20260907",
         "runtimeHeroId": "community-review-22-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -5238,7 +5239,7 @@
       "currentMainVoice": {
         "heroId": "community-review-23-20260907",
         "runtimeHeroId": "community-review-23-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 17,
@@ -5308,7 +5309,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-23-20260907",
         "runtimeHeroId": "community-review-23-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 17,
@@ -5472,7 +5473,7 @@
       "currentMainVoice": {
         "heroId": "community-review-24-20260907",
         "runtimeHeroId": "community-review-24-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 29,
@@ -5542,7 +5543,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-24-20260907",
         "runtimeHeroId": "community-review-24-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 29,
@@ -5706,7 +5707,7 @@
       "currentMainVoice": {
         "heroId": "community-review-25-20260907",
         "runtimeHeroId": "community-review-25-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 17,
@@ -5776,7 +5777,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-25-20260907",
         "runtimeHeroId": "community-review-25-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 17,
@@ -5940,7 +5941,7 @@
       "currentMainVoice": {
         "heroId": "community-review-26-20260907",
         "runtimeHeroId": "community-review-26-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
@@ -6010,7 +6011,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-26-20260907",
         "runtimeHeroId": "community-review-26-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
@@ -6174,7 +6175,7 @@
       "currentMainVoice": {
         "heroId": "community-review-27-20260907",
         "runtimeHeroId": "community-review-27-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 18,
@@ -6244,7 +6245,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-27-20260907",
         "runtimeHeroId": "community-review-27-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 18,
@@ -6406,7 +6407,7 @@
       "currentMainVoice": {
         "heroId": "community-review-28-20260907",
         "runtimeHeroId": "community-review-28-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -6476,7 +6477,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-28-20260907",
         "runtimeHeroId": "community-review-28-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -6640,7 +6641,7 @@
       "currentMainVoice": {
         "heroId": "community-review-29-20260907",
         "runtimeHeroId": "community-review-29-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -6710,7 +6711,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-29-20260907",
         "runtimeHeroId": "community-review-29-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -6872,7 +6873,7 @@
       "currentMainVoice": {
         "heroId": "community-review-30-20260907",
         "runtimeHeroId": "community-review-30-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -6942,7 +6943,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-30-20260907",
         "runtimeHeroId": "community-review-30-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -7104,7 +7105,7 @@
       "currentMainVoice": {
         "heroId": "community-review-31-20260907",
         "runtimeHeroId": "community-review-31-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7174,7 +7175,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-31-20260907",
         "runtimeHeroId": "community-review-31-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7336,7 +7337,7 @@
       "currentMainVoice": {
         "heroId": "community-review-32-20260907",
         "runtimeHeroId": "community-review-32-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7406,7 +7407,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-32-20260907",
         "runtimeHeroId": "community-review-32-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7568,7 +7569,7 @@
       "currentMainVoice": {
         "heroId": "community-review-33-20260907",
         "runtimeHeroId": "community-review-33-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7638,7 +7639,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-33-20260907",
         "runtimeHeroId": "community-review-33-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7800,7 +7801,7 @@
       "currentMainVoice": {
         "heroId": "community-review-34-20260907",
         "runtimeHeroId": "community-review-34-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -7870,7 +7871,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-34-20260907",
         "runtimeHeroId": "community-review-34-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8034,7 +8035,7 @@
       "currentMainVoice": {
         "heroId": "community-review-35-20260907",
         "runtimeHeroId": "community-review-35-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -8104,7 +8105,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-35-20260907",
         "runtimeHeroId": "community-review-35-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -8266,7 +8267,7 @@
       "currentMainVoice": {
         "heroId": "community-review-36-20260907",
         "runtimeHeroId": "community-review-36-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8336,7 +8337,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-36-20260907",
         "runtimeHeroId": "community-review-36-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8500,7 +8501,7 @@
       "currentMainVoice": {
         "heroId": "community-review-37-20260907",
         "runtimeHeroId": "community-review-37-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8570,7 +8571,7 @@
       "currentBranchVoice": {
         "heroId": "community-review-37-20260907",
         "runtimeHeroId": "community-review-37-20260907",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8732,7 +8733,7 @@
       "currentMainVoice": {
         "heroId": "b2-popp",
         "runtimeHeroId": "b2-popp",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8802,7 +8803,7 @@
       "currentBranchVoice": {
         "heroId": "b2-popp",
         "runtimeHeroId": "b2-popp",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -8966,7 +8967,7 @@
       "currentMainVoice": {
         "heroId": "b2-rem",
         "runtimeHeroId": "b2-rem",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -9036,7 +9037,7 @@
       "currentBranchVoice": {
         "heroId": "b2-rem",
         "runtimeHeroId": "b2-rem",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 19,
@@ -9200,7 +9201,7 @@
       "currentMainVoice": {
         "heroId": "b2-zenitsu",
         "runtimeHeroId": "b2-zenitsu",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 26,
@@ -9270,7 +9271,7 @@
       "currentBranchVoice": {
         "heroId": "b2-zenitsu",
         "runtimeHeroId": "b2-zenitsu",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 26,
@@ -9434,7 +9435,7 @@
       "currentMainVoice": {
         "heroId": "b2-rin",
         "runtimeHeroId": "b2-rin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 22,
@@ -9504,7 +9505,7 @@
       "currentBranchVoice": {
         "heroId": "b2-rin",
         "runtimeHeroId": "b2-rin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 22,
@@ -9666,7 +9667,7 @@
       "currentMainVoice": {
         "heroId": "b2-uncle",
         "runtimeHeroId": "b2-uncle",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -9736,7 +9737,7 @@
       "currentBranchVoice": {
         "heroId": "b2-uncle",
         "runtimeHeroId": "b2-uncle",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -9898,7 +9899,7 @@
       "currentMainVoice": {
         "heroId": "b2-boxxo",
         "runtimeHeroId": "b2-boxxo",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -9968,7 +9969,7 @@
       "currentBranchVoice": {
         "heroId": "b2-boxxo",
         "runtimeHeroId": "b2-boxxo",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -10132,7 +10133,7 @@
       "currentMainVoice": {
         "heroId": "b2-shadow",
         "runtimeHeroId": "b2-shadow",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 35,
@@ -10202,7 +10203,7 @@
       "currentBranchVoice": {
         "heroId": "b2-shadow",
         "runtimeHeroId": "b2-shadow",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 35,
@@ -10364,7 +10365,7 @@
       "currentMainVoice": {
         "heroId": "b2-bojji",
         "runtimeHeroId": "b2-bojji",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -10434,7 +10435,7 @@
       "currentBranchVoice": {
         "heroId": "b2-bojji",
         "runtimeHeroId": "b2-bojji",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -10596,7 +10597,7 @@
       "currentMainVoice": {
         "heroId": "b2-maomao",
         "runtimeHeroId": "b2-maomao",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -10666,7 +10667,7 @@
       "currentBranchVoice": {
         "heroId": "b2-maomao",
         "runtimeHeroId": "b2-maomao",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -10828,7 +10829,7 @@
       "currentMainVoice": {
         "heroId": "b2-elma",
         "runtimeHeroId": "b2-elma",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -10898,7 +10899,7 @@
       "currentBranchVoice": {
         "heroId": "b2-elma",
         "runtimeHeroId": "b2-elma",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -11060,7 +11061,7 @@
       "currentMainVoice": {
         "heroId": "b2-albus",
         "runtimeHeroId": "b2-albus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11130,7 +11131,7 @@
       "currentBranchVoice": {
         "heroId": "b2-albus",
         "runtimeHeroId": "b2-albus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11292,7 +11293,7 @@
       "currentMainVoice": {
         "heroId": "b2-goblin",
         "runtimeHeroId": "b2-goblin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11362,7 +11363,7 @@
       "currentBranchVoice": {
         "heroId": "b2-goblin",
         "runtimeHeroId": "b2-goblin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11526,7 +11527,7 @@
       "currentMainVoice": {
         "heroId": "b2-maple",
         "runtimeHeroId": "b2-maple",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -11596,7 +11597,7 @@
       "currentBranchVoice": {
         "heroId": "b2-maple",
         "runtimeHeroId": "b2-maple",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 21,
@@ -11758,7 +11759,7 @@
       "currentMainVoice": {
         "heroId": "b2-naofumi",
         "runtimeHeroId": "b2-naofumi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11828,7 +11829,7 @@
       "currentBranchVoice": {
         "heroId": "b2-naofumi",
         "runtimeHeroId": "b2-naofumi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -11990,7 +11991,7 @@
       "currentMainVoice": {
         "heroId": "b2-makoto",
         "runtimeHeroId": "b2-makoto",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -12060,7 +12061,7 @@
       "currentBranchVoice": {
         "heroId": "b2-makoto",
         "runtimeHeroId": "b2-makoto",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -12222,7 +12223,7 @@
       "currentMainVoice": {
         "heroId": "b2-noor",
         "runtimeHeroId": "b2-noor",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12292,7 +12293,7 @@
       "currentBranchVoice": {
         "heroId": "b2-noor",
         "runtimeHeroId": "b2-noor",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12454,7 +12455,7 @@
       "currentMainVoice": {
         "heroId": "b2-touka",
         "runtimeHeroId": "b2-touka",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12524,7 +12525,7 @@
       "currentBranchVoice": {
         "heroId": "b2-touka",
         "runtimeHeroId": "b2-touka",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12686,7 +12687,7 @@
       "currentMainVoice": {
         "heroId": "b2-haga",
         "runtimeHeroId": "b2-haga",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12756,7 +12757,7 @@
       "currentBranchVoice": {
         "heroId": "b2-haga",
         "runtimeHeroId": "b2-haga",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12918,7 +12919,7 @@
       "currentMainVoice": {
         "heroId": "b2-guts",
         "runtimeHeroId": "b2-guts",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -12988,7 +12989,7 @@
       "currentBranchVoice": {
         "heroId": "b2-guts",
         "runtimeHeroId": "b2-guts",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13150,7 +13151,7 @@
       "currentMainVoice": {
         "heroId": "b2-keyaru",
         "runtimeHeroId": "b2-keyaru",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13220,7 +13221,7 @@
       "currentBranchVoice": {
         "heroId": "b2-keyaru",
         "runtimeHeroId": "b2-keyaru",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13382,7 +13383,7 @@
       "currentMainVoice": {
         "heroId": "b2-kaede",
         "runtimeHeroId": "b2-kaede",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -13452,7 +13453,7 @@
       "currentBranchVoice": {
         "heroId": "b2-kaede",
         "runtimeHeroId": "b2-kaede",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -13614,7 +13615,7 @@
       "currentMainVoice": {
         "heroId": "b2-matthias",
         "runtimeHeroId": "b2-matthias",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13684,7 +13685,7 @@
       "currentBranchVoice": {
         "heroId": "b2-matthias",
         "runtimeHeroId": "b2-matthias",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13846,7 +13847,7 @@
       "currentMainVoice": {
         "heroId": "b2-sinbad",
         "runtimeHeroId": "b2-sinbad",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -13916,7 +13917,7 @@
       "currentBranchVoice": {
         "heroId": "b2-sinbad",
         "runtimeHeroId": "b2-sinbad",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14078,7 +14079,7 @@
       "currentMainVoice": {
         "heroId": "b2-kumoko",
         "runtimeHeroId": "b2-kumoko",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14148,7 +14149,7 @@
       "currentBranchVoice": {
         "heroId": "b2-kumoko",
         "runtimeHeroId": "b2-kumoko",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14310,7 +14311,7 @@
       "currentMainVoice": {
         "heroId": "b2-yogiri",
         "runtimeHeroId": "b2-yogiri",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14380,7 +14381,7 @@
       "currentBranchVoice": {
         "heroId": "b2-yogiri",
         "runtimeHeroId": "b2-yogiri",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14542,7 +14543,7 @@
       "currentMainVoice": {
         "heroId": "b2-kaiji",
         "runtimeHeroId": "b2-kaiji",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14612,7 +14613,7 @@
       "currentBranchVoice": {
         "heroId": "b2-kaiji",
         "runtimeHeroId": "b2-kaiji",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -14774,7 +14775,7 @@
       "currentMainVoice": {
         "heroId": "b2-fushi",
         "runtimeHeroId": "b2-fushi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -14844,7 +14845,7 @@
       "currentBranchVoice": {
         "heroId": "b2-fushi",
         "runtimeHeroId": "b2-fushi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -15006,7 +15007,7 @@
       "currentMainVoice": {
         "heroId": "b2-orphen",
         "runtimeHeroId": "b2-orphen",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -15076,7 +15077,7 @@
       "currentBranchVoice": {
         "heroId": "b2-orphen",
         "runtimeHeroId": "b2-orphen",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -15238,7 +15239,7 @@
       "currentMainVoice": {
         "heroId": "b2-klaus",
         "runtimeHeroId": "b2-klaus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -15308,7 +15309,7 @@
       "currentBranchVoice": {
         "heroId": "b2-klaus",
         "runtimeHeroId": "b2-klaus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -15470,7 +15471,7 @@
       "currentMainVoice": {
         "heroId": "b2-takopi",
         "runtimeHeroId": "b2-takopi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -15540,7 +15541,7 @@
       "currentBranchVoice": {
         "heroId": "b2-takopi",
         "runtimeHeroId": "b2-takopi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -15702,7 +15703,7 @@
       "currentMainVoice": {
         "heroId": "b2-luckyman",
         "runtimeHeroId": "b2-luckyman",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -15772,7 +15773,7 @@
       "currentBranchVoice": {
         "heroId": "b2-luckyman",
         "runtimeHeroId": "b2-luckyman",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -15934,7 +15935,7 @@
       "currentMainVoice": {
         "heroId": "b2-misery",
         "runtimeHeroId": "b2-misery",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -16004,7 +16005,7 @@
       "currentBranchVoice": {
         "heroId": "b2-misery",
         "runtimeHeroId": "b2-misery",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -16166,7 +16167,7 @@
       "currentMainVoice": {
         "heroId": "b2-nube",
         "runtimeHeroId": "b2-nube",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -16236,7 +16237,7 @@
       "currentBranchVoice": {
         "heroId": "b2-nube",
         "runtimeHeroId": "b2-nube",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -16398,7 +16399,7 @@
       "currentMainVoice": {
         "heroId": "b2-shinchan",
         "runtimeHeroId": "b2-shinchan",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -16468,7 +16469,7 @@
       "currentBranchVoice": {
         "heroId": "b2-shinchan",
         "runtimeHeroId": "b2-shinchan",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -16630,7 +16631,7 @@
       "currentMainVoice": {
         "heroId": "b2-aladdin",
         "runtimeHeroId": "b2-aladdin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -16700,7 +16701,7 @@
       "currentBranchVoice": {
         "heroId": "b2-aladdin",
         "runtimeHeroId": "b2-aladdin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -16862,7 +16863,7 @@
       "currentMainVoice": {
         "heroId": "b2-ned",
         "runtimeHeroId": "b2-ned",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -16932,7 +16933,7 @@
       "currentBranchVoice": {
         "heroId": "b2-ned",
         "runtimeHeroId": "b2-ned",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -17096,7 +17097,7 @@
       "currentMainVoice": {
         "heroId": "b2-kisaragi",
         "runtimeHeroId": "b2-kisaragi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 9,
@@ -17168,7 +17169,7 @@
       "currentBranchVoice": {
         "heroId": "b2-kisaragi",
         "runtimeHeroId": "b2-kisaragi",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-branch-pending-main-merge",
         "uniqueClipCount": 11,
@@ -17232,7 +17233,7 @@
         "allGitHashesVerified": true,
         "allWorktreeFilesMatchMain": true,
         "sourceSpeakerVerified": false,
-        "note": "Current Main snapshot plus two branch-only railway audio bindings; not original character performance or Main merge evidence.",
+        "note": "Current Main snapshot plus branch-only railway audio bindings; not original character performance or Main merge evidence.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
         "mainMergedAdditions": false,
         "addedCategories": [
@@ -17301,11 +17302,11 @@
       "currentMainVoice": {
         "heroId": "example:karthus",
         "runtimeHeroId": "lol-karthus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 8,
-        "originalSourceLabelledCount": 8,
+        "originalSourceLabelledCount": 7,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17382,18 +17383,18 @@
           "kill-1"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
         "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records."
       },
       "currentBranchVoice": {
         "heroId": "example:karthus",
         "runtimeHeroId": "lol-karthus",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
-        "publicationState": "current-main-at-pinned-revision",
+        "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
         "uniqueClipCount": 8,
-        "originalSourceLabelledCount": 8,
+        "originalSourceLabelledCount": 7,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17470,11 +17471,13 @@
           "kill-1"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
-        "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
+        "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-        "mainMergedAdditions": true
+        "mainMergedAdditions": false,
+        "ownerReviewedRuntimeReplacementCount": 1,
+        "allCurrentFilesShaVerified": true
       }
     },
     {
@@ -17535,11 +17538,11 @@
       "currentMainVoice": {
         "heroId": "example:leesin",
         "runtimeHeroId": "lol-leesin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 13,
-        "originalSourceLabelledCount": 13,
+        "originalSourceLabelledCount": 11,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17614,18 +17617,18 @@
           "hurt-heavy"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
         "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records."
       },
       "currentBranchVoice": {
         "heroId": "example:leesin",
         "runtimeHeroId": "lol-leesin",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
-        "publicationState": "current-main-at-pinned-revision",
+        "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
         "uniqueClipCount": 13,
-        "originalSourceLabelledCount": 13,
+        "originalSourceLabelledCount": 11,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17700,11 +17703,13 @@
           "hurt-heavy"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
-        "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
+        "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-        "mainMergedAdditions": true
+        "mainMergedAdditions": false,
+        "ownerReviewedRuntimeReplacementCount": 2,
+        "allCurrentFilesShaVerified": true
       }
     },
     {
@@ -17765,11 +17770,11 @@
       "currentMainVoice": {
         "heroId": "example:lux",
         "runtimeHeroId": "lol-lux",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
-        "originalSourceLabelledCount": 20,
+        "originalSourceLabelledCount": 16,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17840,18 +17845,18 @@
           "skill-name.ex"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
         "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records."
       },
       "currentBranchVoice": {
         "heroId": "example:lux",
         "runtimeHeroId": "lol-lux",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
-        "publicationState": "current-main-at-pinned-revision",
+        "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
         "uniqueClipCount": 20,
-        "originalSourceLabelledCount": 20,
+        "originalSourceLabelledCount": 16,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -17922,11 +17927,13 @@
           "skill-name.ex"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
-        "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
+        "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-        "mainMergedAdditions": true
+        "mainMergedAdditions": false,
+        "ownerReviewedRuntimeReplacementCount": 4,
+        "allCurrentFilesShaVerified": true
       }
     },
     {
@@ -17987,11 +17994,11 @@
       "currentMainVoice": {
         "heroId": "example:missfortune",
         "runtimeHeroId": "lol-missfortune",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 20,
-        "originalSourceLabelledCount": 20,
+        "originalSourceLabelledCount": 16,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -18062,18 +18069,18 @@
           "skill-name.ex"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
         "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records."
       },
       "currentBranchVoice": {
         "heroId": "example:missfortune",
         "runtimeHeroId": "lol-missfortune",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
-        "publicationState": "current-main-at-pinned-revision",
+        "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
         "uniqueClipCount": 20,
-        "originalSourceLabelledCount": 20,
+        "originalSourceLabelledCount": 16,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -18144,11 +18151,13 @@
           "skill-name.ex"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
-        "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
+        "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-        "mainMergedAdditions": true
+        "mainMergedAdditions": false,
+        "ownerReviewedRuntimeReplacementCount": 4,
+        "allCurrentFilesShaVerified": true
       }
     },
     {
@@ -18209,11 +18218,11 @@
       "currentMainVoice": {
         "heroId": "example:warwick",
         "runtimeHeroId": "lol-warwick",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
-        "originalSourceLabelledCount": 12,
+        "originalSourceLabelledCount": 10,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -18287,18 +18296,18 @@
           "victory"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
         "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records."
       },
       "currentBranchVoice": {
         "heroId": "example:warwick",
         "runtimeHeroId": "lol-warwick",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
-        "publicationState": "current-main-at-pinned-revision",
+        "publicationState": "current-branch-owner-reviewed-runtime-replacement-pending-main-merge",
         "uniqueClipCount": 12,
-        "originalSourceLabelledCount": 12,
+        "originalSourceLabelledCount": 10,
         "syntheticCount": 0,
         "donorSyntheticCount": 0,
         "ownReferenceSyntheticCount": 0,
@@ -18372,11 +18381,13 @@
           "victory"
         ],
         "allGitHashesVerified": true,
-        "allWorktreeFilesMatchMain": true,
+        "allWorktreeFilesMatchMain": false,
         "sourceSpeakerVerified": false,
-        "note": "Current Main manifest and Git blobs are pinned; source identity and listening claims remain as declared by their source records.",
+        "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
-        "mainMergedAdditions": true
+        "mainMergedAdditions": false,
+        "ownerReviewedRuntimeReplacementCount": 2,
+        "allCurrentFilesShaVerified": true
       }
     },
     {
@@ -18437,7 +18448,7 @@
       "currentMainVoice": {
         "heroId": "example:xerath",
         "runtimeHeroId": "lol-xerath",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -18522,7 +18533,7 @@
       "currentBranchVoice": {
         "heroId": "example:xerath",
         "runtimeHeroId": "lol-xerath",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 11,
@@ -18665,7 +18676,7 @@
       "currentMainVoice": {
         "heroId": "example:yasuo",
         "runtimeHeroId": "lol-yasuo",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -18751,7 +18762,7 @@
       "currentBranchVoice": {
         "heroId": "example:yasuo",
         "runtimeHeroId": "lol-yasuo",
-        "revision": "4d8aa368fd696e92b909e8f0bbd8d246ec26cf63",
+        "revision": "dd986901652dac20bd4d1599950e3f30357f12b3",
         "packPresent": true,
         "publicationState": "current-main-at-pinned-revision",
         "uniqueClipCount": 12,
@@ -18846,7 +18857,7 @@
       "categories": [
         "taunt"
       ],
-      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
       "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
       "bytes": 116654,
       "sha256": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
@@ -18962,7 +18973,7 @@
         ]
       },
       "conversionReceipt": {
-        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "gitPath": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "bytes": 3008,
         "sha256": "9cc46f1458764742d95c68101f3aea96d611ae7925cee9aa6e3a0ff4900416d0"
@@ -18975,7 +18986,7 @@
       "categories": [
         "victory"
       ],
-      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
       "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
       "bytes": 161376,
       "sha256": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
@@ -19095,7 +19106,7 @@
         ]
       },
       "conversionReceipt": {
-        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "gitPath": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "bytes": 3008,
         "sha256": "9cc46f1458764742d95c68101f3aea96d611ae7925cee9aa6e3a0ff4900416d0"

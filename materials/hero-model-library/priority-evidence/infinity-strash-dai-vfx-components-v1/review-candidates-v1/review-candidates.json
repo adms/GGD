@@ -1,0 +1,858 @@
+{
+  "schema": "ggd.infinity-strash-dai-vfx-review-candidates@1",
+  "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "inputs": {
+    "components": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json",
+      "bytes": 100561,
+      "sha256": "612973fb0189217a32e579f3a0a016a8c8dacb85e44e1fd0bcce4249c12884bd"
+    },
+    "policy": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/policy-check.json",
+      "bytes": 38642,
+      "sha256": "52e1d3f5bd7622ebf5bc58c61528a5e72305e0838ae21841a87518dee55f33ff"
+    }
+  },
+  "summary": {
+    "sourceRoots": 6,
+    "reviewCandidatesBuilt": 6,
+    "fixedPreviewFrames": 18,
+    "textureComponentsCovered": 18,
+    "meshComponentsCovered": 8,
+    "ownerApproved": 0,
+    "approvedBindings": 0,
+    "runtimeMutations": 0,
+    "productionDeployed": 0
+  },
+  "boundary": {
+    "candidateKind": "authored-static-procedural-visual-review",
+    "niagaraTimingRecovered": false,
+    "skillEventsAssigned": false,
+    "skeletonAttachmentsAssigned": false,
+    "originalEffectParityClaimed": false,
+    "runtimeMutationAllowed": false,
+    "audioBindingAllowed": false
+  },
+  "approvedBindings": [],
+  "candidates": [
+    {
+      "candidateId": "dai-pn010-review-5efcc26a6874",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_Skl01_Flash_00",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-00da6b3c486d",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uasset",
+            "bytes": 23131,
+            "sha256": "8e113598da1cdd58842da78f74e5f1e1b2a7c23fd204316a330bb0f2c636a123",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uexp",
+            "bytes": 182684,
+            "sha256": "e6e692d320a4ff2a011ce648ca2a1ec01107877de25a61c2f81be7f039bec121",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Skl01/NPS_Skl01_Flash_00.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 3,
+          "spriteRenderers": 0,
+          "meshRenderers": 3
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-b4a7e4c1252b",
+          "dai-vfx-texture-d3f0cfbb0fe1",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-b4a7e4c1252b",
+            "role": "preview-opacity-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-d3f0cfbb0fe1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-06d60c9dc509",
+          "dai-vfx-mesh-1afaff4e7a06"
+        ],
+        "meshUses": [
+          {
+            "componentId": "dai-vfx-mesh-06d60c9dc509",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-1afaff4e7a06",
+            "role": "preview-wireframe-geometry-reference"
+          }
+        ]
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "radial-flash-preview",
+        "layout": "radial",
+        "colours": [
+          [
+            110,
+            202,
+            255
+          ],
+          [
+            235,
+            250,
+            255
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t00.png",
+          "bytes": 6483,
+          "sha256": "1f01e49a66ed3671364dd2742919dabe8fa61ebcb72e70fec60edc54f8bf5cf0"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t05.png",
+          "bytes": 6772,
+          "sha256": "32a276e52ab29d808460d4215446ab851775f4dbb81613b8e58c7d72e1c29038"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-5efcc26a6874-t10.png",
+          "bytes": 6793,
+          "sha256": "3998f41581d5b17906c0c665b5a622fe17f3a1030622eb4b3a84f850b532b140"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-review-c040be6be782",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_PN010_Special02_Flash_00",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-afbe0d0928c6",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uasset",
+            "bytes": 22321,
+            "sha256": "10938fc8658be643d963071a113ba161cf07c07c4c939b3cb18c0d516c444177",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uexp",
+            "bytes": 149701,
+            "sha256": "d36787bb3d8ca8f1862707fd4279b74c107a42d1b048733ade8f6fd3c2ef45fe",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special02/NPS_PN010_Special02_Flash_00.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 3,
+          "spriteRenderers": 0,
+          "meshRenderers": 3
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-3334415bf1cf",
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-3334415bf1cf",
+            "role": "preview-opacity-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-06d60c9dc509",
+          "dai-vfx-mesh-1f03f74da354"
+        ],
+        "meshUses": [
+          {
+            "componentId": "dai-vfx-mesh-06d60c9dc509",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-1f03f74da354",
+            "role": "preview-wireframe-geometry-reference"
+          }
+        ]
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "disk-flash-preview",
+        "layout": "radial",
+        "colours": [
+          [
+            80,
+            158,
+            255
+          ],
+          [
+            255,
+            244,
+            188
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t00.png",
+          "bytes": 8032,
+          "sha256": "1e4aa6962e8d4f9b32b2223ec42336478b3d304acb405cfbe22d9d9480f764f2"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t05.png",
+          "bytes": 9302,
+          "sha256": "50ce55824e58960d9796bf3a0761eb0d1b5d5c780d7142fbc104b22fc318175b"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-c040be6be782-t10.png",
+          "bytes": 8836,
+          "sha256": "bea33ac15f622c184b79aafed5bb0a9917ce9169c60f1e8e69b57ccd87238736"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-review-2682386eefc4",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_PN010_Special03_Slash_00",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-da25b103b4ab",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uasset",
+            "bytes": 48615,
+            "sha256": "68853e4f8ef39cb498f1780c4e79169961879b8e81194ac0e68345caa559a45e",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uexp",
+            "bytes": 385364,
+            "sha256": "48d2105b193c4adfc00dd9dc452588e65066270ce0cfe685279b9779bcd70ff9",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Slash_00.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 7,
+          "spriteRenderers": 0,
+          "meshRenderers": 5
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-1d983aca2c50",
+          "dai-vfx-texture-278d1511f567",
+          "dai-vfx-texture-3334415bf1cf",
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-71e658468dee",
+          "dai-vfx-texture-760908689aab",
+          "dai-vfx-texture-79adb82807ab",
+          "dai-vfx-texture-9f7867d7fa2a",
+          "dai-vfx-texture-c6d05cb7cfc8",
+          "dai-vfx-texture-caa730676994",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-1d983aca2c50",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-278d1511f567",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-3334415bf1cf",
+            "role": "preview-opacity-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-71e658468dee",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-760908689aab",
+            "role": "preview-opacity-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-79adb82807ab",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-9f7867d7fa2a",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-c6d05cb7cfc8",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-caa730676994",
+            "role": "preview-opacity-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [
+          "dai-vfx-mesh-16ad660ce7bf",
+          "dai-vfx-mesh-2df98836a4fa",
+          "dai-vfx-mesh-3315cee29bd1",
+          "dai-vfx-mesh-ae3e9d7e829c",
+          "dai-vfx-mesh-b9c28ede0f0d"
+        ],
+        "meshUses": [
+          {
+            "componentId": "dai-vfx-mesh-16ad660ce7bf",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-2df98836a4fa",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-3315cee29bd1",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-ae3e9d7e829c",
+            "role": "preview-wireframe-geometry-reference"
+          },
+          {
+            "componentId": "dai-vfx-mesh-b9c28ede0f0d",
+            "role": "preview-wireframe-geometry-reference"
+          }
+        ]
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "slash-arc-preview",
+        "layout": "arc",
+        "colours": [
+          [
+            65,
+            157,
+            255
+          ],
+          [
+            220,
+            247,
+            255
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t00.png",
+          "bytes": 14008,
+          "sha256": "52e71a51b4213fd17e21400e9b85dbad738d8e2ded94460c200e98aaa2e6a5f2"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t05.png",
+          "bytes": 15649,
+          "sha256": "c660fe68d22f0b04a99747d859ea44c2be36a715afddc56b46a7cc59ec7462c3"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-2682386eefc4-t10.png",
+          "bytes": 16381,
+          "sha256": "73a343cc71ac94d663e7d8e3b2441fa340b3506e8510ad87746c7f0107a96c22"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-review-811a70524aec",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_PN010_Special03_EnergyThunderA",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-4ffeb18ca7ae",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uasset",
+            "bytes": 17669,
+            "sha256": "f1214c993a673b18d3ddbbe570e47794337ebaa1c3837fa598ec9cf18202f1b4",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uexp",
+            "bytes": 114888,
+            "sha256": "61d1459db05f15e596f66c06d1e6b858b82fbfe287653dc1b1d40abda8e16256",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_EnergyThunderA.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 2,
+          "spriteRenderers": 2,
+          "meshRenderers": 0
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-b3c703088417",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-b3c703088417",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [],
+        "meshUses": []
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "thunder-billboard-preview",
+        "layout": "vertical",
+        "colours": [
+          [
+            118,
+            154,
+            255
+          ],
+          [
+            248,
+            250,
+            255
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t00.png",
+          "bytes": 7061,
+          "sha256": "1cb1913b277d9d481e51ad23a0b7fff63db72d7eb68bb45649a4b8ae6bcb3e58"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t05.png",
+          "bytes": 7498,
+          "sha256": "cf6eb4f62b2c6f25d6dda0b1e695a843204512f5453fc85984f0197766d7b890"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-811a70524aec-t10.png",
+          "bytes": 7120,
+          "sha256": "0ba7c9c2ac88910fafe169fdfc504da1f62c0babc94606dea8d8fee1d15c004d"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-review-78c1869c7ed9",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_PN010_Special03_Jump_00",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-5f482bb94989",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uasset",
+            "bytes": 12576,
+            "sha256": "c44cd3a63a65f3c8a4e0f6a56d6182baf1cb9871b6f6bc53c4090e3b42e906ce",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uexp",
+            "bytes": 53340,
+            "sha256": "062cfa7b95b96e8679aeb609837b095025c021c28d1148e8fe9a8e044e7cd6f6",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Jump_00.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 1,
+          "spriteRenderers": 1,
+          "meshRenderers": 0
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-aa307baadef6",
+          "dai-vfx-texture-b660aa73e684",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-aa307baadef6",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-b660aa73e684",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [],
+        "meshUses": []
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "ground-burst-preview",
+        "layout": "ground",
+        "colours": [
+          [
+            86,
+            179,
+            255
+          ],
+          [
+            245,
+            252,
+            255
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t00.png",
+          "bytes": 9376,
+          "sha256": "895583b2d2f788198b80fb5a55cd0d958fa571992a58369d6fbae8acfc44673f"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t05.png",
+          "bytes": 9825,
+          "sha256": "990012edb292a2d7b7c5de404403fd28df373d71bf24b396d063c40f9ca7a03a"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-78c1869c7ed9-t10.png",
+          "bytes": 9515,
+          "sha256": "12682a5152510a8b86eb95481e008740c80ec21ed063aacf20591e9fc47e2864"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-review-446d57b8bd17",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nativeCharacterId": "PN010",
+      "nativePackageStem": "NPS_PN010_Special03_Shuchusen_00",
+      "sourceRoot": {
+        "candidateId": "infinity-strash-vfx-pn010-dc2a51f5b215",
+        "reference": "/Game/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00",
+        "sourceFiles": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uasset",
+            "bytes": 13646,
+            "sha256": "8e9e507708bb5673a592e4ecc2132ae6bb89cd424887bae5f26a805bc42c281e",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uasset"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uexp",
+            "bytes": 75859,
+            "sha256": "d28221810316f669be2410ff54469c9ffb52b7dca7f818607eb90cf3802eb30a",
+            "sourceRelativePath": "strash/Content/Strash/VFX/NPS/Player/PN010/Special03/NPS_PN010_Special03_Shuchusen_00.uexp"
+          }
+        ],
+        "observedRendererCounts": {
+          "emitters": 2,
+          "spriteRenderers": 2,
+          "meshRenderers": 0
+        }
+      },
+      "sourceComponents": {
+        "textureIds": [
+          "dai-vfx-texture-35027d881f17",
+          "dai-vfx-texture-5e9552e7cdb1",
+          "dai-vfx-texture-723415b1eff0",
+          "dai-vfx-texture-e3cf25c6edcd"
+        ],
+        "textureUses": [
+          {
+            "componentId": "dai-vfx-texture-35027d881f17",
+            "role": "preview-colour-modulator"
+          },
+          {
+            "componentId": "dai-vfx-texture-5e9552e7cdb1",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-723415b1eff0",
+            "role": "preview-visible-billboard"
+          },
+          {
+            "componentId": "dai-vfx-texture-e3cf25c6edcd",
+            "role": "preview-colour-modulator"
+          }
+        ],
+        "meshIds": [],
+        "meshUses": []
+      },
+      "previewProfile": {
+        "kind": "authored-static-procedural-preview",
+        "profile": "speedline-preview",
+        "layout": "horizontal",
+        "colours": [
+          [
+            85,
+            169,
+            255
+          ],
+          [
+            236,
+            251,
+            255
+          ]
+        ],
+        "durationSeconds": 1.0,
+        "fixedTimes": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "selectionBasis": "explicit profile keyed by native package stem; not recovered Niagara semantics or skill mapping"
+      },
+      "previewEvidence": [
+        {
+          "time": 0.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t00.png",
+          "bytes": 6982,
+          "sha256": "00fcd0bd4bf099229c6af102eb816b96df287c467f364133e34aeae7f1a9d0a8"
+        },
+        {
+          "time": 0.5,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t05.png",
+          "bytes": 8121,
+          "sha256": "8f499f29bba4c3ba9c42589d02bb405e1bcfb6dba540c6c423e39c6496b679e3"
+        },
+        {
+          "time": 1.0,
+          "gitPath": "apps/client/public/infinity-strash-dai-vfx-review-previews-v1/dai-pn010-review-446d57b8bd17-t10.png",
+          "bytes": 7011,
+          "sha256": "474b4bada6961a98695fe79b8fb6334364e27894ace026d82ec5b79e9cda5a37"
+        }
+      ],
+      "ownerDecision": "pending",
+      "approvedBindings": [],
+      "states": {
+        "supportComponentsVerified": true,
+        "staticProceduralPreviewBuilt": true,
+        "niagaraTimingRecovered": false,
+        "skillEventIdentified": false,
+        "skeletonAttachmentIdentified": false,
+        "originalEffectParityClaimed": false,
+        "visuallyApproved": false,
+        "runtimeBindingCreated": false,
+        "runtimeSelectable": false,
+        "productionDeployed": false
+      }
+    }
+  ],
+  "review": {
+    "page": "apps/client/public/infinity-strash-dai-vfx-review-candidates.html",
+    "contactSheet": "apps/client/public/infinity-strash-dai-vfx-review-candidates.png",
+    "decisionDefault": "pending",
+    "laterPortalAuthority": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json"
+  }
+}

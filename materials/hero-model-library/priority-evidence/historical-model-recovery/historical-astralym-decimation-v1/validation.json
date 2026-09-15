@@ -16,15 +16,20 @@
   },
   "candidate": {
     "git": {
-      "path": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-      "bytes": 3795720,
-      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
-    },
-    "local": {
-      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "path": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
       "bytes": 3795720,
       "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
     }
+  },
+  "preservedLegacyCandidate": {
+    "local": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "bytes": 3793672,
+      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
+    },
+    "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+    "validation": "validation-c45f111d.json",
+    "relation": "separate prior 7,996-triangle candidate; not substituted for f77"
   },
   "parameters": {
     "tool": "tools/model-budget/optimize/decimate-emissive-lock.mjs",
