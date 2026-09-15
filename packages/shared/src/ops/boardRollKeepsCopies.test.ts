@@ -6,7 +6,8 @@
  *   ① 改寫當日戰情版之前留一份 `戰情版_temp_{時間}.md`，內容＝改寫**前**
  *   ② 內容沒變 ⇒ 不再多留
  *   ③ 同一分鐘已經有一份 ⇒ ⛔ 不蓋舊的
- *   ④ --check：根目錄捷徑不存在（它不進 git）⇒ 放行；存在但指錯 ⇒ 紅（兩個方向）
+ *   ④ --check：根目錄捷徑被 git 追蹤（出貨的狀態，主 session 2026-09-15 裁決維持追蹤）⇒ 指對放行、不見了紅、指錯紅
+ *      （只測預設那一邊：GGD_BOARD_LINK_REQUIRED=auto 且追蹤中；「沒追蹤 ⇒ 存在才驗」是回頭用的那一邊，⛔ 不測）
  * 體驗層（工具腳本），接線類突變一次，紀錄見 commit 訊息。
  */
 import { describe, it, expect } from "vitest";
@@ -47,9 +48,12 @@ describe("GH#1256 board-roll.sh 用時間區隔留底", () => {
     expect(readFileSync(minute, "utf8"), "③ 同一分鐘的舊副本被蓋掉了").toBe("SENTINEL");
     expect(temps().map(read), "③ 第二次改寫沒有留底").toContain(before);
 
+    sh("git", ["init", "-q"], tmp);
+    sh("git", ["add", "--", "GGD戰情版.md"], tmp); // 追蹤中（出貨的狀態）
+    const ok = roll("--check");
+    expect(ok.status, `④ 捷徑指對、窗也是新的，--check 卻紅（下面兩個紅就不是捷徑造成的）\n${ok.stdout}`).toBe(0);
     rmSync(join(tmp, "GGD戰情版.md"));
-    const noLink = roll("--check");
-    expect(noLink.status, `④ 捷徑不在（不進 git）就紅了\n${noLink.stdout}`).toBe(0);
+    expect(roll("--check").status, "④ 追蹤中的捷徑不見了，--check 卻放行").toBe(1);
     symlinkSync("docs/_release/戰情版-20000101.md", join(tmp, "GGD戰情版.md"));
     expect(roll("--check").status, "④ 捷徑指錯卻放行").toBe(1);
   });

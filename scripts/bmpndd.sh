@@ -19,14 +19,30 @@ cd "$(dirname "$0")/.."
 
 MSG="${1:?用法: bash scripts/mpndd.sh \"<這一版的一句話說明>\" [--no-deploy]}"
 shift
-# ⛔⛔ GH#1256 順手修 —— **這裡不載 docker/.env**。
+# ⛔⛔ GH#1256 —— **這裡不載 docker/.env**（⭐ 主 session 2026-09-15 派工時指定的結構性修正，⛔ 不是 lane 順手修；
+#   96e6ede6b 的訊息寫成「順手修」是錯的，修正輪更正）。
 #   在此之前這一行就在這裡 ⇒ 正式站的 env（`PLATFORM_GAME_SHARED_SECRET` 那一族）被 export 進
-#   第 0 步的 `pnpm ship:check` ⇒ game-server 的測試讀到正式站設定而紅（2026-09-15 當晚踩到）。
-#   ⭐ 閘要在**乾淨的 env** 跑；env 只給 P·N·D·D —— 而 `ship-it.sh` 自己就載它，⛔ 不必在這裡載。
+#   閘的 `pnpm ship:check` ⇒ game-server 的測試讀到正式站設定而紅（2026-09-15 當晚 BMPNDD 的閘就是這樣紅的）。
+#   ⭐ 閘要在**乾淨的 env** 跑；env 只給 P·N·D·D —— 而 `ship-it.sh:19` 自己就載它，⛔ 不必在這裡載。
 #   守衛：`bmpnddBoardAndEnv.test.ts`「閘的 env 裡沒有 docker/.env」（真的跑出貨的這一支）。
 
 step() { printf '\n\033[1m══ %s\033[0m\n' "$*"; }
 FAIL=""
+
+# 🔙 GH#1256 的爭議各留一格開關（環境變數 —— 只有作者／主 session 會轉，⛔ 不進後台）：
+#   GGD_BMPNDD_BACKUP_SET = both（預設）｜board｜batches        B 留底哪幾份（batches ＝ 改動前：只留執行批次計畫）
+#   GGD_BMPNDD_M_ROLL     = 1（預設）｜0                        M 先跑 board:roll 重建七天窗（0 ＝ 改動前：唯讀比對）
+#   GGD_BMPNDD_BOARD_WRAP = before-gate（預設）｜after-gate｜off  戰情版與副本何時進 git（off ＝ 改動前：不收）
+#   根目錄捷徑追不追蹤那一格在 `board-roll.sh`（GGD_BOARD_LINK_REQUIRED）。
+# ⛔ 打錯值 ⇒ 開跑前就停下來指名（靜默退回預設，與沒有開關長得一模一樣）。
+knob() {   # knob <變數名> <預設> <合法值…> ⇒ 印出值
+  local name=$1 def=$2 v ok; shift 2; v="${!name:-$def}"
+  for ok in "$@"; do [ "$v" = "$ok" ] && { echo "$v"; return 0; }; done
+  echo "⛔ $name='$v' 不認得（合法：$*）—— ⛔ 不靜默退回預設" >&2; return 1
+}
+BACKUP_SET=$(knob GGD_BMPNDD_BACKUP_SET both both board batches) || exit 1
+M_ROLL=$(knob GGD_BMPNDD_M_ROLL 1 1 0) || exit 1
+BOARD_WRAP=$(knob GGD_BMPNDD_BOARD_WRAP before-gate before-gate after-gate off) || exit 1
 
 # ⭐ GH#1256 —— **戰情版是哪一份**只問 `board-roll.sh --where`（⛔ 這裡不再寫一份路徑）。
 #   owner 叫「戰情版」的是 `docs/_release/戰情版-YYYYMMDD.md`。⛔ 在此之前 B／M 指的是
@@ -76,9 +92,15 @@ step "B/6  備份戰情版"
 #   產生器**自己叫**留底。⇒ 這一步就是替 md 那一份補上同一件事。
 # ⭐ GH#1256 owner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」
 #   ⇒ 當日戰情版 ＋ 執行批次計畫（⛔ 不是戰情版，但在「三份」裡）都留底，副本目錄帶時間戳。
-#   ggd-board.html 由 gen_board.py 每次改寫前自己留底；根目錄 GGD戰情版.md 只是指標（不進 git）。
+#   ggd-board.html 由 gen_board.py 每次改寫前自己留底；根目錄 GGD戰情版.md 只是指向日檔的捷徑。
+#   🔙 GGD_BMPNDD_BACKUP_SET（見檔頭）。
 BOARD=$(board_path) || { echo "⛔ 找不到戰情版（board-roll.sh --where）—— ⛔ 不往下走"; exit 1; }
-if bash scripts/preserve.sh "$BOARD" docs/_execution-batches.md; then :; else
+case "$BACKUP_SET" in
+  both) KEEP=("$BOARD" docs/_execution-batches.md) ;;
+  board) KEEP=("$BOARD") ;;
+  batches) KEEP=(docs/_execution-batches.md) ;;
+esac
+if bash scripts/preserve.sh "${KEEP[@]}"; then :; else
   echo "⚠️ 留底失敗 —— ⛔ 這一步失敗就**不要往下走**（下一步會覆蓋它）"
   exit 1
 fi
@@ -87,8 +109,12 @@ fi
 step "M/6  近一週的票 ↔ 戰情版"
 SINCE=$(date -v-7d +%F 2>/dev/null || date -d '-7 days' +%F)
 # ⭐ GH#1256「整理」＝ board:roll 從帳本重建七天窗（它改寫前自己留 戰情版_temp_{時間}.md）；
-#   換日後今天那一份才是戰情版 ⇒ 重問一次路徑。
-bash scripts/genrun.sh board:roll board:roll:raw || { echo "⚠️ board:roll 失敗 ⇒ 下面比對的是舊的戰情版"; FAIL="${FAIL}M "; }
+#   換日後今天那一份才是戰情版 ⇒ 重問一次路徑。🔙 GGD_BMPNDD_M_ROLL=0 ⇒ 不重建（見檔頭）。
+if [ "$M_ROLL" = 1 ]; then
+  bash scripts/genrun.sh board:roll board:roll:raw || { echo "⚠️ board:roll 失敗 ⇒ 下面比對的是舊的戰情版"; FAIL="${FAIL}M "; }
+else
+  echo "⚠️ GGD_BMPNDD_M_ROLL=0：⛔ 這一輪沒有重建七天窗，下面比對的是現有的戰情版"
+fi
 BOARD=$(board_path) || { echo "⛔ 找不到戰情版"; exit 1; }
 # ⭐ **寫戰情版之前先留底**（owner 2026-08-30：「寫入戰情版前 都會自動備份對吧？」）
 #   ⚠️ ⭐ 當時的答案是**沒有** —— PreToolUse hook 對**檔案 API 直寫**是瞎的，
@@ -129,19 +155,35 @@ fi
 #   而 `backup-s3.sh` 上傳的是 `git archive HEAD` ⇒ ⛔ 沒進 git 的副本不上 S3、只活在這一台。
 # ⭐ 在閘前面收：紅燈的日子副本也不會只留在工作區；P 會把它推上去。
 #   ⛔ 只收戰情版家族，逐檔 pathspec（CLAUDE.md：commit 永遠帶逐檔列名，⛔ 不碰別的 lane）。
+#   ⭐ 修正輪補收 `docs/legacy/_overwrites/_ledger.tsv`：B 的 preserve.sh 會追加它，⛔ 不收的話收尾之後它仍躺在工作區。
+#     ⚠️ 它是 append-only 的留底帳本（hook 也寫）⇒ 整份進 commit 會連同別的 session 追加的列 ——
+#     那是紀錄、⛔ 不是別人的程式改動；合併衝突取聯集（CLAUDE.md「追加式帳本 ⛔ --ours／--theirs」）。
 board_wrap() {
   local files=() f msg
   while IFS= read -r -d '' f; do files+=("$f"); done < <(git ls-files -z -m -o --exclude-standard -- \
     'docs/_release/戰情版-*.md' 'docs/_release/戰情版_temp_*.md' \
-    'docs/legacy/_overwrites/*/docs/_release/戰情版-*.md' 'docs/legacy/_overwrites/*/docs/_execution-batches.md')
+    'docs/legacy/_overwrites/*/docs/_release/戰情版-*.md' 'docs/legacy/_overwrites/*/docs/_execution-batches.md' \
+    'docs/legacy/_overwrites/_ledger.tsv')
   [ ${#files[@]} -gt 0 ] || { echo "✓ 戰情版沒有新的改動或副本要收"; return 0; }
   msg="${TMPDIR:-/tmp}"; msg="${msg%/}/bmpndd-board-wrap-$$.txt"
   printf 'chore(board): 🗂 GH#1256 戰情版與副本收尾（BMPNDD B·M，%s 個檔）\n\nowner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」\n' "${#files[@]}" > "$msg"
-  git add -- "${files[@]}" && git commit -q -F "$msg" -- "${files[@]}" \
+  # ⚠️ 為什麼還要先 `git add`：**未追蹤**的副本（新日檔、_temp_、legacy 目錄）`git commit -- <路徑>` 不認
+  #   （pathspec did not match any file(s) known to git）⇒ 路徑一定要先進索引。
+  #   ⭐ 用 `-N`（intent-to-add：只登記「有這個路徑」、⛔ 不 stage 內容；已追蹤的檔它不動）——
+  #   別的 session 裸打 `git commit` 掃不走它，內容由下一行帶逐檔 pathspec 的 commit 從工作樹讀
+  #   （CLAUDE.md「全程不 stage」；2026-09-15 修正輪在暫存 repo 實測兩個方向）。
+  git add -N -- "${files[@]}" && git commit -q -F "$msg" -- "${files[@]}" \
     && echo "✓ 戰情版與副本 ${#files[@]} 個檔進 git（$(git rev-parse --short HEAD)）"
 }
-step "B·M 收尾  戰情版與副本進 git"
-board_wrap || { echo "⚠️ 收尾 commit 失敗 —— 副本還在工作區，⛔ 但沒進 git（不會上 S3）"; FAIL="${FAIL}B "; }
+wrap_step() {
+  step "B·M 收尾  戰情版與副本進 git（GGD_BMPNDD_BOARD_WRAP=$BOARD_WRAP）"
+  board_wrap || { echo "⚠️ 收尾 commit 失敗 —— 副本還在工作區，⛔ 但沒進 git（不會上 S3）"; FAIL="${FAIL}B "; }
+}
+# 🔙 GGD_BMPNDD_BOARD_WRAP（見檔頭）：after-gate ⇒ 閘綠了才收；off ⇒ 這一輪不收。
+case "$BOARD_WRAP" in
+  before-gate) wrap_step ;;
+  off) echo "⚠️ GGD_BMPNDD_BOARD_WRAP=off：⛔ 戰情版與副本這一輪不進 git（不會上 S3）" ;;
+esac
 
 # ── 閘：⭐ 站在**它真正守的那扇門**前面（push／note／discord／deploy）────────
 # ⛔ 它本來在 B 之前 ⇒ 紅燈的日子裡連備份與開票整理都跑不了（見檔頭那段根因）。
@@ -151,6 +193,7 @@ bmpndd_gate || {
   echo "   ⛔ 不會因為這裡紅而白跑 —— 那正是 2026-09-12 檢討出來的根因。"
   exit 1
 }
+[ "$BOARD_WRAP" = after-gate ] && wrap_step
 
 # ── P + N + D + D ────────────────────────────────────────────────────────
 step "P·N·D·D  (3-6/6)"

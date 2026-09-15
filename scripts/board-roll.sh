@@ -15,7 +15,7 @@
 # ⭐ GH#1256「戰情版」是哪一份：owner 叫「戰情版」的是這支寫的 `docs/_release/戰情版-YYYYMMDD.md`。
 #   · `docs/_execution-batches.md` —— owner 叫它「執行批次計畫」，⛔ 不是戰情版
 #   · `docs/_release/ggd-board.html` —— 戰情板網頁（`tools/board/gen_board.py`，每次改寫前自己留底）
-#   · 根目錄 `GGD戰情版.md` —— 指向今天那一份的**本機捷徑**，⛔ 不進 git
+#   · 根目錄 `GGD戰情版.md` —— 指向今天那一份的**捷徑**（被 git 追蹤的符號連結；追不追蹤見檔尾那段）
 #
 # ⭐ 為什麼是指令＋閘不是判準：CLAUDE.md 記過五次「要記得⋯」失效。
 #    「今天有沒有輪替」是一個**日期比對**，不是感覺。
@@ -108,15 +108,25 @@ fi
 # owner 2026-08-26：「**GGD 戰情版.md 應該在我本機端阿**」
 # ⇒ 檔名每天換（那是紀錄），⛔ 但**找它的路徑不可以每天換**。symlink 一行解決，
 #   ⛔ 不是複製一份（複製＝同一份知識兩個住處，第〇·四守則）。
-# ⭐ GH#1256：它**不進 git**（`.gitignore`）。在此之前它是被追蹤的符號連結、目標每天換
-#   ⇒ commit 新日檔時漏帶連結（d935cfc98）⇒ 乾淨 checkout 上這條 --check 就紅。
-#   ⇒ --check 只在它**存在**時驗它指得對（新 clone／CI 上沒有它是正常的）；建立在檔尾（寫完才指過去）。
+# ⭐ GH#1256 修正輪：它**仍然被 git 追蹤**。e525a37b5 曾把它移出 git（目標每天換 ⇒ commit 新日檔時漏帶連結，
+#   d935cfc98 ⇒ 乾淨 checkout 上這條 --check 紅），⛔ 已由主 session 2026-09-15 裁決 revert：owner 本機工作樹
+#   有它的未提交改動，未追蹤化會卡住那棵樹的 pull。⇒ 「漏帶連結 ⇒ 紅」這個洞仍然開著（開關見下）。建立在檔尾（寫完才指過去）。
+# 🔙 GGD_BOARD_LINK_REQUIRED（環境變數，只有作者／CI 會轉）：
+#   auto（預設）＝ 問 git「它有沒有被追蹤」：追蹤中 ⇒ --check 要求它**存在**且指對；沒追蹤（或不在 git 樹裡）⇒ 存在才驗
+#   1 ＝ 一律要求 · 0 ＝ 存在才驗
+#   ⇒ 哪天要改回不追蹤，只要 revert 那個 revert（它連 .gitignore 一起帶回），⛔ 不必再改這支或 CI。
 LINK=GGD戰情版.md
 WANT="$TARGET"
-if [ "$CHECK" = 1 ] && { [ -e "$LINK" ] || [ -L "$LINK" ]; }; then
+case "${GGD_BOARD_LINK_REQUIRED:-auto}" in
+  1) NEED_LINK=1 ;;
+  0) NEED_LINK=0 ;;
+  auto) NEED_LINK=0; git ls-files --error-unmatch -- "$LINK" >/dev/null 2>&1 && NEED_LINK=1 ;;
+  *) echo "⛔ GGD_BOARD_LINK_REQUIRED='${GGD_BOARD_LINK_REQUIRED}' 不認得（合法：auto｜1｜0）"; exit 1 ;;
+esac
+if [ "$CHECK" = 1 ] && { [ "$NEED_LINK" = 1 ] || [ -e "$LINK" ] || [ -L "$LINK" ]; }; then
   HAVE=$(readlink "$LINK" 2>/dev/null || true)
   if [ "$HAVE" != "$WANT" ]; then
-    echo "⛔ 根目錄的 $LINK 指向 '${HAVE:-（不是連結）}'，應該是 '$WANT'"
+    echo "⛔ 根目錄的 $LINK 指向 '${HAVE:-（不存在或不是連結）}'，應該是 '$WANT'"
     echo "   跑：bash scripts/board-roll.sh"
     exit 1
   fi
