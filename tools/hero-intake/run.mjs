@@ -528,15 +528,23 @@ const REQUIRED = readJson(join(ROOT, CATEGORIES_REL), {})?.shipGate?.required ??
  *
  * ⭐ 預設讀 **git 裡那一份**（#1211）。在此之前預設是一條寫死的 Dropbox 絕對路徑 ⇒ CI 永遠讀不到
  * ⇒ `voice.candidates` 全空 ⇒ digest 永遠對不上（形態⑨：永遠不會綠的閘，而本機永遠綠）。
- * 2026-09-15 量到：repo 那一份（988→1053 組，0 刪 0 改）是 Dropbox 那一份的**嚴格超集**。
+ * 2026-09-15 量到（逐組比對 `groups`）：Dropbox 988 組 → repo 1053 組 ＝ **0 刪、65 增**；共同的 988 組裡
+ * 9 組在試聽審查欄位（listeningReview*／battleReviewCandidateFiles／nativeTargetCandidateFiles）不同，
+ * ⭐ 這支讀的欄位（id/name/heroIds/library/work/language/fileCount/speakerVerified/transcriptStatus）**0 改**。
  * ↩ rollback：`GGD_VOICE_INDEX=<那條 Dropbox 路徑>`（或 `--voice-index`）。`--voice-index none` ＝ 明確不讀索引。
+ * ⚠️ rollback 的代價：用 Dropbox 那份重產 ⇒ digest 回到 e22fb25e81f1，而 CI 讀得到 git 那一份（算出另一個 digest）
+ *    ⇒ `hero:intake:check`（skills:check）在 CI **再紅**。
+ * ⛔ 顯式指定（`--voice-index <路徑>`／`GGD_VOICE_INDEX`）卻讀不到 ⇒ die，⛔ 不悄悄退回 git 那一份
+ *    （rollback 開關打錯字、或在沒有 Dropbox 的機器上翻，否則會靜默不生效）。相對路徑對 repo 根（ROOT）解析，⛔ 不是 cwd。
  */
 const VOICE_INDEX_IN_GIT = "materials/hero-model-library/voice-index.json";
-const voiceIndexTried = VOICE_INDEX === "none" ? [] : [VOICE_INDEX, VOICE_INDEX_IN_GIT].filter(Boolean);
+const VOICE_INDEX_SOURCE = has("--voice-index") ? "--voice-index" : VOICE_INDEX ? "GGD_VOICE_INDEX" : null;
+const voiceIndexTried = VOICE_INDEX === "none" ? [] : [VOICE_INDEX_SOURCE ? VOICE_INDEX : VOICE_INDEX_IN_GIT];
 function loadVoiceIndex() {
   for (const p of voiceIndexTried) {
-    const d = readJson(resolve(ROOT, p));
+    const d = p ? readJson(resolve(ROOT, p)) : null;
     if (d?.groups) return { path: p, groups: d.groups };
+    if (VOICE_INDEX_SOURCE) die(`${VOICE_INDEX_SOURCE} 指定的角色語音索引讀不到（或沒有 groups）：${p ? resolve(ROOT, p) : "（沒給路徑）"} ⇒ ⛔ 不悄悄退回 ${VOICE_INDEX_IN_GIT}`);
   }
   return null;
 }
