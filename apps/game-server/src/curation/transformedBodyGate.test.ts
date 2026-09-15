@@ -13,11 +13,15 @@
  * 突變紀錄（兩條都跑過）：
  *   · 拿掉 `if (isTransformedBody(id)) return false` → 三條全紅（實測 2 failed，前提那條不動）
  *   · 移到 `this.bypass ||` **之後** → 「bypass 底下也擋得住」那條紅
+ *   · GH#1258：拿掉 `|| isContentAlternateBody(id)` → 「內容卡宣告的變身態」那條紅
  */
 import { describe, it, expect, beforeEach } from "vitest";
 import { Configs } from "@ggd/shared/content";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { isTransformedBody } from "@ggd/shared/content/championForms";
+import { Champions } from "@ggd/shared/sim/content/registry";
+import type { ChampionDef } from "@ggd/shared/sim/content/defs";
+import type { ChampionId } from "@ggd/shared/ids";
 import { Whitelist } from "./whitelist";
 
 /** 超級賽亞人 —— 悟空 `godie-ogrh` 的 alternate 身體，也是 #249 換掉的那 10 個之一。 */
@@ -57,5 +61,20 @@ describe("變身態的身體不可被選（伺服器側）", () => {
     expect(wl.allowsChampion(BASE)).toBe(true);
     // ⬇⬇ THE assertion：把閘移到 `this.bypass ||` 之後，這一行就會變 true。
     expect(wl.allowsChampion(SSJ)).toBe(false);
+  });
+
+  it("⭐ GH#1258：只宣告在內容卡上的變身態（不在手寫表）也擋得住 —— 讀 contentFormPairs 那一對", () => {
+    // ⚠️ 2026-09-15：一對＝兩張卡互相指著對方（`voiceFormSharing.contentFormPairs`，⛔ 單邊 role 不算）。
+    const ALT = "test-gate-content-alt" as ChampionId;
+    const CBASE = "test-gate-content-base" as ChampionId;
+    Champions.register(ALT, { id: ALT, transform: { role: "alternate", counterpartId: CBASE } } as unknown as ChampionDef);
+    Champions.register(CBASE, { id: CBASE, transform: { role: "base", counterpartId: ALT } } as unknown as ChampionDef);
+    try {
+      expect(isTransformedBody(ALT), "夾具前提：手寫表不認得它").toBe(false);
+      expect(new Whitelist(null, true).allowsChampion(ALT)).toBe(false);
+      expect(new Whitelist(null, true).allowsChampion(CBASE), "本體那一半照樣選得到").toBe(true);
+    } finally {
+      Champions.clear();
+    }
   });
 });

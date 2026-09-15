@@ -134,7 +134,9 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   //   ⇒ 帳本上這一列被下面「the ledger is exact」逐字要求刪掉：
   //   「these ids are on ART_DEBT but are already visible — delete them from the list」。
   // "godie-n01g", // 42 依文潔琳 —— 債還完了
-  "godie-n01c", // 08 勇者小呆 龍魔人
+  // ⭐ PR #1152（2026-09-14）—— 08 小呆 龍魔人**已經看得見了**（Infinity Strash 達伊的原作身體進來了）
+  //   ⇒ 下面「the ledger is exact」逐字要求刪掉這一列。
+  // "godie-n01c", // 08 勇者小呆 龍魔人 —— 債還完了
   "godie-o030", // 30 臭作 變態紳士
   "godie-u00o", // 76 魯夫 二檔
   "godie-u01u", // 11 索隆 武裝色霸氣

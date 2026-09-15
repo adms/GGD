@@ -10,7 +10,7 @@
  * EVERYTHING HERE IS COMPOSITION — the data all comes from existing selectors
  * ---------------------------------------------------------------------------
  *   · roster    → `valhallaRoster` (registry ∩ operator whitelist, ./valhalla)
- *   · 稱號/全名/故事 → `championDisplayFor` + `parseDescriptionSections`
+ *   · 稱號/全名/故事 → `championDisplayFor` + `valhallaBlurb`（./valhallaCard，GH#1258 抽成純函式供閘）
  *   · 技能      → `skillRows(champSelectSkillSeat(def))`, rendered with
  *                 champ-select's own `SkillRowView`
  *   · 3D        → `StorePreviewCanvas` (one shared Babylon viewer class)
@@ -70,15 +70,17 @@ import type { ChampionId } from "@ggd/shared/ids";
 import { useContentReady } from "./ContentGate";
 import { useWhitelist } from "../panels/whitelist";
 import { championDisplayFor } from "./championDisplay";
-import { championDescription, champSelectSkillSeat, parseDescriptionSections } from "../panels/champselect/championProfile";
-import { isStandInModel, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "../panels/champselect/standIn";
+import { champSelectSkillSeat } from "../panels/champselect/championProfile";
+import { standInBadgeFor, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "../panels/champselect/standIn";
+import type { ModelDoc } from "@ggd/shared/content";
 import { SkillRowView } from "../panels/champselect/ProfileBlock";
 import { skillRows } from "../panels/skillDetails";
 import { StorePreviewCanvas, type PreviewStatus } from "./StorePreviewCanvas";
 import { IconImg } from "../components/IconImg";
 import { championIconUrl } from "../icons";
 import { attackTypeLabel } from "../codex/codexLabels";
-import { pitchTooltipForChampion, PITCH_ACCENT } from "../panels/champselect/pitchTooltip";
+import { PITCH_ACCENT } from "../panels/champselect/pitchTooltip";
+import { valhallaBlurb, valhallaPitchLine, valhallaSkillChip } from "./valhallaCard";
 import { useLobbyCombatEnv } from "./lobbyCombatEnv";
 import { Panel, ACCENT } from "./widgets";
 import { padFocusLanding } from "../padFocusLanding";
@@ -252,7 +254,13 @@ function ValhallaStage({
    * holds, because a different champion with a broken model has a different key.
    */
   useEffect(() => setStatus("loading"), [modelKey]);
-  const standIn = isStandInModel(modelKey);
+  // GH#1250 —— 徽章看**舞台真的載入的那份**模型文件（overlay 解析之後），⛔ 不是出貨 modelKey：
+  // FULL_ASSETS 下 godie-h02k/umal 的 `champ.skin.barbarian` 會被換成原作模型，徽章不該再亮。
+  // 重設同時綁 championId：兩位共用同一顆 modelKey 時 overlay 的答案逐位不同，而畫布對 championId 也會重報。
+  const [loadedDoc, setLoadedDoc] = useState<ModelDoc | null>(null);
+  const onModelDoc = useCallback((doc: ModelDoc | null) => setLoadedDoc(doc), []);
+  useEffect(() => setLoadedDoc(null), [modelKey, championId]);
+  const standIn = standInBadgeFor(modelKey, status === "ready" ? loadedDoc : null);
   return (
     <div
       data-ggd-valhalla-stage=""
@@ -284,6 +292,7 @@ function ValhallaStage({
           hideEmptyHint
           minHeight={height}
           onStatus={onStatus}
+          onModelDoc={onModelDoc}
         />
       )}
       {/* NEVER A HOLE. Three states cover the stage with the portrait: no model
@@ -316,6 +325,7 @@ function ValhallaStage({
         // covered the champion's HEAD on this 220px stage — a disclaimer that
         // hides the thing it is disclaiming. The long text moves to the tooltip.
         <div
+          data-ggd-valhalla-standin=""
           title={`${STAND_IN_NOTE_ZH} — ${STAND_IN_NOTE_EN}`}
           style={{
             position: "absolute",
@@ -536,13 +546,12 @@ export function ValhallaPanel({
   if (!def) return <ValhallaSkeleton note="英靈殿整備中…" />;
 
   const display = championDisplayFor(current);
-  const sections = parseDescriptionSections(championDescription(def));
-  const story = sections.story ?? (sections.hasSections ? "" : (championDescription(def) ?? ""));
-  const blurb = story || display.blurb;
+  // GH#1258 —— 卡片上要印的字全部走 `./valhallaCard` 的純函式（閘讀同一份）。
+  const blurb = valhallaBlurb(def);
   const rows = skillRows(champSelectSkillSeat(def));
   // ⭐ 選角簡短介紹（owner 2026-08-16「包含英靈殿」）。⛔ 是**多加**的一段，
   //   上面的 `blurb`（w3x 故事）與 `attackType · 技能格數` 一個字都沒動。
-  const pitchTip = pitchTooltipForChampion(def);
+  const pitchLine = valhallaPitchLine(def);
   const strip = layout.mode === "strip" && !expanded;
   const stageHeight = layout.mode === "strip" ? VALHALLA_EXPANDED_STAGE : layout.stageHeight;
   // ~3 lines of 11.5px/1.6 prose, never more than a third of the detail budget
@@ -648,15 +657,18 @@ export function ValhallaPanel({
           上面是 `attackType`（投射物 vs 近身揮擊）+ 技能格數，
           這裡是**出身 × 距離量級**加上 owner 手寫的玩法意圖。
           ⚠️ 出貨資料裡有 10 位兩者「看起來矛盾」（藏馬近戰揮擊卻是遠程 8.2）——
-          那是刻意的，⛔ 不要為了讓兩行一致去改任何一邊。 */}
-      {!strip && pitchTip !== null && !pitchTip.empty && (
-        <div style={{ marginTop: 4, display: "flex", flexDirection: "column", gap: 2 }}>
+          那是刻意的，⛔ 不要為了讓兩行一致去改任何一邊。
+          ⭐ GH#1258：出身行**永遠畫**（推導的、不會缺）。在此之前這裡借用 tooltip 的
+          `!pitchTip.empty`，而 `empty` 問的是「playstyle/pitch 都沒填」—— 於是 81 位
+          新英雄連出身都一起被藏掉。playstyle/pitch 仍然有才畫（⛔ 不填佔位字）。 */}
+      {!strip && (
+        <div data-ggd-valhalla-pitch="" style={{ marginTop: 4, display: "flex", flexDirection: "column", gap: 2 }}>
           <div style={{ fontSize: 11, color: PITCH_ACCENT, fontWeight: 600 }}>
-            {pitchTip.headlineTail}
-            {pitchTip.playstyleLine && ` · ${pitchTip.playstyleLine}`}
+            {pitchLine.headline}
+            {pitchLine.playstyleLine && ` · ${pitchLine.playstyleLine}`}
           </div>
-          {pitchTip.pitch && (
-            <div style={{ fontSize: 11, color: "#c8d0e0", lineHeight: 1.5 }}>{pitchTip.pitch}</div>
+          {pitchLine.pitch && (
+            <div style={{ fontSize: 11, color: "#c8d0e0", lineHeight: 1.5 }}>{pitchLine.pitch}</div>
           )}
         </div>
       )}
@@ -786,9 +798,10 @@ export function ValhallaPanel({
             {rows.length === 0 ? (
               <div style={{ color: TEXT_DIM }}>此英雄沒有技能資料</div>
             ) : (
-              rows.map((r) => (
+              rows.map(valhallaSkillChip).map((chip) => (
                 <span
-                  key={`${r.slot}-${r.rawName}`}
+                  key={chip.key}
+                  data-ggd-valhalla-skill={chip.label}
                   style={{
                     display: "inline-flex",
                     alignItems: "baseline",
@@ -800,7 +813,8 @@ export function ValhallaPanel({
                     maxWidth: "100%",
                   }}
                 >
-                  <b style={{ color: ACCENT, fontWeight: 500, flex: "0 0 auto" }}>{r.slot}</b>
+                  {/* GH#1258：「天生」而不是字面 PASSIVE；名字去掉 NN-0X 編號（與選人畫面同一組） */}
+                  <b style={{ color: ACCENT, fontWeight: 500, flex: "0 0 auto" }}>{chip.label}</b>
                   <span
                     style={{
                       color: "#c8d0e0",
@@ -809,7 +823,7 @@ export function ValhallaPanel({
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {r.rawName}
+                    {chip.name}
                   </span>
                 </span>
               ))

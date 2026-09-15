@@ -14,7 +14,7 @@
     "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and has separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion non-default candidates. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates."
   },
   "sourceSha256": "sha256:cf94dce8dd1dd5d3c31453b5882a0644e52b96eabdc1e2497bc2f14b9662071c",
-  "catalogSha256": "sha256:dc744de4c42eb006f74ad3e61057eb3f7b9f7c9b33b0eac284cfce74fa6d2207",
+  "catalogSha256": "sha256:be1aba274b9b894530a2f952425926196d1f6c65882f14af84c87a631608a5fe",
   "modelAdoptionPolicy": {
     "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
     "bytes": 292,
@@ -57,10 +57,33 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredPresentation.ts",
-      "sha256": "sha256:776e34d55e954221ee50e5866e9ef4aabf5887e57cc7c274b4d1aabefd515b6b",
-      "bytes": 4464
+      "sha256": "sha256:d15d4bcb4f2a82d5e88a9bff78376dae309251d3895f34f90cf479fec6aebfa9",
+      "bytes": 5478
     }
   ],
+  "acceptanceRun": {
+    "overallStatus": "blocked",
+    "targetHeroIds": [
+      "acquired-astralym",
+      "acquired-cattiva",
+      "acquired-jetragon"
+    ],
+    "targetHeroesPassed": true,
+    "nonTargetNonPassed": [
+      {
+        "id": "acquired-mewtwo",
+        "status": "blocked",
+        "errors": [
+          {
+            "phase": "model",
+            "code": "MODEL_NOT_APPROVED",
+            "message": "Model is not an approved hero body in this catalog: imported.herobuu"
+          }
+        ]
+      }
+    ],
+    "meaning": "The receipt is scoped to the three target Palworld packages. Any unrelated acquired-hero blocker remains recorded here and is not represented as a Palworld pass."
+  },
   "acceptanceCommand": "node --import tsx tools/editor-acceptance/acquired-heroes-check.ts --mode strict --out <new-empty-directory>",
   "integrations": [
     {
@@ -136,13 +159,13 @@
           "currentPolicyEligible": true,
           "modelDocument": {
             "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
-            "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a",
+            "sha256": "63093713e8887e59570921aedc85e841028634dbd2c24234e58d8108d9374819",
             "bytes": 455
           },
           "modelGlb": {
-            "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-            "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-            "bytes": 3224424
+            "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+            "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+            "bytes": 3222184
           }
         },
         {
@@ -185,9 +208,9 @@
       "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
       "package": {
         "status": "passed",
-        "digest": "sha256:504d46be6a86127cab9c6c85cf6902a9472f108af34182dc7a0ea7f5720c4e0a",
-        "zipSha256": "sha256:fa1c7f4d684fd715aa031f2030b19687d51b1d22b33d7a977c6c6fdaa8bd4374",
-        "zipBytes": 6288568,
+        "digest": "sha256:c79e34d3b7ecda6266f7d89d736a874b2eb2201c88a86a7b11a246232b60f77b",
+        "zipSha256": "sha256:ec8005ecb0c6f114c763a57b96b0a913d03d953890fcbcb4553a03784be72ad2",
+        "zipBytes": 6289284,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
       },
@@ -321,9 +344,9 @@
       "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
       "package": {
         "status": "passed",
-        "digest": "sha256:10c400ee6239171887732f37aacfa607fa1f148f76e04a6f265ee88b82cdfd3c",
-        "zipSha256": "sha256:5a1db3f4366ca98f7629c996a85cfba91c12e24820ac740714c8b6673151f697",
-        "zipBytes": 6855714,
+        "digest": "sha256:389bda157537732fb1eea487f3c99b8fc6731f3ccc802783d682ffaeb1f70627",
+        "zipSha256": "sha256:fd8b3a1e43dd8c2303f304c98ecb57ca4e016ffcef48ae33b2650a4237bc5c09",
+        "zipBytes": 6856430,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
       },
@@ -439,9 +462,9 @@
       "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
       "package": {
         "status": "passed",
-        "digest": "sha256:20185b1432fd514de4bd9420da83846b4ea7b91d49f4f69f056efe7ef2797797",
-        "zipSha256": "sha256:8c649eaf143027f79fd133fb75cfc00726443496cb406a3dede71e9b21507ada",
-        "zipBytes": 4401433,
+        "digest": "sha256:75c56090f4db6c849175574e86b799fbb9206c5469d73b4e7d1502a13ef5d064",
+        "zipSha256": "sha256:70a211d8e26ba2fecbaeaf83f7f4b67040644b6175b181e1f1af4cb44f58cfc9",
+        "zipBytes": 4402149,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
       },

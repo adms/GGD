@@ -219,7 +219,7 @@ w("---")
 w("")
 
 # ── A 骨架 ──────────────────────────────────────────────────
-w("## A. 🦴 骨架 —— 1 支")
+w(f"## A. 🦴 骨架 —— {len(rig)} 支" + ("（✅ 目前沒有缺口）" if not rig else ""))
 w("")
 w("| 英雄 | id | 現在指的模型 | 問題 |")
 w("|---|---|---|---|")
@@ -233,20 +233,28 @@ w("再跑 `python3 tools/w3x-import/model_intake.py <檔> --merge`（⭐ 匯入�
 w("")
 
 # ── B 語音 ──────────────────────────────────────────────────
+# ⛔ 下面兩列是**逐支查過的分析**（候選來源、信心），⛔ 不是量出來的 —— 所以要跟量到的名單對得上，對不上就停
+_B_MATERIAL_IDS = {"godie-e00s", "godie-e010", "godie-u034", "godie-ucrl"}
+_B_WIRING_IDS = {"b2-maple-alt-9769eb88b85b"}
+_measured_voice_gap = {x["id"] for x in voice_gap}
+if not _measured_voice_gap <= (_B_MATERIAL_IDS | _B_WIRING_IDS) or not _B_MATERIAL_IDS <= _measured_voice_gap:
+    print(f"⛔ B 節的手寫分析過期了：量到 {sorted(_measured_voice_gap)}，手寫 {sorted(_B_MATERIAL_IDS | _B_WIRING_IDS)} —— 重查再改這支產生器")
+    raise SystemExit(2)
 w("## B. 🎙 語音 —— ⭐ 真正要找素材的只有 **2 個角色**")
 w("")
-w("⚠️ 原始量測說「7 支沒有語音」，逐支查完之後**只有 2 個角色是素材缺口**：")
+w(f"⚠️ 量到 {len(_measured_voice_gap)} 個 id 沒有語音，逐支查完之後**只有 2 個角色是素材缺口**：")
 w("")
 w("| 角色 | 佔幾個 id | 狀態 | 索引裡的候選 |")
 w("|---|---|---|---|")
 w("| 白木老樹精・白木卡迪那 | `godie-e00s` ＋ `godie-e010` | ⛔ 兩個 id 都沒有包 | `300heroes:215`「白」400 檔 —— ⚠️ **只有一個字命中，信心低**，要聽過才算 |")
 w("| 職業獵人・傑 富力士 | `godie-u034` ＋ `godie-ucrl` | ⛔ 兩個 id 都沒有包 | ⛔ **沒有可用候選**（撈到的 `vc_kirby_copy_*` 索引自己標著「非對象本人」）|")
 w("")
-w("⭐ **另外兩支⛔ 不要去找素材**，它們是**接線**問題：")
+w("⭐ **這幾支⛔ 不要去找素材**：")
 w("")
 w("| 英雄 | 為什麼不是素材缺口 |")
 w("|---|---|")
-w("| `b2-maple-alt-9769eb88b85b` 梅普露（變身） | ⭐ **本體 `b2-maple` 已經有 18 類語音包** —— 缺的是 `MANIFEST.formShares` 裡的一列（`base-to-alternate`）。⚠️ 那張表今天 19 筆**全部是 `godie-*`，一筆 b2 都沒有** ⇒ 產生器 `tools/voice-gen/index-lines.mjs` 的變身配對規則沒有涵蓋 `*-alt-*` 這種 id |")
+if "b2-maple-alt-9769eb88b85b" in _measured_voice_gap:
+    w("| `b2-maple-alt-9769eb88b85b` 梅普露（變身） | ⭐ **本體 `b2-maple` 已經有語音包** —— 缺的是變身對借用（`contentFormPairs`）的接線 |")
 w("| `sela` / `thorne` | ⛔ **不是上架英雄** —— 內容載入失敗時 `main.tsx` 註冊的骨架 fallback |")
 w("")
 w("**要找的**：那 2 個角色的**原作日文語音**（⭐ 只收日文；⛔ 中文配音檔要排除，300英雄的 `voice_ch_*` 就是）。")

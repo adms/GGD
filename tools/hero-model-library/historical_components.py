@@ -11,7 +11,9 @@ PRESERVED_RECOVERED_COMPONENTS = {
         'community:palworld-astralym',
     ),
     'historical-jetragon-7bc2fa3f8': (
-        '0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6',
+        # ⭐ PR #1152 合併準備：出貨版本換成貼圖背板修補後的位元組；
+        #   歷史原件 0d9eed3a… 逐位元組保留在 sourceArtifact.gitArchivePath（同 kita-kita／lord-nightmares 的前例）
+        '0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d',
         'community:palworld-jetragon',
     ),
     'historical-kita-kita-7bc2fa3f8': (
@@ -28,6 +30,20 @@ PRESERVED_RECOVERED_COMPONENTS = {
 def require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def _non_image_data_identical(before, after):
+    """⭐ 證明的**唯一住處**是 `tools/model-fix/record_backdrop_repairs.py`，⛔ 這裡不抄一份。"""
+    import importlib.util
+    path = Path(__file__).resolve().parents[1] / 'model-fix' / 'record_backdrop_repairs.py'
+    spec = importlib.util.spec_from_file_location('ggd_record_backdrop_repairs', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    try:
+        proof = module.non_image_data_identical(before, after)
+    except AssertionError:
+        return False
+    return proof.get('nonImageBufferViewsByteIdentical') is True and proof.get('gltfJsonIdenticalExceptImageLayout') is True
 
 
 def file_pin(path):
@@ -138,16 +154,30 @@ def source_historical_components(downloads, repo):
                         'Historical normalization source mismatch')
                 require((normalized['output']['sha256'], normalized['output']['bytes']) == (candidate['sha256'], candidate['bytes']),
                         'Historical normalization output mismatch')
-                require(normalized.get('binaryChunkByteIdentical') is True and normalized.get('nonMaterialJsonByteSemanticIdentical') is True,
-                        'Historical normalization changed non-material data')
+                if normalized.get('schema') == 'ggd-model-texture-backdrop-repair@1':
+                    # ⭐ PR #1152 合併準備（2026-09-14）：`MODEL_TEXTURE_BACKDROP` 閘晚於這批歷史復原才存在，
+                    #   而「BLEND 平面卡的不透明底色」與「自發光藏著亮色」⛔ 只改材質 JSON 修不掉 —— 要動貼圖像素。
+                    #   ⇒ 契約擴充成兩類，⭐ 但這一類**由這裡從位元組重算證明**，⛔ 不信紀錄上填的布林：
+                    #   歷史原件（sourceArtifact.gitArchivePath）與出貨版本之間，**非貼圖的 bufferView 必須逐位元組相同**、
+                    #   glTF JSON 除了貼圖佈局以外必須相同 ⇒ 幾何・骨架・動作一個位元組都沒動。
+                    archive = verify_pin({'gitPath': source_artifact['gitArchivePath'], 'bytes': historical_bytes, 'sha256': historical_sha}, repo)
+                    require(_non_image_data_identical(archive.read_bytes(), model_path.read_bytes()),
+                            'Historical texture repair changed non-image data')
+                else:
+                    require(normalized.get('binaryChunkByteIdentical') is True and normalized.get('nonMaterialJsonByteSemanticIdentical') is True,
+                            'Historical normalization changed non-material data')
             evidence_path = verify_pin(candidate['validationEvidence'], repo)
             evidence = json.loads(evidence_path.read_text())
             if evidence.get('schema') == 'ggd-historical-astralym-decimation-validation@1':
                 require(candidate.get('parentComponentId') == 'historical-astralym-7bc2fa3f8', 'Astralym decimation parent mismatch')
                 require(evidence.get('candidateId') == candidate['id'] and evidence.get('heroId') == candidate['historicalAcceptanceId'],
                         'Astralym decimation identity mismatch')
+                # ⭐ 減面驗證（含 15 組三視角 A/B）是對**減面產物本身**跑的。之後若再做過貼圖背板修補，
+                #   那一份產物就是 sourceArtifact（逐位元組封存）⇒ 證據對它比，⛔ 不是對修補後的出貨版本比 ——
+                #   修補後與封存之間「只動了貼圖位元組」由上面的證明守著。
+                decimated = (source_artifact['sha256'], source_artifact['bytes']) if source_artifact is not None else (candidate['sha256'], candidate['bytes'])
                 require((evidence.get('candidate', {}).get('git', {}).get('sha256'), evidence.get('candidate', {}).get('git', {}).get('bytes')) ==
-                        (candidate['sha256'], candidate['bytes']), 'Astralym decimation output mismatch')
+                        decimated, 'Astralym decimation output mismatch')
                 require(evidence.get('originalRetained', {}).get('git', {}).get('sha256') == PRESERVED_RECOVERED_COMPONENTS[candidate['parentComponentId']][0],
                         'Astralym original retention mismatch')
                 require(evidence.get('formalHeroAdoptionEligible') is True and evidence.get('ggdModelBudget', {}).get('errors') == [],
@@ -175,7 +205,10 @@ def source_historical_components(downloads, repo):
             visual_path = verify_pin(candidate['visualEvidence'], repo)
             visual = json.loads(visual_path.read_text())
             if visual.get('schema') == 'ggd-historical-astralym-visual-comparison@1':
-                require(visual.get('candidate', {}).get('sha256') == candidate['sha256'], 'Astralym visual candidate mismatch')
+                # ⭐ 同上：15 組三視角 A/B 是**對減面產物渲的** ⇒ 對封存那一份比。
+                #   ⚠️ 它⛔ 沒有對貼圖修補後的位元組重跑 —— 修補紀錄的 visualNote 明寫，⛔ 不假裝這份視覺證據涵蓋修補。
+                rendered = source_artifact['sha256'] if source_artifact is not None else candidate['sha256']
+                require(visual.get('candidate', {}).get('sha256') == rendered, 'Astralym visual candidate mismatch')
                 require(visual.get('allChangedPixelPctAtChannelDeltaGt10Under5') is True and
                         visual.get('allLitClassificationXorPctAtLuma128Under5') is True and
                         visual.get('humanReview', {}).get('result') == 'accepted', 'Astralym visual acceptance failed')

@@ -292,6 +292,37 @@ export function registerImportRoutes(
   app.addHook("onClose", async () => { clearInterval(cleanupTimer); cleanup.close(); });
 
   /**
+   * ⭐ `app.close()` resolve 之後，**沒有任何匯入路由的處理器還在寫 importDir**。
+   *
+   * ⚠️ 為什麼（2026-09-15 重現，lane nc-contentapi）：Fastify 的 close 只等**真的 socket** 上的請求；
+   *   `inject()`（測試，以及任何行程內呼叫）與「客戶端已斷線但處理器還在跑」的請求它都不等。
+   *   ⇒ 一條測試逾時後 vitest 照樣跑 `afterAll`：`await app.close()` 立刻回來，接著 `rmSync(importDir)`，
+   *   ⭐ 而逾時那一發的 worker 還在 `build-sources/works/<id>/versions/<digest>.pending-<uuid>/source/…`
+   *   逐檔寫建包來源（`retainHeroBuildSources` → `putWorkVersion`）⇒ rm 刪到一半目錄又長出新檔 ⇒ `ENOTEMPTY`。
+   *   把 `}, 60_000)` 改成 `}, 6_000)` 就穩定重現；殘留目錄正是上面那條 `.pending-*`。
+   * ⇒ ⛔ 修法不是 `rmSync` 加重試／force：是讓 close 真的等到最後一次寫入結束，清理順序才成立。
+   *
+   * 只包匯入前綴底下的路由（含 heroImportServer 之後掛上的 catalog 路由）——
+   * ⛔ 不包 server.ts 的 SSE 那種長連線：那些處理器本來就不會結束，等它就是讓 close 永遠不回來。
+   * 處理器各自有上限（worker 準備 60 秒＋編譯 20 秒，`HERO_WORKER_BUDGET`），⇒ 這裡不會無限等。
+   */
+  const inflight = new Set<Promise<void>>();
+  app.addHook("onRoute", (route) => {
+    if (!prefixes.some((prefix) => route.url.startsWith(prefix))) return;
+    const handler = route.handler as (this: unknown, ...args: unknown[]) => unknown;
+    route.handler = function (this: unknown, ...args: unknown[]) {
+      const result = handler.apply(this, args);
+      if (result !== null && typeof result === "object" && typeof (result as PromiseLike<unknown>).then === "function") {
+        const settled = Promise.resolve(result).then(() => undefined, () => undefined);
+        inflight.add(settled);
+        void settled.then(() => inflight.delete(settled));
+      }
+      return result;
+    } as typeof route.handler;
+  });
+  app.addHook("onClose", async () => { while (inflight.size > 0) await Promise.all([...inflight]); });
+
+  /**
    * ⭐ profile 要的那幾格「這台**現在**是什麼狀態」。
    *
    * ⚠️ ⭐ `migrationFingerprint` 的語意是「**一包 bootstrap 是對哪一套 schema 建的**」

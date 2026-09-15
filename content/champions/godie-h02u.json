@@ -637,9 +637,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0.0,
       "radiusTier": "大",
@@ -690,7 +690,7 @@
       "vfxKey": "fx.prim.nature.explosion-lg",
       "castTimeSec": 1,
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "castTimeTier": "極大"
     }
   },

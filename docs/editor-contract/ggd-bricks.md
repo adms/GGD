@@ -27,7 +27,7 @@ capability 指紋：`fb8d3eb8`
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（74 份）→ 後台自己的 readSchema()（1212 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（74 份）→ 後台自己的 readSchema()（1213 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts-spawn-obstacle-landed.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 180 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
@@ -180,11 +180,11 @@ capability 指紋：`fb8d3eb8`
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
 | `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 7 |
-| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 113 |
+| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 124 |
 | `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 35 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 9 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `heal` | 4 | 0 | 0 | ⛔ | ✅ | 12 |
+| `heal` | 4 | 0 | 0 | ⛔ | ✅ | 20 |
 | `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 16 |
 | `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 16 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
@@ -208,9 +208,9 @@ capability 指紋：`fb8d3eb8`
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 6 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 11 |
-| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 92 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 94 |
 | `spend-resource` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
-| `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 6 |
+| `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 7 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 3 |
 | `transform` | 6 | 0 | 0 | ⛔ | ✅ | 13 |
 | `traveling-wave` | 9 | 0 | 0 | ⛔ | ✅ | 7 |

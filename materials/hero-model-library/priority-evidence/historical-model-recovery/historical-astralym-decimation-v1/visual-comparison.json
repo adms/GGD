@@ -5,8 +5,8 @@
     "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8"
   },
   "candidate": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
-    "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+    "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
   },
   "sampling": {
     "clips": [
@@ -33,154 +33,154 @@
     {
       "clip": "Idle",
       "view": "front",
-      "changedPixelPctAtChannelDeltaGt10": 2.872031,
-      "meanAbsoluteChannelDelta": 1.393085,
+      "changedPixelPctAtChannelDeltaGt10": 2.871094,
+      "meanAbsoluteChannelDelta": 1.39292,
       "litClassificationXorPctAtLuma128": 0.740313,
       "maxChannelDelta": 234
     },
     {
       "clip": "Idle",
       "view": "back",
-      "changedPixelPctAtChannelDeltaGt10": 3.089531,
-      "meanAbsoluteChannelDelta": 1.584805,
+      "changedPixelPctAtChannelDeltaGt10": 3.088906,
+      "meanAbsoluteChannelDelta": 1.584857,
       "litClassificationXorPctAtLuma128": 1.017344,
       "maxChannelDelta": 234
     },
     {
       "clip": "Idle",
       "view": "isometric",
-      "changedPixelPctAtChannelDeltaGt10": 4.490938,
-      "meanAbsoluteChannelDelta": 3.288266,
-      "litClassificationXorPctAtLuma128": 2.032188,
+      "changedPixelPctAtChannelDeltaGt10": 4.490156,
+      "meanAbsoluteChannelDelta": 3.288205,
+      "litClassificationXorPctAtLuma128": 2.032031,
       "maxChannelDelta": 231
     },
     {
       "clip": "Walk",
       "view": "front",
-      "changedPixelPctAtChannelDeltaGt10": 2.173594,
-      "meanAbsoluteChannelDelta": 1.037029,
+      "changedPixelPctAtChannelDeltaGt10": 2.1725,
+      "meanAbsoluteChannelDelta": 1.036795,
       "litClassificationXorPctAtLuma128": 0.556406,
       "maxChannelDelta": 232
     },
     {
       "clip": "Walk",
       "view": "back",
-      "changedPixelPctAtChannelDeltaGt10": 1.97375,
-      "meanAbsoluteChannelDelta": 1.014295,
+      "changedPixelPctAtChannelDeltaGt10": 1.9725,
+      "meanAbsoluteChannelDelta": 1.014246,
       "litClassificationXorPctAtLuma128": 0.665,
       "maxChannelDelta": 232
     },
     {
       "clip": "Walk",
       "view": "isometric",
-      "changedPixelPctAtChannelDeltaGt10": 2.278437,
-      "meanAbsoluteChannelDelta": 1.191902,
-      "litClassificationXorPctAtLuma128": 0.718906,
+      "changedPixelPctAtChannelDeltaGt10": 2.277656,
+      "meanAbsoluteChannelDelta": 1.19181,
+      "litClassificationXorPctAtLuma128": 0.71875,
       "maxChannelDelta": 232
     },
     {
       "clip": "FarSkill_Action",
       "view": "front",
-      "changedPixelPctAtChannelDeltaGt10": 1.067344,
-      "meanAbsoluteChannelDelta": 0.507767,
-      "litClassificationXorPctAtLuma128": 0.299531,
+      "changedPixelPctAtChannelDeltaGt10": 1.066094,
+      "meanAbsoluteChannelDelta": 0.507579,
+      "litClassificationXorPctAtLuma128": 0.299219,
       "maxChannelDelta": 236
     },
     {
       "clip": "FarSkill_Action",
       "view": "back",
-      "changedPixelPctAtChannelDeltaGt10": 1.152969,
-      "meanAbsoluteChannelDelta": 0.507731,
+      "changedPixelPctAtChannelDeltaGt10": 1.1525,
+      "meanAbsoluteChannelDelta": 0.50763,
       "litClassificationXorPctAtLuma128": 0.392188,
       "maxChannelDelta": 232
     },
     {
       "clip": "FarSkill_Action",
       "view": "isometric",
-      "changedPixelPctAtChannelDeltaGt10": 2.292813,
-      "meanAbsoluteChannelDelta": 1.507996,
+      "changedPixelPctAtChannelDeltaGt10": 2.291562,
+      "meanAbsoluteChannelDelta": 1.507895,
       "litClassificationXorPctAtLuma128": 0.945625,
       "maxChannelDelta": 233
     },
     {
       "clip": "HaloBeam_Loop",
       "view": "front",
-      "changedPixelPctAtChannelDeltaGt10": 1.385625,
-      "meanAbsoluteChannelDelta": 0.854997,
-      "litClassificationXorPctAtLuma128": 0.467656,
+      "changedPixelPctAtChannelDeltaGt10": 1.385156,
+      "meanAbsoluteChannelDelta": 0.854934,
+      "litClassificationXorPctAtLuma128": 0.4675,
       "maxChannelDelta": 229
     },
     {
       "clip": "HaloBeam_Loop",
       "view": "back",
-      "changedPixelPctAtChannelDeltaGt10": 1.110469,
-      "meanAbsoluteChannelDelta": 0.553843,
+      "changedPixelPctAtChannelDeltaGt10": 1.109531,
+      "meanAbsoluteChannelDelta": 0.553831,
       "litClassificationXorPctAtLuma128": 0.332813,
       "maxChannelDelta": 234
     },
     {
       "clip": "HaloBeam_Loop",
       "view": "isometric",
-      "changedPixelPctAtChannelDeltaGt10": 1.6,
-      "meanAbsoluteChannelDelta": 1.104575,
-      "litClassificationXorPctAtLuma128": 0.657813,
+      "changedPixelPctAtChannelDeltaGt10": 1.599531,
+      "meanAbsoluteChannelDelta": 1.104403,
+      "litClassificationXorPctAtLuma128": 0.657969,
       "maxChannelDelta": 230
     },
     {
       "clip": "Damage",
       "view": "front",
-      "changedPixelPctAtChannelDeltaGt10": 1.952344,
-      "meanAbsoluteChannelDelta": 1.047067,
-      "litClassificationXorPctAtLuma128": 0.615,
+      "changedPixelPctAtChannelDeltaGt10": 1.951563,
+      "meanAbsoluteChannelDelta": 1.047009,
+      "litClassificationXorPctAtLuma128": 0.615156,
       "maxChannelDelta": 238
     },
     {
       "clip": "Damage",
       "view": "back",
-      "changedPixelPctAtChannelDeltaGt10": 2.085,
-      "meanAbsoluteChannelDelta": 1.074723,
+      "changedPixelPctAtChannelDeltaGt10": 2.084375,
+      "meanAbsoluteChannelDelta": 1.074685,
       "litClassificationXorPctAtLuma128": 0.821719,
       "maxChannelDelta": 230
     },
     {
       "clip": "Damage",
       "view": "isometric",
-      "changedPixelPctAtChannelDeltaGt10": 3.794219,
-      "meanAbsoluteChannelDelta": 2.748471,
+      "changedPixelPctAtChannelDeltaGt10": 3.793281,
+      "meanAbsoluteChannelDelta": 2.74825,
       "litClassificationXorPctAtLuma128": 1.696406,
       "maxChannelDelta": 231
     }
   ],
   "allChangedPixelPctAtChannelDeltaGt10Under5": true,
-  "maxChangedPixelPctAtChannelDeltaGt10": 4.490938,
+  "maxChangedPixelPctAtChannelDeltaGt10": 4.490156,
   "allLitClassificationXorPctAtLuma128Under5": true,
-  "maxLitClassificationXorPctAtLuma128": 2.032188,
+  "maxLitClassificationXorPctAtLuma128": 2.032031,
   "contactSheets": [
     {
       "path": "back-contact-sheet.png",
-      "bytes": 969756,
-      "sha256": "2fd40218dec775905f836115964af9df4443597701c5cd84a9b1780e16b1032a"
+      "bytes": 969162,
+      "sha256": "43aafee226795aedd3de6883fa012544fc89b0786b23e9ce66151e5589b51477"
     },
     {
       "path": "front-contact-sheet.png",
-      "bytes": 1070101,
-      "sha256": "8ecff4c3fc30804295bcb4954f49123f73aa52c487e7a0e668fc88a5f5ffe0aa"
+      "bytes": 1069839,
+      "sha256": "dc9cc843db05855b96957b27d27c7903767be8eff31708614e0f99064cb9652e"
     },
     {
       "path": "isometric-contact-sheet.png",
-      "bytes": 1122736,
-      "sha256": "766ad99ffc31c50a2018860718d175637cb431e0eadd4291054b82e253d409a8"
+      "bytes": 1122286,
+      "sha256": "a558f79a478ca8b75b49b60b661a742e636ae0f813072be7a09e97fc63ab8c2b"
     }
   ],
   "worstDifferenceOverview": {
     "clip": "Idle",
     "view": "isometric",
     "path": "worst-difference-overview.png",
-    "bytes": 461822,
-    "sha256": "f6f14be88972a7ce22ebaf3f6a2827bf8c31e4c649ea041075c9b8ed1761ea8d",
+    "bytes": 461829,
+    "sha256": "33efb473ce2bd6d290da202eb240842e62240bf996946f62e89458c72a32a3e7",
     "heatmapScale": "per-pixel maximum RGB channel delta multiplied by 4"
   },
-  "rawEvidenceLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/render-c45f111d-v2",
+  "rawEvidenceLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/visual-sampling",
   "rawRendersRetainedLocally": true,
   "pillowVersion": "12.3.0",
   "humanReview": {

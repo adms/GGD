@@ -76,7 +76,10 @@ def build(report_path: Path, manifest_path: Path) -> dict:
     require(isinstance(target_triangles, int) and 0 < target_triangles <= trigger_triangles,
             "Invalid formal adoption decimation target")
     require(report.get("schema") == "ggd-acquired-heroes-check@1", "Unexpected acceptance report schema")
-    require(report.get("status") == "passed", "Acquired hero acceptance did not pass")
+    # This receipt uses only the three named Palworld packages.  A blocked
+    # unrelated acquired hero must remain visible, but must not make the
+    # already-passing Palworld evidence impossible to reproduce.
+    require(report.get("status") in {"passed", "blocked"}, "Acquired hero acceptance failed")
     require(manifest.get("schema") == "ggd-acquired-heroes-authoring@1", "Unexpected authoring manifest schema")
     require(manifest.get("recipeSha256") == report.get("sourceSha256"), "Recipe digest differs between reports")
 
@@ -88,6 +91,16 @@ def build(report_path: Path, manifest_path: Path) -> dict:
         source_pins.append(pin)
 
     rows = {row["id"]: row for row in report.get("heroes", [])}
+    target_hero_ids = {hero_id for hero_id, _name in HEROES.values()}
+    for hero_id in target_hero_ids:
+        row = rows.get(hero_id)
+        require(row is not None and row.get("status") == "passed",
+                "Palworld hero package is not passed: " + hero_id)
+    non_target_non_passed = [
+        {"id": row.get("id"), "status": row.get("status"), "errors": row.get("errors", [])}
+        for row in report.get("heroes", [])
+        if row.get("id") not in target_hero_ids and row.get("status") != "passed"
+    ]
     integrations = []
     model_options = manifest.get("modelOptions", {})
     for identity_id, (hero_id, name) in HEROES.items():
@@ -219,6 +232,13 @@ def build(report_path: Path, manifest_path: Path) -> dict:
             "hero": adoption_policy,
         },
         "authoringSources": source_pins,
+        "acceptanceRun": {
+            "overallStatus": report["status"],
+            "targetHeroIds": sorted(target_hero_ids),
+            "targetHeroesPassed": True,
+            "nonTargetNonPassed": non_target_non_passed,
+            "meaning": "The receipt is scoped to the three target Palworld packages. Any unrelated acquired-hero blocker remains recorded here and is not represented as a Palworld pass.",
+        },
         "acceptanceCommand": "node --import tsx tools/editor-acceptance/acquired-heroes-check.ts --mode strict --out <new-empty-directory>",
         "integrations": integrations,
         "historicalLoopbackEvidence": {
@@ -272,6 +292,11 @@ def check_receipt(receipt: dict) -> None:
             and digest_matches(ADOPTION_POLICY, policy_pin.get("sha256", "")),
             "Model adoption policy changed; rebuild the receipt")
     require(len(receipt.get("integrations", [])) == 3, "Receipt must contain three Palworld heroes")
+    acceptance = receipt.get("acceptanceRun", {})
+    require(acceptance.get("targetHeroIds") == sorted(hero_id for hero_id, _name in HEROES.values()),
+            "Targeted acceptance scope is incomplete")
+    require(acceptance.get("targetHeroesPassed") is True, "Targeted Palworld acceptance is not passed")
+    require(acceptance.get("overallStatus") in {"passed", "blocked"}, "Acceptance run status is invalid")
     for pin in receipt.get("authoringSources", []):
         path = ROOT / pin["path"]
         require(path.is_file() and path.stat().st_size == pin["bytes"] and digest_matches(path, pin["sha256"]), "Changed authoring source: " + pin["path"])

@@ -72,9 +72,25 @@ function playerFor(doc: Record<string, unknown>, casterPos: { x: number; z: numb
 describe("script 段落掉了要說話（GH#974）", () => {
   beforeEach(() => void takeScriptSegmentDrops());
 
-  it("★★ ⭐ 出貨的 10 份 script 都在，而 `anchor:\"target\"` 是主要形狀", () => {
+  it("★★ ⭐ 出貨的 script 一份都沒漏掃，而 `anchor:\"target\"` 是主要形狀", () => {
     const docs = shippedScripts();
-    expect(docs.length, "⛔ 掃不到出貨 script —— 量尺壞了，⛔ 不是真的沒有").toBe(10);
+    // ⭐ 量尺自證的分母**從出貨的集合索引推導**，⛔ 不抄一個數字。
+    //   ⚠️ 這一行以前是 `toBe(10)` —— 那是 2026-09-04 寫下時出貨的份數；
+    //   `5f7d222ef`（2026-09-10，GH#1165 七名 LOL 英雄上架）合法地多出 35 份
+    //   ⇒ 45 份，⛔ 而那條紅說的是「量尺壞了」，其實是**名單變長了**
+    //   （同 `bindings.test.ts` 記過的「一個 53 散在十個地方」那個病）。
+    //   ⇒ 索引（`content:build` 寫的 `_index.json`）就是「出貨的有哪幾份」的答案：
+    //   readdir 漏掃／多掃任何一份，逐 id 都會與它對不上；而且兩邊都不可以是空的。
+    const indexedIds = (
+      JSON.parse(readFileSync(join(SCRIPTS, "_index.json"), "utf8")) as { entries: { id: string }[] }
+    ).entries
+      .map((e) => e.id)
+      .sort();
+    expect(indexedIds.length, "⛔ 出貨索引一份 script 都沒有 —— 量尺壞了").toBeGreaterThan(0);
+    expect(
+      docs.map((d) => String(d["id"])).sort(),
+      "⛔ 掃到的 script 與出貨索引對不上 —— 量尺壞了，⛔ 不是真的沒有",
+    ).toEqual(indexedIds);
 
     // ⭐ 母體推導自出貨內容，⛔ 不抄 id：`anchor:"target"` 的段有多少？
     const segs = docs.flatMap((d) => (d["segments"] as Record<string, unknown>[] | undefined) ?? []);

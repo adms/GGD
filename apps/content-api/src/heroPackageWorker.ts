@@ -19,12 +19,13 @@ import { retainHeroBuildSources } from "./heroBuildHistory";
 const { root, job, importDir } = workerData as { root: string; job: HeroPackageJob; importDir?: string };
 async function run() {
 try {
-  let project = job.kind === "build" ? job.project : null;
-  if (job.kind === "build" && job.sourcePackage) {
-    if (!importDir || !job.iconPolicy) throw new Error("此目標未提供圖示正規化政策與保存位置。");
-    project = normalizeHeroSource(job.sourcePackage, new ImportStore({ dir: importDir }), job.iconPolicy, job.target);
-  }
-  let catalog = readHeroPackageCatalog(root, importDir, job.kind === "validate" ? normalizedHeroIcons(job.input.raw) : undefined);
+  // ⭐ ① 可信準備段 —— 只讀出貨樹、保存建包來源、載入 Platform overlay、保存模板；
+  //    ⛔ 這一段不碰送來的包。它的耗時 ⛔ 不算進「英雄編譯／SimWorld」的預算
+  //    （`heroPackageWorkerClient.ts` 的 HERO_WORKER_BUDGET）。
+  //    2026-09-15 量到：單獨跑一次建包 13.5 秒裡有 12.5 秒是這一段
+  //    （tsx 載入 3.4 · 首次保存 1,168 份建包來源 7.4 · overlay 0.6 · 模板 1.2），
+  //    ⇒ 它吃掉 20 秒預算，負載一高合法英雄就回 503。
+  let catalog = readHeroPackageCatalog(root, importDir);
   const base = new FsContentSource(root);
   const source = job.overlay ? new OverlayContentSource(base, job.overlay) : base;
   const manifest = await source.readManifest();
@@ -41,6 +42,18 @@ try {
   const templateStore = new ImportStore({ dir: job.templateHistoryDir ?? resolve(root, "..", "data", "content-backups", "hero-catalog-versions") });
   retainHeroTemplates(templateStore, [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc));
   catalog = { ...catalog, resolveTemplateVersion: (id, digest) => readHeroTemplateVersion(templateStore, id, digest) };
+  parentPort!.postMessage({ phase: "ready" });
+  // ⭐ ② 送來的包 —— 圖示正規化、上傳模型、編譯／SimWorld。編譯預算從這一行起算。
+  let project = job.kind === "build" ? job.project : null;
+  if (job.kind === "build" && job.sourcePackage) {
+    if (!importDir || !job.iconPolicy) throw new Error("此目標未提供圖示正規化政策與保存位置。");
+    project = normalizeHeroSource(job.sourcePackage, new ImportStore({ dir: importDir }), job.iconPolicy, job.target);
+  }
+  if (job.kind === "validate") {
+    // 與原本 `readHeroPackageCatalog(..., normalizedHeroIcons(raw))` 同一個優先序：送來的正規化圖示先查。
+    const icons = normalizedHeroIcons(job.input.raw), shipped = catalog.readAsset;
+    catalog = { ...catalog, readAsset: (path) => icons.has(path) ? icons.get(path) : shipped(path) };
+  }
   if (job.kind === "build") {
     if ((project as { presentation?: { uploadedModel?: unknown } } | null)?.presentation?.uploadedModel && catalog.documents.get("config/ugc")?.heroModelUploadsEnabled === false) throw new Error("目前未開放新的英雄模型上傳，原檔仍保存在草稿。");
     catalog = await withUploadedHeroModel(catalog, project, job.sourcePackage, Boolean(job.canonicalTakeoverId));

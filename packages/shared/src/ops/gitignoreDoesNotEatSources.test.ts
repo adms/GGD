@@ -33,7 +33,29 @@ const EXEMPT: { where: RegExp; why: string }[] = [
   { where: /^scratchpad\//, why: "agent 誤寫到 repo 根的暫存（真的暫存在 session dir）" },
   { where: /(^|\/)(\.backup[^/]*|backup-[^/]*)\//, why: "整樹快照（vitest.config.ts）—— 每一份都是某個 commit 的副本" },
   { where: /^docs\/legacy\/_overwrites\/.*\/\.claude\/worktrees\//, why: "覆蓋前留底裡夾帶的 worktree 副本 —— 本體在各自的分支上" },
+  { where: /(^|\/)vite\.config\.[^/]*\.timestamp-[^/]*\.mjs$/, why: "被殺掉的 vite／vitest 行程留下的**孤兒**暫存 bundle（與 .gitignore 的 vite.config.*.timestamp-*.mjs 同一個樣式）：Vite 載設定檔時把它寫在旁邊，正常載完就自刪；行程在載入途中被 SIGTERM／SIGKILL ⇒ 刪檔的 finally 沒跑到 ⇒ 永久留下。它是產物，⛔ 不是原始碼（GH#1211 H，CI run 34867941830；洩漏的來源見 VITE_TEMP 註解）" },
 ];
+/**
+ * CI 上真的撞見過的那一顆（GH#1211 H，CI run 34867941830）。
+ *
+ * ⚠️ 更正 `0166bcd26`（commit 訊息與本檔當時的註解）的兩句話，兩句都是錯的：
+ *   ✗「`pnpm -r` 併行的 vitest 正在載 apps/editor 的設定，撞見一閃即逝的暫存檔」
+ *   ✗「暫存檔一閃即逝，反方向那條無法穩定重現它」
+ * 審查者（lane small 的 review，2026-09-15）量到的三條證據：
+ *   ① CI log 開頭寫 `workspace-concurrency=1` ⇒ 16:29:42 之後只有 packages/shared 一包在跑，⛔ 沒有別的包併行
+ *   ② 檔名時間戳 1789403554233 ＝ 2026-09-14T16:32:34.233Z，反方向那條到 16:39:53 才撞見
+ *      ⇒ 它**至少活了 7 分 19 秒** ⇒ 是**孤兒**，⛔ 不是一閃即逝
+ *   ③ 時間窗落在 `shipScriptWatchdog.test.ts`（16:32:31–45，14.3 秒）裡：那支真的跑 `ship.mjs`，
+ *      看門狗地板 4 秒，並行段的 `skills:check` 按 LPT 第一支是 `formreceipts:check`，
+ *      而它會跑 `pnpm --filter @ggd/editor exec vitest` ⇒ Vite 寫下暫存 bundle ⇒ 看門狗殺整組 ⇒ 沒刪到
+ *   ⚠️ ③ 是**推論**（時間窗＋LPT＋本機重現機制），審查者 ⛔ 沒有實跑 ship.mjs。
+ * 本機量到的兩個方向：不殺 ⇒ 169ms 自刪；載設定途中送 SIGTERM ⇒ 永久留下，
+ *   ⭐ 而且只要有一顆孤兒，反方向那條**每次都紅**（訊息與 CI 同形）⇒ 它重現得了，只是要先有孤兒。
+ * ⛔ 豁免列只管「它不是原始碼」；**洩漏本身沒有修**（守衛每跑一次都可能在 apps/editor 留一顆），
+ *   ⚠️ 而這一列關掉了唯一會指到它的紅燈 ⇒ 要另開票追（第零守則⑧，⛔ 不在這條 lane 修）。
+ * 這裡釘住那一顆，讓「豁免表認得它」是一條不依賴本機有沒有孤兒的斷言。
+ */
+const VITE_TEMP = "apps/editor/vite.config.ts.timestamp-1789403554233-caed338cfbfdb.mjs";
 
 /** `git check-ignore -q`：離開碼 0 = 被吃、1 = 沒被吃；其他 ⇒ 擲出（⛔ 不要讓錯誤長得像「沒被吃」）。 */
 function ignored(p: string): boolean {
@@ -47,6 +69,14 @@ describe("`.gitignore` 不可以吃掉原始碼（GH#1038）", () => {
       expect(ignored(p), `${p} 被 .gitignore 吃掉了 —— 那是原始碼（本機綠、CI 紅的形狀）`).toBe(false);
     for (const p of ["build/x.js", "apps/client/build/x.js", "apps/client/dist/x.js", "tools/bgm-gen/build/x.wav"])
       expect(ignored(p), `${p} 沒被吃 —— 放行過寬，產物會進 git`).toBe(true);
+  });
+
+  it("豁免表認得 Vite 設定的暫存 bundle，⛔ 不認得設定檔本身（GH#1211 H）", () => {
+    const exempt = (p: string): boolean => EXEMPT.some((e) => e.where.test(p));
+    expect(ignored(VITE_TEMP), `${VITE_TEMP} 沒被 .gitignore 吃 —— 那條規則被改掉了`).toBe(true);
+    expect(exempt(VITE_TEMP), "Vite 暫存 bundle 不在豁免表 ⇒ 任何一顆被殺行程留下的孤兒都會讓反方向那條紅").toBe(true);
+    for (const p of ["apps/editor/vite.config.ts", "apps/client/src/timestamp-x.mjs"])
+      expect(exempt(p), `${p} 是原始碼 —— 豁免表放行過寬`).toBe(false);
   });
 
   it("反方向：從實體走 —— 被 ignore 的原始碼檔 ⇒ 0 個，或在帶理由的豁免表", () => {

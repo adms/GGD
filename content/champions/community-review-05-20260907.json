@@ -1,7 +1,7 @@
 {
   "id": "community-review-05-20260907",
   "name": "洛克人",
-  "description": "洛克人 社群英雄功能驗收稿。作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。",
   "role": "marksman",
   "attackType": "ranged",
   "archetype": "marksman",
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "小",
@@ -140,12 +140,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "小",
@@ -291,11 +291,11 @@
         90.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        600.0,
+        600.0,
+        600.0
       ],
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "range": 8,
       "radius": 4.5,
       "rangeTier": "大",

@@ -19,6 +19,7 @@
   ],
   "range": 12.0,
   "radiusTier": "極小",
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -80,8 +81,7 @@
   "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "中",
-  "manaCostTier": "小",
-  "castTimeTier": "極大",
   "rangeTier": "極大",
+  "manaCostTier": "小",
   "castTimeSec": 1
 }

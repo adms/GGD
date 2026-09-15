@@ -339,7 +339,7 @@
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -357,10 +357,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1
+          "castTimeSec": 0.5
         }
       },
-      "castTimeTier": "極大"
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

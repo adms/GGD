@@ -80,6 +80,13 @@ const NO_ARTIFACT: Record<string, string> = {
  * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
  */
 const GENERATOR_NO_CHECK: Record<string, string> = {
+  "valhalla-intro":
+    "⭐ 2026-09-15（GH#1258）—— `strip_dev_notes.py` 是**一次性、欄位級**的剝除器：它把 44 張卡描述裡的" +
+    "開發流程樣板剝掉，並把**剝之前的原文**另存成 `docs/legacy/_valhalla-card-dev-notes-full.md`（第一·五守則：另存）。" +
+    "⇒ 那份 legacy 檔是**歷史快照**，⛔ 不是「會隨來源漂移的產物」：剝完之後卡上已經沒有樣板，重跑只會得到空集合，" +
+    "它沒有「過期」這種狀態。之後防回流的是兩條閘：`championDevNotesStripped.test.ts`（全部卡）與 " +
+    "`valhallaShippedRoster.test.ts`（英靈殿印出來的字），以及兩支匯入器在組裝處 import 同一個 `stripped()`。" +
+    "反駁方式：哪一天這支腳本被當成常駐產生器重跑並**改寫**那份 legacy 檔（而不是一次性另存），刪掉本列、給它 `*:check`。",
   "hero-model-library":
     "⭐ 2026-09-13 —— `import_kisaragi_train_audio.py` 是一次性的外部素材匯入器，" +
     "⛔ 不是可以從 repo 內來源重建的產生器：它強制要求 `--intake` 指向本機/S3 保存的" +
@@ -188,15 +195,69 @@ const SYNC_STEP_NO_CHECK: Record<string, string> = {
  * 理由要能被反駁：⭐ 說得出**為什麼那份產物不會因為聚合重生成而變**。
  */
 const CHECK_STEP_NO_SYNC: Record<string, string> = {
+  // ⭐ PR #1152 合併準備（2026-09-14）：六支都**會寫產物**，⛔ 不是「沒有產物」那一族 —— 缺的是鏈上的位置，理由逐列寫明。
+  "modelpolicy:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/asset-library/模型動作特效上架限制.md），照規矩 `modelpolicy:build` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:build`。反駁法：鏈上出現 `modelpolicy:build` 之後這一列就是幽靈，刪掉。",
+  "modelpolicy:priority-audit:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/hero-model-library/priority-model-policy-audit.{json,md}），照規矩 `modelpolicy:priority-audit` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:priority-audit`。反駁法：鏈上出現 `modelpolicy:priority-audit` 之後這一列就是幽靈，刪掉。",
+  "modelpolicy:component-audit:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/hero-model-library/priority-evidence/current-component-policy-audit.json），照規矩 `modelpolicy:component-audit` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:component-audit`。反駁法：鏈上出現 `modelpolicy:component-audit` 之後這一列就是幽靈，刪掉。",
+  "models:historical-options:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（historical-model-recovery/model-option-registration.json 與四份 model@1 選項），照規矩 `models:historical-options` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm models:historical-options`。反駁法：鏈上出現 `models:historical-options` 之後這一列就是幽靈，刪掉。",
+  "hero:intake:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（docs/_review/material/hero-intake/ship*.json），照規矩 `hero:intake` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm hero:intake`。反駁法：鏈上出現 `hero:intake` 之後這一列就是幽靈，刪掉。",
+  "handoff:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（docs/素材缺口交接單.md），照規矩 `handoff:build` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm handoff:build`。反駁法：鏈上出現 `handoff:build` 之後這一列就是幽靈，刪掉。",
   "echoloop:check":
     "⭐ 它**不寫任何檔** —— `tools/balance-alert/echoLoop.ts` 全檔零個 `writeFileSync`（2026-09-03 實查）," +
     "而 `echoloop` 與 `echoloop:check` 是**同一支腳本**,`--check` 只改嚴格度。" +
     "⇒ ⭐ 沒有產物就沒有「過期」這回事,接進 `skills:sync` 只是把同一個分析跑第二次。" +
     "⚠️ 它守的是**平衡公式自洽**（每一格倍率 ×0.5／×2 重算,兩邊一起動而佔血條不動 = 回音迴圈）," +
     "⛔ 不是某份文件的新鮮度。反駁法:如果哪天它開始寫檔,這一列就要刪掉。",
+  // ⭐ 2026-09-15（GH#1227 C13 審查後續）—— 從 EXEMPT 搬過來（舊理由為什麼是假的，見 EXEMPT 那一格的註解）。
+  //    突變（實跑）：把 `pnpm legacyindex:check && ` 從 `skills:check` 拿掉 ⇒ 本檔 3 條紅，三條都指名它
+  //    （「沒被 skills:check 跑到也沒豁免」· 「第三個方向」的 sentinel：這一列指向不在 check 鏈上的步驟 ·
+  //     「產物那一端」：`tools/legacy-index/` 不在視野裡）；Edit 改回。
+  "legacyindex:check":
+    "⭐ 它**會寫產物**（`docs/legacy-index.md`），⛔ 而它的四組輸入**沒有一組是 `skills:sync` 寫的**：" +
+    "`docs/legacy/**`（`_overwrites/` 刻意跳過，GH#947）· `content/_legacy/**` · `content/config/roster.json` 的 `retiredChampions` · " +
+    "`packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY`。" +
+    "2026-09-15 對 `tools/parallel-gates/sync-io.json` 68 步的 writes 逐一比對：唯一落在這四組底下的是 " +
+    "`board:build` → `docs/legacy/_overwrites/_ledger.tsv`，正好在產生器跳過的那個目錄。" +
+    "⇒ 聚合重生成**不會**讓它過期，也**修不好**它：它紅只可能是有人在 sync 之外動了這四組輸入（搬進／搬出／改 legacy 檔、改那兩份名單），" +
+    "修法是它自己的 `--check` 訊息指名的那一行（`pnpm legacyindex:build`）。" +
+    "⛔ 刻意不現在接進 `skills:sync`：改那條鏈＝改 `sync-io.json` 的身分（`sync.mjs` 閘①逐字比對 chain），" +
+    "要重跑 3-pass trace（GH#710），全域只能一條工作流跑。" +
+    "反駁法：sync-io 任一步的 writes 開始落在上面四組輸入裡（`_overwrites/` 除外）⇒ 這一列當場作廢，" +
+    "要把 `legacyindex:build` 接在那一步之後。",
 };
 
 const EXEMPT: Record<string, string> = {
+  "secrets:check":
+    "🔐 public repo 的憑證掃描（owner 2026-09-11：「以後可以定期呼叫這個script檢查就好」)—— " +
+    "它驗的是**一份工作樹／一段歷史與一張規則表的關係**,⛔ 沒有任何檔案是它寫的," +
+    "「重生成」對它不成立。⚠️ 也刻意**不**進 `skills:check`:那一支是**技能改動的新鮮度**閘," +
+    "而一把金鑰跟技能改不改動無關 —— 混進去會讓每一次 `skills:sync` 都多背一次全樹掃描。" +
+    "⭐ 反駁法：哪天技能內容開始夾帶憑證（例如外部素材 API key 寫進 ability JSON)," +
+    "這一列就要刪掉並把 `secrets:check` 接進 `skills:check`。",
   // ⭐ 2026-09-06 GH#990 —— vfx-script 的子模組正規化器
   "vfxsub:check":
     "⭐ **不是新鮮度閘、沒有產物**：`tools/vfx-subtypes/callify.mjs --check` **不寫任何檔（0 個寫入呼叫）**，" +
@@ -239,12 +300,26 @@ const EXEMPT: Record<string, string> = {
     "技能／特效／級距／卡面說明一個位元組都不會進來。⛔ 它也不是新鮮度閘（欄位缺了才紅，不是過期才紅）",
   "docs:status:test": "這是那支產生器**自己的單元測試**，不是新鮮度閘",
   "iconstyle:check": "圖示的**美術指導**快照 —— 讀 icon-gen 的提示詞常數，不讀 abilities/vfx/級距",
-  "legacyindex:check":
-    "掃 `docs/legacy/` 與 `content/_legacy/` 底下**有哪些檔**（簡介取自那個檔自己的第一段）—— " +
-    "⛔ **不讀**出貨中的 `content/abilities|vfx|config`：⭐ 只有把檔案搬進／搬出 legacy 才會動它的產物",
+  // ⭐ 2026-09-15（GH#1227 C13 審查後續）—— `legacyindex:check` 這一列**刪掉了**，它改成接進 `skills:check`。
+  //    ⚠️ 舊理由逐字是「⛔ **不讀**出貨中的 `content/abilities|vfx|config`：⭐ 只有把檔案搬進／搬出 legacy
+  //    才會動它的產物」—— ⛔ ef326ac70 讓產生器去讀 `content/config/roster.json` 的 `retiredChampions`
+  //    與 `communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` 之後，**兩半都是假的**
+  //    （第三守則：一句被散文守著的理由活過了它的保存期限，而這張表不會紅）。
+  //    ⇒ 它的「build 不在 skills:sync 上」那一半改住 {@link CHECK_STEP_NO_SYNC}，理由逐列寫明。
   "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
   "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
   "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",
+  // ⭐ PR #1152（2026-09-14 合併準備）帶進來的模型政策腳本 —— ⛔ 三列都**不是**漏接：
+  "modelbudget:check":
+    "同 `budget:check` 的 root 包裝（`pnpm --filter @ggd/model-budget budget:check` 遞迴到同一支 `emit_report.ts --check`）" +
+    "—— 它不是新鮮度閘（超標才紅，不是過期才紅）。反駁法：哪天 emit_report 開始寫會過期的產物，就改接進 skills:check。",
+  "budget:policy-doc:check":
+    "⭐ 它就是 skills:check 裡 `pnpm modelpolicy:check` 經 `pnpm --filter @ggd/model-budget` **遞迴**呼叫的那一支" +
+    "（同一支 `generate_policy_doc.ts --check`）；這張掃描只比對 root 腳本名，看不見 --filter 那一跳。" +
+    "反駁法：root 的 `modelpolicy:check` 被拿出 skills:check，這一列就要刪。",
+  "budget:priority-audit:check":
+    "⭐ 它就是 skills:check 裡 `pnpm modelpolicy:priority-audit:check` 經 `pnpm --filter @ggd/model-budget` **遞迴**呼叫的那一支" +
+    "（同一支 `audit_priority_release.ts --check`）。反駁法同上一列。",
   // ⭐ GH#621 —— `ship:check` 是**聚合指令自己**（它跑 content:build + skills:sync
   // + skills:check + typecheck + 每一包 vitest）。把它放進 `skills:check` 會變成
   // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。
@@ -259,10 +334,13 @@ const EXEMPT: Record<string, string> = {
     "反駁法：哪天 S3 支援讓我們**不下載**就驗得到內容雜湊（例如存 checksum metadata 再 head-object 比對），" +
     "這一列就要刪掉並把它接進 `skills:check`。",
   "model:intake:check":
-    "⭐ **純檢查、0 個產物**（`tools/w3x-import/model_intake.py` 唯一的 write 是 `tempfile.NamedTemporaryFile` 的" +
-    "暫存 gltf-validator 腳本，跑完即丟，實查 2026-09-11）。它驗的是**每一顆匯入 GLB 與 `content/config/model-lod.json` " +
-    "預算的關係**（貼圖 256 上限 · 通道 · 多邊形），⛔ 不是新鮮度閘 —— 沒有東西會因為技能改動而過期。" +
-    "反駁法：哪天 `--merge` 的合併結果寫回 `content/`，這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
+    "⭐ **純檢查、0 個產物**：這條指令（`model_intake.py --all --check`，⛔ 不帶 `--merge`／`--roles-json`）唯一的寫入呼叫" +
+    "是 gltf-validator 暫存腳本（`packages/shared/node_modules/.cache/ggd-gltf-validate.mjs`，跑完即刪）。" +
+    "⚠️ 2026-09-15 更正：這裡原本寫「唯一的 write 是 tempfile」—— 落點早已改到 `.cache`，而同一支腳本的 `--merge`（就地改 GLB、先留底）" +
+    "與 `--roles-json <OUT>`（寫呼叫者指定的報表）都會寫檔，只是不在這條指令裡。它驗的是**每一顆 GLB 與 " +
+    "`modelUpload/budget.ts`／`adoptionPolicy.json` 預算的關係**（貼圖 256 上限 · draw call · 三角面 · 骨架），⛔ 不是新鮮度閘 —— " +
+    "沒有東西會因為技能改動而過期。反駁法：哪天這條指令本身帶上會寫 `content/` 的旗標（例如 `--merge`），" +
+    "這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
 };
 
 /**

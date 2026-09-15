@@ -8,15 +8,40 @@
  * shared prefixes are precisely what a weak hash collides on.
  */
 import { describe, it, expect } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, fnv1a, voxelLookFor } from "./voxelLook";
+import {
+  ARCHETYPE_BY_MODEL_KEY,
+  appearanceModelKey,
+  fallbackAccentFor,
+  fnv1a,
+  voxelLookFor,
+} from "./voxelLook";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../../content");
 
-/** Every champion that actually resolves to one of the generated blocky meshes. */
+type BodyVersion = { sourceModelKey: string; legacyAppearance: boolean };
+function bodyVersionOf(modelKey: string): BodyVersion | undefined {
+  const p = join(CONTENT, "models", `${modelKey}.json`);
+  if (!existsSync(p)) return undefined;
+  return (JSON.parse(readFileSync(p, "utf8")) as { bodyVersion?: BodyVersion }).bodyVersion;
+}
+
+/**
+ * Every (champion, blocky mesh) pair the game can put on screen.
+ *
+ * ⚠️ 2026-09-15 —— 這個母體以前只讀 `doc.modelKey` 且要求它**字面上**是 `champ.*`。
+ *   09-10／09-11 那幾批（4058d8166 · b1a939f7c · 107626f90 · 0c2446749）把幾十位英雄
+ *   從方塊人換成真模型，⭐ 而**舊的方塊人一顆都沒刪**：它們被凍結成
+ *   `version.body.*`（`bodyVersion.legacyAppearance: true`），留在各自的
+ *   `modelVersions[]` 裡 —— 後台一個 `activate` 就換回來。
+ *   ⇒ 只讀字面 modelKey，champ.sela 上從 18 位掉到 1 位（它自己），
+ *   ⛔ 而那 10 位**隨時可以被切回**方塊法師的英雄一位都沒被量到。
+ * ⭐ 所以母體 = 目前套用的 modelKey ∪ 每一個模型版本，都先過出貨的
+ *   `appearanceModelKey`（`championBody.modelOverrideFor` 用的同一支）再查 archetype。
+ */
 function blockyRoster(): { id: string; modelKey: string }[] {
   const out: { id: string; modelKey: string }[] = [];
   for (const f of readdirSync(join(CONTENT, "champions"))) {
@@ -24,15 +49,31 @@ function blockyRoster(): { id: string; modelKey: string }[] {
     const doc = JSON.parse(readFileSync(join(CONTENT, "champions", f), "utf8")) as {
       id?: string;
       modelKey?: string;
+      modelVersions?: { modelKey: string }[];
     };
-    if (doc.id && doc.modelKey && ARCHETYPE_BY_MODEL_KEY[doc.modelKey]) {
-      out.push({ id: doc.id, modelKey: doc.modelKey });
+    if (!doc.id) continue;
+    const seen = new Set<string>();
+    for (const key of [doc.modelKey, ...(doc.modelVersions ?? []).map((v) => v.modelKey)]) {
+      if (!key) continue;
+      const looksLike = appearanceModelKey(key, bodyVersionOf(key));
+      if (!ARCHETYPE_BY_MODEL_KEY[looksLike] || seen.has(looksLike)) continue;
+      seen.add(looksLike);
+      out.push({ id: doc.id, modelKey: looksLike });
     }
   }
   return out;
 }
 
 const ROSTER = blockyRoster();
+
+/**
+ * 每一位真英雄的 id —— 給「archetype 偏好」那一組用。那一組**明寫** archetype 參數，
+ * 驗的是偏好表本身，⛔ 與「誰現在穿方塊人」無關 ⇒ 母體不該跟著模型換裝一起縮。
+ * （⚠️ 2026-09-15 量到：用穿方塊人的那一小群當母體，名單一換裝，統計就擲硬幣。）
+ */
+const ALL_IDS: readonly { id: string }[] = readdirSync(join(CONTENT, "champions"))
+  .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+  .map((f) => ({ id: (JSON.parse(readFileSync(join(CONTENT, "champions", f), "utf8")) as { id: string }).id }));
 
 describe("voxelLookFor is deterministic", () => {
   it("returns the same look for the same id, every call", () => {
@@ -127,16 +168,25 @@ describe("the real roster comes out visually distinct", () => {
 describe("the archetype biases the props without deciding the colours", () => {
   it("a barbarian is usually bare-headed, a mage usually is not", () => {
     const hats = (arch: string) =>
-      ROSTER.filter((c) => voxelLookFor(c.id, arch).props.hat).length / ROSTER.length;
+      ALL_IDS.filter((c) => voxelLookFor(c.id, arch).props.hat).length / ALL_IDS.length;
     expect(hats("mage")).toBeGreaterThan(hats("barbarian"));
   });
 
   it("the undead wears no props at all by bias, and shambles", () => {
-    const bare = ROSTER.filter((c) => {
-      const p = voxelLookFor(c.id, "undead").props;
-      return !p.hat && !p.pack && !p.pauldron;
-    }).length;
-    expect(bare / ROSTER.length).toBeGreaterThan(0.6);
+    const bare = (arch: string) =>
+      ALL_IDS.filter((c) => {
+        const p = voxelLookFor(c.id, arch).props;
+        return !p.hat && !p.pack && !p.pauldron;
+      }).length / ALL_IDS.length;
+    // ⚠️ 2026-09-15 —— 這一條以前是 `bare("undead") > 0.6` 一個固定門檻。
+    //   量到的：同一支雜湊在**全部 153 位真英雄**上給 0.608、在可切回方塊人的 40 位上給
+    //   正好 0.600 —— ⇒ 0.6 不是地板，是這個分布的**平均值**（#226 當年 44 位的樣本剛好在上面）。
+    //   ⛔ 一個坐在平均值上的門檻，名單一動就擲硬幣。
+    // ⭐ 改成和上一條同一個形狀：**同一批 id、只換 archetype** 的差分。
+    //   基準是中性偏好（未知 archetype ⇒ DEFAULT_BIAS，見上面「is total」那條）。
+    //   突變：undead 的偏好被拿掉（退回 DEFAULT_BIAS）⇒ 兩邊相等 ⇒ 紅。
+    expect(bare("undead")).toBeGreaterThan(2 * bare("no-such-archetype"));
+    expect(bare("undead")).toBeGreaterThan(bare("barbarian"));
   });
 });
 

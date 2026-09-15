@@ -126,7 +126,7 @@
     {
       "name": "multipliers.agiToArmor",
       "owner": "config.combat-env@1",
-      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+      "why": "owner 2026-07-30：「目前玩家太容易死了\n敏捷 → 護甲agiToArmor: 每 1 點敏捷增加的護甲 AgiDefenseBonus=0.15 => 0.3」"
     },
     {
       "name": "multipliers.agiToAttackSpeed",
@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "ebd5131324b1",
+  "fingerprint": "899e14fa667d",
   "capabilityFingerprint": "fb8d3eb8",
   "required": [
     {
@@ -8836,6 +8836,11 @@
     },
     {
       "group": "configField",
+      "name": "communityCueFallback",
+      "owner": "config.vfx-scripts@1"
+    },
+    {
+      "group": "configField",
       "name": "communityRoomOnly",
       "owner": "config.ugc@1"
     },
@@ -11202,6 +11207,21 @@
     {
       "group": "configField",
       "name": "hiddenChampionsInMobPool",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla=exclude",
+      "owner": "config.roster@1"
+    },
+    {
+      "group": "configField",
+      "name": "hiddenInValhalla=show",
       "owner": "config.roster@1"
     },
     {
@@ -25464,9 +25484,9 @@
     "projectileField": 21,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4087,
+    "configField": 4091,
     "_notRequired": 15,
-    "_total": 5230,
+    "_total": 5234,
     "_ownerOnly": 39
   }
 }

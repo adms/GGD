@@ -31,8 +31,8 @@
   ],
   "vfxKey": "fx.prim.nature.pulse-sm",
   "targetsEnemies": true,
-  "castTimeSec": 1,
+  "castTimeSec": 0.5,
   "rangeTier": "極大",
   "range": 12,
-  "castTimeTier": "極大"
+  "castTimeTier": "大"
 }

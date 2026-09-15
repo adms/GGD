@@ -81,6 +81,8 @@ import { StoreEconomyPage } from "./StoreEconomyPage";
 // 這份文件是 apps/admin/src 全樹零引用的（configDocCoverage 的 KNOWN_GAP 那一列）。
 import { RosterPage } from "./RosterPage";
 import { ConfigDocPage } from "./ConfigDocPage";
+// 🧮 GH#1260 B2 —— 「英雄屬性正規化」頁的唯讀試算（出身表 vs 套現行屬性係數），⛔ 不警示。
+import { OriginTrialPanel } from "./OriginTrialPanel";
 import { IconWorkshopPage } from "./IconWorkshopPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
@@ -92,6 +94,7 @@ import { AbilityNodesPage } from "./AbilityNodesPage";
 import { PerLevelBonusPage } from "./PerLevelBonusPage";
 // 🧑‍⚖️ GH#669/#785 —— 一頁批次後台驗收（連續圖片＋一鍵否決＋必填原因）。
 import { FeatureReviewPage } from "./FeatureReviewPage";
+import { HeroIntakePage } from "./HeroIntakePage";
 import { SubmissionsReviewPage } from "./SubmissionsReviewPage";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
@@ -392,6 +395,9 @@ const HAND_NAV: NavItem[] = [
   // 🧑‍⚖️ owner 2026-08-27:「你還是沒告訴我去後台哪裡審查 [一頁批次後台驗收]」
   //    ⇒ 在此之前它**不在後台**（只活在 client dev server）。現在是真的一頁。
   { page: "featureReview", label: "批次驗收（連續圖片）", emoji: "🧑‍⚖️", section: SEC_OPS },
+  // 🧍🖼🎙 owner 2026-09-11：「全部放到一頁檢核頁面讓我複查…並且這一頁也要放到後台管理頁」
+  //    ⇒ 新英雄上架的三段（模型對應／圖示／語音配對）全自動算好，這一頁只收通過／退回。
+  { page: "heroIntake", label: "新英雄上架檢核", emoji: "🧍", section: SEC_OPS },
   // 📥 owner 2026-09-01：「所有技能效果機制動畫特效由 AI 來調整變更都要經過
   //    **後台一頁批核審查頁 通過才能套用**」⇒ ⭐ 這一頁的預設與上面那一頁**相反**：
   //    那一頁「先上線、事後否決」，這一頁「先不上線、通過才套用」。
@@ -1284,6 +1290,7 @@ export function Console(): React.JSX.Element {
             {page === "statCaps" && <StatCapsPage />}
             {page === "perLevelBonus" && <PerLevelBonusPage />}
             {page === "featureReview" && <FeatureReviewPage />}
+            {page === "heroIntake" && <HeroIntakePage />}
             {page === "submissionsReview" && <SubmissionsReviewPage />}
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}
@@ -1295,6 +1302,7 @@ export function Console(): React.JSX.Element {
               `specForPage` 回 null，下面這一行就什麼都不畫（而不是畫一個空表單）。
             */}
             {configDocSpec !== null && <ConfigDocPage spec={configDocSpec} />}
+            {page === "statNormalization" && <OriginTrialPanel />}
             {page === "mapReport" && <MapReportPage />}
             {page === "arenaPool" && <ArenaPoolPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}

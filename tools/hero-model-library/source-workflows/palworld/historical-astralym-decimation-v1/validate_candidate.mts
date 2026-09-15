@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -15,13 +14,17 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../../../../..");
 const CHECK = process.argv.includes("--check");
 const SOURCE = path.join(ROOT, "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb");
-const CANDIDATE = path.join(ROOT, "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb");
+// ⭐ PR #1152 合併準備（2026-09-14）：減面產物之後又做過貼圖背板修補（出貨版本 7d8264d1…）。
+//   這支驗的是**減面**這一步 ⇒ 讀逐位元組封存的減面產物；修補只動貼圖位元組，由
+//   tools/model-fix/record_backdrop_repairs.py 的證明與 historical_components.py 守著。
+const CANDIDATE = path.join(ROOT, "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb");
 const VISUAL = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json");
 const OUTPUT = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json");
 const LOCAL_SOURCE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb";
-const LOCAL_CANDIDATE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb";
+const LOCAL_LEGACY_C45_CANDIDATE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb";
+const EXPECTED_LOCAL_LEGACY_C45 = "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f";
 const EXPECTED_SOURCE = "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8";
-const EXPECTED_CANDIDATE = "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f";
+const EXPECTED_CANDIDATE = "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7";
 const CLIPS = ["Idle", "Walk", "FarSkill_Action", "HaloBeam_Loop", "Damage"];
 
 const digest = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
@@ -59,36 +62,7 @@ function structuralPreservation(sourceFile: string, candidateFile: string) {
     index: image.index, width: image.w, height: image.h, format: image.format,
     bytes: image.diskBytes, sha256: digest(imageBytes(glb, image)),
   }));
-  const beforeImages = readImages(before), afterImages = readImages(after);
-  assert.equal(afterImages.length, beforeImages.length, "embedded image count changed");
-  const imageSanitization = [];
-  for (let index = 0; index < beforeImages.length; index++) {
-    const a = beforeImages[index], b = afterImages[index];
-    assert.equal(b.w, a.w, `image ${index}: width changed`);
-    assert.equal(b.h, a.h, `image ${index}: height changed`);
-    const sourceBytes = imageBytes(before, a), candidateBytes = imageBytes(after, b);
-    if (digest(sourceBytes) === digest(candidateBytes)) continue;
-    const decode = (bytes: Uint8Array) => execFileSync(
-      "ffmpeg", ["-loglevel", "error", "-i", "pipe:0", "-f", "rawvideo", "-pix_fmt", "rgba", "pipe:1"],
-      { input: bytes, maxBuffer: a.w * a.h * 4 + 1024 },
-    );
-    const sourcePixels = decode(sourceBytes), candidatePixels = decode(candidateBytes);
-    assert.equal(candidatePixels.length, sourcePixels.length, `image ${index}: decoded length changed`);
-    let clearedPixels = 0;
-    for (let offset = 0; offset < sourcePixels.length; offset += 4) {
-      assert.equal(candidatePixels[offset + 3], sourcePixels[offset + 3], `image ${index}: alpha changed`);
-      if (sourcePixels[offset + 3] > 5) {
-        for (let channel = 0; channel < 3; channel++) assert.equal(candidatePixels[offset + channel], sourcePixels[offset + channel], `image ${index}: visible RGB changed`);
-      } else if (Math.max(sourcePixels[offset], sourcePixels[offset + 1], sourcePixels[offset + 2]) > 8) {
-        assert.deepEqual([...candidatePixels.subarray(offset, offset + 3)], [0, 0, 0], `image ${index}: hidden bright RGB not cleared`);
-        clearedPixels++;
-      } else {
-        for (let channel = 0; channel < 3; channel++) assert.equal(candidatePixels[offset + channel], sourcePixels[offset + channel], `image ${index}: unrelated hidden RGB changed`);
-      }
-    }
-    imageSanitization.push({ imageIndex: index, width: a.w, height: a.h, clearedPixels, alphaValuesChanged: 0, visiblePixelsChanged: 0 });
-  }
-  assert.deepEqual(imageSanitization.map((row) => row.clearedPixels).sort((a, b) => a - b), [927, 927, 1428, 1428]);
+  assert.deepEqual(images(after), images(before), "embedded images changed");
   const primitiveRecords = [];
   for (let meshIndex = 0; meshIndex < before.json.meshes.length; meshIndex++) {
     const a = before.json.meshes[meshIndex].primitives, b = after.json.meshes[meshIndex].primitives;
@@ -116,16 +90,18 @@ function structuralPreservation(sourceFile: string, candidateFile: string) {
       assert.equal(accessorDigest(after, b.output), accessorDigest(before, a.output), "animation output keys changed");
     }
   }
-  return { nodeHierarchyAndTransformsExact: true, materialDefinitionsExact: true, embeddedImagesExactExceptTransparentEmissiveRgbSanitization: true,
+  return { nodeHierarchyAndTransformsExact: true, materialDefinitionsExact: true, embeddedImagesExact: true,
     skinJointsAndInverseBindMatricesExact: true, allNonIndexVertexAttributesExact: true,
-    animationChannelsAndKeyValuesExact: true, primitiveRecords, images: images(after), imageSanitization };
+    animationChannelsAndKeyValuesExact: true, primitiveRecords, images: images(after) };
 }
 
 async function build() {
   assert.equal(digest(fs.readFileSync(SOURCE)), EXPECTED_SOURCE);
   assert.equal(digest(fs.readFileSync(CANDIDATE)), EXPECTED_CANDIDATE);
   assert.equal(digest(fs.readFileSync(LOCAL_SOURCE)), EXPECTED_SOURCE);
-  assert.equal(digest(fs.readFileSync(LOCAL_CANDIDATE)), EXPECTED_CANDIDATE);
+  // The older c45 conversion remains locally archived and has its own frozen
+  // receipt.  The active f77 proof is reproduced from the Git-pinned artifact.
+  assert.equal(digest(fs.readFileSync(LOCAL_LEGACY_C45_CANDIDATE)), EXPECTED_LOCAL_LEGACY_C45);
   const [source, candidate] = await Promise.all([inspectModelUpload(fs.readFileSync(SOURCE)), inspectModelUpload(fs.readFileSync(CANDIDATE))]);
   const budget = heroModelBudgetIssues(candidate);
   const rig = checkRig(SOURCE, CANDIDATE, "fewer");
@@ -144,11 +120,12 @@ async function build() {
   const preservation = structuralPreservation(SOURCE, CANDIDATE);
   return {
     schema: "ggd-historical-astralym-decimation-validation@1",
-    candidateId: "historical-astralym-decimated-c45f111d",
+    candidateId: "historical-astralym-decimated-f77cf1ee",
     heroId: "acquired-astralym",
     originalRetained: { git: pin(SOURCE), local: localPin(LOCAL_SOURCE) },
-    candidate: { git: pin(CANDIDATE), local: localPin(LOCAL_CANDIDATE) },
-    parameters: { tool: "tools/model-budget/optimize/decimate-emissive-lock.mjs", target: 7900, actualTriangles: candidate.triangles, emissiveThreshold: 192, errorBound: 0.02, lockBorder: true, transparentEmissiveMatteSanitization: { alphaMax: 5, hiddenRgbFloorExclusive: 8 } },
+    candidate: { git: pin(CANDIDATE) },
+    preservedLegacyCandidate: { local: localPin(LOCAL_LEGACY_C45_CANDIDATE), sha256: EXPECTED_LOCAL_LEGACY_C45, validation: "validation-c45f111d.json", relation: "separate prior 7,996-triangle candidate; not substituted for f77" },
+    parameters: { tool: "tools/model-budget/optimize/decimate-emissive-lock.mjs", target: 7900, actualTriangles: candidate.triangles, emissiveThreshold: 192, errorBound: 0.02, lockBorder: true },
     metrics: { triangles: candidate.triangles, drawPrimitives: candidate.meshes, textures: candidate.textures, skins: candidate.skins, joints: candidate.joints, clips: candidate.clips },
     preservation,
     khronos: candidate.report,

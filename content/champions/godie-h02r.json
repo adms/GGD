@@ -175,10 +175,10 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.nature.beam",
@@ -187,7 +187,7 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "大",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -221,9 +221,9 @@
         60.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -265,7 +265,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "template": {
         "ref": "tpl-line-strike",
         "params": {

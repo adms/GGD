@@ -6,7 +6,10 @@ import {
 import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthTiers";
 import { championStatBase } from "../sim/stats/attributes";
 
-const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
+// ⭐ GH#1260 B2 —— export 給後台「出身表試算」讀**反解用的那一套**算法（⛔ 不在後台再抄一份）。
+//   它刻意不傳 env（＝程式預設屬性係數）：主 session 2026-09-15 決定**不修**反解、把出貨的
+//   agiToArmor／strToAttackDamage 當 owner 旋鈕；兩者的差只在後台並排顯示，⛔ 不警示。
+export const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
   statAt: (def: unknown, key: NormalizedStatKey, level: number): number => {
     const d = def as { baseStats?: unknown; growth?: unknown };
     return championStatBase({ ...d, baseStats: d.baseStats ?? {}, growth: d.growth ?? {} } as never, NORMALIZED_STAT_TO_STAT[key], level);

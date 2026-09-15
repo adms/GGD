@@ -203,9 +203,9 @@
         90.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0,
       "effects": [],
@@ -234,7 +234,7 @@
         }
       },
       "cooldownTier": "大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "radiusTier": "極小",
       "castTimeTier": "極大"
     }
@@ -284,7 +284,7 @@
       "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
       "label": "ou99 黑人牙膏（本尊／相似造型）",
       "sourceModelKey": "ou99.495978",
-      "modelSha256": "49fb772ba52347a34f551ed988f04aa11e6b63678f5dbf9cdb063c2b51bdd40c",
+      "modelSha256": "098aec78a71152b830a000a4d8a0c151484cf2f391a45c69670eb6d572dc446e",
       "binarySha256": "9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727",
       "registeredAt": "2026-09-10T18:20:40.543Z",
       "source": {

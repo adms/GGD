@@ -41,16 +41,17 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     ).toBe(0);
   });
 
-  it("ship34 的 8 組模型元件以精確 identityId 接入，Ryu 程序化候選已登記且其餘仍待動作", () => {
+  it("ship34 的 8 組獨立模型元件以精確 identityId 接入，仍維持待英雄整合", () => {
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8"));
     const byId = new Map(doc.heroes.map((hero: any) => [hero.id, hero]));
     const expected: Record<string, string[]> = {
       "acquired-zero": ["ssbu-zero-c00-static-skinned-v1"],
       "acquired-ram": ["rezero-ram-thunderstore-0.1.1-static-skinned-v1"],
       "acquired-beatrice": ["rezero-beatrice-thunderstore-0.1.1-static-skinned-v1"],
-      "acquired-mario": ["ssbu-mario-c00-static-skinned-v1", "ssbu-mario-c00-static-skinned-v2", "ssbu-mario-c00-ultimate14-motion-v1"],
+      "acquired-mario": ["ssbu-mario-c00-static-skinned-v1", "ssbu-mario-c00-ultimate14-motion-v1"],
       "acquired-mewtwo": ["ssbu-mewtwo-c00-static-skinned-v1"],
       "acquired-pokemon-trainer": ["ssbu-ptrainer-female-c01-static-skinned-v1", "ssbu-ptrainer-male-c00-static-skinned-v1"],
+      // ⚠️ 8c73fa1e1（09-13 14:53）加了程序化六態動作元件；這一格寫於 180486a9b（同日 09:06）而沒跟上
       "acquired-ryu": ["ssbu-ryu-c00-procedural-six-state-v1", "ssbu-ryu-c00-static-skinned-v1"],
       "acquired-minecraft": ["ssbu-pickel-alex-c01-static-skinned-v1", "ssbu-pickel-steve-c00-static-skinned-v1"],
     };
@@ -58,20 +59,15 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     for (const [heroId, componentIds] of Object.entries(expected)) {
       const hero: any = byId.get(heroId);
       expect(hero?.model.componentStatus, heroId).toBe("accepted-independent-components-pending-hero-integration");
-      if (heroId === "acquired-ryu") {
-        expect(hero?.model.modelKey).toBe("community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9");
-        expect(hero?.model.severity).toBe("warning");
-      } else {
-        expect(hero?.model.modelKey, heroId).toBeNull();
-        expect(hero?.model.severity, heroId).toBe("blocker");
-      }
+      expect(hero?.model.modelKey, heroId).toBeNull();
+      expect(hero?.model.severity, heroId).toBe("blocker");
       expect(hero?.model.components.map((component: any) => component.id), heroId).toEqual(componentIds);
       expect(hero?.model.components.every((component: any) => component.verified), heroId).toBe(true);
       expect(hero?.model.componentFilesInRepo, heroId).toBe(hero?.model.componentCount);
     }
 
     expect(doc.counts.independentComponentPending).toBe(8);
-    expect(doc.counts.independentComponents).toBe(13);
+    expect(doc.counts.independentComponents).toBe(12);
     expect(doc.counts.modelCompletelyMissing).toBe(0);
     expect((byId.get("acquired-zero") as any).model.components.map((component: any) => component.id)).not.toContain("zero-lancer-p1-static-skinned-v1");
     expect((byId.get("acquired-mario") as any).model.nativeAnimationCount).toBe(5);
@@ -82,13 +78,15 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8"));
     const byId = new Map(doc.heroes.map((hero: any) => [hero.id, hero]));
 
-    for (const heroId of ["acquired-jetragon", "acquired-astralym"]) {
+    for (const heroId of ["acquired-astralym"]) {
       const model: any = (byId.get(heroId) as any)?.model;
       expect(model?.filesInRepo, heroId).toBe(2);
       expect(model?.filesArchivedInRepo ?? 0, heroId).toBe(0);
     }
 
     const relocated: Record<string, string> = {
+      // ⭐ PR #1152 合併準備：空渦龍的交付原件修過貼圖背板（0d9eed3a… → 0d533af8…），原件照 kita-kita 前例歸檔
+      "acquired-jetragon": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
       "acquired-kita-kita": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
       "acquired-lord-nightmares": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
     };

@@ -31,12 +31,12 @@
       ],
       "id": "b2-naofumi.e",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "盾牌清空違停入口",
       "radius": 3,
@@ -495,7 +495,7 @@
       "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
       "label": "ou99 岩谷尚文（本尊／相似造型）",
       "sourceModelKey": "ou99.470782",
-      "modelSha256": "5a61cb266ad38661e492e1272f8f03c595244b9348b7a96ee48a97d010232f70",
+      "modelSha256": "ce3837bd22c51d46e0f599ad5f52feb3f3a09fbfbcf3cef410de082cabb0cc08",
       "binarySha256": "250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160",
       "registeredAt": "2026-09-10T18:20:40.237Z",
       "source": {

@@ -1,7 +1,7 @@
 {
   "id": "lol-leesin",
   "name": "李星",
-  "description": "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\n\n概念來源：LoL 李星\nhttps://www.leagueoflegends.com/zh-tw/champions/leesin/\n\n本遊戲改編：\n• 能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。\n• 聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "description": "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\n\n概念來源：LoL 李星\nhttps://www.leagueoflegends.com/zh-tw/champions/leesin/\n\n本遊戲改編：\n• 能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。\n• 聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
@@ -62,12 +62,12 @@
         15.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
@@ -186,12 +186,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 4.5,
       "radius": 6.0,
       "rangeTier": "小",
@@ -240,11 +240,11 @@
         90.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        600.0,
+        600.0,
+        600.0
       ],
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "range": 4.5,
       "radius": 2.75,
       "rangeTier": "小",

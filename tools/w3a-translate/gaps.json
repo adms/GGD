@@ -14,8 +14,8 @@
   "duration:same": 11,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 79,
-  "mana:same": 39,
-  "mana:tier": 153,
+  "mana:same": 61,
+  "mana:tier": 131,
   "mana:w3a-absent": 181,
   "radius:free-number": 7,
   "radius:ggd-absent": 74,
@@ -3197,16 +3197,6 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A0CL",
-   "ggd": "godie-e001.passive",
-   "name": "22-00 嗚鎖打!",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A0D5",
    "ggd": "godie-e002.e",
    "name": "20-03 約束與勝利之劍",
@@ -3251,7 +3241,7 @@
    "ggd": "godie-e008.e",
    "name": "21-03 赤焰爆發",
    "w3aValue": 165.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3427,41 +3417,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A0JM",
-   "ggd": "godie-etyr.e",
-   "name": "14-02 式神炸裂",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "AOhw",
-   "ggd": "godie-etyr.e",
-   "name": "14-02 痊癒之風",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0JJ",
-   "ggd": "godie-etyr.passive",
-   "name": "14-00 召喚式神",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A0JZ",
    "ggd": "godie-etyr.r",
    "name": "14-04 AKT戰隊",
    "w3aValue": 175.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3471,7 +3431,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04-03 涼宮禁言",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3481,17 +3441,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04-02 六芒星",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0SS",
-   "ggd": "godie-etyr.r",
-   "name": "14-04 聖夜降臨",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3571,7 +3521,7 @@
    "ggd": "godie-h020.e",
    "name": "04-03 龍破斬",
    "w3aValue": 230.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3581,16 +3531,6 @@
    "ggd": "godie-h020.q",
    "name": "04-01 火球術",
    "w3aValue": 35.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A07F",
-   "ggd": "godie-h020.r",
-   "name": "04-04 神滅斬",
-   "w3aValue": 150.0,
    "ggdValue": 75.0,
    "verdict": "tier"
   },
@@ -3611,7 +3551,7 @@
    "ggd": "godie-h02r.e",
    "name": "90-03 藤鞭",
    "w3aValue": 80.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3621,7 +3561,7 @@
    "ggd": "godie-h02r.e",
    "name": "90-03 藤鞭",
    "w3aValue": 125.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3671,26 +3611,6 @@
    "ggd": "godie-h02r.r",
    "name": "90-04 陽光烈焰",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A06Y",
-   "ggd": "godie-h02u.r",
-   "name": "92-04 馬勒戈壁",
-   "w3aValue": 300.0,
-   "ggdValue": 150.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0WC",
-   "ggd": "godie-h02u.r",
-   "name": "92-04 馬勒戈壁",
-   "w3aValue": 300.0,
    "ggdValue": 150.0,
    "verdict": "tier"
   },
@@ -3731,7 +3651,7 @@
    "ggd": "godie-hart.e",
    "name": "01-03 畫龍點睛",
    "w3aValue": 120.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3761,7 +3681,7 @@
    "ggd": "godie-hart.r",
    "name": "01-04 超究武神霸斬",
    "w3aValue": 170.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3771,7 +3691,7 @@
    "ggd": "godie-hart.r",
    "name": "01-04r 超究武神霸斬 - 改",
    "w3aValue": 216.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3811,7 +3731,7 @@
    "ggd": "godie-hpb1.e",
    "name": "07-03 列、在、前",
    "w3aValue": 220.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3821,7 +3741,7 @@
    "ggd": "godie-hpb1.w",
    "name": "07-02 者、皆、陣",
    "w3aValue": 110.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3841,7 +3761,7 @@
    "ggd": "godie-huth.r",
    "name": "28-04 破滅能量彈",
    "w3aValue": 280.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3857,21 +3777,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A00J",
-   "ggd": "godie-hvsh.e",
-   "name": "48-03 魔法枷鎖",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A06C",
    "ggd": "godie-hvsh.e",
    "name": "48-03 鮮血神殿",
    "w3aValue": 120.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3901,7 +3811,7 @@
    "ggd": "godie-hvsh.r",
    "name": "48-04 騎英之疆繩MAX",
    "w3aValue": 230.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3911,7 +3821,7 @@
    "ggd": "godie-hvsh.r",
    "name": "48-04 騎英之疆繩",
    "w3aValue": 230.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3921,7 +3831,7 @@
    "ggd": "godie-hvwd.e",
    "name": "02-03 魂飛魄散",
    "w3aValue": 120.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3931,7 +3841,7 @@
    "ggd": "godie-hvwd.ex",
    "name": "02-002 神通眼",
    "w3aValue": 200.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -3941,7 +3851,7 @@
    "ggd": "godie-hvwd.r",
    "name": "02-04 百鬼夜行",
    "w3aValue": 120.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3951,7 +3861,7 @@
    "ggd": "godie-n003.e",
    "name": "42-03 暗夜吹雪",
    "w3aValue": 160.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -3971,7 +3881,7 @@
    "ggd": "godie-n003.r",
    "name": "42-04 世界終結",
    "w3aValue": 500.0,
-   "ggdValue": 300.0,
+   "ggdValue": 600.0,
    "verdict": "tier"
   },
   {
@@ -3981,7 +3891,7 @@
    "ggd": "godie-n003.r",
    "name": "42-04-01 世界終結",
    "w3aValue": 0.0,
-   "ggdValue": 300.0,
+   "ggdValue": 600.0,
    "verdict": "tier"
   },
   {
@@ -3997,21 +3907,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A0JN",
-   "ggd": "godie-n00b.r",
-   "name": "57-04 竹蜻蜓",
-   "w3aValue": 300.0,
-   "ggdValue": 150.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A00N",
    "ggd": "godie-n00p.e",
    "name": "18-03-01 召喚毒蕈",
    "w3aValue": 225.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4021,7 +3921,7 @@
    "ggd": "godie-n00p.e",
    "name": "18-03 妖狐變化",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4031,17 +3931,7 @@
    "ggd": "godie-n00p.q",
    "name": "18-01 風華圓舞陣",
    "w3aValue": 130.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A00O",
-   "ggd": "godie-n00p.r",
-   "name": "18-04-02 老樹盤根",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4051,7 +3941,7 @@
    "ggd": "godie-n00p.r",
    "name": "18-04 億年樹",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4061,7 +3951,7 @@
    "ggd": "godie-n00p.r",
    "name": "18-04-0x 老樹盤根",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4087,21 +3977,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A05J",
-   "ggd": "godie-n01c.e",
-   "name": "08-03 龍鬥氣砲咒文",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A0EZ",
    "ggd": "godie-n01c.r",
    "name": "08-04 阿邦快速劍X",
    "w3aValue": 250.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -4121,17 +4001,7 @@
    "ggd": "godie-o00k.e",
    "name": "86-03 神鳴",
    "w3aValue": 135.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0C0",
-   "ggd": "godie-o00k.r",
-   "name": "86-04 打雷絕招",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4141,26 +4011,6 @@
    "ggd": "godie-o00l.q",
    "name": "53-01 獸王牙操彈",
    "w3aValue": 180.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0DT",
-   "ggd": "godie-o00l.r",
-   "name": "53-04 暴爆咒",
-   "w3aValue": 300.0,
-   "ggdValue": 150.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0UE",
-   "ggd": "godie-o00l.r",
-   "name": "53-04 暴爆咒",
-   "w3aValue": 300.0,
    "ggdValue": 150.0,
    "verdict": "tier"
   },
@@ -4181,7 +4031,7 @@
    "ggd": "godie-o00x.e",
    "name": "09-03 超級賽亞人",
    "w3aValue": 160.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4191,7 +4041,7 @@
    "ggd": "godie-o00x.r",
    "name": "09-04 龜派氣功",
    "w3aValue": 210.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4227,26 +4077,6 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "ANso",
-   "ggd": "godie-o030.e",
-   "name": "30-03 痴漢火焰",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A01P",
-   "ggd": "godie-o030.r",
-   "name": "30-04 電車之狼衝擊",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "ANdh",
    "ggd": "godie-o030.w",
    "name": "30-02 酒精灌腸",
@@ -4271,7 +4101,7 @@
    "ggd": "godie-ogld.r",
    "name": "72-04 黑化",
    "w3aValue": 250.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -4291,7 +4121,7 @@
    "ggd": "godie-osam.ex",
    "name": "34-002 冥道殘月破",
    "w3aValue": 800.0,
-   "ggdValue": 300.0,
+   "ggdValue": 600.0,
    "verdict": "tier"
   },
   {
@@ -4301,7 +4131,7 @@
    "ggd": "godie-osam.r",
    "name": "34-04 奧義˙蒼龍破",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4311,7 +4141,7 @@
    "ggd": "godie-u00h.e",
    "name": "39-03 無名神風流-蛟龍",
    "w3aValue": 215.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4331,7 +4161,7 @@
    "ggd": "godie-u00h.r",
    "name": "39-04 祕奧義．金色的神風",
    "w3aValue": 175.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4351,7 +4181,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03-x 流星雨",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4361,7 +4191,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03 闇之天使",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4371,7 +4201,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03-x 流星雨",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4381,7 +4211,7 @@
    "ggd": "godie-u00j.q",
    "name": "74-01 獄門",
    "w3aValue": 120.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4391,17 +4221,7 @@
    "ggd": "godie-u00j.r",
    "name": "74-04 最終殞落星",
    "w3aValue": 220.0,
-   "ggdValue": 150.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0ET",
-   "ggd": "godie-u00j.w",
-   "name": "74-02 八刀一閃",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -4411,7 +4231,7 @@
    "ggd": "godie-u00k.e",
    "name": "71-03 厄夜靈魂",
    "w3aValue": 160.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4447,21 +4267,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A0HK",
-   "ggd": "godie-u00k.r",
-   "name": "71-04 萬惡歸宗",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A0HV",
    "ggd": "godie-u00l.e",
    "name": "25-03 北斗百裂拳",
    "w3aValue": 165.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4491,7 +4301,7 @@
    "ggd": "godie-u00n.e",
    "name": "76-03 伸縮自如的槍亂打",
    "w3aValue": 130.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4511,7 +4321,7 @@
    "ggd": "godie-u00n.r",
    "name": "76-04-00 三檔副作用",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4521,7 +4331,7 @@
    "ggd": "godie-u00n.r",
    "name": "76-04 三檔.巨人迴旋彈",
    "w3aValue": 200.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4531,7 +4341,7 @@
    "ggd": "godie-u00n.r",
    "name": "76-04-x 震地",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4547,21 +4357,11 @@
   {
    "axis": "mana",
    "key": "mana:tier",
-   "w3a": "A0L2",
-   "ggd": "godie-u00v.e",
-   "name": "78-03 廬山昇龍破",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
    "w3a": "A0L6",
    "ggd": "godie-u00v.r",
    "name": "78-04 死亡噴射肘擊",
    "w3aValue": 110.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4571,7 +4371,7 @@
    "ggd": "godie-u010.e",
    "name": "38-03 邪王炎殺黑龍波",
    "w3aValue": 215.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4601,7 +4401,7 @@
    "ggd": "godie-u034.passive",
    "name": "06-00x 布緩速",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4611,7 +4411,7 @@
    "ggd": "godie-u034.passive",
    "name": "06-00 猜猜拳",
    "w3aValue": 140.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4621,7 +4421,7 @@
    "ggd": "godie-u034.passive",
    "name": "06-00x 剪刀出血",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4631,7 +4431,7 @@
    "ggd": "godie-u034.passive",
    "name": "06-00x 石頭暈",
    "w3aValue": 0.0,
-   "ggdValue": 75.0,
+   "ggdValue": 150.0,
    "verdict": "tier"
   },
   {
@@ -4642,16 +4442,6 @@
    "name": "37-02 黑核晶",
    "w3aValue": 100.0,
    "ggdValue": 75.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0ZV",
-   "ggd": "godie-ubal.ex",
-   "name": "37-002 真‧黑核晶",
-   "w3aValue": 600.0,
-   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -4691,7 +4481,7 @@
    "ggd": "godie-ubal.w",
    "name": "37-03 災難之牆",
    "w3aValue": 350.0,
-   "ggdValue": 150.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {
@@ -4701,17 +4491,7 @@
    "ggd": "godie-udea.r",
    "name": "65-04 天譴",
    "w3aValue": 250.0,
-   "ggdValue": 150.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A05S",
-   "ggd": "godie-udea.w",
-   "name": "65-02 寒冰破碎",
-   "w3aValue": 150.0,
-   "ggdValue": 75.0,
+   "ggdValue": 300.0,
    "verdict": "tier"
   },
   {

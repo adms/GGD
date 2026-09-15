@@ -74,6 +74,7 @@
       ],
       "range": 0.0,
       "radiusTier": "中",
+      "castTimeTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -149,7 +150,7 @@
             "modelKey": "imported.earthtornado2",
             "soundKey": "wc3.blademasterwhirlwind"
           },
-          "castTimeSec": 1
+          "castTimeSec": 0.5
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.q.webp",
@@ -157,8 +158,7 @@
       "sfxKey": "wc3.darksummoninglaunch1",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeTier": "極大",
-      "castTimeSec": 1
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-e00w.w",
@@ -341,6 +341,7 @@
       ],
       "range": 12.0,
       "radiusTier": "極小",
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -402,9 +403,8 @@
       "icon": "assets/icons/abilities/godie-e00w.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
       "cooldownTier": "中",
-      "manaCostTier": "小",
-      "castTimeTier": "極大",
       "rangeTier": "極大",
+      "manaCostTier": "小",
       "castTimeSec": 1
     }
   },

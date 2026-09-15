@@ -2,6 +2,7 @@
   "id": "lol-xerath.ex",
   "schema": "vfx-script@1",
   "abilityId": "lol-xerath.ex",
+  "yields": [],
   "segments": [
     {
       "kind": "anim",

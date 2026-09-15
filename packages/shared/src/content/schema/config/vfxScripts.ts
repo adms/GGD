@@ -33,9 +33,16 @@ export const zConfigVfxScriptsDoc = z
      * （逐位元回到 Codex `35b231ef3` 的行為）。缺席 ⇒ 開。
      */
     yieldDefaultCastFx: z.boolean().optional().describe("@zh 有腳本的技能：施法瞬間的預設裝飾讓路\n@note ⭐ GH#1000：vfx-script 宣告 yields:[\"caster.castFx\"] 的技能（04-03 龍破斬、08-04 阿邦快速劍X 兩對），施法那一幀 GGD 預設畫在身體周圍的裝飾（光柱／家族美術／EX 爆發／電弧／焦痕／槍口）讓路給腳本 —— 腳本自己畫的魔法陣才是主角。⚠️ 關掉 ＝ 每一份 yields 當成空的（逐位元回到 Codex 35b231ef3 的行為）。逐支回頭不用等這格：把那份 script 的 yields 改回 [] 即可。"),
+    /**
+     * ⭐ 2026-09-15（lane lol-vfx）：社群編輯器編出來、**作者沒有挑施法特效**的技能
+     * （今天＝七名 LOL 英雄的 35 支主動技），載入時照社群英雄的施法提示規則
+     * （`heroForge/communityAcquiredPresentation.ts` 的 `communityCastCue`）補一層 `fx.prim.*`。
+     * false ⇒ 那些技能的註冊結果**逐位元回到**沒有這一格之前（施法只剩身體動作與浮字）。缺席 ⇒ 開。
+     */
+    communityCueFallback: z.boolean().optional().describe("@zh 社群技能沒有作者特效時：套社群施法提示規則\n@note ⭐ 社群編輯器編出來、作者沒有挑施法特效的主動技（今天是七名 LOL 英雄的 35 支），載入時依模板家族（直線掃擊＝光束、其餘＝脈衝；自身／落點／目標）挑一份已出貨的 fx.prim 特效 —— 規則與編輯器社群範例的施法提示是同一支（communityCastCue）。⚠️ 關掉 ＝ 那些技能回到施法只有身體動作與浮字（逐位元同這一格存在之前）。作者自己挑了 vfxKey／vfxLayers 的技能完全不受影響。"),
   })
   .strict();
 export type ConfigVfxScriptsDoc = z.infer<typeof zConfigVfxScriptsDoc>;
 
 /** Zod 側的預設住處 —— 客戶端「缺文件」的退化讀這裡，⛔ 不是散落的字面 true。 */
-export const DEFAULT_VFX_SCRIPTS = { enabled: true, yieldDefaultCastFx: true } as const;
+export const DEFAULT_VFX_SCRIPTS = { enabled: true, yieldDefaultCastFx: true, communityCueFallback: true } as const;

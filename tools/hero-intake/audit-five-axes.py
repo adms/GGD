@@ -8,10 +8,10 @@ owner 2026-09-11：「請你列表告訴我 **哪些角色 缺模組 骨架 動�
   · 🧍 模組「共用」⛔ **不一定是缺** —— 同一角色的本體↔變身共用是正常的
 
 ```sh
-python3 tools/hero-intake/audit-five-axes.py            # 印統計，明細寫到 /private/tmp/audit5.json
+python3 tools/hero-intake/audit-five-axes.py            # 印統計，明細寫到 ${TMPDIR:-/tmp}/audit5.json
 ```
 """
-import collections, json, pathlib, struct, subprocess, sys
+import collections, json, pathlib, struct, subprocess, sys, tempfile
 
 ROOT = pathlib.Path('.').resolve(); C = ROOT/'content'
 jl = lambda p: json.loads(pathlib.Path(p).read_text(encoding='utf-8'))
@@ -111,7 +111,7 @@ for hid, c in champs.items():
     rows.append({'id': hid, 'name': c.get('name'), 'model': model, 'rig': rig,
                  'anim': anim, 'sfx': sfx, 'voice': voice, 'quote': quote})
 
-OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else '/private/tmp/audit5.json')
+OUT = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(tempfile.gettempdir()) / 'audit5.json'
 json.dump(rows, OUT.open('w'), ensure_ascii=False, indent=1)
 def tally(ax):
     return collections.Counter(r[ax][0] for r in rows)

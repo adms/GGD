@@ -9,12 +9,12 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "5d639d99d247c555a0b1aa57dfaef1faa6720804a1026ee2633644537b817543",
-      "fileCount": 1021
+      "sha256": "e989c1a9ffefd5a3d7ee8405e67def618e9badd117960e191c95081bc75fd9f3",
+      "fileCount": 1030
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "e98a2d36fe1506b6e146811ad659558167a8f9e7cfdaae3efd5ebe8dbeb01178",
+      "sha256": "8c6de79db243ffdc4669b206ee2bd0ae168d4aac0f04dfba64011abc8822e272",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -23,33 +23,33 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "00e3a5aeaca27f480b5ae505962dc66ff859bf180dd1e0e5a4f7106e664d72c4"
+      "sha256": "f10e68a6de8ecbda4efe6c5a75c30c12527a4c76473d85062755f84a44c28678"
     }
   },
   "summary": {
-    "modelAt1Documents": 1016,
+    "modelAt1Documents": 1025,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 514,
-    "championModelVersionRows": 567,
-    "sourceModelsRepresentedByFrozenVersions": 202,
+    "championPrimaryAndVersionSelectableModelKeys": 519,
+    "championModelVersionRows": 576,
+    "sourceModelsRepresentedByFrozenVersions": 204,
     "heroForgeHeroesWithOptions": 34,
     "heroForgeSelectableModelKeys": 46,
-    "allActualSelectableModelKeys": 552,
+    "allActualSelectableModelKeys": 558,
     "centralSourceRows": 159,
     "centralUniqueModelKeys": 152,
-    "centralRowsWithQualificationEvidence": 140,
+    "centralRowsWithQualificationEvidence": 143,
     "centralRegisteredRows": 146,
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 42,
-    "readyUnregisteredCharacterOrMotionComponents": 40,
+    "readyUnregisteredIndependentComponents": 43,
+    "readyUnregisteredCharacterOrMotionComponents": 41,
     "readyUnregisteredWeaponComponents": 2,
-    "nonReadyHistoricalSourceArtifacts": 2,
+    "nonReadyHistoricalSourceArtifacts": 4,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
-    "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1016,
+    "unclassifiedOrNonHeroModelDocuments": 185,
+    "modelDocumentsWithoutResourceRole": 1025,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -295,6 +295,32 @@
       ]
     },
     {
+      "id": "historical-astralym-decimated-c45f111d",
+      "character": "枯星龍",
+      "resourceRole": "independent-historical-model-body-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+      "readiness": "validated-decimated-historical-body-candidate-pending-generated-option-overlay",
+      "nativeAnimationCount": 5,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Expected low-poly faceting is visible after 23,928 to 7,996 triangle reduction; five-clip A/B remains under the 5% visual threshold.",
+        "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
+        "Transparent texel RGB was sanitized without changing alpha or any visible texel; source and predecessor candidate bytes remain retained.",
+        "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states.",
+        "The S3 conversion-stage backup preserves both the corrected c45f111d candidate and its f77cf1ee predecessor; neither backup proves deployment."
+      ]
+    },
+    {
       "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
       "character": "密斯特巴恩",
       "resourceRole": "independent-static-skinned-model-component",
@@ -329,8 +355,8 @@
       "runtimeSelectable": false,
       "runtimeDropdownRegistered": false,
       "heroIds": [],
-      "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
-      "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+      "gitPath": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+      "sha256": "7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04",
       "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
       "nativeAnimationCount": 0,
       "animationClipCount": null,
@@ -355,8 +381,8 @@
       "runtimeSelectable": false,
       "runtimeDropdownRegistered": false,
       "heroIds": [],
-      "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
-      "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+      "gitPath": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+      "sha256": "0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa",
       "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
       "nativeAnimationCount": 0,
       "animationClipCount": null,
@@ -1095,8 +1121,8 @@
       "runtimeSelectable": false,
       "runtimeDropdownRegistered": false,
       "heroIds": [],
-      "gitPath": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
-      "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+      "gitPath": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+      "sha256": "8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f",
       "readiness": "accepted-independent-static-skinned-component-actions-missing",
       "nativeAnimationCount": 0,
       "animationClipCount": null,
@@ -1379,6 +1405,32 @@
     }
   ],
   "nonReadyHistoricalSourceArtifacts": [
+    {
+      "id": "historical-astralym-decimated-f77cf1ee:exact-historical-source",
+      "nameZh": "枯星龍",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+      "blockers": [
+        "exact-historical-source-artifact-is-not-a-normalized-runtime-model",
+        "componentReady-is-false"
+      ]
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8:exact-historical-source",
+      "nameZh": "空渦龍",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+      "blockers": [
+        "exact-historical-source-artifact-is-not-a-normalized-runtime-model",
+        "componentReady-is-false"
+      ]
+    },
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
       "nameZh": "吉他吉他老伯",
@@ -2582,6 +2634,19 @@
       "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
       "modelDocumentGitPath": "content/models/community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399.json",
       "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+      "modelDocumentGitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
+      "glbPath": "assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
       "semanticReferenceCount": 0,
       "semanticReferenceSamples": [],
       "classification": "role-and-usage-unresolved",
@@ -5352,7 +5417,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1016
+      "modelAt1DocumentsWithoutResourceRole": 1025
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

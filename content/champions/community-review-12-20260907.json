@@ -1,7 +1,7 @@
 {
   "id": "community-review-12-20260907",
   "name": "衛宮士郎",
-  "description": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。",
   "role": "mage",
   "attackType": "melee",
   "archetype": "mage",
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 3,
       "radius": 2.75,
       "rangeTier": "極小",
@@ -149,12 +149,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 6,
       "radius": 4.5,
       "rangeTier": "中",
@@ -217,12 +217,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 4.5,
       "radius": 2.75,
       "rangeTier": "小",
@@ -301,11 +301,11 @@
         90.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        600.0,
+        600.0,
+        600.0
       ],
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "range": 6,
       "radius": 4.5,
       "rangeTier": "中",

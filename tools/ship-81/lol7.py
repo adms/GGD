@@ -46,6 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from gen import (ICON_AB, ICON_CH, ICONS, OUT_AB, OUT_CH, attach_ability_icon,  # noqa: E402
                  backfill_status_mechanics, drop_baked_values, shipped_status_mechanics)
 from model_map import catalog_titles, entry_for_model_key, parse_inventory, resolve, stale_blockers  # noqa: E402
+from gen import strip_dev_notes  # noqa: E402  ⭐ GH#1258 ②：同一條剝除（住 tools/valhalla-intro/strip_dev_notes.py）
 
 REPO = Path(__file__).resolve().parents[2]
 OUT_VFX = REPO / "content/vfx-scripts"
@@ -63,6 +64,28 @@ def attach_champion_icon(champion: dict, placeholders: list[dict]) -> None:
         placeholders.append({"field": "icon", "state": "no-generated-icon",
                              "why": f"⛔ 沒有產好的頭圖（找過 {ICONS.relative_to(REPO)}/champions/{hid}.webp "
                                     f"與 {ICON_CH.relative_to(REPO)}/{hid}.webp）"})
+
+
+def ship_script(script: dict) -> dict:
+    """⭐ 出貨的 script 一定要**寫出** `yields`（GH#1000 AC1）—— ⛔ 省略只給 forge 草稿用。
+
+    `vfx-script@1.yields` 的 schema 註解逐字：「省略 ⇒ 同 `[]`（forge 草稿相容）；
+    ⚠️ 出貨的 script 要**寫出來**」，守衛 `apps/client/src/vfx/VfxSystem.castFxYield.test.ts`。
+    ⇒ 這支是「草稿 → 出貨內容」的那一步，所以決定在這裡被寫下來：
+    作者稿沒說的，照 schema 的省略語意寫成 `[]`（兩條都跑）—— ⭐ 執行期逐位元不變
+    （`VfxSystem` 讀到省略與 `[]` 是同一條路），只是把「沒說」變成「說了」。
+    作者稿自己寫了（例如 `["caster.castFx"]`）⇒ 原封不動。
+    鍵順序與既有出貨 script 一致（`… abilityId, notes, yields, segments`）。
+    """
+    if "yields" in script:
+        return script
+    out: dict = {}
+    for key, value in script.items():
+        if key == "segments":
+            out["yields"] = []
+        out[key] = value
+    out.setdefault("yields", [])
+    return out
 
 
 def main() -> None:
@@ -114,6 +137,11 @@ def main() -> None:
     for pack in packs:
         placeholders: list[dict] = []
         champion = drop_baked_values(pack["champion"])
+        # ⭐ GH#1258 ②：Hero Forge 範本（communityExamples.ts）的草稿句「外觀為驗收用替身」在草稿裡是對的，
+        #   ⛔ 上架成卡面就不是 ⇒ 在「草稿 → 出貨內容」這一步剝（範本與它的測試刻意保留草稿原文）。
+        clean = strip_dev_notes(champion)
+        if clean is not None:
+            champion["description"] = clean
         from model_map import preserve_model_history
         previous_path = OUT_CH / f"{champion['id']}.json"
         if previous_path.exists():
@@ -136,7 +164,7 @@ def main() -> None:
                     json.dumps(a, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             for s in pack["vfxScripts"]:
                 (OUT_VFX / f"{s['id']}.json").write_text(
-                    json.dumps(s, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                    json.dumps(ship_script(s), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             # ⛔⛔ 少了這一段 ＝ 「模板展開失敗，已個別降級」而 `content:build` 仍然 exit 0
             #   —— 實測 16 支技能降級、其中 7 支**完全沒有效果**（GH#1165 同一個形狀）。
             OUT_TPL.mkdir(parents=True, exist_ok=True)

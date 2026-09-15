@@ -127,12 +127,16 @@ describe("hero product condition editing", () => {
     const catalog = shippedHeroCatalog();
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
     let project = createCommunityHeroExample("lux", "form-lux", templates);
+    // eff686aa0 moved Lux W's shield out of an abilityOverrides effect into the
+    // tpl-ally-shield product params; locate that product instead of assuming a path.
+    const shieldIndex = project.acceptedPlan!.slots.W.products.findIndex((product) => product.template.ref === "tpl-ally-shield");
+    expect(shieldIndex, "Lux W no longer carries a tpl-ally-shield product").toBeGreaterThanOrEqual(0);
     function Host() {
       const [value, setValue] = useState(project);
       return createElement(HeroSlotEditor, { project: value, slot: "W", templates, errors: {}, onChange(next: HeroProject) { project = next; setValue(next); } });
     }
     const form = mount(createElement(Host));
-    form.enter(form.field("acceptedPlan.slots.W.abilityOverrides.effects.0.amount.flat"), "175");
+    form.enter(form.field(`acceptedPlan.slots.W.products.${shieldIndex}.template.params.amount.flat`), "175");
     form.enter(form.field("acceptedPlan.slots.W.abilityOverrides.cooldownTier"), "中");
     const reopened = zHeroProject.parse(JSON.parse(JSON.stringify(project)));
     const materialized = compileHeroPackageProject(reopened, catalog, false);

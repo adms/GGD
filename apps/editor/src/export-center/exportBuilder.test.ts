@@ -14,8 +14,9 @@ import {
   runtimeDocumentsFromBaseBundle,
   runtimeReferenceKeys,
   vfxScriptReferenceKeys,
+  type RuntimeAuthoringDocument,
 } from "./exportBuilder";
-import type { TargetProfileFacts } from "./exportPolicy";
+import { isRuntimeAuthoringCollection, type TargetProfileFacts } from "./exportPolicy";
 
 const target: TargetProfileFacts = {
   schema: "ggd-content-target-profile@1",
@@ -464,6 +465,55 @@ describe("champion 投稿包（GH#1024 B1／B2）", () => {
       role: "asset",
       collection: "champions",
     }));
+  });
+
+  /**
+   * ⭐ GH#1024 AC⑧（逐字）：「四層各改一個模板參數 ⇒ 匯出包裡**四個覆寫都在**」。
+   * ⭐ 特效層用 `spawnModelFx.preset`（model-preset 模板 ref ＋ 覆寫一格）——
+   * ⛔ 不是 `vfx-script@1` 的 call 段：contract-index 記它 `planned`／`modes: []`、
+   *   不在 `RUNTIME_AUTHORING_COLLECTIONS`，今天**包不進去**（見票上 2026-09-15 那則留言）。
+   * ⭐ 語料照出貨頁面的列舉走（`ExportCenterPage::collectRuntimeCorpus` 逐集合走那張清單）
+   *   ⇒ 清單拿掉 `champions` ⇒ root 找不到 ⇒ 紅。
+   */
+  it.skipIf(!CHAMPION_KIND_ACCEPTED)("四層各改一格（英雄 statOverrides／技能 template.params／機制參數／特效 preset 覆寫）⇒ delta 包裡四格都在", () => {
+    type Doc = { collection: string; id: string; document: Record<string, unknown> };
+    const edit = (doc: Doc, patch: Record<string, unknown>): Doc => ({ ...doc, document: { ...doc.document, ...patch } });
+    const [q, w, e, r] = championAbilities as Doc[];
+    const strike = (q!.document.effects as Record<string, unknown>[])[0]!;
+    const orb = { kind: "spawnModelFx", preset: "tpl-locust-orb" };
+    const hero = champion();
+    const baseQ = edit(q!, { template: { ref: "tpl-ground-nova", params: {} } });
+    const baseE = edit(e!, { effects: [strike, orb] });
+    const base: Doc[] = [hero, baseQ, w!, baseE, r!, ribbon];
+    const current: Doc[] = [
+      edit(hero, { statOverrides: { armor: "極小", mr: "極大" } }), // 英雄：出身模板 ＋ 逐格覆寫
+      edit(baseQ, { template: { ref: "tpl-ground-nova", params: { radius: 5 } } }), // 技能：模板參數
+      edit(w!, { effects: [{ ...strike, damageType: "physical" }] }), // 機制：effect 節點參數
+      edit(baseE, { effects: [strike, { ...orb, scale: 1.5 }] }), // 特效：model-preset 覆寫
+      r!,
+      ribbon,
+    ];
+    const corpus = (docs: readonly Doc[]) =>
+      docs.filter((doc): doc is RuntimeAuthoringDocument => isRuntimeAuthoringCollection(doc.collection));
+    const closure = resolveDeltaRuntimeClosure(corpus(current), corpus(base), [{ collection: "champions", id: CHAMPION_ID }]);
+    const built = buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: closure.documents,
+      selectionRoots: closure.selectionRoots,
+      baseDocuments: corpus(base),
+    });
+    const packaged = (collection: string, id: string) =>
+      built.package.documents.find((row) => row.path === `authoring/${collection}/${id}.json`)?.document as
+        Record<string, unknown> & { effects?: Record<string, unknown>[] } | undefined;
+    expect(packaged("champions", CHAMPION_ID)?.statOverrides).toEqual({ armor: "極小", mr: "極大" });
+    expect(packaged("abilities", "hero.probe.q")?.template).toEqual({ ref: "tpl-ground-nova", params: { radius: 5 } });
+    expect(packaged("abilities", "hero.probe.w")?.effects?.[0]?.damageType).toBe("physical");
+    expect(packaged("abilities", "hero.probe.e")?.effects?.[1]).toEqual({ ...orb, scale: 1.5 });
+    // ⭐ 沒改的兩份（r、ribbon）⛔ 不進 delta —— 四格覆寫就是四筆 change，⛔ 不是把整棵樹抄一份。
+    expect(built.package.manifest.changes.map((change) => change.id).sort()).toEqual(
+      [CHAMPION_ID, "hero.probe.e", "hero.probe.q", "hero.probe.w"].sort(),
+    );
   });
 
   it.skipIf(CHAMPION_KIND_ACCEPTED)("擋住的只剩 Main 的一格詞彙，而錯誤訊息指名那一行", () => {

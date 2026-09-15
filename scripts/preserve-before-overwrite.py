@@ -17,7 +17,7 @@ owner 2026-08-20：
   · 未追蹤 / 不在 repo 裡 → **備份**（唯一副本）
 
 備份落點：`docs/legacy/_overwrites/overwrite_temp_<YYYYMMDD-HHMMSS>/…`（repo 內，被 git 看得到）
-repo 外的檔（scratchpad 等）落在 `~/.claude/projects/-Users-Takuro-GGD/overwrite-backups/`。
+repo 外的檔（scratchpad 等）落在 `~/.claude/projects/<主工作樹 slug>/overwrite-backups/`（`claude_project_dir.py`）。
 
 ⛔ 這支腳本**永遠不擋**工具（exit 0）。它只留副本 —— 一個會擋人的備份 hook
 會被關掉，而被關掉的閘等於沒有閘。
@@ -40,7 +40,26 @@ from pathlib import Path
 _ENV_ROOT = os.environ.get("CLAUDE_PROJECT_DIR")
 REPO = (Path(_ENV_ROOT) if _ENV_ROOT else Path(__file__).resolve().parent.parent).resolve()
 IN_REPO_DEST = REPO / "docs/legacy/_overwrites"
-OUT_REPO_DEST = Path.home() / ".claude/projects/-Users-Takuro-GGD/overwrite-backups"
+_OUT_REPO_FALLBACK = Path.home() / ".claude/projects/-Users-Takuro-GGD/overwrite-backups"
+
+
+def out_repo_dest() -> Path:
+    """repo 外的檔留底落點 ＝ `claude_project_dir.py`（主工作樹 slug，GH#1254）底下的 `overwrite-backups/`。
+
+    ⭐ **用到才算**（只有 repo 外的檔要留底時）—— 這支 hook 每一次工具呼叫都跑，⛔ 不為了一個
+       很少用到的路徑每次多開一個 git 行程。
+    ⛔ 解析器壞掉**不可以讓 hook 擋工具**：退回舊的寫死值，並說出來（fail-open 沒錯，靜默才是缺陷）。
+    """
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import claude_project_dir as _cpd
+        return _cpd.project_dir(REPO) / "overwrite-backups"
+    except Exception as e:  # noqa: BLE001 —— hook 永遠 exit 0
+        print(f"⚠️ preserve-before-overwrite: 推不出 Claude 專案目錄（{e}）—— 退回 {_OUT_REPO_FALLBACK}",
+              file=sys.stderr)
+        return _OUT_REPO_FALLBACK
+
+
 LOG = REPO / "docs/legacy/_overwrites/_ledger.tsv"
 MAX_BYTES = 1 * 1024 * 1024  # 超過就只記帳，⛔ 不把大二進位塞進 repo（GH#1192：8 MB 時 docs/legacy/_overwrites 長到 212 MB；⭐ 對應 gitHygieneRatchet 的單檔上限）
 
@@ -148,7 +167,7 @@ def preserve(p: Path, why: str, stamp: str, actor: str) -> str:
         rel = p.resolve().relative_to(REPO)
         dest = IN_REPO_DEST / stamp / rel
     except (ValueError, OSError):
-        dest = OUT_REPO_DEST / stamp / p.name
+        dest = out_repo_dest() / stamp / p.name
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(p, dest)
     return str(dest)

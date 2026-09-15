@@ -190,9 +190,9 @@
         }
       ],
       "cooldownTier": "大",
-      "manaCostTier": "極小",
       "castTimeTier": "大",
       "rangeTier": "極小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.5
     },
     "E": {
@@ -283,8 +283,8 @@
         }
       ],
       "cooldownTier": "中",
-      "manaCostTier": "小",
       "castTimeTier": "大",
+      "manaCostTier": "小",
       "castTimeSec": 0.5
     },
     "R": {
@@ -307,6 +307,7 @@
       ],
       "range": 0.0,
       "radiusTier": "極小",
+      "castTimeTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -365,8 +366,7 @@
       "recoverySec": 0.8,
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "castTimeTier": "極大",
-      "castTimeSec": 1
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

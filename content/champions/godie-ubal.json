@@ -114,10 +114,10 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [],
       "template": {
@@ -140,7 +140,7 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "castTimeTier": "極大"
     },
     "E": {
@@ -297,10 +297,10 @@
     },
     {
       "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
-      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復高面數保留版）",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
       "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-      "modelSha256": "b5c198ed21f19471b33f1ad0da2d9f78be81b3c6d47a237b73c5392322b6cbf6",
-      "binarySha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "modelSha256": "228203a6343429579aed3cc25c77cf45cf65aa518dfd4591626d0f2c7dbafb3e",
+      "binarySha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
       "registeredAt": "2026-09-13T11:29:19.327Z",
       "source": {
         "kind": "exact",

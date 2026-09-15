@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "坦克",
-  "modelKey": "imported.herobuu",
+  "modelKey": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 12,
@@ -213,9 +213,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
@@ -224,7 +224,7 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -294,5 +294,41 @@
     "再生",
     "持久戰"
   ],
-  "pitch": "黏在戰場中央不斷承受傷害，戰鬥拖得越久，敵人越難真正解決你。"
+  "pitch": "黏在戰場中央不斷承受傷害，戰鬥拖得越久，敵人越難真正解決你。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.9a69c9c0350229bf4e9d41868bb6deae5ddbd50170586859",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herobuu",
+      "modelSha256": "99b246f9a4b7705e2a5b4fd666e55ffb81a344ddbb06879e7b25c125d7bfec6f",
+      "binarySha256": "99f18391788367a91b8afacae159a89a351fcbe470f36a29f6dd195e72cc714d",
+      "registeredAt": "2026-09-14T22:47:00.784Z",
+      "source": {
+        "kind": "previous",
+        "character": "超級普烏 - 魔人普烏",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herobuu.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
+      "label": "原上線模型（貼圖 256 正規化）",
+      "sourceModelKey": "imported.herobuu",
+      "modelSha256": "09f0d0655241ba25a24d5b584c8e3f447ddcc6f84c7cef53793272f8563b6d97",
+      "binarySha256": "6d1911e02127d385eeb87620fd79ddea42e918b95e870220ff6cda21b2aba41e",
+      "registeredAt": "2026-09-14T22:47:00.785Z",
+      "source": {
+        "kind": "exact",
+        "character": "超級普烏 - 魔人普烏",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herobuu.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3505339,
-      "sha256": "befc7afc6a118c0d3e687c6ba7a5e9f042057a5b3b4268c57b91cac9dc063eb8"
+      "bytes": 3516280,
+      "sha256": "2d25de4ebd3921ffadf2769929bb0876d48d72f6c9e11834bca0ee8a9f5b45b0"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 54,
-    "runtimeBudgetPass": 54,
+    "audited": 55,
+    "runtimeBudgetPass": 55,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 33,
+    "heroAdoptionEligible": 34,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -271,12 +271,61 @@
       }
     },
     {
+      "id": "historical-astralym-decimated-f77cf1ee",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+      "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+      "bytes": 3782388,
+      "metrics": {
+        "triangles": 7996,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 435,
+        "skins": 1,
+        "joints": 145,
+        "clips": 5,
+        "embeddedImages": 8
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
       "id": "historical-jetragon-7bc2fa3f8",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
       "resourceRole": "independent-historical-model-body-component",
-      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-      "bytes": 3224424,
+      "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+      "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+      "bytes": 3222184,
       "metrics": {
         "triangles": 8468,
         "meshes": 3,

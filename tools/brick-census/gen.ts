@@ -26,7 +26,7 @@
 // ggd:writes docs/editor-contract/ggd-bricks.md
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { isExpandable } from "@ggd/shared/content/templates/expand";
+import { isExpandable, normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import { buildBricks, renderBricksMd } from "./bricks";
 
 const ROOT = resolve(__dirname, "../..");
@@ -111,7 +111,7 @@ function adoption(): Map<string, number> {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { template?: unknown };
     // ⭐ 一支技能同時用文件級與節點級指到同一份模板時只算一次（問的是「幾支技能在用」）。
-    const refs = new Set<string>(refsOf(doc.template));
+    const refs = new Set<string>(refsOf(doc.template, f));
     for (const p of modelFxPresetsOf(doc)) refs.add(p);
     for (const ref of refs) out.set(ref, (out.get(ref) ?? 0) + 1);
   }
@@ -139,15 +139,25 @@ function modelFxPresetsOf(node: unknown): string[] {
   return out;
 }
 
-function refsOf(t: unknown): string[] {
-  if (typeof t === "string") return [t];
-  if (Array.isArray(t)) return t.flatMap(refsOf);
-  if (t && typeof t === "object") {
-    const o = t as { ref?: unknown; stack?: unknown };
-    if (typeof o.ref === "string") return [o.ref];
-    if (Array.isArray(o.stack)) return o.stack.flatMap(refsOf);
+/**
+ * ⭐ 文件級 `template` → 它指到的模板 id。
+ *
+ * ⛔⛔ **這支在 2026-09-15 之前是一段手寫的形狀判斷**（字串／`{ref}`／`{stack}`），
+ * ⛔ 而 schema 收的三種寫法是 `{ref,params}`／陣列／**`{cards,onConflict}`** ——
+ * ⇒ 社群編輯器寫的卡片堆疊（`b2-*` 那 11 支）一律回空陣列 ⇒ 被數成**手刻**，
+ *   `handWritten` 灌大 +11（159，實為 148），它們用到的 hero-template 被記成零採用（GH#993）。
+ * ⚠️ 這是**同一支普查第二次**只問了一種接法（上一次是節點級 preset，見 `adoption()`）。
+ * ⇒ ⭐ 判準改成**問出貨的那支**：`normalizeTemplateBinding()` 是三種寫法收斂成一條卡片清單的
+ *   **唯一地方**（`resolveTemplateExpansion` 也走它）⇒ 普查與引擎從此不會對「有沒有模板」各說各話。
+ * ⛔ 壞掉的綁定**擲出來**並指名那個檔，⛔ 不是靜靜算成手刻（`content:build` 早該擋下它）。
+ */
+function refsOf(t: unknown, file: string): string[] {
+  if (t === undefined) return [];
+  try {
+    return normalizeTemplateBinding(t).cards.map((c) => c.ref);
+  } catch (e) {
+    throw new Error(`content/abilities/${file}：${e instanceof Error ? e.message : String(e)}`);
   }
-  return [];
 }
 
 /**
@@ -191,7 +201,7 @@ function demandShapes(): Array<{
       template?: unknown;
       effects?: unknown[];
     };
-    if (refsOf(d.template).length > 0) continue; // ⭐ 已經有積木了
+    if (refsOf(d.template, f).length > 0) continue; // ⭐ 已經有積木了
     const effects = d.effects ?? [];
     if (effects.length === 0) continue; // ⛔ 純被動／marks —— 不是 effects 模板的客戶
     const kinds: string[] = [];

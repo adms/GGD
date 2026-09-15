@@ -153,11 +153,11 @@
       ],
       "id": "b2-sinbad.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "七海規格產品示範",
       "range": 6,
@@ -343,7 +343,7 @@
       "modelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
       "label": "ou99 「遥远救世主拳皇」（相似造型）",
       "sourceModelKey": "ou99.491497",
-      "modelSha256": "ea955b4c803ac4f4bdc3c20c10a929a410061afac8f3df68b302d335cf902fce",
+      "modelSha256": "5c81f76be69b425b0da2da4ea7b40992350279d2bb2bd70e978dd5cf1284881c",
       "binarySha256": "88d75170756d3dab0edb5673403cece180e024751447822a27e85d7d63ae5492",
       "registeredAt": "2026-09-10T11:32:36.802Z",
       "source": {
@@ -358,7 +358,7 @@
       "modelKey": "version.body.2edcd3ab07695536fe0c8086ebe02a9a1a3d67a464a0c31d",
       "label": "原上線模型",
       "sourceModelKey": "ou99.491497",
-      "modelSha256": "474641230a6bfb0c5fd6564c996688028d2428ade0b135ac79eecf4d54f97a8f",
+      "modelSha256": "d49948f1d2dc91644912ccb8b19e7ea6329dd54f3a83f68541da93ca49a429a9",
       "binarySha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
       "registeredAt": "2026-09-10T14:45:40.456Z",
       "source": {
@@ -374,7 +374,7 @@
       "modelKey": "version.body.897c9bef5847f35d96263ab5674047aacf0dc68d669d4ee9",
       "label": "遥远救世主拳皇（論壇相似模型）",
       "sourceModelKey": "ou99.491497-standard",
-      "modelSha256": "0547b8b59b804f0819b9f104973c52638f8a595bdc10efa2da97a0b28cbae4ed",
+      "modelSha256": "02c716ed61d97462cf7ab968c3dd3db6d87f953a063076944f0f718a6fb9ec2a",
       "binarySha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378",
       "registeredAt": "2026-09-10T14:45:40.503Z",
       "source": {
@@ -428,7 +428,7 @@
       "modelKey": "version.body.d03b9fdc5017d06d28da0a234adbd4dc3ff54003658c339b",
       "label": "遥远救世主拳皇（論壇相似模型）",
       "sourceModelKey": "ou99.491497-standard",
-      "modelSha256": "c15170de1592763e1e67096a51bbc9e5c266a69b495435d88db277495d7bb0d8",
+      "modelSha256": "3af822929f23a8c32d209ad5932a134f0eaee0eb4a2a4ccbd69e0d07b29197ce",
       "binarySha256": "750f4f65d8f3a18b6e6e9dbc74d40ecc97dd8363d8c4f9351aa04b43c0d7b659",
       "registeredAt": "2026-09-12T23:11:58.894Z",
       "source": {
@@ -482,7 +482,7 @@
       "modelKey": "version.body.42d19a2676eb2f2573ec6aa46659193ed4554f548f68c046",
       "label": "遥远救世主拳皇（論壇相似模型）",
       "sourceModelKey": "ou99.491497-standard",
-      "modelSha256": "c42197f0e2eb7094a42f12fa94bc15b2381d390b610dfe1047e1841491c21894",
+      "modelSha256": "99c3b12304280a6cebb55cae708e8b74743fdf539489cf4a9621ef9baea63e93",
       "binarySha256": "750f4f65d8f3a18b6e6e9dbc74d40ecc97dd8363d8c4f9351aa04b43c0d7b659",
       "registeredAt": "2026-09-13T00:09:02.904Z",
       "source": {

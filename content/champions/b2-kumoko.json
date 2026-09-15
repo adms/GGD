@@ -141,11 +141,11 @@
       ],
       "id": "b2-kumoko.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "整個客廳都是我的網",
       "range": 0.0,
@@ -219,12 +219,12 @@
       ],
       "id": "b2-kumoko.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "毒牙代收房租",
       "radius": 3,

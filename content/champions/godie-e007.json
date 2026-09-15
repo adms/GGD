@@ -148,8 +148,8 @@
       "icon": "assets/icons/abilities/godie-e007.w.webp",
       "vfxKey": "fx.prim.nature.pulse",
       "cooldownTier": "極大",
-      "castTimeSec": 0.1,
-      "castTimeTier": "小"
+      "castTimeSec": 1,
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-e007.e",

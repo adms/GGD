@@ -631,11 +631,26 @@ describe("E · 一護的兩個形態各只畫一套身體 (@visual-proof)", () =
     expect(bankai.glbPath, "兩份文件必須共用同一顆 glb —— ⛔ 不要多烘一份二進位檔").toBe(base.glbPath);
 
     // 兩隻一護各自指到其中一份 —— ⛔ 共用一份就必然畫同一套身體(這張票的缺陷)。
-    const ch = (id: string): { modelKey: string; transform?: { role: string; counterpartId: string } } =>
-      JSON.parse(readFileSync(join(REPO, `content/champions/${id}.json`), "utf8"));
+    type Champ = {
+      modelKey: string;
+      transform?: { role: string; counterpartId: string };
+      modelVersions?: { modelKey: string; sourceModelKey?: string }[];
+    };
+    const ch = (id: string): Champ => JSON.parse(readFileSync(join(REPO, `content/champions/${id}.json`), "utf8"));
     const [n, o] = [ch("godie-h01n"), ch("godie-h01o")];
     expect([n.transform?.role, o.transform?.counterpartId]).toEqual(["base", "godie-h01n"]);
-    expect([n.modelKey, o.modelKey], "兩隻一護沒有各自指到自己的形態文件").toEqual([base.id, bankai.id]);
+    // ⚠️ PR #1152 起兩隻一護穿的是**凍結版本**（label「原上線模型」，位元組是凍結當時的那一份）——
+    //    ⇒ 各自要追得回自己的形態文件，⭐ 而且**穿著的那一份 GLB** 上量出來的卍解切分要與它宣告的
+    //    hiddenPrimitives 一致（⛔ 只驗來源文件＝驗了一份沒有人穿的東西，失敗形態⑤）。
+    const sourceOf = (c: Champ): string =>
+      (c.modelVersions ?? []).find((v) => v.modelKey === c.modelKey)?.sourceModelKey ?? c.modelKey;
+    expect([sourceOf(n), sourceOf(o)], "兩隻一護沒有各自指到自己的形態文件").toEqual([base.id, bankai.id]);
+    const [wn, wo] = [readDoc(`content/models/${n.modelKey}.json`), readDoc(`content/models/${o.modelKey}.json`)];
+    expect(wn.glbPath, "兩份穿著的文件必須共用同一顆 glb —— ⛔ 不要多烘一份二進位檔").toBe(wo.glbPath);
+    const wornSplit = bankaiPrimitivesOf(join(REPO, "content", wn.glbPath));
+    expect(wn.hiddenPrimitives, "常態一護穿的那一份要藏的是卍解身體").toEqual(wornSplit);
+    expect(wo.hiddenPrimitives?.length, "卍解一護穿的那一份要藏常態身體與常態配件").toBeGreaterThan(0);
+    expect(wo.hiddenPrimitives!.some((p) => wornSplit.includes(p)), "卍解穿的那一份把自己的身體也藏掉了").toBe(false);
   });
 
   it("渲染端:常態畫不出卍解身體,卍解畫不出常態身體,而兩邊都還有身體可畫", async () => {

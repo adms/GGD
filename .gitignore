@@ -1,5 +1,6 @@
 # deps
 node_modules/
+node_modules
 .pnpm-store/
 
 # local AI image generation (tools/icon-gen/local): python venv + multi-GB model
@@ -90,6 +91,8 @@ backup-*/
 __pycache__/
 *.pyc
 apps/platform/platform
+# `go build ./cmd/opstate` 的產物（Makefile 走 `go run`、映像在 docker/platform.Dockerfile 內建）—— GH#1160 從樹裡退休
+apps/platform/opstate
 
 # Full local voice manifest. The deterministic gzip copy is the Git entry point;
 # voice_index.py keeps this 200MB uncompressed copy locally for direct inspection.
@@ -121,3 +124,8 @@ docs/傳說武器道具.xlsx
 # ⚠️ 在此之前它沒被忽略 ⇒ 每一次 `genrun`／`skills:sync` 之後工作樹就永遠「不乾淨」，
 #   ⭐ 而一個永遠髒的工作樹會讓「乾淨」這個訊號失去意義（下一個人會學會忽略它）。
 .content-tree.lock
+
+# 部署主機身分（scripts/_hosts.sh 讀它）—— ⭐ 這個 repo 是 public 的,
+# 一個寫死的 `user@ip` 等於公開 ssh 憑證的一半。`.example` 才進 git。
+scripts/hosts.local.sh
+tools/secret-scan/hosts.local.tsv

@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-14 03:28 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-15 02:44 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.44.1 · 資料截至 2026-09-14 03:28 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-14 03:28 (GMT+8)</h1><div class="meta"><span>帳本 <b>27</b> 份</span><span>點名票號 <b>459</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.45.1 · 資料截至 2026-09-15 02:44 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-15 02:44 (GMT+8)</h1><div class="meta"><span>帳本 <b>28</b> 份</span><span>點名票號 <b>473</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1569,6 +1569,45 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>19:56</td><td>我的目標是 153名全部上架</td><td>— 需要新票：「153 名全部上架」中 21 個變身態是否上架（翻 starterChampions／transformevict.go／whitelist.ts 三層＋從變身態開局按變身的語意，與 2026-08-22 GH#552 下架原話反向）；助手 19:58/20:00/22:52 三次問 A/B/C 未獲回答，無票承接。其餘部分見 #1226（已關，差額拆解＋閘）、#1205、#1185</td></tr>
 <tr><td>22:51</td><td>回來了</td><td>— 回來通知，無指示（後續見 19:56 列）</td></tr>
 <tr><td>23:26</td><td>上架檢核 模型 每個音效 等都應該分開選項接受或拒絕 也有全部接受 全部拒絕 像你之前做過的那樣</td><td>— 需要新票：同 13:02 的 hero-intake 票（檢核頁逐項接受／拒絕＋全部接受／全部拒絕；057c14d8b 在未合併分支）</td></tr>
+<tr><td>00:05</td><td>你是否可優先完成 上架81英雄相關 儘速比對完成 更新 語音替換聽審</td><td>#1170（c133e100 語音 session：81 上架英雄的語音來源比對＋替換聽審，成果隨 bb4717fbb「語音兩批」併回 main）</td></tr>
+<tr><td>00:29</td><td>劍心 明明就有 揍敵客阿福 = 揍敵客桀諾 我記得還有一堆下載模型但角色還沒做的阿 承太郎 小當家 之類</td><td>#1188（同 session 00:24／00:30 列：下載了模型卻還沒做的角色名單）</td></tr>
+<tr><td>00:52</td><td>給我佔位卡列表 英雄來源作品名跟人物名就好</td><td>#1188（同 session 01:01 列：37 張佔位卡）</td></tr>
+<tr><td>01:02</td><td>我要的是 我們已經下載好模型 但是英雄根本沒設計過（包含上架及未上架）</td><td>#1188（助手回覆引 #1188：已下載模型而未設計的英雄）</td></tr>
+<tr><td>01:03</td><td>等待我們來設計實作的英雄列表</td><td>#1188（同 01:02：等待設計實作的英雄列表）</td></tr>
+<tr><td>01:44</td><td>你完全搞錯了 鋼彈 · 劍心 · 黑化Saber · 異形 · 瘋狂假面 · 胖虎 · 貞子 · 阿強一號 這幾個都是GGD設計過 只是還沒上架的角色 講半天你還是搞不懂我再說什麼 你看以下文件就知道我說什麼了 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/已取得模型待設計英雄.md</td><td>#1188（同一串：已取得模型待設計英雄.md）</td></tr>
+<tr><td>01:45</td><td>https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md</td><td>#1188（同一串：codex/hero-model-library-options 分支上的待設計英雄表）</td></tr>
+<tr><td>01:47</td><td>你還要結合你自己下載的模型 卻沒有對應到角色的 （分未設計跟未上架） 補充進去這張表 （PR）</td><td>#1188（同一串：把自己下載而未對應角色的模型補進那張表）</td></tr>
+<tr><td>02:21</td><td>我已經不知道你在幹嘛了</td><td>— 回饋看不懂進度，無新需求（助手隨後回報 #1187／#1197 進度），不開票</td></tr>
+<tr><td>03:27</td><td>你就都開分支commit push 然後讓main合併就好</td><td>— 流程指令：開分支 commit push 讓 main 合併（PR #1202），不開票</td></tr>
+<tr><td>03:28</td><td>這個工作流差不多要告一段落了 請你收尾</td><td>— 流程指令：這條工作流收尾（PR #1202），不開票</td></tr>
+<tr><td>03:35</td><td>請你給我一鍵複製的內容 讓我跟 main 說合併你的分支</td><td>— 指令：給他一鍵複製的合併說明（c133e100 那一份；564b17ca 的 03:34 列同一句），不開票</td></tr>
+<tr><td>03:36</td><td>請合併 PR #1202（分支 feat/ou99-models-catalog-20260911，HEAD 9082cf7cc， 領先 main 11 個 commit、315 個檔）。已 rebase/merge 過 origin/main，GitHub 判定 MERGEABLE。 ## 這個 PR 做了什麼 ou99 論壇下載的 129 顆模型：轉換 → 入庫檢查 → 索引 → 上架後台與編輯器選單 → 綁成 12 支英雄的預設模型。 | | 之前 | 之後 | |---|---:|---:| | content/models/_index.json | 292（磁碟 378 ⇒ 缺 8…</td><td>#1202 #838 #1199 #1198 #1200 #1201 #1186</td></tr>
+<tr><td>03:36</td><td>請把 feat/voice-originals-remap-20260911 合併進 main（13 個 commit，已推到 origin）。 內容：語音兩批（全庫 963 組重新比對；聽審決定套用 1,090 採用／33 不採用，舊檔已歸檔到 S3 voice-archive/20260911-0303） ＋ ou99 模型批次 6 個 commit ＋ 那條分支原本的 3 個（重建 bundle／12 支脫骨架／編輯器濾凍結版本）。 tag v0.44.0 已在這個分支的頂端打好，push 時記得 --follow-tags，並補 GitHub release note。 合併會有 12…</td><td>#1197 #1187</td></tr>
+<tr><td>04:16</td><td>說好的 BMPNDD 呢</td><td>— 流程催促（BMPNDD），不開票</td></tr>
+<tr><td>12:17</td><td>codex編輯器新上架名單範圍 英雄範圍： 1. 第一批社群英雄 37 名 2. 第二批社群英雄 37 名 3. LoL 第一批 7 名 4. LoL 第二批 11 名 5. 已取得模型之新增／重新上架英雄 34 名 合計 126 名。</td><td>#1227（owner 列的 126 名範圍；助手量到總數同為 126 而組成不同）</td></tr>
+<tr><td>12:22</td><td>那原本已經上架的那些呢？請你產生一個全英雄列表.md 並且更新在 github readme主頁，主頁需包含技能名稱 天生/Q/W/E/R/EX</td><td>#1226（全英雄列表 153 名 × 六槽技能名，README 主頁 ＋ 獨立 md）</td></tr>
+<tr><td>12:23</td><td>別忘了 我們講的這些都要照開票守則開票</td><td>— 流程指示：這串討論要照開票守則開票，本身不開票</td></tr>
+<tr><td>12:23</td><td>一個段落就 BMPNDD</td><td>— 流程指示：每個段落就 BMPNDD，不開票</td></tr>
+<tr><td>12:54</td><td>給我 git 連結 docs/全英雄列表.md</td><td>#1226（要 docs/全英雄列表.md 的 git 連結）</td></tr>
+<tr><td>12:59</td><td>這個名單好像還沒包含正在上架的 已取得模型新增／重上架 34</td><td>#1226 #1205（列表未含正在上架的已取得模型 34 名 —— 那 34 名屬 #1205，尚未進 content/）</td></tr>
+<tr><td>13:03</td><td>並且同時檢查模型對應是否有缺漏</td><td>— 需要新票：同 13:02 的 hero-intake 票（同時檢查模型對應缺漏）</td></tr>
+<tr><td>13:28</td><td>你還沒更新到 https://github.com/adms/GGD/blob/main/docs/%E5%85%A8%E8%8B%B1%E9%9B%84%E5%88%97%E8%A1%A8.md</td><td>#1226（main 上的全英雄列表.md 還沒更新到待上架 34＋11 名）</td></tr>
+<tr><td>13:36</td><td>About 3v3v3v3 網頁 3D 體素競技場 MOBA · 78 英雄 / 461 技能 / 219 道具 / 60 張聖杯願望三選一 —— 技能與願望全部是 JSON 模板組合，README 的清單由程式從 JSON 產生 這個也要改吧</td><td>PR #1232（GitHub About 描述也要對齊 README；同 13:00 列，無獨立 issue）</td></tr>
+<tr><td>13:44</td><td>LoL 第二批（11 名 · GH#1185） # ID 角色 狀態 1 lol-sett 賽特 待上架（本機發布已通過；來源核心待 Main） 2 lol-fiddlesticks 稻草人 待上架（本機發布已通過；來源核心待 Main） 3 lol-ornn 鄂爾 待上架（本機發布已通過；來源核心待 Main） 4 lol-chogath 科加斯 待上架（本機發布已通過） 5 lol-ashe 艾希 待上架（本機發布已通過） 6 lol-blitzcrank 布里姿 待上架（本機發布已通過） 7 lol-ahri 阿璃 待上架（本機發布已通過；來源核心待 Main） 8 lol-thresh…</td><td>#1185 #1205</td></tr>
+<tr><td>13:46</td><td>請你做成script掃 不要浪費token</td><td>PR #1236（敏感資料掃描做成 script；同 13:41／13:52 列）</td></tr>
+<tr><td>13:50</td><td>LoL 第二批（11 名 · GH#1185） # ID 角色 狀態 1 lol-sett 賽特 待上架（本機發布已通過；來源核心待 Main） 2 lol-fiddlesticks 稻草人 待上架（本機發布已通過；來源核心待 Main） 3 lol-ornn 鄂爾 待上架（本機發布已通過；來源核心待 Main） 4 lol-chogath 科加斯 待上架（本機發布已通過） 5 lol-ashe 艾希 待上架（本機發布已通過） 6 lol-blitzcrank 布里姿 待上架（本機發布已通過） 7 lol-ahri 阿璃 待上架（本機發布已通過；來源核心待 Main） 8 lol-thresh…</td><td>#1185 #1205</td></tr>
+<tr><td>13:50</td><td>LoL 第二批（11 名 · GH#1185） # ID 角色 狀態 1 lol-sett 賽特 待上架（本機發布已通過；來源核心待 Main） 2 lol-fiddlesticks 稻草人 待上架（本機發布已通過；來源核心待 Main） 3 lol-ornn 鄂爾 待上架（本機發布已通過；來源核心待 Main） 4 lol-chogath 科加斯 待上架（本機發布已通過） 5 lol-ashe 艾希 待上架（本機發布已通過） 6 lol-blitzcrank 布里姿 待上架（本機發布已通過） 7 lol-ahri 阿璃 待上架（本機發布已通過；來源核心待 Main） 8 lol-thresh…</td><td>#1185 #1205</td></tr>
+<tr><td>14:52</td><td>要記得檢查script接上後台跟編輯器, 成品全部都要上 git, 原始資源跟半成品 抽取器 產生器等要上S3</td><td>#1230 #1231（入庫檢查 script 接上後台與編輯器；成品上 git、來源與半成品上 S3）</td></tr>
+<tr><td>14:54</td><td>確保所有英雄角色都有特定模型、ICON、音效、對白對應 而非體素</td><td>#1181 #1170（每名英雄要有自己的模型／ICON／音效／對白而非體素；15:14 列的回報：體素替身 #1181、缺對白 #1170）</td></tr>
+<tr><td>14:58</td><td>你就開分支讓 main 合併吧</td><td>— 流程指令：開分支讓 main 合併（README，PR #1232），不開票</td></tr>
+<tr><td>14:58</td><td>順帶量到、沒動的三筆帳：LICENSE 仍寫 eleven 首 BGM 與 40 段効果音ラボ；ou99.* 129 顆模型在 CREDITS.md 沒有授權紀錄；docker/compose.yaml 對 content-api 仍設 CONTENT_DIR 而程式讀 GGD_CONTENT_DIR。這三筆都寫進了 README 對應段落，沒有開票。 =&gt; 開票</td><td>#1233 #1234 #1235（owner「=&gt; 開票」：LICENSE 數字過期、ou99 模型 CREDITS 零紀錄、compose 的 CONTENT_DIR）</td></tr>
+<tr><td>15:02</td><td>請你將全部126個新英雄上架</td><td>#1205 #1185（126 名中 81 已上架；其餘 45 名＝已取得模型 34 名 #1205 ＋ LoL 第二批 11 名 #1185）</td></tr>
+<tr><td>15:03</td><td>你其實連 PR commit 票 等資訊都要掃描有沒有敏感訊息</td><td>PR #1236（掃描範圍擴到 commit 訊息／PR／issue 等公開表面）</td></tr>
+<tr><td>15:05</td><td>正確來說是 [全英雄列表.md] 153 名英雄全部上架</td><td>#1253（「全英雄列表.md 153 名全部上架」；是否含 21 個變身態等 owner 勾）</td></tr>
+<tr><td>15:14</td><td>缺的兩項：38 名跑進體素替身（GLB 不在版控， #1181）、60 名沒有角色對白（b2 37／community 16／lol 7，對應 #1170）。另有 36 名共用 18 顆模型（非專屬），包含 14 對變身態共用是正常的。 你要一起處理</td><td>#1181 #1170</td></tr>
+<tr><td>15:15</td><td>2. 模型／貼圖檢查 script —— 有，而且接上了兩條路，但它今天是紅的 model_intake.py --all --check ⇒ EXIT=1：641 顆裡 285 顆有問題。 問題 顆數 這次合併新帶進來的 貼圖邊長 &gt; 256 146 7 draw call 可合併 120 6 draw call &gt; 6 21 0 零長度動作片段 20 0 貼圖掉成 8×8 佔位圖 6 0 最大的是 1024（props/torch.glb、props/pillar.glb）＝ 上限 4 倍。 =&gt; 請你更新 scritp 每次上架跟啟動自動化處理</td><td>#1230（owner「=&gt; 請你更新 script 每次上架跟啟動自動化處理」：入庫檢查接上上架與啟動）</td></tr>
+<tr><td>23:36</td><td>等等 你這幾天自己改動那麼多東西 你可否整理一個清單給我 不然你改歪了我都不知</td><td>— 要一份這幾天改動的清單（助手從 git 撈、做成逐項打勾頁），本身不開票；公式／機制項後續落在 #1224 #1243</td></tr>
+<tr><td>23:40</td><td>你改動公式 機制這些判斷 我最在意</td><td>— 清單收斂到公式與機制並標明誰說的（同 23:36），本身不開票；後續落在 #1224 #1243</td></tr>
 </table></div>
 <p># 2026-09-12</p>
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
@@ -1585,6 +1624,24 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>11:25</td><td>請幫助漏填這種 trivial 的狀況</td><td>#1245（targetsEnemies 省略≡true：schema 寫明＋比對先套預設；transcript 9fdde660 11:26–11:35）</td></tr>
 <tr><td>11:59</td><td>類似省略意義的欄位掃一遍</td><td>#1246（transcript 9fdde660 12:02 掃完開票：radius 省略有三個預設值）</td></tr>
 <tr><td>12:31</td><td>請你列表告訴我 哪些角色 缺模組 骨架 動作 音效 語音</td><td>— 需要新票：同 09-11 13:02 的 hero-intake 票（五軸缺口盤點 tools/hero-intake/audit-five-axes.py 只在分支 feat/hero-intake-pipeline-20260911、不在 origin/main、無 issue；語音缺口相關 #1170）</td></tr>
+<tr><td>00:15</td><td>發版會有什麼問題嗎?</td><td>#1224 #1199 #1237 #1243 #1239（助手回答的發版風險清單；01:11 列 owner 貼回同一份）</td></tr>
+<tr><td>01:11</td><td>還有一點我不懂 大家都是照英雄出身去分配屬性 為什麼中位數會改變？</td><td>#1224（新批英雄屬性共用模板 ⇒ 逐角色中位數被拉動）</td></tr>
+<tr><td>01:12</td><td>這個中位數是相對所有出身而言 不是指所有角色 不然這個值會變動到停不下來</td><td>#1224 #1260（中位數要相對出身而非全角色；固定數值原則收進 #1260 總票）</td></tr>
+<tr><td>01:13</td><td>我建議你重新計算模擬最為公平 數值也最工整的數值關係 讓生命系統倍率可以降下來不要那麼高</td><td>#1224 #1260（重新模擬最工整的數值關係、讓生命系統倍率降下來）</td></tr>
+<tr><td>01:14</td><td>你可以不用對齊一開始81支 公式統一 且平衡 比較重要 讓我的旋鈕越不要脫離太多越好</td><td>#1224 #1260（公式統一且平衡優先，不必對齊最初 81 支）</td></tr>
+<tr><td>01:15</td><td>然後你別忘了我們有三個檢查點 30/50/99 並且有 技能流 普攻流 的超越交叉趨勢</td><td>#1224 #1260（驗收條件：30/50/99 三檢查點 ＋ 技能流／普攻流交叉趨勢）</td></tr>
+<tr><td>01:16</td><td>你可以先模擬估算後 告訴我新計畫 三個方案 分析優缺點 我再來做選擇 你實作 不要輕易上線</td><td>#1224 #1260（先模擬給三方案，owner 選，不輕易上線）</td></tr>
+<tr><td>02:02</td><td>請你更正讓你誤會的 吟唱冷卻公式 以後不要再發生</td><td>#1243 #943（更正誤導的吟唱公式：castTimeFormula 舊 20 階梯 vs 五級距）</td></tr>
+<tr><td>02:04</td><td>逐出身 ＋ 每個出身用同一條梯子 + A 只工整化 很棒 以後固定數值 别再取中位數了</td><td>#1224 #1260（owner 裁決：逐出身＋同一條梯子＋A 只工整化，以後固定數值不取中位數）</td></tr>
+<tr><td>02:05</td><td>新的五級距表要給我看並且記得更新到相關說明文件 別忘了他也連動到耗魔 也要取整數</td><td>#1224 #1260（新五級距表給 owner 看、更新說明文件、連動耗魔、取整數）</td></tr>
+<tr><td>02:06</td><td>還有什麼公式是取中位數也讓我知道</td><td>#1260（還有哪些公式取中位數 —— 助手列出後收進總票）</td></tr>
+<tr><td>02:40</td><td>逐出身 ＋ 同一條梯子 ⭐ 151 張卡 · 漂移 34.6% → 0.0% A 只工整化 ⭐ 倍率維持 4 · 交叉趨勢逐格不變 耗魔也要取整數 ⭐ 73/146/292/584/1168 → 75/150/300/600/1200 =&gt; all ok 「固定數值別再取中位」還沒做完 —— 梯子讓它不再漂,但 balance-anchors/gen.ts 仍在取中位。要真正固定還要換成常數。 =&gt; 這些常數是可被編輯的設定檔 而非寫死</td><td>#1224 #1260（owner「=&gt; all ok」＋「這些常數是可被編輯的設定檔 而非寫死」）</td></tr>
+<tr><td>03:51</td><td>想清楚再做 不要一直loop改來改去改不完</td><td>— 工作方式指示（想清楚再做、停止反覆修改），本身不開票；原則收進 #1260</td></tr>
+<tr><td>11:01</td><td>簡單舉例解釋 #1238 — 「照來源判準改」 #1243 — 212 支的 1.2–2.433 秒是設計還是舊階梯殘留 #1245 — 最後那 1 筆同源分歧</td><td>#1238 #1243 #1245</td></tr>
+<tr><td>11:13</td><td>castTimeTier 現在是什麼？ 什麼是舊公式? 為什麼有新舊 帳本的合併規則是「15 分鐘內同一句併成一列」 =&gt; 我沒說過 我的原則一定是詳實記錄不會合併 這應該是你自己說的 請你要查證我說的話出處 #1243 — 那 212 支的 1.2–2.433 秒 =&gt; 照五級距 最高就是1秒 有什麼好爭議的 請你把推論污染根因修正. 舊 20 階階梯 =&gt; 移到 legacy 區不要再被看到了 #1245 — 最後那 1 筆同源分歧 其他 37 筆我都判得出來,靠兩個問題: =&gt; 看不懂 我說過要簡單舉例說明</td><td>#1243 #1245 #1238（=&gt; 之後 owner 否定「15 分鐘合併」＝#1238 的前提；照身分成列見 #1255）</td></tr>
+<tr><td>11:14</td><td>如果我有回答過 請你都要將讓你誤會的根因資訊做修正 甚至移到 legacy</td><td>#1243（常設指令：回答過的要修正誤導根因甚至移到 legacy，已落地 commit 00e70d518）</td></tr>
+<tr><td>12:38</td><td>這是我一貫風格</td><td>#1246（同 12:38 列「對 要抽象化 統一」：owner 的一貫風格）</td></tr>
+<tr><td>12:51</td><td>最低是 0.1 吧</td><td>#1243（吟唱五級距的最低實際吟唱是 0.1）</td></tr>
 </table></div>
 <p># 2026-09-13</p>
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
@@ -1622,6 +1679,18 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:17</td><td>已完成清單更新、commit、push、同步最新 Main，並建立合併票。 * 四日完整清單：[2026-09-11～2026-09-14 新增模型、動作、特效與語音清單](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/近四日新增模型動作特效清單.md) * PR：[PR #1152](https://github.com/adms/GGD/pull/1152) * Main 合併票：[Issue #1252](htt…</td><td>#1152 #1252</td></tr>
 <tr><td>03:27</td><td>你要不要先 BMPNDD</td><td>— 助手建議停在部署前，owner 未指示部署</td></tr>
 <tr><td>03:28</td><td>那把你該開的票都開一開</td><td>#1253 #1254 #1255 #1256 #1257 #1258 #1259 #1260（本則開票授權；另補留言 #1246 更正 4d8aa368f 因果 · #1243 · #1224 · #1238 · #1250 · #1227；⛔ 不含部署）</td></tr>
+<tr><td>03:26</td><td>請你驗收合併這張票 解決英雄殿跟遊戲回合中 model, 特效, 音效, 語音 等遺漏與不足之處</td><td>#1252（c133e100：驗收合併 03:17 列建立的合併票 —— 英靈殿與回合中的模型／特效／音效／語音缺漏）</td></tr>
+</table></div>
+<p># 2026-09-15</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>02:27</td><td># 2026-09-11～2026-09-15 新增模型、動作、特效與語音清單 請你比照最近上架的素材重新比對在後台上架 特別是下拉式選單 要能即時載入御覽</td><td>⏸ 未對票</td></tr>
+<tr><td>02:44</td><td>C5 「幾發打死」的算法沒乘 AP 乘數 =&gt; 我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示 數值簡化總票:統一規則、七個缺口、B1/B2/B3 =&gt; 這三個是啥 C8 「153 名全部上架」裡的 21 個變身態 —— 等你決定的票 =&gt; 這啥 我沒有詳細資訊 C12 「戰情版」有三份同名的檔=&gt; 用時間區隔 全部都要備份 C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態 =&gt; 你解說阿 是不是應該修一個段落 BMPNDD</td><td>1260,1256,1253,1227</td></tr>
+<tr><td>02:38</td><td>已推送完成。 * 遠端分支：<code>codex/hero-model-library-options</code> * 最新 commit：<code>462a6dd32</code> * 推送範圍：<code>215f752d3..462a6dd32</code> * PR：[adms/GGD #1152](https://github.com/adms/GGD/pull/1152) * 清單檔：[2026-09-11～2026-09-15 新增模型、動作、特效與語音清單](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materia…</td><td>#1152</td></tr>
+<tr><td>02:41</td><td>你記得都要對話開票記錄</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

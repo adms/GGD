@@ -18,13 +18,14 @@ import {
   voxelSkinInputOf,
   fromHex,
   luminance,
-  STAND_IN_MODEL_KEYS,
   VOXEL_SKINS_SCHEMA,
   type ChampionLike,
   type VoxelSkinInput,
   type VoxelSkinOverride,
   type VoxelSkinRecipe,
 } from "@ggd/shared/content/voxelSkin";
+import { isStandInModel } from "@ggd/shared/content/standInBody";
+import { modelDocOf } from "../voxelBody";
 
 export const CHAMPION_INDEX_URL = "/content/champions/_index.json";
 export const VOXEL_OVERRIDES_URL = "/content/models/_voxel-skins.json";
@@ -115,10 +116,14 @@ interface ChampionDocLike extends ChampionLike {
 /**
  * Build the whole sheet from the champion docs + the override sidecar.
  * Deterministic and order-independent: `generateAllVoxelSkins` sorts by id.
+ *
+ * `modelDocs`（GH#1250）：modelKey → 模型文件。`sharedStandIn` 讀 `standInBody`（glb 住在哪），
+ * ⛔ 不再讀手寫的 `STAND_IN_MODEL_KEYS` —— 那張表漏了 `champ.godie-zombiex`。
  */
 export function buildSheet(
   docs: readonly ChampionDocLike[],
   overrides: Record<string, VoxelSkinOverride>,
+  modelDocs: ReadonlyMap<string, unknown>,
 ): { rows: SkinRow[]; stats: SkinSheetStats } {
   const result = generateAllVoxelSkins(docs.map(voxelSkinInputOf), overrides);
   const shareCount = new Map<string, number>();
@@ -148,7 +153,7 @@ export function buildSheet(
       tags: doc.tags ?? [],
       recipe,
       signature: lookSignature(recipe),
-      sharedStandIn: STAND_IN_MODEL_KEYS.includes(doc.modelKey ?? ""),
+      sharedStandIn: isStandInModel(doc.modelKey, modelDocOf(modelDocs, doc.modelKey)),
       modelKeyShareCount: shareCount.get(doc.modelKey ?? "") ?? 1,
       overridden: Object.prototype.hasOwnProperty.call(overrides, doc.id),
       tint: doc.tint ?? null,

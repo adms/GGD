@@ -117,7 +117,7 @@
   "icon": "assets/icons/abilities/godie-e002.r.webp",
   "vfxKey": "fx.prim.holy.nova-lg",
   "cooldownTier": "極大",
-  "manaCostTier": "小",
   "castTimeTier": "大",
+  "manaCostTier": "小",
   "castTimeSec": 0.5
 }

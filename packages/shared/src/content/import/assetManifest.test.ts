@@ -52,10 +52,23 @@ describe("P1-1 完整 asset manifest", () => {
     const sample = doc.entries.filter((_, i) => i % step === 0);
     expect(sample.length).toBeGreaterThan(20);
     const bad: string[] = [];
+    // ⭐ PR #1152 合併準備（2026-09-14）：清單長大之後抽樣剛好落在一顆**宣告在 assets-offdisk.json** 的 GLB 上
+    //   （位元組住 S3，owner 2026-09-08）⇒ 它「不在磁碟上」是宣告過的狀態，⛔ 不是篡改。
+    //   ⇒ 這一顆改問**兩個名詞的關係**：宣告的 bytes／sha256 要與清單逐欄相同（⛔ 不是跳過）。
+    //   ⚠️ 沒有宣告卻不在磁碟上的，照舊紅。
+    const offdisk = (
+      JSON.parse(readFileSync(resolve(ROOT, "content/assets-offdisk.json"), "utf8")) as {
+        entries?: Record<string, { bytes: number; sha256: string }>;
+      }
+    ).entries ?? {};
     for (const e of sample) {
       const abs = resolve(ROOT, "content", e.path);
       if (!existsSync(abs)) {
-        bad.push(`${e.path} —— 檔案不存在`);
+        const declared = offdisk[e.path];
+        if (!declared) bad.push(`${e.path} —— 檔案不存在`);
+        else if (declared.bytes !== e.bytes || declared.sha256 !== e.sha256) {
+          bad.push(`${e.path} —— assets-offdisk.json 的宣告（${declared.bytes} bytes / ${declared.sha256.slice(0, 12)}）與清單不符`);
+        }
         continue;
       }
       const buf = readFileSync(abs);

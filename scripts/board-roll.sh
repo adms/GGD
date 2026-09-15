@@ -119,6 +119,12 @@ rows, byday = [], collections.Counter()
 #    ⛔ 在此之前這一節只寫「逐則原文在 docs/_daily/…」—— 那是一個指標，⛔ 不是紀錄，
 #    而 owner 讀的是**這一份**。
 perday = collections.OrderedDict()
+# ⭐ GH#1255 審查後補：帳本列原話格尾的**身分標記** `<!-- id:… -->` 是給機器認列用的，⛔ 不是給 owner 讀的。
+#   markdown 渲染看不到它，⛔ 但 owner 在終端機／原文讀這一份（`GGD戰情版.md` 指向它）時一列一個
+#   ⇒ 在此之前（1dc3faccc 重產）這一份帶著 129 個原樣標記，而只有 gen_board.py 與 admin-live 剝。
+#   ⇒ 剝除規則從 `scripts/ledger_table.py` 取（`strip_id`，gen_board 用的同一支），⛔ 不在這裡再長一份正則。
+sys.path.insert(0, "scripts")
+from ledger_table import strip_id
 for i in range(7):
     d = start + datetime.timedelta(days=i)
     p = f"docs/_daily/{d.isoformat()}.md"
@@ -126,9 +132,10 @@ for i in range(7):
         continue
     for line in open(p, encoding="utf-8"):
         if re.match(r"^\| \d\d:\d\d \|", line):
-            rows.append(line.rstrip())
+            line = strip_id(line.rstrip())
+            rows.append(line)
             byday[d.isoformat()[5:]] += 1
-            perday.setdefault(d.isoformat(), []).append(line.rstrip())
+            perday.setdefault(d.isoformat(), []).append(line)
 
 issues = set()
 unmapped = 0

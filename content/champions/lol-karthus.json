@@ -1,7 +1,7 @@
 {
   "id": "lol-karthus",
   "name": "卡爾瑟斯",
-  "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
@@ -62,12 +62,12 @@
         30.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 6,
       "radius": 6.0,
       "rangeTier": "中",
@@ -117,12 +117,12 @@
         15.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
@@ -176,12 +176,12 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "range": 0.0,
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -243,11 +243,11 @@
         120.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        600.0,
+        600.0,
+        600.0
       ],
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "range": 12,
       "radius": 6.0,
       "rangeTier": "極大",

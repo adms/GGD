@@ -975,7 +975,7 @@
         "damageType": "physical",
         "statusId": "burnstun",
         "statusDurationSec": 0.8,
-        "castTimeSec": 1.0
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -1014,7 +1014,7 @@
         ],
         "radius": 6.0,
         "range": 0.0,
-        "castTimeSec": 1.0,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -3595,7 +3595,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.0
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "targeted",
@@ -3615,7 +3615,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.0,
+        "castTimeSec": 0.3,
         "targetsEnemies": true
       },
       "order": [
@@ -4694,7 +4694,7 @@
       "params": {
         "to": "alternate",
         "durationSec": 8,
-        "castTimeSec": 1.0
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -4706,7 +4706,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.0
+        "castTimeSec": 0.3
       },
       "order": [
         "id",
@@ -5382,7 +5382,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.0
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -5402,7 +5402,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.0,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -6113,7 +6113,7 @@
       "params": {
         "to": "alternate",
         "durationSec": 6,
-        "castTimeSec": 1.0
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "self",
@@ -6125,7 +6125,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.0
+        "castTimeSec": 0.5
       },
       "order": [
         "id",

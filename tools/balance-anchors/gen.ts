@@ -233,7 +233,10 @@ const CEILING = Math.floor(finalHp(SHIPPED_ANCHOR_LEVEL));
 // ⛔ 在此之前這裡是 `finalHp(lv) / SMALLEST`——分子含 ×HP_MULT、分母不含,兩個空間混算,
 //   於是三個錨點**全部印 ❌**,而 `anchors:check` 是綠的。文件與閘各說各話 20 天。
 const castsAt = (lv: BalanceAnchorLevel): number => (baseHp[lv]! + HP_BONUS) / SMALLEST;
-/** 玩家**實際**要打幾發（含 HP 系統倍率）—— owner #530 問的是這一個,⛔ 不是達成率。 */
+/**
+ * 照血條算要打幾發（含 HP 系統倍率，⛔ **沒算 AP 加成**）—— ⛔ 不是「玩家實際」、⛔ 不是達成率。
+ * 只是試算顯示，⛔ 不評判：owner 2026-09-15（逐字）「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」（GH#1260 C5）。
+ */
 const realCastsAt = (lv: BalanceAnchorLevel): number => finalHp(lv) / SMALLEST;
 const RATIOS = tierRatios();
 
@@ -407,10 +410,11 @@ function docMd(): string {
   );
   L.push("");
   L.push(
-    `⇒ \`maxHealth ${HP_MULT}\` / \`damageDealt ${DMG_MULT}\` / \`cooldown\` 這一族**只出現在「玩家實際」那幾欄**，` +
-      "⛔ 一個都沒有進推導鏈。⚠️ 看到「幾發送走中位英雄」不合意時，**要問的是 owner 想不想動那一格**，" +
-      "⛔ 不是自己去轉 —— 出貨值與他的逐字原話記在 `content/config/owner-knobs.json`，" +
-      "`packages/shared/src/ops/ownerKnobs.test.ts` 在守。",
+    `⇒ \`maxHealth ${HP_MULT}\` / \`damageDealt ${DMG_MULT}\` / \`cooldown\` 這一族**只出現在標「試算」的那幾欄**，` +
+      "⛔ 一個都沒有進推導鏈。試算欄**⛔ 沒算 AP 加成**，只是顯示 —— ⛔ 不是門檻、不評判，也⛔ 不是拿去問 owner 要不要轉旋鈕的理由。" +
+      "owner 2026-09-15（逐字）：「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」；" +
+      "2026-08-22（逐字）：「總之不要再叫我調整了，公式已定好，只要公式本身自洽，我們只調系統倍率」。" +
+      "系統倍率的出貨值與他的逐字原話記在 `content/config/owner-knobs.json`，`packages/shared/src/ops/ownerKnobs.test.ts` 在守。",
   );
   L.push("");
   L.push("## ⭐ 傷害五級距的推導鏈（`content/config/damage-tiers.json` 由這一支寫）");
@@ -437,17 +441,17 @@ function docMd(): string {
     `| 表上的值（減傷前） | ${DAMAGE_TIER_NAMES.map((n) => `${DAMAGE[n]}`).join(" | ")} |`,
   );
   L.push(
-    `| ⭐ 玩家實際吃到（×${DMG_MULT} damageDealt） | ${DAMAGE_TIER_NAMES.map((n) => `**${Math.round(DAMAGE[n]! * DMG_MULT)}**`).join(" | ")} |`,
+    `| 試算・卡面 ×${DMG_MULT} damageDealt（⛔ 沒算 AP） | ${DAMAGE_TIER_NAMES.map((n) => `**${Math.round(DAMAGE[n]! * DMG_MULT)}**`).join(" | ")} |`,
   );
   // ⭐ 三個錨點都是標準（owner 2026-09-06）⇒ 佔血條／幾發三級都印，⛔ 不只 hard limit 那一級。
   for (const lv of BALANCE_ANCHOR_LEVELS) {
     L.push(
-      `| ⭐ 佔 LV${lv} 血條 | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n]! * DMG_MULT / finalHp(lv)) * 100).toFixed(1)}%`).join(" | ")} |`,
+      `| 試算・佔 LV${lv} 血條（⛔ 沒算 AP） | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n]! * DMG_MULT / finalHp(lv)) * 100).toFixed(1)}%`).join(" | ")} |`,
     );
   }
   for (const lv of BALANCE_ANCHOR_LEVELS) {
     L.push(
-      `| 幾發送走 LV${lv} 中位 | ${DAMAGE_TIER_NAMES.map((n) => `${(finalHp(lv) / (DAMAGE[n]! * DMG_MULT)).toFixed(1)}`).join(" | ")} |`,
+      `| 試算・照血條算幾發送走 LV${lv} 中位（⛔ 沒算 AP） | ${DAMAGE_TIER_NAMES.map((n) => `${(finalHp(lv) / (DAMAGE[n]! * DMG_MULT)).toFixed(1)}`).join(" | ")} |`,
     );
   }
   L.push("");
@@ -455,7 +459,7 @@ function docMd(): string {
   L.push("");
   L.push(`「打死該級中位英雄要幾發**極小**」，門檻 ${KILL_CASTS_REF} 發（owner Q1）。`);
   L.push("");
-  L.push("| 錨點 | 身分 | 純基礎+加成 | 設計承諾要幾發 | 達成 | 引擎最終血量 | 玩家實際要幾發 | 這一級自己要求的極小 |");
+  L.push("| 錨點 | 身分 | 純基礎+加成 | 設計承諾要幾發 | 達成 | 引擎最終血量 | 試算・照血條算要幾發（⛔ 沒算 AP） | 這一級自己要求的極小 |");
   L.push("|---|---|---:|---:|---|---:|---:|---:|");
   for (const lv of BALANCE_ANCHOR_LEVELS) {
     const n = castsAt(lv);

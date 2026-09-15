@@ -20,6 +20,7 @@
     75.0
   ],
   "range": 12.0,
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -75,8 +76,7 @@
   "icon": "assets/icons/abilities/godie-hapm.w.webp",
   "vfxKey": "fx.prim.physical.shockwave",
   "cooldownTier": "大",
-  "manaCostTier": "極小",
-  "castTimeTier": "極大",
   "rangeTier": "極大",
+  "manaCostTier": "極小",
   "castTimeSec": 1
 }

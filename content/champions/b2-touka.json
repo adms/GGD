@@ -30,12 +30,12 @@
       ],
       "id": "b2-touka.e",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "入坑紀錄蓋個章",
       "range": 6,
@@ -200,11 +200,11 @@
       ],
       "id": "b2-touka.r",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 3,
       "name": "錄取地下室再送出口",
       "radius": 3,
@@ -294,12 +294,12 @@
       ],
       "id": "b2-touka.w",
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "maxRank": 4,
       "name": "聖劍當釣竿使",
       "range": 6,

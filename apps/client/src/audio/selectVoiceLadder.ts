@@ -85,6 +85,7 @@
  * in had no combat voice AT ALL until the share landed.
  */
 import { counterpartFormId } from "@ggd/shared/content/championForms";
+import { Champions } from "@ggd/shared/sim/content/registry";
 import type { BlizzardManifest, ChampionVoicesConfig } from "./championVoice";
 import type { ChampionNamesManifest, ChampionQuotesManifest } from "./nameVoice";
 import type { Rng } from "./audioSelect";
@@ -302,7 +303,11 @@ export function resolveVoicePackId(
   if (!pack || !champId) return null;
   const own = pack.champions[champId];
   if (own) return { id: champId, sharedFrom: own.sharedFrom };
-  const counterpart = counterpartFormId(champId);
+  // ⭐ 2026-09-15：w3x 那 26 對之外，內容檔宣告的變身對也借（`champion.transform.counterpartId`，
+  //   `ChampionFormSystem` 在比賽裡就是照它變身）—— 梅普露變身之後在此之前是**啞的**。
+  //   產生器 `tools/voice-gen/index-lines.mjs` 用 `contentFormPairs()` 算同一張表，兩層仍然指名同一個借出者。
+  const counterpart =
+    counterpartFormId(champId) ?? (Champions.tryGet(champId as never)?.transform?.counterpartId as string | undefined) ?? null;
   if (counterpart && pack.champions[counterpart]) {
     return { id: counterpart, sharedFrom: counterpart };
   }

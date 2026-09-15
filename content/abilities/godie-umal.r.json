@@ -42,6 +42,6 @@
   "vfxKey": "fx.prim.lightning.pulse-lg",
   "sfxKey": "wc3.nocute",
   "schema": "ability@1",
-  "castTimeSec": 1,
-  "castTimeTier": "極大"
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

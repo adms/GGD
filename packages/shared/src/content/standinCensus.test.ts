@@ -54,6 +54,8 @@ import {
   type VoxelSkinOverridesFile,
 } from "./voxelSkin";
 import { counterpartFormId } from "./championForms";
+import { isStandInModel } from "./standInBody";
+import { readShippedModelDocs } from "../../testkit/shippedModelDocs";
 import { DOC_ARCHETYPE } from "../voxel/archetypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -156,6 +158,19 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
         ...(EXPECTED[key] ?? []),
       ]);
     }
+  });
+
+  it("⭐ GH#1250：出貨的替身判準（模型文件的 glb）＝ 四具 rig 的租戶 ∪ 逐位列名的非 rig 替身", () => {
+    cover("model-standin-census");
+    // 這份普查數的是**四具歷史 rig**（`STAND_IN_MODEL_KEYS`，體素身體規則 `defaultPrefersVoxelBody` 讀它）；
+    // 替身徽章／身分排序／對外 resolved-appearance 讀的是 `standInBody`（看 glb 住在哪）。
+    // ⛔ 兩個分母在此之前沒有任何一條對起來 ⇒ `godie-zombiex`（blocky-undead.glb，不是 rig）兩邊各說各話。
+    // ⭐ 非 rig 的替身逐位列名：換成本人模型的那一位從這裡劃掉；多出一位 ⇒ 紅並指名。
+    const NON_RIG_STAND_INS = ["godie-zombiex"];
+    const models = readShippedModelDocs(CONTENT);
+    const derived = ROSTER.filter((c) => isStandInModel(c.modelKey, models.get(c.modelKey ?? "") ?? null)).map((c) => c.id);
+    const rigTenants = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
+    expect(derived.sort()).toEqual([...rigTenants, ...NON_RIG_STAND_INS].sort());
   });
 
   it("the borrower total is exactly the census, and nobody is double counted", () => {

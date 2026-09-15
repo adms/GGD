@@ -229,6 +229,23 @@ export const ARCHETYPE_BY_MODEL_KEY: Readonly<Record<string, string>> = {
 };
 
 /**
+ * 這一具身體**看起來**是哪一個 modelKey —— 查 {@link ARCHETYPE_BY_MODEL_KEY} 之前要先問的那一題。
+ *
+ * ⭐ 模型版本（`version.body.*`）把「原上線的方塊人」凍結成一份獨立文件，
+ * `bodyVersion.legacyAppearance: true` 說「它長得就是 `sourceModelKey` 那一具」。
+ * ⇒ 拿版本文件自己的 id 去查 archetype 一定查不到，方塊人外觀就靜靜地掉了。
+ *
+ * ⚠️ 出貨的 `championBody.modelOverrideFor` 與 `voxelLook.test.ts` 的母體**呼叫同一支**，
+ * ⛔ 不是各抄一份判斷（失敗形態 ⑤：被測的不是出貨的那個）。
+ */
+export function appearanceModelKey(
+  modelKey: string,
+  bodyVersion: { readonly sourceModelKey: string; readonly legacyAppearance: boolean } | null | undefined,
+): string {
+  return bodyVersion?.legacyAppearance ? bodyVersion.sourceModelKey : modelKey;
+}
+
+/**
  * The look for one champion. `archetype` only biases which props are likely
  * (a mage usually keeps its hat, a barbarian usually does not) — it never
  * decides a colour, so two champions on the same mesh are still distinct.

@@ -99,9 +99,9 @@
       "icon": "assets/icons/abilities/godie-ewar.q.webp",
       "vfxKey": "fx.prim.ki.nova",
       "cooldownTier": "極小",
-      "manaCostTier": "極小",
       "castTimeTier": "中",
       "rangeTier": "小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.3
     },
     "W": {
@@ -125,6 +125,7 @@
         0.0
       ],
       "range": 0.0,
+      "castTimeTier": "極大",
       "targetsEnemies": false,
       "effects": [
         {
@@ -150,8 +151,7 @@
       "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
       "cooldownTier": "極大",
-      "castTimeTier": "小",
-      "castTimeSec": 0.1
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-ewar.e",
@@ -339,7 +339,7 @@
       },
       "vfxKey": "fx.prim.ki.pulse-sm",
       "icon": "assets/icons/abilities/godie-ewar.e.png",
-      "castTimeTier": "極大"
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-ewar.r",
@@ -361,6 +361,7 @@
       ],
       "range": 0.0,
       "radiusTier": "中",
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -415,7 +416,6 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "中",
-      "castTimeTier": "極大",
       "castTimeSec": 1
     }
   },

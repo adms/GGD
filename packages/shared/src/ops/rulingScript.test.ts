@@ -63,9 +63,11 @@ describe("裁決腳本", () => {
   /**
    * ⭐ GH#1028 A：列鍵是**訊息時間**（帳本自己宣告的鍵），⛔ 不是執行時間。
    * 假 transcript 放一則「一小時前」的 owner 訊息 ⇒ 列上的 HH:MM 必須是那一則的時間；
-   * 接著跑建置器 ⇒ 同一句話仍只有一列（承重的那一條）。
+   * 接著跑建置器 ⇒ 同一則仍只有一列（承重的那一條）。
    * ⭐ 夾具刻意用 2026-09-06 12:28 量到的形狀：我記的裁決**掉了 owner 開頭三個字、尾巴接了我的註**
-   *   （A 落地之後仍重複的那一對）⇒ 訊息時間要找得到、併列之後留的是 owner 的原話、`--check` 綠。
+   *   ⇒ 訊息時間要找得到、帳本那一格是 owner 的原話、`--check` 綠。
+   * ⚠️ 2026-09-12 起帳本「**詳實記錄不會合併**」（owner 逐字；`ledger_table._same_entry` 只認同一分鐘 ＋ 同一段文字）
+   *   ⇒ 這一條**不再靠建置器事後併列**變綠：`ruling.sh` 要把鍵的**兩半**（時間與逐字原話）都從 transcript 取來。
    * ⚠️ jsonl 要**緊湊**（`"type":"user"` 不帶空白）—— 建置器的 bytes 粗篩就是這麼篩的。
    */
   it("ruling.sh 的列鍵＝transcript 裡那一則的時間；再跑建置器仍只有一列（且留 owner 原話）", () => {
@@ -90,9 +92,9 @@ describe("裁決腳本", () => {
     expect(b.status, b.stderr).toBe(0);
     expect(rows(), "建置器又插了一列 ⇒ 兩個寫入端的鍵仍不一致").toHaveLength(1);
     expect(rows()[0]).toContain("1028");
-    expect(rows()[0], "併列要留 owner 的原話，⛔ 不是我的改述").toContain("好吧 先開票");
+    expect(rows()[0], "帳本那一格要是 owner 的原話，⛔ 不是我的改述").toContain("好吧 先開票");
     const c = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--check", "--date", day], { encoding: "utf8", env: E, cwd: REPO });
-    expect(c.status, `併完之後 --check 還紅：${c.stdout}`).toBe(0);
+    expect(c.status, `兩個寫入端都寫完之後 --check 還紅：${c.stdout}`).toBe(0);
   });
 
   it("asked-before.sh 命中時印出**那段文字本身**,⛔ 不是只有票號", () => {

@@ -147,6 +147,18 @@ function SkinModelEmbed({ doc }: { doc: unknown }) {
   );
 }
 
+/**
+ * 🔭 只有一個 modelKey 的模型預覽 —— Hero Forge「模型版本（僅此作品）」下拉選了就畫
+ * （owner 2026-09-15「下拉式選單 要能即時載入御覽」）。
+ * ⭐ 同一支 `ModelPanel`＋`normalizeBody`：看到的就是比賽裡那一顆，⛔ 不是另一套近似。
+ */
+export function ModelKeyPreview({ modelKey }: { modelKey: string }) {
+  const query = useModelDoc(modelKey);
+  const unavailable = modelQueryState(modelKey, query);
+  if (unavailable) return unavailable;
+  return <ModelPanel doc={query.data} autoPlay="idle" appearance={{ normalizeBody: true }} />;
+}
+
 export function Preview3D({ collection, doc }: { collection: CollectionName; doc: unknown }) {
   switch (collection) {
     case "models":

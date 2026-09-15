@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_cb9313fce69f",
+    "contentVersion": "cv_0a5c837d1787",
     "collections": {
       "champions": {
-        "hash": "c436a06a0a3d",
+        "hash": "26f5ebaf968c",
         "count": 153
       },
       "abilities": {
-        "hash": "c90c08b5cb9f",
+        "hash": "8ba8049b08c4",
         "count": 907
       },
       "items": {
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "3b8dc72cd85b",
+        "hash": "f057f8bcc755",
         "count": 104
       },
       "models": {
-        "hash": "c44d4df055b1",
-        "count": 1016
+        "hash": "76731f5f2b99",
+        "count": 1025
       },
       "vfx": {
         "hash": "b8f430d12052",
@@ -58,11 +58,11 @@
         "count": 14
       },
       "ability-templates": {
-        "hash": "48fcf2ce8923",
+        "hash": "a28a14aad4f4",
         "count": 82
       },
       "vfx-scripts": {
-        "hash": "20b5e06e9013",
+        "hash": "15ff12a31066",
         "count": 45
       },
       "vfx-subtypes": {
@@ -6937,7 +6937,7 @@
               "min": 0.5,
               "max": 600,
               "unit": "s",
-              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
+              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「無時限」（原作 0 秒的那種；⚠️ 仍在回合結算時收走，⛔ 不是整場永久 —— GH#1241）。"
             },
             "damageMult": {
               "type": "number",
@@ -8400,11 +8400,11 @@
       }
     ]
   },
-  "assetManifestDigest": "8e1b3d852397",
+  "assetManifestDigest": "99bc53c61730",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2886,
-    "totalBytes": 1144813562
+    "entries": 2871,
+    "totalBytes": 1108018602
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8422,11 +8422,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "220c8ea110eb",
+    "fingerprint": "99148d5ca9dc",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "892aecfd4093"
+        "digest": "c11b83625d05"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8492,5 +8492,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "4409a9329713"
+  "profileDigest": "d4914e7f1bec"
 }

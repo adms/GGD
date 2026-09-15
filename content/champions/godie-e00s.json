@@ -109,9 +109,9 @@
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
       "cooldownTier": "中",
-      "manaCostTier": "中",
       "castTimeTier": "極大",
       "rangeTier": "極大",
+      "manaCostTier": "中",
       "castTimeSec": 1
     },
     "W": {
@@ -268,6 +268,7 @@
       ],
       "range": 0.0,
       "radiusTier": "小",
+      "castTimeTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -297,8 +298,7 @@
       "icon": "assets/icons/abilities/godie-e00s.e.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
       "cooldownTier": "小",
-      "castTimeTier": "極大",
-      "castTimeSec": 1
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-e00s.r",
@@ -402,8 +402,8 @@
       "icon": "assets/icons/abilities/godie-e00s.r.webp",
       "vfxKey": "fx.prim.arcane.nova-lg",
       "cooldownTier": "大",
-      "manaCostTier": "中",
       "castTimeTier": "極大",
+      "manaCostTier": "中",
       "castTimeSec": 1
     }
   },

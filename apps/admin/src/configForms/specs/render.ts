@@ -163,7 +163,7 @@ export const VFX_SCRIPTS_SPEC: ConfigDocSpec<"vfxScripts"> = {
     "這一格是「自己判斷但留後台開關」的那個開關：關掉＝播放器對每一個事件直接跳過，有腳本的技能退回它沒有腳本時的預設演出，**逐位元同開關存在之前**。⛔ 它不影響任何傷害／行為 —— 腳本是純演出，行為真相在技能 JSON。",
   ],
   consumer:
-    "apps/client/src/vfx/VfxSystem.ts 的 VfxScriptPlayer（每一個事件都活讀這一格；缺文件＝開，⛔ 不是關 —— 部署漏帶 JSON 不可以讓整座工坊靜默消失）",
+    "apps/client/src/vfx/VfxSystem.ts 的 VfxScriptPlayer（每一個事件都活讀這一格；缺文件＝開，⛔ 不是關 —— 部署漏帶 JSON 不可以讓整座工坊靜默消失）；communityCueFallback 那一格由 packages/shared/src/content/registries.ts 的技能註冊接縫（communityCueFallbackEnabled → withCommunityCueFallback）在載入時讀",
   effect: "玩家**下一次重新整理遊戲頁面**生效（客戶端載入內容時讀，一場中途改要重整）。",
   fields: derivedFields(zConfigVfxScriptsDoc, []),
   preserved: [],

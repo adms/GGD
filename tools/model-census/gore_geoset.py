@@ -565,6 +565,19 @@ def scan() -> list[dict]:
 #: 在 `_overlay-hidden-geometry.json`、`hero-turtle` 在它自己的 model doc）。
 #: 空表 = 這條閘現在真的攔得住下一顆帶血泥的新模型，⛔ 不是「先放著」。
 EXEMPT: dict[tuple[str, int], str] = {
+    # ⭐ PR #1152 合併準備（2026-09-14）—— 同一兩顆模型 GH#1218 已經審過（下面 ou99.458777／ou99.474258 那四列），
+    #   ⚠️ 而 PR 重新凍結出**新位元組**，這張表用檔名當鍵 ⇒ 舊豁免對不上新副本。⛔ 不是新的放行。
+    #   ⭐ 這一次多了幾何量測當證據（誰都可以重量）：
+    ("dc9feac3209d03e7a1d0d180c747a7de3d6d5f1d1636cc316ac61e0f750a5ff7.glb", 0): (
+        "ou99.458777（b2-keyaru）的 PR #1152 凍結副本，與下面 bb6bd9fd／d7a771d9 同一塊 1789 頂點。"
+        "量到：尺寸 0.14×0.30×0.14、中心 y=1.22（手部高度）、只占全身 14.5% —— 是**持有物／配件**，⛔ 不是貼地血泥。"
+        "反駁方式：實拍後若看到它是屍體或飛天分身，就移進 hiddenPrimitives。"
+    ),
+    ("319db4f84bd4eb6e3db37c4342fe9f762abc80b0eebf928fc016c1fd816b2009.glb", 1): (
+        "ou99.474258（b2-kaede）的 PR #1152 凍結副本，與下面 57dd13ab／66971613 同一塊 597 頂點（正規化合併後編號由 3 變 1）。"
+        "量到：尺寸 0.24×1.47×0.13、直立、位於身前 0.75 —— 是**長柄武器**，⛔ 不是扁平貼地的板子。"
+        "反駁方式：同上，實拍確認是屍體或分身才移入 hiddenPrimitives。"
+    ),
     # GH#1218 follow-up: the asset-library merge exposes the normalized and
     # versioned copies to this reverse gate.  These six findings still have
     # only the single second-skeleton signal, so hiding them before visual

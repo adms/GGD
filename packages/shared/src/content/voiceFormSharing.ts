@@ -81,16 +81,56 @@ export interface FormVoiceShare {
 }
 
 /**
+ * A base/alternate pair declared by CONTENT (`champion.transform`), not by the w3x
+ * map. ⭐ 2026-09-15: 梅普露（b2-maple ↔ b2-maple-alt-9769eb88b85b）is a real
+ * transform in the shipped sim (`ChampionFormSystem` reads `transform.counterpartId`),
+ * ⛔ but the closed 26-pair table only knows w3x pairs ⇒ the alternate went MUTE the
+ * moment she transformed. Numberless heroes have no 編號, so `heroNumber` is "".
+ */
+export interface ContentFormPair {
+  readonly baseId: string;
+  readonly alternateId: string;
+}
+
+/** Content-declared pairs from champion docs (`transform.role` + `counterpartId`), both halves required. */
+export function contentFormPairs(
+  docs: Iterable<{ id?: unknown; transform?: { role?: unknown; counterpartId?: unknown } }>,
+): ContentFormPair[] {
+  const byId = new Map<string, { role?: unknown; counterpartId?: unknown }>();
+  for (const d of docs) if (typeof d.id === "string" && d.transform) byId.set(d.id, d.transform);
+  const out: ContentFormPair[] = [];
+  for (const [id, t] of byId) {
+    if (t.role !== "base" || typeof t.counterpartId !== "string") continue;
+    const other = byId.get(t.counterpartId);
+    // ⛔ 兩邊都要互相指著對方才算一對 —— 單邊宣告是資料錯誤，⛔ 不是借用的理由
+    if (other?.role !== "alternate" || other.counterpartId !== id) continue;
+    out.push({ baseId: id, alternateId: t.counterpartId });
+  }
+  return out.sort((a, b) => (a.baseId < b.baseId ? -1 : a.baseId > b.baseId ? 1 : 0));
+}
+
+/**
  * The shares to add, given the ids that OWN a generated pack.
  *
  * Deterministic: ordered by `championId` so the generated manifest diff is
- * stable. Ids outside the 26-pair table are ignored — they have no counterpart
- * and there is nothing to borrow.
+ * stable. Ids outside the 26-pair table and `contentPairs` are ignored — they
+ * have no counterpart and there is nothing to borrow.
  */
-export function planFormVoiceShares(idsWithOwnPack: Iterable<string>): FormVoiceShare[] {
+export function planFormVoiceShares(
+  idsWithOwnPack: Iterable<string>,
+  contentPairs: readonly ContentFormPair[] = [],
+): FormVoiceShare[] {
   const owned = new Set(idsWithOwnPack);
   const shares: FormVoiceShare[] = [];
-  for (const pair of CHAMPION_FORM_PAIRS) {
+  const w3x = new Set(CHAMPION_FORM_PAIRS.flatMap((p) => [p.baseId, p.alternateId]));
+  const pairs = [
+    ...CHAMPION_FORM_PAIRS,
+    // ⭐ w3x 那 26 對優先（它帶著編號）；內容宣告的只補表上沒有的
+    ...contentPairs
+      .filter((p) => !w3x.has(p.baseId) && !w3x.has(p.alternateId))
+      .map((p) => ({ ...p, heroNumber: "" })),
+  ];
+  for (const pair of pairs) {
     const hasBase = owned.has(pair.baseId);
     const hasAlt = owned.has(pair.alternateId);
     // Both → nothing to lend. Neither → nothing to lend FROM.

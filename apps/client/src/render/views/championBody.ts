@@ -134,7 +134,7 @@ import {
   type EntityViewState,
   type ModelDocOverride,
 } from "../EntityViewRegistry";
-import { ARCHETYPE_BY_MODEL_KEY, voxelLookFor } from "./voxelLook";
+import { ARCHETYPE_BY_MODEL_KEY, appearanceModelKey, voxelLookFor } from "./voxelLook";
 import { voxelSkinForId } from "./voxelSkinFor";
 import { championTintForId } from "./championTint";
 import type { ModelTint } from "./modelTint";
@@ -391,8 +391,7 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     // 標準症狀（⚠️ 今天在 EX 魔法陣那一題已經踩過同型：粒子等解鎖、模型從出生
     // 就掛著）。⛔ 這一行與 `modelDocFor` 那一行必須同進退。
     const bodyKey = visual?.modelKey ?? e.key;
-    const version = content.modelFor(bodyKey)?.bodyVersion;
-    const archetype = ARCHETYPE_BY_MODEL_KEY[version?.legacyAppearance ? version.sourceModelKey : bodyKey];
+    const archetype = ARCHETYPE_BY_MODEL_KEY[appearanceModelKey(bodyKey, content.modelFor(bodyKey)?.bodyVersion)];
     if (!archetype) return base;
     return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
   };

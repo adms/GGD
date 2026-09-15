@@ -21,7 +21,8 @@ import {
   similarPairs,
   sortRows,
 } from "./voxelSkinSheet";
-import { BLIZZARD_MODEL_CHAMPIONS } from "@ggd/shared/content/voxelSkin";
+import { BLIZZARD_MODEL_CHAMPIONS, STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
+import { readShippedModelDocs } from "@ggd/shared/testkit/shippedModelDocs";
 import { composeThumb, THUMB_H, THUMB_W } from "../ui/voxelSkinThumb";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
@@ -35,7 +36,9 @@ const overrides = parseOverrides(
   JSON.parse(readFileSync(join(CONTENT, "models/_voxel-skins.json"), "utf8")),
 );
 
-const sheet = buildSheet(docs, overrides);
+// GH#1250：「共用替身」讀模型文件的 glb ⇒ 把出貨的模型文件一起餵進去（⛔ 不再讀手寫 4 顆 key）。
+const models: ReadonlyMap<string, unknown> = readShippedModelDocs(CONTENT);
+const sheet = buildSheet(docs, overrides, models);
 
 describe("buildSheet over the real roster", () => {
   it("covers every champion and every look is distinct", () => {
@@ -75,7 +78,10 @@ describe("buildSheet over the real roster", () => {
       // 拉的 40 個**可選**單位,26 對變身的 `Emeu` 那一半天生不在裡面;
       // `defaultPrefersVoxelBody` 的「缺省即繼承」讓它們穿得到對半的模型。
       // 只問「自己在不在名單上」會替 6 位穿得到模型的英雄要求體素身體。
-      if (row.sharedStandIn) {
+      // ⚠️ GH#1250：「共用替身」現在是 glb 推導（含 godie-zombiex 的 blocky-undead），
+      //   ⛔ 而**身體規則**刻意仍只管四具體素 rig（voxelSkin/types.ts：翻成體素會改變對戰畫面，
+      //   owner 要時到後台切）⇒ 這條身體斷言只對 rig 租戶成立。
+      if (row.sharedStandIn && STAND_IN_MODEL_KEYS.includes(row.modelKey)) {
         const reaches =
           BLIZZARD_MODEL_CHAMPIONS.includes(row.championId) ||
           BLIZZARD_MODEL_CHAMPIONS.includes(counterpartFormId(row.championId) ?? "");
@@ -105,7 +111,7 @@ describe("buildSheet over the real roster", () => {
   });
 
   it("is order-independent — the sheet does not depend on directory order", () => {
-    const reversed = buildSheet([...docs].reverse(), overrides);
+    const reversed = buildSheet([...docs].reverse(), overrides, models);
     expect(JSON.stringify(reversed.rows.map((r) => r.signature))).toBe(
       JSON.stringify(sheet.rows.map((r) => r.signature)),
     );
@@ -180,7 +186,7 @@ describe("filters, sorts and the review loop", () => {
       first.recipe.palette.outfitPrimary,
     );
     // ...and re-feeding it reproduces the same look
-    const round = buildSheet(docs, parseOverrides(parsed));
+    const round = buildSheet(docs, parseOverrides(parsed), models);
     expect(round.rows.find((r) => r.championId === first.championId)!.signature).toBe(
       first.signature,
     );

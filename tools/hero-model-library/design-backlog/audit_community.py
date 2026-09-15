@@ -1,9 +1,9 @@
-import json, pathlib, hashlib, struct, collections, re, datetime, mmap, argparse
+import json, pathlib, hashlib, struct, collections, re, datetime, mmap, argparse, tempfile
 
 parser=argparse.ArgumentParser(description='Read-only audit of acquired community model sources; requires the local raw intake and current GGD repository.')
 parser.add_argument('--repo',type=pathlib.Path,default=pathlib.Path.cwd(),help='GGD checkout to audit (default: current directory; never searches sibling checkouts)')
 parser.add_argument('--workspace',type=pathlib.Path,default=None,help='Workspace containing GGD-Asset-Library and outputs (default: parent of --repo); does not choose the checkout')
-parser.add_argument('--output',type=pathlib.Path,default=pathlib.Path('/private/tmp/ggd-undesigned-community.json'))
+parser.add_argument('--output',type=pathlib.Path,default=pathlib.Path(tempfile.gettempdir())/'ggd-undesigned-community.json')
 parser.add_argument('--generated-at',default=None,help='Optional fixed ISO timestamp when reproducing a pinned snapshot')
 parser.add_argument('--output-repo-path',type=pathlib.Path,default=None,help='Optional stable checkout path to write into evidence while inspecting --repo (useful from an isolated worktree)')
 args=parser.parse_args()
