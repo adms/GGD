@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-15 19:17 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-15 20:18 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.45.1 · 資料截至 2026-09-15 19:17 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-15 19:17 (GMT+8)</h1><div class="meta"><span>帳本 <b>28</b> 份</span><span>點名票號 <b>478</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.45.2 · 資料截至 2026-09-15 20:18 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-15 20:18 (GMT+8)</h1><div class="meta"><span>帳本 <b>28</b> 份</span><span>點名票號 <b>479</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1730,6 +1730,29 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>17:55</td><td>ok 那你要註記 這條支線合併的價值是什麼 所以暫時不合併</td><td>⏸ 未對票</td></tr>
 <tr><td>18:07</td><td>整位允許上架 應該放在該角色最後一格，原本整位允許上架的位置放的則是跳到最後一個的位置</td><td>⏸ 未對票</td></tr>
 <tr><td>19:17</td><td>（AskUserQuestion「哆啦A夢舊模型要怎麼辦：留著可以選／拿掉舊版／這版先不換」owner 選的選項）拿掉舊版</td><td>1263</td></tr>
+<tr><td>19:12</td><td>哥布林殺手現在的「受傷、重傷、擊殺」三格，上線的是無聲的佔位檔被放大後的雜音 =&gt; 套用你覺得最接近風格的角色語音就好 話少 低沉 頭盔悶住 請你多設計一個 script 給語音及音效使用跟模型、圖片上架的檢查及轉換類似，實際遊戲會使用的語音跟音效是 128bit 44khz mp3 而不是更高音質的聲音檔 (若原本音質就更低就不用轉換浪費空間了) 然後全部檢查轉換所有上架角色語音，轉換上架的檔案會上 git，原始素材或半成品等上 S3，還沒用到/上架的語音檔保持原始沒關係 黑魔導士 - 莉娜因巴斯 godie-h020・godie-hjai （原檔）voice_attack_2, vc_ze…</td><td>⏸ 未對票</td></tr>
+<tr><td>19:14</td><td>上傳備份後可以刪除 zip 了</td><td>⏸ 未對票</td></tr>
+<tr><td>19:25</td><td>請你查證是否為真後，用開票守則開票以下 bug 回報 1. 滿裝後再跳出裝備獎勵沒辦法跳過也不能賣裝 2. [重要][緊急] 手把可否重頭玩到尾 3. 所有新的模組定位角度有問題-螃蟹走路 4. BOT 不要三人同隊選一樣的角色避免過度失衡 5. 木乃香 強度需要調整 6. 推薦碼變成選項不需讓玩家也可以直接註冊，但是後台還是要批核 (但新帳號使用推薦碼後還是可以讓介紹人自動審批過) 這個變成後台選項可以切換</td><td>⏸ 未對票</td></tr>
+<tr><td>19:27</td><td>你不要自己比 你做一頁 我幫你比較勾選就好 不要浪費 token</td><td>⏸ 未對票</td></tr>
+<tr><td>19:34</td><td>其餘 LoL 11＋模型角色 3445/45 本機發布通過，但 PR #1228 仍是 Draft、尚未合併⏳ 尚未正式上架 =&gt; ?</td><td>#1228</td></tr>
+<tr><td>19:39</td><td>v0.45.2 部署後先實機看過鄂爾、阿璃、瑟雷西、稻草人、威寇茲這幾招，再翻開關 =&gt; 不需要 直接上就好</td><td>⏸ 未對票</td></tr>
+<tr><td>19:42</td><td>你查看一下 最近一週有許多新分支等你合併上架</td><td>⏸ 未對票</td></tr>
+<tr><td>19:52</td><td>你自己可以用 whisper 本地端測試超過 1秒以上的語音是否為中文 就不要上架</td><td>⏸ 未對票</td></tr>
+<tr><td>19:53</td><td>但其實我已經要做完了</td><td>⏸ 未對票</td></tr>
+<tr><td>19:55</td><td>我已經全部判斷完了</td><td>⏸ 未對票</td></tr>
+<tr><td>20:02</td><td>好了 請你全部整理告一個段落 讓 main 合併上架</td><td>⏸ 未對票</td></tr>
+<tr><td>20:04</td><td>為何初號機還沒綁定模型？</td><td>⏸ 未對票</td></tr>
+<tr><td>20:07</td><td>論壇模型都要接上才對</td><td>⏸ 未對票</td></tr>
+<tr><td>20:08</td><td>你要不要先盤點還沒接上論壇的模型跟角色有哪些 然後開張票先</td><td>⏸ 未對票</td></tr>
+<tr><td>20:10</td><td>你可以先暫緩 先寫個 plan 我們找時間再執行</td><td>⏸ 未對票</td></tr>
+<tr><td>20:11</td><td>你應該要趕快上架 BMPNDD 了 我十分鐘後要出門</td><td>⏸ 未對票</td></tr>
+<tr><td>20:11</td><td>我等等要出門了 你快做完</td><td>⏸ 未對票</td></tr>
+<tr><td>20:12</td><td>whisper 判斷中文還需兩三分鐘 =&gt; 請你停掉 下次在座</td><td>⏸ 未對票</td></tr>
+<tr><td>20:12</td><td>那些都是後台下拉式選單 可以加購的選項 都寫到計畫裡</td><td>⏸ 未對票</td></tr>
+<tr><td>20:12</td><td>你可以先把計畫寫好 commit + push</td><td>⏸ 未對票</td></tr>
+<tr><td>20:12</td><td>你可以先把計畫寫好 commit + push</td><td>⏸ 未對票</td></tr>
+<tr><td>20:14</td><td>所以你這版應該是全角色都上了 不會卡了吧</td><td>⏸ 未對票</td></tr>
+<tr><td>20:18</td><td>我已經有開啟了 請你自己去路徑讀去</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
