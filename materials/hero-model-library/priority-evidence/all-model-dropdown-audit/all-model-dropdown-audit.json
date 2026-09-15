@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "f10e68a6de8ecbda4efe6c5a75c30c12527a4c76473d85062755f84a44c28678"
+      "sha256": "7a5e52c86c34161e279106cee1e105995518a28d5e2c18f8b72c60a397c2cf46"
     }
   },
   "summary": {
@@ -295,15 +295,15 @@
       ]
     },
     {
-      "id": "historical-astralym-decimated-c45f111d",
+      "id": "historical-astralym-decimated-f77cf1ee",
       "character": "枯星龍",
       "resourceRole": "independent-historical-model-body-component",
       "componentReady": true,
       "runtimeSelectable": false,
       "runtimeDropdownRegistered": false,
       "heroIds": [],
-      "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
-      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+      "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+      "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
       "readiness": "validated-decimated-historical-body-candidate-pending-generated-option-overlay",
       "nativeAnimationCount": 5,
       "animationClipCount": null,
@@ -315,9 +315,7 @@
       "limitations": [
         "Expected low-poly faceting is visible after 23,928 to 7,996 triangle reduction; five-clip A/B remains under the 5% visual threshold.",
         "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
-        "Transparent texel RGB was sanitized without changing alpha or any visible texel; source and predecessor candidate bytes remain retained.",
-        "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states.",
-        "The S3 conversion-stage backup preserves both the corrected c45f111d candidate and its f77cf1ee predecessor; neither backup proves deployment."
+        "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states."
       ]
     },
     {

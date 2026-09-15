@@ -388,7 +388,7 @@ def write_or_check(path: Path, value: str, check: bool) -> None:
         path.write_text(value, encoding="utf-8")
 
 
-def run_apply(repo: Path, workspace: Path, git_link_root: Path) -> list[dict[str, Any]]:
+def run_apply(repo: Path, workspace: Path, git_link_root: Path, *, update_central_index: bool = True) -> list[dict[str, Any]]:
     downloads = load_json(repo / "materials/hero-model-library/download-sources.json")
     registered = {row.get("id") for row in downloads.get("publicSources", [])}
     commands: list[list[str]] = []
@@ -397,23 +397,27 @@ def run_apply(repo: Path, workspace: Path, git_link_root: Path) -> list[dict[str
     if "steam-kofxiv-terry-path-index-v1" not in registered:
         commands.append([sys.executable, str(HERE.parent / "kof-xiv-terry-path-index-v1/integrate.py"), "--repo", str(repo), "--workspace", str(workspace)])
     commands.extend([
-        [sys.executable, str(repo / "tools/hero-model-library/inventory.py"), "--workspace", str(workspace)],
-        [sys.executable, str(repo / "tools/hero-model-library/build_model_design_backlog.py"), "--workspace", str(workspace)],
         [sys.executable, str(HERE.parent / "kof-xiv-terry-path-index-v1/build_inventory.py"), "--repo", str(repo), "--workspace", str(workspace)],
         [sys.executable, str(HERE.parent / "kof-3d-sources-v1/build_inventory.py"), "--repo", str(repo), "--workspace", str(workspace)],
         [sys.executable, str(HERE.parent / "kof-3d-sources-v1/update_four_day_report.py"), "--write"],
         [sys.executable, str(HERE.parent / "kof-xiv-terry-path-index-v1/update_four_day_report.py"), "--write"],
     ])
+    if update_central_index:
+        commands.extend([
+            [sys.executable, str(repo / "tools/hero-model-library/inventory.py"), "--workspace", str(workspace)],
+            [sys.executable, str(repo / "tools/hero-model-library/build_model_design_backlog.py"), "--workspace", str(workspace)],
+        ])
     return [run_command(repo, command) for command in commands]
 
 
-def run_generated_checks(repo: Path, workspace: Path, git_link_root: Path) -> list[dict[str, Any]]:
+def run_generated_checks(repo: Path, workspace: Path, git_link_root: Path, *, check_central_index: bool = True) -> list[dict[str, Any]]:
     commands = [
         [sys.executable, str(HERE.parent / "kof-3d-sources-v1/update_four_day_report.py")],
         [sys.executable, str(HERE.parent / "kof-xiv-terry-path-index-v1/update_four_day_report.py")],
         [sys.executable, str(HERE / "update_report.py")],
-        [sys.executable, str(repo / "tools/hero-model-library/current_resource_index.py"), "--check", "--git-link-root", str(git_link_root)],
     ]
+    if check_central_index:
+        commands.append([sys.executable, str(repo / "tools/hero-model-library/current_resource_index.py"), "--check", "--git-link-root", str(git_link_root)])
     return [run_command(repo, command) for command in commands]
 
 
@@ -424,6 +428,8 @@ def main() -> int:
     parser.add_argument("--git-link-root", type=Path)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--defer-central-index", action="store_true",
+                        help="refresh/check KOF-owned outputs only; a parent orchestrator updates shared indexes later")
     args = parser.parse_args()
     repo = args.repo.resolve()
     workspace = args.workspace.resolve()
@@ -432,7 +438,7 @@ def main() -> int:
         raise ValueError("--check and --apply are mutually exclusive")
 
     if args.apply:
-        run_apply(repo, workspace, git_link_root)
+        run_apply(repo, workspace, git_link_root, update_central_index=not args.defer_central_index)
     definition = load_json(DEFINITION)
     entry = build_entry(repo, definition)
     fragment = build_fragment()
@@ -444,12 +450,14 @@ def main() -> int:
 
     if not args.check:
         run_command(repo, [sys.executable, str(HERE / "update_report.py"), "--write"])
-        run_command(repo, [sys.executable, str(repo / "tools/hero-model-library/current_resource_index.py"), "--git-link-root", str(git_link_root)])
-    checks = run_generated_checks(repo, workspace, git_link_root)
+        if not args.defer_central_index:
+            run_command(repo, [sys.executable, str(repo / "tools/hero-model-library/current_resource_index.py"), "--git-link-root", str(git_link_root)])
+    checks = run_generated_checks(repo, workspace, git_link_root, check_central_index=not args.defer_central_index)
     print(json.dumps({
         "pipelineId": definition["pipelineId"],
         "check": args.check,
         "apply": args.apply,
+        "centralIndexDeferred": args.defer_central_index,
         "stages": len(receipt["stages"]),
         "verifiedPayloadFiles": receipt["summary"]["verifiedPayloadFiles"],
         "ownerApprovedReviewItems": receipt["summary"]["ownerApprovedVfxTextureCandidates"] + receipt["summary"]["ownerApprovedNativeEffectGroups"],

@@ -289,7 +289,8 @@ def build() -> dict:
         if not relevant_scope(row, kinds):
             excluded["outside-four-kind-community-scope"] += 1
             continue
-        manifest_versions = manifests.get(row["id"], [])
+        manifest_id = row.get("localVerificationManifestId") or row["id"]
+        manifest_versions = manifests.get(manifest_id, [])
         manifest = manifest_versions[-1] if manifest_versions else {"files": row.get("files", [])}
         local_path = row.get("localPath") or row.get("localRoot") or row.get("upstreamLocalRoot")
         absolute = str((WORKSPACE / local_path).resolve()) if local_path and not Path(local_path).is_absolute() else local_path
@@ -317,6 +318,7 @@ def build() -> dict:
                 **(file_authority if manifest_versions else file_ref(DOWNLOAD_SOURCES)),
                 "authorityKind": "public-source-files-source-row" if manifest_versions else "download-sources-public-source-row",
                 "sourceRecordId": row["id"],
+                "activeManifestId": manifest_id,
                 "sourceRecordIndexes": [m["_recordIndex"] for m in manifest_versions] if manifest_versions else [source_index],
                 "activeSourceRecordIndex": manifest.get("_recordIndex", source_index),
                 "preservedVersionCount": len(manifest_versions) or 1,

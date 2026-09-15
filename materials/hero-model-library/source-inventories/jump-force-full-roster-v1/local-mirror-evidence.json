@@ -104,9 +104,15 @@
     "fileCount": 3466,
     "fullGetVerified": true,
     "allMemberSha256Verified": true,
+    "manifestS3ReadbackVerified": true,
     "localUnchanged": true,
     "manifest": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/1db8e6da6f902b35d09cc206fb35fa9e4d57caeceaba9ab2063793e0a7425852/manifest.json",
+      "bytes": 660516,
+      "sha256": "958939bd603db62c4aa50c30a19191849e45ee00121d205c1a027749ec365b8b"
+    },
+    "manifestS3Readback": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/1db8e6da6f902b35d09cc206fb35fa9e4d57caeceaba9ab2063793e0a7425852/manifest-s3-readback.json",
       "bytes": 660516,
       "sha256": "958939bd603db62c4aa50c30a19191849e45ee00121d205c1a027749ec365b8b"
     },
@@ -114,12 +120,6 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/latest-receipt.json",
       "bytes": 2083,
       "sha256": "3056a7e9ff7999ac6b79744be524e6f95e25db90121141856d8f2bc6258d8cd6"
-    },
-    "manifestS3ReadbackVerified": true,
-    "manifestS3Readback": {
-      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/1db8e6da6f902b35d09cc206fb35fa9e4d57caeceaba9ab2063793e0a7425852/manifest-s3-readback.json",
-      "bytes": 660516,
-      "sha256": "958939bd603db62c4aa50c30a19191849e45ee00121d205c1a027749ec365b8b"
     }
   },
   "scope": {

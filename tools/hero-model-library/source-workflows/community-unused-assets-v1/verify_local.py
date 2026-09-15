@@ -34,9 +34,10 @@ def verify() -> dict:
         # The final row is the active local tree; earlier rows remain preserved
         # as immutable S3 versions in public-source-files.json. Newer sources
         # can use the per-source file list in download-sources directly.
-        versions = manifests.get(source["id"], [])
+        manifest_id = source.get("localVerificationManifestId") or source["id"]
+        versions = manifests.get(manifest_id, [])
         manifest = versions[-1] if versions else {"files": source.get("files", [])}
-        root_value = source.get("localPath") or source.get("localRoot") or source.get("upstreamLocalRoot")
+        root_value = manifest.get("localPath") or source.get("localPath") or source.get("localRoot") or source.get("upstreamLocalRoot")
         root = Path(root_value) if root_value and Path(root_value).is_absolute() else WORKSPACE / str(root_value or "")
         checked = missing = mismatched = verified_bytes = 0
         problems = []
@@ -76,6 +77,7 @@ def verify() -> dict:
         all_verified = missing == 0 and mismatched == 0 and checked == len(manifest.get("files", [])) and checked > 0
         rows.append({
             "sourceId": source["id"],
+            "activeManifestId": manifest_id,
             "localAbsolutePath": str(root.resolve()),
             "expectedFiles": len(manifest.get("files", [])),
             "verifiedFiles": checked - mismatched,

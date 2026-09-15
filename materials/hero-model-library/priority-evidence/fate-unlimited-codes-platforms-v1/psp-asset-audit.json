@@ -10,13 +10,13 @@
   "generatedFrom": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3516280,
-      "sha256": "2d25de4ebd3921ffadf2769929bb0876d48d72f6c9e11834bca0ee8a9f5b45b0"
+      "bytes": 3516282,
+      "sha256": "3d2733750efadee3434e5361b4a566167f795997f20842bd3223ce1aecff565a"
     },
     "platformIndex": {
       "path": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
       "bytes": 25656,
-      "sha256": "0b9eb653598377e14cfce743ba70a89e3a31bdbfee4487c8d2a608dee4215a18"
+      "sha256": "41b27cb667de95058772db612c6e8e8091b2fb162ca40ad68ccff329f59f4387"
     },
     "generator": {
       "path": "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py",

@@ -19,22 +19,22 @@
   "inputs": {
     "legacy": {
       "bytes": 15353,
-      "sha256": "7522234f601816db6710ffc836a05ccf71fb1ccd8deeb0af4d5f617c405233e6",
+      "sha256": "26a5528c0fa37bc45d7620eb40e887017c91fb59821118bbd16bc3760335443c",
       "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/inventory.json"
     },
     "ultimate": {
-      "bytes": 262087,
-      "sha256": "324027a053067991cb5bc64e4c2adda842f805ba8e4b62d8d8c0acd686ce79c2",
+      "bytes": 262083,
+      "sha256": "114d7011c6490ea8df88d7fc4fd64cb57094e6ef07738501845696a0946e0baf",
       "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json"
     },
     "ultimateReconciliation": {
       "bytes": 32591,
-      "sha256": "37a71da786f2fc75af08d44c6176b49a2fd45e5a253e6c10e82ecbddae9df625",
+      "sha256": "e1bc30c68dc5c79368f2660f3b29a9594d2099d06bdd87abb50eb6db06224f52",
       "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json"
     },
     "downloadSources": {
-      "bytes": 3412456,
-      "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
+      "bytes": 3516282,
+      "sha256": "3d2733750efadee3434e5361b4a566167f795997f20842bd3223ce1aecff565a",
       "gitPath": "materials/hero-model-library/download-sources.json"
     },
     "samusMacosBlender522Blocker": {
@@ -44,8 +44,8 @@
     }
   },
   "inputConsistency": {
-    "ultimateReconciliationPinnedDownloadSourcesSha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
-    "currentDownloadSourcesSha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
+    "ultimateReconciliationPinnedDownloadSourcesSha256": "3d2733750efadee3434e5361b4a566167f795997f20842bd3223ce1aecff565a",
+    "currentDownloadSourcesSha256": "3d2733750efadee3434e5361b4a566167f795997f20842bd3223ce1aecff565a",
     "ultimateReconciliationMatchesCurrentCatalog": true,
     "status": "current",
     "effect": "The cross-generation counts retain the current checked-in reconciliation values, but its source-catalog pin must be rebuilt before treating that reconciliation as a fresh full-pipeline check."

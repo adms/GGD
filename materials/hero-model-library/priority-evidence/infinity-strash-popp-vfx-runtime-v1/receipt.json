@@ -410,8 +410,8 @@
       ],
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.q.json",
-        "bytes": 1681,
-        "sha256": "feb91f093b71126869e47e5a8947f053024397e4f968e86d91c6b6a96d8a9512"
+        "bytes": 1682,
+        "sha256": "6196cece133da85e74487335b2887ba659811fecf344d8fa18e957c4dcb8216d"
       }
     },
     {
@@ -432,8 +432,8 @@
       ],
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.w.json",
-        "bytes": 2534,
-        "sha256": "556043dcec870d6fe9bd4a93d0e4861cef14dec9159d8ce10ba6d643dc79f819"
+        "bytes": 2535,
+        "sha256": "c2429e55e1c4f938dd93ba37f5769fb9bbd0f60d1a50d9689454af5edb657c77"
       }
     },
     {
@@ -465,7 +465,7 @@
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.r.json",
         "bytes": 1959,
-        "sha256": "4a1332d06fe1b388a4a9e1a27f52e43a983a04f8119d978ef059515e3d61451c"
+        "sha256": "ab9ad3977f2abf1d9eaff0c1dc280c7d4ac5924d6bf8f847b3aff0fdfb8121da"
       }
     }
   ],
@@ -478,8 +478,8 @@
   ],
   "championMirror": {
     "gitPath": "content/champions/b2-popp.json",
-    "bytes": 19398,
-    "sha256": "3f6ade0086073fa6211cf839634ebcdddd7c10dc737b216595ccd7ff4f8bda7b"
+    "bytes": 19400,
+    "sha256": "72779598f7d0d94254b0d8ad35af74d3b026057b34e27fbd90397a9acb241abc"
   },
   "states": {
     "featureBranchVfxDocumentsResolvable": true,

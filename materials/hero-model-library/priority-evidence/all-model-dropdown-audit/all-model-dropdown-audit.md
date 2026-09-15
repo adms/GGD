@@ -41,7 +41,7 @@
 | 元件 | 角色 | 類型 | 動作 | 精確阻塞 |
 |---|---|---|---:|---|
 | `historical-astralym-7bc2fa3f8` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
-| `historical-astralym-decimated-c45f111d` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `historical-astralym-decimated-f77cf1ee` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `infinity-strash-mystvearn-en653-01-static-skinned-v1` | 密斯特巴恩 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `kof-xv-ash-crimson-left-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `kof-xv-ash-crimson-right-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |

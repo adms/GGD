@@ -4,10 +4,10 @@
 
 ## 範圍與數量
 
-- 來源記錄：59；獨立元件：42。
-- 權威逐檔記錄：66728 檔，26481617176 bytes。
-- 尚未證明可在執行期選用：58 個來源。
-- 已轉換候選：20；有部分驗收證據：11；已登記：1；明確可切換：1；正式部署：0。
+- 來源記錄：61；獨立元件：47。
+- 權威逐檔記錄：66959 檔，27103028589 bytes。
+- 尚未證明可在執行期選用：60 個來源。
+- 已轉換候選：21；有部分驗收證據：12；已登記：1；明確可切換：1；正式部署：0。
 - 300英雄／MBA 的大型逐檔、動作與 VFX 索引沿用 `300-mba-unused-assets-v1`，本頁只保留其 content-addressed 入口。
 
 ## 來源分類
@@ -21,7 +21,7 @@
 | game-resource-site | 14 |
 | mod-repository | 16 |
 | public-source-repository | 9 |
-| steam-workshop | 2 |
+| steam-workshop | 4 |
 | warcraft-community-or-custom-map | 3 |
 
 ## 查詢

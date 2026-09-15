@@ -1,28 +1,29 @@
 {
   "schema": "ggd.community-unused-assets-local-verification@1",
   "inputSha256": {
-    "downloadSources": "671eebfa9b46e3e9d7228273398e5d98f33b766c4c8126c06f18bfa11b058a19",
-    "publicSourceFiles": "8622f745ea8ff6c1305423b2c8a3cf70776ad137f5844dca118dfb4ee5be2c64"
+    "downloadSources": "dc9dd1fbf7e337e5cad55a939656b9cc0789ea6f8a62a71ce664383f5dd66718",
+    "publicSourceFiles": "e8d211bc747600ae2dc43e0ca1b6d699df0024d4ec71c42e1d5ca31804240e57"
   },
   "scope": "All acquired sources in the four-kind community/MOD inventory; every authoritative manifest member is checked.",
   "summary": {
     "state": "complete",
-    "sourcesChecked": 59,
-    "sourcesFullyVerified": 56,
-    "expectedFiles": 66728,
-    "verifiedFiles": 66688,
-    "verifiedBytes": 26424809517,
-    "missingFiles": 39,
-    "mismatchedFiles": 1,
-    "componentFilesExpected": 42,
-    "componentFilesVerified": 42,
-    "componentVerifiedBytes": 48122320,
+    "sourcesChecked": 61,
+    "sourcesFullyVerified": 60,
+    "expectedFiles": 66959,
+    "verifiedFiles": 66959,
+    "verifiedBytes": 27103028589,
+    "missingFiles": 0,
+    "mismatchedFiles": 0,
+    "componentFilesExpected": 47,
+    "componentFilesVerified": 47,
+    "componentVerifiedBytes": 56869192,
     "componentMissingFiles": 0,
     "componentMismatchedFiles": 0
   },
   "sources": [
     {
       "sourceId": "itch-kmiliz-doraemon",
+      "activeManifestId": "itch-kmiliz-doraemon",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/itch-kmiliz-doraemon",
       "expectedFiles": 3,
       "verifiedFiles": 3,
@@ -42,6 +43,7 @@
     },
     {
       "sourceId": "hive-megaman-x",
+      "activeManifestId": "hive-megaman-x",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x",
       "expectedFiles": 12,
       "verifiedFiles": 12,
@@ -61,6 +63,7 @@
     },
     {
       "sourceId": "hive-sephiroth",
+      "activeManifestId": "hive-sephiroth",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-sephiroth",
       "expectedFiles": 7,
       "verifiedFiles": 7,
@@ -80,6 +83,7 @@
     },
     {
       "sourceId": "thunderstore-hisoka",
+      "activeManifestId": "thunderstore-hisoka",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka",
       "expectedFiles": 366,
       "verifiedFiles": 366,
@@ -99,6 +103,7 @@
     },
     {
       "sourceId": "thunderstore-maomao",
+      "activeManifestId": "thunderstore-maomao",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao",
       "expectedFiles": 437,
       "verifiedFiles": 437,
@@ -118,6 +123,7 @@
     },
     {
       "sourceId": "thunderstore-holo",
+      "activeManifestId": "thunderstore-holo",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo",
       "expectedFiles": 521,
       "verifiedFiles": 521,
@@ -137,6 +143,7 @@
     },
     {
       "sourceId": "thunderstore-guts",
+      "activeManifestId": "thunderstore-guts",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts",
       "expectedFiles": 174,
       "verifiedFiles": 174,
@@ -156,6 +163,7 @@
     },
     {
       "sourceId": "hive-anime-team-survival",
+      "activeManifestId": "hive-anime-team-survival",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival",
       "expectedFiles": 308,
       "verifiedFiles": 308,
@@ -175,6 +183,7 @@
     },
     {
       "sourceId": "thunderstore-rezero",
+      "activeManifestId": "thunderstore-rezero",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero",
       "expectedFiles": 1970,
       "verifiedFiles": 1970,
@@ -184,9 +193,9 @@
       "allManifestFilesVerified": true,
       "verificationState": "all-enumerated-files-verified",
       "problems": [],
-      "componentFilesExpected": 7,
-      "componentFilesVerified": 7,
-      "componentVerifiedBytes": 6690160,
+      "componentFilesExpected": 8,
+      "componentFilesVerified": 8,
+      "componentVerifiedBytes": 7731424,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0,
       "allEnumeratedComponentsVerified": true,
@@ -194,6 +203,7 @@
     },
     {
       "sourceId": "thunderstore-gon",
+      "activeManifestId": "thunderstore-gon",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-gon",
       "expectedFiles": 177,
       "verifiedFiles": 177,
@@ -213,6 +223,7 @@
     },
     {
       "sourceId": "thunderstore-rimuru-ror2",
+      "activeManifestId": "thunderstore-rimuru-ror2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2",
       "expectedFiles": 2039,
       "verifiedFiles": 2039,
@@ -232,6 +243,7 @@
     },
     {
       "sourceId": "thunderstore-iori",
+      "activeManifestId": "thunderstore-iori",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori",
       "expectedFiles": 233,
       "verifiedFiles": 233,
@@ -251,6 +263,7 @@
     },
     {
       "sourceId": "thunderstore-eva01",
+      "activeManifestId": "thunderstore-eva01",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-eva01",
       "expectedFiles": 768,
       "verifiedFiles": 768,
@@ -270,6 +283,7 @@
     },
     {
       "sourceId": "thunderstore-kenshiro",
+      "activeManifestId": "thunderstore-kenshiro",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-kenshiro",
       "expectedFiles": 312,
       "verifiedFiles": 312,
@@ -289,6 +303,7 @@
     },
     {
       "sourceId": "thunderstore-hokuto-lr",
+      "activeManifestId": "thunderstore-hokuto-lr",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-hokuto-lr",
       "expectedFiles": 6158,
       "verifiedFiles": 6158,
@@ -308,6 +323,7 @@
     },
     {
       "sourceId": "steam-korosensei",
+      "activeManifestId": "steam-korosensei",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-korosensei",
       "expectedFiles": 31,
       "verifiedFiles": 31,
@@ -327,6 +343,7 @@
     },
     {
       "sourceId": "steam-billy-herrington",
+      "activeManifestId": "steam-billy-herrington",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington",
       "expectedFiles": 29,
       "verifiedFiles": 29,
@@ -346,6 +363,7 @@
     },
     {
       "sourceId": "thunderstore-pikachu-tiny",
+      "activeManifestId": "thunderstore-pikachu-tiny",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-tiny",
       "expectedFiles": 97,
       "verifiedFiles": 97,
@@ -365,6 +383,7 @@
     },
     {
       "sourceId": "thunderstore-pikachu-frankzin",
+      "activeManifestId": "thunderstore-pikachu-frankzin",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-pikachu-frankzin",
       "expectedFiles": 223,
       "verifiedFiles": 223,
@@ -384,6 +403,7 @@
     },
     {
       "sourceId": "gtainside-naofumi",
+      "activeManifestId": "gtainside-naofumi",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi",
       "expectedFiles": 13,
       "verifiedFiles": 13,
@@ -403,6 +423,7 @@
     },
     {
       "sourceId": "gtainside-light-yagami-kw",
+      "activeManifestId": "gtainside-light-yagami-kw",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-light-yagami-kw",
       "expectedFiles": 13,
       "verifiedFiles": 13,
@@ -422,6 +443,7 @@
     },
     {
       "sourceId": "gtainside-kenshin",
+      "activeManifestId": "gtainside-kenshin",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-kenshin",
       "expectedFiles": 16,
       "verifiedFiles": 16,
@@ -441,6 +463,7 @@
     },
     {
       "sourceId": "gtainside-anime-pack",
+      "activeManifestId": "gtainside-anime-pack",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-anime-pack",
       "expectedFiles": 254,
       "verifiedFiles": 254,
@@ -460,6 +483,7 @@
     },
     {
       "sourceId": "github-chiikawa",
+      "activeManifestId": "github-chiikawa",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/github-chiikawa",
       "expectedFiles": 253,
       "verifiedFiles": 253,
@@ -479,6 +503,7 @@
     },
     {
       "sourceId": "gamebanana-shadow",
+      "activeManifestId": "gamebanana-shadow",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow",
       "expectedFiles": 1161,
       "verifiedFiles": 1161,
@@ -498,6 +523,7 @@
     },
     {
       "sourceId": "thunderstore-sadako",
+      "activeManifestId": "thunderstore-sadako",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-sadako",
       "expectedFiles": 351,
       "verifiedFiles": 351,
@@ -517,6 +543,7 @@
     },
     {
       "sourceId": "gtainside-lubu",
+      "activeManifestId": "gtainside-lubu",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-lubu",
       "expectedFiles": 14,
       "verifiedFiles": 14,
@@ -536,6 +563,7 @@
     },
     {
       "sourceId": "thunderstore-goku",
+      "activeManifestId": "thunderstore-goku",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-goku",
       "expectedFiles": 1996,
       "verifiedFiles": 1996,
@@ -555,6 +583,7 @@
     },
     {
       "sourceId": "gta5mod-shinchan-sd2",
+      "activeManifestId": "gta5mod-shinchan-sd2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-sd2",
       "expectedFiles": 8,
       "verifiedFiles": 8,
@@ -574,6 +603,7 @@
     },
     {
       "sourceId": "gta5mod-shinchan-kstamil",
+      "activeManifestId": "gta5mod-shinchan-kstamil",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gta5mod-shinchan-kstamil",
       "expectedFiles": 8,
       "verifiedFiles": 8,
@@ -593,6 +623,7 @@
     },
     {
       "sourceId": "parallel-ns-ultimate14",
+      "activeManifestId": "parallel-ns-ultimate14",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14",
       "expectedFiles": 1075,
       "verifiedFiles": 1075,
@@ -612,6 +643,7 @@
     },
     {
       "sourceId": "parallel-ns-bowser-big-blast",
+      "activeManifestId": "parallel-ns-bowser-big-blast",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast",
       "expectedFiles": 74,
       "verifiedFiles": 74,
@@ -631,6 +663,7 @@
     },
     {
       "sourceId": "parallel-ns-alucard-ssbu",
+      "activeManifestId": "parallel-ns-alucard-ssbu",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu",
       "expectedFiles": 346,
       "verifiedFiles": 346,
@@ -650,6 +683,7 @@
     },
     {
       "sourceId": "gitlab-ssbu-models",
+      "activeManifestId": "gitlab-ssbu-models",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models",
       "expectedFiles": 42581,
       "verifiedFiles": 42581,
@@ -659,9 +693,9 @@
       "allManifestFilesVerified": true,
       "verificationState": "all-enumerated-files-verified",
       "problems": [],
-      "componentFilesExpected": 22,
-      "componentFilesVerified": 22,
-      "componentVerifiedBytes": 19495300,
+      "componentFilesExpected": 23,
+      "componentFilesVerified": 23,
+      "componentVerifiedBytes": 20448004,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0,
       "allEnumeratedComponentsVerified": true,
@@ -669,24 +703,16 @@
     },
     {
       "sourceId": "parallel-community-adult-gon-multiversus",
+      "activeManifestId": "parallel-community-adult-gon-multiversus-unreal-v4-analysis",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus",
-      "expectedFiles": 9,
-      "verifiedFiles": 8,
-      "verifiedBytes": 17481571,
+      "expectedFiles": 54,
+      "verifiedFiles": 54,
+      "verifiedBytes": 33539301,
       "missingFiles": 0,
-      "mismatchedFiles": 1,
-      "allManifestFilesVerified": false,
-      "verificationState": "incomplete-or-mismatched",
-      "problems": [
-        {
-          "path": "asset-classification.json",
-          "problem": "content-mismatch",
-          "expectedSha256": "4b5d3e56397b4a2d4fa6d6959419a8714315d9bc53660eda9130e06a22738d4d",
-          "actualSha256": "c05948abbd291aad4d721255fad23d2cb965529f9e9e8a14c512417d9c5b0787",
-          "expectedBytes": 2137,
-          "actualBytes": 3783
-        }
-      ],
+      "mismatchedFiles": 0,
+      "allManifestFilesVerified": true,
+      "verificationState": "all-enumerated-files-verified",
+      "problems": [],
       "componentFilesExpected": 0,
       "componentFilesVerified": 0,
       "componentVerifiedBytes": 0,
@@ -697,6 +723,7 @@
     },
     {
       "sourceId": "parallel-community-goblin-slayer-ssbu",
+      "activeManifestId": "parallel-community-goblin-slayer-ssbu",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu",
       "expectedFiles": 60,
       "verifiedFiles": 60,
@@ -716,6 +743,7 @@
     },
     {
       "sourceId": "gamebanana-zero-lancer-493444",
+      "activeManifestId": "gamebanana-zero-lancer-493444",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer",
       "expectedFiles": 359,
       "verifiedFiles": 359,
@@ -735,6 +763,7 @@
     },
     {
       "sourceId": "gamebanana-fuc-shirou-473819",
+      "activeManifestId": "gamebanana-fuc-shirou-473819",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou",
       "expectedFiles": 341,
       "verifiedFiles": 341,
@@ -754,6 +783,7 @@
     },
     {
       "sourceId": "gamebanana-fuc-rin-474593",
+      "activeManifestId": "gamebanana-fuc-rin-474593",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin",
       "expectedFiles": 342,
       "verifiedFiles": 342,
@@ -773,6 +803,7 @@
     },
     {
       "sourceId": "parallel-community-lina-ssbu-ceruleancast",
+      "activeManifestId": "parallel-community-lina-ssbu-ceruleancast",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ssbu-ceruleancast",
       "expectedFiles": 460,
       "verifiedFiles": 460,
@@ -792,6 +823,7 @@
     },
     {
       "sourceId": "parallel-community-slayers-tales-of-rays",
+      "activeManifestId": "parallel-community-slayers-tales-of-rays",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-tales-of-rays",
       "expectedFiles": 183,
       "verifiedFiles": 183,
@@ -811,6 +843,7 @@
     },
     {
       "sourceId": "github-neztypezero-psp-gmo-loader-f346daec",
+      "activeManifestId": "github-neztypezero-psp-gmo-loader-f346daec",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader",
       "expectedFiles": 548,
       "verifiedFiles": 548,
@@ -830,6 +863,7 @@
     },
     {
       "sourceId": "parallel-community-slayers-lina-hand-review",
+      "activeManifestId": "parallel-community-slayers-lina-hand-review",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review",
       "expectedFiles": 144,
       "verifiedFiles": 144,
@@ -849,6 +883,7 @@
     },
     {
       "sourceId": "psp-cloud-native-motion-batch4",
+      "activeManifestId": "psp-cloud-native-motion-batch4",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/psp-cloud-native-motion-batch4",
       "expectedFiles": 48,
       "verifiedFiles": 48,
@@ -868,6 +903,7 @@
     },
     {
       "sourceId": "kof-open3dlab-ash-xv",
+      "activeManifestId": "kof-open3dlab-ash-xv",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv",
       "expectedFiles": 68,
       "verifiedFiles": 68,
@@ -887,6 +923,7 @@
     },
     {
       "sourceId": "parallel-community-lina-rays-300-retarget",
+      "activeManifestId": "parallel-community-lina-rays-300-retarget",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget",
       "expectedFiles": 153,
       "verifiedFiles": 153,
@@ -906,6 +943,7 @@
     },
     {
       "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+      "activeManifestId": "gamebanana-fuc-kotomine-kirei-291438",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
       "expectedFiles": 33,
       "verifiedFiles": 33,
@@ -925,6 +963,7 @@
     },
     {
       "sourceId": "gamebanana-fuc-dark-sakura-492607",
+      "activeManifestId": "gamebanana-fuc-dark-sakura-492607",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
       "expectedFiles": 377,
       "verifiedFiles": 377,
@@ -944,6 +983,7 @@
     },
     {
       "sourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+      "activeManifestId": "kof-open3dlab-ash-xv-material-repair-v2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2",
       "expectedFiles": 105,
       "verifiedFiles": 105,
@@ -963,6 +1003,7 @@
     },
     {
       "sourceId": "parallel-community-lina-rays-300-retarget-footloop-v2",
+      "activeManifestId": "parallel-community-lina-rays-300-retarget-footloop-v2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2",
       "expectedFiles": 116,
       "verifiedFiles": 116,
@@ -982,6 +1023,7 @@
     },
     {
       "sourceId": "parallel-infinity-strash-sorcerer-popp",
+      "activeManifestId": "parallel-infinity-strash-sorcerer-popp",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
       "expectedFiles": 134,
       "verifiedFiles": 134,
@@ -1001,10 +1043,11 @@
     },
     {
       "sourceId": "kof-xv-mai-sfmlab-lordscrub-v1",
+      "activeManifestId": "kof-xv-mai-sfmlab-lordscrub-v1",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
-      "expectedFiles": 1,
-      "verifiedFiles": 1,
-      "verifiedBytes": 90764853,
+      "expectedFiles": 50,
+      "verifiedFiles": 50,
+      "verifiedBytes": 268596636,
       "missingFiles": 0,
       "mismatchedFiles": 0,
       "allManifestFilesVerified": true,
@@ -1020,6 +1063,7 @@
     },
     {
       "sourceId": "thunderstore-holya-kaiji-suit2",
+      "activeManifestId": "thunderstore-holya-kaiji-suit2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
       "expectedFiles": 3,
       "verifiedFiles": 3,
@@ -1039,6 +1083,7 @@
     },
     {
       "sourceId": "github-flemmli97-fateubw-07e9d79b",
+      "activeManifestId": "github-flemmli97-fateubw-07e9d79b",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
       "expectedFiles": 797,
       "verifiedFiles": 797,
@@ -1058,6 +1103,7 @@
     },
     {
       "sourceId": "patreon-shinteo-dai-daz-v2",
+      "activeManifestId": "patreon-shinteo-dai-daz-v2",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
       "expectedFiles": 135,
       "verifiedFiles": 135,
@@ -1077,6 +1123,7 @@
     },
     {
       "sourceId": "mai-doa6-gtasa-gtav06-motion",
+      "activeManifestId": "mai-doa6-gtasa-gtav06-motion",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23",
       "expectedFiles": 221,
       "verifiedFiles": 221,
@@ -1096,253 +1143,19 @@
     },
     {
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
-      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community",
+      "activeManifestId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8",
       "expectedFiles": 39,
-      "verifiedFiles": 0,
-      "verifiedBytes": 0,
-      "missingFiles": 39,
+      "verifiedFiles": 39,
+      "verifiedBytes": 56805522,
+      "missingFiles": 0,
       "mismatchedFiles": 0,
-      "allManifestFilesVerified": false,
-      "verificationState": "incomplete-or-mismatched",
-      "problems": [
-        {
-          "path": "evidence/contact-sheet.png",
-          "problem": "missing",
-          "expectedSha256": "c0670571764bb5402e6a915046d4743bb164b696869dad171cbf9967704f2f85",
-          "expectedBytes": 390994
-        },
-        {
-          "path": "evidence/historical-astralym-7bc2fa3f8/back.png",
-          "problem": "missing",
-          "expectedSha256": "6bff7244bcd4844a2c72699006a5ef82c3519d797f6d24daae64ed2cf7cc5e98",
-          "expectedBytes": 205502
-        },
-        {
-          "path": "evidence/historical-astralym-7bc2fa3f8/front.png",
-          "problem": "missing",
-          "expectedSha256": "942ffa3d7eac21e086df9f7d8b103652cb9e9cb4e1894d4f23649782bd81b643",
-          "expectedBytes": 228638
-        },
-        {
-          "path": "evidence/historical-astralym-7bc2fa3f8/isometric.png",
-          "problem": "missing",
-          "expectedSha256": "deb2fbcb52dac0a4b1006cbb57b71c6bb3544f8070c512b212432918f24db4fd",
-          "expectedBytes": 237968
-        },
-        {
-          "path": "evidence/historical-astralym-7bc2fa3f8/proof.json",
-          "problem": "missing",
-          "expectedSha256": "bc46fc0aa96be4781497323a2d4314fc8adc2cfc2f3e9e566d665dfe73ba0d54",
-          "expectedBytes": 5855
-        },
-        {
-          "path": "evidence/historical-astralym-7bc2fa3f8/run.json",
-          "problem": "missing",
-          "expectedSha256": "f4e3d54974bc0e1fb7f55568483828ca1c21aaf1149bbba5096ad40208712719",
-          "expectedBytes": 436
-        },
-        {
-          "path": "evidence/historical-jetragon-7bc2fa3f8/back.png",
-          "problem": "missing",
-          "expectedSha256": "0c9412b20b2713bd70346722e43f20aadb97751b6590773236057b29d49a08f5",
-          "expectedBytes": 143670
-        },
-        {
-          "path": "evidence/historical-jetragon-7bc2fa3f8/front.png",
-          "problem": "missing",
-          "expectedSha256": "bce4ddc3122691f36ff73018f2854859a30038c10fbe0e875c00872a3d30dd14",
-          "expectedBytes": 164036
-        },
-        {
-          "path": "evidence/historical-jetragon-7bc2fa3f8/isometric.png",
-          "problem": "missing",
-          "expectedSha256": "b1fdb202190d511f9b4b13d863728191e0b5a7ccc99633277c03d1cdbb9d41fb",
-          "expectedBytes": 170348
-        },
-        {
-          "path": "evidence/historical-jetragon-7bc2fa3f8/proof.json",
-          "problem": "missing",
-          "expectedSha256": "6bf5bf080ac604a580692a3c6e07b097a802da0aa59ca12fef86ab39a76da57e",
-          "expectedBytes": 5719
-        },
-        {
-          "path": "evidence/historical-jetragon-7bc2fa3f8/run.json",
-          "problem": "missing",
-          "expectedSha256": "7d00d9e166ca09289b623e32b62c5ed6896b326d4d79a7274f26a57f7d62b1c1",
-          "expectedBytes": 436
-        },
-        {
-          "path": "evidence/historical-kita-kita-7bc2fa3f8/back.png",
-          "problem": "missing",
-          "expectedSha256": "77bbd2016652a09f1b4ac225a82a65caa259f427d03d76e070f272bbcd39377f",
-          "expectedBytes": 187497
-        },
-        {
-          "path": "evidence/historical-kita-kita-7bc2fa3f8/front.png",
-          "problem": "missing",
-          "expectedSha256": "8c746069a42a41978aca54bdfba4668f6d1dc233b1722b0efb1dc19cb3bfc7ee",
-          "expectedBytes": 212378
-        },
-        {
-          "path": "evidence/historical-kita-kita-7bc2fa3f8/isometric.png",
-          "problem": "missing",
-          "expectedSha256": "e4f116de498ad262a01e85614b1ac574f42e4852b8f2f3c375e7cd606e0f94f2",
-          "expectedBytes": 182733
-        },
-        {
-          "path": "evidence/historical-kita-kita-7bc2fa3f8/proof.json",
-          "problem": "missing",
-          "expectedSha256": "8bd45832cc52c9b28eaf6767e6a39fe8c41f933e8f8c0d37e27c1566f261a0cf",
-          "expectedBytes": 2707
-        },
-        {
-          "path": "evidence/historical-kita-kita-7bc2fa3f8/run.json",
-          "problem": "missing",
-          "expectedSha256": "203e16d0f0715fa1ee85e476e135523dc22540ea98ee05afbe575ee3bcb37bf2",
-          "expectedBytes": 437
-        },
-        {
-          "path": "evidence/historical-lord-nightmares-7bc2fa3f8/back.png",
-          "problem": "missing",
-          "expectedSha256": "54092eb4003d1975a398cc577087ec900d800f5cb22ba4a77224735c5c76360b",
-          "expectedBytes": 118265
-        },
-        {
-          "path": "evidence/historical-lord-nightmares-7bc2fa3f8/front.png",
-          "problem": "missing",
-          "expectedSha256": "0a7e1f9048a19fb679b8fa4227673b343885ed23de46e6724f10375e6f544f9c",
-          "expectedBytes": 147479
-        },
-        {
-          "path": "evidence/historical-lord-nightmares-7bc2fa3f8/isometric.png",
-          "problem": "missing",
-          "expectedSha256": "fba58dbb181efc220b58daee40917780d8b7f4f713db65fc858626a8c132e232",
-          "expectedBytes": 168476
-        },
-        {
-          "path": "evidence/historical-lord-nightmares-7bc2fa3f8/proof.json",
-          "problem": "missing",
-          "expectedSha256": "166a7b2feee288913ca63333900b4ed49865b9db24c4a0f14ed7948a6bbd52e3",
-          "expectedBytes": 2730
-        },
-        {
-          "path": "evidence/historical-lord-nightmares-7bc2fa3f8/run.json",
-          "problem": "missing",
-          "expectedSha256": "b792b197cb3d7c56f24f755bb0c717ed45abc7a7d167fde78760c7f8c73ca788",
-          "expectedBytes": 443
-        },
-        {
-          "path": "evidence/validation.json",
-          "problem": "missing",
-          "expectedSha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
-          "expectedBytes": 65157
-        },
-        {
-          "path": "evidence/visual-acceptance.json",
-          "problem": "missing",
-          "expectedSha256": "690f693a49c02e3f270e3a695b7c5b135565ccf55edb044fd0b1dc19e5f225d4",
-          "expectedBytes": 6787
-        },
-        {
-          "path": "render-intermediates/historical-astralym-7bc2fa3f8/bundle.js",
-          "problem": "missing",
-          "expectedSha256": "56c157443905f3dd4beb88dbeda7ea9825699a6473ac9471a0fc8f381a8ee192",
-          "expectedBytes": 11484861
-        },
-        {
-          "path": "render-intermediates/historical-astralym-7bc2fa3f8/chrome.log",
-          "problem": "missing",
-          "expectedSha256": "99aed5bf6dda967a730f7a1b472d495aebd9119e3fe6d5e27434e6b8ebdf5ad9",
-          "expectedBytes": 4298
-        },
-        {
-          "path": "render-intermediates/historical-jetragon-7bc2fa3f8/bundle.js",
-          "problem": "missing",
-          "expectedSha256": "56c157443905f3dd4beb88dbeda7ea9825699a6473ac9471a0fc8f381a8ee192",
-          "expectedBytes": 11484861
-        },
-        {
-          "path": "render-intermediates/historical-jetragon-7bc2fa3f8/chrome.log",
-          "problem": "missing",
-          "expectedSha256": "db6c8cbc9544ff55f8288f550ba8940aae63dec64dca51ad3759dfa9d523fced",
-          "expectedBytes": 4114
-        },
-        {
-          "path": "render-intermediates/historical-kita-kita-7bc2fa3f8/bundle.js",
-          "problem": "missing",
-          "expectedSha256": "56c157443905f3dd4beb88dbeda7ea9825699a6473ac9471a0fc8f381a8ee192",
-          "expectedBytes": 11484861
-        },
-        {
-          "path": "render-intermediates/historical-kita-kita-7bc2fa3f8/chrome.log",
-          "problem": "missing",
-          "expectedSha256": "23784724d0206db7fa9c928ee6b23cd562046a90026f3278598a1c83305b7648",
-          "expectedBytes": 2599
-        },
-        {
-          "path": "render-intermediates/historical-lord-nightmares-7bc2fa3f8/bundle.js",
-          "problem": "missing",
-          "expectedSha256": "56c157443905f3dd4beb88dbeda7ea9825699a6473ac9471a0fc8f381a8ee192",
-          "expectedBytes": 11484861
-        },
-        {
-          "path": "render-intermediates/historical-lord-nightmares-7bc2fa3f8/chrome.log",
-          "problem": "missing",
-          "expectedSha256": "22ca0ac93de47ba89822a738f5db033db3169dad2f20aa07b4610079a8937aa1",
-          "expectedBytes": 2599
-        },
-        {
-          "path": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-          "problem": "missing",
-          "expectedSha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-          "expectedBytes": 3224424
-        },
-        {
-          "path": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
-          "problem": "missing",
-          "expectedSha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
-          "expectedBytes": 373464
-        },
-        {
-          "path": "restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
-          "problem": "missing",
-          "expectedSha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
-          "expectedBytes": 3889188
-        },
-        {
-          "path": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
-          "problem": "missing",
-          "expectedSha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
-          "expectedBytes": 695600
-        },
-        {
-          "path": "tools/historical_components.py",
-          "problem": "missing",
-          "expectedSha256": "cc175f6a5a1f38df5fe09bf66e7cb4105a549382219d6a1b550d5b6864f0b191",
-          "expectedBytes": 5479
-        },
-        {
-          "path": "tools/render_historical_model.mjs",
-          "problem": "missing",
-          "expectedSha256": "b54316c8bed072757f02361d79efc5ccc94f330cdf1c13b1ed4b31f711866c3e",
-          "expectedBytes": 4632
-        },
-        {
-          "path": "tools/render_historical_model.py",
-          "problem": "missing",
-          "expectedSha256": "017ba5072f5dffa2dc5ef9a3267a4ff933fcc0bf5eb7bb6d6c2797a735e687f3",
-          "expectedBytes": 3767
-        },
-        {
-          "path": "tools/validate_historical_model_recovery.mts",
-          "problem": "missing",
-          "expectedSha256": "9439be2714c75bf23c4e9e811794c907161cb4fe74b98d2f422b185ead55905f",
-          "expectedBytes": 7223
-        }
-      ],
-      "componentFilesExpected": 5,
-      "componentFilesVerified": 5,
-      "componentVerifiedBytes": 11975516,
+      "allManifestFilesVerified": true,
+      "verificationState": "all-enumerated-files-verified",
+      "problems": [],
+      "componentFilesExpected": 6,
+      "componentFilesVerified": 6,
+      "componentVerifiedBytes": 15755664,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0,
       "allEnumeratedComponentsVerified": true,
@@ -1350,6 +1163,7 @@
     },
     {
       "sourceId": "bowlroll-sabakan359-vearn-mmd-v087",
+      "activeManifestId": "bowlroll-sabakan359-vearn-mmd-v087",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087",
       "expectedFiles": 24,
       "verifiedFiles": 24,
@@ -1369,6 +1183,7 @@
     },
     {
       "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "activeManifestId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
       "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2",
       "expectedFiles": 0,
       "verifiedFiles": 0,
@@ -1377,6 +1192,46 @@
       "mismatchedFiles": 0,
       "allManifestFilesVerified": false,
       "verificationState": "no-enumerated-files",
+      "problems": [],
+      "componentFilesExpected": 2,
+      "componentFilesVerified": 2,
+      "componentVerifiedBytes": 2972756,
+      "componentMissingFiles": 0,
+      "componentMismatchedFiles": 0,
+      "allEnumeratedComponentsVerified": true,
+      "componentProblems": []
+    },
+    {
+      "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
+      "activeManifestId": "steam-jump-force-dai-l4d2-coach-2298782931",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-l4d2-2298782931-2298782931",
+      "expectedFiles": 112,
+      "verifiedFiles": 112,
+      "verifiedBytes": 395813921,
+      "missingFiles": 0,
+      "mismatchedFiles": 0,
+      "allManifestFilesVerified": true,
+      "verificationState": "all-enumerated-files-verified",
+      "problems": [],
+      "componentFilesExpected": 0,
+      "componentFilesVerified": 0,
+      "componentVerifiedBytes": 0,
+      "componentMissingFiles": 0,
+      "componentMismatchedFiles": 0,
+      "allEnumeratedComponentsVerified": false,
+      "componentProblems": []
+    },
+    {
+      "sourceId": "steam-jump-force-dai-sword-l4d2-2318399292",
+      "activeManifestId": "steam-jump-force-dai-sword-l4d2-2318399292",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-sources/lead-dai-jumpforce-sword-l4d2-2318399292-2318399292",
+      "expectedFiles": 25,
+      "verifiedFiles": 25,
+      "verifiedBytes": 31710116,
+      "missingFiles": 0,
+      "mismatchedFiles": 0,
+      "allManifestFilesVerified": true,
+      "verificationState": "all-enumerated-files-verified",
       "problems": [],
       "componentFilesExpected": 0,
       "componentFilesVerified": 0,

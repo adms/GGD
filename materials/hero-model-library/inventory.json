@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T11:52:34+08:00",
-  "inputsSha256": "153cb7416be0e7eb589d9addc77260ad4b954fc05e55f35826a2932956689b25",
+  "generatedAt": "2026-09-15T12:50:08+08:00",
+  "inputsSha256": "ef4e6e8219b8fd2313567dfddc393783d8a9b79831adbc0550ecba0e631636da",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -149418,7 +149418,8 @@
             "manifestSha256": "55b50ef1ad5ece7839f9e89b406bcb746aad878fa44539a245f741081674dd3c",
             "s3Use": "backup-only-not-runtime-entry"
           }
-        ]
+        ],
+        "localVerificationManifestId": "parallel-community-adult-gon-multiversus-unreal-v4-analysis"
       },
       {
         "id": "parallel-community-goblin-slayer-ssbu",
@@ -187913,8 +187914,8 @@
               "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
               "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states."
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
             "backupLocations": [
               "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz"
             ],
@@ -187923,12 +187924,12 @@
             "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
             "s3Use": "legacy conversion/intermediate backup; runtime continues to use the Git-pinned GLB",
             "backupReceipt": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-receipt.json",
+              "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/astralym-f77cf1ee-s3-backup-receipt.json",
               "bytes": 1459,
               "sha256": "64a04f236664551c6e71b44bd869498c882fe9925c536ee0a493965594751d5c"
             },
             "backupManifest": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-manifest.json",
+              "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/astralym-f77cf1ee-s3-backup-manifest.json",
               "bytes": 16962,
               "sha256": "32330c59a21958eaed8b07cea4979e4257fd595ed5ea7652af8b10e8c64d5eb4"
             },
@@ -188062,8 +188063,8 @@
               "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
               "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
             "backupLocations": [
               {
                 "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
