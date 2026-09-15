@@ -15,17 +15,20 @@
  * ⚠️ watch 模式不掛：等檔案變動時本來就是 CPU≈0，⛔ 那不是卡死。
  */
 import { spawn } from "node:child_process";
-import { rmSync } from "node:fs";
+import { existsSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { pendingFileFor } from "./pendingReporter.mjs";
 
 const WATCHDOG = fileURLToPath(new URL("../../scripts/watchdog.sh", import.meta.url));
+/** ⚠️ 看門狗是保險，⛔ 保險裝不上不可以讓測試跑不了 ⇒ 印一句（⛔ 不是安靜地少一隻）、照常跑。 */
+const notStarted = (why) => console.warn(`⏲️ 看門狗沒啟動（${why}）—— 這一次 vitest 照常跑，⛔ 但沒有人看住它（GH#1257）`);
 
 export default function setup({ config }) {
   if (config.watch || process.env.GGD_VITEST_WATCHDOG_OFF === "1" || process.platform === "win32") return;
   // workspace（apps/game-server）每個 project 各跑一次 globalSetup ⇒ 一個主行程只掛一隻。
   // ⚠️ 比對 pid 而不是「有沒有設」：子行程會繼承 env，而測試裡再起一個 vitest 時它要有自己的一隻。
   if (process.env.GGD_VITEST_WATCHDOG_PID === String(process.pid)) return;
+  if (!existsSync(WATCHDOG)) return notStarted(`找不到 ${WATCHDOG}`);
   process.env.GGD_VITEST_WATCHDOG_PID = String(process.pid);
 
   const pending = pendingFileFor(process.pid);
@@ -36,6 +39,9 @@ export default function setup({ config }) {
     detached: true,
     stdio: ["ignore", "inherit", "inherit"],
   });
+  // ⛔⛔ GH#1257 修正輪 —— 沒有這一格，找不到 bash（node:22-alpine 就沒有；edge build stage 正是它）
+  //   ⇒ spawn 擲 Unhandled 'error' event ⇒ **vitest 主行程直接崩（EXIT=1）**（審查實測）。
+  dog.on("error", (e) => notStarted(e.message));
   dog.unref();
   return () => {
     try {

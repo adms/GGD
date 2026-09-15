@@ -94,16 +94,34 @@ fi
 #     macOS 的 `pcpu` 是衰減平均，剛好看得見。⇒ 兩邊都用 `time` 的差才是同一把尺。
 #   ⚠️ attach 模式下這支是主行程的**子行程**（globalSetup 生的）⇒ 自己那一支（ps／awk／sleep）
 #     一定要排除，否則看門狗自己的取樣就讓它永遠「不閒」、開火時還會把自己殺掉。
+#
+# ⭐ GH#1257 修正輪 —— **量尺的粒度**：Linux（CI）procps 的 `ps -o time=` **只到整秒**。
+#   判準是「5 秒一格、低於 25ms」⇒ 整秒粒度下實際變成「連續 90 秒整棵樹不到 1 整秒」（≈1.1%，⛔ 不是 0.5%），
+#   而 root 的 5% 容許更失真：一次 +1 整秒 − 250ms 容許 = 750ms ⇒ 前景 TTY 跑在 Linux 上**永遠不開火**。
+#   ⇒ 有 `/proc` 就讀 `/proc/<pid>/stat` 的 utime+stime（1/CLK_TCK 秒，通常 10ms）——
+#     ⭐ 與 procps 的 `time` 是**同一個數**（utime+stime），只是沒有被捨去成整秒；沒有 `/proc`（macOS）才用 `ps`（百分之一秒）。
+#   🔙 `GGD_WATCHDOG_NO_PROC=1` 強制走 `ps`（環境變數，只給作者／CI 退回舊量法）。
+HZ=$(getconf CLK_TCK 2>/dev/null); [ -n "$HZ" ] || HZ=100
+cpu_table() {   # 每行「pid ppid 累計CPU秒」
+  if [ "${GGD_WATCHDOG_NO_PROC:-}" != 1 ] && [ -r /proc/self/stat ]; then
+    # comm（第 2 欄）可以含空白與括號 ⇒ 砍到**最後一個** ") " 為止；之後 f[2]=ppid、f[12]=utime、f[13]=stime。
+    cat /proc/[0-9]*/stat 2>/dev/null | awk -v hz="$HZ" '
+      { r = $0; sub(/.*\) /, "", r); split(r, f, " "); printf "%s %s %.2f\n", $1, f[2], (f[12] + f[13]) / hz }'
+  else
+    ps -eo pid=,ppid=,time= 2>/dev/null | awk '
+      function secs(t,   d, a, n, i, s) {
+        d = 0
+        if (index(t, "-")) { split(t, a, "-"); d = a[1]; t = a[2] }
+        n = split(t, a, ":"); s = 0
+        for (i = 1; i <= n; i++) s = s * 60 + a[i]
+        return d * 86400 + s
+      }
+      { printf "%s %s %.2f\n", $1, $2, secs($3) }'
+  fi
+}
 tree() {
-  ps -eo pid=,ppid=,time= 2>/dev/null | awk -v root="$1" -v self="$$" '
-    function secs(t,   d, a, n, i, s) {
-      d = 0
-      if (index(t, "-")) { split(t, a, "-"); d = a[1]; t = a[2] }
-      n = split(t, a, ":"); s = 0
-      for (i = 1; i <= n; i++) s = s * 60 + a[i]
-      return d * 86400 + s
-    }
-    { pid[NR] = $1; ppid[NR] = $2; cpu[NR] = secs($3); n = NR }
+  cpu_table | awk -v root="$1" -v self="$$" '
+    { pid[NR] = $1; ppid[NR] = $2; cpu[NR] = $3; n = NR }
     END {
       want[root] = 1; changed = 1
       while (changed) {
@@ -164,16 +182,27 @@ else
   PID=$!
 fi
 DEADLINE=$(( SECONDS + LIMIT_MIN*60 ))
-IDLE=0 PREV="" RECORDED="" TICK=0
+IDLE=0 PREV="" RECORDED="" WALL_RECORDED="" BLIND="" TICK=0
 while kill -0 "$PID" 2>/dev/null; do
   # ⭐ 每秒看一次「它還在不在」，每 SAMPLE_SEC 秒才量一次 CPU：attach 模式下這支握著 vitest 的
   #   stdout/stderr，主行程走了之後要**馬上**放手，⛔ 不可以讓 `| tee`、`spawnSync` 多等 5 秒。
   sleep 1 </dev/null >/dev/null 2>&1
-  if [ "$SECONDS" -ge "$DEADLINE" ]; then
-    fire "超過 ${LIMIT_MIN} 分鐘 —— SIGKILL（wall 逾時）" 124
+  # ⚠️ RECORD_ONLY 時 fire 回 1、迴圈繼續 ⇒ 要像下面 idle 那支一樣記一次就好，
+  #   ⛔ 不擋的話逾時之後**每秒**重印一次訊息與未結束檔清單（GH#1257 修正輪，審查抓到的不對稱）。
+  if [ "$SECONDS" -ge "$DEADLINE" ] && [ -z "$WALL_RECORDED" ]; then
+    fire "超過 ${LIMIT_MIN} 分鐘 —— SIGKILL（wall 逾時）" 124 || WALL_RECORDED=1
   fi
   TICK=$((TICK + 1)); [ $(( TICK % SAMPLE_SEC )) -eq 0 ] || continue
   SAMPLE=$(tree "$PID")
+  # ⛔ 量表裡連 root 自己都沒有（沒有 /proc 也沒有 ps —— 例：debian-slim 又設了 GGD_WATCHDOG_NO_PROC=1）⇒ 整棵樹讀起來是 0，
+  #   ⛔ 那是**量尺瞎了**、不是閒置 ⇒ 這一格不算、印一次就好（一把靜默的瞎尺會把健康的跑殺掉；GH#1257 修正輪）。
+  #   ⚠️ 用 case 比對，⛔ 不用 `printf | grep -q`：pipefail 底下 grep 提早關管道會讓整條管線非零 ⇒ 反而誤判成瞎。
+  case $'\n'"$SAMPLE" in
+    *$'\n'"$PID "*) ;;
+    *) kill -0 "$PID" 2>/dev/null || break   # 只是剛好在量的那一刻走了
+       [ -n "$BLIND" ] || echo "⏲️ 看門狗：量不到 pid $PID 的 CPU（沒有 /proc 也沒有 ps？）—— ⛔ 量尺瞎了不等於閒置：不判死" >&2
+       BLIND=1; IDLE=0; continue ;;
+  esac
   # 這一格的 CPU 毫秒數 = Σ(這次 − 上次)；新出現的 pid 整份算進去，消失的不算。
   # 輸出兩個數：「子孫合計」與「root 自己」。
   read -r DESC_MS ROOT_MS <<<"$(printf '%s\n' "$SAMPLE" | awk -v prev="$PREV" -v root="$PID" '
