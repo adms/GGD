@@ -660,9 +660,12 @@ export const heroCatalogApi = {
  * 仍然吃同一個 `ENABLED` 部署閘，寫入仍然「先 validate 再 PUT」（content-api 覆蓋前先留底）。
  *
  * ⚠️ 寫進去的是 `content/skins/*.json` —— 平台的商店目錄**開機時**讀它（wallet/catalog.go LoadCatalog）
- * ⇒ 玩家看得到要 commit ＋ 完整部署。⛔ 這不是 content-overlay（線上即時）那條路。
+ * ⇒ 玩家看得到要 `pnpm content:build`（PUT 走 reindex 會刪 bundle.json）＋ commit ＋ 完整部署。
+ * ⛔ 這不是 content-overlay（線上即時）那條路。
  */
 export const modelShopApi = {
+  /** 同一個 `ENABLED` 部署閘 —— UI 關著時整段收起（⛔ 不是讓 owner 填完售價才吃 OFF_MESSAGE）。 */
+  enabled: ENABLED,
   async listSkins(championId: string, opts: ContentApiOptions = {}): Promise<{ docs: SkinDoc[]; error: string | null }> {
     if (!ENABLED) return { docs: [], error: OFF_MESSAGE };
     const fetchFn = opts.fetchFn ?? defaultFetch;
@@ -672,13 +675,15 @@ export const modelShopApi = {
       if (res.status !== 200) return { docs: [], error: errorOf(res.body, res.status, url) };
       const entries = (res.body as { entries?: { id?: unknown }[] } | null)?.entries;
       if (!Array.isArray(entries)) return { docs: [], error: "造型清單格式不完整。" };
+      // ⭐ 讀**全部**造型再按文件裡的 championId 篩（⛔ 不靠 id 前綴）—— 「同模型已有造型」要看得到手寫的那幾份。
+      const ids = entries.map((entry) => entry.id).filter((id): id is string => typeof id === "string");
       const docs: SkinDoc[] = [];
-      for (const entry of entries) {
-        if (typeof entry.id !== "string" || !entry.id.startsWith(`skin.${championId}.`)) continue;
-        const docUrlOf = `/content-api/skins/${encodeURIComponent(entry.id)}`;
-        const one = await send(fetchFn, docUrlOf, "GET");
-        if (one.status !== 200) return { docs: [], error: errorOf(one.body, one.status, docUrlOf) };
-        const doc = one.body as SkinDoc | null;
+      for (const one of await Promise.all(ids.map(async (id) => {
+        const docUrlOf = `/content-api/skins/${encodeURIComponent(id)}`;
+        return { docUrlOf, res: await send(fetchFn, docUrlOf, "GET") };
+      }))) {
+        if (one.res.status !== 200) return { docs: [], error: errorOf(one.res.body, one.res.status, one.docUrlOf) };
+        const doc = one.res.body as SkinDoc | null;
         if (doc?.championId === championId) docs.push(doc);
       }
       return { docs, error: null };
@@ -698,4 +703,4 @@ export const modelShopApi = {
     } catch (error) { return { ok: false, issues: [], error: error instanceof Error ? error.message : String(error) }; }
   },
 };
-export type ModelShopApi = Pick<typeof modelShopApi, "listSkins" | "saveSkin">;
+export type ModelShopApi = Pick<typeof modelShopApi, "enabled" | "listSkins" | "saveSkin">;

@@ -7,6 +7,13 @@
 import { z } from "zod";
 import { zAlpha, zId, zRef, zTintRgb } from "./common";
 
+/**
+ * GH#1177 —— skin@1 `mcoinPrice` 的上界，⭐ 唯一住處（第〇·四守則）。
+ * 讀它的：下面的 Zod `.max` ＋ 後台 `apps/admin/src/ui/ChampionModelVersionShop.tsx` 的 `parseSkinPrice`。
+ * 打錯字的柵欄，⛔ 不是平衡意見；要放寬就改這一行，兩邊一起動。
+ */
+export const SKIN_PRICE_MAX = 1_000_000;
+
 export const zSkinDoc = z
   .object({
     id: zId,
@@ -20,7 +27,7 @@ export const zSkinDoc = z
      * not a balance opinion (第一守則：欄位要有上界) — GH#1177 made pricing a
      * routine 後台 action, so 750 typed as 7500000 has to stop at validate.
      */
-    mcoinPrice: z.number().int().min(0).max(1_000_000),
+    mcoinPrice: z.number().int().min(0).max(SKIN_PRICE_MAX),
     /**
      * GH#1177 商店上架開關 —— ABSENT == listed (true), so every skin that shipped
      * before this field keeps selling exactly as before. `false` = 下架：the
