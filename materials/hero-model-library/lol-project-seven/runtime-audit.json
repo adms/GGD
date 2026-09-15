@@ -37,23 +37,23 @@
     },
     "runtimeManifest": {
       "path": "content/assets/audio/voices/champions/MANIFEST.json",
-      "bytes": 1673191,
-      "sha256": "e2f5624170fc2a9b363c4b8ba90e7cc5966ea6b7fe6ac8f86511cc5567f81c37"
+      "bytes": 1688327,
+      "sha256": "22074a9387e5a9ac906745c20babf8fe3b3c5d015b30b068ba44a42c30e41291"
     },
     "centralVoiceIndex": {
       "path": "materials/hero-model-library/voice-index.json",
-      "bytes": 4297964,
-      "sha256": "ded9d247a2b97fcf514ac96c9c7bcbad30a8627483c82eb7eb835ea539c02ad4"
+      "bytes": 4300287,
+      "sha256": "4a7800931fbb1fa09619e945914fb39929e808b4fe68a7c386ecaadd0ad3d501"
     },
     "centralVoiceFiles": {
       "path": "materials/hero-model-library/voice-files.jsonl.gz",
-      "bytes": 27882183,
-      "sha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469"
+      "bytes": 27888115,
+      "sha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0"
     },
     "localSourceVerification": {
       "path": "materials/hero-model-library/lol-project-seven/local-file-verification/index.json",
       "bytes": 10635,
-      "sha256": "2884a9697519f123a7049570a5bd20217137aade889c6b6fed332d1e0411743e"
+      "sha256": "ce5833168bd524d7bf7de834eea5e878ddaca0bc09488ddb4bec875b48236dba"
     }
   },
   "approvalEvidence": {

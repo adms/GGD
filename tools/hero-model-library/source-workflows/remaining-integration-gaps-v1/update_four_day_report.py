@@ -26,13 +26,21 @@ def block():
     mapped = [row for row in fate_manifest["components"] if row.get("heroIds")]
     unmapped = [row for row in fate_manifest["components"] if not row.get("heroIds")]
     voice_groups = status["originalVoiceDirectFilenameGapGroups"]
+    missing_skill_slots = {
+        row["heroId"].removeprefix("lol-"): [slot.removeprefix("ability-") for slot in row["missingApprovedSkillTargets"]]
+        for row in load(LOL)["perHero"]
+        if row["missingApprovedSkillTargets"]
+    }
+    missing_skill_text = "、".join(
+        f"{hero} 缺 {','.join(slots)}" for hero, slots in missing_skill_slots.items()
+    ) or "無"
     return "\n".join([
         START,
         "## 八、仍待整合與語音身份缺口",
         "",
         f"- **何布／波普**：{status['branchOnlyPoppOriginalVfxRelationships']} 筆原作事件名稱對應仍只是本分支提案；12 顆已核准 GGD VFX 文件保留為未綁定候選。Main 合併、技能時序綁定與正式部署皆為 0。",
         f"- **分支減面預選**：{'、'.join(status['branchOnlyDecimatedDefaultCharacters'])}的新版本在此分支；尚未證明 Main 或正式站已使用。",
-        f"- **LoL 七位**：已核准並驗證 {lol['runtimeMp3sVerified']} 段 runtime MP3，但原生事件覆蓋仍是 partial-by-skin，另有 {lol['pendingOtherEventBoundWavs']} 段已綁事件 WAV 未進本批；喊招槽不宣稱齊全。",
+        f"- **LoL 七位**：已核准並驗證 {lol['runtimeMp3sVerified']} 段 runtime MP3，但原生事件覆蓋仍是 partial-by-skin，另有 {lol['pendingOtherEventBoundWavs']} 段已綁事件 WAV 未進本批；目前可由稽核資料確認的喊招缺格為：{missing_skill_text}。其餘候選仍待逐項 owner 聽審，不補猜測配對。",
         f"- **FateUBW**：{len(fate_manifest['components'])}/14 顆 Git GLB 已轉換，{len(mapped)} 顆成品對應 {fate.get('registeredCharacters', 4)} 名已有英雄，共 {fate.get('registeredHeroOptions', 5)} 個非預設後台候選；{len(unmapped)} 名尚無 GGD 英雄定義，不能寫成全部進遊戲。",
         f"- **尚未轉進遊戲**：{'、'.join(status['notIntegratedIntoGame'])}仍為素材／轉換候選，runtime 註冊與正式部署為 0。",
         f"- **原作語音直接對應缺口**：11 位負責英雄（例：{'、'.join(voice_groups[0]['examples'])}）與 23 位原作角色（例：{'、'.join(voice_groups[1]['examples'])}）在現有素材庫沒有能靠檔名直接確認本人的原作語音。",
