@@ -187,25 +187,27 @@ redis_snapshot_before_shutdown() {
 
 roster_coverage_check() {
 head_ "4.5 ⭐ 名單覆蓋（映像宣告的官方英雄 ↔ 這台機器真的啟用的）"
-local sj wj n_star n_white n_short
+local sj wj n_star n_white n_short short_ids
 sj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist/starter' 2>/dev/null || true)
 wj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist' 2>/dev/null || true)
 if [ -z "$sj" ] || [ -z "$wj" ]; then
   warn "兩個名單端點讀不到 —— ⛔ 這一段**沒有驗到**（⛔ 不是通過）"
 else
   # ⭐ 差集算在**這裡**，⛔ 不是比兩個數字：兩邊數量相等也可能是各自缺不同的人。
-  read -r n_star n_white n_short <<<"$(
+  # ⭐ GH#1227：缺的人**逐名印出來** —— ⛔ 只印人數，讀的人得自己去兩個端點做差集。
+  read -r n_star n_white n_short short_ids <<<"$(
     python3 - "$sj" "$wj" <<'PY'
 import json, sys
 star = set(json.loads(sys.argv[1]).get("champions") or [])
 white = set((json.loads(sys.argv[2]).get("whitelist") or json.loads(sys.argv[2])).get("champions") or [])
-print(len(star), len(white), len(star - white))
+print(len(star), len(white), len(star - white), ",".join(sorted(star - white)) or "-")
 PY
   )"
   if [ "${n_short:-1}" = "0" ]; then
     ok "白名單涵蓋映像宣告的全部 ${n_star} 名官方英雄（這台啟用 ${n_white}）"
   else
     warn "⛔ **這台機器少啟用 ${n_short} 名官方英雄**（映像 ${n_star} / 啟用 ${n_white}）"
+    info "⇒ git 有、服務沒有啟用：${short_ids//,/, }"
     info "⇒ 玩家的症狀是**選人畫面少人**，⛔ 而每一個既有檢查都會是綠的。"
     info "⇒ 補它（union-only，⛔ 一個都不會被移除，有稽核）："
     info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union"
@@ -226,6 +228,55 @@ PY
     }
   fi
 fi
+roster_publication_check
+}
+
+# ⭐⭐ GH#1227 —— **126 名文件逐群 ↔ 這台服務真的發布了的英雄作品**。
+#
+# owner 2026-09-11 給的權威文件（`社群英雄126名上架狀態.md`）逐字定義「已上架」＝
+#   「已在 Main 當下正式服務確認可選，且有目前發布版本」。
+# ⚠️ 上面那一段比的是 starterChampions ↔ 白名單 —— ⛔ 它看不到 `/hero-works/published`，
+#   ⇒ 126 名裡「git 上有、服務上沒有發布版本」的人，在此之前**沒有任何一段說得出名字**。
+# ⭐ 文件讀的是 **mini 上已 checkout 的那一版**（＝這次部署的 commit），⛔ 不是這台 Mac 的工作區。
+# ⚠️ 刻意只 warn（同上一段）：發布是營運動作，⛔ 部署腳本不替它決定。
+roster_publication_check() {
+local dj pj line name n_pub n_all missing
+dj=$(r "cat $REMOTE_REPO/docs/editor-contract/社群英雄126名上架狀態.md" 2>/dev/null || true)
+pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/hero-works/published' 2>/dev/null || true)
+if [ -z "$dj" ] || [ -z "$pj" ]; then
+  warn "126 名文件或 /hero-works/published 讀不到 —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過）"
+  return 0
+fi
+# ⚠️ 解析形狀與 packages/shared/testkit/rosterDeclaration.ts 的 parseBatchDoc 相同：`## 批次（N）` 底下的 `| # | \`id\` |` 列
+line=$(python3 - "$dj" "$pj" <<'PY'
+import json, re, sys
+published = {row.get("workId") for row in json.loads(sys.argv[2]) if isinstance(row, dict)}
+batches, section = {}, None
+for text in sys.argv[1].split("\n"):
+    if text.startswith("## "):
+        m = re.match(r"^## (.+?)（\d+）\s*$", text)
+        section = m.group(1) if m else None
+        continue
+    # ⚠️ 反引號寫成 \x60：macOS 的 bash 3.2 會把命令替換裡 heredoc 的奇數個反引號當成語法（bash -n 就紅）
+    m = re.match(r"^\|\s*\d+\s*\|\s*\x60([^\x60]+)\x60\s*\|", text)
+    if section and m:
+        batches.setdefault(section, []).append(m.group(1))
+for name, ids in batches.items():
+    missing = [i for i in ids if i not in published]
+    print(f"{name}\t{len(ids) - len(missing)}\t{len(ids)}\t{', '.join(missing) or '-'}")
+PY
+) || line=""
+if [ -z "$line" ]; then
+  warn "126 名文件解析出 0 批（或發布清單不是 JSON 陣列）—— ⛔ 逐群發布**沒有驗到**"
+  return 0
+fi
+while IFS=$'\t' read -r name n_pub n_all missing; do
+  if [ "$n_pub" = "$n_all" ]; then
+    ok "${name}：${n_all}/${n_all} 都有發布版本"
+  else
+    warn "⛔ ${name}：發布 ${n_pub}/${n_all} —— git 有、服務沒有發布：${missing}"
+  fi
+done <<<"$line"
 }
 
 # ═══════════════════════════════════════ check
