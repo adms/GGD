@@ -129,6 +129,18 @@ export const zConfigApCoefficientDoc = z
       "@zh 全域倍率\n" +
       "@note ⭐ **調整體強度就轉這一格**（出貨 1.0）—— 它與基準相乘，但語意乾淨：基準是校準出來的常數，這一格是**意圖**。⚠️ 1.1 ＝ 全庫 AP 加成整體 +10%。",
     ),
+    /**
+     * ⭐ 係數取整粒度（GH#1260 B4）。owner 2026-08-13「我建議最多取小數點兩位就好」⇒ 出貨 0.01。
+     * ⚠️ 刻意 `.optional()`（同 `keepAuthoredPerRankAp`）：還沒重打包的 bundle／舊的後台覆蓋層缺這一格時
+     * strict 驗證仍然要過；缺席 ⇒ `DEFAULT_AP_COEFFICIENT.roundStep`。
+     */
+    roundStep: z.number().min(0.0001).max(1).optional().describe(
+      "@zh 係數取整粒度\n" +
+      "@note 公式算完的 AP 係數靠到最近的一格（出貨 {{出貨值}} ＝ 卡面上的 AP 加成是整數 %）。" +
+      "⭐ owner 2026-08-13「你計算的位數太多了，我建議最多取小數點兩位就好」。" +
+      "⭐ **一鍵 rollback**：填 0.0001 ⇒ 逐位元回到取整之前（四位小數）。" +
+      "⚠️ 填 1 的整數分之一（0.01／0.05／0.1）才會剛好是那一格；一個正的係數最少留一格，⛔ 不會被取成 0（0 ＝ 不吃 AP）。",
+    ),
     /** ⭐ owner 旋鈕：冷卻斜率指數。出貨 1.0 ＝線性。 */
     cooldownSlopeExp: z.number().min(0.1).max(3).describe(
       "@zh 冷卻維度的斜率\n" +
