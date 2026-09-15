@@ -64,6 +64,8 @@ import { DRAFT_CONFIRM_SFX, isItemChoice, tierColor, tierLabel, weaponEffectDesc
 // owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
 import { ItemCardBody } from "../components/ItemCardBody";
 import { REJECT_TEXT } from "./shopFeedback";
+import { DraftSwapPicker, SWAP_HINT } from "./draftSwapPicker";
+import { swapWhenFullEnabled } from "../legendaryShelfConfig";
 import { itemCardDescription } from "./draftCardStyle";
 import {
   draftChoiceSuffix,
@@ -357,6 +359,8 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
   });
   const accent = tierColor(offer.tier);
   const [revealed, setRevealed] = useState(0);
+  /** ⭐ GH#1110 B —— 背包滿時點了哪一張道具卡（換裝介面開著）；null ＝ 沒開。 */
+  const [swapFor, setSwapFor] = useState<number | null>(null);
 
   useEffect(() => {
     const legendary = isLegendaryOffer(offer.tier);
@@ -407,7 +411,11 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           //   ⚠️ `freeItemSlots < 0` ＝ 還沒有座位狀態 ⇒ ⛔ 不宣稱滿（fail-open，
           //   ⭐ 而它不靜默：真的滿了伺服器仍會回 `itemPickRejected`）。
           const isItemCard = isItemChoice(choice);
-          const noSlot = isItemCard && freeItemSlots === 0;
+          const bagFull = isItemCard && freeItemSlots === 0;
+          // ⭐ GH#1110 B —— 開關開著（`legendaryShelf.swapWhenFull`）⇒ 滿的卡**點得下去**，
+          //   打開換裝介面；關著 ⇒ 維持 A3（壓暗、⛔ 不送）。
+          const canSwap = bagFull && swapWhenFullEnabled();
+          const noSlot = bagFull && !canSwap;
           return (
             <Tooltip
               key={choice}
@@ -443,6 +451,11 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   //   ⚠️ 伺服器那一側仍然會拒（`draft.ts` 的 `no-slot`）——
                   //   ⭐ 這裡只是讓玩家**在點之前**就看得到，⛔ 不是唯一的防線。
                   if (noSlot) return;
+                  // ⭐ GH#1110 B —— 先選要賣掉哪一格，⛔ 不直接送（送出在 `draftSwapPicker`）。
+                  if (canSwap) {
+                    setSwapFor(idx);
+                    return;
+                  }
                   audioSystem.playSfx(DRAFT_CONFIRM_SFX);
                   hudActions.sendCommand({ kind: "pickOffer", offerId: `${offer.offerId}#${idx}` });
                 }}
@@ -517,12 +530,23 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   <span style={{ fontSize: 10, color: "#ff9a6b", fontWeight: 700 }}>
                     {REJECT_TEXT["no-slot"]}
                   </span>
+                ) : canSwap ? (
+                  <span style={{ fontSize: 10, color: "#ffd27a", fontWeight: 700 }}>{SWAP_HINT}</span>
                 ) : null}
               </SfxButton>
             </Tooltip>
           );
         })}
       </div>
+      {/* ⭐ GH#1110 B —— 換裝介面。背包一旦不滿（伺服器狀態）就收起來：那張卡回到一般選取。 */}
+      {swapFor !== null && freeItemSlots === 0 && offer.choices[swapFor] !== undefined ? (
+        <DraftSwapPicker
+          offerId={offer.offerId}
+          choiceIdx={swapFor}
+          choiceName={resolveChoice(offer.choices[swapFor]!).name}
+          onCancel={() => setSwapFor(null)}
+        />
+      ) : null}
       {/* ⭐ GH#972 —— 連續屬性強化的進度＋歸零警告（owner：「沒有足夠提示」）。 */}
       <StatPathProgress />
       {/* ⭐ GH#893 —— 本場已選（讀伺服器狀態，⛔ 不是客戶端自己記的）。 */}

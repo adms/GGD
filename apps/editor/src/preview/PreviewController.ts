@@ -651,6 +651,15 @@ function effectLines(
           summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
         });
         break;
+      // GH#1189 瑟雷西 W【互動物】—— 地上放一個物件，**隊友自己點**才對接受者跑 onAccept（施法者不搬人）。
+      case "spawnInteractable":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `互動物 接受圈半徑 ${e.radius}，${e.durationSec}s，最多 ${e.maxUses ?? 1} 位隊友（${e.at === "self" ? "施法者腳下" : "落點"}）—— 隊友點選時對接受者：`,
+        });
+        effectLines(e.onAccept, finalStats, attrs, maxRank, depth + 1, out);
+        break;
       // GH#1197 瑟雷西 R【邊界陣】—— 正多邊形的**邊**，穿過那一段才對穿越者跑 onCross，那一段即消失。
       case "spawnThresholds":
         out.push({

@@ -111,6 +111,7 @@ import { grantXpEffect } from "./grantXp"; // ⭐ GH#890 —— 每秒額外獲�
 import { dispelEffect } from "./dispel";
 import { spawnThresholdsEffect } from "./spawnThresholds";
 import { spawnObstacleEffect } from "./spawnObstacle";
+import { spawnInteractableEffect } from "./spawnInteractable";
 import { shieldBreakEffect } from "./shieldBreak";
 import { devourEffect } from "./devour";
 import { reviveEffect } from "./revive";
@@ -210,6 +211,8 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   spawnThresholds: spawnThresholdsEffect,
   // ── 【暫時障礙】(GH#1190 鄂爾 Q) — 真碰撞圓柱，到期／被 dash.shatter 撞碎消失。碰撞 ../obstacles.ts。
   spawnObstacle: spawnObstacleEffect,
+  // ── 【互動物】(GH#1189 瑟雷西 W 燈籠) — 隊友送 `interact` 指令才對接受者跑 onAccept。生命週期 ../interactables.ts。
+  spawnInteractable: spawnInteractableEffect,
   shieldBreak: shieldBreakEffect,
   devour: devourEffect,
 

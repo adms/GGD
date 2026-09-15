@@ -806,3 +806,25 @@ export interface ObstacleComp {
   shatterable: boolean;
   origin: string;
 }
+
+/**
+ * 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 技能放在地上、**隊友送指令才會觸發**的物件。
+ * ⛔ 沒有 transform／health：它不是單位、索敵與碰撞都看不到它；生命週期與接受規則在 `sim/interactables.ts`。
+ */
+export interface InteractableComp {
+  castInstance?: import("./content/castInstance").CastInstance;
+  ownerId: EntityId;
+  zone: number;
+  center: Vec2;
+  radius: number;
+  expiresAtTick: number;
+  /** 還剩幾位隊友可以用（0 ⇒ 當場收掉） */
+  usesLeft: number;
+  /** 已經接受過的隊友（id 遞增）—— 同一人不重複接受 */
+  acceptedBy: EntityId[];
+  /** 施放那一刻烘好的 onAccept（`bakeList`） */
+  onAccept: import("./effects/effect").EffectDef[];
+  rank: number;
+  origin: string;
+  abilitySlot?: CastableSlot;
+}

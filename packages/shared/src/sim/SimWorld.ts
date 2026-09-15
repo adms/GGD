@@ -15,6 +15,7 @@ import type {
   ProjectileComp,
   ThresholdComp,
   ObstacleComp,
+  InteractableComp,
   ChampionComp,
   StatusComp,
   FlowerComp,
@@ -84,6 +85,7 @@ import {
   DEFAULT_SELL_REFUND_PCT,
   LEGENDARY_PRICE_MULTIPLIER,
   LEGENDARY_SHELF_OPEN,
+  SWAP_WHEN_FULL,
   WEAPON_SHELF_OPEN,
 } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
@@ -115,6 +117,7 @@ import { toggleUpkeepSystem } from "./abilities/toggle";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { thresholdSystem } from "./systems/ThresholdSystem";
 import { obstacleSystem } from "./obstacles";
+import { interactableSystem } from "./interactables";
 import { combatResolveSystem } from "./combat/damage";
 import { flightSystem } from "./flight";
 import { attrGrantExpirySystem } from "./effects/grantAttribute";
@@ -174,6 +177,8 @@ export class SimWorld {
   readonly threshold = new Map<EntityId, ThresholdComp>();
   /** 【暫時障礙】（GH#1190）—— 見 `sim/obstacles.ts`。 */
   readonly obstacle = new Map<EntityId, ObstacleComp>();
+  /** 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 見 `sim/interactables.ts`。 */
+  readonly interactable = new Map<EntityId, InteractableComp>();
   readonly champion = new Map<EntityId, ChampionComp>();
   readonly status = new Map<EntityId, StatusComp>();
   readonly stats = new Map<EntityId, StatsComp>();
@@ -721,7 +726,7 @@ export class SimWorld {
     priceMultiplier: number;
     sellRefundPct: number;
     randomOnlyTables: string[];
-    /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨 false）。 */
+    /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨見 `SWAP_WHEN_FULL`）。 */
     swapWhenFull: boolean;
   } = {
     open: LEGENDARY_SHELF_OPEN,
@@ -732,8 +737,8 @@ export class SimWorld {
     //   ⭐ 而 `itemAcquisition.test.ts` / `legendaryShelf.test.ts` 的漂移斷言
     //   在 2026-09-09 真的抓到我漏了它 —— ⛔ 沒有那兩條,沒有 host 接線的路會靜靜地用空表。
     randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
-    // ⭐ GH#1110 B —— 第四個住處。⛔ 出貨 false：換不換裝是 owner 的設計決定。
-    swapWhenFull: false,
+    // ⭐ GH#1110 B —— 引擎常數（出處與「預設開是 Claude 的推論」見 shopShelf.ts）。
+    swapWhenFull: SWAP_WHEN_FULL,
   };
 
   /**
@@ -1520,6 +1525,7 @@ export class SimWorld {
     this.projectile.delete(id);
     this.threshold.delete(id);
     this.obstacle.delete(id);
+    this.interactable.delete(id);
     this.champion.delete(id);
     this.status.delete(id);
     this.stats.delete(id);
@@ -1791,6 +1797,7 @@ export class SimWorld {
     //                             height and the landing detonation. IMMEDIATELY
     //                             before movementSystem, which then sees the
     //                             `leap` override and leaves the body alone.
+    interactableSystem(this); // 4c′. 【互動物】到期／施法者死亡／回合重置收掉（接受走 commandSystem 的 `interact`）
     obstacleSystem(this); //  4c. 【暫時障礙】到期清掉 —— ⭐ 在 movement 之前，這一 tick 的碰撞清單才是對的
     movementSystem(this); // 5. integrate + collide
     carrySystem(this); //    5a. ⭐ [背負]（[EX∅ 根源]）—— 乘客的座標從載具重建。
