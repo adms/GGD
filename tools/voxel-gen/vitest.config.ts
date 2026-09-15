@@ -1,5 +1,5 @@
 import { defineConfig } from "vitest/config";
-import { RESOLVE_TS_FIRST } from "../../vitest.shared";
+import { RESOLVE_TS_FIRST, VITEST_WATCHDOG } from "../../vitest.shared";
 
 // WHY THIS FILE EXISTS. `tools/voxel-gen` shipped without a vitest config, which
 // was fine while its tests only imported local files. The 體素條碼 work added
@@ -15,6 +15,8 @@ import { RESOLVE_TS_FIRST } from "../../vitest.shared";
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
   test: {
+    // ⏲️ GH#1257 —— 卡死（整棵樹 CPU≈0）時自己停下來、印出還沒跑完的檔。理由在 `vitest.shared.ts`。
+    ...VITEST_WATCHDOG,
     // ⏱ GH#979 —— vitest 預設 5 秒在 CI runner 上不夠（見 repo 根的 vitest.config.ts）。
     //   ⭐ 放寬**時鐘**，⛔ 不是放寬斷言。
     testTimeout: 60_000,
