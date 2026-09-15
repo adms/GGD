@@ -424,7 +424,8 @@ export function checkRoster(): Finding[] {
   // ⑫ ⭐ 稽核母體 ↔ 上架面 —— GH#472：「稽核／工作的範圍收斂到**上架中**」。
   out.push(...checkAuditScope());
 
-  // ⑬ ⭐ 逐群宣告 ↔ 權威文件 ↔ 名單 ↔ 兩棵樹的卡（GH#1227）—— 邏輯與 vitest 閘共用一份。
+  // ⑬ ⭐ 逐群宣告 ↔ 權威文件 ↔ 名單 ↔ 退休卡（GH#1227）—— 邏輯與 vitest 閘共用一份。
+  //    上架樹那一側是上面的 ⑧／②；退休卡的狀態讀 legacy-index 的 JSON 產物（⛔ 不再推導一次）。
   out.push(...checkRosterDeclaration(loadRosterWorld(ROOT)));
 
   return out;
@@ -769,7 +770,7 @@ export function runRosterCheck(): number {
     console.log(
       "✓ 英雄名單漣漪檢查通過（下架↔種子 · 種子↔內容樹 · Go 兩份清單 · 經濟拆分 · 沒有人抄長度 · " +
         "平衡母體↔名單 · 平衡母體↔變身態 · 產出文件的母體↔名單 · 內容樹↔三種身分 · " +
-        "名單↔變身態存在 · 營運白名單↔名單 · 稽核母體↔上架面 · 逐群宣告↔權威文件↔兩棵樹的卡）",
+        "名單↔變身態存在 · 營運白名單↔名單 · 稽核母體↔上架面 · 逐群宣告↔權威文件↔退休卡）",
     );
     console.log(rosterDeclarationSummary(loadRosterWorld(ROOT)));
     // ⭐ 上架面**每次都印出來** —— GH#472 的另一半：被稽核略過的東西⛔不可以無聲變多。

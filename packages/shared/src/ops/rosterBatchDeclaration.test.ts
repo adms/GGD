@@ -1,11 +1,11 @@
 /**
- * ⭐ GH#1227 —— 上架名單**逐群**對得上 owner 的範圍，而且卡與宣告**兩個方向**都對得上（涵蓋 content/_legacy）。
+ * ⭐ GH#1227 —— 上架名單**逐群**對得上 owner 的範圍，而且退休卡與宣告**兩個方向**都對得上。
  *
  * 邏輯住 `packages/shared/testkit/rosterDeclaration.ts`（`pnpm roster:check` 也呼叫它）；
- * 宣告住 `tools/roster-guard/batch-declaration.json`。⛔ 這裡不寫任何 id 或人數。
+ * 宣告住 `tools/roster-guard/batch-declaration.json`；退休卡狀態讀 `docs/legacy-index-champions.json`
+ * （build_index.py 的產物，過期由 legacyIndexFresh.test.ts 紅）。⛔ 這裡不寫任何 id 或人數。
  *
- * ⭐ 量尺自證（兩個方向）：先證明出貨的世界是綠的，再在**記憶體裡**把世界改壞，
- *    證明每一個方向都會紅 —— ⛔ 一把只驗過單邊的尺，會在它最需要說話的時候沉默。
+ * ⭐ 量尺自證（兩個方向）：先證明出貨的世界是綠的，再在**記憶體裡**把世界改壞，證明每一個方向都會紅。
  */
 import { describe, expect, it } from "vitest";
 import { dirname, join } from "node:path";
@@ -15,40 +15,53 @@ import { checkRosterDeclaration, loadRosterWorld, type RosterWorld } from "../..
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const world = loadRosterWorld(ROOT);
 const report = (w: RosterWorld) => checkRosterDeclaration(w).map((f) => `✗ ${f.pair}\n   ${f.detail}\n   → ${f.fix}`);
+const withBatches = (batches: RosterWorld["declaration"]["batches"]): RosterWorld => ({
+  ...world,
+  declaration: { ...world.declaration, batches },
+});
 
-describe("上架名單逐群宣告 ↔ 權威文件 ↔ starterChampions ↔ 兩棵樹的卡（GH#1227）", () => {
-  it("⭐ 出貨的宣告、名單、126 名文件與兩棵樹逐群逐名對得上", () => {
+describe("上架名單逐群宣告 ↔ 權威文件 ↔ starterChampions ↔ 退休卡（GH#1227）", () => {
+  it("⭐ 出貨的宣告、名單、126 名文件與退休卡狀態逐群逐名對得上", () => {
     expect(report(world), "⛔ 不要改這條測試 —— 訊息指名了該改哪一份").toEqual([]);
   });
 
-  it("⛔ 任何一批的宣告人數改成 0 ⇒ 紅（⛔ 總數不變也要紅）", () => {
-    for (const b of world.declaration.batches) {
-      const batches = world.declaration.batches.map((x) => (x === b ? { ...x, expected: 0 } : x));
-      const out = report({ ...world, declaration: { ...world.declaration, batches } });
-      expect(out.join("\n"), b.section).toContain(b.section);
+  it("⛔ 任何一批的宣告人數改成 0 ⇒ 紅；最後一批改成 owner 的合計數 ⇒ 「owner 原話」那一對也要紅", () => {
+    const bs = world.declaration.batches;
+    for (const b of bs) {
+      expect(report(withBatches(bs.map((x) => (x === b ? { ...x, expected: 0 } : x)))).join("\n"), b.section).toContain(b.section);
     }
+    const last = bs[bs.length - 1]!;
+    const total = bs.reduce((n, b) => n + b.expected, 0);
+    const out = report(withBatches(bs.map((x) => (x === last ? { ...x, expected: total } : x)))).join("\n");
+    expect(out, "⛔ 同一行的「合計」不可以替這一項作證").toContain("宣告人數 ↔ owner 原話");
   });
 
-  it("⛔ 一批的 starter 宣告翻面 ⇒ 紅（組成錯了）", () => {
-    const [b] = world.declaration.batches;
-    const flipped = { ...b!, starter: b!.starter === "all" ? ("none" as const) : ("all" as const) };
-    const batches = [flipped, ...world.declaration.batches.slice(1)];
-    expect(report({ ...world, declaration: { ...world.declaration, batches } }).join("\n")).toContain("starterChampions");
+  it("⭐ 單一名先上架：宣告 none ⇒ 紅且修法指向 partial；宣告 partial ⇒ 綠", () => {
+    const bs = world.declaration.batches;
+    const b = bs.find((x) => x.starter === "none" && (world.batchDoc.get(x.section)?.length ?? 0) > 1)!;
+    const one = world.batchDoc.get(b.section)![0]!;
+    const w = { ...world, starter: [...world.starter, one] };
+    const none = checkRosterDeclaration(w).find((f) => f.pair === "逐群宣告 ↔ starterChampions");
+    expect(none?.detail).toContain(one);
+    expect(none?.fix).toContain('"partial"');
+    const partial = bs.map((x) => (x === b ? { ...x, starter: "partial" as const } : x));
+    expect(report({ ...w, declaration: { ...w.declaration, batches: partial } })).toEqual([]);
   });
 
-  it("⛔ 卡 → 宣告：退休區多一張沒人宣告的卡 ⇒ 紅並指名", () => {
-    const cards = new Map(world.cards).set("sentinel-orphan", { tree: "content/_legacy/champions", base: null });
-    expect(report({ ...world, cards }).join("\n")).toContain("sentinel-orphan");
+  it("⛔ 卡 → 宣告：退休區多一張「從未開放」而沒人宣告的卡 ⇒ 紅並指名", () => {
+    const cards = [...world.legacy.cards, { id: "sentinel-orphan", base: null, status: "never" }];
+    expect(report({ ...world, legacy: { ...world.legacy, cards } }).join("\n")).toContain("sentinel-orphan");
   });
 
-  it("⛔ 宣告 → 卡：回收桶／待重上架名單上的人沒有卡，或豁免被拿掉 ⇒ 紅並指名", () => {
-    const [unlisted] = world.declaration.legacyUnlisted.ids;
-    const cards = new Map(world.cards);
-    cards.delete(unlisted!);
-    expect(report({ ...world, cards }).join("\n")).toContain(unlisted!);
+  it("⛔ 宣告 → 卡：宣告的本體沒有退休卡、宣告了變身態，或豁免被拿掉 ⇒ 紅並指名", () => {
+    const [declared] = world.declaration.legacyNeverOpened.ids;
+    const gone = world.legacy.cards.filter((c) => c.id !== declared);
+    expect(report({ ...world, legacy: { ...world.legacy, cards: gone } }).join("\n")).toContain(declared!);
+    const alt = world.legacy.cards.find((c) => c.base !== null && c.status === "never")!;
+    const ids = [...world.declaration.legacyNeverOpened.ids, alt.id];
+    expect(report({ ...world, declaration: { ...world.declaration, legacyNeverOpened: { ids } } }).join("\n")).toContain(alt.id);
     for (const { id } of world.declaration.missingCardExemptions) {
-      const bare = { ...world.declaration, missingCardExemptions: [] };
-      expect(report({ ...world, declaration: bare }).join("\n")).toContain(id);
+      expect(report({ ...world, declaration: { ...world.declaration, missingCardExemptions: [] } }).join("\n")).toContain(id);
     }
   });
 });

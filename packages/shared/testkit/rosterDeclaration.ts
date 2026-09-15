@@ -1,35 +1,46 @@
 /**
- * ⭐⭐ GH#1227 —— 上架名單的**逐群宣告**，與「卡 ↔ 宣告」**兩個方向**的逐名比對。
+ * ⭐⭐ GH#1227 —— 上架名單的**逐群宣告**，與退休區「卡 ↔ 宣告」**兩個方向**的逐名比對。
  *
- * ── 為什麼（票面量到的）──────────────────────────────────────────────
- * owner 2026-09-11 列的範圍是 37＋37＋7＋11＋34＝126；`starterChampions` 扣掉下架／隱藏
- * 之後**也是 126**，⛔ 而組成是 45＋37＋37＋7 ⇒ **總數對了、組成錯了**，沒有任何東西會紅。
- * ⇒ 這支逐群比人數**與成員**，⛔ 不比總數。
+ * ── 為什麼 ──────────────────────────────────────────────────────────
+ * owner 2026-09-11 12:17 列的範圍是五批、合計 126（逐字住宣告表的 `ownerScope.quote`）。
+ * ⚠️ 本票第一版把 `starterChampions`（扣下架／隱藏之後也是 126）讀成「總數對了、組成錯了」——
+ *    ⛔ 那個前提**已被收回**。本票 2026-09-11 更正塊（Claude 寫的留言，⛔ 不是 owner 的話）逐字：
+ *    「那兩個 126 **不是同一個集合，也不是同一個軸**」、「⛔ **不是**「名單組成錯了」（那是我讀錯）」。
+ *    ⇒ 一個 126 是 **git 的名單檔**（`starterChampions`：原作班底＋三批已在名單檔上的人），
+ *      另一個是權威文件定義的**正式服務發布**（「已在 Main 當下正式服務確認可選，且有目前發布版本」）
+ *      ⇒ ⭐ **總數相同是巧合**，⛔ 不是同一份名單的兩種組成。
+ * ⇒ 這支逐群比**人數與成員**（⛔ 不比總數）；「git 有、服務沒有發布」那一軸住
+ *   `scripts/mini-deploy.sh` 的 `roster_publication_check`，⛔ 不在這裡。
  *
- * ── 每一格的住處（第〇·四守則：⛔ 這裡與宣告表都不抄名單）──────────────
- *   批次成員       docs/editor-contract/社群英雄126名上架狀態.md 的逐節表
- *   批次人數       tools/roster-guard/batch-declaration.json —— ⭐ 而且驗 owner 原話裡真的寫著這個數
- *   上架           starter.go 的 starterChampions
- *   下架           content/config/roster.json 的 retiredChampions
- *   待重上架       COMMUNITY_ACQUIRED_LEGACY（真的 import，同 legacyIndexFresh.test.ts）
- *   變身態         卡上自己的 transform（跟著本體的狀態走）
- *   回收桶         宣告表逐張明寫 —— 它的定義是「不在任何名單上」，推導不出來
+ * ── 每一格的住處（第〇·四守則：⛔ 不抄名單、⛔ 不重寫別人已經住好的推導）─────────────
+ *   批次成員        docs/editor-contract/社群英雄126名上架狀態.md 的逐節表
+ *   批次人數        宣告表 —— ⭐ 而且驗 owner 原話第 N 項（「合計」之前）真的寫著這個數
+ *   上架            starter.go 的 starterChampions
+ *   待重上架        COMMUNITY_ACQUIRED_LEGACY（真的 import）
+ *   退休卡的狀態     ⭐ docs/legacy-index-champions.json —— `tools/legacy-index/build_index.py` 的產物
+ *                  （已下架／待重上架／從未開放，變身態跟著本體）。⛔ 這裡**不再推導一次**：
+ *                  第一版在 TS 重寫了那三條規則 ⇒ 同一套規則兩個住處，連詞彙與張數都各說各話。
+ *                  ⚠️ 那份 JSON 過期由 `legacyIndexFresh.test.ts`（`--check`）紅，⛔ 不是這支。
+ *   從未開放的「有人看過」  宣告表 `legacyNeverOpened.ids`（只列本體，變身態跟著本體）
  *
- * ── 兩個方向（綠燈假來源⑫：只從一頭走，結構上瞎一半）────────────────
- *   卡 → 宣告：`content/champions` ＋ `content/_legacy/champions` 每一張卡都要解得出狀態
- *   宣告 → 卡：名單說有的人，卡要在該在的那棵樹（例：`godie-eevi` 在待重上架名單上，兩棵樹都沒卡）
+ * ── 不在這裡的（已經有住處，⛔ 不重複）──────────────────────────────
+ *   content/champions 每張卡的身分 → tools/roster-guard/check.ts ⑧ · starter → 內容樹 → 同檔 ②
+ *   下架 id 指到真的卡 → packages/shared/src/content/championRetirement.test.ts
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { COMMUNITY_ACQUIRED_LEGACY } from "../src/content/heroForge/communityAcquiredLegacy";
-import { SELA, THORNE } from "../src/sim/content/skeleton";
 import { readStarterRoster } from "./starterRoster";
 
 export const DECLARATION_REL = "tools/roster-guard/batch-declaration.json";
 export const BATCH_DOC_REL = "docs/editor-contract/社群英雄126名上架狀態.md";
+export const LEGACY_STATUS_REL = "docs/legacy-index-champions.json";
 const LIVE = "content/champions";
-const LEGACY = "content/_legacy/champions";
-type Tree = typeof LIVE | typeof LEGACY;
+/** legacy-index JSON 的穩定代碼（⛔ 不比中文標籤）。 */
+const NEVER = "never";
+
+/** all＝整批在 starterChampions · none＝整批不在 · partial＝逐名推導（只有一部分在，閘只印人數）。 */
+export type StarterShape = "all" | "none" | "partial";
 
 export interface RosterDeclaration {
   readonly ownerScope: { readonly quote: string };
@@ -37,11 +48,17 @@ export interface RosterDeclaration {
     readonly item: number;
     readonly section: string;
     readonly expected: number;
-    readonly starter: "all" | "none";
+    readonly starter: StarterShape;
   }[];
   readonly original: { readonly name: string; readonly expected: number };
-  readonly legacyUnlisted: { readonly name: string; readonly ids: readonly string[] };
+  readonly legacyNeverOpened: { readonly ids: readonly string[] };
   readonly missingCardExemptions: readonly { readonly id: string }[];
+}
+
+export interface LegacyStatusDoc {
+  readonly rules: readonly { readonly status: string; readonly label: string; readonly count: number }[];
+  readonly reopenWithoutLegacyCard: readonly { readonly id: string; readonly liveCard: boolean }[];
+  readonly cards: readonly { readonly id: string; readonly base: string | null; readonly status: string }[];
 }
 
 export interface RosterWorld {
@@ -49,12 +66,9 @@ export interface RosterWorld {
   /** 126 名文件：節標題（去掉「（N）」）→ 逐列 id */
   readonly batchDoc: ReadonlyMap<string, readonly string[]>;
   readonly starter: readonly string[];
-  readonly retired: readonly string[];
   readonly relist: readonly string[];
-  readonly skeleton: readonly string[];
-  /** 兩棵樹的卡：id → 在哪棵樹、變身態的本體（不是變身態就是 null） */
-  readonly cards: ReadonlyMap<string, { readonly tree: Tree; readonly base: string | null }>;
-  readonly duplicateCards: readonly string[];
+  readonly legacy: LegacyStatusDoc;
+  readonly liveCardIds: readonly string[];
 }
 
 export interface Finding {
@@ -78,51 +92,46 @@ export function parseBatchDoc(md: string): Map<string, string[]> {
   return out;
 }
 
+/**
+ * owner 原話第 `item` 項有沒有寫著「`n` 名」。
+ * ⚠️ 只看「合計」**之前** —— 第 5 項與「合計 126 名」在同一行，⛔ 不切掉的話把第 5 批宣告成合計數也會過。
+ */
+export function ownerQuoteSays(quote: string, item: number, n: number): boolean {
+  const line = quote.split("\n").find((l) => l.startsWith(`${item}. `));
+  return line !== undefined && new RegExp(`(?<![0-9])${n} 名`).test(line.split("合計")[0]!);
+}
+
 /** 讀**出貨的**每一份來源。⛔ 讀出 0 張卡／0 節批次 = 讀取器壞了，⛔ 不是內容空了。 */
 export function loadRosterWorld(root: string): RosterWorld {
   const json = <T>(rel: string): T => JSON.parse(readFileSync(join(root, rel), "utf8")) as T;
-  const roster = json<{ retiredChampions?: string[] }>("content/config/roster.json");
-  const cards = new Map<string, { tree: Tree; base: string | null }>();
-  const duplicateCards: string[] = [];
-  for (const tree of [LIVE, LEGACY] as const) {
-    for (const f of readdirSync(join(root, tree))) {
-      if (!f.endsWith(".json") || f.startsWith("_")) continue;
-      const doc = json<{ id: string; transform?: { role?: string; counterpartId?: string } }>(`${tree}/${f}`);
-      if (cards.has(doc.id)) duplicateCards.push(doc.id);
-      const base = doc.transform?.role === "alternate" ? (doc.transform.counterpartId ?? null) : null;
-      cards.set(doc.id, { tree, base });
-    }
-  }
+  const liveCardIds = readdirSync(join(root, LIVE))
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => json<{ id: string }>(`${LIVE}/${f}`).id);
   const batchDoc = parseBatchDoc(readFileSync(join(root, BATCH_DOC_REL), "utf8"));
-  if (cards.size === 0 || batchDoc.size === 0) {
-    throw new Error(`讀出 ${cards.size} 張卡、${batchDoc.size} 節批次 —— 讀取器壞了，⛔ 不是內容空了`);
+  const legacy = json<LegacyStatusDoc>(LEGACY_STATUS_REL);
+  if (liveCardIds.length === 0 || legacy.cards.length === 0 || batchDoc.size === 0) {
+    throw new Error(
+      `讀出 ${liveCardIds.length} 張上架樹的卡、${legacy.cards.length} 張退休卡、${batchDoc.size} 節批次 —— 讀取器壞了，⛔ 不是內容空了`,
+    );
   }
   return {
     declaration: json<RosterDeclaration>(DECLARATION_REL),
     batchDoc,
     starter: readStarterRoster(root),
-    retired: roster.retiredChampions ?? [],
     relist: COMMUNITY_ACQUIRED_LEGACY.map((h) => h.id),
-    skeleton: [SELA.id, THORNE.id],
-    cards,
-    duplicateCards,
+    legacy,
+    liveCardIds,
   };
 }
 
-/** 一個 id 的狀態 —— 規則照順序，變身態跟著本體。回 null ＝ ⛔ 沒有任何宣告涵蓋它。 */
-export function rosterStatus(w: RosterWorld, id: string, seen: ReadonlySet<string> = new Set()): string | null {
-  if (w.skeleton.includes(id)) return "骨架佔位";
-  if (w.retired.includes(id)) return "已下架";
-  const batch = w.declaration.batches.find((b) => w.batchDoc.get(b.section)?.includes(id));
-  if (w.starter.includes(id)) return `上架（${batch?.section ?? w.declaration.original.name}）`;
-  if (batch) return `待上架（${batch.section}）`;
-  const base = w.cards.get(id)?.base;
-  if (base && !seen.has(id)) {
-    const s = rosterStatus(w, base, new Set([...seen, id]));
-    return s && `變身態（本體 ${base}：${s}）`;
-  }
-  return w.declaration.legacyUnlisted.ids.includes(id) ? w.declaration.legacyUnlisted.name : null;
-}
+const STARTER_FIX: Record<StarterShape, string> = {
+  partial:
+    "只有一部分在 starterChampions。⭐ 如果是 owner 同意**逐名先上架**（例：owner 2026-09-14 02:20「隱藏角色要顯示 黑化Saber可以上架」，" +
+    `docs/_daily/2026-09-14.md:12）⇒ 同一個 commit 把 ${DECLARATION_REL} 那一批的 starter 改成 "partial"（逐名推導，閘只印人數）；` +
+    "⛔ 不要為了變綠把人從 starter.go 拿掉。是誤加／誤刪 ⇒ 改 starter.go。",
+  all: `整批都在 starterChampions ⇒ 同一個 commit 把 ${DECLARATION_REL} 那一批的 starter 改成 "all"；不是整批上架而是誤加 ⇒ 改 starter.go。`,
+  none: `整批都不在 starterChampions ⇒ 同一個 commit 把 ${DECLARATION_REL} 那一批的 starter 改成 "none"；不是整批下架而是誤刪 ⇒ 改回 starter.go。`,
+};
 
 export function checkRosterDeclaration(w: RosterWorld): Finding[] {
   const out: Finding[] = [];
@@ -137,10 +146,10 @@ export function checkRosterDeclaration(w: RosterWorld): Finding[] {
   for (const b of d.batches) {
     const ids = w.batchDoc.get(b.section) ?? [];
     for (const id of ids) batchIds.add(id);
-    if (!new RegExp(`^${b.item}\\. [^\\n]*?(?<![0-9])${b.expected} 名`, "m").test(d.ownerScope.quote)) {
+    if (!ownerQuoteSays(d.ownerScope.quote, b.item, b.expected)) {
       out.push({
         pair: "宣告人數 ↔ owner 原話",
-        detail: `第 ${b.item} 批「${b.section}」宣告 ${b.expected} 名，⛔ 而 owner 原話第 ${b.item} 項沒有寫這個數`,
+        detail: `第 ${b.item} 批「${b.section}」宣告 ${b.expected} 名，⛔ 而 owner 原話第 ${b.item} 項（「合計」之前）沒有寫這個數`,
         fix: `${DECLARATION_REL} 的 expected 只能照抄 ownerScope.quote —— owner 改了範圍就連原話一起換。`,
       });
     }
@@ -151,12 +160,19 @@ export function checkRosterDeclaration(w: RosterWorld): Finding[] {
         fix: "兩邊有一邊錯了：文件是 Codex 的狀態頁，宣告是 owner 的原話 —— ⛔ 不要只改一邊讓它變綠，先查是誰漂了。",
       });
     }
-    push(
-      "逐群宣告 ↔ starterChampions",
-      ids.filter((id) => starter.has(id) !== (b.starter === "all")),
-      `「${b.section}」宣告 starter:"${b.starter}"，⛔ 這幾名不是`,
-      `整批上架／下架時，同一個 commit 改 ${DECLARATION_REL} 那一批的 starter；只上了一半就是還沒做完。`,
-    );
+    const inStarter = ids.filter((id) => starter.has(id));
+    const actual: StarterShape =
+      inStarter.length === 0 ? "none" : inStarter.length === ids.length ? "all" : "partial";
+    if (ids.length > 0 && actual !== b.starter) {
+      const odd = b.starter === "partial" ? [] : ids.filter((id) => starter.has(id) !== (b.starter === "all"));
+      out.push({
+        pair: "逐群宣告 ↔ starterChampions",
+        detail:
+          `「${b.section}」宣告 starter:"${b.starter}"，⛔ 而 starterChampions 裡有 ${inStarter.length}/${ids.length} 名（＝"${actual}"）` +
+          (odd.length > 0 ? `；不符的：${odd.join(", ")}` : ""),
+        fix: STARTER_FIX[actual],
+      });
+    }
   }
   push(
     "權威文件 ↔ 宣告",
@@ -173,37 +189,49 @@ export function checkRosterDeclaration(w: RosterWorld): Finding[] {
     });
   }
 
-  // ② 卡 → 宣告（兩棵樹）
+  // ② 退休卡 → 宣告：legacy-index 算成「從未開放」的，本體要有人看過（⛔ 補集會把沒人決定過的卡安靜吞掉）
+  const neverLabel = w.legacy.rules.find((r) => r.status === NEVER)?.label ?? NEVER;
+  const declared = new Set(d.legacyNeverOpened.ids);
   push(
-    "卡 → 宣告",
-    [...w.cards.keys()].filter((id) => rosterStatus(w, id) === null).sort(),
-    "這幾張卡**沒有任何宣告涵蓋**（不在任何名單、不是任何人的變身態、也沒寫進回收桶）",
-    `決定它是什麼：上架 → starter.go；下架 → roster.json；真的是回收桶 → ${DECLARATION_REL} 的 legacyUnlisted.ids。`,
+    "退休卡 → 宣告",
+    w.legacy.cards
+      .filter((c) => c.status === NEVER && !declared.has(c.id) && !(c.base !== null && declared.has(c.base)))
+      .map((c) => c.id),
+    `這幾張退休卡 ${LEGACY_STATUS_REL} 算成「${neverLabel}」，⛔ 而它（或它的本體）沒有寫進宣告表`,
+    `決定它是什麼：上架 → starter.go；下架 → roster.json；待重上架 → COMMUNITY_ACQUIRED_LEGACY（改完跑 pnpm legacyindex:build）；` +
+      `真的是從未開放 → ${DECLARATION_REL} 的 legacyNeverOpened.ids（列本體，變身態跟著本體）。`,
   );
-  push("卡 ↔ 卡", w.duplicateCards, "同一個 id 在兩棵樹都有卡", "留一張 —— 上架在 content/champions，其餘在 content/_legacy/champions。");
+  push("卡 ↔ 卡", w.legacy.cards.map((c) => c.id).filter((id) => w.liveCardIds.includes(id)), "同一個 id 在兩棵樹都有卡", "留一張 —— 上架在 content/champions，其餘在 content/_legacy/champions。");
 
   // ③ 宣告 → 卡
+  const legacyById = new Map(w.legacy.cards.map((c) => [c.id, c] as const));
+  push(
+    "宣告 → 退休卡",
+    d.legacyNeverOpened.ids.filter((id) => !legacyById.has(id)),
+    `宣告在「${neverLabel}」，⛔ 而 ${LEGACY_STATUS_REL} 沒有這張退休卡`,
+    "卡被搬走或刪掉了 ⇒ 從 legacyNeverOpened.ids 拿掉（上架走 starter.go；⛔ 不要刪卡，owner 2026-08-13「不要刪除舊資料」）。",
+  );
+  push(
+    `宣告的「${neverLabel}」↔ 推導`,
+    d.legacyNeverOpened.ids.filter((id) => {
+      const c = legacyById.get(id);
+      return c !== undefined && (c.status !== NEVER || c.base !== null);
+    }),
+    `明寫了，⛔ 而 ${LEGACY_STATUS_REL} 推導得出它的狀態（已下架／待重上架），或它是變身態（跟著本體）`,
+    "從 legacyNeverOpened.ids 刪掉 —— 推導得出來的值⛔ 不要有第二個住處。",
+  );
   const exempt = new Set(d.missingCardExemptions.map((e) => e.id));
-  const needs: readonly [string, readonly string[], Tree | null][] = [
-    ["starterChampions", w.starter, LIVE],
-    ["retiredChampions", w.retired, null],
-    ["COMMUNITY_ACQUIRED_LEGACY", w.relist, null],
-    [`宣告表的${d.legacyUnlisted.name}`, d.legacyUnlisted.ids, LEGACY],
-  ];
-  for (const [from, ids, tree] of needs) {
-    const card = (id: string) => w.cards.get(id);
-    push(
-      `宣告 → 卡（${from}）`,
-      ids.filter((id) => !exempt.has(id) && (!card(id) || (tree !== null && card(id)!.tree !== tree))),
-      `名單有、⛔ ${tree ?? "兩棵樹"}沒有卡`,
-      `把卡放回該在的樹，或把 id 從名單拿掉；真的還不該有卡 ⇒ ${DECLARATION_REL} 的 missingCardExemptions 加一列並寫可反駁的理由。`,
-    );
-  }
-  const needed = new Set(needs.flatMap(([, ids]) => ids));
+  const cardless = w.legacy.reopenWithoutLegacyCard.filter((r) => !r.liveCard).map((r) => r.id);
+  push(
+    "宣告 → 卡（COMMUNITY_ACQUIRED_LEGACY）",
+    cardless.filter((id) => !exempt.has(id)),
+    "待重上架名單有、⛔ 兩棵樹都沒有卡",
+    `把卡放回該在的樹，或把 id 從名單拿掉；真的還不該有卡 ⇒ ${DECLARATION_REL} 的 missingCardExemptions 加一列並寫可反駁的理由。`,
+  );
   push(
     "豁免 ↔ 現況",
-    [...exempt].filter((id) => w.cards.has(id) || !needed.has(id)),
-    "這幾列豁免已經不成立（卡出現了，或它已不在任何要求有卡的名單上）",
+    [...exempt].filter((id) => !cardless.includes(id)),
+    "這幾列豁免已經不成立（卡出現了，或它已不在待重上架名單上）",
     `從 ${DECLARATION_REL} 的 missingCardExemptions 刪掉 —— 過期的豁免會替下一個缺口背書。`,
   );
 
@@ -214,35 +242,27 @@ export function checkRosterDeclaration(w: RosterWorld): Finding[] {
     "待重上架名單有、126 名文件任何一批都沒有",
     "重上架必須屬於 owner 列的某一批 —— 查 #1205 的範圍。",
   );
-  push(
-    `${d.legacyUnlisted.name} ↔ 推導`,
-    d.legacyUnlisted.ids.filter((id) => rosterStatus(w, id, new Set()) !== d.legacyUnlisted.name),
-    "明寫在回收桶，⛔ 而它的狀態推導得出來（已在某份名單上，或是變身態）",
-    `從 legacyUnlisted.ids 刪掉 —— 推導得出來的值⛔ 不要有第二個住處。`,
-  );
   return out;
 }
 
-/** `pnpm roster:check` 通過時印的一行（觀測，⛔ 不是閘）。 */
+/** `pnpm roster:check` 通過時印的幾行（觀測，⛔ 不是閘；數字⛔ 不進斷言）。 */
 export function rosterDeclarationSummary(w: RosterWorld): string {
   const d = w.declaration;
   const batchIds = new Set(d.batches.flatMap((b) => w.batchDoc.get(b.section) ?? []));
   const original = w.starter.filter((id) => !batchIds.has(id)).length;
-  const tally = (tree: Tree): string => {
-    const n = new Map<string, number>();
-    for (const [id, c] of w.cards) {
-      if (c.tree !== tree) continue;
-      const s = (rosterStatus(w, id) ?? "?").replace(/（.*$/, "");
-      n.set(s, (n.get(s) ?? 0) + 1);
-    }
-    return [...n].map(([s, k]) => `${s} ${k}`).join(" · ");
-  };
   const batches = d.batches.map((b) => {
     const ids = w.batchDoc.get(b.section) ?? [];
     return `${b.section} ${ids.filter((id) => w.starter.includes(id)).length}/${ids.length}`;
   });
+  const label = new Map(w.legacy.rules.map((r) => [r.status, r.label] as const));
+  const alts = w.legacy.cards.filter((c) => c.base !== null);
+  const altBy = w.legacy.rules.map((r) => `${r.label} ${alts.filter((c) => c.status === r.status).length}`);
+  const never = w.legacy.rules.find((r) => r.status === NEVER);
   return (
     `  逐群（在 starterChampions／該批人數）：${d.original.name} ${original} · ${batches.join(" · ")}\n` +
-    `  卡：${LIVE}（${tally(LIVE)}）· ${LEGACY}（${tally(LEGACY)}）`
+    `  退休卡（${LEGACY_STATUS_REL}，變身態跟著本體算）：${w.legacy.rules.map((r) => `${r.label} ${r.count}`).join(" · ")}\n` +
+    `  跨軸（⛔ 不是第四群）：其中變身態 ${alts.length}（${altBy.join(" · ")}）；` +
+    `${label.get(NEVER) ?? NEVER} ${never?.count ?? 0} ＝ 宣告表明寫的本體 ${d.legacyNeverOpened.ids.length} ＋ 跟著本體的變身態 ` +
+    `${alts.filter((c) => c.status === NEVER).length}`
   );
 }
