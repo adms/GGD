@@ -2,106 +2,6 @@
   "schema": "ggd-deploy-timings@1",
   "runs": [
     {
-      "id": "2026-08-24/v0.26.4-11-g330ad1aa-dirty",
-      "at": "2026-08-24T18:32",
-      "ref": "v0.26.4-11-g330ad1aa-dirty",
-      "stages": [
-        {
-          "name": "ship:content:build",
-          "ms": 12808,
-          "code": 0,
-          "phase": "serial"
-        },
-        {
-          "name": "ship:skills:sync",
-          "ms": 74645,
-          "code": 0,
-          "phase": "serial"
-        },
-        {
-          "name": "ship:visual-proof",
-          "ms": 5358,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/test-dashboard",
-          "ms": 7658,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest tools/deploy-timing",
-          "ms": 10321,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:go test (platform)",
-          "ms": 11980,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/content-api",
-          "ms": 17646,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:skills:check",
-          "ms": 21535,
-          "code": 1,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/admin",
-          "ms": 68196,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/editor",
-          "ms": 105757,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:typecheck",
-          "ms": 126949,
-          "code": 1,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/game-server",
-          "ms": 177392,
-          "code": 0,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest packages/shared",
-          "ms": 245809,
-          "code": 1,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:vitest apps/client",
-          "ms": 261892,
-          "code": 1,
-          "phase": "parallel"
-        },
-        {
-          "name": "ship:total",
-          "ms": 349451,
-          "code": 1,
-          "phase": "summary",
-          "serialSec": 87.5,
-          "parallelCpuSec": 1060.5,
-          "forksPerSuite": 5
-        }
-      ]
-    },
-    {
       "id": "2026-08-24/v0.26.4-12-g71c0a27d-dirty",
       "at": "2026-08-24T18:41",
       "ref": "v0.26.4-12-g71c0a27d-dirty",
@@ -8820,6 +8720,514 @@
           "phase": "summary",
           "serialSec": 428.4,
           "parallelCpuSec": 3365.3,
+          "forksPerSuite": 4
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15/v0.45.0-1-gf7bd0efcd-dirty",
+      "at": "2026-09-15T02:23",
+      "ref": "v0.45.0-1-gf7bd0efcd-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 46169,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillremake:json",
+          "ms": 95884,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:castderive:build:raw",
+          "ms": 3567,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:apconv:build",
+          "ms": 3276,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:tiers:apply",
+          "ms": 3403,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillremake:provenance",
+          "ms": 3200,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:grail:wishes",
+          "ms": 3275,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vfxfam:build",
+          "ms": 4982,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:pitch:build",
+          "ms": 5157,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:anchors:build",
+          "ms": 5285,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:statcaps:build",
+          "ms": 5272,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:apconv:plan",
+          "ms": 3577,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:apdmg:build",
+          "ms": 5513,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:prose:build",
+          "ms": 6297,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:content:build",
+          "ms": 43043,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:audit:build",
+          "ms": 3727,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:mana:audit",
+          "ms": 6286,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:caps:export",
+          "ms": 4834,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillremake:docs",
+          "ms": 8655,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:contract:numbers",
+          "ms": 3310,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:atlas:build",
+          "ms": 6450,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:treasure:csv",
+          "ms": 3268,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:docs:readme",
+          "ms": 3338,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:docs:status",
+          "ms": 3162,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:newhero:build",
+          "ms": 5503,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:lowdmg:build",
+          "ms": 5287,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:archetypes:build",
+          "ms": 5279,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:templates:build",
+          "ms": 3248,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:msgledger:build",
+          "ms": 29988,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:board:build",
+          "ms": 3439,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillnorm:build",
+          "ms": 6457,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:jasscombo:build",
+          "ms": 3270,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vfxbind:build",
+          "ms": 3258,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:sfxbind:build",
+          "ms": 3250,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:speedtiers:build",
+          "ms": 5389,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:shapes:build",
+          "ms": 3268,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:bricks:build",
+          "ms": 6238,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:assets:manifest",
+          "ms": 8096,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:review:build",
+          "ms": 3658,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:speedlists:build",
+          "ms": 5483,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:locust:build",
+          "ms": 3464,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:appearance:build",
+          "ms": 6203,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:ptokens:build",
+          "ms": 5784,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:decor:build",
+          "ms": 7040,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:board:roll",
+          "ms": 5101,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:clipdeg:build",
+          "ms": 6445,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:receipt:build",
+          "ms": 5461,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:handback:build",
+          "ms": 5408,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:apcoeffdiff:build",
+          "ms": 5368,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:w3a:build",
+          "ms": 5894,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:jasstpl:build",
+          "ms": 3603,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:declshape:build",
+          "ms": 5300,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:enableaudit:build",
+          "ms": 3404,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:typecat:build",
+          "ms": 5550,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillforge:audit",
+          "ms": 5512,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillforge:visual-review:build",
+          "ms": 3411,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillforge:visual-advisory:build",
+          "ms": 3246,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skillforge:visual-sheets:build",
+          "ms": 7449,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vfxforge:handback:build",
+          "ms": 4329,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:editorcov:build",
+          "ms": 5733,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:formreceipts:build",
+          "ms": 26065,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:roster:check",
+          "ms": 3179,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:iconplan:build",
+          "ms": 3270,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:collections:build",
+          "ms": 5478,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:voices:build",
+          "ms": 5849,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:commit-ref-lint",
+          "ms": 3789,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 7790,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 8849,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 15710,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:coord:check",
+          "ms": 17135,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor-desktop",
+          "ms": 42514,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 112794,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 145592,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 154357,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:model-intake",
+          "ms": 177267,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 182847,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 203365,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 207116,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 341506,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:lint",
+          "ms": 359944,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 452710,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 745864,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 1279532,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 529.6,
+          "parallelCpuSec": 3179.1,
           "forksPerSuite": 4
         }
       ]
