@@ -31,7 +31,7 @@ import {
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
-import { DEFAULT_SELL_REFUND_PCT, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
+import { DEFAULT_SELL_REFUND_PCT, SWAP_WHEN_FULL, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
@@ -83,11 +83,11 @@ export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRu
     // 複製一份：`world.legendaryShelf` 是整塊指派的，共用同一個陣列會讓一場比賽
     // 有辦法動到 DEFAULT_ARENA_RULES（模組層常數，每一場都在讀它）。
     randomOnlyTables: [...(cfg.randomOnlyTables ?? [])],
-    // ⭐ GH#1110 B —— 背包滿時可不可以換掉一件。⛔ 出貨 `false`（玩家看得到的行為改變）。
+    // ⭐ GH#1110 B —— 背包滿時可不可以換掉一件。缺席拿**引擎常數**（與上面兩格同一條規則）。
     // ⚠️ ⭐ 2026-09-10 抓到:這一行**漏了好幾輪** —— `LegendaryShelfRules` 多了這一格
     //   而建它的這支函式沒補 ⇒ ⛔ **`pnpm typecheck` 一直是紅的**,而部署照樣成功
     //   （game-server 的映像不跑 tsc）⇒ ⭐ 「部署綠」與「typecheck 綠」是兩件事。
-    swapWhenFull: cfg.swapWhenFull ?? false,
+    swapWhenFull: cfg.swapWhenFull ?? SWAP_WHEN_FULL,
   };
 }
 

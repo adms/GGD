@@ -4297,23 +4297,20 @@ export class MatchController {
    * 它必須傳進來而不是在這裡推導:同一支 `applyPick` 兩個呼叫點,一個是玩家
    * 的 `pickOffer` 事件、一個是 `advancePhase` 的安全網,而「選取率」把這兩種
    * 混在一起就是一半的樣本是隨機數 —— 隨機數的選取率沒有任何意義。
+   *
+   * `swapSlot`(GH#1110 B)= 玩家指定「背包滿時賣掉哪一格」。⛔ 系統代選永遠不帶它
+   * (⛔ 不替玩家挑一件丟掉;AI 座位不換裝)。
    */
-  private applyPick(offerId: string, offer: StoredOffer, choiceIdx: number, auto: boolean): void {
+  private applyPick(
+    offerId: string,
+    offer: StoredOffer,
+    choiceIdx: number,
+    auto: boolean,
+    swapSlot?: number,
+  ): void {
     const choice = offer.choices[choiceIdx] ?? offer.choices[0]!;
-    // #207:記在 apply 的入口,**在任何一條 return 之前**。下面 attr 那一支
-    // (`applyAttrPick`)是有可能失敗的,但卡片已經被消耗掉了(這個方法無條件
-    // `offers.delete`),所以那仍然是「這張被選走了」。
-    this.ledger.recordOffer({
-      seatId: offer.seatId,
-      round: this.phase.round,
-      tick: this.world.tick,
-      kind: MatchController.offerKindOf(offer),
-      offered: [...offer.choices],
-      picked: choice,
-      auto,
-      // `declined` 由 recordOffer 自己從 offered − picked 推導 —— 呼叫端不算,
-      // 不然「沒選的那兩張」會有兩個版本。
-    });
+    /** 道具卡背包滿、而且是**系統代選**:這張卡給不出去,消耗掉(帳本記 picked=null)。 */
+    let landedNowhere = false;
     if (offer.kind === "item") {
       // A 傳說寶玉 card holds an inventory slot from the moment it is rolled
       // (task #82). Release it FIRST so the grant below can use the very slot
@@ -4322,17 +4319,23 @@ export class MatchController {
       // outlived its card would cost the player a slot for the rest of the
       // match.
       if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
-      const picked = applyItemPick(this.world, offer, choice as ItemId);
+      const picked = applyItemPick(this.world, offer, choice as ItemId, swapSlot);
       // ⭐⭐ GH#1110（owner 2026-09-06「A ＋ B 開票」的 A）——
       //   背包滿的時候**留著這張卡**，⛔ 不消耗那次機會。
       //   ⚠️ 在此之前這個方法無條件 `offers.delete` ⇒ 玩家點了一張卡、
       //   什麼都沒發生、而卡片消失了。
       //   ⚠️ ⭐ 寶玉的格子上面剛剛才 `releaseOrbSlot` 過 —— 要**放回去**，
       //   ⛔ 否則留著的那張卡下一次按下去仍然沒有格子（而且那一格永久漏掉）。
-      if (picked === "no-slot") {
+      // ⚠️ 只有**玩家按的**才留卡。系統代選（AI 座位 age>10 那一條、過期安全網）留卡
+      //   ⇒ 下一 tick 同一條迴圈又來一次 ⇒ ⛔ 逐 tick 重試、逐 tick 發拒絕事件，
+      //   而且那張 AI 的卡讓 `offers.size === 0` 永遠不成立（全 bot 局等滿中場）。
+      //   代選本來就不會替人挑一件丟掉 ⇒ 那張卡給不出去 ⇒ 消耗掉。
+      if (picked === "no-slot" && !auto) {
         if (offer.reservesSlot) reserveOrbSlot(this.world, offer.entity);
+        // ⛔ 不記帳：卡片沒有被消耗（在此之前入口先記 ⇒ AI 座位逐 tick 灌一筆）。
         return;
       }
+      landedNowhere = picked === "no-slot";
     } else if (offer.kind === "attr") {
       // 能力屬性強化 (#260). The 375g was charged when the card OPENED, so the
       // pick is a pure grant: it adds the rolled 力/敏/智 magnitude into
@@ -4342,6 +4345,21 @@ export class MatchController {
     } else {
       applyAugmentPick(this.world, offer, choice as AugmentId);
     }
+    // #207:卡片**被消耗的那一刻**記一筆,⭐ 每張卡恰好一筆。attr 那一支
+    // (`applyAttrPick`)有可能失敗,但卡片照樣消耗,所以那仍然是「這張被選走了」。
+    // ⚠️ 在此之前記在入口(任何 return 之前)——而 GH#1110 A 加了一條「背包滿留卡」的
+    // return 之後,入口那一筆就變成「每按一次記一次」。
+    this.ledger.recordOffer({
+      seatId: offer.seatId,
+      round: this.phase.round,
+      tick: this.world.tick,
+      kind: MatchController.offerKindOf(offer),
+      offered: [...offer.choices],
+      picked: landedNowhere ? null : choice,
+      auto,
+      // `declined` 由 recordOffer 自己從 offered − picked 推導 —— 呼叫端不算,
+      // 不然「沒選的那兩張」會有兩個版本。
+    });
     this.offers.delete(offerId);
   }
 
@@ -5526,7 +5544,9 @@ export class MatchController {
         const offer = this.offers.get(offerId);
         if (offer && offer.seatId === (ev.data.seatId as SeatId)) {
           // auto = false —— 這是玩家(或 AI 的 brain)真的按下去的那一張。
-          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false);
+          // swapSlot(GH#1110 B)—— 背包滿時要換掉哪一格,`validateInput` 已驗過格號。
+          const swapSlot = typeof ev.data.swapSlot === "number" ? ev.data.swapSlot : undefined;
+          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false, swapSlot);
         }
       } else if (ev.type === "legendaryOrbRolled") {
         // 傳說寶玉 (task #82): the SIM rolled the 3-choose-1 (so it rides

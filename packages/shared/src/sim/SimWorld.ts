@@ -84,6 +84,7 @@ import {
   DEFAULT_SELL_REFUND_PCT,
   LEGENDARY_PRICE_MULTIPLIER,
   LEGENDARY_SHELF_OPEN,
+  SWAP_WHEN_FULL,
   WEAPON_SHELF_OPEN,
 } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
@@ -721,7 +722,7 @@ export class SimWorld {
     priceMultiplier: number;
     sellRefundPct: number;
     randomOnlyTables: string[];
-    /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨 false）。 */
+    /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨見 `SWAP_WHEN_FULL`）。 */
     swapWhenFull: boolean;
   } = {
     open: LEGENDARY_SHELF_OPEN,
@@ -732,8 +733,8 @@ export class SimWorld {
     //   ⭐ 而 `itemAcquisition.test.ts` / `legendaryShelf.test.ts` 的漂移斷言
     //   在 2026-09-09 真的抓到我漏了它 —— ⛔ 沒有那兩條,沒有 host 接線的路會靜靜地用空表。
     randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
-    // ⭐ GH#1110 B —— 第四個住處。⛔ 出貨 false：換不換裝是 owner 的設計決定。
-    swapWhenFull: false,
+    // ⭐ GH#1110 B —— 引擎常數（owner 2026-09-08「A ＋ B」），見 shopShelf.ts。
+    swapWhenFull: SWAP_WHEN_FULL,
   };
 
   /**

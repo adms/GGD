@@ -105,7 +105,12 @@ export type Command =
   | { kind: "sellItem"; itemSlot: number }
   /** revert the most recent buy/sell of this shopping session (task #121) */
   | { kind: "undoLastShopStep" }
-  | { kind: "pickOffer"; offerId: string }
+  /**
+   * `swapSlot`（GH#1110 B）：背包滿時要**賣掉哪一格**換上這張卡。省略 ＝ 不換。
+   * 只有 `legendaryShelf.swapWhenFull` 開著時伺服器才照做（`economy/draft.ts::applyItemPick`）。
+   * ⚠️ 指令不是 Colyseus schema ⇒ 加一格選填欄位⛔ 不動 append-only 協定。
+   */
+  | { kind: "pickOffer"; offerId: string; swapSlot?: number }
   | { kind: "rankUpAbility"; slot: AbilitySlot }
   /**
    * 陣亡投幣 (task #191): throw 100 unspent gold onto the floor as a coin.

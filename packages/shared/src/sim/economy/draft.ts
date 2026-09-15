@@ -7,8 +7,9 @@
 import type { AugmentId, EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { AugmentDef, AugmentTier } from "../content/defs";
-import { Augments, LootTables } from "../content/registry";
+import { Augments, Items, LootTables } from "../content/registry";
 import { sellItem } from "./shop";
+import { shopAccess } from "./shopAccess";
 import { attachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
 import { grantItemFree } from "./shop";
@@ -441,15 +442,23 @@ export function applyItemPick(
   /**
    * ⭐ **背包滿時要換掉哪一格**（GH#1110 B）——⛔ 省略 ＝ 不換（既有行為）。
    *
-   * ⚠️ ⭐ 它受 `legendaryShelf.swapWhenFull` 管（出貨 **false**）：
-   *   ⛔ 開關關著時**連給了格子也不換** —— 那一格是 owner 的設計決定
-   *   （「先想清楚再拿」vs「隨時可換」），⛔ 不是我能自己轉的（第一守則）。
+   * ⚠️ ⭐ 它受 `legendaryShelf.swapWhenFull` 管（出貨 **true**，owner 2026-09-08「A ＋ B 開票」）：
+   *   ⛔ 開關關著時**連給了格子也不換**（一鍵回到 A 段行為）。
+   * ⚠️ 換裝那一下是一次**賣出**，⇒ 它守商店**同一條** `shopAccess`（⛔ 在此之前繞過它：
+   *   活著的英雄在戰鬥中拿一張還開著的卡就能賣東西）。被擋 ⇒ 發拒絕原因、卡片留著。
    */
   swapSlot?: number,
 ): ItemPickResult {
   if (offer.picked || !offer.choices.includes(pick)) return "invalid";
   let slot = grantItemFree(world, offer.entity, pick);
-  if (slot < 0 && swapSlot !== undefined && world.legendaryShelf?.swapWhenFull === true) {
+  // ⚠️ `Items.tryGet(pick)`：`grantItemFree` 對**認不得的 id** 也回 -1 ——
+  //   ⛔ 沒有這一格，一張壞掉的卡會先把玩家的道具賣掉、再換不上。
+  if (slot < 0 && swapSlot !== undefined && world.legendaryShelf?.swapWhenFull === true && Items.tryGet(pick)) {
+    const access = shopAccess(world, offer.entity);
+    if (!access.open) {
+      world.emit("itemPickRejected", { entity: offer.entity, itemId: pick, reason: access.reason });
+      return "no-slot";
+    }
     // ⭐ 賣掉走**既有**的 `sellItem`（退款照 `sellRefundPct`）——
     //   ⛔ 不另寫一條退款路徑（第〇·四守則：同一個值不可以有第二個住處）。
     // ⚠️⚠️ ⭐ **這裡刻意不發第三個事件。**
@@ -466,6 +475,10 @@ export function applyItemPick(
     // ⭐ 真的需要「這兩則是同一次換裝」這個關聯時,⛔ 不要再加一個事件 ——
     //   在 `itemPicked` 上加一格 `swappedOutSlot`(⭐ 一個欄位,⛔ 不是一條新通道)。
     if (sellItem(world, offer.entity, swapSlot)) {
+      // ⚠️ `sellItem` 推了一筆可復原的「賣出」—— 而那一格下一行就被新道具佔掉，
+      //   ⇒ 那筆復原**永遠是 stale**，並擋住它底下每一筆（例：這一輪先買的那件）。
+      //   ⭐ 換裝跟三選一本身一樣不可復原 ⇒ 把它拿掉。
+      world.champion.get(offer.entity)?.undoStack.pop();
       slot = grantItemFree(world, offer.entity, pick);
     }
   }

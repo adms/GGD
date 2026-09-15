@@ -112,8 +112,15 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           dropCoinCommand(world, entity, seatId);
           break;
         case "pickOffer":
-          // offers are host-side state; surface the pick as an event
-          world.emit("pickOffer", { entity, seatId, offerId: cmd.offerId });
+          // offers are host-side state; surface the pick as an event.
+          // `swapSlot` (GH#1110 B) rides along ONLY when present, so a plain pick's
+          // payload stays byte-identical to every recorded replay.
+          world.emit(
+            "pickOffer",
+            cmd.swapSlot === undefined
+              ? { entity, seatId, offerId: cmd.offerId }
+              : { entity, seatId, offerId: cmd.offerId, swapSlot: cmd.swapSlot },
+          );
           break;
         case "ready":
           world.emit("ready", { entity, seatId });
