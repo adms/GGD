@@ -199,6 +199,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
 
   // ── 武器道具（2）· 肉鴿殭屍（2）· 鑄技工坊（2）
   storeEconomy: ["內容", "數值", "可調"], // 玩家要打幾場才買得起
+  skinTierPrices: ["內容", "數值", "可調"], // GH#1177 追加：造型分級售價（LoL 分級參考）
   itemDraft: ["內容", "規則", "可調"], // 候選不足時怎麼補抽
   mobWaves: ["數值", "規則", "可調"], // 出怪節奏與能力數值
   bossIntro: ["演出", "可調"], // 王走進場那五秒

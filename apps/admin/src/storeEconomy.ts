@@ -15,9 +15,10 @@
  * `TestOperatorPriceEditReachesGetWallet`：後台存一個價格 →`GET /wallet` 必須
  * 回那個價格，不重啟、不重整。**改這一頁的存檔路徑時，請確認那條測試還是綠的。**
  *
- * ⚠️ 生效範圍不是整份文件：`championUnlockCost` 與 `freeChampionIds` 是即時的，
- * `mcoinRewards` **不是**（結算發 M幣 走 `internal/gamelink`，它拿的是開機時的
- * catalog 副本）。頁面上的文案必須照這個講，不要說「整份文件即時生效」。
+ * ⭐ 整份文件都是即時的：`championUnlockCost`／`freeChampionIds` 每次請求現讀；
+ * `crystalRewards` 與（GH#1177 追加，owner 2026-09-15「記得後台可動態參數設定」）
+ * `mcoinRewards` 每一場結算現讀（`wallet.Service.CrystalRulesNow`／`McoinRewardNow`）。
+ * 在此之前 `mcoinRewards` 只讀開機時的 catalog 副本 —— 一格看起來可調而不生效的欄位。
  *
  * ⚠️ 存檔一定寫**整份文件**（`storeDocFor` 一定要收 `mcoinRewards`）。只寫
  * `championUnlockCost` + `freeChampionIds` 的話，覆蓋層裡就會出現一份沒有
@@ -28,6 +29,7 @@
 
 import {
   DEFAULT_CRYSTAL_REWARDS,
+  MCOIN_REWARD_MAX,
   crystalMultiplier,
 } from "@ggd/shared/content/schema/config";
 
@@ -232,6 +234,29 @@ export const SHIPPED_RANDOM_PICK_OWNERSHIP: RandomPickOwnership = "block";
 
 const DEFAULT_REWARDS: McoinRewards = { placement1: 1, placement2: 0, placement3: 0, placement4: 0 };
 
+/** 出貨的 M幣 名次獎勵（`content/config/store.json`）—— 頁面「回到出貨值」用。 */
+export const SHIPPED_MCOIN_REWARDS: McoinRewards = DEFAULT_REWARDS;
+
+/** M幣 名次獎勵的欄位順序與標籤（1 = 冠軍）。 */
+export const MCOIN_REWARD_FIELDS: readonly { key: keyof McoinRewards; label: string }[] = [
+  { key: "placement1", label: "第 1 名" },
+  { key: "placement2", label: "第 2 名" },
+  { key: "placement3", label: "第 3 名" },
+  { key: "placement4", label: "第 4 名" },
+];
+
+/** 上下界與 `zConfigStoreDoc.mcoinRewards` 同一個住處（MCOIN_REWARD_MAX）；回傳有錯的欄位。 */
+export function validateMcoinRewards(r: McoinRewards): Partial<Record<keyof McoinRewards, string>> {
+  const out: Partial<Record<keyof McoinRewards, string>> = {};
+  for (const { key, label } of MCOIN_REWARD_FIELDS) {
+    const v = r[key];
+    if (!Number.isInteger(v) || v < 0 || v > MCOIN_REWARD_MAX) {
+      out[key] = `${label} M幣要是 0–${MCOIN_REWARD_MAX.toLocaleString()} 的整數（現在是 ${String(v)}）`;
+    }
+  }
+  return out;
+}
+
 function intOr(v: unknown, fallback: number): number {
   return typeof v === "number" && Number.isFinite(v) ? Math.trunc(v) : fallback;
 }
@@ -351,8 +376,7 @@ export function freeListText(ids: readonly string[]): string {
  *
  * See the module header: `mcoinRewards` is required and `.strict()`, so a
  * partial write is either rejected or (worse) drops the 吃雞 M幣 reward. The
- * page therefore has to carry the rewards it read, even though it does not
- * edit them.
+ * page always writes the whole reward table (since GH#1177 追加 it also edits it).
  */
 export function storeDocFor(economy: StoreEconomy): Record<string, unknown> {
   return {

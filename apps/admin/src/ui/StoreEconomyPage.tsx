@@ -28,11 +28,16 @@ import { Panel, Btn } from "./widgets";
 import { ChampionIdList, useChampionLabelIndex } from "./ChampionIdList";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
+import { gamesToAffordSkin, skinPriceTierRows, type SkinPriceTierRow } from "@ggd/shared/content/schema/config";
 import {
   CRYSTAL_FIELD_BOUNDS,
   RANDOM_PICK_OWNERSHIP_OPTIONS,
   SANE_UNLOCK_COST,
   SHIPPED_CRYSTAL_REWARDS,
+  SHIPPED_MCOIN_REWARDS,
+  MCOIN_REWARD_FIELDS,
+  validateMcoinRewards,
+  type McoinRewards,
   SHIPPED_FREE_CHAMPION_IDS,
   SHIPPED_RANDOM_PICK_OWNERSHIP,
   SHIPPED_UNLOCK_COST,
@@ -86,6 +91,8 @@ export function StoreEconomyPage(): JSX.Element {
   const [freeText, setFreeText] = useState("");
   const [randomPick, setRandomPick] = useState<RandomPickOwnership>(SHIPPED_RANDOM_PICK_OWNERSHIP);
   const [crystal, setCrystal] = useState<CrystalRewards>(SHIPPED_CRYSTAL_REWARDS);
+  const [mcoin, setMcoin] = useState<McoinRewards>(SHIPPED_MCOIN_REWARDS);
+  const [tiers, setTiers] = useState<SkinPriceTierRow[] | null>(null);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -108,9 +115,22 @@ export function StoreEconomyPage(): JSX.Element {
           setFreeText(freeListText(economy.freeChampionIds));
           setRandomPick(economy.randomPickOwnership);
           setCrystal(economy.crystalRewards);
+          setMcoin(economy.mcoinRewards);
         }
       } catch (err) {
         setApiErr(errText(err));
+      }
+      try {
+        // GH#1177 追加：「約需打幾場」要對上**線上生效的**造型分級售價 —— 覆蓋層優先，沒有才讀出貨表。
+        const ov = (await getOverlayDoc("config", "skin-tier-prices")) as unknown;
+        let tierDoc: unknown = ov ?? null;
+        if (!tierDoc) {
+          const shipped = await getShippedDoc("config", "skin-tier-prices");
+          if (shipped.present && shipped.doc) tierDoc = shipped.doc;
+        }
+        setTiers(skinPriceTierRows(tierDoc as Parameters<typeof skinPriceTierRows>[0]));
+      } catch {
+        setTiers(null);
       }
       try {
         // The whitelist is the set of champions this deploy actually offers —
@@ -135,15 +155,17 @@ export function StoreEconomyPage(): JSX.Element {
 
   const crystalErrs = useMemo(() => validateCrystalRewards(crystal), [crystal]);
   const crystalOK = Object.keys(crystalErrs).length === 0;
+  const mcoinErrs = useMemo(() => validateMcoinRewards(mcoin), [mcoin]);
+  const mcoinOK = Object.keys(mcoinErrs).length === 0;
 
   const preview: StoreEconomy | null =
-    loaded && cost.ok && crystalOK
+    loaded && cost.ok && crystalOK && mcoinOK
       ? {
           championUnlockCost: cost.value,
           freeChampionIds: free.ids,
           randomPickOwnership: randomPick,
           crystalRewards: crystal,
-          mcoinRewards: loaded.mcoinRewards,
+          mcoinRewards: mcoin,
         }
       : null;
 
@@ -152,7 +174,8 @@ export function StoreEconomyPage(): JSX.Element {
     (costText.trim() !== String(loaded.championUnlockCost) ||
       free.ids.join("\n") !== freeListText(loaded.freeChampionIds) ||
       randomPick !== loaded.randomPickOwnership ||
-      JSON.stringify(crystal) !== JSON.stringify(loaded.crystalRewards));
+      JSON.stringify(crystal) !== JSON.stringify(loaded.crystalRewards) ||
+      JSON.stringify(mcoin) !== JSON.stringify(loaded.mcoinRewards));
 
   const save = async (): Promise<void> => {
     if (!preview) return;
@@ -179,6 +202,7 @@ export function StoreEconomyPage(): JSX.Element {
     setFreeText(freeListText(SHIPPED_FREE_CHAMPION_IDS));
     setRandomPick(SHIPPED_RANDOM_PICK_OWNERSHIP);
     setCrystal(SHIPPED_CRYSTAL_REWARDS);
+    setMcoin(SHIPPED_MCOIN_REWARDS);
     setFlash(null);
   };
 
@@ -206,11 +230,9 @@ export function StoreEconomyPage(): JSX.Element {
         <b style={{ color: TEXT_MAIN }}>還沒解鎖的人下一次要付多少</b>。
       </p>
       <p style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
-        ⚠️ 這一頁<b style={{ color: GOLD }}>只有解鎖價、免費名單與藍水晶獎勵是即時生效的</b>
-        （這三樣平台都是每一次請求／每一場結算現讀）。存檔會連同 <code>mcoinRewards</code>
-        （吃雞的 M幣）一起寫回去（不寫會讓那張表消失），但
-        <b style={{ color: GOLD }}>結算發 M幣 讀的仍然是開機時載入的出貨值</b>，
-        要改 M幣 名次獎勵得<b style={{ color: GOLD }}>重啟 platform</b>（或重新部署）才會生效。
+        ⭐ 這一頁<b style={{ color: OK }}>每一格都是即時生效的</b>：解鎖價與免費名單每一次請求現讀，
+        藍水晶與 <b style={{ color: TEXT_MAIN }}>M幣 名次獎勵</b>每一場結算現讀（owner 2026-09-15
+        「記得後台可動態參數設定」）。存檔一定寫整份文件。
       </p>
 
       <div style={{ color: TEXT_MAIN, fontSize: 13, marginBottom: 12 }}>
@@ -388,6 +410,89 @@ export function StoreEconomyPage(): JSX.Element {
         </p>
       </div>
 
+      {/* GH#1177 追加 —— owner 2026-09-15（逐字）：「LoL 點數購買分級為一般 390/520/750/975、史詩 1350、
+          傳說 1820、終極 3250 => 對應打幾場的獎勵呢? 記得後台可動態參數設定」。
+          場數算式只住 shared 的 gamesToAffordSkin；分級價讀線上生效的造型分級售價。 */}
+      <div
+        style={{
+          padding: "9px 10px",
+          border: `1px solid ${PANEL_BORDER}`,
+          borderRadius: 4,
+          fontSize: 13,
+          marginBottom: 12,
+        }}
+      >
+        <div style={{ color: TEXT_MAIN, marginBottom: 4 }}>
+          🪙 M幣 名次獎勵 <code style={{ color: TEXT_DIM, fontSize: 11 }}>mcoinRewards</code>
+        </div>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 8px" }}>
+          <b style={{ color: TEXT_MAIN }}>只有全真人對局</b>（沒有任何 bot）才發 M幣，照隊伍最終名次發。
+          <b style={{ color: OK }}>存檔後下一場結算就生效</b>。
+        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {MCOIN_REWARD_FIELDS.map(({ key, label }) => {
+            const bad = mcoinErrs[key];
+            return (
+              <label key={key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}>
+                <span style={{ color: TEXT_MAIN }}>{label}</span>
+                <input
+                  aria-label={`M幣 ${label}`}
+                  data-field={`mcoinRewards.${key}`}
+                  inputMode="numeric"
+                  value={String(mcoin[key])}
+                  onChange={(e) => setMcoin((m) => ({ ...m, [key]: Number(e.target.value.trim()) }))}
+                  style={{
+                    width: 78,
+                    padding: "4px 6px",
+                    background: "transparent",
+                    color: bad ? DANGER : TEXT_MAIN,
+                    border: `1px solid ${bad ? DANGER : PANEL_BORDER}`,
+                    borderRadius: 3,
+                    textAlign: "right",
+                  }}
+                />
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>出貨 {SHIPPED_MCOIN_REWARDS[key]}</span>
+              </label>
+            );
+          })}
+        </div>
+        {Object.entries(mcoinErrs).map(([k, msg]) => (
+          <div key={k} style={{ color: DANGER, fontSize: 12, marginTop: 6 }}>
+            {msg}
+          </div>
+        ))}
+        <div style={{ overflowX: "auto", marginTop: 8 }}>
+          <table data-testid="skin-tier-games" style={{ fontSize: 12, borderCollapse: "collapse", color: TEXT_MAIN }}>
+            <thead>
+              <tr style={{ color: TEXT_DIM }}>
+                <th style={{ textAlign: "left", padding: "2px 10px 2px 0" }}>造型分級</th>
+                <th style={{ textAlign: "right", padding: "2px 10px" }}>M幣</th>
+                <th style={{ textAlign: "right", padding: "2px 10px" }}>約需打幾場（平均名次）</th>
+                <th style={{ textAlign: "right", padding: "2px 0 2px 10px" }}>每場都第一</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(tiers ?? []).map((t) => {
+                const g = gamesToAffordSkin(t.mcoin, mcoin);
+                const fmt = (n: number | null): string => (n === null ? "拿不到" : `${n.toLocaleString()} 場`);
+                return (
+                  <tr key={t.id} data-tier={t.id}>
+                    <td style={{ padding: "2px 10px 2px 0" }}>{t.label}</td>
+                    <td style={{ textAlign: "right", padding: "2px 10px" }}>{t.mcoin.toLocaleString()}</td>
+                    <td style={{ textAlign: "right", padding: "2px 10px" }}>{fmt(g.gamesAtAverage)}</td>
+                    <td style={{ textAlign: "right", padding: "2px 0 2px 10px" }}>{fmt(g.gamesAllFirst)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {tiers === null && <div style={{ color: TEXT_DIM, fontSize: 12 }}>讀不到造型分級售價表。</div>}
+        </div>
+        <p style={{ color: TEXT_DIM, fontSize: 11, lineHeight: 1.6, margin: "6px 0 0" }}>
+          平均名次＝四個名次機會均等時一場的期望 M幣；場數都是「全真人對局」的場數，無條件進位。
+        </p>
+      </div>
+
       <div style={{ marginBottom: 6 }}>
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>免費名單</span>{" "}
         <code style={{ color: TEXT_DIM, fontSize: 11 }}>freeChampionIds</code>{" "}
@@ -449,7 +554,7 @@ export function StoreEconomyPage(): JSX.Element {
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 14 }}>
         <Btn
           kind="primary"
-          disabled={busy || !dirty || !cost.ok || !crystalOK}
+          disabled={busy || !dirty || !cost.ok || !crystalOK || !mcoinOK}
           onClick={() => void save()}
         >
           儲存 Save
@@ -462,7 +567,9 @@ export function StoreEconomyPage(): JSX.Element {
             ? "價格不合法，無法儲存"
             : !crystalOK
               ? "水晶獎勵有欄位超出範圍，無法儲存"
-              : "整份文件一起寫入（含 M幣 名次獎勵，但那一段要重啟才生效）"}
+              : !mcoinOK
+                ? "M幣 名次獎勵有欄位超出範圍，無法儲存"
+                : "整份文件一起寫入，存檔即生效"}
         </span>
       </div>
     </Panel>

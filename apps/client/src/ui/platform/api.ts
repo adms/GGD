@@ -457,8 +457,8 @@ export function getCatalog(): Promise<Catalog> {
   return api.request<Catalog>("/store/catalog");
 }
 
-export function buyItem(kind: "champion" | "skin", id: string): Promise<Wallet> {
-  return api.request<Wallet>("/store/buy", { body: { kind, id } });
+export function buyItem(kind: "champion" | "skin", id: string, currency?: "mcoin" | "crystal"): Promise<Wallet> {
+  return api.request<Wallet>("/store/buy", { body: currency ? { kind, id, currency } : { kind, id } });
 }
 
 export function equipSkin(championId: string, skinId: string | null): Promise<Wallet> {

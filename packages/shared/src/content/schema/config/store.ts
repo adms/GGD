@@ -11,6 +11,9 @@ import { zId } from "../common";
  * client and the server). Under the flat model an unlisted champion costs
  * `championUnlockCost`, so onboarding a hero needs no store edit at all.
  */
+/** 單一名次一場發的 M幣上界（打錯字的柵欄）。Go 那一半：`apps/platform/internal/wallet/economy.go` 的 `MaxMcoinReward`。 */
+export const MCOIN_REWARD_MAX = 10_000;
+
 export const zConfigStoreDoc = z
   .object({
     id: zId,
@@ -68,13 +71,21 @@ export const zConfigStoreDoc = z
       })
       .strict()
       .optional(),
-    /** M COIN granted per final team placement (1 = winner) */
+    /**
+     * M COIN granted per final team placement (1 = winner) —— **只在全真人對局**發。
+     *
+     * ⭐ owner 2026-09-15（逐字）：「LoL 點數購買分級為一般 390/520/750/975、史詩 1350、傳說 1820、
+     * 終極 3250 => 對應打幾場的獎勵呢? 記得後台可動態參數設定」
+     * ⇒ 後台「商店經濟」可改、平台**每一場結算現讀**（`wallet.Service.McoinRewardNow`），
+     *   「約需打幾場」由 `skinTierPrices.ts` 的 `gamesToAffordSkin` 推導（唯一算式）。
+     * ⚠️ 上界 `MCOIN_REWARD_MAX` 是打錯字的柵欄，⛔ 不是平衡意見（GH#277：只檢查 min 會讓 1 打成 1000 靜靜過去）。
+     */
     mcoinRewards: z
       .object({
-        placement1: z.number().int().min(0),
-        placement2: z.number().int().min(0),
-        placement3: z.number().int().min(0),
-        placement4: z.number().int().min(0),
+        placement1: z.number().int().min(0).max(MCOIN_REWARD_MAX),
+        placement2: z.number().int().min(0).max(MCOIN_REWARD_MAX),
+        placement3: z.number().int().min(0).max(MCOIN_REWARD_MAX),
+        placement4: z.number().int().min(0).max(MCOIN_REWARD_MAX),
       })
       .strict(),
     /**

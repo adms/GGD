@@ -1,0 +1,18 @@
+{
+  "note": "GH#1177 追加 —— skin@1 定價規則的**跨語言對表**。TS `resolveSkinPrice()`（packages/shared/src/content/schema/config/skinTierPrices.ts）與 Go `resolveSkinPrice`（apps/platform/internal/wallet/skinprice.go）跑同一份案例：一邊改了規則而另一邊沒改 ⇒ 那一邊的測試紅。⚠️ 這裡的價錢是**案例自己的數字**，⛔ 不是出貨價（出貨價只住 content/config/skin-tier-prices.json）。error 的詞彙兩邊共用：both／none／unknown-tier。",
+  "tiers": {
+    "tier-a": 100,
+    "tier-b": 250,
+    "tier-free": 0
+  },
+  "cases": [
+    { "name": "只寫分級 ⇒ 表上的價", "skin": { "priceTier": "tier-b" }, "want": 250 },
+    { "name": "分級價 0 ⇒ 免費（⛔ 不是查不到）", "skin": { "priceTier": "tier-free" }, "want": 0 },
+    { "name": "只寫字面價 ⇒ 字面價（GH#1177 之前出貨的 14 份）", "skin": { "mcoinPrice": 750 }, "want": 750 },
+    { "name": "字面價 0 ⇒ 免費", "skin": { "mcoinPrice": 0 }, "want": 0 },
+    { "name": "兩個都寫 ⇒ 擋（第〇·四：級別與算好的值不可並存）", "skin": { "priceTier": "tier-a", "mcoinPrice": 100 }, "error": "both" },
+    { "name": "兩個都沒寫 ⇒ 擋（⛔ 不是 0 元）", "skin": {}, "error": "none" },
+    { "name": "分級在表上查不到 ⇒ 擋（⛔ 不是 0 元）", "skin": { "priceTier": "tier-z" }, "error": "unknown-tier" },
+    { "name": "分級名是空字串 ⇒ 是「寫了但查不到」，⛔ 不是「沒寫」", "skin": { "priceTier": "" }, "error": "unknown-tier" }
+  ]
+}

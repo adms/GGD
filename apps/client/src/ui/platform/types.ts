@@ -318,6 +318,8 @@ export interface CatalogSkin {
   id: string;
   championId: string;
   price: number;
+  /** 藍水晶價（M幣價 × 後台倍率）；0 或缺席 ⇒ 不開放藍水晶購買（owner 2026-09-15「造型也可以用 藍水晶來買」）。 */
+  crystalPrice?: number;
   modelKey: string;
   owned: boolean;
   equipped: boolean;
@@ -413,7 +415,12 @@ export interface SkinDoc {
   championId: string;
   name: string;
   description?: string;
-  mcoinPrice: number;
+  /**
+   * GH#1177 追加：售價寫法恰好一種 —— 字面價 `mcoinPrice` 或分級 `priceTier`（skin@1 superRefine）。
+   * ⛔ 客戶端**不**從這兩格算價：商店顯示的價一律是 /store/catalog 的 `price`（平台從分級表解析）。
+   */
+  mcoinPrice?: number;
+  priceTier?: string;
   modelKey: string;
   /** GH#1177 商店上架開關；缺席＝上架，`false`＝下架（只留給已購玩家）。 */
   listed?: boolean;

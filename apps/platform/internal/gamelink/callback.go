@@ -291,7 +291,14 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 		// treat "skip an absolute write" as a wipe wherever it appears here.
 		mcoin[a.ID] = a.MCoin
 		if perfectLobby {
-			mcoin[a.ID] = a.MCoin + s.cat.RewardFor(placeOf[seat.Team])
+			// GH#1177 追加（owner 2026-09-15「記得後台可動態參數設定」）：名次獎勵每一場現讀
+			// 後台「商店經濟」的覆蓋層（Service.McoinRewardNow），⛔ 不是開機時的 s.cat 副本。
+			// 窄夾具沒有 wallet 時退回出貨表。
+			reward := s.cat.RewardFor(placeOf[seat.Team])
+			if s.settle != nil && s.settle.wallet != nil {
+				reward = s.settle.wallet.McoinRewardNow(placeOf[seat.Team])
+			}
+			mcoin[a.ID] = a.MCoin + reward
 		}
 		// 水晶 (task #118, re-ruled 2026-08-17): the free 「打場免費賺」 grant =
 		// placement base × the whole-lobby multiplier explained above. Same

@@ -73,6 +73,17 @@ var GoConsumedConfigs = []GoConsumedConfig{
 			"overlay entry on every pricing decision, so 後台 → 商店經濟 is live on the next request.",
 	},
 	{
+		// GH#1177 追加（owner 2026-09-15「新模型加購參考 LOL 分級標價」）。
+		Key:      "config/skin-tier-prices",
+		File:     "config/skin-tier-prices.json",
+		GoReader: "internal/wallet",
+		Liveness: ReadsOverlay,
+		LiveConsumer: "internal/wallet itself — Service.effective() lays the overlay's 造型分級售價 over the " +
+			"shipped tier table (skinprice.go skinTierPricesFromOverlay) on every pricing decision, so " +
+			"/store/catalog shows and /store/buy charges the new tier price on the next request. " +
+			"⚠️ Adding/removing a tier or a skin doc is still content/ (read at boot).",
+	},
+	{
 		Key:      "config/combat-env",
 		File:     "config/combat-env.json",
 		GoReader: "internal/combatenv",
