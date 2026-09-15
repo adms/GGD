@@ -62,16 +62,13 @@
  * No trig (direction comes from `normalize`), no `**`, no Map iteration, no
  * clock.
  */
-import type { EntityId } from "../../ids";
 import type { EffectContext } from "./effect";
 import { resolveScaling } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
-import { capsule } from "../collision/shapes";
-import { queryOverlap } from "../collision/queries";
-import { canSee } from "../stealth";
-import { distSq, type Vec2 } from "../math/vec2";
-import { aimDirection, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
+import type { Vec2 } from "../math/vec2";
+import { enemiesInCapsule } from "./capsuleEnemies";
+import { aimDirection, castFrameOf, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
@@ -86,8 +83,8 @@ import { scalingOracle } from "../content/condition";
  * `delayed.advance.dir` 需要**同一個**答案，而本檔案原本那份私有 `lineDir` 一旦
  * 被抄第二份，兩份分岔的那一天沒有人會發現（第零守則⑨）。這裡只留一個轉呼叫。
  */
-function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | undefined {
-  return aimDirection(e.aim, ctx);
+function lineDir(e: { aim?: "facing" | "target" | "cast" }, ctx: EffectContext): Vec2 | undefined {
+  return e.aim === "cast" ? castFrameOf(ctx)?.direction : aimDirection(e.aim, ctx);
 }
 
 export const damageLineEffect: EffectKindSpec<"damageLine"> = {
@@ -97,6 +94,8 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     if (!from) return;
     const dir = lineDir(e, ctx);
     if (!dir) return;
+    // ⭐ GH#1197 威寇茲 W：`aim:"cast"` 的起點也凍在施放那一刻（`delayed` 排出來的第二段不跟著施法者走）。
+    const frozenStart = e.aim === "cast" ? castFrameOf(ctx)?.origin : undefined;
 
     // Both bounded by the SAME ceiling a spread radius is (`SPREAD_MAX_RADIUS`,
     // 24 today — ⛔ 不要在這裡抄一個字面值，這句話寫「12」的時候常數已經是 24 了): the
@@ -111,7 +110,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
 
     // WHERE THE LINE STARTS. Default = the caster's own body ("面前"); the
     // victim-anchored form is the lash that carries on past what it caught.
-    let start = from.pos;
+    let start = frozenStart ?? from.pos;
     if (e.fromCaster === false) {
       const tid = ctx.targets[0];
       const tt = tid !== undefined ? world.transform.get(tid) : undefined;
@@ -119,29 +118,11 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     }
     const end = { x: start.x + dir.x * length, z: start.z + dir.z * length };
 
-    const selfTeam = world.team.get(ctx.caster);
+    // Enemies only, stealth through `stealthRules.blocksAbilityAoe` (the SAME shipped answer AoE
+    // gives), total order by distance² then id —— ⭐ GH#1190 起這一份判準住 `capsuleEnemies.ts`，
+    // `dash.onPathHit`（衝刺沿途）讀同一支，⛔ 不各抄一份。
     const skip = e.includeOrigin === true ? null : new Set(ctx.targets);
-    const victims: { id: EntityId; d2: number }[] = [];
-    for (const id of queryOverlap(world, capsule(start, end, width / 2), {
-      zone: from.zone,
-      exclude: new Set([ctx.caster]),
-      aliveOnly: true,
-    })) {
-      if (skip?.has(id)) continue;
-      const ht = world.team.get(id);
-      // Enemies only — same predicate `enemiesInCircle` applies, spelled out
-      // here because this query is on a capsule and cannot reuse that helper.
-      if (ht && selfTeam && ht.teamId === selfTeam.teamId) continue;
-      // 隱形 (sim/stealth.ts): the SAME shipped answer AoE already gives —
-      // `blocksAbilityAoe` is false, so an invisible body standing in the lash
-      // is still cut. Routed through the field rather than hard-coded so the two
-      // AoE paths can never drift apart.
-      if (world.stealthRules.blocksAbilityAoe && !canSee(world, ctx.caster, id)) continue;
-      const vt = world.transform.get(id);
-      if (!vt) continue;
-      victims.push({ id, d2: distSq(start, vt.pos) });
-    }
-    victims.sort((a, b) => (a.d2 !== b.d2 ? a.d2 - b.d2 : a.id - b.id));
+    const victims = enemiesInCapsule(world, ctx.caster, from.zone, start, end, width / 2, skip);
     // ⭐ G1 ① —— 膠囊**內**逐一過濾 + 切上限（`damageArea` 的同一支模板，
     // ⛔ 不是第二份實作）。一定要在 `canCrit` 的擲骰之前，理由同 damageArea。
     const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);

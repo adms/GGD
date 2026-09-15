@@ -137,8 +137,52 @@ export const zAbilityRecast = z
     cooldownAt: z.enum(["first", "end"]).optional(),
     /** 每一次後段的耗魔（預設 0 —— 首放已經付過）。 */
     costPerRecast: z.number().min(0).optional(),
-    /** GH#1197 威寇茲 W：`firstCast` = 後段沿用**首段**的落點與方向（裂痕固定在原處，⛔ 不讀後段這一按的目標）。缺 = press */
-    anchor: z.enum(["press", "firstCast"]).optional().describe("firstCast = 後段釘在首段的落點／方向（威寇茲 W）"),
+    /**
+     * GH#1197 威寇茲 W：`firstCast` = 後段沿用**首段**的落點與方向（裂痕固定在原處，⛔ 不讀後段這一按的目標）。
+     * GH#1187 瑟雷西 Q：`firstHit` = 後段的目標是**首段命中的第一個單位**（目標＝他、落點＝他腳下、方向＝朝他），
+     * ⛔ 不讀後段這一按的瞄準；那個人已死亡／消失／不在同一區 ⇒ 按下被拒**且階段當場清除**（⛔ 不留可再按的殘窗）。缺 = press
+     */
+    anchor: z
+      .enum(["press", "firstCast", "firstHit"])
+      .optional()
+      .describe("後段瞄準什麼：press（預設，這一按的瞄準）／firstCast（釘在首段的落點與方向，威寇茲 W）／firstHit（首段命中的第一個單位，瑟雷西 Q；那人死亡或消失 ⇒ 階段結束）"),
+  })
+  .strict();
+
+/** 【持續引導】可以被哪些事打斷（GH#1191）。⭐ 引擎與 Zod 共用這一組，⛔ 不各抄一份。 */
+export const CHANNEL_CANCEL_CAUSES = ["move", "stun", "silence", "knockdown", "death", "damage", "control"] as const;
+/**
+ * 省略 `cancelOn` 時的政策：主動移動／暈眩／沉默／擊倒／死亡／方向盤被拿走會打斷，⛔ 普通受傷不會（`damage` 要明寫）。
+ * `control` ＝ 暴走／恐懼／魅惑／混亂（`sim/steeringTaken.ts`，與 OrderSystem 丟指令同一支）＋ 後台設成「嘲弄蓋掉玩家指令」時的嘲弄。
+ */
+export const DEFAULT_CHANNEL_CANCEL_ON: readonly (typeof CHANNEL_CANCEL_CAUSES)[number][] = ["move", "stun", "silence", "knockdown", "death", "control"];
+/** 一次引導最長幾秒（誤植柵欄：把 250 毫秒打成 250 秒時在這裡被擋）。 */
+export const CHANNEL_MAX_SEC = 10;
+
+/**
+ * 【持續引導】（GH#1191）—— 效果開始**之後**仍然站著維持的那一段：稻草人 W 汲取、威寇茲 R 射線。
+ * ⭐ 一個機制（一格資料），⛔ 不是兩支技能各寫一個 if（第〇·五守則）。省略 = 沒有引導 = 舊行為逐位元組不變。
+ *
+ * 與 `interruptOn` 的分工：那一格管**前搖**（效果還沒開始），這一格管**效果開始之後**。
+ * 生命週期（`sim/abilities/channel.ts`，全部絕對 tick）：效果跑完 ⇒ 開始引導（身體定住、不普攻、別的技能按不出來）；
+ * 引導中同一格再按 ⇒ **只更新瞄準**（`aim:"facing"` 的每一波讀當下面向）；
+ * 被打斷 ⇒ 這一次施放排好的 `delayed` 波次**全部作廢**、`onComplete` 不跑；撐滿 `durationSec` ⇒ 殘留波次作廢、跑 `onComplete`。
+ */
+export const zAbilityChannel = z
+  .object({
+    /** 引導撐多久（秒）才算完成。從效果開始那一刻起算。 */
+    durationSec: z.number().min(0.1).max(CHANNEL_MAX_SEC).describe("引導撐多久（秒）才算完成；從效果開始那一刻起算"),
+    /**
+     * 被哪些事打斷。省略 ＝ {@link DEFAULT_CHANNEL_CANCEL_ON}。
+     * `move` 的全域一鍵回頭在 `config.cast-time@1.channelCancelOnMoveOrder`。
+     */
+    cancelOn: z
+      .array(z.enum(CHANNEL_CANCEL_CAUSES))
+      .max(CHANNEL_CANCEL_CAUSES.length)
+      .optional()
+      .describe("被哪些事打斷：move 主動移動或攻擊指令／stun 暈眩／silence 沉默／knockdown 擊倒／death 死亡／damage 掉血／control 方向盤被拿走（暴走、恐懼、魅惑、混亂；後台設成嘲弄蓋掉玩家指令時也含嘲弄）。省略＝move、stun、silence、knockdown、death、control（普通受傷不打斷）"),
+    /** 撐滿才跑的收尾（稻草人 W 的末段）。被打斷 ⇒ ⛔ 不跑。 */
+    onComplete: z.array(zEffectDef).optional().describe("撐滿引導才跑的收尾效果；被打斷就不跑"),
   })
   .strict();
 
@@ -1018,6 +1062,8 @@ export const zAbilityDef = z
     toggle: zAbilityToggle.optional(),
     /** 【再次施放】階段設定。完整語意見 {@link zAbilityRecast}。 */
     recast: zAbilityRecast.optional(),
+    /** 【持續引導】設定（GH#1191）。完整語意見 {@link zAbilityChannel}。 */
+    channel: zAbilityChannel.optional(),
     /**
      * 【跨技能強化】—— 這支技能**指名改寫另一支技能的數字**（59-001 / 70-002 /
      * 77-002 / 92-002）。缺席 = 不強化任何東西。完整語意見 {@link zAbilityAugment}。

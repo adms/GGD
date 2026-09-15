@@ -42,8 +42,10 @@ const LOOKS: Record<string, Look> = {
   },
   ornn: {
     color: [255, 110, 35],
-    slots: { Q: [beam(), ground("point")], W: [beam(), cue("fx.prim.fire.explosion", "point", "castEffect", { w3xScale: 0.7 })], E: [cue("fx.prim.physical.shockwave")], R: [cue("fx.prim.fire.pulse", "self", "castStart"), beam()], EX: [pulse("target")] },
+    // GH#1190：E 的震波只在撞柱／牆擋停時出現 ⇒ 掛在 dash.onEnd（landing），⛔ 不在施放當下（那會對空衝也畫震波）。
+    slots: { Q: [beam(), ground("point")], W: [beam(), cue("fx.prim.fire.explosion", "point", "castEffect", { w3xScale: 0.7 })], E: [beam()], R: [cue("fx.prim.fire.pulse", "self", "castStart"), beam()], EX: [pulse("target")] },
     passive: [proc("damage", "fx.prim.fire.explosion", "target")],
+    landing: { E: "fx.prim.physical.shockwave" },
   },
   chogath: {
     color: [185, 85, 230],
@@ -65,7 +67,8 @@ const LOOKS: Record<string, Look> = {
   },
   ahri: {
     color: [240, 120, 205],
-    slots: { Q: [beam(), beam("strike")], W: [cue("fx.prim.fire.pulse", "self", "strike")], E: shot(), R: [cue("fx.prim.arcane.dash")], EX: [cue("fx.prim.arcane.pulse", "point")] },
+    // GH#1197：Q 改成真的回程法球 ⇒ 演出掛投射物生成／命中（⛔ 舊的 strike 錨點已經沒有延遲波次會發）。
+    slots: { Q: shot(), W: [cue("fx.prim.fire.pulse", "self", "strike")], E: shot(), R: [cue("fx.prim.arcane.dash")], EX: [cue("fx.prim.arcane.pulse", "point")] },
     passive: [proc("heal", "fx.prim.nature.pulse-sm")],
     landing: { R: "fx.prim.arcane.explosion" },
   },

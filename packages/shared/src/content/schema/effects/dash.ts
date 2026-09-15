@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DASH_ON_END_MAX_EFFECTS } from "../../../sim/effects/kindLimits";
+import { SPREAD_MAX_RADIUS } from "../../../sim/effects/spreadLimits";
 import { DISPLACEMENT_AUTHORED_SPEED_MAX, DISPLACEMENT_SPEED_MIN, DISPLACEMENT_TRAVEL_DISTANCE_MAX } from "../../displacementTiers";
 import { zDisplacementTier } from "../displacementDoc";
 import {
@@ -78,15 +79,39 @@ z
       .enum(["always", "completed", "blocked"])
       .optional()
       .describe(
-        "被地形擋下來的衝刺算不算衝完：always（預設，照樣揮出）或 completed（只有跑完距離才揮）。",
+        "結束效果什麼時候跑：always（預設，撞停或跑完都揮）、completed（只有跑完距離才揮）、" +
+          "blocked（只有被牆／暫時障礙擋停才揮，跑完全程不揮）。",
       ),
     /** ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = false（同 randomArea 的同名欄位）。 */
     onEndWhenDead: z
       .boolean()
       .optional()
-      ,
-    /** GH#1190：撞停時把身體碰到的**可碎**暫時障礙（spawnObstacle）撞碎。缺 = false */
-    shatter: z.boolean().optional()
       .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
+    /** GH#1190：撞停時把身體碰到的**可碎**暫時障礙（spawnObstacle）撞碎。缺 = false */
+    shatter: z
+      .boolean()
+      .optional()
+      .describe("被擋停時，把身體碰到的可撞碎暫時障礙（spawnObstacle 生的柱子）撞碎。留空＝不撞碎。"),
+    /**
+     * ⭐ GH#1190 鄂爾 E【衝刺沿途命中】—— 身體**真的掃過**的那一段線上的敵人，各吃一次這一串（目標 = 被掃到的人）。
+     * 逐 tick 只掃這一 tick 走過的那一段 ⇒ 被柱／牆擋停就只算到擋停點（⛔ 柱子後面的人不挨打）；同一個人一次衝刺只算一次。
+     * ⛔ 取代「`damageLine` 抄一份衝刺長度」的舊近似：長度就是**實際位移**，⛔ 沒有第二個長度住處（第〇·四）。
+     * 規則開關 `config.displacement-tiers@1.dashPath.mode`（sweep 預設／full 施放當下沿整條長度結算）。缺 = 沒有沿途命中。
+     */
+    onPathHit: z
+      .array(z.lazy(() => zEffectDef))
+      .min(1)
+      .max(DASH_ON_END_MAX_EFFECTS)
+      .optional()
+      .describe(
+        "衝刺沿途命中：身體真的掃過的那一段線上的敵人各吃一次這一串（被擋停就只算到擋停點）。留空＝沿途不打人。",
+      ),
+    /** 沿途命中那條線的**寬度**（GGD 單位，⛔ 不是半徑）。缺 = 施法者身體直徑。與 `damageLine.width` 同一個上界。 */
+    pathWidth: z
+      .number()
+      .positive()
+      .max(SPREAD_MAX_RADIUS)
+      .optional()
+      .describe("衝刺沿途命中的線寬（GGD 單位）。留空＝施法者的身體直徑。"),
   })
   .strict();

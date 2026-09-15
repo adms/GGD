@@ -59,5 +59,11 @@
   "markedBlink": {
     "enabled": true,
     "requireOwnMark": true
+  },
+  "projectileRedirect": {
+    "mode": "contact"
+  },
+  "dashPath": {
+    "mode": "sweep"
   }
 }

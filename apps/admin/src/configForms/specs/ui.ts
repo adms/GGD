@@ -50,7 +50,11 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
     "⭐ **穿牆有兩半，這一頁兩半都在**（owner 2026-08-21「有許多地圖的牆 瞬移過去 例如無限城等」）：上面那一格修的是**穿隧**（`dash`／擊退滑行一步跨太遠），最下面那五格修的是**終點就在牆的另一邊**（`blink` 沒有中間位置、`leap` 刻意離開平面物理）。⛔ 兩者不可互相取代 —— 夾住瞬移的速度是沒有意義的，它沒有速度。⭐ 那五格的**最後一格**是 GH#490 的飛行例外：一個走路就穿得過牆的身體，位移時照樣穿得過。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/displacement-tiers.json`**。",
   ],
-  consumer: "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）",
+  consumer:
+    "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）；" +
+    "wallBlock／markedBlink／projectileRedirect／dashPath 四區塊由 apps/game-server/src/match/MatchController.ts（正式場次）與 " +
+    "packages/shared/src/content/worldCombatRules.ts（編輯器／重播）寫進 world，再由 sim/movement/leap.ts（world.wallBlock）、sim/effects/blink.ts（world.markedBlink）、" +
+    "sim/projectileRedirect.ts（world.projectileRedirect）、sim/effects/dash.ts（world.dashPath）讀",
   effect: "**要重啟 game-server shard 才生效**，客戶端要重新載入 bundle。",
   // ⭐ GH#992（2026-09-07）：`wallBlock.blink` / `.leap` 兩格的人話與三個處置的中文
   //    搬進 `schema/displacementDoc.ts`（`WALL_BLOCK_POLICY_OPTS` 從 `WALL_BLOCK_POLICIES`

@@ -206,11 +206,11 @@ export const CAST_TIME_SPEC: ConfigDocSpec<"castTime"> = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cast-time.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules。comboWindowFrom 的讀端：sim/content/condition.ts 的 recentCast 分支（comboWindowBaseTick）與 abilities/abilitySystem.ts 提交點的 comboBonus 烘焙（comboWindowFrozenAtCommit）",
+    "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules。comboWindowFrom 的讀端：sim/content/condition.ts 的 recentCast 分支（comboWindowBaseTick）與 abilities/abilitySystem.ts 提交點的 comboBonus 烘焙（comboWindowFrozenAtCommit）。channelCancelOnMoveOrder 的讀端：sim/systems/OrderSystem.ts 套用移動／攻擊指令那一段 → sim/abilities/channel.ts 的 cancelChannelByOrder（GH#1191）",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 冷卻規則／淨化規則／格擋規則 同一個形態(#278)。",
   fields: derivedFields(zConfigCastTimeDoc, []),
-  // 六格純量（#787 加了 castTimeMaxSec、GH#1086 加了 comboWindowFrom），沒有不編輯的分支要原封帶走。
+  // 七格純量（#787 加了 castTimeMaxSec、GH#1086 加了 comboWindowFrom、GH#1191 加了 channelCancelOnMoveOrder），沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 

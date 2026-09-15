@@ -2284,6 +2284,30 @@
     "why": "GH#1187 —— 同上 —— 後段效果樹的第一份採用者是鄂爾 R（撞羊改向），由 #1185 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
     "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
   },
+  "field:abilities.effects[]#spawnProjectile.launchFrom": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1187 —— 鄂爾 R 首段「射程盡頭召出火羊朝自己衝回」。第一份採用者是 `communityLolBatch2.ts` 的 ornn.R 配方（社群英雄草稿，⛔ 還不在 content/）；守衛 `communityLolBatch2Mechanics.test.ts`「Ornn R」跑正常指令。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
+    "group": "2026-09-15 #1187 撞擊改向剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#spawnProjectile.onRedirectHit": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1187 —— 鄂爾 R 後段「衝刺撞到同一隻火羊 ⇒ 改向並擊飛」的改向命中效果。採用者同上（ornn.R 配方草稿）；機制在 `sim/projectileRedirect.ts`，守衛含突變（拿掉碰撞改向 ⇒ 撞羊臂紅）。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
+    "group": "2026-09-15 #1187 撞擊改向剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.channel": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1191 —— 【持續引導】（效果開始之後可被打斷、撐滿才收尾）。第一份採用者是 `communityLolBatch2.ts` 的 fiddlesticks.W 與 velkoz.R 配方（社群英雄草稿，⛔ 還不在 content/）；機制在 `sim/abilities/channel.ts`，守衛 `communityLolBatch2Mechanics.test.ts`「channel:」跑正常指令並做過突變（拿掉打斷時作廢波次 ⇒ 移動／暈眩臂紅）。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
+    "group": "2026-09-15 #1191 持續引導剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:champions.abilities.*.channel": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1191 —— 同上，鏡像側（champion 文件內嵌的 Q/W/E/R）。採用者同上（稻草人 W／威寇茲 R 草稿），#1185 上架時兩格一起變綠；30 天到期會自己紅。",
+    "group": "2026-09-15 #1191 持續引導剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
   "field:champions.abilities.*.recast": {
     "status": "landing",
     "since": "2026-09-11",
@@ -2308,17 +2332,11 @@
     "why": "GH#1197 —— 只清減速 —— 第一份採用者是蓋倫 Q，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
     "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
   },
-  "field:projectiles.returns": {
+  "enum:abilities.effects[]#damageLine.aim=cast": {
     "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 回程彈 —— 第一份採用者是阿璃 Q 的法球 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:projectiles.split": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 分裂彈 —— 第一份採用者是威寇茲 Q 的主彈 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+    "since": "2026-09-15",
+    "why": "GH#1197 —— 威寇茲 W「延遲的第二段仍在原裂痕上」：`damageLine.aim:\"cast\"` 的起點與方向凍在施放那一刻（`delayed` 排程時凍住、每一發原樣帶著）。第一份採用者是 `communityLolBatch2.ts` 的 velkoz.W 配方，由 #1193／#1185 接回（社群英雄草稿，⛔ 還不在 content/）；守衛 `sim/effects/damageLine.test.ts`「延遲直線 aim:cast／facing」兩個方向一起驗。30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-15 #1197 契約層補齊、內容由 LoL lane 接回（landing，30 天到期）"
   },
   "variant:abilities.effects[]#spawnThresholds": {
     "status": "landing",
@@ -2335,6 +2353,18 @@
     "status": "landing",
     "since": "2026-09-15",
     "why": "GH#1189 —— 互動物（瑟雷西 W 燈籠：隊友送 interact 指令才觸發 onAccept）由本 commit 落地；⭐ 第一份採用者是 **瑟雷西 W**，而它住在 `heroForge/communityLolBatch2.ts`（LoL 第四批 11 名的待上架候選，GH#1185），⛔ 今天還不在 `content/abilities/`。⇒ 今天的 0 是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架後這一格仍為 0 ⇒ 接線斷了，這條 30 天的閘會自己再喊一次。"
+  },
+  "field:abilities.effects[]#dash.onPathHit": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1190 修正輪 —— 【衝刺沿途命中】身體真的掃過的那一段線上的敵人各吃一次（被柱／牆擋停就只算到擋停點）。第一份採用者是 `communityLolBatch2.ts` 的 ornn.E 配方（社群英雄草稿，⛔ 還不在 content/）；守衛 `communityLolBatch2Mechanics.test.ts`「Ornn E after Q pillar」兩臂（撞柱臂柱後敵人⛔ 不挨打／空衝臂挨打）。出貨另有兩支同形的近似（80-03 godie-h01u.e、45-03 godie-edem.e 用 damageLine 抄衝刺長度），要不要遷移是另一張票。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
+    "group": "2026-09-15 #1190 修正輪 衝刺沿途命中剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#dash.pathWidth": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1190 修正輪 —— 同上，沿途命中那條線的寬度（缺 = 施法者身體直徑）。採用者同上（ornn.E 配方草稿 1.4 格）；#1185 上架時與 onPathHit 一起變綠，30 天到期會自己紅。",
+    "group": "2026-09-15 #1190 修正輪 衝刺沿途命中剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
   },
   "variant:abilities.effects[]#spawnObstacle": {
     "status": "landing",

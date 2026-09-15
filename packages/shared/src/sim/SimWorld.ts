@@ -50,6 +50,8 @@ import {
 } from "../content/schema/config/controllerScheme";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_MARKED_BLINK, type MarkedBlinkRules } from "./movement/markedBlink";
+import { DEFAULT_PROJECTILE_REDIRECT, type ProjectileRedirectRules } from "./projectileRedirectRules";
+import { DEFAULT_DASH_PATH, type DashPathRules } from "./dashPathRules";
 import { DEFAULT_WALL_BLOCK, type WallBlockRules } from "./movement/wallBlock";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
@@ -927,6 +929,18 @@ export class SimWorld {
    * 預設是**出貨值**（＝功能開著），⛔ 不是關掉。
    */
   markedBlink: MarkedBlinkRules = DEFAULT_MARKED_BLINK;
+
+  /**
+   * ⭐ GH#1187【撞擊改向】規則（`config.displacement-tiers@1` 的 `projectileRedirect`）—— 鄂爾 R 後段那一族。
+   * 同 `markedBlink`：開賽前指派一次、之後不再動；預設是出貨值（contact）。
+   */
+  projectileRedirect: ProjectileRedirectRules = DEFAULT_PROJECTILE_REDIRECT;
+
+  /**
+   * ⭐ GH#1190【衝刺沿途命中】規則（`config.displacement-tiers@1` 的 `dashPath`）—— `dash.onPathHit` 那一族。
+   * 同 `projectileRedirect`：開賽前指派一次、之後不再動；預設是出貨值（sweep）。讀端 `effects/dash.ts`。
+   */
+  dashPath: DashPathRules = DEFAULT_DASH_PATH;
 
   /**
    * 護盾規則 (see shieldRules.ts) —— 目前只有「多個護盾池誰先被吃掉」一格
