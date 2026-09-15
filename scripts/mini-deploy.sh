@@ -240,7 +240,7 @@ roster_publication_check
 # ⭐ 文件讀的是 **mini 上已 checkout 的那一版**（＝這次部署的 commit），⛔ 不是這台 Mac 的工作區。
 # ⚠️ 刻意只 warn（同上一段）：發布是營運動作，⛔ 部署腳本不替它決定。
 roster_publication_check() {
-local dj pj line name n_pub n_all missing
+local dj pj line rc name n_pub n_all missing
 dj=$(r "cat $REMOTE_REPO/docs/editor-contract/社群英雄126名上架狀態.md" 2>/dev/null || true)
 pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/hero-works/published' 2>/dev/null || true)
 if [ -z "$dj" ] || [ -z "$pj" ]; then
@@ -248,9 +248,25 @@ if [ -z "$dj" ] || [ -z "$pj" ]; then
   return 0
 fi
 # ⚠️ 解析形狀與 packages/shared/testkit/rosterDeclaration.ts 的 parseBatchDoc 相同：`## 批次（N）` 底下的 `| # | \`id\` |` 列
+# ⭐ 發布清單的形狀**真的檢查**：陣列，或 `{items:[…]}`（同 tools/editor-acceptance/community-hero-release-check.mts:353）。
+#   ⛔ 在此之前沒檢查 ⇒ 回的是物件時迭代只拿到鍵、published 變空集合 ⇒ 五批全部「發布 0/N」的**假紅**，
+#   而不是「沒有驗到」。形狀不對 ⇒ python 印原因並 exit 3 ⇒ 下面說「沒有驗到」。
+rc=0
 line=$(python3 - "$dj" "$pj" <<'PY'
 import json, re, sys
-published = {row.get("workId") for row in json.loads(sys.argv[2]) if isinstance(row, dict)}
+try:
+    data = json.loads(sys.argv[2])
+except ValueError:
+    print("發布清單不是 JSON")
+    sys.exit(3)
+rows = data.get("items") if isinstance(data, dict) else data
+if not isinstance(rows, list):
+    print("發布清單不是陣列，也不是 {items:[…]}")
+    sys.exit(3)
+published = {row.get("workId") for row in rows if isinstance(row, dict)} - {None}
+if rows and not published:
+    print("發布清單有 %d 列而沒有一列帶 workId" % len(rows))
+    sys.exit(3)
 batches, section = {}, None
 for text in sys.argv[1].split("\n"):
     if text.startswith("## "):
@@ -261,13 +277,16 @@ for text in sys.argv[1].split("\n"):
     m = re.match(r"^\|\s*\d+\s*\|\s*\x60([^\x60]+)\x60\s*\|", text)
     if section and m:
         batches.setdefault(section, []).append(m.group(1))
+if not batches:
+    print("126 名文件解析出 0 批")
+    sys.exit(3)
 for name, ids in batches.items():
     missing = [i for i in ids if i not in published]
     print(f"{name}\t{len(ids) - len(missing)}\t{len(ids)}\t{', '.join(missing) or '-'}")
 PY
-) || line=""
-if [ -z "$line" ]; then
-  warn "126 名文件解析出 0 批（或發布清單不是 JSON 陣列）—— ⛔ 逐群發布**沒有驗到**"
+) || rc=$?
+if [ "$rc" -ne 0 ] || [ -z "$line" ]; then
+  warn "${line:-解析失敗（exit ${rc}）} —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過，也⛔ 不是缺發布）"
   return 0
 fi
 while IFS=$'\t' read -r name n_pub n_all missing; do

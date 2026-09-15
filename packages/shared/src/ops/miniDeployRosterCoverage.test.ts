@@ -39,9 +39,10 @@ const DOC = join(REPO, BATCH_DOC_REL);
  * 跑 `roster_coverage_check`，餵它假的端點回應（published＝`/hero-works/published` 的 workId）。
  * ⚠️ 只 source 到 `cmd_check` 之前（⛔ 那之後是會真的連線的指令）。
  */
-function run(starter: string[] | null, whitelist: string[] | null, published: string[] | null = null): string {
+function run(starter: string[] | null, whitelist: string[] | null, published: string[] | string | null = null): string {
   const j = (ids: string[] | null) => (ids === null ? "" : JSON.stringify({ champions: ids }));
-  const p = published === null ? "" : JSON.stringify(published.map((workId) => ({ workId })));
+  // 字串 ＝ 原樣的回應本體（驗形狀用）；陣列 ＝ 出貨形狀 `[{ workId }]`
+  const p = published === null ? "" : typeof published === "string" ? published : JSON.stringify(published.map((workId) => ({ workId })));
   const harness = `
     set -u
     export GGD_MINI_USER=test-harness GGD_MINI_HOST=127.0.0.1
@@ -110,6 +111,12 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
     for (const [n] of batches) expect(full).toMatch(new RegExp(`✓ ${n}：`));
     expect(full).not.toContain("服務沒有發布");
     expect(run(OLD_49, OLD_49, null)).toContain("逐群發布**沒有驗到**");
+    // ⭐ 形狀：`{items:[…]}` 照樣讀得到；不是陣列的物件 ⇒ 「沒有驗到」，⛔ 不是五批全部假紅
+    const items = run(OLD_49, OLD_49, JSON.stringify({ items: all.map((workId) => ({ workId })) }));
+    for (const [n] of batches) expect(items).toMatch(new RegExp(`✓ ${n}：`));
+    const odd = run(OLD_49, OLD_49, JSON.stringify({ workId: all[0] }));
+    expect(odd).toContain("逐群發布**沒有驗到**");
+    expect(odd).not.toContain("服務沒有發布");
   });
 
   it("⭐ 數量相等而**內容不同** ⇒ 要抓得到（⛔ 比數字的實作會在這裡放行）", () => {
