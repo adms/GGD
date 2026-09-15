@@ -225,7 +225,7 @@ const norm360 = (d: number) => ((d % 360) + 360) % 360;
 /** Snap a measured yaw to the nearest quarter turn (bakes are axis-aligned). */
 const quarter = (d: number) => norm360(Math.round(norm360(d) / 90) * 90);
 
-interface ModelDocLite { id: string; glbPath: string; yawOffsetDeg?: number }
+interface ModelDocLite { id: string; glbPath: string; yawOffsetDeg?: number; bodyVersion?: { sourceModelKey?: string } }
 
 function loadModelDocs(): ModelDocLite[] {
   return fs
@@ -277,7 +277,7 @@ type CensusVerdict =
   | { kind: "unreadable" };
 
 /**
- * ⚠️ **量到的洞，逐具具名** —— 出貨模型裡面向**沒有任何守衛在看**的那些（2026-09-15 起 66 具，原本 3 具）。
+ * ⚠️ **量到的洞，逐具具名** —— 出貨模型裡面向**沒有任何守衛在看**的那些（2026-09-15 起 68 具，原本 3 具；其中 2 具是「與來源同一份幾何」推導來的，見 ④-b）。
  * ⛔ 它們不可以繼續躲在一個 `continue` 後面：列在這裡 = 洞還在，但它**有名字、有理由、
  * 而且不會長大**（表外多一具就紅）。⭐ 反方向也關：哪天有人把某一具修好變成量得出來，
  * 它還留在這張表上一樣紅 —— 一張活得比缺陷還久的豁免表就是下一個謊。
@@ -372,6 +372,10 @@ const FACING_UNVERIFIED: Readonly<Record<string, string>> = {
     "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 b2-uncle）",
   "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6":
     "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過（英雄 lol-karthus）",
+  // ⭐ 下面兩具（`與來源 … 同一份幾何`）⛔ 不是人看過之後宣告的 —— 是**從關係推導**的：
+  //   tex256（c133e100）只換貼圖，⑥ 逐條驗「是它的版本・來源在表上・量測讀的 nodes 逐項相同」。
+  "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b":
+    "與來源 ou99.470426 同一份幾何，來源已宣告量不出（tex256 預設身體貼圖 → 256；英雄 godie-n003）",
   "version.body.39c18a9b1921088ab533c174a64f6ae0bf908933d72ed3ea":
     "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
   "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5":
@@ -396,6 +400,8 @@ const FACING_UNVERIFIED: Readonly<Record<string, string>> = {
     "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
   "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e":
     "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246":
+    "與來源 imported.luffe 同一份幾何，來源已宣告量不出（tex256 預設身體貼圖 → 256；英雄 godie-u00n / u00o）",
   "version.body.8c7d9c17a45eacbf0463ad09896708d85b8a8602f16344c5":
     "4 對 L/R 骨頭彼此不同意（coherence 0.750）—— 骨架疑似被鏡射過",
   "version.body.8ccd5ce36ba95dcfbe12a95f88e973cc09b630b883632578":
@@ -500,6 +506,25 @@ describe("champion model facing, re-measured from the shipped .glb (model-facing
       Object.keys(FACING_UNVERIFIED).filter((id) => !holeIds.has(id)),
       "FACING_UNVERIFIED entries that are no longer holes — delete them",
     ).toEqual([]);
+
+    // ④-b ⭐ 「與來源 X 同一份幾何」⛔ 不是散文（第三守則：註解會說謊）—— 逐條驗三件事：
+    //    ①這份文件真的是 X 的版本 ②X 自己在表上 ③`chiralityForward()` 唯一讀的 glTF nodes 逐項相同
+    //    ⇒ 判定在結構上必然與 X 一樣。任何一件不成立 ⇒ 紅，⛔ 那一條就是一個沒人看過的新洞。
+    const INHERITED = /^與來源 (\S+) 同一份幾何，來源已宣告量不出/;
+    const byId = new Map(all.map((c) => [c.doc.id, c.doc]));
+    const nodesOf = (d: ModelDocLite | undefined) =>
+      d ? JSON.stringify(readGlb(path.join(CONTENT, d.glbPath))?.json.nodes ?? null) : "missing";
+    const lies = Object.entries(FACING_UNVERIFIED).flatMap(([id, why]) => {
+      const src = INHERITED.exec(why)?.[1];
+      if (!src) return [];
+      const doc = byId.get(id);
+      if (doc?.bodyVersion?.sourceModelKey !== src) return [`${id}: bodyVersion.sourceModelKey 不是 ${src}`];
+      if (!(src in FACING_UNVERIFIED) || INHERITED.test(FACING_UNVERIFIED[src] ?? "")) {
+        return [`${id}: 來源 ${src} 自己沒有量到的理由在表上`];
+      }
+      return nodesOf(doc) === nodesOf(byId.get(src)) ? [] : [`${id}: glTF nodes 與來源 ${src} 不同 —— 要重新量`];
+    });
+    expect(lies, "FACING_UNVERIFIED 裡「與來源同一份幾何」的宣告不成立").toEqual([]);
 
     // ⑤ 判定與證據（#216 的「N 支正確 / M 支偏差」）：窮舉且互斥 —— 每一具模型
     //    要嘛量得出來、要嘛沒有骨架、要嘛在具名的豁免表上。⛔ 沒有第四種下場。
