@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2871,
-    "totalBytes": 1108018602
+    "entries": 2873,
+    "totalBytes": 1112669218
   },
   "entries": [
     {
@@ -27365,8 +27365,8 @@
     },
     {
       "path": "assets/models/imported/doraemon-cat.glb",
-      "bytes": 3576192,
-      "sha256": "56ab7b8aea6618ed2ba47f410675eb4dce44d0a3e117e595e0930bf786900198",
+      "bytes": 3495736,
+      "sha256": "b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -27629,8 +27629,8 @@
     },
     {
       "path": "assets/models/imported/herobuu.glb",
-      "bytes": 228584,
-      "sha256": "99f18391788367a91b8afacae159a89a351fcbe470f36a29f6dd195e72cc714d",
+      "bytes": 188804,
+      "sha256": "6d1911e02127d385eeb87620fd79ddea42e918b95e870220ff6cda21b2aba41e",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -28704,6 +28704,17 @@
       "refs": [
         "bundle",
         "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f"
+      ]
+    },
+    {
+      "path": "assets/models/imported/versions/b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b.glb",
+      "bytes": 3495736,
+      "sha256": "b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d"
       ]
     },
     {
@@ -30693,6 +30704,17 @@
       "refs": [
         "bundle",
         "version.body.db80a14d14fe5bf724271e3fc298b87ed497bb61f27a564b"
+      ]
+    },
+    {
+      "path": "assets/models/ou99/versions/6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e.glb",
+      "bytes": 1275116,
+      "sha256": "6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe"
       ]
     },
     {

@@ -7,7 +7,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "軟輔",
-  "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
+  "modelKey": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -270,7 +270,7 @@
       "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
       "label": "ou99「搞怪哆啦A梦猫」（本尊·合併版）",
       "sourceModelKey": "ou99.496905",
-      "modelSha256": "f40f51ec96937eebeeebb4950ce845ae993f8b62ac7fec518d50b7718fec58f8",
+      "modelSha256": "7025f082e5cd9f2d9f2512a60e10a9bf65f72758a6b14f5be0fef6448126324c",
       "binarySha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
       "registeredAt": "2026-09-10T13:45:21.326Z",
       "source": {
@@ -280,6 +280,24 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-496905-1-2.html"
       }
+    },
+    {
+      "modelKey": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
+      "label": "原上線模型（減面 7,864 面＋貼圖 256）",
+      "sourceModelKey": "imported.doraemon-cat",
+      "modelSha256": "a56a7d9c0119e8e4f5f037116b4b6bffee3eb23f575bc9c33549c922086e185f",
+      "binarySha256": "b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b",
+      "registeredAt": "2026-09-15T05:38:10.088Z",
+      "source": {
+        "kind": "exact",
+        "character": "小叮噹 - 哆拉A夢",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.doraemon-cat.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "manual"
 }

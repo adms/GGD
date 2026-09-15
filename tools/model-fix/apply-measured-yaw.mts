@@ -18,7 +18,7 @@
  * 三件事：① `spliceMembers` 只改 `yawOffsetDeg`（⛔ 不重新序列化整份）② 被改到的 `version.body.*`
  * 在每位英雄的 `modelVersions` 重算 `modelSha256` ③ 用 `ModelVersions.verify()` 驗全部版本。
  */
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs";
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
@@ -36,7 +36,9 @@ for (const [key, deg] of Object.entries(measured)) {
   const file = join(C, "models", `${key}.json`);
   const text = readFileSync(file, "utf8");
   const doc = JSON.parse(text);
-  if (doc.yawOffsetDeg === deg) continue;
+  // ⭐ 已是量到的值也要進 touched：中途失敗後重跑時，① 全部 skip 而 ② 沒有東西可重算 ⇒ 英雄卡的雜湊永遠停在舊值
+  //   （2026-09-15 真的發生：寫到第 13 張英雄卡撞到唯讀的產物就停了）
+  if (doc.yawOffsetDeg === deg) { touched.set(key, zModelDoc.parse(doc)); continue; }
   const next = spliceMembers(text, { yawOffsetDeg: deg });
   const parsed = zModelDoc.parse(JSON.parse(next));          // ⛔ 寫之前先過 schema
   writeFileSync(file, next);
@@ -60,7 +62,12 @@ for (const f of readdirSync(champDir).filter((x) => x.endsWith(".json") && !x.st
     return { ...v, modelSha256 };
   });
   if (!changed) continue;
-  writeFileSync(join(champDir, f), spliceMembers(raw, { modelVersions: next }));
+  // ⭐ 暫存檔＋rename：與後台 `ModelVersions`／`register-texture-256` 同一條寫法。部分英雄卡是 skillremake:json 的
+  //   隔離產物（444）—— 那支產生器只覆寫 `abilities`、其餘欄位照讀照寫，`modelVersions` 的寫入者是模型版本這一條。
+  const target = join(champDir, f);
+  const temporary = `${target}.${process.pid}.tmp`;
+  writeFileSync(temporary, spliceMembers(raw, { modelVersions: next }), { flag: "wx" });
+  renameSync(temporary, target);
   console.log(`② ${f.replace(".json", "")}：modelVersions 雜湊更新`);
 }
 
