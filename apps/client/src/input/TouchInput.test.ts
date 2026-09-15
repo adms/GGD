@@ -11,6 +11,7 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import type { Command, Order, CastableSlot } from "@ggd/shared/sim/intents";
+import { targetingRadius } from "@ggd/shared/sim/abilities/abilitySystem";
 import type { AimAbility } from "./AimResolver";
 import { MOVE_LEAD } from "./GamepadInput";
 import type { PickableUnit } from "./Picking";
@@ -298,11 +299,19 @@ describe("drag-aim release (mobile-06)", () => {
     ctrl.buttonTouchStart("E", { identifier: 4, clientX: 700, clientY: 300 });
     ctrl.touchMove(ev([4, 700, 252])); // 48px up → mag 0.5 → 0.5·min(9,6) = 3 out
     ctrl.poll();
-    expect(touchFrame.indicator).toEqual({ kind: "disc", x: 10, z: 8, radius: 1.2 });
+    // ⭐ GH#1246 —— 省略 radius 的圓盤＝sim 選人的那個圈（以前是 sim 裡不存在的 1.2）。
+    expect(touchFrame.indicator).toEqual({ kind: "disc", x: 10, z: 8, radius: targetingRadius({}) });
     ctrl.touchEnd(ev([4, 700, 252]));
     expect(commands).toEqual([
       { kind: "castAbility", slot: "E", target: { type: "point", point: { x: 10, z: 8 } } },
     ]);
+    // …而且跟 sim 一樣再乘 abilityRange。
+    const scaled = harness(ctx({ abilityRange: () => 0.5 }));
+    scaled.ctrl.buttonTouchStart("E", { identifier: 5, clientX: 700, clientY: 300 });
+    scaled.ctrl.touchMove(ev([5, 700, 252]));
+    scaled.ctrl.poll();
+    expect(touchFrame.indicator).toMatchObject({ kind: "disc", radius: targetingRadius({}) * 0.5 });
+    scaled.ctrl.touchEnd(ev([5, 700, 252]));
   });
 
   it("aimCastCommand: targeted drags bias target acquisition along the drag", () => {
