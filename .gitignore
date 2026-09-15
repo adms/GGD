@@ -129,8 +129,3 @@ docs/傳說武器道具.xlsx
 # 一個寫死的 `user@ip` 等於公開 ssh 憑證的一半。`.example` 才進 git。
 scripts/hosts.local.sh
 tools/secret-scan/hosts.local.tsv
-
-# 根目錄的戰情版捷徑（GH#1256）—— `scripts/board-roll.sh` 每天在本機重指到今天那一份。
-# ⛔ 它曾是被追蹤的符號連結、目標每天換 ⇒ commit 新日檔漏帶它（d935cfc98）⇒ 乾淨 checkout 上
-#   `board:roll:check` 紅。owner 2026-08-26：「GGD 戰情版.md 應該再我本機端阿」。
-/GGD戰情版.md
