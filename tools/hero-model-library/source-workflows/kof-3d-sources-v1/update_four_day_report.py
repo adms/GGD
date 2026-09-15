@@ -23,6 +23,7 @@ def render() -> str:
     xiv = data["kofXiv"]
     left, right = data["kofXv"]["newBudgetCandidates"]["candidates"]
     universal = data["kofXv"]["universalAtlasStaticComponents"]["components"]
+    material_probes = data["kofXv"]["materialMappingProbes"]
     textures = xiv["textureCandidates"]["summary"]
     backup = xiv["textureCandidates"]["backup"]
     summary = preflight["summary"]
@@ -30,6 +31,16 @@ def render() -> str:
             or summary.get("completeModelPilots") != 0
             or summary.get("nativeClipLabelCandidates") != 338):
         raise ValueError("KOF XIV native preflight is stale or overclaims conversion")
+    if len(material_probes) != 2 or any(
+            row.get("state") != "blocked-no-authoritative-material-slot-mapping"
+            or row.get("runtimeReady") or row.get("backendSelectionVerified")
+            for row in material_probes):
+        raise ValueError("KOF XV Mai/Iori material mapping probes are stale or overclaim readiness")
+    probe_text = "；".join(
+        f"{row['character']} 原始 FBX／拒絕 GLB 的 SHA 均已重驗，{row['rejectedAssimpGlb']['externalImageUriCount']} 個外部 URI、"
+        f"{row['suppliedTextures']['decodedCount']} 張 TGA 均保留，但仍為 `{row['state']}`"
+        for row in material_probes
+    )
     return (
         f"- KOF 3D 來源批次：KOF XIV MAI、IOR、KYO 已抽取並逐檔 SHA 驗證 "
         f"{xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔／{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes；"
@@ -51,6 +62,7 @@ def render() -> str:
         "每段均已完整解碼與固定來源／輸出 SHA-256；逐段語言、說話者、類別與事件仍為待確認，"
         f"runtime 綁定 {ash_audio['summary']['runtimeBindingsCreated']}、後台選項 {ash_audio['summary']['backendSelectableAssets']}、"
         f"正式部署 {ash_audio['summary']['productionDeployments']}。"
+        f"KOF XV {probe_text}；兩者均未註冊為後台選項。"
     )
 
 
