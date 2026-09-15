@@ -822,8 +822,24 @@ export const zAbilityDef = z
      */
     manaCostTier: z.enum(MANA_TIER_NAMES).optional(),
     range: z.number().min(0),
-    /** skillshot width or AoE radius */
-    radius: z.number().positive().optional(),
+    /**
+     * skillshot width or AoE radius.
+     *
+     * ⭐ GH#1246 —— 「省略」在兩個語境是兩個值，⛔ 各自只有一個住處
+     * （`sim/abilities/abilitySystem.ts`）：選人走 `targetingRadius(def)`（省略 ⇒ 1），
+     * 判斷「它是不是 AoE」走 `authoredAoeRadius(def)`（省略 ⇒ 0）。
+     * ⛔ 消費端不准寫 `def.radius ?? <字面值>`（閘 `ops/noLiteralRadiusDefault.test.ts`）。
+     */
+    radius: z
+      .number()
+      .positive()
+      .optional()
+      .describe(
+        "技能的範圍半徑（或直線技的寬度）。填了 radiusTier 就不要填它。" +
+          "留空時有兩個意思：選人（誰被打到）當成 1 單位的圈、再乘 abilityRange（targetingRadius）；" +
+          "判斷它是不是範圍技（例：殭屍王瞄人群）當成 0＝不是範圍技（authoredAoeRadius）。" +
+          "要範圍就明寫或填 radiusTier。",
+      ),
     /**
      * ⭐ AoE 級別（owner 2026-08-11：「**原則上不寫範圍數字**」）。
      *

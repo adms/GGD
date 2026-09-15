@@ -1469,16 +1469,16 @@
     "why": "⛔ 2026-09-15 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-13）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`（前例 `62e20850c` 同一個判法）。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。 ⚠️ 原本的分節（`group`）是「⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）」—— 分節欄改成本次改判的批次，原文留在這裡。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n三選一增益卡授予的穿透。同上第三個面。31 張出貨增益卡沒有一張是穿透卡；⛔ 加一張是內容決策，屬於 owner 的排序，不是這一批引擎工作的一部分。",
     "group": "2026-09-15 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
-  "enum:abilities.effects[]#dash.distanceTier=小": {
+  "enum:abilities.effects[]#blink.distanceTier=小": {
     "status": "landing",
     "since": "2026-08-18",
-    "why": "GH#318 位移級距。第一個採用（`items/godie-i01s`）在 2026-08-18 落地 —— ⚠️ 它當時填的字是「小」，GH#463 把級距名整體左移一格之後那一筆變成「**極小**」（值一個都沒動）。四個刻度共用同一段查表，所以這一列講的是**內容還沒有一支中距離位移需要改用級別**，⛔ 不是引擎少了什麼。等哪一支距離正好落在「中」的刻度上時把它改過去，這一列就會自己過期。",
+    "why": "⚠️ 2026-09-15（GH#1260 B3 修正輪）**鍵名改了、這一列的意思沒有改**：`dash`／`knockback`／`blink`／`leap` 四種位移的 `distanceTier` 共用**同一個** `zDisplacementTier` enum 物件，census 用「最淺、字典序最小」的路徑替它命名（`fieldAdoption.ts::nameSchemas`）⇒ B3 補上 `blink.distanceTier` 之後名字從 `dash.…` 換成 `blink.…`（`b` < `d`）。⭐ 採用量是**四種位移合計**（2026-09-15 量 content/：極小 5、小 0、中 0、大 1、極大 5），⛔ 不是只數 blink。⏳ 寬限從 `since` 2026-08-18 起算、⛔ 改名不重置（重置＝再展延一次，同 09-15 那批 debt 改判的判法）：2026-09-18T00:00Z（台北 08:00）起這一列會紅 ⇒ 屆時「把距離級別標籤寫回文件」那一步仍沒落地，就改判 `debt`。⭐ B3 吸格後場上已經落在「小」的節點（例：社群 tpl-charge-push 擊退 3 ×14、79-01 瞬步衝刺 8.25）寫上 `distanceTier:\"小\"` 就是採用。\n\n── 以下是原本的理由（⛔ 一個字都沒有刪；`items/godie-i01s` 是 dash 那一族當年的第一個採用）──\nGH#318 位移級距。第一個採用（`items/godie-i01s`）在 2026-08-18 落地 —— ⚠️ 它當時填的字是「小」，GH#463 把級距名整體左移一格之後那一筆變成「**極小**」（值一個都沒動）。四個刻度共用同一段查表，所以這一列講的是**內容還沒有一支中距離位移需要改用級別**，⛔ 不是引擎少了什麼。等哪一支距離正好落在「中」的刻度上時把它改過去，這一列就會自己過期。",
     "group": "⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）"
   },
-  "enum:abilities.effects[]#dash.distanceTier=中": {
+  "enum:abilities.effects[]#blink.distanceTier=中": {
     "status": "landing",
     "since": "2026-08-18",
-    "why": "共用同一段查表的第三格，引擎那一側與已落地的「極小」逐字是同一條路。⚠️ 這一格 GH#463 之前叫「大」—— 合併級距詞彙時挑了 owner 2026-08-11 的舊版（含「超大」），\n      而他同一天稍晚給冷卻級距時已經改口成 極小/小/中/大/極大；改回來是**純改名**，值一個都沒動。零採用講的是內容排序（沒有一支這個距離的位移需要改用級別），⛔ 不是機制缺口。",
+    "why": "⚠️ 2026-09-15（GH#1260 B3 修正輪）鍵名從 `dash.distanceTier=中` 換成 `blink.distanceTier=中`，理由同上一列（共用 `zDisplacementTier` enum、census 取字典序最小的路徑命名；採用量是四種位移合計，「中」仍是 0）。⏳ `since` 2026-08-18 ⛔ 改名不重置 ⇒ 2026-09-18T00:00Z（台北 08:00）起紅，屆時標籤寫回文件那一步沒落地就改判 `debt`。⭐ B3 吸格後場上已經落在「中」的節點（例：08-04 阿邦快速劍X 瞬移 11、b2-goblin.r／b2-touka.r 擊退 4.5）寫上 `distanceTier:\"中\"` 就是採用。\n\n── 以下是原本的理由（⛔ 一個字都沒有刪）──\n共用同一段查表的第三格，引擎那一側與已落地的「極小」逐字是同一條路。⚠️ 這一格 GH#463 之前叫「大」—— 合併級距詞彙時挑了 owner 2026-08-11 的舊版（含「超大」），\n      而他同一天稍晚給冷卻級距時已經改口成 極小/小/中/大/極大；改回來是**純改名**，值一個都沒動。零採用講的是內容排序（沒有一支這個距離的位移需要改用級別），⛔ 不是機制缺口。",
     "group": "⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）"
   },
   "field:abilities.effects[]#screenShake.condition": {
@@ -2378,5 +2378,23 @@
   "enum:champions.modelVersions[].source.selectionClass=w3x": {
     "status": "debt",
     "why": "2026-09-13 模型來源欄位遷移後仍為 0。現有 W3X 位元來源是舊的 previous 版本或跨角色 style-proxy，後者依規則歸類 similar-proxy；不可原地改寫不可變歷史版本，也不能把相似模型冒稱為純 W3X 順位。下一個真正的 W3X 原版候選註冊時應採用此類別。"
+  },
+  "field:abilities.effects[]#blink.distanceTier": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1260 B3 —— `blink` 【固定距離】`distanceUnits` 的級別欄位。⭐ 零採用是**對的**：同一輪 `geometrySnap.ts` 在載入時把**沒標級別**的 `distanceUnits` 吸到 travel 梯最近一格，玩家拿到的已經是級距值；這一格是給**作者**（編輯器／Codex／內容遷移）直接寫標籤用的。⚠️ 5 個節點（b2-kisaragi.r 三格、08-04 阿邦快速劍X 兩形態 godie-n01c.r／godie-nbbc.r）還沒寫標籤。⚠️ 修正輪更正：第一版說「需要 skills:sync 全域鎖」⛔ 不準 —— 手編檔直接寫＋content:build 即可；真正擋住的是 b2-kisaragi.r 的上游是 repo 外的第二批編譯稿（寫在出貨檔會被重跑匯入器打回）。30 天到期時若仍零採用，就是那一步沒做。",
+    "group": "GH#1260 B3 距離收進五級距（2026-09-15）"
+  },
+  "field:abilities.effects[]#leap.distanceTier": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1260 B3 —— `leap.throwDistance` 的級別欄位（被拋的目標走 push 梯、自己飛走 travel 梯，`displacementFieldsOf`）。⭐ 零採用是**對的**：`geometrySnap.ts` 已在載入時把沒標級別的 21 個拋投距離吸格（被拋目標 8、自己飛 13；修正輪重量，第一版寫 27 是錯的）；這一格等內容遷移把標籤寫進文件。⚠️ 修正輪更正：⛔ 不是「需要 skills:sync 全域鎖」—— 21 個裡大半住在模板參數（tpl-charge-push／tpl-pull-throw 的 wc3u，模板沒有級別參數）與匯入器上游（社群 recipe 唯讀、第二批編譯稿在 repo 外）。",
+    "group": "GH#1260 B3 距離收進五級距（2026-09-15）"
+  },
+  "field:abilities.effects[]#leap.radiusTier": {
+    "status": "landing",
+    "since": "2026-09-15",
+    "why": "GH#1260 B3 —— `leap.landRadius`（落地爆炸半徑）的級別欄位，解析到 `landRadius`（`aoeTiers.ts::radiusFieldOf`）。⭐ 零採用是**對的**：`geometrySnap.ts` 已在載入時把沒標級別的 63 個落地半徑（其中 2.75→3 的 45 個裡 41 個是模板技）吸格；這一格等內容遷移把標籤寫進文件與模板參數。⚠️ 修正輪更正：⛔ 不是「需要 skills:sync 全域鎖」—— 擋住的是模板參數（wc3u，模板沒有級別參數）與匯入器上游（社群 recipe 唯讀、第二批編譯稿在 repo 外）。",
+    "group": "GH#1260 B3 距離收進五級距（2026-09-15）"
   }
 }

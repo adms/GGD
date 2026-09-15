@@ -35,6 +35,7 @@ from model_map import parse_inventory, catalog_titles, resolve, stale_blockers  
 #   判準住 `tools/valhalla-intro/strip_dev_notes.py` 一處（逐字樣板、剝一半就擲錯），⛔ 這裡不抄第二份。
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "valhalla-intro"))
 from strip_dev_notes import stripped as strip_dev_notes  # noqa: E402
+from passive_card import composed as passive_card  # noqa: E402  ← GH#1239 天生技三行卡面
 
 REPO = Path(__file__).resolve().parents[2]
 RECIPES = REPO / "materials/community-hero-forge/recipes"
@@ -262,6 +263,13 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
                 )
                 # ⛔ 不發明 enum 值 —— `provenance` 只收 'owner-spec' | 'editor-json'。
                 #   ⭐ 那個狀態放在**描述**裡（玩家看得到的地方），⛔ 不是一個 schema 不認得的字。
+            else:
+                # ⭐ GH#1239 —— 有 runtime 的天生技卡面組成與 Q/W/E/R **同一個三行格式**
+                #   （【目前模板可執行】／【目標設計】／【待補機制】）。組字住 `passive_card.py` 一處，
+                #   ⛔ 這裡不抄第二份；recipe 的 currentBehavior 與 JSON 對不上 ⇒ 回 None、卡面不動。
+                card = passive_card(slot, {"ranks": ranks})
+                if card is not None:
+                    doc["description"] = card
             pas["ranks"] = ranks
             doc["passive"] = pas
         docs.append(doc)

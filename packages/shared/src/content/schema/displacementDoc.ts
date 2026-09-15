@@ -115,6 +115,19 @@ export const zConfigDisplacementTiersDoc = z
       "@note 關掉之後技能照自己文件裡寫的距離走，等於這套級距沒有存在過。⚠️ 它**不會**連帶關掉速度夾限（那是下面獨立的一格）。\n" +
       "技能上填的位移級別（小/中/大/極大）要不要被翻成距離與速度。關掉＝只吃手寫數字。"),
     /**
+     * ⭐ GH#1260 B3 —— 沒標級別的位移距離，載入時吸到最近一格（`content/geometrySnap.ts`）。
+     * `.optional()`：線上耐久覆蓋層沒有這一格仍要過 strict；缺席 ⇒ 出貨值（開）。
+     */
+    snapUntiered: z
+      .boolean()
+      .optional()
+      .describe(
+        "@zh 沒標級別的位移距離吸到最近一格\n" +
+        "@note 技能上**沒填** `distanceTier` 的擊退／衝刺／固定瞬移／拋投距離，載入時靠到最近的級距值（被拋的目標走擊退梯）。⚠️ 只動距離，⛔ 不動速度。" +
+        "⭐ owner 2026-09-02「距離、範圍…全部都五級距化標籤化」。" +
+        "⭐ **一鍵 rollback**：關掉 ⇒ 逐位元回到手寫距離（有填級別的不受影響）。⚠️ 級距總開關關掉時這一格也不跑。",
+      ),
+    /**
      * ② 速度天花板的止血閥。⛔ 關掉 = GH#318 的穿牆回來。
      * 與 `enabled` 分開，因為「不想用級距」與「想讓人穿牆」不是同一件事。
      */
@@ -284,6 +297,7 @@ export const DEFAULT_DISPLACEMENT_TIERS_DOC = {
   id: DISPLACEMENT_TIERS_DOC_ID,
   schema: "config.displacement-tiers@1",
   enabled: DEFAULT_DISPLACEMENT_TIERS.enabled,
+  snapUntiered: DEFAULT_DISPLACEMENT_TIERS.snapUntiered,
   clampSpeed: DEFAULT_DISPLACEMENT_TIERS.clampSpeed,
   safetyFactor: DEFAULT_DISPLACEMENT_TIERS.safetyFactor,
   travel: DEFAULT_DISPLACEMENT_TIERS.travel,

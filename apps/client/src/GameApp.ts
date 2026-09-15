@@ -208,6 +208,7 @@ import { registerHudActions } from "./ui/actions";
 import { appStore } from "./ui/platform/store";
 import { getHeldAimSlot } from "./ui/abilityHold";
 import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
+import { authoredAoeRadius, targetingRadius } from "@ggd/shared/sim/abilities/abilitySystem";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
 import { warmContextualVoice, playContextualVoice } from "./audio/contextualVoice";
@@ -1142,6 +1143,8 @@ export class GameApp {
           facing: this.playerFacing(0),
           ability: (slot) => localAbility(slot),
           enemyUnits: () => this.enemyUnitsFor(playerTeam(0)),
+          // GH#1246 —— 觸控的 AoE 圓盤跟桌機預覽同一個倍率（每幀已 `setDisplayEnvJson` 同步）。
+          abilityRange: () => envFactor("abilityRange"),
         }),
         onOrder: withOrderFeedback(this.orderFeedback, (o) => this.sender.setOrder(o)),
         onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
@@ -3172,7 +3175,12 @@ export class GameApp {
     setDisplayEnvJson(hudStore.getState().combatEnvJson);
     const mult = envFactor("abilityRange");
     const range = ability.range * mult;
-    const rawRadius = (ability as { radius?: number }).radius ?? 0;
+    // ⭐ GH#1246 —— 省略 `radius` 的意思由 sim 的兩支具名解析器說了算，⛔ 不在這裡寫字面預設：
+    // `ground` 走 `groundAoeTargets` 的選人圈（省略 ⇒ `targetingRadius`；這一行以前寫 `?? 0`，
+    // 於是省略它的 ground 技按住預覽**不畫**那個 sim 真的會打的圈）；
+    // 其餘 castType 只有**明寫**半徑才畫（`authoredAoeRadius`，省略 ⇒ 0 ⇒ 不畫，行為不變）。
+    const aoeDef = ability as typeof ability & { radius?: number };
+    const rawRadius = ability.castType === "ground" ? targetingRadius(aoeDef) : authoredAoeRadius(aoeDef);
     const radius = rawRadius > 0 ? rawRadius * mult : null;
     if (range <= 0.1 && radius === null) return null;
 

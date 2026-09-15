@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔興趣使然的英雄〕",
   "provenance": "editor-json",
-  "description": "一段時間未攻擊後，下一次普通拳獲得有限強化。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】一段時間未攻擊後，下一次普通拳獲得有限強化。\n【待補機制】需未攻擊時間與下一拳一次消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

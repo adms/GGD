@@ -24,6 +24,7 @@
  * NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
+import { targetingRadius } from "@ggd/shared/sim/abilities/abilitySystem";
 import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
@@ -116,6 +117,11 @@ export interface TouchPlayerCtx {
    * 逐位元不變，而**真的觸控路徑仍然是活的**。
    */
   allyUnits?(): PickableUnit[];
+  /**
+   * 戰鬥環境的 `abilityRange` 倍率（GH#1246）—— sim 的 AoE 圈是 `targetingRadius(def) × abilityRange`，
+   * 圓盤要畫同一個大小。⛔ **選用**：省略 ⇒ 1（既有夾具逐位元不變）。
+   */
+  abilityRange?(): number;
 }
 
 /** Direction from self toward the nearest enemy within maxRange, or null. */
@@ -530,7 +536,8 @@ export class TouchController {
           kind: "disc",
           x: self.x + dir.x * reach,
           z: self.z + dir.z * reach,
-          radius: ability.radius ?? 1.2,
+          // ⭐ GH#1246 —— 以前是 `?? 1.2`：一個 sim 裡不存在的第三個預設值。
+          radius: targetingRadius(ability) * (ctx.abilityRange?.() ?? 1),
         };
       }
       case "targeted":

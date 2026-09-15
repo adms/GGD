@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔狙擊專注〕",
   "provenance": "editor-json",
-  "description": "保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。\n【待補機制】需静止瞄準層與移動受傷衰退。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

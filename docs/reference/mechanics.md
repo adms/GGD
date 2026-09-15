@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_8e53cfc05d69`
+contentVersion `cv_91f9de0a89eb`
 
 ---
 
@@ -27,7 +27,7 @@ contentVersion `cv_8e53cfc05d69`
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 310 | `b2-albus.ex`、`b2-albus.q`、`b2-bojji.r`、`b2-bojji.w`、`b2-elma.r`、`b2-goblin.e`、`b2-goblin.q`、`b2-goblin.r`、`b2-guts.passive`、`b2-guts.r`、`b2-kaede.passive`、`b2-kaede.r` …（共 310） |
-| `damageArea` | 範圍傷害 | 61 | `b2-kisaragi.e`、`b2-kisaragi.r`、`b2-nube.r`、`b2-shinchan.r`、`b2-yogiri.r`、`community-review-02-20260907.q`、`community-review-03-20260907.q`、`community-review-05-20260907.w`、`community-review-11-20260907.q`、`community-review-21-20260907.q`、`community-review-26-20260907.q`、`godie-e002.w` …（共 61） |
+| `damageArea` | 範圍傷害 | 60 | `b2-kisaragi.e`、`b2-kisaragi.r`、`b2-nube.r`、`b2-shinchan.r`、`b2-yogiri.r`、`community-review-02-20260907.q`、`community-review-03-20260907.q`、`community-review-05-20260907.w`、`community-review-11-20260907.q`、`community-review-21-20260907.q`、`community-review-26-20260907.q`、`godie-e002.w` …（共 60） |
 | `damageLine` | 直線傷害 | 27 | `b2-aladdin.r`、`b2-guts.q`、`b2-kaede.w`、`b2-ned.r`、`b2-popp.r`、`b2-shadow.r`、`b2-sinbad.r`、`b2-uncle.ex`、`godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex` …（共 27） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 75 | `b2-boxxo.r`、`b2-goblin.q`、`b2-kaede.r`、`b2-klaus.r`、`b2-klaus.w`、`b2-kumoko.r`、`b2-makoto.e`、`b2-misery.ex`、`b2-shadow.w`、`b2-touka.q`、`b2-zenitsu.q`、`b2-zenitsu.r` …（共 75） |
@@ -76,7 +76,7 @@ contentVersion `cv_8e53cfc05d69`
 | `onAbilityHit` | 技能命中時 | 21 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18` …（共 21） |
 | `onAllyDamaged` | 隊友受傷時 | 6 | `b2-naofumi.passive`、`b2-naofumi.passive`、`b2-nube.passive`、`b2-nube.passive`、`b2-takopi.passive`、`b2-takopi.passive` |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普攻時 | 153 | `b2-albus.passive`、`b2-albus.passive`、`b2-guts.passive`、`b2-guts.passive`、`b2-kaede.passive`、`b2-kaede.passive`、`b2-orphen.passive`、`b2-orphen.passive`、`b2-rin.passive`、`b2-rin.passive`、`community-review-01-20260907.passive`、`community-review-02-20260907.passive` …（共 153） |
+| `onBasicAttack` | 普攻時 | 152 | `b2-albus.passive`、`b2-albus.passive`、`b2-guts.passive`、`b2-guts.passive`、`b2-kaede.passive`、`b2-kaede.passive`、`b2-orphen.passive`、`b2-orphen.passive`、`b2-rin.passive`、`b2-rin.passive`、`community-review-01-20260907.passive`、`community-review-02-20260907.passive` …（共 152） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 8 | `b2-goblin.passive`、`b2-goblin.passive`、`b2-kumoko.passive`、`b2-kumoko.passive`、`b2-matthias.passive`、`b2-matthias.passive`、`b2-shinchan.passive`、`b2-shinchan.passive` |

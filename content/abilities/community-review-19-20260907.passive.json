@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "二刀流",
   "provenance": "editor-json",
-  "description": "交替命中累積連擊節奏，停止交鋒後衰退；提供有限攻速加成。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】交替命中累積連擊節奏，停止交鋒後衰退；提供有限攻速加成。\n【待補機制】需左右手交替命中、節奏衰退與攻速。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

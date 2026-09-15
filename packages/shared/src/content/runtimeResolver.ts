@@ -11,6 +11,7 @@ import { moveSpeedTiersFromDoc, resolveMsBonusTier } from "./moveSpeedTiers";
 import { displacementTiersFromDoc, minBodyRadiusFromConfigs, resolveDisplacementTier } from "./displacementTiers";
 import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
 import { resolveModelFxPreset } from "./modelFxPreset";
+import { snapUntieredGeometry } from "./geometrySnap";
 
 /** One ordered runtime resolution pipeline for registration, Editor and imports. */
 export function createRuntimeResolver(
@@ -124,7 +125,16 @@ export function createRuntimeResolver(
               // spin/scale/touch*），⛔ 沒有一格是級距的輸入，所以它與外面五層
               // 順序無關；擺在最內層只是讓下游看到的永遠是**補完**的節點。
               // 表住 `content/ability-templates/tpl-beam-roll.json`（第〇·四守則）。
-              resolveRadiusTier(resolveModelFxPreset(d, templates) as never, aoeTiers) as never,
+              // ⭐ GH#1260 B3 —— 沒標級別的距離／範圍先吸到最近一格（`geometrySnap.ts`），
+              //   外面每一層（冷卻形狀、AP 係數讀的半徑與射程）看到的都是吸完的值。
+              resolveRadiusTier(
+                snapUntieredGeometry(resolveModelFxPreset(d, templates) as never, {
+                  aoe: aoeTiers,
+                  range: rangeTiers,
+                  displacement: displacementTiers,
+                }) as never,
+                aoeTiers,
+              ) as never,
               rangeTiers,
             ) as never,
             displacementTiers,
