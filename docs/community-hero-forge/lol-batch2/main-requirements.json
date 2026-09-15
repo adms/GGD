@@ -55,7 +55,10 @@
     },
     {
       "id": "temporary-pillar-collision",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1190：ornn.Q 加 spawnObstacle{at:self, offsetForwardU=裂地長度}；ornn.E 改 tpl-effect-sequence 的 dash{onEndOn:blocked, shatter:true, onEnd:震波擊飛}",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「Ornn E after Q pillar」—— 正常施放 Q→E 撞柱震波＋擊飛＋撞碎；沒柱空衝不震",
+      "notVerified": "遊戲畫面（柱子模型、震波特效）與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "slots": [
         "ornn.Q",
         "ornn.E"

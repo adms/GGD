@@ -648,7 +648,7 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
+          summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.offsetForwardU ? `往前 ${e.offsetForwardU} 格` : ""}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
         });
         break;
       // GH#1197 瑟雷西 R【邊界陣】—— 正多邊形的**邊**，穿過那一段才對穿越者跑 onCross，那一段即消失。

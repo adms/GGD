@@ -42,8 +42,10 @@ const LOOKS: Record<string, Look> = {
   },
   ornn: {
     color: [255, 110, 35],
-    slots: { Q: [beam(), ground("point")], W: [beam(), cue("fx.prim.fire.explosion", "point", "castEffect", { w3xScale: 0.7 })], E: [cue("fx.prim.physical.shockwave")], R: [cue("fx.prim.fire.pulse", "self", "castStart"), beam()], EX: [pulse("target")] },
+    // GH#1190：E 的震波只在撞柱／牆擋停時出現 ⇒ 掛在 dash.onEnd（landing），⛔ 不在施放當下（那會對空衝也畫震波）。
+    slots: { Q: [beam(), ground("point")], W: [beam(), cue("fx.prim.fire.explosion", "point", "castEffect", { w3xScale: 0.7 })], E: [beam()], R: [cue("fx.prim.fire.pulse", "self", "castStart"), beam()], EX: [pulse("target")] },
     passive: [proc("damage", "fx.prim.fire.explosion", "target")],
+    landing: { E: "fx.prim.physical.shockwave" },
   },
   chogath: {
     color: [185, 85, 230],

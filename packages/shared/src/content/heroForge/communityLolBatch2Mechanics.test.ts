@@ -20,7 +20,7 @@ const vfxSubtypes = [...catalog.documents].filter(([key]) => key.startsWith("vfx
 const compiled = new Map<string, Extract<CompiledHeroDraftResult, { ok: true }>>();
 
 beforeAll(() => {
-  for (const id of ["sett", "fiddlesticks"]) {
+  for (const id of ["sett", "fiddlesticks", "ornn"]) {
     const recipe = COMMUNITY_LOL_BATCH2_EXAMPLES.find((entry) => entry.id === id)!;
     const project = createCommunityHeroRecipe(recipe, `lol-mechanics-${id}`, templates);
     const generated = generateHeroDraft(project.acceptedPlan!, {
@@ -70,7 +70,7 @@ function withHero(id: string, spots: [number, number][], run: (rig: Rig) => void
   });
 }
 
-const damageFrom = (rig: Rig, slot: "W" | "R") => rig.events.filter((event) => event.type === "damage" && event.data.source === rig.hero && String(event.data.origin).includes(rig.draft.abilityDrafts[slot].id));
+const damageFrom = (rig: Rig, slot: "W" | "E" | "R") => rig.events.filter((event) => event.type === "damage" && event.data.source === rig.hero && String(event.data.origin).includes(rig.draft.abilityDrafts[slot].id));
 
 describe("LoL batch 2 corrected recipe mechanics", () => {
   it.each([0, 2, 3])("Sett W with %i grit hits center as true, sides as physical, never double-hits, and spends existing grit", (stacks) => {
@@ -113,6 +113,32 @@ describe("LoL batch 2 corrected recipe mechanics", () => {
       expect(damageFrom(rig, "R").some((event) => event.data.target === foes[1])).toBe(true);
       for (let tick = 0; tick < TICK_HZ; tick++) step();
       expect(world.carried.has(foes[0]!)).toBe(false);
+    });
+  });
+
+  // GH#1190 —— 正常輸入 Q→E：E 撞 Q 柱才震波擊飛並撞碎柱子；同一招對空衝（沒柱）⛔ 不震。
+  // ⭐ 兩臂的敵人都站在「E 停下處」的震波半徑內、衝刺線外 ⇒ 空衝那一臂若照樣震，一定打得到他。
+  it.each([[true, 5], [false, 7]] as const)("Ornn E after Q pillar=%s knocks up and shatters only when the dash is blocked", (withPillar, foeX) => {
+    withHero("ornn", [[foeX, 2]], (rig) => {
+      const { world, hero, foes, step, events } = rig;
+      for (const slot of ["Q", "E"] as const) expect(rankUpAbility(world, hero, slot)).toBe(true);
+      const start = { ...world.transform.get(hero)!.pos };
+      const ahead = { type: "point" as const, point: { x: start.x + 3, z: start.z } };
+      if (withPillar) {
+        step({ commands: [{ kind: "castAbility", slot: "Q", target: ahead }] });
+        // Q 落空會吃完整後搖（abilityRecovery）⇒ 等玩家真的按得出 E 的時候再按；柱子活 4 秒以上
+        for (let tick = 0; tick < 2 * TICK_HZ; tick++) step();
+        const qEffects = COMMUNITY_LOL_BATCH2_EXAMPLES.find((r) => r.id === "ornn")!.moves.Q.params.effects as { kind: string; offsetForwardU?: number }[];
+        const lineEnd = qEffects.find((e) => e.kind === "spawnObstacle")!.offsetForwardU!;
+        expect([...world.obstacle.values()].map((o) => o.center.x - start.x), "Q 柱在裂地終點（⛔ 不在腳下）").toEqual([lineEnd]);
+      }
+      step({ commands: [{ kind: "castAbility", slot: "E", target: ahead }] });
+      for (let tick = 0; tick < TICK_HZ; tick++) step();
+      expect(events.some((e) => e.type === "abilityCast" && e.data.caster === hero && e.data.slot === "E")).toBe(true);
+      const shock = damageFrom(rig, "E").filter((e) => e.data.target === foes[0]);
+      const knockup = events.filter((e) => e.type === "leapStart" && e.data.id === foes[0]);
+      expect([shock.length > 0, knockup.length > 0, events.some((e) => e.type === "obstacleShatter")]).toEqual([withPillar, withPillar, withPillar]);
+      expect(world.obstacle.size, "柱子被撞碎（沒柱那一臂本來就是 0）").toBe(0);
     });
   });
 

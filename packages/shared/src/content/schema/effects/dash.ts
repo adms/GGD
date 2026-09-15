@@ -78,15 +78,18 @@ z
       .enum(["always", "completed", "blocked"])
       .optional()
       .describe(
-        "被地形擋下來的衝刺算不算衝完：always（預設，照樣揮出）或 completed（只有跑完距離才揮）。",
+        "結束效果什麼時候跑：always（預設，撞停或跑完都揮）、completed（只有跑完距離才揮）、" +
+          "blocked（只有被牆／暫時障礙擋停才揮，跑完全程不揮）。",
       ),
     /** ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = false（同 randomArea 的同名欄位）。 */
     onEndWhenDead: z
       .boolean()
       .optional()
-      ,
-    /** GH#1190：撞停時把身體碰到的**可碎**暫時障礙（spawnObstacle）撞碎。缺 = false */
-    shatter: z.boolean().optional()
       .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
+    /** GH#1190：撞停時把身體碰到的**可碎**暫時障礙（spawnObstacle）撞碎。缺 = false */
+    shatter: z
+      .boolean()
+      .optional()
+      .describe("被擋停時，把身體碰到的可撞碎暫時障礙（spawnObstacle 生的柱子）撞碎。留空＝不撞碎。"),
   })
   .strict();

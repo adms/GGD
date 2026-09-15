@@ -703,9 +703,9 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
     "adaptations": [
       "保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。",
       "PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。",
-      "Q：重大簡化：沒有生成地形柱；不能描述可堵路或供 E 撞柱。",
+      "Q：裂地終點在施放當下立刻升起 4 秒暫時柱（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。",
       "W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。",
-      "E：重大簡化：不偵測撞牆增幅或擊飛；不能冒充 Q→E 柱擊。",
+      "E：沿途傷害在起衝時沿整條衝刺線結算、不因撞停縮短；撞柱或牆的震波也會打到已被沿途命中的敵人（原作不重複）。",
       "R：PENDING MAIN：需要跨施放保存同一代理物、碰撞事件、方向重定與二段payload；不等同再射一隻羊。 原單段params只為技術候選，不授權作最終替代。",
       "EX：沒有任何裝備升級；保固就是這三秒的盾。"
     ],
@@ -777,7 +777,7 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "Q": {
         "name": "火山脈動",
-        "purpose": "前方裂地造成傷害並緩速。",
+        "purpose": "前方裂地造成傷害並緩速，裂地終點升起一根可堵路、可被熔岩俯衝撞碎的暫時柱。",
         "ref": "tpl-effect-sequence",
         "params": {
           "castType": "skillshot",
@@ -805,6 +805,13 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
                   "moveSpeedMult": 0.7
                 }
               ]
+            },
+            {
+              "kind": "spawnObstacle",
+              "radius": 1,
+              "durationSec": 4,
+              "at": "self",
+              "offsetForwardU": 6
             }
           ]
         }
@@ -844,21 +851,56 @@ export const COMMUNITY_LOL_BATCH2_EXAMPLES = ([
       },
       "E": {
         "name": "熔岩俯衝",
-        "purpose": "向前衝撞、傷害並推移敵人。",
-        "ref": "tpl-charge-push",
+        "purpose": "向前衝撞傷害沿途敵人；只有撞上柱子或牆被擋停，才震波擊飛周圍敵人並撞碎柱子。",
+        "ref": "tpl-effect-sequence",
         "params": {
-          "dashDistance": 400,
-          "dashDurationSec": 0.35,
-          "radius": 150,
-          "damage": {
-            "damageTier": "小"
-          },
-          "damageType": "physical",
-          "pushDistance": 100,
-          "pushSpeed": 650,
-          "pushFrom": "facing",
-          "pushLaunchHeight": 0,
-          "castTimeSec": 0.2
+          "castType": "skillshot",
+          "castTimeSec": 0.2,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 7.33,
+              "width": 1.4,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true
+            },
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 16,
+              "maxDistance": 7.33,
+              "onEndOn": "blocked",
+              "shatter": true,
+              "onEnd": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "radius": 2.75,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "knockback",
+                      "distance": 0.2,
+                      "speed": 12,
+                      "from": "caster",
+                      "subtractGap": false,
+                      "launchHeight": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       "R": {

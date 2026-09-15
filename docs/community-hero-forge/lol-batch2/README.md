@@ -22,7 +22,7 @@
 |---|---|---|
 | [#1187](https://github.com/adms/GGD/issues/1187) | 阿璃 R、瑟雷西 Q、鄂爾 R | 次數型重施放、命中後自選進場、同一羊再次撞擊改向 |
 | [#1189](https://github.com/adms/GGD/issues/1189) | 瑟雷西 W | 隊友自主點燈接受位移與護盾 |
-| [#1190](https://github.com/adms/GGD/issues/1190) | 鄂爾 Q、E | 暫時地形柱及撞有效地形才發生的震波 |
+| [#1190](https://github.com/adms/GGD/issues/1190) | 鄂爾 Q、E | ⭐ 已接回配方：Q 裂地終點生暫時柱、E 被柱／牆擋停才震波擊飛並撞碎柱（模擬守衛通過；⛔ 畫面與編輯器往返未實機驗收） |
 | [#1191](https://github.com/adms/GGD/issues/1191) | 稻草人 W、威寇茲 R | 可中斷持續引導，結束後停止後續波次；射線持續瞄準 |
 | [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | 法球返航／魅惑、觸碰破牆、當前彈體分裂／固定裂痕與充能、僅解除既有減速 |
 
