@@ -28,6 +28,7 @@ def block() -> str:
     raw_metrics = raw["metrics"]
     rebuilt = raw.get("materialRebuildIntermediate")
     topology = (rebuilt or {}).get("topologyDecimationAttempts")
+    wholemesh = (rebuilt or {}).get("wholeMeshTopologyPreservingCandidate")
     topology_text = ""
     if topology:
         attempts = topology["attempts"]
@@ -37,6 +38,17 @@ def block() -> str:
         topology_text = (f"另有 {topology['rejectedCount']} 個低面數拓撲減面嘗試（{runs}），雖都低於 8,000 面且各自具三視角證據，"
                          f"但均在技術視覺檢查拒絕：{findings}。它們是 **已轉換但技術視覺拒絕的中間檔**，"
                          f"不是 owner 視覺核可、不可註冊、不可切換、未部署；完整階段歸檔 `{backup['s3Uri']}` 已完成讀回與逐檔 SHA-256 驗證。")
+    wholemesh_text = ""
+    if wholemesh:
+        conversion = wholemesh["conversion"]
+        backup = wholemesh["legacyArchive"]["backup"]
+        wholemesh_text = (f"新一輪 whole-mesh 保形減面候選為 **{conversion['trianglesAfter']:,} 面／{conversion['drawPrimitives']} draw／"
+                          f"{conversion['maxTextureEdge']}px**，保留原始 skin、骨架階層及 material/base-texture slots，並移除舊版未蒙皮 Icosphere helper；"
+                          f"Khronos {conversion['khronosErrors']} error，{conversion['webglViewCount']} 張 WebGL 視圖均完成。"
+                          f"但它仍是 **技術拒收的替代候選**：{conversion['drawPrimitives']} draw 超過硬上限 {conversion['drawLimit']}，固定 RGB 診斷最大 "
+                          f"{conversion['visualDiagnosticMaxForegroundDeltaPct']}% 超過政策 {conversion['visualDiagnosticPolicyThresholdPct']}%，且 "
+                          f"{conversion['shapeKeyStatus']}。因此不可註冊、不可切換、未部署；完整 stage 已歸檔 `{backup['s3Uri']}`，"
+                          "完整讀回與逐檔 SHA-256 驗證通過。")
     return "\n".join([
         START,
         "",
@@ -57,6 +69,8 @@ def block() -> str:
         (f"接著的材質重建 v3 將 22 個實際 mesh 材質重綁為同名原始 VTF、全部嵌入且壓至 **256px**；GLB SHA-256 `{rebuilt['output']['sha256']}`、Babylon 三視角證據 3 張無輸出錯誤，並已歸檔到 `{rebuilt['stageBackup']['s3Uri']}`（完整讀回、逐檔 SHA-256 驗證）。它仍保留 **89,833 面**，因此只是 **材質重建完成、待保形減面／視覺驗收，未註冊、不可切換、未部署**。" if rebuilt else "").strip(),
         "",
         topology_text,
+        "",
+        wholemesh_text,
         "",
         END,
         "",

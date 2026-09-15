@@ -30,6 +30,7 @@ def source_entry(row: dict) -> dict:
     source = row["source"]
     local = Path(source["absolutePath"])
     body, accessories, props = [], [], []
+    has_wholemesh_candidate = False
     for index, model in enumerate(row["modelGroups"]):
         role = model["role"]
         geometry = model["coreGeometry"]
@@ -75,6 +76,17 @@ def source_entry(row: dict) -> dict:
                     candidate["topologyDecimationAttempts"] = topology
                     candidate["conversionStatus"] = "sourceio-material-rebuilt-topology-decimation-candidates-rejected-pending-alternative-standardization"
                     candidate["limitations"][2] = "Three under-8,000-triangle collapse-decimation candidates are retained with render proof and S3 receipts, but all failed technical visual screening. None is an accepted model, a backend option, runtime selectable, or deployed; use a different standardization method before owner visual acceptance."
+                wholemesh = material_rebuild.get("wholeMeshTopologyPreservingCandidate")
+                if wholemesh:
+                    has_wholemesh_candidate = True
+                    conversion = wholemesh["conversion"]
+                    candidate["wholeMeshTopologyPreservingCandidate"] = wholemesh
+                    candidate["converted"] = True
+                    candidate["technicalRejected"] = True
+                    candidate["conversionStatus"] = "sourceio-wholemesh-under-8000-converted-technical-rejected-not-dropdown-runtime-or-deployed"
+                    candidate["limitations"][0] = "The whole-mesh boundary-preserving candidate retains the verified skeleton, skin weights, material slots and embedded 256px textures; it is a converted technical-rejected intermediary, not a GGD model option."
+                    candidate["limitations"][2] = (f"The 7,616-triangle candidate has Khronos 0 errors and three WebGL views, but {conversion['drawPrimitives']} draws exceed {conversion['drawLimit']}; "
+                                                    f"its fixed-view diagnostic is {conversion['visualDiagnosticMaxForegroundDeltaPct']}% over {conversion['visualDiagnosticPolicyThresholdPct']}%, and {conversion['facialShapeKeysMissing']} facial shape keys are unavailable after topology change. It is not default eligible, backend registered, runtime selectable, or deployed.")
         if "body replacement" in role:
             candidate["resourceRole"] = "character-body"
             candidate["character"] = "小呆／達伊 / Dai"
@@ -102,7 +114,7 @@ def source_entry(row: dict) -> dict:
         "accessStatus": "public-steam-file-url",
         "checkedAt": source["checkedAt"],
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "source1-vpk-sourceio-raw-intermediate-pending-material-rebuild-and-standardization" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else "source1-vpk-core-geometry-audited-pending-glb-standardization",
+        "readiness": "source1-vpk-wholemesh-under8000-converted-technical-rejected-not-runtime" if any((model.get("sourceioRawIntermediate") or {}).get("materialRebuildIntermediate", {}).get("wholeMeshTopologyPreservingCandidate") for model in row["modelGroups"]) else "source1-vpk-sourceio-raw-intermediate-pending-material-rebuild-and-standardization" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else "source1-vpk-core-geometry-audited-pending-glb-standardization",
         "purchaseDecision": "hold-purchase-review-acquired-source",
         "defaultEligible": False,
         "resourceRole": "character-body-and-weapon-prop-collection",
@@ -122,9 +134,9 @@ def source_entry(row: dict) -> dict:
         "textureCount": row["extracted"]["vtfFiles"],
         "vfxCount": 0,
         "audioCount": 0,
-        "publicationStatus": "local-extracted-awaiting-legacy-backup",
-        "backendIntegration": {"required": True, "state": "pending-source-mdl-glb-standardization", "heroIds": ["godie-nbbc", "godie-n01c"], "ownerEntryIds": [], "release": None, "selectionVerified": False},
-        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。" + (" 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else " 尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。") + (" raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。" if any((model.get("sourceioRawIntermediate") or {}).get("conversionStageBackup") for model in row["modelGroups"]) else ""),
+        "publicationStatus": "source-vpk-s3-readback-verified; wholemesh-conversion-legacy-archive-readback-verified" if any((model.get("sourceioRawIntermediate") or {}).get("materialRebuildIntermediate", {}).get("wholeMeshTopologyPreservingCandidate") for model in row["modelGroups"]) else "local-extracted-awaiting-legacy-backup",
+        "backendIntegration": {"required": True, "state": "technical-rejected-wholemesh-candidate-not-backend-registered" if has_wholemesh_candidate else "pending-source-mdl-glb-standardization", "heroIds": ["godie-nbbc", "godie-n01c"], "ownerEntryIds": [], "release": None, "selectionVerified": False},
+        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。" + (" 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else " 尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。") + (" raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。" if any((model.get("sourceioRawIntermediate") or {}).get("conversionStageBackup") for model in row["modelGroups"]) else "") + (" Whole-mesh 7,616 面候選已轉換並具 0 Khronos errors、3 張 WebGL 視圖，但 26 draw、25.6767% 視覺診斷與 29 個未保留表情 shape keys 使其技術拒收；其 local stage 與 legacy archive 均已完整讀回及逐檔 SHA-256 驗證。" if any((model.get("sourceioRawIntermediate") or {}).get("materialRebuildIntermediate", {}).get("wholeMeshTopologyPreservingCandidate") for model in row["modelGroups"]) else ""),
         "limitations": row["blockers"],
     }
 

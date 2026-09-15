@@ -66039,7 +66039,7 @@
       "accessStatus": "public-steam-file-url",
       "checkedAt": "2026-09-15T00:48:36+00:00",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "source1-vpk-sourceio-raw-intermediate-pending-material-rebuild-and-standardization",
+      "readiness": "source1-vpk-wholemesh-under8000-converted-technical-rejected-not-runtime",
       "purchaseDecision": "hold-purchase-review-acquired-source",
       "defaultEligible": false,
       "resourceRole": "character-body-and-weapon-prop-collection",
@@ -66067,7 +66067,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "da154cf2a36ffdff7a29512e463057e298c537d74a510629a7e018a082d000dd"
+        "sha256": "f495cb76f82e641977c704950a94d71868a6fb58b60741db1689be11ca07215f"
       },
       "modelCandidates": [
         {
@@ -66144,14 +66144,14 @@
             "finitePositionNormalUv": true,
             "skeletonParentsInRange": true
           },
-          "converted": false,
+          "converted": true,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "sourceio-material-rebuilt-topology-decimation-candidates-rejected-pending-alternative-standardization",
+          "conversionStatus": "sourceio-wholemesh-under-8000-converted-technical-rejected-not-dropdown-runtime-or-deployed",
           "limitations": [
-            "The same-name Workshop VTF maps were rebuilt into an embedded 256px GLB with Babylon render proof; it remains a conversion intermediate.",
+            "The whole-mesh boundary-preserving candidate retains the verified skeleton, skin weights, material slots and embedded 256px textures; it is a converted technical-rejected intermediary, not a GGD model option.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
-            "Three under-8,000-triangle collapse-decimation candidates are retained with render proof and S3 receipts, but all failed technical visual screening. None is an accepted model, a backend option, runtime selectable, or deployed; use a different standardization method before owner visual acceptance."
+            "The 7,616-triangle candidate has Khronos 0 errors and three WebGL views, but 26 draws exceed 6; its fixed-view diagnostic is 25.6767% over 5%, and 29 facial shape keys are unavailable after topology change. It is not default eligible, backend registered, runtime selectable, or deployed."
           ],
           "rawGlbIntermediate": {
             "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/conversion-receipt.json",
@@ -66327,6 +66327,218 @@
                   "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1/latest-receipt.json",
                   "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
                 }
+              },
+              "wholeMeshTopologyPreservingCandidate": {
+                "stage": "jump-force-dai-l4d2-topology-preserving-v2",
+                "run": "run-a-wholemesh-preserve-boundaries",
+                "source": {
+                  "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+                  "bytes": 5852664,
+                  "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
+                },
+                "candidate": {
+                  "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+                  "bytes": 2351028,
+                  "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+                },
+                "conversion": {
+                  "acquired": true,
+                  "converted": true,
+                  "technicalRejected": true,
+                  "status": "rejected-technical-budget-and-visual-diagnostic; preserve-as-alternative-conversion-candidate",
+                  "trianglesBefore": 89833,
+                  "trianglesAfter": 7616,
+                  "maxTextureEdge": 256,
+                  "drawPrimitives": 26,
+                  "drawLimit": 6,
+                  "khronosErrors": 0,
+                  "webglViewCount": 3,
+                  "visualDiagnosticMaxForegroundDeltaPct": 25.6767,
+                  "visualDiagnosticPolicyThresholdPct": 5,
+                  "facialShapeKeysMissing": 29,
+                  "shapeKeyStatus": "basis-bind-pose-only; 29 source expression keys intentionally removed before topology change and not advertised as preserved",
+                  "backendRegistered": false,
+                  "runtimeSelectable": false,
+                  "productionDeployed": false
+                },
+                "gitEvidence": [
+                  {
+                    "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/stage-manifest.json",
+                    "bytes": 5703,
+                    "sha256": "59f4918e565ddbf02df26a516ba42a5d6d260d770aaaab92bff144c6dd216f1e",
+                    "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/manifest.json"
+                  },
+                  {
+                    "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/candidate-receipt.json",
+                    "bytes": 13468,
+                    "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b",
+                    "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/receipt.json"
+                  },
+                  {
+                    "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/validation.json",
+                    "bytes": 38233,
+                    "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498",
+                    "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/validation.json"
+                  },
+                  {
+                    "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/visual-comparison.json",
+                    "bytes": 1966,
+                    "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427",
+                    "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json"
+                  }
+                ],
+                "legacyArchive": {
+                  "state": "s3-readback-verified",
+                  "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2",
+                  "memberCount": 26,
+                  "members": [
+                    {
+                      "path": "build_candidate.py",
+                      "bytes": 15431,
+                      "sha256": "42c14fd2c156a18147c0a4bdf9d6aa5ab1952f1c606f1ebdd487c55472de6fb4"
+                    },
+                    {
+                      "path": "compare_visuals.py",
+                      "bytes": 3963,
+                      "sha256": "898c5cda7c35f3e4a7050d8328fe5b529a6a32cc38b8e3d43d0cccf1fbdb4e05"
+                    },
+                    {
+                      "path": "finalize_validation.py",
+                      "bytes": 5981,
+                      "sha256": "eb53c1fa8665d35b17974ad84cd89635a04f6697274058ed687d011145c8f1a5"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/blender-driver.py",
+                      "bytes": 5414,
+                      "sha256": "ad14a848b81b668492615955d56e0b3e324da299187ed317dec4b3d3aca3e9ca"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/blender-result.json",
+                      "bytes": 11475,
+                      "sha256": "7aeada79443d28dc069a22d8b1152dff07ae41d19bbf2285c1892d57cb8d335b"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/blender.log",
+                      "bytes": 4903,
+                      "sha256": "0d1de2cb9141104d542a976d9db36ba619b2be9b87fd9c90bb9fc305aded0735"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/budget.json",
+                      "bytes": 1530,
+                      "sha256": "cea9078fb8f03a7283132a34c75b133c2bf094ee99a3ff180a81cbf768f8f24c"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+                      "bytes": 2351028,
+                      "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/khronos.json",
+                      "bytes": 178,
+                      "sha256": "4624fddcb2ec1e7a9b2b05fedd063dcede9b9d02376202de24d02156e4e549cb"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/receipt.json",
+                      "bytes": 13468,
+                      "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/validation.json",
+                      "bytes": 38233,
+                      "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-comparison.png",
+                      "bytes": 591831,
+                      "sha256": "bbb3e8e8a6a43140d430ad5e80b722659fbeeff3eb172e7c2034596b4f6f40b7"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-rgb-delta.png",
+                      "bytes": 211718,
+                      "sha256": "67128839b975c5944f729e3e439c79bab9440bd5beddab4f4e898a2bb6c8b980"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json",
+                      "bytes": 1966,
+                      "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-comparison.png",
+                      "bytes": 608475,
+                      "sha256": "0bcca150e33910ceabbf32ee4fce9f8c6ee39151fbb981c392ea9da31a02fac8"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-rgb-delta.png",
+                      "bytes": 217072,
+                      "sha256": "5ad6dc36940b80c3b02a144d6872df85316923dae395d15adb38528a1f946cbc"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-comparison.png",
+                      "bytes": 566451,
+                      "sha256": "748014e760c1233f344d6d73d9f73fe0c1e8630e32a2bd891fa17a0ccdb3a797"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-rgb-delta.png",
+                      "bytes": 206023,
+                      "sha256": "869a2147399489520ed64f746e583dfe5e030aafbaf9fe7ddd7a382bcd6c20fa"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/back.png",
+                      "bytes": 261894,
+                      "sha256": "42bb6936881779f39cca1a6dcbac03aa2f287fa06c4a64e271ab8a73419397d2"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/bundle.js",
+                      "bytes": 11484181,
+                      "sha256": "c61a4840cbe01dcbf1ca66289535bd68405b10598687f850784c638efee15823"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/chrome.log",
+                      "bytes": 3600,
+                      "sha256": "d16a9e4ec3f843fac13457b6ade852fba91a119b65afafdee0533d0e77bcad10"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/contact-sheet.png",
+                      "bytes": 279972,
+                      "sha256": "6aba235bdaca538df10fa6c5952beac6c5eecddb982387a2299e9fe7ead3b25a"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/front.png",
+                      "bytes": 267191,
+                      "sha256": "aee4e3b9720b592d7f28b3a608bbe80381de85b06ffa4daa3dace51d7394aee1"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/isometric.png",
+                      "bytes": 245368,
+                      "sha256": "c76e1653624885e535659314bc2c89753257ee55565241dda9f33549e9bd8aa1"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/proof.json",
+                      "bytes": 25986,
+                      "sha256": "cefa8ec7b3d21ea7ccee3ea9129a001b139952a1683a400e5f129c610776d7ce"
+                    },
+                    {
+                      "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/run.json",
+                      "bytes": 686,
+                      "sha256": "465e4563ad3d1d8f915f38777f7f3567b32e726f4d565a5699039c81d3a53c3e"
+                    }
+                  ],
+                  "backup": {
+                    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.tar.gz",
+                    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.files.json",
+                    "archiveSha256": "0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d",
+                    "archiveBytes": 7410350,
+                    "fileCount": 30,
+                    "fullGetVerified": true,
+                    "allMemberSha256Verified": true,
+                    "localUnchanged": true,
+                    "profile": "vibe-coding",
+                    "region": "ap-east-2",
+                    "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-preserving-v2/latest-receipt.json",
+                    "receiptSha256": "93a3a4fe2df7bbcd1f409a6f773d76e600daf4eb2cf0ea15e3ea6acffcdee6e3"
+                  },
+                  "reason": "Converted but technical-rejected intermediary; local stage and immutable legacy archive are retained before any later cleanup."
+                }
               }
             }
           },
@@ -66465,6 +66677,218 @@
                 "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1/latest-receipt.json",
                 "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
               }
+            },
+            "wholeMeshTopologyPreservingCandidate": {
+              "stage": "jump-force-dai-l4d2-topology-preserving-v2",
+              "run": "run-a-wholemesh-preserve-boundaries",
+              "source": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+                "bytes": 5852664,
+                "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
+              },
+              "candidate": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+                "bytes": 2351028,
+                "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+              },
+              "conversion": {
+                "acquired": true,
+                "converted": true,
+                "technicalRejected": true,
+                "status": "rejected-technical-budget-and-visual-diagnostic; preserve-as-alternative-conversion-candidate",
+                "trianglesBefore": 89833,
+                "trianglesAfter": 7616,
+                "maxTextureEdge": 256,
+                "drawPrimitives": 26,
+                "drawLimit": 6,
+                "khronosErrors": 0,
+                "webglViewCount": 3,
+                "visualDiagnosticMaxForegroundDeltaPct": 25.6767,
+                "visualDiagnosticPolicyThresholdPct": 5,
+                "facialShapeKeysMissing": 29,
+                "shapeKeyStatus": "basis-bind-pose-only; 29 source expression keys intentionally removed before topology change and not advertised as preserved",
+                "backendRegistered": false,
+                "runtimeSelectable": false,
+                "productionDeployed": false
+              },
+              "gitEvidence": [
+                {
+                  "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/stage-manifest.json",
+                  "bytes": 5703,
+                  "sha256": "59f4918e565ddbf02df26a516ba42a5d6d260d770aaaab92bff144c6dd216f1e",
+                  "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/manifest.json"
+                },
+                {
+                  "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/candidate-receipt.json",
+                  "bytes": 13468,
+                  "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b",
+                  "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/receipt.json"
+                },
+                {
+                  "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/validation.json",
+                  "bytes": 38233,
+                  "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498",
+                  "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/validation.json"
+                },
+                {
+                  "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/visual-comparison.json",
+                  "bytes": 1966,
+                  "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427",
+                  "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json"
+                }
+              ],
+              "legacyArchive": {
+                "state": "s3-readback-verified",
+                "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2",
+                "memberCount": 26,
+                "members": [
+                  {
+                    "path": "build_candidate.py",
+                    "bytes": 15431,
+                    "sha256": "42c14fd2c156a18147c0a4bdf9d6aa5ab1952f1c606f1ebdd487c55472de6fb4"
+                  },
+                  {
+                    "path": "compare_visuals.py",
+                    "bytes": 3963,
+                    "sha256": "898c5cda7c35f3e4a7050d8328fe5b529a6a32cc38b8e3d43d0cccf1fbdb4e05"
+                  },
+                  {
+                    "path": "finalize_validation.py",
+                    "bytes": 5981,
+                    "sha256": "eb53c1fa8665d35b17974ad84cd89635a04f6697274058ed687d011145c8f1a5"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/blender-driver.py",
+                    "bytes": 5414,
+                    "sha256": "ad14a848b81b668492615955d56e0b3e324da299187ed317dec4b3d3aca3e9ca"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/blender-result.json",
+                    "bytes": 11475,
+                    "sha256": "7aeada79443d28dc069a22d8b1152dff07ae41d19bbf2285c1892d57cb8d335b"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/blender.log",
+                    "bytes": 4903,
+                    "sha256": "0d1de2cb9141104d542a976d9db36ba619b2be9b87fd9c90bb9fc305aded0735"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/budget.json",
+                    "bytes": 1530,
+                    "sha256": "cea9078fb8f03a7283132a34c75b133c2bf094ee99a3ff180a81cbf768f8f24c"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+                    "bytes": 2351028,
+                    "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/khronos.json",
+                    "bytes": 178,
+                    "sha256": "4624fddcb2ec1e7a9b2b05fedd063dcede9b9d02376202de24d02156e4e549cb"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/receipt.json",
+                    "bytes": 13468,
+                    "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/validation.json",
+                    "bytes": 38233,
+                    "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-comparison.png",
+                    "bytes": 591831,
+                    "sha256": "bbb3e8e8a6a43140d430ad5e80b722659fbeeff3eb172e7c2034596b4f6f40b7"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-rgb-delta.png",
+                    "bytes": 211718,
+                    "sha256": "67128839b975c5944f729e3e439c79bab9440bd5beddab4f4e898a2bb6c8b980"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json",
+                    "bytes": 1966,
+                    "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-comparison.png",
+                    "bytes": 608475,
+                    "sha256": "0bcca150e33910ceabbf32ee4fce9f8c6ee39151fbb981c392ea9da31a02fac8"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-rgb-delta.png",
+                    "bytes": 217072,
+                    "sha256": "5ad6dc36940b80c3b02a144d6872df85316923dae395d15adb38528a1f946cbc"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-comparison.png",
+                    "bytes": 566451,
+                    "sha256": "748014e760c1233f344d6d73d9f73fe0c1e8630e32a2bd891fa17a0ccdb3a797"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-rgb-delta.png",
+                    "bytes": 206023,
+                    "sha256": "869a2147399489520ed64f746e583dfe5e030aafbaf9fe7ddd7a382bcd6c20fa"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/back.png",
+                    "bytes": 261894,
+                    "sha256": "42bb6936881779f39cca1a6dcbac03aa2f287fa06c4a64e271ab8a73419397d2"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/bundle.js",
+                    "bytes": 11484181,
+                    "sha256": "c61a4840cbe01dcbf1ca66289535bd68405b10598687f850784c638efee15823"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/chrome.log",
+                    "bytes": 3600,
+                    "sha256": "d16a9e4ec3f843fac13457b6ade852fba91a119b65afafdee0533d0e77bcad10"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/contact-sheet.png",
+                    "bytes": 279972,
+                    "sha256": "6aba235bdaca538df10fa6c5952beac6c5eecddb982387a2299e9fe7ead3b25a"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/front.png",
+                    "bytes": 267191,
+                    "sha256": "aee4e3b9720b592d7f28b3a608bbe80381de85b06ffa4daa3dace51d7394aee1"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/isometric.png",
+                    "bytes": 245368,
+                    "sha256": "c76e1653624885e535659314bc2c89753257ee55565241dda9f33549e9bd8aa1"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/proof.json",
+                    "bytes": 25986,
+                    "sha256": "cefa8ec7b3d21ea7ccee3ea9129a001b139952a1683a400e5f129c610776d7ce"
+                  },
+                  {
+                    "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/run.json",
+                    "bytes": 686,
+                    "sha256": "465e4563ad3d1d8f915f38777f7f3567b32e726f4d565a5699039c81d3a53c3e"
+                  }
+                ],
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.files.json",
+                  "archiveSha256": "0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d",
+                  "archiveBytes": 7410350,
+                  "fileCount": 30,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true,
+                  "profile": "vibe-coding",
+                  "region": "ap-east-2",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-preserving-v2/latest-receipt.json",
+                  "receiptSha256": "93a3a4fe2df7bbcd1f409a6f773d76e600daf4eb2cf0ea15e3ea6acffcdee6e3"
+                },
+                "reason": "Converted but technical-rejected intermediary; local stage and immutable legacy archive are retained before any later cleanup."
+              }
             }
           },
           "topologyDecimationAttempts": {
@@ -66554,6 +66978,219 @@
               "receiptSha256": "c0acfe388e433495bf3d3fe06c7d1cde1702e6a73665008b6cd60352dedb7f3b"
             }
           },
+          "wholeMeshTopologyPreservingCandidate": {
+            "stage": "jump-force-dai-l4d2-topology-preserving-v2",
+            "run": "run-a-wholemesh-preserve-boundaries",
+            "source": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/candidate-material-rebuilt-89833.glb",
+              "bytes": 5852664,
+              "sha256": "963d392eeba652af1aafa448abf83eae3a8a6502f6dbaa932a6b584c3d94c4f1"
+            },
+            "candidate": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+              "bytes": 2351028,
+              "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+            },
+            "conversion": {
+              "acquired": true,
+              "converted": true,
+              "technicalRejected": true,
+              "status": "rejected-technical-budget-and-visual-diagnostic; preserve-as-alternative-conversion-candidate",
+              "trianglesBefore": 89833,
+              "trianglesAfter": 7616,
+              "maxTextureEdge": 256,
+              "drawPrimitives": 26,
+              "drawLimit": 6,
+              "khronosErrors": 0,
+              "webglViewCount": 3,
+              "visualDiagnosticMaxForegroundDeltaPct": 25.6767,
+              "visualDiagnosticPolicyThresholdPct": 5,
+              "facialShapeKeysMissing": 29,
+              "shapeKeyStatus": "basis-bind-pose-only; 29 source expression keys intentionally removed before topology change and not advertised as preserved",
+              "backendRegistered": false,
+              "runtimeSelectable": false,
+              "productionDeployed": false
+            },
+            "gitEvidence": [
+              {
+                "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/stage-manifest.json",
+                "bytes": 5703,
+                "sha256": "59f4918e565ddbf02df26a516ba42a5d6d260d770aaaab92bff144c6dd216f1e",
+                "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/manifest.json"
+              },
+              {
+                "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/candidate-receipt.json",
+                "bytes": 13468,
+                "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b",
+                "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/receipt.json"
+              },
+              {
+                "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/validation.json",
+                "bytes": 38233,
+                "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498",
+                "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/validation.json"
+              },
+              {
+                "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence/visual-comparison.json",
+                "bytes": 1966,
+                "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427",
+                "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json"
+              }
+            ],
+            "legacyArchive": {
+              "state": "s3-readback-verified",
+              "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2",
+              "memberCount": 26,
+              "members": [
+                {
+                  "path": "build_candidate.py",
+                  "bytes": 15431,
+                  "sha256": "42c14fd2c156a18147c0a4bdf9d6aa5ab1952f1c606f1ebdd487c55472de6fb4"
+                },
+                {
+                  "path": "compare_visuals.py",
+                  "bytes": 3963,
+                  "sha256": "898c5cda7c35f3e4a7050d8328fe5b529a6a32cc38b8e3d43d0cccf1fbdb4e05"
+                },
+                {
+                  "path": "finalize_validation.py",
+                  "bytes": 5981,
+                  "sha256": "eb53c1fa8665d35b17974ad84cd89635a04f6697274058ed687d011145c8f1a5"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/blender-driver.py",
+                  "bytes": 5414,
+                  "sha256": "ad14a848b81b668492615955d56e0b3e324da299187ed317dec4b3d3aca3e9ca"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/blender-result.json",
+                  "bytes": 11475,
+                  "sha256": "7aeada79443d28dc069a22d8b1152dff07ae41d19bbf2285c1892d57cb8d335b"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/blender.log",
+                  "bytes": 4903,
+                  "sha256": "0d1de2cb9141104d542a976d9db36ba619b2be9b87fd9c90bb9fc305aded0735"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/budget.json",
+                  "bytes": 1530,
+                  "sha256": "cea9078fb8f03a7283132a34c75b133c2bf094ee99a3ff180a81cbf768f8f24c"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/candidate-under-8000.glb",
+                  "bytes": 2351028,
+                  "sha256": "e97cb53786253cd41de1f03b66c1e16905de409af8796ceb894b38e2456fb66c"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/khronos.json",
+                  "bytes": 178,
+                  "sha256": "4624fddcb2ec1e7a9b2b05fedd063dcede9b9d02376202de24d02156e4e549cb"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/receipt.json",
+                  "bytes": 13468,
+                  "sha256": "075ac42f661a33d51a4fc287d749250c045688d88884751c29e1e2eae229eb7b"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/validation.json",
+                  "bytes": 38233,
+                  "sha256": "84d4fdab62fcb7efc439f06eb6b1adf33138fad26b8089656b77acf0d902a498"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-comparison.png",
+                  "bytes": 591831,
+                  "sha256": "bbb3e8e8a6a43140d430ad5e80b722659fbeeff3eb172e7c2034596b4f6f40b7"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/back-rgb-delta.png",
+                  "bytes": 211718,
+                  "sha256": "67128839b975c5944f729e3e439c79bab9440bd5beddab4f4e898a2bb6c8b980"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/comparison.json",
+                  "bytes": 1966,
+                  "sha256": "2cc897584fe755fca8b3f533091a58b7b58a680cb43f9660f0d18b7afbaac427"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-comparison.png",
+                  "bytes": 608475,
+                  "sha256": "0bcca150e33910ceabbf32ee4fce9f8c6ee39151fbb981c392ea9da31a02fac8"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/front-rgb-delta.png",
+                  "bytes": 217072,
+                  "sha256": "5ad6dc36940b80c3b02a144d6872df85316923dae395d15adb38528a1f946cbc"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-comparison.png",
+                  "bytes": 566451,
+                  "sha256": "748014e760c1233f344d6d73d9f73fe0c1e8630e32a2bd891fa17a0ccdb3a797"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-comparison-v1/isometric-rgb-delta.png",
+                  "bytes": 206023,
+                  "sha256": "869a2147399489520ed64f746e583dfe5e030aafbaf9fe7ddd7a382bcd6c20fa"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/back.png",
+                  "bytes": 261894,
+                  "sha256": "42bb6936881779f39cca1a6dcbac03aa2f287fa06c4a64e271ab8a73419397d2"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/bundle.js",
+                  "bytes": 11484181,
+                  "sha256": "c61a4840cbe01dcbf1ca66289535bd68405b10598687f850784c638efee15823"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/chrome.log",
+                  "bytes": 3600,
+                  "sha256": "d16a9e4ec3f843fac13457b6ade852fba91a119b65afafdee0533d0e77bcad10"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/contact-sheet.png",
+                  "bytes": 279972,
+                  "sha256": "6aba235bdaca538df10fa6c5952beac6c5eecddb982387a2299e9fe7ead3b25a"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/front.png",
+                  "bytes": 267191,
+                  "sha256": "aee4e3b9720b592d7f28b3a608bbe80381de85b06ffa4daa3dace51d7394aee1"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/isometric.png",
+                  "bytes": 245368,
+                  "sha256": "c76e1653624885e535659314bc2c89753257ee55565241dda9f33549e9bd8aa1"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/proof.json",
+                  "bytes": 25986,
+                  "sha256": "cefa8ec7b3d21ea7ccee3ea9129a001b139952a1683a400e5f129c610776d7ce"
+                },
+                {
+                  "path": "run-a-wholemesh-preserve-boundaries/visual-review-v1/run.json",
+                  "bytes": 686,
+                  "sha256": "465e4563ad3d1d8f915f38777f7f3567b32e726f4d565a5699039c81d3a53c3e"
+                }
+              ],
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-topology-preserving-v2/0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d.files.json",
+                "archiveSha256": "0e4f3be910ba401185a97b4c9e582606bbe85b9e3e12b43295c3cda02788d35d",
+                "archiveBytes": 7410350,
+                "fileCount": 30,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-preserving-v2/latest-receipt.json",
+                "receiptSha256": "93a3a4fe2df7bbcd1f409a6f773d76e600daf4eb2cf0ea15e3ea6acffcdee6e3"
+              },
+              "reason": "Converted but technical-rejected intermediary; local stage and immutable legacy archive are retained before any later cleanup."
+            }
+          },
+          "technicalRejected": true,
           "resourceRole": "character-body",
           "character": "小呆／達伊 / Dai"
         },
@@ -66611,7 +67248,7 @@
       "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
-        "state": "pending-source-mdl-glb-standardization",
+        "state": "technical-rejected-wholemesh-candidate-not-backend-registered",
         "heroIds": [
           "godie-nbbc",
           "godie-n01c"
@@ -66620,9 +67257,9 @@
         "release": null,
         "selectionVerified": false
       },
-      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 Whole-mesh 7,616 面候選已轉換並具 0 Khronos errors、3 張 WebGL 視圖，但 26 draw、25.6767% 視覺診斷與 29 個未保留表情 shape keys 使其技術拒收；其 local stage 與 legacy archive 均已完整讀回及逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
-        "Three under-8,000-triangle collapse-decimation candidates have render proof but all failed technical visual screening; preserve them as rejected intermediates and use a different standardization method before owner review, registration or deployment.",
+        "A fourth whole-mesh 7,616-triangle candidate preserves materials, skeleton and skinning and removes the Icosphere artifact, but is still technically rejected: 26 draws exceed 6, RGB diagnostic is 25.6767% above 5%, and 29 source facial shape keys were reduced to bind-pose Basis. Preserve it as an alternative conversion candidate, not a runtime option.",
         "No accepted GGD GLB, six-state mapping, backend registration, runtime selection, or deployment has been created; raw and rejected conversion intermediates remain preserved separately.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],
@@ -66679,7 +67316,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "da154cf2a36ffdff7a29512e463057e298c537d74a510629a7e018a082d000dd"
+        "sha256": "f495cb76f82e641977c704950a94d71868a6fb58b60741db1689be11ca07215f"
       },
       "modelCandidates": [
         {

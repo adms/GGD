@@ -29,11 +29,154 @@ MATERIAL_REBUILD_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-mater
 MATERIAL_REBUILD_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-material-rebuild-v3"
 TOPOLOGY_DECIMATION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-decimation-v1"
 TOPOLOGY_DECIMATION_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-decimation-v1"
+WHOLEMESH_TOPOLOGY_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2"
+WHOLEMESH_TOPOLOGY_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-topology-preserving-v2"
+WHOLEMESH_RUN = "run-a-wholemesh-preserve-boundaries"
+WHOLEMESH_EVIDENCE = Path("tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/wholemesh-preserving-v2/evidence")
 TOPOLOGY_ATTEMPT_FINDINGS = {
     "run-f": "Unskinned SourceIO Icosphere helper was retained and rendered as a giant visible artifact.",
     "run-g": "Body and clothing collapse caused visible holes and spikes.",
     "run-i": "Ankle, pants and hair collapse caused visible holes and spikes after budget reallocation.",
 }
+
+
+def wholemesh_topology_candidate(workspace: Path, material: dict[str, Any]) -> dict[str, Any] | None:
+    """Read the separately preserved whole-mesh decimation attempt.
+
+    This stage intentionally differs from the three historical per-material
+    collapse attempts: it retains each original skinned mesh and its material
+    slots while decimating, then records why the resulting candidate still
+    cannot become a GGD option.  The Git copies are small, immutable evidence
+    snapshots; the GLB, renderer bundle and images stay in the local/S3
+    conversion stage and are never mistaken for runtime assets.
+    """
+    root = workspace / WHOLEMESH_TOPOLOGY_ROOT
+    run = root / WHOLEMESH_RUN
+    receipt_path = run / "receipt.json"
+    validation_path = run / "validation.json"
+    manifest_path = root / "manifest.json"
+    comparison_path = run / "visual-comparison-v1/comparison.json"
+    required = (receipt_path, validation_path, manifest_path, comparison_path)
+    if not any(path.exists() for path in required):
+        return None
+    if not all(path.is_file() for path in required):
+        raise FileNotFoundError("incomplete whole-mesh topology stage: " + str(root))
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    candidate = Path(receipt.get("candidate", {}).get("absolutePath", ""))
+    if (receipt.get("schema") != "ggd.jump-force-dai-l4d2-wholemesh-topology-preserving@2"
+            or receipt.get("source", {}).get("sha256") != material["output"]["sha256"]
+            or not candidate.is_file()
+            or candidate.stat().st_size != receipt["candidate"]["bytes"]
+            or sha256(candidate) != receipt["candidate"]["sha256"]
+            or receipt.get("trianglesAfter") != 7616
+            or receipt.get("policy", {}).get("requiredOutputBelow") != 8000
+            or receipt.get("policy", {}).get("textureMaxEdge") != 256):
+        raise ValueError("invalid whole-mesh topology receipt: " + str(receipt_path))
+    structural = validation.get("structural", {})
+    budget = validation.get("ggdBudget", {}).get("results", [])
+    if len(budget) != 1:
+        raise ValueError("whole-mesh validation lacks one GGD budget result")
+    axes = {row.get("key"): row for row in budget[0].get("axes", [])}
+    webgl = validation.get("webglReview", {})
+    if (validation.get("schema") != "ggd.jump-force-dai-l4d2-wholemesh-topology-validation@2"
+            or validation.get("candidate", {}).get("sha256") != receipt["candidate"]["sha256"]
+            or structural.get("triangleCount") != 7616
+            or structural.get("maxTextureEdge") != 256
+            or structural.get("skinCount") != 1
+            or structural.get("allPrimitivesSkinned") is not True
+            or structural.get("jointNamesAndHierarchyEquivalent") is not True
+            or structural.get("materialAndBaseTextureSlotsEquivalent") is not True
+            or validation.get("khronos", {}).get("candidate", {}).get("errors") != 0
+            or validation.get("khronos", {}).get("sameIssueCodeCounts") is not True
+            or axes.get("drawCalls", {}).get("value") != 26
+            or axes.get("drawCalls", {}).get("limit") != 6
+            or axes.get("drawCalls", {}).get("verdict") != "over"
+            or axes.get("maxTextureEdge", {}).get("value") != 256
+            or webgl.get("proofSummary", {}).get("renderer", "").startswith("actual Babylon WebGL") is not True
+            or len(webgl.get("images", [])) != 3
+            or validation.get("visualComparison", {}).get("maxForegroundDeltaGt20Pct") != 25.6767
+            or validation.get("visualComparison", {}).get("policyVisualLitPixelDeltaPctMax") != 5
+            or validation.get("acceptedForRuntime") is not False
+            or validation.get("runtimeSelectable") is not False
+            or validation.get("productionDeployed") is not False
+            or "29 source expression keys" not in validation.get("shapeKeyStatus", "")):
+        raise ValueError("invalid whole-mesh topology validation: " + str(validation_path))
+    if (comparison.get("candidateTriangles") != 7616
+            or comparison.get("sourceTriangles") != 89833
+            or max(row.get("foregroundDeltaGt20Pct", 0) for row in comparison.get("views", [])) != 25.6767):
+        raise ValueError("whole-mesh visual comparison drift: " + str(comparison_path))
+    manifest_rows = {row.get("path"): row for row in manifest.get("files", [])}
+    if manifest.get("schema") != "ggd.jump-force-dai-l4d2-topology-preserving-v2-manifest@1":
+        raise ValueError("unexpected whole-mesh stage manifest")
+    expected_manifest = {
+        "build_candidate.py", "compare_visuals.py", "finalize_validation.py",
+        f"{WHOLEMESH_RUN}/candidate-under-8000.glb",
+        f"{WHOLEMESH_RUN}/receipt.json", f"{WHOLEMESH_RUN}/validation.json",
+        f"{WHOLEMESH_RUN}/visual-comparison-v1/comparison.json",
+        f"{WHOLEMESH_RUN}/visual-review-v1/run.json", f"{WHOLEMESH_RUN}/visual-review-v1/proof.json",
+    }
+    if not expected_manifest <= set(manifest_rows):
+        raise ValueError("whole-mesh stage manifest omits required members")
+    evidence_root = REPO / WHOLEMESH_EVIDENCE
+    evidence_files = {
+        "stage-manifest.json": manifest_path,
+        "candidate-receipt.json": receipt_path,
+        "validation.json": validation_path,
+        "visual-comparison.json": comparison_path,
+    }
+    evidence = []
+    for name, local in evidence_files.items():
+        snapshot = evidence_root / name
+        if not snapshot.is_file() or snapshot.read_bytes() != local.read_bytes():
+            raise ValueError("whole-mesh Git evidence is stale: " + str(snapshot))
+        evidence.append({"gitPath": str(snapshot.relative_to(REPO)), "bytes": snapshot.stat().st_size,
+                         "sha256": sha256(snapshot), "localAbsolutePath": str(local.resolve())})
+    archive_members = [row for path, row in sorted(manifest_rows.items()) if not path.startswith("__pycache__/")]
+    backup_path = workspace / WHOLEMESH_TOPOLOGY_BACKUP_ROOT / "latest-receipt.json"
+    if not backup_path.is_file():
+        raise FileNotFoundError(f"missing whole-mesh topology backup receipt: {backup_path}")
+    backup = json.loads(backup_path.read_text(encoding="utf-8"))
+    required_backup = ("s3Uri", "manifestUri", "archiveSha256", "archiveBytes", "fileCount")
+    if (backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or Path(backup.get("source", "")).resolve() != root.resolve()
+            or not backup.get("s3Uri", "").startswith("s3://ggd-390630837668-ap-east-2-an/legacy/")
+            or backup.get("fullGetVerified") is not True
+            or backup.get("allMemberSha256Verified") is not True
+            or backup.get("localUnchanged") is not True
+            or any(key not in backup for key in required_backup)):
+        raise ValueError(f"invalid whole-mesh topology backup receipt: {backup_path}")
+    stage_backup = {key: backup[key] for key in (*required_backup, "fullGetVerified", "allMemberSha256Verified", "localUnchanged", "profile", "region")}
+    stage_backup["receiptAbsolutePath"] = str(backup_path.resolve())
+    stage_backup["receiptSha256"] = sha256(backup_path)
+    return {
+        "stage": "jump-force-dai-l4d2-topology-preserving-v2",
+        "run": WHOLEMESH_RUN,
+        "source": receipt["source"],
+        "candidate": receipt["candidate"],
+        "conversion": {
+            "acquired": True, "converted": True, "technicalRejected": True,
+            "status": validation["status"], "trianglesBefore": receipt["trianglesBefore"],
+            "trianglesAfter": receipt["trianglesAfter"], "maxTextureEdge": structural["maxTextureEdge"],
+            "drawPrimitives": structural["drawPrimitives"], "drawLimit": axes["drawCalls"]["limit"],
+            "khronosErrors": validation["khronos"]["candidate"]["errors"],
+            "webglViewCount": len(webgl["images"]),
+            "visualDiagnosticMaxForegroundDeltaPct": validation["visualComparison"]["maxForegroundDeltaGt20Pct"],
+            "visualDiagnosticPolicyThresholdPct": validation["visualComparison"]["policyVisualLitPixelDeltaPctMax"],
+            "facialShapeKeysMissing": 29,
+            "shapeKeyStatus": validation["shapeKeyStatus"],
+            "backendRegistered": False, "runtimeSelectable": False, "productionDeployed": False,
+        },
+        "gitEvidence": evidence,
+        "legacyArchive": {
+            "state": "s3-readback-verified", "sourceAbsolutePath": str(root.resolve()),
+            "memberCount": len(archive_members), "members": archive_members,
+            "backup": stage_backup,
+            "reason": "Converted but technical-rejected intermediary; local stage and immutable legacy archive are retained before any later cleanup."
+        },
+    }
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -359,6 +502,9 @@ def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, sour
         }
         result["materialRebuildIntermediate"]["topologyDecimationAttempts"]["stageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
         result["materialRebuildIntermediate"]["topologyDecimationAttempts"]["stageBackup"]["receiptSha256"] = sha256(backup_path)
+        wholemesh = wholemesh_topology_candidate(workspace, material)
+        if wholemesh:
+            result["materialRebuildIntermediate"]["wholeMeshTopologyPreservingCandidate"] = wholemesh
     return result
 
 
@@ -402,12 +548,14 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
     intermediates = [model["sourceioRawIntermediate"] for model in models if model["sourceioRawIntermediate"]]
     material_rebuilds = [entry["materialRebuildIntermediate"] for entry in intermediates if entry.get("materialRebuildIntermediate")]
     topology_attempts = [entry["materialRebuildIntermediate"]["topologyDecimationAttempts"] for entry in intermediates if entry.get("materialRebuildIntermediate", {}).get("topologyDecimationAttempts")]
+    wholemesh_attempts = [entry["materialRebuildIntermediate"]["wholeMeshTopologyPreservingCandidate"] for entry in intermediates if entry.get("materialRebuildIntermediate", {}).get("wholeMeshTopologyPreservingCandidate")]
     reader_blocker = ("SourceIO is pinned locally, but Blender background startup fails before plugin/model import; "
                       "repair the headless Blender environment before standardization." if not ready else
                       "SourceIO is available but no MDL conversion has been executed or accepted." if not intermediates else
                       "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration." if not material_rebuilds else
                       "A material-rebuilt GLB has render proof, but it retains 89,833 triangles and still needs topology-aware decimation, visual acceptance and GGD contract validation before registration." if not topology_attempts else
-                      "Three under-8,000-triangle collapse-decimation candidates have render proof but all failed technical visual screening; preserve them as rejected intermediates and use a different standardization method before owner review, registration or deployment.")
+                      "Three under-8,000-triangle collapse-decimation candidates have render proof but all failed technical visual screening; preserve them as rejected intermediates and use a different standardization method before owner review, registration or deployment." if not wholemesh_attempts else
+                      "A fourth whole-mesh 7,616-triangle candidate preserves materials, skeleton and skinning and removes the Icosphere artifact, but is still technically rejected: 26 draws exceed 6, RGB diagnostic is 25.6767% above 5%, and 29 source facial shape keys were reduced to bind-pose Basis. Preserve it as an alternative conversion candidate, not a runtime option.")
     return {
         "sourceId": item["sourceId"], "leadId": item["leadId"],
         "source": {"absolutePath": str(root.resolve()), "title": acquisition["title"], "pageUrl": acquisition["pageUrl"], "itemId": acquisition["itemId"], "raw": {"path": acquisition["file"], "bytes": acquisition["bytes"], "sha256": acquisition["sha256"]}, "checkedAt": inspection["checkedAt"]},
@@ -415,7 +563,7 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "extracted": {"extensions": dict(sorted(suffixes.items())), "vmtFiles": len(vmts), "vtfFiles": len(vtfs)},
         "modelGroups": models,
         "tooling": tooling,
-        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "materialRebuildIntermediates": len(material_rebuilds), "topologyDecimationCandidatesRejected": sum(entry["rejectedCount"] for entry in topology_attempts), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
+        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "materialRebuildIntermediates": len(material_rebuilds), "topologyDecimationCandidatesRejected": sum(entry["rejectedCount"] for entry in topology_attempts), "wholeMeshTopologyPreservingCandidatesRejected": len(wholemesh_attempts), "convertedCandidates": len(wholemesh_attempts), "converted": bool(wholemesh_attempts), "technicalRejected": bool(wholemesh_attempts), "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
         "blockers": [reader_blocker, "No accepted GGD GLB, six-state mapping, backend registration, runtime selection, or deployment has been created; raw and rejected conversion intermediates remain preserved separately.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
     }
 
@@ -425,7 +573,7 @@ def build(workspace: Path) -> dict[str, Any]:
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",
-        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "materialRebuildIntermediates": sum(row["status"]["materialRebuildIntermediates"] for row in rows), "topologyDecimationCandidatesRejected": sum(row["status"]["topologyDecimationCandidatesRejected"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
+        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "materialRebuildIntermediates": sum(row["status"]["materialRebuildIntermediates"] for row in rows), "topologyDecimationCandidatesRejected": sum(row["status"]["topologyDecimationCandidatesRejected"] for row in rows), "wholeMeshTopologyPreservingCandidatesRejected": sum(row["status"]["wholeMeshTopologyPreservingCandidatesRejected"] for row in rows), "convertedTechnicalRejected": sum(row["status"]["convertedCandidates"] for row in rows), "converted": sum(row["status"]["convertedCandidates"] for row in rows), "runtimeSelectable": 0, "productionDeployed": False},
         "sources": rows,
         "reproduction": {"write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace ..", "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace .. --check"},
     }
