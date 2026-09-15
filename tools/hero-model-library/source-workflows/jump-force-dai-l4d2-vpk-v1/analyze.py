@@ -24,6 +24,7 @@ REPO = HERE.parents[3]
 OUTPUT = REPO / "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json"
 SOURCEIO_PREFLIGHT = OUTPUT.with_name("sourceio-preflight.json")
 SOURCEIO_CONVERSION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1"
+SOURCEIO_BACKUP_ROOT = "GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1"
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -208,13 +209,33 @@ def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, sour
     output = Path(receipt["output"]["absolutePath"])
     if not output.is_file() or output.stat().st_size != receipt["output"]["bytes"] or sha256(output) != receipt["output"]["sha256"]:
         raise ValueError(f"SourceIO intermediate output drift: {output}")
-    return {
+    result = {
         "receiptAbsolutePath": str(receipt_path.resolve()),
         "receiptSha256": sha256(receipt_path),
         "rawGlb": receipt["output"],
         "metrics": receipt["metrics"],
         "status": receipt["status"],
     }
+    # A conversion-stage backup is distinct from the larger VPK source archive.
+    # Record it only after both the local receipt and the exact source root agree.
+    backup_path = workspace / SOURCEIO_BACKUP_ROOT / "latest-receipt.json"
+    if backup_path.is_file():
+        backup = json.loads(backup_path.read_text(encoding="utf-8"))
+        conversion_root = (workspace / SOURCEIO_CONVERSION_ROOT).resolve()
+        required = ("s3Uri", "manifestUri", "archiveSha256", "archiveBytes", "fileCount")
+        if (backup.get("schema") != "ggd-intake-backup-receipt@1"
+                or Path(backup.get("source", "")).resolve() != conversion_root
+                or not backup.get("s3Uri", "").startswith("s3://ggd-390630837668-ap-east-2-an/legacy/")
+                or backup.get("fullGetVerified") is not True
+                or backup.get("allMemberSha256Verified") is not True
+                or any(key not in backup for key in required)):
+            raise ValueError(f"invalid SourceIO conversion backup receipt: {backup_path}")
+        result["conversionStageBackup"] = {
+            key: backup[key] for key in (*required, "fullGetVerified", "allMemberSha256Verified", "localUnchanged", "profile", "region")
+        }
+        result["conversionStageBackup"]["receiptAbsolutePath"] = str(backup_path.resolve())
+        result["conversionStageBackup"]["receiptSha256"] = sha256(backup_path)
+    return result
 
 
 def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:

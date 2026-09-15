@@ -184,7 +184,21 @@
                 "Weapon"
               ]
             },
-            "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
+            "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review",
+            "conversionStageBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+              "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+              "archiveBytes": 1835119,
+              "fileCount": 5,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true,
+              "profile": "vibe-coding",
+              "region": "ap-east-2",
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+              "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+            }
           }
         },
         {

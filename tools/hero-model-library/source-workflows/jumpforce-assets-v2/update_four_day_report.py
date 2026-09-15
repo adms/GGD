@@ -41,7 +41,7 @@ def block() -> str:
         "",
         f"v6 以前代 six-draw 候選為輸入，只把含透明 texel 的材質從 OPAQUE 改為 BLEND，輸出為 **{six_draw['after']['triangles']:,} 面／{six_draw['after']['drawPrimitives']} draw／{six_draw['after']['maxTextureEdge']}px**；GLB binary chunk、幾何、骨架與貼圖均保持，Khronos {six_draw['khronosErrors']} error。v5 前代位元組仍保留；v6 需要新的視覺審查，且沒有已通過播放審查的動作綁定，因此狀態是 **已轉換、技術門檻通過、視覺待審、未註冊、不可切換、未部署**。v6 S3 狀態為 `{six_draw['s3Backup']['state']}`。其他 JUMP 角色的 PAK payload 另依全角色抽取計畫處理，不用 metadata 充當已抽出成品。",
         "",
-        f"公開 L4D2 Workshop 的小呆 Coach 移植已用 SourceIO／Blender 輸出一個 raw GLB 中間產物：**{raw_metrics['triangleCount']:,} 面、{raw_metrics['boneCounts'][0]} bones、{raw_metrics['meshObjectCount']} mesh、{raw_metrics['materialCount']} materials**，本機輸出 SHA-256 `{raw['rawGlb']['sha256']}`。其中 {raw_metrics['unsupportedMaterialCount']} 個 VMT patch 材質缺共同基底，且模型超過 10,000 面門檻；狀態固定為 **已轉 raw GLB、待材質重建／減面／視覺驗收，未註冊、不可切換、未部署**。它是公開社群移植候選，與原始 `chr0430` 來源分開保留。",
+        f"公開 L4D2 Workshop 的小呆 Coach 移植已用 SourceIO／Blender 輸出一個 raw GLB 中間產物：**{raw_metrics['triangleCount']:,} 面、{raw_metrics['boneCounts'][0]} bones、{raw_metrics['meshObjectCount']} mesh、{raw_metrics['materialCount']} materials**，本機輸出 SHA-256 `{raw['rawGlb']['sha256']}`。其中 {raw_metrics['unsupportedMaterialCount']} 個 VMT patch 材質缺共同基底，且模型超過 10,000 面門檻；狀態固定為 **已轉 raw GLB、待材質重建／減面／視覺驗收，未註冊、不可切換、未部署**。該中間產物已傳至 `{raw['conversionStageBackup']['s3Uri']}`，完整讀回與逐檔 SHA-256 驗證通過；它是公開社群移植候選，與原始 `chr0430` 來源分開保留。",
         "",
         END,
         "",

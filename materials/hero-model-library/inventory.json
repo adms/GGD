@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T09:53:33+08:00",
-  "inputsSha256": "9d99969313296fae045a8cc50418517d8a319c1c22b63cd383d8f520c7e60136",
+  "generatedAt": "2026-09-15T10:02:30+08:00",
+  "inputsSha256": "ea8576e2eeb17feedf9bbf474bb1a4edff1b28f6d81d921abdc546efd44cd181",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -53141,7 +53141,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+            "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
           },
           "modelCandidates": [
             {
@@ -53265,7 +53265,35 @@
                     "Weapon"
                   ]
                 },
-                "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
+                "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review",
+                "conversionStageBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+                  "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+                  "archiveBytes": 1835119,
+                  "fileCount": 5,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true,
+                  "profile": "vibe-coding",
+                  "region": "ap-east-2",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+                  "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+                }
+              },
+              "rawGlbIntermediateBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+                "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+                "archiveBytes": 1835119,
+                "fileCount": 5,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+                "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
               },
               "resourceRole": "character-body",
               "character": "小呆／達伊 / Dai"
@@ -53333,7 +53361,7 @@
             "release": null,
             "selectionVerified": false
           },
-          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
@@ -53392,7 +53420,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+            "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
           },
           "modelCandidates": [
             {
@@ -58608,7 +58636,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+            "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
           },
           "modelCandidates": [
             {
@@ -58732,7 +58760,35 @@
                     "Weapon"
                   ]
                 },
-                "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
+                "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review",
+                "conversionStageBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+                  "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+                  "archiveBytes": 1835119,
+                  "fileCount": 5,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true,
+                  "profile": "vibe-coding",
+                  "region": "ap-east-2",
+                  "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+                  "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+                }
+              },
+              "rawGlbIntermediateBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+                "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+                "archiveBytes": 1835119,
+                "fileCount": 5,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+                "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
               },
               "resourceRole": "character-body",
               "character": "小呆／達伊 / Dai"
@@ -58800,7 +58856,7 @@
             "release": null,
             "selectionVerified": false
           },
-          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
             "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
@@ -58859,7 +58915,7 @@
           ],
           "extractionReceipt": {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-            "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+            "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
           },
           "modelCandidates": [
             {
@@ -197932,7 +197988,7 @@
         ],
         "extractionReceipt": {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-          "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+          "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
         },
         "modelCandidates": [
           {
@@ -198056,7 +198112,35 @@
                   "Weapon"
                 ]
               },
-              "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
+              "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review",
+              "conversionStageBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+                "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+                "archiveBytes": 1835119,
+                "fileCount": 5,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true,
+                "profile": "vibe-coding",
+                "region": "ap-east-2",
+                "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+                "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
+              }
+            },
+            "rawGlbIntermediateBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-l4d2-sourceio-v1/11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43.files.json",
+              "archiveSha256": "11ad39d5fe5ccb4965befaa22c4697d67b3b8278b6a970d94d127d67ac8a9d43",
+              "archiveBytes": 1835119,
+              "fileCount": 5,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true,
+              "profile": "vibe-coding",
+              "region": "ap-east-2",
+              "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-dai-l4d2-sourceio-v1/latest-receipt.json",
+              "receiptSha256": "ad49519d529ed60295ff2aa14f23cfc7f486bd25bd55a26ed2e1763ba9e0ce0a"
             },
             "resourceRole": "character-body",
             "character": "小呆／達伊 / Dai"
@@ -198124,7 +198208,7 @@
           "release": null,
           "selectionVerified": false
         },
-        "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 raw GLB 中間產物已完成 S3 legacy 完整讀回與逐檔 SHA-256 驗證。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
           "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
           "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
@@ -198183,7 +198267,7 @@
         ],
         "extractionReceipt": {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-          "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
+          "sha256": "4a667a1e237379dc68642373d050293be88c6c5081d561a176774a3011672bbe"
         },
         "modelCandidates": [
           {
