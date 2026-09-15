@@ -124,7 +124,7 @@ def validate_component(candidate, repo):
         require(validation.get('componentId') == candidate['id'], 'SSBU decimation component mismatch')
         require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'SSBU decimation candidate mismatch')
         glb=validation.get('glb',{})
-        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'SSBU decimation output pin mismatch')
+        require((glb.get('sha256'),glb.get('bytes')) == (accepted_sha,accepted_bytes), 'SSBU decimation predecessor pin mismatch')
         inspection=validation.get('ggdInspection',{})
         require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')],
                 'Unexpected SSBU decimation skin/joint shape')
@@ -144,7 +144,7 @@ def validate_component(candidate, repo):
         rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
         require(rebuild.get('schema') == 'ggd.ssbu-ryu-static-decimation-rebuild@1' and rebuild.get('componentId') == candidate['id'],
                 'Unexpected SSBU Ryu decimation rebuild proof')
-        require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('firstBuild',{}).get('sha256') == candidate['sha256'],
+        require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('firstBuild',{}).get('sha256') == accepted_sha,
                 'SSBU Ryu decimation deterministic rebuild proof failed')
     elif schema == 'ggd.infinity-strash-en653-static-component-validation@1':
         require(validation.get('componentId') == candidate['id'], 'Infinity Strash EN653 component mismatch')
@@ -178,8 +178,8 @@ def validate_component(candidate, repo):
     elif schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':
         require(validation.get('componentId') == candidate['id'], 'KOF Ash component mismatch')
         glb=validation.get('glb',{})
-        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']),
-                'KOF Ash validation source-output pin mismatch')
+        require((glb.get('sha256'),glb.get('bytes')) == (accepted_sha,accepted_bytes),
+                'KOF Ash validation predecessor pin mismatch')
         inspection=validation.get('ggdInspection',{})
         require((inspection.get('triangles'),inspection.get('drawPrimitives'),inspection.get('skinnedPrimitives'),
                  inspection.get('skinCount'),inspection.get('joints'),inspection.get('textureCount'),inspection.get('clipCount')) ==
@@ -198,7 +198,7 @@ def validate_component(candidate, repo):
         rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
         require(rebuild.get('schema') == 'ggd.kof-xv-ash-universal-atlas-source-rebuild@1' and
                 rebuild.get('componentId') == candidate['id'] and rebuild.get('byteIdenticalRebuild') is True and
-                rebuild.get('output',{}).get('sha256') == candidate['sha256'], 'KOF Ash deterministic rebuild proof failed')
+                rebuild.get('output',{}).get('sha256') == accepted_sha, 'KOF Ash deterministic rebuild proof failed')
     else:
         raise ValueError('Unexpected skinned validation schema: '+str(schema))
     if schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':

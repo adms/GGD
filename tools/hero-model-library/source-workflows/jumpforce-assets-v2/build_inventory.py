@@ -130,17 +130,17 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     v1_paths = [v1_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "visual-comparison.json", "owner-review.json", "ab-contact-sheet.png", "worst-difference-overview.png", "s3-backup-receipt.json")]
     v2_dir = BASE / "priority-evidence/jump-force-dai-decimation-v2"
     v2_paths = [v2_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "guard.json", "visual-review.json", "owner-review.json", "front.png", "back.png", "isometric.png", "face-source.png", "face-v1-rejected.png", "face-v2.png")]
-    v5_dir = BASE / "priority-evidence/jump-force-dai-six-draw-v5"
-    v5_paths = [v5_dir / name for name in ("conversion.json", "validation.json", "guard.json", "atlas-plan.json", "merge-receipt.json", "front.png", "back.png", "isometric.png", "proof.json", "run.json", "freeze-receipt.json")]
-    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *v1_paths, *v2_paths, *v5_paths]
+    v6_dir = BASE / "priority-evidence/jump-force-dai-six-draw-v6"
+    v6_paths = [v6_dir / name for name in ("conversion.json", "validation.json", "guard.json", "freeze-receipt.json")]
+    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *v1_paths, *v2_paths, *v6_paths]
     downloads, public_files, voice = read(downloads_path), read(public_files_path), read(voice_path)
     reconciliation, pak, dai, visual = read(reconciliation_path), read(pak_path), read(dai_manifest_path), read(dai_visual_path)
     dai_config, streaming, character_map, policy = read(dai_config_path), read(streaming_evidence_path), read(map_path), read(policy_path)
     v1_conversion, v1_validation, v1_draw, v1_visual, v1_owner = [read(path) for path in v1_paths[:5]]
     v1_backup = read(v1_paths[-1])
     decimation, decimation_validation, draw_audit, guard, visual_comparison, owner_review = [read(path) for path in v2_paths[:6]]
-    six_conversion, six_validation, six_guard = [read(path) for path in v5_paths[:3]]
-    six_freeze = read(v5_paths[-1])
+    six_conversion, six_validation, six_guard = [read(path) for path in v6_paths[:3]]
+    six_freeze = read(v6_paths[-1])
     six_git_model = {"gitPath": f"content/assets/models/community/{six_validation['candidate']['sha256']}.glb", "bytes": six_validation['candidate']['bytes'], "sha256": six_validation['candidate']['sha256']}
     sources = {row["id"]: row for row in downloads["publicSources"]}
     manifests = {row["id"]: row for row in public_files["sources"]}
@@ -180,14 +180,12 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     if (six_conversion.get("output", {}).get("sha256") != six_validation.get("candidate", {}).get("sha256")
             or six_validation.get("khronos", {}).get("errors") != 0
             or six_validation.get("metrics") != {"triangles": 7930, "drawPrimitives": 6, "maxTextureEdge": 256, "skins": 1, "joints": 159, "animations": 0}
-            or not six_validation.get("preservation", {}).get("nonUvVertexAttributesByteEquivalentAsMultiset")
-            or not six_validation.get("states", {}).get("drawCallLimitPassed")
+            or not six_validation.get("preservation", {}).get("binaryChunkByteIdentical")
+            or not six_validation.get("preservation", {}).get("geometryAndSkinningUnchanged")
             or six_validation.get("states", {}).get("runtimeSelectable") is not False
-            or not six_validation.get("webgl", {}).get("complete")
-            or six_validation.get("webgl", {}).get("views") != 3
             or six_freeze.get("gitModel") != six_git_model
             or {row.get("key"): row.get("verdict") for row in six_guard.get("results", [{}])[0].get("axes", [])}.get("drawCalls") == "over"):
-        raise ValueError("Dai six-draw evidence is inconsistent")
+        raise ValueError("Dai v6 alpha-normalization evidence is inconsistent")
     if (v1_backup.get("schema") != "ggd-intake-backup-receipt@1"
             or not v1_backup.get("fullGetVerified")
             or not v1_backup.get("allMemberSha256Verified")
@@ -473,24 +471,24 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
                 "after": six_validation["metrics"],
                 "byteIdenticalRebuild": six_validation["deterministicRebuild"]["byteIdentical"],
                 "khronosErrors": six_validation["khronos"]["errors"],
-                "nonUvVertexAttributesPreserved": six_validation["preservation"]["nonUvVertexAttributesByteEquivalentAsMultiset"],
-                "transparentEyeHairLayersKeptSeparate": six_validation["preservation"]["preservedEyeLensHairGlassPrimitives"] == 5,
-                "technicalVisualInspectionPassed": True,
-                "ownerVisualQualityReview": six_validation["webgl"]["reviewState"],
+                "nonUvVertexAttributesPreserved": six_validation["preservation"]["binaryChunkByteIdentical"],
+                "transparentEyeHairLayersKeptSeparate": True,
+                "technicalVisualInspectionPassed": False,
+                "ownerVisualQualityReview": six_validation["states"]["visualReview"],
                 "ownerPublicationAuthorized": True,
-                "drawCallPassed": six_validation["states"]["drawCallLimitPassed"],
+                "drawCallPassed": True,
                 "nativeSixStateMotionComplete": False,
                 "gitProductFrozen": True,
                 "runtimeRegistered": six_validation["states"]["backendOptionRegistered"],
                 "runtimeSelectable": six_validation["states"]["runtimeSelectable"],
                 "productionDeployed": six_validation["states"]["productionDeployed"],
-                "s3Backup": {"state": "pending-v3-upload-and-readback", "s3Uri": None, "fullGetVerified": False},
+                "s3Backup": {"state": "pending-v6-upload-and-readback", "s3Uri": None, "fullGetVerified": False},
                 "remaining": [
                     "No native JUMP FORCE animation clips are present in the extracted GLB.",
                     "No owner-reviewed borrowed motion set is bound; do not register a backend option.",
-                    "The immutable source stage is retained locally; its commit-pinned Git backup is pending after this freeze commit.",
+                    "V5 is retained as the exact predecessor; v6 needs a new visual review after alpha metadata normalization.",
                 ],
-                "evidence": [pin(path) for path in v5_paths],
+                "evidence": [pin(path) for path in v6_paths],
             },
             "genericPbrVisualReviewAccepted": visual["review"]["genericPbrMaterialBindingAccepted"],
             "sourceGameShaderParity": visual["review"]["sourceGameShaderParity"],
@@ -532,11 +530,11 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
             "drawPrimitives": six_validation["metrics"]["drawPrimitives"],
             "animations": six_validation["metrics"]["animations"],
             "ownerPublicationAuthorized": True,
-            "ownerVisualQualityReview": six_validation["webgl"]["reviewState"],
+            "ownerVisualQualityReview": six_validation["states"]["visualReview"],
             "runtimeRegistered": False,
             "runtimeSelectable": False,
             "productionDeployed": False,
-            "evidence": [pin(path) for path in v5_paths],
+            "evidence": [pin(path) for path in v6_paths],
         },
         "registered": False,
         "runtimeSelectable": False,

@@ -46,8 +46,8 @@ class JumpForceInventoryTest(unittest.TestCase):
         self.assertFalse(candidate["s3Backup"]["fullGetVerified"])
         self.assertEqual(len(candidate["evidence"]), 12)
         six_draw = inventory["dai"]["sixDrawCandidate"]
-        self.assertEqual(six_draw["candidateId"], "jump-force-native-dai-chr0430-material-faithful-six-draw-v5")
-        self.assertEqual(six_draw["sha256"], "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482")
+        self.assertEqual(six_draw["candidateId"], "jump-force-native-dai-chr0430-material-faithful-six-draw-v6-alpha")
+        self.assertEqual(six_draw["sha256"], "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d")
         self.assertEqual(six_draw["after"]["triangles"], 7930)
         self.assertEqual(six_draw["after"]["drawPrimitives"], 6)
         self.assertEqual(six_draw["after"]["maxTextureEdge"], 256)
@@ -59,7 +59,7 @@ class JumpForceInventoryTest(unittest.TestCase):
         self.assertFalse(six_draw["runtimeRegistered"])
         self.assertFalse(six_draw["runtimeSelectable"])
         self.assertFalse(six_draw["productionDeployed"])
-        self.assertEqual(len(six_draw["evidence"]), 11)
+        self.assertEqual(len(six_draw["evidence"]), 4)
         self.assertEqual(current_ref["daiCandidateStatus"]["sha256"], six_draw["sha256"])
         self.assertFalse(current_ref["daiCandidateStatus"]["runtimeSelectable"])
 

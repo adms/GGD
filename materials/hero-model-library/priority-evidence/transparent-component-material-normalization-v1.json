@@ -1,5 +1,5 @@
 {
-  "schema": "ggd-transparent-component-material-normalization-batch@1",
+  "schema": "ggd-transparent-component-material-normalization-batch@2",
   "rule": "transparent atlas materials use BLEND",
   "records": [
     {
@@ -20,6 +20,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
         "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
@@ -45,11 +46,68 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
         "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
         "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb"
+      }
+    },
+    {
+      "candidateId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+        "bytes": 1486160,
+        "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/kof-xv-ash-crimson-left-hair-universal-atlas-static-v1/component.glb",
+        "gitPath": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+        "bytes": 1486220,
+        "sha256": "7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04"
+      },
+      "changes": [
+        "mat0:? transparent=29.61%",
+        "mat1:? transparent=3.10%",
+        "mat3:? transparent=29.61%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+        "s3ArchiveMember": null
+      }
+    },
+    {
+      "candidateId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+        "bytes": 1486476,
+        "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/kof-xv-ash-crimson-right-hair-universal-atlas-static-v1/component.glb",
+        "gitPath": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+        "bytes": 1486536,
+        "sha256": "0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa"
+      },
+      "changes": [
+        "mat0:? transparent=29.61%",
+        "mat1:? transparent=3.10%",
+        "mat3:? transparent=29.61%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+        "s3ArchiveMember": null
       }
     },
     {
@@ -71,6 +129,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
         "gitArchivePath": null,
@@ -97,6 +156,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
         "gitArchivePath": null,
@@ -123,6 +183,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
         "gitArchivePath": null,
@@ -149,11 +210,39 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
         "gitArchivePath": null,
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
         "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-ryu-c00-static-decimated-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+        "bytes": 952632,
+        "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-decimated-v1/component.glb",
+        "gitPath": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+        "bytes": 952704,
+        "sha256": "8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f"
+      },
+      "changes": [
+        "mat3:EyeL transparent=89.58%",
+        "mat4:EyeR transparent=89.59%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-static-decimation-probe-20260915/candidate-v3.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-ryu-c00-static-decimation-v2/06ac422cf4eb6e31d8d8eaa2d9e9c2a08dc0a60012e63d587ad5dde4a44b4ff9.tar.gz",
+        "s3ArchiveMember": "candidate-v3.glb"
       }
     },
     {
@@ -175,6 +264,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
         "gitArchivePath": null,
@@ -200,6 +290,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
         "gitArchivePath": null,
@@ -225,6 +316,7 @@
       ],
       "binaryChunkByteIdentical": true,
       "nonMaterialJsonByteSemanticIdentical": true,
+      "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
       "sourcePreservation": {
         "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
         "gitArchivePath": null,
