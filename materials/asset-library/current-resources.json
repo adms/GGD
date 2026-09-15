@@ -6293,7 +6293,7 @@
   },
   "legacySmashSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/inventory.json",
-    "sha256": "7522234f601816db6710ffc836a05ccf71fb1ccd8deeb0af4d5f617c405233e6",
+    "sha256": "8c5c5a6f26316567aebef4ad04677e58c7cb33ae9a49ac80abf714dea1e70aa9",
     "sourceId": "smash-legacy-sources-v1",
     "status": "N64 metadata-only; Melee and Brawl audio bytes verified; model/motion/VFX source bytes not acquired; Ultimate separate",
     "summary": {
@@ -6316,7 +6316,7 @@
       "sourceGame": "Super Smash Bros. Ultimate",
       "platform": "Nintendo Switch",
       "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
-      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+      "sha256": "37a71da786f2fc75af08d44c6176b49a2fd45e5a253e6c10e82ecbddae9df625",
       "sourceId": "parallel-ns-ultimate14",
       "status": "separate-current-generation-source; see linked reconciliation",
       "sourceStageCounts": {
@@ -8238,13 +8238,13 @@
     },
     "runtimeSelectable": false,
     "productionDeploymentVerified": false,
-    "sha256": "ac186fb9086fe33618e28f966b19ad2ab965a3fd48540cab7ea1943f1b1ef9e2",
+    "sha256": "d834a2f13117226f81f1e787ac5ad8ef2fc08359b5c9ab5c2d82f8329776c55a",
     "documentSha256": "0e5719a49bc42d355cbb77bfdeb5495fc9771a38c1a4153dcdc1df2845979de1",
     "policyAuditSha256": "cfa9e40f6d9bc1685df0eadf728c13c8935116871c3ffaa77de1ebf29aed9d0a",
     "fucPspAssetAuditSha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379",
     "fucPspAssetAuditDocumentSha256": "d0efb018478b862d1fc8b82dd9dec499ed469bf957a92f2d6a3c6be6fcbb8446",
     "entryGitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-resource-entry.json",
-    "entrySha256": "d1d132b9f7b392ad228d8b0f0534dda01a6d656db1e7df5232c54d4379107175"
+    "entrySha256": "1957daae6ab0d614f96615d2628c166e73b9197c683349858ba3ed06e875a0f5"
   },
   "palworldVfxSfxInventory": {
     "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
