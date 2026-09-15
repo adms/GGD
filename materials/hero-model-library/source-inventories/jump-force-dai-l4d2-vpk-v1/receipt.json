@@ -6,6 +6,7 @@
     "acquired": 2,
     "extracted": 2,
     "sourceMdlGroups": 4,
+    "rawGlbIntermediates": 1,
     "converted": 0,
     "runtimeSelectable": 0,
     "productionDeployed": false
@@ -144,6 +145,46 @@
             "weightsSumToOne": true,
             "finitePositionNormalUv": true,
             "skeletonParentsInRange": true
+          },
+          "sourceioRawIntermediate": {
+            "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/conversion-receipt.json",
+            "receiptSha256": "a0628c9ac1d0296168ed141133be3e1c98974c6c3fe3496455e27c471710f60e",
+            "rawGlb": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/sourceio-raw.glb",
+              "bytes": 4099056,
+              "sha256": "511663435c85d72d0dea1f713c73bbde2ce275552fc4a1648e83fd7347bfb1ce"
+            },
+            "metrics": {
+              "meshObjectCount": 15,
+              "triangleCount": 89833,
+              "boneCounts": [
+                87
+              ],
+              "actionCount": 2,
+              "materialCount": 26,
+              "unsupportedMaterialCount": 18,
+              "unsupportedMaterials": [
+                "Body",
+                "Body3",
+                "Body4",
+                "effect",
+                "Face",
+                "face1",
+                "Face2",
+                "Glass",
+                "Hair",
+                "Hair1",
+                "Hair2",
+                "Hair3",
+                "Pants",
+                "Pants1",
+                "PantsRip",
+                "Skin",
+                "Skin 1",
+                "Weapon"
+              ]
+            },
+            "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
           }
         },
         {
@@ -203,19 +244,21 @@
             "weightsSumToOne": true,
             "finitePositionNormalUv": true,
             "skeletonParentsInRange": true
-          }
+          },
+          "sourceioRawIntermediate": null
         }
       ],
       "tooling": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/sourceio-preflight.json",
-        "sha256": "e17b75dfb5948dc648ce6556648ba4babec0d45d0b0e0eea9348affd105afd03",
+        "sha256": "32a43950a745744a5de470d48a6eccff6c75a8bec951ec249740b6477052f6ff",
         "blenderVersion": "Blender 5.2.1 LTS",
         "sourceioCommit": "25b3978e366aeed1b4bdcf078394751b2d376c7a",
-        "standardizationReady": false
+        "standardizationReady": true
       },
       "status": {
         "acquired": true,
         "extracted": true,
+        "rawGlbIntermediates": 1,
         "converted": false,
         "validated": false,
         "registered": false,
@@ -223,7 +266,7 @@
         "productionDeployed": false
       },
       "blockers": [
-        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
+        "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ]
@@ -320,7 +363,8 @@
             "weightsSumToOne": true,
             "finitePositionNormalUv": true,
             "skeletonParentsInRange": true
-          }
+          },
+          "sourceioRawIntermediate": null
         },
         {
           "role": "first-person Dai sword replacement prop",
@@ -379,19 +423,21 @@
             "weightsSumToOne": true,
             "finitePositionNormalUv": true,
             "skeletonParentsInRange": true
-          }
+          },
+          "sourceioRawIntermediate": null
         }
       ],
       "tooling": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/sourceio-preflight.json",
-        "sha256": "e17b75dfb5948dc648ce6556648ba4babec0d45d0b0e0eea9348affd105afd03",
+        "sha256": "32a43950a745744a5de470d48a6eccff6c75a8bec951ec249740b6477052f6ff",
         "blenderVersion": "Blender 5.2.1 LTS",
         "sourceioCommit": "25b3978e366aeed1b4bdcf078394751b2d376c7a",
-        "standardizationReady": false
+        "standardizationReady": true
       },
       "status": {
         "acquired": true,
         "extracted": true,
+        "rawGlbIntermediates": 0,
         "converted": false,
         "validated": false,
         "registered": false,
@@ -399,7 +445,7 @@
         "productionDeployed": false
       },
       "blockers": [
-        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
+        "SourceIO is available but no MDL conversion has been executed or accepted.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ]

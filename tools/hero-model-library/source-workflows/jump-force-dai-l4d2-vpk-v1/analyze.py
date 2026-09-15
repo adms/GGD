@@ -23,6 +23,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 OUTPUT = REPO / "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json"
 SOURCEIO_PREFLIGHT = OUTPUT.with_name("sourceio-preflight.json")
+SOURCEIO_CONVERSION_ROOT = "GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1"
 WORKFLOWS = (
     {
         "sourceId": "steam-jump-force-dai-l4d2-coach-2298782931",
@@ -193,6 +194,29 @@ def core_geometry(path: Path, vvd_path: Path, vtx_path: Path, sourceio_root: Pat
     }
 
 
+def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, source: dict[str, Any]) -> dict[str, Any] | None:
+    """Read a previously emitted raw GLB without upgrading it to a candidate."""
+    root = workspace / SOURCEIO_CONVERSION_ROOT / item["folder"] / stem.replace("/", "_")
+    receipt_path = root / "conversion-receipt.json"
+    if not receipt_path.is_file():
+        return None
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    if receipt.get("schema") != "ggd.jump-force-dai-sourceio-conversion-receipt@1":
+        raise ValueError(f"unexpected SourceIO intermediate receipt: {receipt_path}")
+    if receipt.get("source", {}).get("sha256") != source["mdl"]["sha256"]:
+        raise ValueError(f"SourceIO intermediate source SHA mismatch: {receipt_path}")
+    output = Path(receipt["output"]["absolutePath"])
+    if not output.is_file() or output.stat().st_size != receipt["output"]["bytes"] or sha256(output) != receipt["output"]["sha256"]:
+        raise ValueError(f"SourceIO intermediate output drift: {output}")
+    return {
+        "receiptAbsolutePath": str(receipt_path.resolve()),
+        "receiptSha256": sha256(receipt_path),
+        "rawGlb": receipt["output"],
+        "metrics": receipt["metrics"],
+        "status": receipt["status"],
+    }
+
+
 def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
     root = workspace / "GGD-Asset-Library/intake/public-sources" / item["folder"]
     members = validated_members(root)
@@ -214,7 +238,9 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         for required in (mdl, vvd, vtx):
             if not required.is_file():
                 raise FileNotFoundError(required)
-        models.append({"role": role, **mdl_header(mdl, root), "vvd": file_record(vvd, root), "vtx": file_record(vtx, root), "assimp": assimp(mdl), "coreGeometry": core_geometry(mdl, vvd, vtx, sourceio_root)})
+        source_model = {"role": role, **mdl_header(mdl, root), "vvd": file_record(vvd, root), "vtx": file_record(vtx, root), "assimp": assimp(mdl), "coreGeometry": core_geometry(mdl, vvd, vtx, sourceio_root)}
+        source_model["sourceioRawIntermediate"] = sourceio_intermediate(workspace, item, stem, source_model)
+        models.append(source_model)
     suffixes = Counter(Path(row["path"]).suffix.lower() for row in members if row["path"].startswith("extracted/"))
     vmts = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vmt")]
     vtfs = [row for row in members if row["path"].startswith("extracted/") and row["path"].lower().endswith(".vtf")]
@@ -228,9 +254,11 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "sourceioCommit": preflight["toolchain"]["sourceio"]["gitCommit"],
         "standardizationReady": ready,
     }
+    intermediates = [model["sourceioRawIntermediate"] for model in models if model["sourceioRawIntermediate"]]
     reader_blocker = ("SourceIO is pinned locally, but Blender background startup fails before plugin/model import; "
                       "repair the headless Blender environment before standardization." if not ready else
-                      "SourceIO is available but no MDL conversion has been executed or accepted.")
+                      "SourceIO is available but no MDL conversion has been executed or accepted." if not intermediates else
+                      "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.")
     return {
         "sourceId": item["sourceId"], "leadId": item["leadId"],
         "source": {"absolutePath": str(root.resolve()), "title": acquisition["title"], "pageUrl": acquisition["pageUrl"], "itemId": acquisition["itemId"], "raw": {"path": acquisition["file"], "bytes": acquisition["bytes"], "sha256": acquisition["sha256"]}, "checkedAt": inspection["checkedAt"]},
@@ -238,7 +266,7 @@ def source_row(workspace: Path, item: dict[str, Any]) -> dict[str, Any]:
         "extracted": {"extensions": dict(sorted(suffixes.items())), "vmtFiles": len(vmts), "vtfFiles": len(vtfs)},
         "modelGroups": models,
         "tooling": tooling,
-        "status": {"acquired": True, "extracted": True, "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
+        "status": {"acquired": True, "extracted": True, "rawGlbIntermediates": len(intermediates), "converted": False, "validated": False, "registered": False, "runtimeSelectable": False, "productionDeployed": False},
         "blockers": [reader_blocker, "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.", "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."],
     }
 
@@ -248,7 +276,7 @@ def build(workspace: Path) -> dict[str, Any]:
     return {
         "schema": "ggd.jump-force-dai-l4d2-vpk-source-audit@1",
         "scope": "Public Steam Workshop Source 1 ports of JUMP FORCE Dai. These are separate MOD sources and do not replace original JUMP FORCE assets.",
-        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
+        "summary": {"sources": len(rows), "acquired": len(rows), "extracted": len(rows), "sourceMdlGroups": sum(len(row["modelGroups"]) for row in rows), "rawGlbIntermediates": sum(row["status"]["rawGlbIntermediates"] for row in rows), "converted": 0, "runtimeSelectable": 0, "productionDeployed": False},
         "sources": rows,
         "reproduction": {"write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace ..", "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/analyze.py --workspace .. --check"},
     }

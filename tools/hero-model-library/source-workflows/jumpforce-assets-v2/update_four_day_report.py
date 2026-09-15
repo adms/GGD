@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 INVENTORY = ROOT / "materials/hero-model-library/source-inventories/jumpforce-assets-v2/inventory.json"
+WORKSHOP_AUDIT = ROOT / "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json"
 REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 START = "<!-- generated:jumpforce-assets-v2:start -->"
 END = "<!-- generated:jumpforce-assets-v2:end -->"
@@ -17,10 +18,14 @@ BOUNDARY = "## 七、所有模型下拉選項與未使用素材"
 
 def block() -> str:
     data = json.loads(INVENTORY.read_text())
+    workshop = json.loads(WORKSHOP_AUDIT.read_text())
     s, dai = data["summary"], data["dai"]
     decimation = dai["formalDecimationCandidate"]
     six_draw = dai["sixDrawCandidate"]
     rejected = dai["rejectedV1Candidate"]
+    coach = next(row for row in workshop["sources"] if row["sourceId"] == "steam-jump-force-dai-l4d2-coach-2298782931")
+    raw = next(model["sourceioRawIntermediate"] for model in coach["modelGroups"] if model.get("sourceioRawIntermediate"))
+    raw_metrics = raw["metrics"]
     return "\n".join([
         START,
         "",
@@ -35,6 +40,8 @@ def block() -> str:
         f"v2 正式可重建候選為 **{decimation['after']['triangles']:,} 面／{decimation['after']['maxTextureEdge']}px**，run-a／run-b SHA 相同，骨架、蒙皮及材質／貼圖槽保留，Khronos {decimation['khronosErrors']} error、有限值通過，眼部透明層修復的技術檢查通過。owner 已授權所有資源可登記／發布，但 v2 新畫面的視覺品質仍待 owner 審查。候選仍有 **{decimation['after']['drawPrimitives']} draw > hard limit {decimation['drawCallLimit']}**，原生 animations 為 {decimation['after']['animations']}；狀態為已轉換、待 owner 視覺審查、draw call 與六態動作阻塞，**未註冊、不可切換、未部署**。v2 S3 狀態為 `{decimation['s3Backup']['state']}`。其他 JUMP 角色維持兩類：公開音訊實檔依 58 包與中央 SHA 清單記錄；Asta／Kenshiro 等遊戲 PAK 角色目前只有路徑索引，沒有把 metadata 當成已抽出實檔。",
         "",
         f"v6 以前代 six-draw 候選為輸入，只把含透明 texel 的材質從 OPAQUE 改為 BLEND，輸出為 **{six_draw['after']['triangles']:,} 面／{six_draw['after']['drawPrimitives']} draw／{six_draw['after']['maxTextureEdge']}px**；GLB binary chunk、幾何、骨架與貼圖均保持，Khronos {six_draw['khronosErrors']} error。v5 前代位元組仍保留；v6 需要新的視覺審查，且沒有已通過播放審查的動作綁定，因此狀態是 **已轉換、技術門檻通過、視覺待審、未註冊、不可切換、未部署**。v6 S3 狀態為 `{six_draw['s3Backup']['state']}`。其他 JUMP 角色的 PAK payload 另依全角色抽取計畫處理，不用 metadata 充當已抽出成品。",
+        "",
+        f"公開 L4D2 Workshop 的小呆 Coach 移植已用 SourceIO／Blender 輸出一個 raw GLB 中間產物：**{raw_metrics['triangleCount']:,} 面、{raw_metrics['boneCounts'][0]} bones、{raw_metrics['meshObjectCount']} mesh、{raw_metrics['materialCount']} materials**，本機輸出 SHA-256 `{raw['rawGlb']['sha256']}`。其中 {raw_metrics['unsupportedMaterialCount']} 個 VMT patch 材質缺共同基底，且模型超過 10,000 面門檻；狀態固定為 **已轉 raw GLB、待材質重建／減面／視覺驗收，未註冊、不可切換、未部署**。它是公開社群移植候選，與原始 `chr0430` 來源分開保留。",
         "",
         END,
         "",

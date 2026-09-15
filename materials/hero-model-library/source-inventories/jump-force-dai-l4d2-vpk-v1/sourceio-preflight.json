@@ -5,9 +5,9 @@
       "absolutePath": "/Applications/Blender.app/Contents/MacOS/Blender",
       "sha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c",
       "version": "Blender 5.2.1 LTS",
-      "backgroundStartupExitCode": -11,
-      "backgroundStartupSignal": 11,
-      "backgroundStartupSucceeded": false
+      "backgroundStartupExitCode": 0,
+      "backgroundStartupSignal": null,
+      "backgroundStartupSucceeded": true
     },
     "sourceio": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/source-tools/SourceIO-5.5.4",
@@ -20,9 +20,9 @@
   "status": {
     "mdlImportAttempted": false,
     "mdlImportSucceeded": false,
-    "standardizationReady": false
+    "standardizationReady": true
   },
-  "blocker": "Blender background startup failed before any SourceIO or model import code ran; repair the Blender headless environment before conversion.",
+  "blocker": null,
   "reproduction": {
     "write": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/probe_sourceio.py --workspace ..",
     "check": "python3 tools/hero-model-library/source-workflows/jump-force-dai-l4d2-vpk-v1/probe_sourceio.py --workspace .. --check"

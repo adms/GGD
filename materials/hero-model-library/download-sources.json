@@ -66039,7 +66039,7 @@
       "accessStatus": "public-steam-file-url",
       "checkedAt": "2026-09-15T00:48:36+00:00",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "source1-vpk-core-geometry-audited-pending-glb-standardization",
+      "readiness": "source1-vpk-sourceio-raw-intermediate-pending-material-rebuild-and-standardization",
       "purchaseDecision": "hold-purchase-review-acquired-source",
       "defaultEligible": false,
       "resourceRole": "character-body-and-weapon-prop-collection",
@@ -66067,7 +66067,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "d3eacfd269f153aa7740ca83caf9b17ac9d4a78b5a8b401b366a497d9c3c191b"
+        "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
       },
       "modelCandidates": [
         {
@@ -66147,12 +66147,52 @@
           "converted": false,
           "defaultEligible": false,
           "runtimeSelectable": false,
-          "conversionStatus": "source-core-geometry-audited-pending-glb-emitter-material-conversion-and-visual-acceptance",
+          "conversionStatus": "sourceio-raw-glb-emitted-pending-material-rebuild-decimation-contract-validation-and-visual-acceptance",
           "limitations": [
-            "SourceIO core parser verified geometry, skeleton and weights without invoking Blender; it did not emit a GLB.",
+            "A SourceIO raw GLB intermediate exists locally, but its VMT patch materials are incomplete and it is not an accepted GGD model.",
             "Source sequence descriptors are retained as metadata and are not GGD action semantics.",
-            "No GLB geometry/material/skin conversion or visual acceptance exists."
+            "The raw GLB exceeds the triangle budget and has not passed material, visual, action-semantic, backend, or deployment validation."
           ],
+          "rawGlbIntermediate": {
+            "receiptAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/conversion-receipt.json",
+            "receiptSha256": "a0628c9ac1d0296168ed141133be3e1c98974c6c3fe3496455e27c471710f60e",
+            "rawGlb": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-sourceio-v1/lead-dai-jumpforce-l4d2-2298782931-2298782931/models_survivors_survivor_coach/sourceio-raw.glb",
+              "bytes": 4099056,
+              "sha256": "511663435c85d72d0dea1f713c73bbde2ce275552fc4a1648e83fd7347bfb1ce"
+            },
+            "metrics": {
+              "meshObjectCount": 15,
+              "triangleCount": 89833,
+              "boneCounts": [
+                87
+              ],
+              "actionCount": 2,
+              "materialCount": 26,
+              "unsupportedMaterialCount": 18,
+              "unsupportedMaterials": [
+                "Body",
+                "Body3",
+                "Body4",
+                "effect",
+                "Face",
+                "face1",
+                "Face2",
+                "Glass",
+                "Hair",
+                "Hair1",
+                "Hair2",
+                "Hair3",
+                "Pants",
+                "Pants1",
+                "PantsRip",
+                "Skin",
+                "Skin 1",
+                "Weapon"
+              ]
+            },
+            "status": "sourceio-raw-intermediate-pending-material-rebuild-decimation-and-visual-review"
+          },
           "resourceRole": "character-body",
           "character": "小呆／達伊 / Dai"
         },
@@ -66219,9 +66259,9 @@
         "release": null,
         "selectionVerified": false
       },
-      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Valve API public URL 下載原始 VPK，111 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、29 VMT、67 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
-        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
+        "SourceIO emitted a raw GLB intermediate; it still needs material rebuild, decimation, visual review and GGD contract validation before registration.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],
@@ -66278,7 +66318,7 @@
       ],
       "extractionReceipt": {
         "gitPath": "materials/hero-model-library/source-inventories/jump-force-dai-l4d2-vpk-v1/receipt.json",
-        "sha256": "d3eacfd269f153aa7740ca83caf9b17ac9d4a78b5a8b401b366a497d9c3c191b"
+        "sha256": "d616e2204941e6d12288eb140f3219faece88c780211dbf5b21fb5a4f625567c"
       },
       "modelCandidates": [
         {
@@ -66389,9 +66429,9 @@
         "release": null,
         "selectionVerified": false
       },
-      "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Valve API public URL 下載原始 VPK，24 個本機檔逐檔 SHA 驗證；VPK 2 組 MDL/VVD/VTX、2 VMT、8 VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。 尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
-        "SourceIO is pinned locally, but Blender background startup fails before plugin/model import; repair the headless Blender environment before standardization.",
+        "SourceIO is available but no MDL conversion has been executed or accepted.",
         "No GLB geometry, skin, material slot, texture conversion, visual review, six-state mapping, backend registration, or deployment has been created.",
         "Source sequence counts are native container metadata, not reviewed GGD idle/run/attack/hurt/death semantics."
       ],

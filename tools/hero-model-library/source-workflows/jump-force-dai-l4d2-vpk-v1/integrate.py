@@ -56,6 +56,12 @@ def source_entry(row: dict) -> dict:
                 "No GLB geometry/material/skin conversion or visual acceptance exists.",
             ],
         }
+        intermediate = model.get("sourceioRawIntermediate")
+        if intermediate:
+            candidate["rawGlbIntermediate"] = intermediate
+            candidate["conversionStatus"] = "sourceio-raw-glb-emitted-pending-material-rebuild-decimation-contract-validation-and-visual-acceptance"
+            candidate["limitations"][0] = "A SourceIO raw GLB intermediate exists locally, but its VMT patch materials are incomplete and it is not an accepted GGD model."
+            candidate["limitations"][2] = "The raw GLB exceeds the triangle budget and has not passed material, visual, action-semantic, backend, or deployment validation."
         if "body replacement" in role:
             candidate["resourceRole"] = "character-body"
             candidate["character"] = "小呆／達伊 / Dai"
@@ -83,7 +89,7 @@ def source_entry(row: dict) -> dict:
         "accessStatus": "public-steam-file-url",
         "checkedAt": source["checkedAt"],
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "source1-vpk-core-geometry-audited-pending-glb-standardization",
+        "readiness": "source1-vpk-sourceio-raw-intermediate-pending-material-rebuild-and-standardization" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else "source1-vpk-core-geometry-audited-pending-glb-standardization",
         "purchaseDecision": "hold-purchase-review-acquired-source",
         "defaultEligible": False,
         "resourceRole": "character-body-and-weapon-prop-collection",
@@ -105,7 +111,7 @@ def source_entry(row: dict) -> dict:
         "audioCount": 0,
         "publicationStatus": "local-extracted-awaiting-legacy-backup",
         "backendIntegration": {"required": True, "state": "pending-source-mdl-glb-standardization", "heroIds": ["godie-nbbc", "godie-n01c"], "ownerEntryIds": [], "release": None, "selectionVerified": False},
-        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重；尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。",
+        "verification": f"Valve API public URL 下載原始 VPK，{row['verifiedFiles']['count']} 個本機檔逐檔 SHA 驗證；VPK {len(row['modelGroups'])} 組 MDL/VVD/VTX、{row['extracted']['vmtFiles']} VMT、{row['extracted']['vtfFiles']} VTF 全數 CRC32 驗證。SourceIO core parser 已驗證幾何、骨架與權重。" + (" 已保留一個 raw GLB 中間產物及其 SHA 收據；它仍未完成材質重建、減面、視覺驗收、動作語意、後台選項或部署。" if any(model.get("sourceioRawIntermediate") for model in row["modelGroups"]) else " 尚未產生 GLB，材質、視覺驗收、動作語意、後台選項與部署皆未完成。"),
         "limitations": row["blockers"],
     }
 
