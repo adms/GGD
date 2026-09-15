@@ -78,6 +78,7 @@
     "collections:check": "tsx tools/collections-gen/gen.ts --check",
     "combat:build": "bash scripts/genrun.sh combat:build combat:build:raw",
     "combat:build:raw": "node --import tsx tools/voice-gen/src/build-combat-lines.mjs && node --import tsx tools/voice-gen/index-lines.mjs",
+    "combat:build:pinned:raw": "node --import tsx tools/voice-gen/src/build-combat-lines.mjs --use-pinned-reference-status && node --import tsx tools/voice-gen/index-lines.mjs",
     "combat:check": "node --import tsx tools/voice-gen/src/build-combat-lines.mjs --check && node --import tsx tools/voice-gen/index-lines.mjs --check",
     "content:build": "bash scripts/genrun.sh content:build content:build:raw",
     "content:build:indexes-only": "pnpm --filter @ggd/shared content:build",

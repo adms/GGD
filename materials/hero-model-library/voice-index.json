@@ -41156,7 +41156,7 @@
       "nativeEventBoundFiles": 79,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 26,
+      "listeningReviewApprovedFiles": 30,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42194,7 +42194,7 @@
       "nativeEventBoundFiles": 79,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 26,
+      "listeningReviewApprovedFiles": 30,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -96720,7 +96720,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 26
+      "listeningReviewApprovedFiles": 30
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
@@ -96747,10 +96747,14 @@
     "uniqueWavFiles": 754,
     "nativeTargetCandidates": 566,
     "battleReviewCandidates": 311,
-    "runtimeApproved": 311,
-    "runtimeRegistered": 311,
+    "runtimeApproved": 315,
+    "runtimeRegistered": 315,
     "runtimeConfigChanged": true,
-    "productionDeployed": false
+    "productionDeployed": false,
+    "gapDecisionsPath": "materials/hero-model-library/lol-project-seven/gap-listening-decisions.json",
+    "gapDecisionsSha256": "ab0f61e6fb424b16f2e2e03688d65917816b6c494fda753a10f6297493e239e3",
+    "baseRuntimeApproved": 311,
+    "gapRuntimeApproved": 4
   },
   "acquisitionPolicy": {
     "archiveEveryAcquiredResource": true,
@@ -96908,13 +96912,13 @@
     "listeningReviewUniqueFiles": 754,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 311,
+    "listeningReviewApprovedFiles": 315,
     "poppOwnerApprovedCandidates": 36,
     "poppGameAudioFiles": 35,
     "poppNativeEventRows": 8,
     "poppRuntimeBindings": 0
   },
-  "sourceFileManifestSha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0",
+  "sourceFileManifestSha256": "253c0f50259b08f55fb1f950b1dc3b85490852849058e800fe8c27fe10fd0c3e",
   "uncompressedFileManifestSha256": "25e57d5ab087d1695f09465ada46283a1f5c555e6f1e97af321ccc13f6349163",
   "poppApprovedAudio": {
     "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",

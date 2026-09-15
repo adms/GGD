@@ -20,6 +20,11 @@
       "bytes": 173295,
       "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
     },
+    "gapDecisions": {
+      "path": "materials/hero-model-library/lol-project-seven/gap-listening-decisions.json",
+      "bytes": 7245,
+      "sha256": "ab0f61e6fb424b16f2e2e03688d65917816b6c494fda753a10f6297493e239e3"
+    },
     "queue": {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "bytes": 1609180,
@@ -27,28 +32,28 @@
     },
     "runtimeRegistration": {
       "path": "materials/hero-model-library/lol-project-seven/runtime-registration.json",
-      "bytes": 333557,
-      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
+      "bytes": 370510,
+      "sha256": "cbec858fa630ec2446abc73b3451db21c341ff21e7c271bd83b415b16e5a2620"
     },
     "runtimeAuthority": {
       "path": "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json",
-      "bytes": 807262,
-      "sha256": "117e232b4bf0a58cae900701f5e67cb3a4be104b70b4413ffc45863080824546"
+      "bytes": 831881,
+      "sha256": "8fe1e0df9e1be29944934e5a0d82b0b733705571dc62fcb85253725d68125b3f"
     },
     "runtimeManifest": {
       "path": "content/assets/audio/voices/champions/MANIFEST.json",
-      "bytes": 1688327,
-      "sha256": "22074a9387e5a9ac906745c20babf8fe3b3c5d015b30b068ba44a42c30e41291"
+      "bytes": 1689713,
+      "sha256": "bf9b5cbd9fb903684ac8ef3090937091a3e476c12940217902b6cb75ba87f3f9"
     },
     "centralVoiceIndex": {
       "path": "materials/hero-model-library/voice-index.json",
-      "bytes": 4300287,
-      "sha256": "4a7800931fbb1fa09619e945914fb39929e808b4fe68a7c386ecaadd0ad3d501"
+      "bytes": 4300545,
+      "sha256": "64a7a0d06c29fd287f724db0927ee5e059cd375d51bf9756a24efe685da345e7"
     },
     "centralVoiceFiles": {
       "path": "materials/hero-model-library/voice-files.jsonl.gz",
-      "bytes": 27888115,
-      "sha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0"
+      "bytes": 27888697,
+      "sha256": "253c0f50259b08f55fb1f950b1dc3b85490852849058e800fe8c27fe10fd0c3e"
     },
     "localSourceVerification": {
       "path": "materials/hero-model-library/lol-project-seven/local-file-verification/index.json",
@@ -59,7 +64,9 @@
   "approvalEvidence": {
     "reviewer": "owner",
     "reviewedAt": "2026-09-14",
-    "verifiedPerClipSpeakerLanguageEventAndGainRows": 311
+    "verifiedPerClipSpeakerLanguageEventAndGainRows": 315,
+    "baseReviewRows": 311,
+    "gapReviewRows": 4
   },
   "playbackReceipt": {
     "recordsPath": "materials/hero-model-library/lol-project-seven/runtime-registration.json",
@@ -67,9 +74,10 @@
     "runtimePathProperty": "runtimePath",
     "runtimeSha256Property": "runtimeSha256",
     "runtimeBytesProperty": "runtimeBytes",
-    "verifiedPlayableRecords": 311
+    "verifiedPlayableRecords": 315
   },
-  "pendingAmbiguousSkillCandidates": [
+  "pendingAmbiguousSkillCandidates": [],
+  "reviewedAmbiguousSkillCandidates": [
     {
       "nativeId": "Xerath",
       "target": "ability-Q",
@@ -80,22 +88,23 @@
         "Xerath:skin0:820216149",
         "Xerath:skin0:837144372"
       ],
-      "reason": "same source WEM maps to an ability event and another native event category",
-      "runtimeRegistered": false
+      "reason": "owner listened to each multi-event source and approved its Q use",
+      "runtimeRegistered": true,
+      "approvalAuthority": "materials/hero-model-library/lol-project-seven/gap-listening-decisions.json"
     }
   ],
   "summary": {
-    "approvedSourceWavsVerified": 311,
-    "runtimeMp3sVerified": 311,
-    "runtimeGitBlobsVerified": 311,
-    "runtimeManifestRowsVerified": 311,
-    "runtimeBytes": 12276064,
+    "approvedSourceWavsVerified": 315,
+    "runtimeMp3sVerified": 315,
+    "runtimeGitBlobsVerified": 315,
+    "runtimeManifestRowsVerified": 315,
+    "runtimeBytes": 12372368,
     "fullSevenSourceWavsVerified": 4927,
-    "pendingOtherEventBoundWavs": 443,
+    "pendingOtherEventBoundWavs": 439,
     "productionDeployed": false,
     "byNativeTarget": {
       "ability-E": 33,
-      "ability-Q": 30,
+      "ability-Q": 34,
       "ability-R": 41,
       "ability-W": 39,
       "attack": 133,
@@ -197,21 +206,20 @@
     },
     {
       "heroId": "lol-xerath",
-      "approvedSourceWavs": 26,
-      "runtimeMp3s": 26,
-      "runtimeGitBlobs": 26,
-      "manifestRows": 26,
-      "runtimeBytes": 1301822,
+      "approvedSourceWavs": 30,
+      "runtimeMp3s": 30,
+      "runtimeGitBlobs": 30,
+      "manifestRows": 30,
+      "runtimeBytes": 1398126,
       "byNativeTarget": {
         "ability-E": 4,
+        "ability-Q": 4,
         "ability-R": 4,
         "ability-W": 4,
         "attack": 10,
         "death": 4
       },
-      "missingApprovedSkillTargets": [
-        "ability-Q"
-      ]
+      "missingApprovedSkillTargets": []
     },
     {
       "heroId": "lol-yasuo",
@@ -252,9 +260,9 @@
     "productionDeployed": false
   },
   "boundaries": [
-    "The 311 records are the complete fixed battle-review subset, not all 4,927 source WAVs.",
-    "The remaining 443 event-bound WAVs are pending and are not mapped by implication.",
-    "Ambiguous WEM relationships stay pending even when one native relationship names a skill slot.",
+    "The 315 records combine the 311-file base review and 4-file owner-approved Xerath Q gap review, not all 4,927 source WAVs.",
+    "The remaining 439 event-bound WAVs are pending and are not mapped by implication.",
+    "Ambiguous WEM relationships require the separate per-file gap decision before runtime registration.",
     "No transcript is asserted by this receipt.",
     "Git and branch runtime verification does not prove Main merge or production deployment."
   ]

@@ -37,6 +37,21 @@ class ApprovedBattleRuntimeTest(unittest.TestCase):
         self.assertEqual(mod.category_base("attack-light.2"), "attack-light")
         self.assertEqual(mod.category_base("defeat"), "defeat")
 
+    def test_gap_approval_requires_exact_owner_target_and_source_hash(self):
+        row = {
+            "nativeId": "Xerath", "candidateRuntimeTarget": "ability-Q",
+            "sha256": "abc", "bytes": 12, "eventBindings": [{"eventName": "Q"}],
+        }
+        decision = {
+            "decision": "approve", "runtimeApproved": True, "reviewer": "owner",
+            "nativeId": "Xerath", "speaker": "Xerath", "language": "ja",
+            "proposedTarget": "ability-Q", "gainDecision": "keep-source-gain",
+            "sha256": "abc", "bytes": 12, "eventBindings": [{"eventName": "Q"}],
+        }
+        self.assertTrue(mod.approved_gap_decision(row, decision))
+        self.assertFalse(mod.approved_gap_decision(row, {**decision, "proposedTarget": "attack"}))
+        self.assertFalse(mod.approved_gap_decision(row, {**decision, "sha256": "wrong"}))
+
     def test_manifest_requires_exact_hash_language_and_duration(self):
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory)

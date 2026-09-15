@@ -32,6 +32,20 @@ class ApprovedBattleRuntimeAuditTest(unittest.TestCase):
         self.assertFalse(mod.owner_decision_matches({**decision, "ggdRuntimeTarget": "ability-R"}, registration))
         self.assertFalse(mod.owner_decision_matches({**decision, "reviewer": "automation"}, registration))
 
+    def test_gap_owner_decision_is_a_separate_exact_authority(self):
+        registration = {
+            "nativeId": "Xerath", "candidateRuntimeTarget": "ability-Q",
+            "sourceSha256": "abc", "reviewedAt": "2026-09-15T10:01:54.928Z",
+            "approvalAuthority": "gap-listening-decisions.json",
+        }
+        decision = {
+            "decision": "approve", "reviewer": "owner", "runtimeApproved": True,
+            "reviewedAt": registration["reviewedAt"], "speaker": "Xerath", "language": "ja",
+            "proposedTarget": "ability-Q", "gainDecision": "keep-source-gain", "sha256": "abc",
+        }
+        self.assertTrue(mod.owner_decision_matches(decision, registration))
+        self.assertFalse(mod.owner_decision_matches({**decision, "sha256": "wrong"}, registration))
+
 
 if __name__ == "__main__":
     unittest.main()

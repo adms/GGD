@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 BASE = ROOT / "materials/hero-model-library/lol-project-seven"
 DECISIONS = BASE / "listening-review-decisions.json"
+GAP_DECISIONS = BASE / "gap-listening-decisions.json"
 QUEUE = BASE / "listening-review-queue.json"
 REGISTRATION = BASE / "runtime-registration.json"
 LOCAL_VERIFICATION = BASE / "local-file-verification/index.json"
@@ -28,7 +29,7 @@ EXPECTED_HEROES = {
     "lol-lux": 48,
     "lol-missfortune": 21,
     "lol-warwick": 59,
-    "lol-xerath": 26,
+    "lol-xerath": 30,
     "lol-yasuo": 41,
 }
 EXPECTED_REVIEW_DATE = "2026-09-14"
@@ -90,6 +91,18 @@ def probe(path: Path) -> tuple[dict, float]:
 
 
 def owner_decision_matches(decision: dict, registration: dict) -> bool:
+    if registration.get("approvalAuthority") == "gap-listening-decisions.json":
+        return (
+            decision.get("decision") == "approve"
+            and decision.get("reviewer") == "owner"
+            and decision.get("reviewedAt") == registration["reviewedAt"]
+            and decision.get("speaker") == registration["nativeId"]
+            and decision.get("language") == "ja"
+            and decision.get("proposedTarget") == registration["candidateRuntimeTarget"]
+            and decision.get("gainDecision") == "keep-source-gain"
+            and decision.get("runtimeApproved") is True
+            and decision.get("sha256") == registration["sourceSha256"]
+        )
     return (
         decision.get("status") == "verified"
         and decision.get("reviewer") == "owner"
@@ -107,6 +120,7 @@ def owner_decision_matches(decision: dict, registration: dict) -> bool:
 
 def create(asset_workspace: Path) -> dict:
     decisions = read_json(DECISIONS)
+    gap_decisions = read_json(GAP_DECISIONS)
     queue = read_json(QUEUE)
     registration = read_json(REGISTRATION)
     local = read_json(LOCAL_VERIFICATION)
@@ -114,13 +128,16 @@ def create(asset_workspace: Path) -> dict:
     manifest = read_json(MANIFEST)
     voice_index = read_json(VOICE_INDEX)
     records = registration["records"]
+    registered_keys = {row["reviewKey"] for row in records}
+    gap_by_key = {row["key"]: row for row in gap_decisions["decisions"]}
 
     pending_ambiguous_skill_candidates: dict[tuple[str, str], list[str]] = defaultdict(list)
     for row in queue["records"]:
         slots = row.get("abilitySlotCandidates", [])
         categories = set(row.get("nativeEventCategories", []))
         if (
-            row.get("candidateRuntimeTarget") is None
+            row["key"] not in registered_keys
+            and row.get("candidateRuntimeTarget") is None
             and len(slots) == 1
             and "ability-cast" in categories
             and len(categories) > 1
@@ -131,8 +148,10 @@ def create(asset_workspace: Path) -> dict:
         key for key, row in decisions["decisions"].items()
         if row.get("runtimeApproved") is True
     }
-    registered_keys = {row["reviewKey"] for row in records}
-    if approved_keys != registered_keys or len(records) != 311:
+    approved_keys.update(
+        row["key"] for row in gap_decisions["decisions"] if row.get("runtimeApproved") is True
+    )
+    if approved_keys != registered_keys or len(records) != 315:
         raise ValueError("Runtime registration differs from the exact approved key set")
     if queue["summary"]["battleReviewCandidates"] != 311:
         raise ValueError("Battle review scope drift")
@@ -144,7 +163,11 @@ def create(asset_workspace: Path) -> dict:
     runtime_bytes_by_hero: Counter[str] = Counter()
     audio_contract = None
     for row in records:
-        decision = decisions["decisions"][row["reviewKey"]]
+        decision = (
+            gap_by_key[row["reviewKey"]]
+            if row.get("approvalAuthority") == "gap-listening-decisions.json"
+            else decisions["decisions"][row["reviewKey"]]
+        )
         if not owner_decision_matches(decision, row):
             raise ValueError(f"Owner decision evidence drift: {row['reviewKey']}")
         source = (asset_workspace / row["sourcePath"]).resolve()
@@ -193,7 +216,7 @@ def create(asset_workspace: Path) -> dict:
     if dict(sorted(counts.items())) != EXPECTED_HEROES:
         raise ValueError(f"Per-hero approved counts drift: {dict(counts)}")
     review = voice_index["listeningReview"]
-    if review["runtimeApproved"] != 311 or review["runtimeRegistered"] != 311:
+    if review["runtimeApproved"] != 315 or review["runtimeRegistered"] != 315:
         raise ValueError("Central voice index registration count drift")
     if review["decisionsPath"] != DECISIONS.relative_to(ROOT).as_posix():
         raise ValueError("Central voice index approval authority drift")
@@ -229,6 +252,7 @@ def create(asset_workspace: Path) -> dict:
         },
         "inputs": {
             "decisions": pin(DECISIONS),
+            "gapDecisions": pin(GAP_DECISIONS),
             "queue": pin(QUEUE),
             "runtimeRegistration": pin(REGISTRATION),
             "runtimeAuthority": pin(ORIGINALS),
@@ -241,6 +265,8 @@ def create(asset_workspace: Path) -> dict:
             "reviewer": "owner",
             "reviewedAt": EXPECTED_REVIEW_DATE,
             "verifiedPerClipSpeakerLanguageEventAndGainRows": len(records),
+            "baseReviewRows": queue["summary"]["runtimeApproved"],
+            "gapReviewRows": gap_decisions["summary"]["approved"],
         },
         "playbackReceipt": {
             "recordsPath": REGISTRATION.relative_to(ROOT).as_posix(),
@@ -261,6 +287,17 @@ def create(asset_workspace: Path) -> dict:
             }
             for (native_id, target), keys in sorted(pending_ambiguous_skill_candidates.items())
         ],
+        "reviewedAmbiguousSkillCandidates": [{
+            "nativeId": "Xerath",
+            "target": "ability-Q",
+            "files": gap_decisions["summary"]["approved"],
+            "reviewKeys": sorted(
+                row["key"] for row in gap_decisions["decisions"] if row["runtimeApproved"]
+            ),
+            "reason": "owner listened to each multi-event source and approved its Q use",
+            "runtimeRegistered": True,
+            "approvalAuthority": GAP_DECISIONS.relative_to(ROOT).as_posix(),
+        }],
         "summary": {
             "approvedSourceWavsVerified": len(records),
             "runtimeMp3sVerified": len(records),
@@ -268,7 +305,7 @@ def create(asset_workspace: Path) -> dict:
             "runtimeManifestRowsVerified": len(records),
             "runtimeBytes": runtime_bytes,
             "fullSevenSourceWavsVerified": local["summary"]["byteAndSha256VerifiedFiles"],
-            "pendingOtherEventBoundWavs": queue["summary"]["pendingReviews"],
+            "pendingOtherEventBoundWavs": queue["summary"]["pendingReviews"] - gap_decisions["summary"]["approved"],
             "productionDeployed": False,
             "byNativeTarget": dict(sorted(targets.items())),
         },
@@ -295,9 +332,9 @@ def create(asset_workspace: Path) -> dict:
             "productionDeployed": False,
         },
         "boundaries": [
-            "The 311 records are the complete fixed battle-review subset, not all 4,927 source WAVs.",
-            "The remaining 443 event-bound WAVs are pending and are not mapped by implication.",
-            "Ambiguous WEM relationships stay pending even when one native relationship names a skill slot.",
+            "The 315 records combine the 311-file base review and 4-file owner-approved Xerath Q gap review, not all 4,927 source WAVs.",
+            "The remaining 439 event-bound WAVs are pending and are not mapped by implication.",
+            "Ambiguous WEM relationships require the separate per-file gap decision before runtime registration.",
             "No transcript is asserted by this receipt.",
             "Git and branch runtime verification does not prove Main merge or production deployment.",
         ],

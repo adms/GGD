@@ -337,16 +337,18 @@ class Builder:
         lol_audit_evidence = self.evidence(lol_audit_path)
         lol_registration = self.read(lol_registration_path)
         lol_audit = self.read(lol_audit_path)
+        lol_gap_decisions = self.read(lol_root / "gap-listening-decisions.json")
+        expected_lol_runtime = 311 + lol_gap_decisions.get("summary", {}).get("approved", 0)
         if (lol_registration.get("schema") != "ggd-lol-approved-battle-runtime-registration@1"
                 or lol_audit.get("schema") != "ggd-lol-seven-approved-runtime-audit@1"):
             raise ValueError("Unsupported LoL approved runtime registration evidence")
         lol_summary = lol_registration.get("summary", {})
         audit_summary = lol_audit.get("summary", {})
-        if (lol_summary.get("approved") != 311 or lol_summary.get("runtimeRegistered") != 311
-                or audit_summary.get("approvedSourceWavsVerified") != 311
-                or audit_summary.get("runtimeMp3sVerified") != 311
-                or audit_summary.get("runtimeGitBlobsVerified") != 311
-                or audit_summary.get("runtimeManifestRowsVerified") != 311
+        if (lol_summary.get("approved") != expected_lol_runtime or lol_summary.get("runtimeRegistered") != expected_lol_runtime
+                or audit_summary.get("approvedSourceWavsVerified") != expected_lol_runtime
+                or audit_summary.get("runtimeMp3sVerified") != expected_lol_runtime
+                or audit_summary.get("runtimeGitBlobsVerified") != expected_lol_runtime
+                or audit_summary.get("runtimeManifestRowsVerified") != expected_lol_runtime
                 or lol_summary.get("productionDeployed") is not False
                 or audit_summary.get("productionDeployed") is not False):
             raise ValueError("LoL approved runtime totals are incomplete or overclaim deployment")
@@ -671,7 +673,7 @@ class Builder:
                         "currentMainAudioRemovedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainRemovedPathsAfterBaseline", 0),
                         "currentMainAudioChangedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainChangedPathsAfterBaseline", 0),
                         "currentBranchAudioFiles": len(current_audio_paths),
-                        "mainMergedAudioAdditions": False,
+                        "mainMergedAudioAdditions": overlay.get("summary", {}).get("mainMergedAdditions", False),
                         "productionDeploymentVerified": False,
                         "all81NativeAudioOrMotionComplete": False},
             "audioAudit": audio_evidence, "audioEvidenceFiles": audio_artifacts,

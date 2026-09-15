@@ -26,7 +26,7 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "bdf28528dd68f22fcb766bf42a6763c027eee8e0816d525801c017db348c5f24",
+ "digest": "e2526298fe9399062b9145bc702b152a547328b60b73fabf5792de604439b393",
  "heroes": [
   {
    "id": "b2-aladdin",
@@ -8746,11 +8746,10 @@
     "ok": false,
     "pack": true,
     "sharedFrom": null,
-    "categories": 11,
+    "categories": 12,
     "required": 9,
-    "haveRequired": 7,
+    "haveRequired": 8,
     "missing": [
-     "skill-name.q",
      "skill-name.ex"
     ],
     "select": 1,
@@ -8792,12 +8791,12 @@
       "confidence": "candidate"
      }
     ],
-    "gap": "出貨門檻缺 2 格",
+    "gap": "出貨門檻缺 1 格",
     "severity": "warning"
    },
    "blockers": [],
    "warnings": [
-    "出貨門檻缺 2 格"
+    "出貨門檻缺 1 格"
    ],
    "ready": true
   },

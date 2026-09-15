@@ -111,13 +111,14 @@ def build(repo, source_manifest, main_ref):
     manifest_path = repo / "content/assets/audio/voices/champions/MANIFEST.json"
     status, originals, manifest = read(status_path), read(originals_path), read(manifest_path)
     lol_runtime = read(repo / LOL_RUNTIME_REGISTRATION)
+    lol_runtime_records = lol_runtime.get("records", [])
     if (lol_runtime.get("schema") != "ggd-lol-approved-battle-runtime-registration@1"
-            or lol_runtime.get("summary", {}).get("approved") != 311
-            or lol_runtime.get("summary", {}).get("runtimeRegistered") != 311
+            or lol_runtime.get("summary", {}).get("approved") != len(lol_runtime_records)
+            or lol_runtime.get("summary", {}).get("runtimeRegistered") != len(lol_runtime_records)
             or lol_runtime.get("summary", {}).get("productionDeployed") is not False):
         raise ValueError("LoL approved runtime registration is not current")
     runtime_by_path = {}
-    for row in lol_runtime.get("records", []):
+    for row in lol_runtime_records:
         runtime_path = row.get("runtimePath")
         if not runtime_path or runtime_path in runtime_by_path:
             raise ValueError("LoL runtime registration contains an invalid or duplicate path")
@@ -266,7 +267,9 @@ def build(repo, source_manifest, main_ref):
         if len(records) != 1 or records[0].get("hash") != runtime["sha256"]:
             raise ValueError(f"Pending or mismatched runtime manifest binding: {category}")
         if any(row.get("clip") == content_path for row in main_manifest_lines.get(category, [])):
-            raise ValueError(f"Branch addition is already present in current Main: {category}")
+            # The former branch-only addition has since landed in Main. It is
+            # already represented and verified in current_main_files above.
+            continue
         binding = original_bindings.get(category)
         if not binding:
             raise ValueError(f"COMBAT_ORIGINALS lacks {HERO}.{category}")
@@ -362,21 +365,23 @@ def build(repo, source_manifest, main_ref):
                 "note": "Current Main snapshot with owner-reviewed LoL runtime replacements; these files remain branch-only until Main merges them.",
             })
         if hero_id == HERO:
-            branch_voice.update({
-                "publicationState": "current-branch-pending-main-merge",
-                "mainMergedAdditions": False,
-                "uniqueClipCount": current_main_voice["uniqueClipCount"] + len(additions),
-                "originalSourceLabelledCount": current_main_voice["originalSourceLabelledCount"] + len(additions),
-                "addedCategories": list(CATEGORIES),
-                "additionalSourceFileCount": len(additions),
-                "allCurrentFilesShaVerified": True,
-                "note": "Current Main snapshot plus two branch-only railway audio bindings; not original character performance or Main merge evidence.",
-            })
-            for key in ("missingCategories", "missingCoreCategories", "missingExtended11Categories"):
-                branch_voice[key] = [category for category in current_main_voice[key] if category not in CATEGORIES]
-            branch_voice["categoryCounts"] = {
-                **current_main_voice["categoryCounts"], **{category: 1 for category in CATEGORIES}
-            }
+            addition_categories = [row["categories"][0] for row in additions]
+            if addition_categories:
+                branch_voice.update({
+                    "publicationState": "current-branch-pending-main-merge",
+                    "mainMergedAdditions": False,
+                    "uniqueClipCount": current_main_voice["uniqueClipCount"] + len(additions),
+                    "originalSourceLabelledCount": current_main_voice["originalSourceLabelledCount"] + len(additions),
+                    "addedCategories": addition_categories,
+                    "additionalSourceFileCount": len(additions),
+                    "allCurrentFilesShaVerified": True,
+                    "note": "Current Main snapshot plus branch-only railway audio bindings; not original character performance or Main merge evidence.",
+                })
+                for key in ("missingCategories", "missingCoreCategories", "missingExtended11Categories"):
+                    branch_voice[key] = [category for category in current_main_voice[key] if category not in addition_categories]
+                branch_voice["categoryCounts"] = {
+                    **current_main_voice["categoryCounts"], **{category: 1 for category in addition_categories}
+                }
         overlay_heroes.append({
             "heroId": hero_id,
             "runtimeHeroId": runtime_id,
@@ -402,7 +407,7 @@ def build(repo, source_manifest, main_ref):
                    and not row["currentBranchVoice"]["missingExtended11Categories"]
                    for row in overlay_heroes
                ),
-               "mainMergedAdditions": False, "productionPlaybackVerified": False}
+               "mainMergedAdditions": not additions, "productionPlaybackVerified": False}
     evidence = [pins[p] for p in sorted(pins)]
     for p, item in pins.items():
         if sha(Path(p)) != item["sha256"]:
@@ -411,7 +416,7 @@ def build(repo, source_manifest, main_ref):
                "generator": "tools/hero-model-library/build_priority81_audio_overlay.py",
                "generatorSha256": sha(Path(__file__).resolve()),
                "baselineUnmodified": True, "scopeHeroIds": [row[0] for row in scope],
-               "branchAdditionHeroIds": [HERO],
+               "branchAdditionHeroIds": [HERO] if additions else [],
                "branchReplacementHeroIds": sorted(branch_replacements_by_hero),
                "scopeCategories": list(CATEGORIES),
                "inputs": evidence, "inputsSha256": hashlib.sha256(encode(evidence)).hexdigest(),
@@ -424,7 +429,8 @@ def build(repo, source_manifest, main_ref):
                "currentMainRemovedBaselineFiles": [baseline_by_clip[clip] for clip in removed_since_baseline],
                "heroes": overlay_heroes,
                "limitations": ["The frozen baseline is retained; the current Main snapshot reports later additions, removals and replacements separately.",
-                               "Two additions are current branch changes, not evidence of Main merging them.",
+                               ("Remaining additions are current branch changes, not evidence of Main merging them."
+                                if additions else "The former railway additions are present in the pinned current Main snapshot."),
                                "Railway source audio is not original character voice performance.",
                                "Source rights/listening limitations are retained verbatim in sourceMetadata."]}
     current = {"schema": "ggd.priority81.current-branch-audio@1", "summary": summary,

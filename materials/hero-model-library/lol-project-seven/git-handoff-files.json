@@ -1,6 +1,6 @@
 {
   "schema": "ggd.seven-voice-git-handoff@1",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/lol-project-seven",
   "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
   "allowedContent": "scripts, settings, immutable index manifests, SHA-256 and docs only",
   "files": [
@@ -26,13 +26,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 7067,
-      "sha256": "fea3982e205a6c97a61a290882eb9325239cb8ae62130395e5c5d4a177188a0c"
+      "bytes": 7702,
+      "sha256": "2db9e22d5588ab11d296aa9798a3ba582e53ebd1a1d49a896e5535d410b1b72d"
     },
     {
       "path": "seven-voice-index.json",
-      "bytes": 20429,
-      "sha256": "59634ae593408206c7e6eb0c85e05566a5a9ad1c221e5e755a7ad17d9f070d0a"
+      "bytes": 20547,
+      "sha256": "1860460ae05e1c7c274390f3d657c5458a66619a90f1aefd53e57953707dc1cb"
     },
     {
       "path": "latest-seven-delivery-receipt.json",
@@ -80,6 +80,11 @@
       "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
     },
     {
+      "path": "gap-listening-decisions.json",
+      "bytes": 7245,
+      "sha256": "ab0f61e6fb424b16f2e2e03688d65917816b6c494fda753a10f6297493e239e3"
+    },
+    {
       "path": "listening-review-queue.json",
       "bytes": 1609180,
       "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
@@ -101,8 +106,8 @@
     },
     {
       "path": "runtime-registration.json",
-      "bytes": 333557,
-      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
+      "bytes": 370510,
+      "sha256": "cbec858fa630ec2446abc73b3451db21c341ff21e7c271bd83b415b16e5a2620"
     },
     {
       "path": "tools/acquire_project_ja.py",
@@ -116,18 +121,23 @@
     },
     {
       "path": "tools/apply_approved_battle_runtime.py",
-      "bytes": 14718,
-      "sha256": "88b5d4130f56c26a1600e08d6c59042f9bff2b8b04fac8129bacd3b1b71f11ba"
+      "bytes": 17944,
+      "sha256": "02d9e1c66d13eb20a00e42b51a1467b4d4c5fd8a6721bce3df8bb7ffcb04a259"
     },
     {
       "path": "tools/audit_approved_battle_runtime.py",
-      "bytes": 13774,
-      "sha256": "205fddd42c23f43c03c2151fb0a3d9fe0ff6070894592cf3f6aa55634782f244"
+      "bytes": 15747,
+      "sha256": "a6ecb35b3f025893924811f07199ddad569a497a00b32ef151e264497fb058ed"
     },
     {
       "path": "tools/build_event_bindings.py",
       "bytes": 12286,
       "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
+    },
+    {
+      "path": "tools/build_gap_review.py",
+      "bytes": 4496,
+      "sha256": "f8fd92deedd23e1d7700fc679e5e8e7fe1d3df03ad53e96bd75197da2a683cf6"
     },
     {
       "path": "tools/build_listening_review_queue.py",
@@ -165,9 +175,14 @@
       "sha256": "e8362f56fc5befad3a04235a469f29fbac095e1c694ef304c0dd1bf3c2de07c0"
     },
     {
+      "path": "tools/import_gap_listening_decisions.py",
+      "bytes": 4787,
+      "sha256": "1a46a425cc600f6a27465ba432cc6e8b3938833124140063db3787e77ffcced9"
+    },
+    {
       "path": "tools/make_seven_handoff.py",
-      "bytes": 8771,
-      "sha256": "516ca19579f52ac074ad659df462df2ce4584f6a337a2d5baf511a2a7614ae6d"
+      "bytes": 9008,
+      "sha256": "0a90ee7255db60b01c29d13e448f320ff2a6db33575a02566759fc07f3e81d85"
     },
     {
       "path": "tools/recover_project_ja.py",
@@ -186,13 +201,18 @@
     },
     {
       "path": "tools/serve_listening_review.py",
-      "bytes": 6798,
-      "sha256": "89b3b19067aec788e4519d8934a258b42017ee6200a22d1587e1a3ed6de7b669"
+      "bytes": 6976,
+      "sha256": "034a4738a049435911a1bd2411c00508b0c1783639fb9ee1540c72cf482e6bbd"
     },
     {
       "path": "tools/sync_event_binding_evidence.py",
       "bytes": 6050,
       "sha256": "4079d40b6618a946f6892dfa4bc8687d9b55bb964e897e4484426b9bafc15b8d"
+    },
+    {
+      "path": "tools/sync_gap_runtime_indexes.py",
+      "bytes": 5367,
+      "sha256": "7fa40da100750dc9aa8e41947cbfcd235fbb7a321027eca50e03007621d250d6"
     },
     {
       "path": "tools/test_acquire_shared_event_metadata.py",
@@ -201,13 +221,13 @@
     },
     {
       "path": "tools/test_apply_approved_battle_runtime.py",
-      "bytes": 3311,
-      "sha256": "a29908fef5807a46f3a6f9f7a2712f3972ccda9eb9a821fb23c543b7d6213c2b"
+      "bytes": 4169,
+      "sha256": "614c10829a9581c0844c529e68385c873c84a1c22073f353f8c796598416c915"
     },
     {
       "path": "tools/test_audit_approved_battle_runtime.py",
-      "bytes": 1460,
-      "sha256": "4d1de92064b87fd939c009b95a5b630321dbafebf8f84ff88462c364c159927e"
+      "bytes": 2257,
+      "sha256": "7f33cdaa5a1aa2b008998ba19c245c3649a7b21d3a6ff15ae88fed8adf9cdbac"
     },
     {
       "path": "tools/test_build_event_bindings.py",
@@ -218,6 +238,11 @@
       "path": "tools/test_build_listening_review_queue.py",
       "bytes": 2355,
       "sha256": "b09669d3884d76fe8b559ddc56ca6d6b7483b366c9768e5e15c75c0c6ddf7104"
+    },
+    {
+      "path": "tools/test_import_gap_listening_decisions.py",
+      "bytes": 1094,
+      "sha256": "e7453b0ab3f2a6e121999643c1dd9a5474a8853d101396758f9ccba0bbe09dc9"
     },
     {
       "path": "tools/test_serve_listening_review.py",

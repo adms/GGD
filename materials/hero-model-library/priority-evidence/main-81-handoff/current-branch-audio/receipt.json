@@ -31,13 +31,13 @@
   "products": [
     {
       "path": "overlay.json",
-      "bytes": 8911703,
-      "sha256": "c826466daa1bb0cc4632567b0d7a9ed5a8de211d3714786745ebb87826ccb59a"
+      "bytes": 8917908,
+      "sha256": "f8931cbea9e86c4d84096bba9617a45eb33d36fccba3cfb118cd2e6614f1d78a"
     },
     {
       "path": "current-per-hero.json",
       "bytes": 589734,
-      "sha256": "de8fcf727729c5555a1051230f95e384ceb5dd64fcc7f289b5ec84e9b9abf3ff"
+      "sha256": "ead4e9eba1ad5974245ac567c87dc170dda105da25bb3665938faf55dab6308a"
     }
   ]
 }

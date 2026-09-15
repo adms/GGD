@@ -17233,7 +17233,7 @@
         "allGitHashesVerified": true,
         "allWorktreeFilesMatchMain": true,
         "sourceSpeakerVerified": false,
-        "note": "Current Main snapshot plus two branch-only railway audio bindings; not original character performance or Main merge evidence.",
+        "note": "Current Main snapshot plus branch-only railway audio bindings; not original character performance or Main merge evidence.",
         "mainBaselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
         "mainMergedAdditions": false,
         "addedCategories": [
@@ -18857,7 +18857,7 @@
       "categories": [
         "taunt"
       ],
-      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
       "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
       "bytes": 116654,
       "sha256": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
@@ -18973,7 +18973,7 @@
         ]
       },
       "conversionReceipt": {
-        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "gitPath": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "bytes": 3008,
         "sha256": "9cc46f1458764742d95c68101f3aea96d611ae7925cee9aa6e3a0ff4900416d0"
@@ -18986,7 +18986,7 @@
       "categories": [
         "victory"
       ],
-      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
       "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
       "bytes": 161376,
       "sha256": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
@@ -19106,7 +19106,7 @@
         ]
       },
       "conversionReceipt": {
-        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "gitPath": "materials/hero-model-library/priority-evidence/kisaragi-train-audio/conversion.json",
         "bytes": 3008,
         "sha256": "9cc46f1458764742d95c68101f3aea96d611ae7925cee9aa6e3a0ff4900416d0"

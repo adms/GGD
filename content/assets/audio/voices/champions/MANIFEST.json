@@ -46330,7 +46330,6 @@
       "variant": "cv3-0.5b",
       "tier": "combat-core",
       "missingCategories": [
-        "skill-name.q",
         "skill-name.ex",
         "victory",
         "stun",
@@ -46590,6 +46589,40 @@
             "durationSec": 1.647574,
             "speakerSim": null,
             "hash": "795ff7fe8e67ab8178ed41ba9f4ab29dc6a388272f2ff1c19ffadd85df4e7699"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/lines/lol-xerath/skill-name.q.mp3",
+            "text": "（原檔）Xerath/skin0/76986339",
+            "lang": "ja",
+            "durationSec": 1.263356,
+            "speakerSim": null,
+            "hash": "674305a8d764cd423bf732093e28f65fc42f6c50605b1cb1b9ce88fe6c38c881"
+          },
+          {
+            "clip": "assets/audio/voices/lines/lol-xerath/skill-name.q.2.mp3",
+            "text": "（原檔）Xerath/skin0/820216149",
+            "lang": "ja",
+            "durationSec": 1.493311,
+            "speakerSim": null,
+            "hash": "b715c072b575fa9ae63ae3b48535f41f6486493f2ae95a36372da85a2c555d98"
+          },
+          {
+            "clip": "assets/audio/voices/lines/lol-xerath/skill-name.q.3.mp3",
+            "text": "（原檔）Xerath/skin0/837144372",
+            "lang": "ja",
+            "durationSec": 1.278844,
+            "speakerSim": null,
+            "hash": "f61550e1a8d6eb13155d80961166541623a25250c07418d9345fed5b9f5b0e7e"
+          },
+          {
+            "clip": "assets/audio/voices/lines/lol-xerath/skill-name.q.4.mp3",
+            "text": "（原檔）Xerath/skin0/2053253391",
+            "lang": "ja",
+            "durationSec": 1.714558,
+            "speakerSim": null,
+            "hash": "eec79b87816a69fc9d009eb19e36c0a3f289eff141993ddbde7787715bf00b24"
           }
         ],
         "skill-name.r": [

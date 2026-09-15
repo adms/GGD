@@ -232,12 +232,20 @@ def apply_listening_review(row, review, registration=None):
     row['runtimeApproved'] = review['runtimeApproved']
     row['runtimeSelectable'] = registration is not None
     if registration is not None:
+        row['candidateRuntimeTarget'] = registration['candidateRuntimeTarget']
+        row['reviewStatus'] = 'verified'
+        row['speakerVerified'] = True
+        row['language'] = 'ja'
+        row['perClipLanguageVerified'] = True
+        row['gainDecision'] = 'keep-source-gain'
+        row['ggdSkillSemanticBindingVerified'] = True
+        row['runtimeApproved'] = True
         row['runtimeHeroId'] = registration['runtimeHeroId']
         row['runtimeCategory'] = registration['runtimeCategory']
         row['runtimeTakeKey'] = registration['runtimeTakeKey']
         row['runtimePath'] = registration['runtimePath']
         row['runtimeSha256'] = registration['runtimeSha256']
-    row['listeningReviewComplete'] = review['runtimeApproved']
+    row['listeningReviewComplete'] = row['runtimeApproved']
     return row
 
 
@@ -294,6 +302,7 @@ def main():
             perClipLanguageVerified=False, ggdSkillSemanticBindingsVerified=False))
     review_queue = read(OUT/'lol-project-seven/listening-review-queue.json')
     review_decisions = read(OUT/'lol-project-seven/listening-review-decisions.json')
+    gap_review_decisions = read(OUT/'lol-project-seven/gap-listening-decisions.json')
     runtime_registration = read(OUT/'lol-project-seven/runtime-registration.json')
     popp_audio_receipt = read(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json')
     popp_audio_event_table = read(OUT/'priority-evidence/infinity-strash-popp-approved-audio-v1/runtime-event-table.json')
@@ -306,6 +315,9 @@ def main():
     assert runtime_registration['schema'] == 'ggd-lol-approved-battle-runtime-registration@1'
     assert runtime_registration['sourceId'] == review_queue['sourceId']
     assert runtime_registration['approvalAuthority']['sha256'] == sha(OUT/'lol-project-seven/listening-review-decisions.json')
+    assert runtime_registration['gapApprovalAuthority']['sha256'] == sha(OUT/'lol-project-seven/gap-listening-decisions.json')
+    assert gap_review_decisions['sourceId'] == review_queue['sourceId']
+    assert gap_review_decisions['sourceQueueSha256'] == sha(OUT/'lol-project-seven/listening-review-queue.json')
     assert runtime_registration['queue']['sha256'] == sha(OUT/'lol-project-seven/listening-review-queue.json')
     runtime_manifest = REPO/runtime_registration['runtimeManifest']['path']
     assert runtime_registration['runtimeManifest']['registered'] is True
@@ -339,7 +351,9 @@ def main():
         review = review_by_native[source['nativeId']]
         source['nativeTargetCandidateFiles'] = review['nativeTargetCandidates']
         source['battleReviewCandidateFiles'] = review['battleReviewCandidates']
-        source['listeningReviewApprovedFiles'] = review['runtimeApproved']
+        source['listeningReviewApprovedFiles'] = sum(
+            row['nativeId'] == source['nativeId'] for row in runtime_registration['records']
+        )
     source_models = {m['id']:m for m in models['models']}
 
     def hero_ids(source_id):
@@ -625,7 +639,7 @@ def main():
             or review['candidateRuntimeTarget'] in {'attack', 'death'}
         ):
             battle_candidate_groups[row['groupId']] += 1
-        if review['runtimeApproved']:
+        if registration is not None:
             approved_review_groups[row['groupId']] += 1
 
     popp_by_source = defaultdict(list)
@@ -701,10 +715,13 @@ def main():
             queueSha256=sha(OUT/'lol-project-seven/listening-review-queue.json'),
             pagePath='materials/hero-model-library/lol-project-seven/listening-review.html',
             decisionsPath='materials/hero-model-library/lol-project-seven/listening-review-decisions.json',
+            gapDecisionsPath='materials/hero-model-library/lol-project-seven/gap-listening-decisions.json',
             uniqueWavFiles=review_queue['summary']['uniqueWavFiles'],
             nativeTargetCandidates=review_queue['summary']['nativeTargetCandidates'],
             battleReviewCandidates=review_queue['summary']['battleReviewCandidates'],
-            runtimeApproved=review_queue['summary']['runtimeApproved'],
+            baseRuntimeApproved=review_queue['summary']['runtimeApproved'],
+            gapRuntimeApproved=gap_review_decisions['summary']['approved'],
+            runtimeApproved=runtime_registration['summary']['approved'],
             runtimeRegistered=runtime_registration['summary']['runtimeRegistered'],
             runtimeConfigChanged=True,
             productionDeployed=False),
@@ -730,7 +747,7 @@ def main():
             listeningReviewUniqueFiles=review_queue['summary']['uniqueWavFiles'],
             nativeTargetCandidateFiles=review_queue['summary']['nativeTargetCandidates'],
             battleReviewCandidateFiles=review_queue['summary']['battleReviewCandidates'],
-            listeningReviewApprovedFiles=review_queue['summary']['runtimeApproved']))
+            listeningReviewApprovedFiles=runtime_registration['summary']['approved']))
     summary['summary']['poppOwnerApprovedCandidates']=36
     summary['summary']['poppGameAudioFiles']=35
     summary['summary']['poppNativeEventRows']=8
