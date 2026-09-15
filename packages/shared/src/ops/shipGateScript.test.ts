@@ -121,6 +121,29 @@ describe("pnpm ship:check", () => {
     30000,
   );
 
+  it(
+    "★ 時鐘敏感的包排在並行段**之後**獨佔跑（2026-09-15：load 90+ 時 content-api 撞 60 秒時鐘，單獨跑全綠）",
+    () => {
+      // ⭐ 跑出貨的那一支 `--list`（一支閘都不跑）：名單順序＝執行順序。⛔ timeout／斷言一個都沒動。
+      const list = (extra: NodeJS.ProcessEnv) => {
+        const r = spawnSync("node", ["tools/parallel-gates/ship.mjs", "--list", "--no-sync", "--sync-base", "v0.44.1"], {
+          cwd: REPO, encoding: "utf8", env: { ...process.env, ...extra }, timeout: 25000,
+        });
+        expect(r.status).toBe(0);
+        return String(r.stdout).trim().split("\n");
+      };
+      const dflt = list({});
+      // 🚨 突變目標：拿掉 PARALLEL 那一行的 `!ISOLATED.has(r)` 過濾 ⇒ content-api 出現兩次、而且不在最後 ⇒ 紅。
+      expect(dflt.filter((l) => l === "vitest apps/content-api")).toHaveLength(1);
+      expect(dflt.at(-1), "content-api 沒有排在最後獨佔跑 —— 會跟其他包搶核而撞時鐘").toBe("vitest apps/content-api");
+      // 回頭開關：設成空字串 ⇒ 回到並行段（仍然只跑一次）。
+      const back = list({ GGD_SHIP_ISOLATED: "" });
+      expect(back.filter((l) => l === "vitest apps/content-api")).toHaveLength(1);
+      expect(back.at(-1)).not.toBe("vitest apps/content-api");
+    },
+    60000,
+  );
+
   it("★ vitest 按依賴方向裁包 —— 依賴邊從 package.json 推導,⛔ 不是手寫表", () => {
     // ⭐ 跑**出貨的那一支**推導器（失敗形態⑤），斷言的是「關係」⛔ 不是包名清單。
     const all: string[] = packagesWithVitest(REPO);
