@@ -34,7 +34,14 @@
 - 新兩個 universal-atlas 靜態元件已進 Git：7,869／7,868 面、各 5 draw、258 joints、12 張 256px 貼圖；GGD hard errors 與 Khronos errors 均為 0。最終 Blender rerender、英雄綁定、原生動作及後台切換仍未完成。
 - 兩個候選的 S3 完整讀回：PASS。
 - 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。
-- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。
+- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。下表的來源 FBX、拒絕產物與 12 張 TGA 均已實際 SHA 驗證，仍不會依檔名猜配材質。
+
+| 角色 | 原始 FBX | 拒絕 Assimp GLB | 外部 URI | 來源 TGA | 狀態 |
+|---|---:|---:|---:|---:|---|
+| Mai Shiranui | 10,074,400 B | 17,301,540 B | 21 | 12 | `blocked-no-authoritative-material-slot-mapping` |
+| Iori Yagami | 6,416,000 B | 8,520,968 B | 26 | 12 | `blocked-no-authoritative-material-slot-mapping` |
+
+- 恢復入口：作者原始材質檔與明確槽位表，或經逐槽視覺聽審的權威 mapping。取得後，腳本才可依固定規則做貼圖嵌入、減面、骨架與視覺驗收；目前兩者都不是後台選項。
 - Ash 音訊：86 個 Float32 WAV 已轉為本機 MP3 審查候選並全檔解碼；逐段語言、說話者、類別與事件確認均為 0，沒有 runtime 綁定或部署。
 - 沒有在 Windows Steam inventory 找到 KOF XV 安裝目錄，所以當前不是完整原作遊戲包盤點。
 

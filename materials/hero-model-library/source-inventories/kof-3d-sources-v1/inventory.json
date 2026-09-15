@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3466356,
-      "sha256": "639ad7c9e05e569a5e9fae122d27f29c6f015e31a8f8afc204f581d2fbc5ff61"
+      "bytes": 3516280,
+      "sha256": "2d25de4ebd3921ffadf2769929bb0876d48d72f6c9e11834bca0ee8a9f5b45b0"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -5782,6 +5782,312 @@
       },
       "status": "converted-review-candidates-pending-listening-and-event-mapping"
     },
+    "materialMappingProbes": [
+      {
+        "sourceId": "kof-xv-mai-whitemagesunny-raw",
+        "character": "Mai Shiranui",
+        "heroIds": [
+          "community-review-03-20260907"
+        ],
+        "state": "blocked-no-authoritative-material-slot-mapping",
+        "runtimeReady": false,
+        "backendSelectionVerified": false,
+        "nativeFbx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/extracted-v1/Raw Files/Mai Shiranui.fbx",
+          "bytes": 10074400,
+          "sha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+          "sha256Verified": true,
+          "triangles": 116939,
+          "sourceBoneCounts": [
+            319
+          ]
+        },
+        "rejectedAssimpGlb": {
+          "attemptId": "kof-xv-mai-assimp-probe-v1",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-mai-assimp-probe-v1/assimp-output.glb",
+          "bytes": 17301540,
+          "sha256": "ab4a779a6cc63b5a05bc053e8e06c8d9d8d60da3e0a5efaf52e01d87f93afb82",
+          "sha256Verified": true,
+          "meshCount": 21,
+          "materialCount": 21,
+          "imageCount": 21,
+          "externalImageUriCount": 21,
+          "reportAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-mai-assimp-probe-v1/conversion-attempt.json",
+          "reportSha256": "b805310268036e7cf6ffe8734ac9134666327387197018038f9cab8406fe356b"
+        },
+        "suppliedTextures": {
+          "manifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/texture-validation.json",
+          "manifestSha256": "ffa1cf5f6504f0bca53aa21a22d9024aebbc5afefdd42aa240961ed44c4eb57b",
+          "decodedCount": 12,
+          "allSha256Verified": true,
+          "failures": [],
+          "files": [
+            {
+              "path": "extracted-v1/Raw Files/MAI_AO_FACE.tga",
+              "bytes": 10020848,
+              "sha256": "466bfe8a0477874a8d2d5fcb538ceeb754aa6f08cdbbbba882aa334d2fe55874",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_AO_HAIR.tga",
+              "bytes": 14947494,
+              "sha256": "f5d455136a00d0bc6ed31baeca9454446018b59d91e0fd3fd7186dc89d947bae",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_AO_OTR.tga",
+              "bytes": 812521,
+              "sha256": "2a8a48f0b04a96b2c3ab59c9f95b5492d0c2a32bfbc8a58889c617a44b8e4c80",
+              "width": 1024,
+              "height": 1024,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_COL_FACE.tga",
+              "bytes": 20766107,
+              "sha256": "f125ba2c6ee32703b93fa65a9ffab62c9a8f83d0e394c2cb36e625c3a5f71607",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_COL_HAIR.tga",
+              "bytes": 32261457,
+              "sha256": "85fff69811481ebe8bbced65a8212480b917ea9771602b7ca5dac9e0b4d45c48",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_COL_MARK.tga",
+              "bytes": 613317,
+              "sha256": "414d1abab3db7a35071f243e80674ff2251f56a56cc7af2c7379fe12a97d1aa5",
+              "width": 1024,
+              "height": 1024,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_COL_OTR_P1.tga",
+              "bytes": 18036487,
+              "sha256": "fd2afd8b207c2ce3983903d55ebaff7ad8e7ee1e995207f6be705b2c0fc2693d",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_NOR_FACE.tga",
+              "bytes": 7044042,
+              "sha256": "28bab8bc8417e7dfa8a4d794f30b199c73e2afa6b733b10fa125d7a77abc134b",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_NOR_HAIR.tga",
+              "bytes": 35859167,
+              "sha256": "ed4aa3cd5b7f81821e199dece31e61bad37363c3562c684c2742b830464feb5a",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_NOR_OTR.tga",
+              "bytes": 13394217,
+              "sha256": "ac0b837054cad1fddeef192cd8817401d6f9837cf16c3351ea9eedbc462744af",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGB",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_SSS_FACE.tga",
+              "bytes": 40297902,
+              "sha256": "29fe9b2a3172b68463e9650af433a802455cd1fd2d196246203415515ea9f853",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/MAI_SSS_OTR.tga",
+              "bytes": 38266510,
+              "sha256": "17289fe158050c84bda92b065e8566bca201b7c090630410a62f4a3f4efa991e",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            }
+          ]
+        },
+        "nextRequirement": "Obtain an authoritative material-binding source or produce a visually reviewed explicit mapping before standardizing.",
+        "rule": "Do not infer TGA-to-material assignments from filename similarity; an explicit authoritative or owner-reviewed slot mapping is required before conversion."
+      },
+      {
+        "sourceId": "kof-xv-iori-whitemagesunny-raw",
+        "character": "Iori Yagami",
+        "heroIds": [
+          "community-review-02-20260907"
+        ],
+        "state": "blocked-no-authoritative-material-slot-mapping",
+        "runtimeReady": false,
+        "backendSelectionVerified": false,
+        "nativeFbx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
+          "bytes": 6416000,
+          "sha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+          "sha256Verified": true,
+          "triangles": 126007,
+          "sourceBoneCounts": [
+            241
+          ]
+        },
+        "rejectedAssimpGlb": {
+          "attemptId": "kof-xv-iori-assimp-probe-v1",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-iori-assimp-probe-v1/assimp-output.glb",
+          "bytes": 8520968,
+          "sha256": "4c1cf51bf6270a2234e46e12fc49d03ffac01b1d7b44a2b13eb5d5183e3836d2",
+          "sha256Verified": true,
+          "meshCount": 26,
+          "materialCount": 26,
+          "imageCount": 26,
+          "externalImageUriCount": 26,
+          "reportAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-iori-assimp-probe-v1/conversion-attempt.json",
+          "reportSha256": "7c565e83fb2ef08845fcbba048b7fb6342756c7fb5041f4ad9e1edfbdac3615f"
+        },
+        "suppliedTextures": {
+          "manifestAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/texture-validation.json",
+          "manifestSha256": "d78ed83e9c019b6e44b711b11f1ee517fe32c77577aec440c127ab05d828b66c",
+          "decodedCount": 12,
+          "allSha256Verified": true,
+          "failures": [],
+          "files": [
+            {
+              "path": "extracted-v1/Raw Files/IOR_AO_FACE.tga",
+              "bytes": 4194322,
+              "sha256": "d5bb0a6437a5067457cf6d2ae96d8393e3b6ac40a13a6089d1815d1e782792c9",
+              "width": 1024,
+              "height": 1024,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_AO_HAIR.tga",
+              "bytes": 4194322,
+              "sha256": "c4b83541f0ed7c540a0e821d5d585faf3b4e3ae4042629186e849959247f1869",
+              "width": 1024,
+              "height": 1024,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_AO_OTR.tga",
+              "bytes": 4194322,
+              "sha256": "346cd77ade628b5e503d3197e40f0df51f106dc812afad5112f0512f1f423761",
+              "width": 1024,
+              "height": 1024,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_COL_FACE_P1.tga",
+              "bytes": 67108882,
+              "sha256": "6aac9c09c267d6449911df98d287610dc2243090c422002a37c3fa939de1f850",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_COL_HAIR_P1.tga",
+              "bytes": 67108882,
+              "sha256": "d672c6244fb806dc19ee1f07445c11cdb03fa3e8bee4843624824cd201ddc43a",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_COL_OTR_P1.tga",
+              "bytes": 67108882,
+              "sha256": "14d8cf41c3ece7fb7b010daa16562f67affb8070e2cefb8afa818635a3f7b171",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_NOR_FACE.tga",
+              "bytes": 67108882,
+              "sha256": "3f7f54fbe4b7ffc773bc1f96a386c2808f5375c146e263168a82fa77e71f0a13",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_NOR_HAIR.tga",
+              "bytes": 67108882,
+              "sha256": "fd2b3fc4dd2a37e261c206a3368b303f3bc863e7c878568ff60e429b1e35fab9",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_NOR_OTR.tga",
+              "bytes": 67108882,
+              "sha256": "c968e63b49d63fd88097e1f8f3b774e2bde163b2377daba3109c2e09688a6a60",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_SSS_FACE.tga",
+              "bytes": 67108882,
+              "sha256": "e06b1fbe4356e39db672f6c0eef6dda8638d0ff4db92a3bc7e6609c532087b98",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_SSS_HAIR.tga",
+              "bytes": 16777234,
+              "sha256": "ef9b3ed882dcde841fdc5d6247eb9fae2391760f8f0fa94f3e6a97792bcb461a",
+              "width": 2048,
+              "height": 2048,
+              "mode": "RGBA",
+              "sha256Verified": true
+            },
+            {
+              "path": "extracted-v1/Raw Files/IOR_SSS_OTR.tga",
+              "bytes": 67108882,
+              "sha256": "f7cbb622e1fe4b0c55978e6392bf73c0a6aea62223640353d6e590ec76627b15",
+              "width": 4096,
+              "height": 4096,
+              "mode": "RGBA",
+              "sha256Verified": true
+            }
+          ]
+        },
+        "nextRequirement": "Obtain an authoritative material-binding source or produce a visually reviewed explicit mapping before standardizing.",
+        "rule": "Do not infer TGA-to-material assignments from filename similarity; an explicit authoritative or owner-reviewed slot mapping is required before conversion."
+      }
+    ],
     "hardPolicyProbe": {
       "guardExitCode": 1,
       "guard": {

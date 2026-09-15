@@ -250,6 +250,104 @@ def classify_public_sources(downloads: dict[str, Any], workspace: Path) -> dict[
     return groups
 
 
+def build_xv_material_mapping_probes(source_rows: list[dict[str, Any]], downloads: dict[str, Any], workspace: Path) -> list[dict[str, Any]]:
+    """Pin the Mai/Iori FBX-to-GLB rejection inputs without inventing a map.
+
+    An Assimp GLB whose images point at an author's vanished Noesis directory is
+    useful evidence, but it is not a texture-complete model.  Keep both the
+    original TGA set and that rejected intermediary addressable so a later
+    owner-reviewed slot map can resume conversion deterministically.
+    """
+    expected = {
+        "kof-xv-mai-whitemagesunny-raw": "Mai Shiranui",
+        "kof-xv-iori-whitemagesunny-raw": "Iori Yagami",
+    }
+    rows_by_id = {str(row.get("sourceId")): row for row in source_rows}
+    source_index = {str(row.get("id")): row for row in downloads.get("publicSources", [])}
+    if set(expected) - set(rows_by_id):
+        raise ValueError("KOF XV Mai/Iori raw source records are missing from the central index")
+    probes: list[dict[str, Any]] = []
+    for source_id, character in expected.items():
+        row = rows_by_id[source_id]
+        source_record = source_index.get(source_id)
+        if source_record is None:
+            raise ValueError(f"central source record missing for {source_id}")
+        candidate_rows = [item for item in row.get("modelArtifacts", []) if item.get("kind") == "nativeModel"]
+        if len(candidate_rows) != 1:
+            raise ValueError(f"expected one native FBX artifact for {source_id}, found {len(candidate_rows)}")
+        candidate = candidate_rows[0]
+        source_root = resolve_local_path(row.get("absoluteLocalPath"), workspace)
+        if source_root is None:
+            raise ValueError(f"missing local source path for {source_id}")
+        source_entry = next(
+            (item for item in source_record.get("modelCandidates", []) if item.get("candidateId") == source_id),
+            None,
+        )
+        if source_entry is None:
+            raise ValueError(f"source candidate manifest omitted {source_id}")
+        attempts = source_record.get("conversionAttempts", [])
+        if len(attempts) != 1 or attempts[0].get("status") != "rejected-not-self-contained":
+            raise ValueError(f"expected one rejected Assimp attempt for {source_id}")
+        attempt = attempts[0]
+        report_path = Path(str(attempt["reportPath"]))
+        report = json_load(report_path)
+        texture_manifest_path = source_root / "texture-validation.json"
+        texture_manifest = json_load(texture_manifest_path)
+        texture_rows = texture_manifest.get("files", [])
+        if texture_manifest.get("decodedCount") != 12 or len(texture_rows) != 12:
+            raise ValueError(f"expected twelve decoded source textures for {source_id}")
+        texture_failures: list[str] = []
+        verified_textures: list[dict[str, Any]] = []
+        for texture in texture_rows:
+            texture_path = source_root / texture["path"]
+            actual = sha256(texture_path) if texture_path.is_file() else None
+            if actual != texture["sha256"]:
+                texture_failures.append(texture["path"])
+            verified_textures.append({
+                "path": texture["path"], "bytes": texture["bytes"], "sha256": texture["sha256"],
+                "width": texture["width"], "height": texture["height"], "mode": texture["mode"],
+                "sha256Verified": actual == texture["sha256"],
+            })
+        output_path = Path(str(attempt["outputPath"]))
+        raw_path = Path(candidate["absolutePath"])
+        if (report.get("input", {}).get("sha256") != candidate.get("sha256")
+                or report.get("output", {}).get("sha256") != attempt.get("outputSha256")
+                or not raw_path.is_file() or sha256(raw_path) != candidate.get("sha256")
+                or not output_path.is_file() or sha256(output_path) != attempt.get("outputSha256")):
+            raise ValueError(f"KOF XV material-map evidence changed for {source_id}")
+        external_uris = report.get("rejection", {}).get("externalImageUris", [])
+        if not external_uris or report.get("rejection", {}).get("status") != "rejected-not-self-contained":
+            raise ValueError(f"missing external material URI rejection for {source_id}")
+        probes.append({
+            "sourceId": source_id,
+            "character": character,
+            "heroIds": source_entry.get("heroIds", []),
+            "state": "blocked-no-authoritative-material-slot-mapping",
+            "runtimeReady": False,
+            "backendSelectionVerified": False,
+            "nativeFbx": {
+                "absolutePath": str(raw_path), "bytes": raw_path.stat().st_size, "sha256": candidate["sha256"],
+                "sha256Verified": True, "triangles": source_entry.get("triangles"),
+                "sourceBoneCounts": source_entry.get("boneCounts", []),
+            },
+            "rejectedAssimpGlb": {
+                "attemptId": attempt["id"], "absolutePath": str(output_path), "bytes": output_path.stat().st_size,
+                "sha256": attempt["outputSha256"], "sha256Verified": True,
+                "meshCount": report["output"]["meshCount"], "materialCount": report["output"]["materialCount"],
+                "imageCount": report["output"]["imageCount"], "externalImageUriCount": len(external_uris),
+                "reportAbsolutePath": str(report_path), "reportSha256": sha256(report_path),
+            },
+            "suppliedTextures": {
+                "manifestAbsolutePath": str(texture_manifest_path), "manifestSha256": sha256(texture_manifest_path),
+                "decodedCount": len(verified_textures), "allSha256Verified": not texture_failures,
+                "failures": texture_failures, "files": verified_textures,
+            },
+            "nextRequirement": report["rejection"]["nextRequirement"],
+            "rule": "Do not infer TGA-to-material assignments from filename similarity; an explicit authoritative or owner-reviewed slot mapping is required before conversion.",
+        })
+    return probes
+
+
 def verify_xiv_extracted_files(source_root: Path) -> dict[str, Any]:
     index = source_root / "files.jsonl.gz"
     checked = 0
@@ -459,6 +557,7 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     ash_budget = build_ash_budget_candidates(workspace)
     ash_universal_atlas = build_ash_universal_atlas_components(downloads, repo)
     ash_audio_review = validate_ash_audio_review(repo, workspace)
+    xv_material_mapping_probes = build_xv_material_mapping_probes(source_groups["xv"], downloads, workspace)
     conversion_probe = json_load(conversion_probe_path)
     texture_candidates = json_load(texture_candidates_path)
     native_preflight = json_load(native_preflight_path)
@@ -546,6 +645,7 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "newBudgetCandidates": ash_budget,
             "universalAtlasStaticComponents": ash_universal_atlas,
             "audioReviewCandidates": ash_audio_review,
+            "materialMappingProbes": xv_material_mapping_probes,
             "hardPolicyProbe": conversion_probe["kofXvAsh"],
             "conversionState": {
                 "ash": "four full-resolution local GLB variants exist across source and material-repair revisions; two new <=8000-triangle/256-texture derivatives are S3-backed but remain blocked by 18 draw calls and visual review, with zero gameplay animation clips",
@@ -634,7 +734,19 @@ def render_markdown(data: dict[str, Any]) -> str:
         f"- 新兩個 universal-atlas 靜態元件已進 Git：{xv['universalAtlasStaticComponents']['components'][0]['triangles']:,}／{xv['universalAtlasStaticComponents']['components'][1]['triangles']:,} 面、各 {xv['universalAtlasStaticComponents']['components'][0]['drawPrimitives']} draw、258 joints、12 張 256px 貼圖；GGD hard errors 與 Khronos errors 均為 0。最終 Blender rerender、英雄綁定、原生動作及後台切換仍未完成。",
         f"- 兩個候選的 S3 完整讀回：{'PASS' if xv['newBudgetCandidates']['s3BackupReceipt']['fullGetVerified'] and xv['newBudgetCandidates']['s3BackupReceipt']['allMemberSha256Verified'] else 'FAIL'}。",
         "- 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。",
-        "- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。",
+        "- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。下表的來源 FBX、拒絕產物與 12 張 TGA 均已實際 SHA 驗證，仍不會依檔名猜配材質。",
+        "",
+        "| 角色 | 原始 FBX | 拒絕 Assimp GLB | 外部 URI | 來源 TGA | 狀態 |",
+        "|---|---:|---:|---:|---:|---|",
+    ]
+    for probe in xv["materialMappingProbes"]:
+        lines.append(
+            f"| {probe['character']} | {probe['nativeFbx']['bytes']:,} B | {probe['rejectedAssimpGlb']['bytes']:,} B | "
+            f"{probe['rejectedAssimpGlb']['externalImageUriCount']} | {probe['suppliedTextures']['decodedCount']} | `{probe['state']}` |"
+        )
+    lines += [
+        "",
+        "- 恢復入口：作者原始材質檔與明確槽位表，或經逐槽視覺聽審的權威 mapping。取得後，腳本才可依固定規則做貼圖嵌入、減面、骨架與視覺驗收；目前兩者都不是後台選項。",
         f"- Ash 音訊：{xv['audioReviewCandidates']['summary']['convertedReviewMp3Files']} 個 Float32 WAV 已轉為本機 MP3 審查候選並全檔解碼；逐段語言、說話者、類別與事件確認均為 0，沒有 runtime 綁定或部署。",
         "- 沒有在 Windows Steam inventory 找到 KOF XV 安裝目錄，所以當前不是完整原作遊戲包盤點。",
         "",

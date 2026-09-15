@@ -77,6 +77,21 @@ class InventoryParsingTest(unittest.TestCase):
         self.assertEqual(0, summary["runtimeBindingsCreated"])
         self.assertEqual(0, summary["backendSelectableAssets"])
 
+    def test_mai_and_iori_material_mapping_probes_stay_non_runtime(self) -> None:
+        inventory_path = HERE.parents[3] / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        probes = inventory["kofXv"]["materialMappingProbes"]
+        self.assertEqual(["Iori Yagami", "Mai Shiranui"], sorted(row["character"] for row in probes))
+        for row in probes:
+            self.assertEqual("blocked-no-authoritative-material-slot-mapping", row["state"])
+            self.assertFalse(row["runtimeReady"])
+            self.assertFalse(row["backendSelectionVerified"])
+            self.assertTrue(row["nativeFbx"]["sha256Verified"])
+            self.assertTrue(row["rejectedAssimpGlb"]["sha256Verified"])
+            self.assertEqual(12, row["suppliedTextures"]["decodedCount"])
+            self.assertTrue(row["suppliedTextures"]["allSha256Verified"])
+            self.assertGreater(row["rejectedAssimpGlb"]["externalImageUriCount"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
