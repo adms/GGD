@@ -10,8 +10,8 @@
   "generatedFrom": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3412456,
-      "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387"
+      "bytes": 3516280,
+      "sha256": "2d25de4ebd3921ffadf2769929bb0876d48d72f6c9e11834bca0ee8a9f5b45b0"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/mapping.json",
@@ -51,12 +51,12 @@
     {
       "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
       "bytes": 25656,
-      "sha256": "d0bedf2c7b8131f520cbe0554e34b509bb401bc9d475a76f7aea9e85ba1cd7d7"
+      "sha256": "0b9eb653598377e14cfce743ba70a89e3a31bdbfee4487c8d2a608dee4215a18"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json",
       "bytes": 40840,
-      "sha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379"
+      "sha256": "8319d2dced82cbdc1f52680f0eba4cc3333723451e962cc3d5486684fdb6b1fe"
     },
     {
       "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-policy.json",
@@ -2743,7 +2743,7 @@
     ],
     "localAssetAudit": {
       "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.json",
-      "sha256": "b7ca3ecb145945eb227b7876bcb1d677877a7d814bf3db83b673b84f2f49b379",
+      "sha256": "8319d2dced82cbdc1f52680f0eba4cc3333723451e962cc3d5486684fdb6b1fe",
       "summary": {
         "originalPspInventoryRows": 2,
         "originalPspPayloadsPresent": 0,
