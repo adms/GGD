@@ -2026,8 +2026,8 @@
       "khronosErrors": 0,
       "nonUvVertexAttributesPreserved": true,
       "transparentEyeHairLayersKeptSeparate": true,
-      "technicalVisualInspectionPassed": false,
-      "ownerVisualQualityReview": "pending-v6-alpha-normalization-review",
+      "technicalVisualInspectionPassed": true,
+      "ownerVisualQualityReview": "pending-owner-v6-alpha-normalization-review",
       "ownerPublicationAuthorized": true,
       "drawCallPassed": true,
       "nativeSixStateMotionComplete": false,
@@ -2036,14 +2036,17 @@
       "runtimeSelectable": false,
       "productionDeployed": false,
       "s3Backup": {
-        "state": "pending-v6-upload-and-readback",
-        "s3Uri": null,
-        "fullGetVerified": false
+        "state": "legacy-stage-backup-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.files.json",
+        "archiveSha256": "9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17",
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
       },
       "remaining": [
         "No native JUMP FORCE animation clips are present in the extracted GLB.",
         "No owner-reviewed borrowed motion set is bound; do not register a backend option.",
-        "V5 is retained as the exact predecessor; v6 needs a new visual review after alpha metadata normalization."
+        "V5 is retained as the exact predecessor; v6 has a new three-view technical render but needs owner visual approval after alpha metadata normalization."
       ],
       "evidence": [
         {
@@ -2065,6 +2068,11 @@
           "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
           "bytes": 1084,
           "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
+          "bytes": 2339,
+          "sha256": "2535706f451eceedee50693f196acac9ce363b8be7b5c977726a27d5aaaa00a4"
         }
       ]
     },
@@ -2094,8 +2102,8 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3437160,
-      "sha256": "0a3bd16da442a1371cefc055076bb0fd260d600e253b713e2c5bd5ca420c1677"
+      "bytes": 3466356,
+      "sha256": "639ad7c9e05e569a5e9fae122d27f29c6f015e31a8f8afc204f581d2fbc5ff61"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -2266,6 +2274,11 @@
       "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
       "bytes": 1084,
       "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
+      "bytes": 2339,
+      "sha256": "2535706f451eceedee50693f196acac9ce363b8be7b5c977726a27d5aaaa00a4"
     }
   ]
 }

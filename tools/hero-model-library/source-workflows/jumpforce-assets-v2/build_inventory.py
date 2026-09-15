@@ -132,7 +132,8 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     v2_paths = [v2_dir / name for name in ("conversion.json", "validation.json", "draw-call-audit.json", "guard.json", "visual-review.json", "owner-review.json", "front.png", "back.png", "isometric.png", "face-source.png", "face-v1-rejected.png", "face-v2.png")]
     v6_dir = BASE / "priority-evidence/jump-force-dai-six-draw-v6"
     v6_paths = [v6_dir / name for name in ("conversion.json", "validation.json", "guard.json", "freeze-receipt.json")]
-    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *v1_paths, *v2_paths, *v6_paths]
+    v6_visual_path = v6_dir / "visual-review.json"
+    inputs = [downloads_path, public_files_path, voice_path, reconciliation_path, pak_path, dai_manifest_path, dai_visual_path, dai_config_path, streaming_evidence_path, map_path, policy_path, *v1_paths, *v2_paths, *v6_paths, v6_visual_path]
     downloads, public_files, voice = read(downloads_path), read(public_files_path), read(voice_path)
     reconciliation, pak, dai, visual = read(reconciliation_path), read(pak_path), read(dai_manifest_path), read(dai_visual_path)
     dai_config, streaming, character_map, policy = read(dai_config_path), read(streaming_evidence_path), read(map_path), read(policy_path)
@@ -141,6 +142,7 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
     decimation, decimation_validation, draw_audit, guard, visual_comparison, owner_review = [read(path) for path in v2_paths[:6]]
     six_conversion, six_validation, six_guard = [read(path) for path in v6_paths[:3]]
     six_freeze = read(v6_paths[-1])
+    six_visual = read(v6_visual_path)
     six_git_model = {"gitPath": f"content/assets/models/community/{six_validation['candidate']['sha256']}.glb", "bytes": six_validation['candidate']['bytes'], "sha256": six_validation['candidate']['sha256']}
     sources = {row["id"]: row for row in downloads["publicSources"]}
     manifests = {row["id"]: row for row in public_files["sources"]}
@@ -184,7 +186,13 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
             or not six_validation.get("preservation", {}).get("geometryAndSkinningUnchanged")
             or six_validation.get("states", {}).get("runtimeSelectable") is not False
             or six_freeze.get("gitModel") != six_git_model
-            or {row.get("key"): row.get("verdict") for row in six_guard.get("results", [{}])[0].get("axes", [])}.get("drawCalls") == "over"):
+            or {row.get("key"): row.get("verdict") for row in six_guard.get("results", [{}])[0].get("axes", [])}.get("drawCalls") == "over"
+            or six_visual.get("candidate", {}).get("sha256") != six_validation.get("candidate", {}).get("sha256")
+            or six_visual.get("technicalRenderComplete") is not True
+            or six_visual.get("ownerVisualQualityReview") != "pending-owner-v6-alpha-normalization-review"
+            or len(six_visual.get("render", {}).get("images", [])) != 3
+            or six_visual.get("stageBackup", {}).get("fullGetVerified") is not True
+            or six_visual.get("stageBackup", {}).get("allMemberSha256Verified") is not True):
         raise ValueError("Dai v6 alpha-normalization evidence is inconsistent")
     if (v1_backup.get("schema") != "ggd-intake-backup-receipt@1"
             or not v1_backup.get("fullGetVerified")
@@ -473,8 +481,8 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
                 "khronosErrors": six_validation["khronos"]["errors"],
                 "nonUvVertexAttributesPreserved": six_validation["preservation"]["binaryChunkByteIdentical"],
                 "transparentEyeHairLayersKeptSeparate": True,
-                "technicalVisualInspectionPassed": False,
-                "ownerVisualQualityReview": six_validation["states"]["visualReview"],
+                "technicalVisualInspectionPassed": six_visual["technicalRenderComplete"],
+                "ownerVisualQualityReview": six_visual["ownerVisualQualityReview"],
                 "ownerPublicationAuthorized": True,
                 "drawCallPassed": True,
                 "nativeSixStateMotionComplete": False,
@@ -482,13 +490,20 @@ def build(workspace: Path) -> tuple[dict, dict, str, dict]:
                 "runtimeRegistered": six_validation["states"]["backendOptionRegistered"],
                 "runtimeSelectable": six_validation["states"]["runtimeSelectable"],
                 "productionDeployed": six_validation["states"]["productionDeployed"],
-                "s3Backup": {"state": "pending-v6-upload-and-readback", "s3Uri": None, "fullGetVerified": False},
+                "s3Backup": {
+                    "state": "legacy-stage-backup-readback-verified",
+                    "s3Uri": six_visual["stageBackup"]["s3Uri"],
+                    "manifestUri": six_visual["stageBackup"]["manifestUri"],
+                    "archiveSha256": six_visual["stageBackup"]["archiveSha256"],
+                    "fullGetVerified": True,
+                    "allMemberSha256Verified": True,
+                },
                 "remaining": [
                     "No native JUMP FORCE animation clips are present in the extracted GLB.",
                     "No owner-reviewed borrowed motion set is bound; do not register a backend option.",
-                    "V5 is retained as the exact predecessor; v6 needs a new visual review after alpha metadata normalization.",
+                    "V5 is retained as the exact predecessor; v6 has a new three-view technical render but needs owner visual approval after alpha metadata normalization.",
                 ],
-                "evidence": [pin(path) for path in v6_paths],
+                "evidence": [pin(path) for path in (*v6_paths, v6_visual_path)],
             },
             "genericPbrVisualReviewAccepted": visual["review"]["genericPbrMaterialBindingAccepted"],
             "sourceGameShaderParity": visual["review"]["sourceGameShaderParity"],
