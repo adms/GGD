@@ -72,7 +72,11 @@ def build(workspace: Path) -> dict[str, Any]:
     chr_manifest = chr_root / "source-manifest.json"
     audio_summary = audio_root / "source-summary.json"
     registry_path = REPO / "materials/hero-model-library/download-sources.json"
-    require_files([mirror_summary, pak_authority, chr_manifest, audio_summary, registry_path])
+    v5_freeze = REPO / "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/freeze-receipt.json"
+    v5_validation = REPO / "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/validation.json"
+    v5_model = REPO / "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb"
+    require_files([mirror_summary, pak_authority, chr_manifest, audio_summary, registry_path,
+                   v5_freeze, v5_validation, v5_model])
     for required_directory in (raw, stream, packages, movies, character, effects, audio_root / "original", audio_root / "decoded"):
         if not required_directory.is_dir():
             raise FileNotFoundError(required_directory)
@@ -119,8 +123,18 @@ def build(workspace: Path) -> dict[str, Any]:
     authority = json.loads(pak_authority.read_text(encoding="utf-8"))
     chr_data = json.loads(chr_manifest.read_text(encoding="utf-8"))
     audio_data = json.loads(audio_summary.read_text(encoding="utf-8"))
+    v5_freeze_data = json.loads(v5_freeze.read_text(encoding="utf-8"))
+    v5_validation_data = json.loads(v5_validation.read_text(encoding="utf-8"))
     if authority.get("summary", {}).get("verifiedContainers") != 6 or not authority.get("summary", {}).get("allSha256Verified"):
         raise ValueError("All six JUMP FORCE authority PAKs must have verified digests")
+    expected_metrics = {"triangles": 7930, "drawPrimitives": 6, "maxTextureEdge": 256,
+                        "skins": 1, "joints": 159, "animations": 0}
+    if (v5_freeze_data.get("candidateId") != "jump-force-native-dai-chr0430-material-faithful-six-draw-v5"
+            or v5_freeze_data.get("gitModel", {}).get("sha256") != sha256(v5_model)
+            or v5_validation_data.get("metrics") != expected_metrics
+            or v5_validation_data.get("khronos", {}).get("errors") != 0
+            or not v5_validation_data.get("webgl", {}).get("complete")):
+        raise ValueError("The frozen JUMP FORCE Dai V5 candidate no longer matches its validation evidence")
     return {
         "schema": SCHEMA,
         "auditBasis": {"mirrorFinishedAt": mirror_data.get("finishedAt"), "operation": "read-only inventory of preserved local mirror and prior extracted data"},
@@ -154,13 +168,34 @@ def build(workspace: Path) -> dict[str, Any]:
                 "native-packages/JUMP_FORCE/Content/Effects/avater/0430/Particles/ava000_ski0430_00_00.uasset",
             ]),
         },
+        "frozenChr0430DaiV5Candidate": {
+            "candidateId": v5_freeze_data["candidateId"],
+            "gitModel": {"absolutePath": str(v5_model.resolve()), "bytes": v5_model.stat().st_size,
+                         "sha256": sha256(v5_model)},
+            "metrics": expected_metrics,
+            "validation": {
+                "khronosErrors": v5_validation_data["khronos"]["errors"],
+                "threeViewWebgl": v5_validation_data["webgl"]["complete"],
+                "visualReview": v5_validation_data["states"]["visualReview"],
+                "motionReview": v5_validation_data["states"]["motionReview"],
+            },
+            "evidence": evidence(REPO, [
+                "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/freeze-receipt.json",
+                "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/validation.json",
+                "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+            ]),
+        },
         "centralRegistryReadback": central,
         "minimalCompletePilotAssessment": {
             "result": "no eligible pilot", "closestCandidate": "chr0430 Dai JUMP FORCE original-source bundle",
+            "modelReadiness": [
+                "V5 material-faithful candidate is frozen in Git: 7,930 triangles, 6 draw primitives, 256px textures, 159 joints, Khronos 0 errors and complete three-view WebGL evidence",
+                "All 20 source mesh objects remain represented; the 15 opaque material primitives use separate atlas tiles while eye, lens, eyeshadow, glass and hair remain separate",
+            ],
             "modelBlockers": [
-                "formal candidate f8f3f1c reduces 59,768 to 7,947 triangles but retains 20 primitives against hard draw limit 6",
-                "current native model export has 0 animation clips",
-                "GGD GLB composition/material binding formal intake remains unverified",
+                "The current native model export has 0 animation clips",
+                "No owner-reviewed borrowed or same-work motion set is bound, so a six-state clipMap cannot be registered without fabricating actions",
+                "V5 visual review remains pending in its frozen validation receipt",
             ],
             "vfxBlockers": ["Preserved particle, mesh, texture and material packages have no converted Unreal graph/parameter data or skill-event bindings."],
             "audioBlockers": [
@@ -187,12 +222,12 @@ def render_markdown(receipt: dict[str, Any]) -> str:
         "## 保留與驗證", "",
         f"- 完整鏡像：{mirror['fullRawGame']['fileCount']:,} 檔／{mirror['fullRawGame']['bytes']:,} bytes；六個 authority PAK SHA-256 全數通過。",
         f"- Streaming 音訊：{audio['sourceCopyIntegrity']['sourceAwbCount']} 個 AWB，凍結副本名稱與位元完全相同；已解碼 {audio['decodedWavFiles']:,} WAV。",
-        "- `chr0430` 達伊：已保留原生套件、模型匯出、貼圖與 Unreal 特效套件；模型、VFX 與音訊仍需各自完成技術轉換與身份／事件驗收。", "",
+        "- `chr0430` 達伊：已保留原生套件、模型匯出、貼圖與 Unreal 特效套件；v5 模型候選已固定為 7,930 面／6 draw／256px，且通過 Khronos 與三視角 WebGL。", "",
         "## 不可升級的狀態", "",
         f"- 結論：`{assessment['result']}`。",
         "- 全角色模型、動作、VFX 與設定仍在加密 PAK；本工作流不尋找、猜測、繞過或使用 AES key。",
         "- 已解碼音訊的角色、語言、台詞與技能事件仍是未審查；不能自動綁英雄或技能。",
-        "- 達伊的既有候選未滿足 draw primitive 和動作要求，不得加入後台下拉。", "",
+        "- 達伊 v5 候選已符合面數、draw 與貼圖門檻，但沒有原生或已聽審借用動作；不能杜撰六態映射來加入後台下拉。", "",
         "## 重跑", "", "```sh", receipt["reproduction"]["write"], receipt["reproduction"]["check"], "```", "",
     ])
 
