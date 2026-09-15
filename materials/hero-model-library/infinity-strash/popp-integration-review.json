@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "dd01fee02c2b8156d36c4458975728d9da5d6f806e19cbff86f26510909b5163",
+  "sourceFingerprint": "cadb7b9c733ba4cf38739f34a08cf65e3c60cd1f6c6651fb458a089bad580d69",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -14,8 +14,8 @@
     },
     {
       "gitPath": "content/champions/b2-popp.json",
-      "bytes": 18703,
-      "sha256": "8a0b3f7017cb3f713a3ddb369549487fd601e66e019ef45bc4b0068d7088a3bf"
+      "bytes": 19400,
+      "sha256": "72779598f7d0d94254b0d8ad35af74d3b026057b34e27fbd90397a9acb241abc"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
@@ -44,8 +44,8 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-      "bytes": 20023,
-      "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+      "bytes": 22508,
+      "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
@@ -359,14 +359,15 @@
       "ggdVfxDocumentsBuilt": 12,
       "sourceTexturesConverted": 9,
       "identityExcludedRoots": 2,
-      "skillBindingsCreated": 0,
+      "skillBindingsCreated": 7,
       "visuallyAccepted": 12,
-      "runtimeSelectable": 0,
+      "runtimeSelectable": 7,
       "productionDeployed": 0,
       "sourceManifestVisuallyAccepted": 0,
       "releasedDocuments": 12,
       "releaseDocumentsRuntimeResolvable": 12,
-      "sourceManifestSkillBindingsCreated": 0
+      "sourceManifestSkillBindingsCreated": 0,
+      "sourceManifestRuntimeSelectable": 0
     },
     "conversionBoundary": {
       "kind": "source-texture-based-GGD-reconstruction-candidate",
@@ -399,6 +400,30 @@
     },
     "runtimeMutationAllowed": false,
     "runtimeMutationAuthorizedForAll": false
+  },
+  "vfxRuntimeAdaptation": {
+    "authority": {
+      "decision": "owner-requested-completion-of-reviewed-vfx-adaptation",
+      "date": "2026-09-15",
+      "ownerQuotes": [
+        "GGD 素材逐項審查中心 全ok",
+        "所有資源可以都上架",
+        "做完 1~7 阿"
+      ],
+      "scope": "Activate the seven existing Q/W/R GGD reconstruction relationships using reviewed original particle textures. No native Niagara replay or exact original spell equivalence is claimed.",
+      "previousCandidateOnlyCommit": "c7f440fadc5f9cca0e97a75c4e05c558eef544c4",
+      "previousWithdrawalReason": "The original review receipt authorized visual resources only. The subsequent owner completion request authorizes this documented GGD adaptation; original visual decisions stay immutable."
+    },
+    "summary": {
+      "ownerApprovedVfxReleased": 12,
+      "ownerApprovedVfxReleasedUnbound": 5,
+      "candidateRelationshipsProposed": 7,
+      "abilityBindingsCreated": 3,
+      "candidateRelationshipsBound": 7,
+      "reserveCandidatesReleasedUnbound": 5,
+      "sourceTexturesRetained": 9,
+      "staticMeshSupportGlbsRetained": 33
+    }
   },
   "approvedAudioTechnicalIntegration": {
     "receipt": {
@@ -450,8 +475,8 @@
       "basis": "source-spell-name-and-phase-only",
       "confidence": "medium-unverified",
       "visuallyApproved": true,
-      "runtimeMutationAllowed": false,
-      "note": "Owner approved all review-centre resources on 2026-09-15. The seven listed source-name relationships remain unbound review proposals; the five reserves remain unpaired.",
+      "runtimeMutationAllowed": true,
+      "note": "Owner requested completion of items 1-7 after approving review assets. Seven existing GGD reconstruction relationships are bound; five reserves remain unpaired.",
       "nativeNiagaraTimingClaim": false
     },
     "abilities": [
@@ -504,12 +529,12 @@
     },
     "proposedCandidateCount": 7,
     "reserveCandidateCount": 5,
-    "runtimeBindingsCreated": 0,
-    "runtimeAbilityBindingsCreated": 0,
+    "runtimeBindingsCreated": 7,
+    "runtimeAbilityBindingsCreated": 3,
     "runtimeRelease": {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-      "bytes": 20023,
-      "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+      "bytes": 22508,
+      "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
     }
   },
   "sourceDependencyEvidence": {
@@ -787,8 +812,8 @@
         "綁定通過 VFX 與技能檢查"
       ],
       "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-      "status": "feature-branch-twelve-candidates-unbound-blocked-native-niagara-timing-and-root-mesh-attribution",
-      "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 source-name relationships remain unbound Q/W/R review proposals and 5 remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+      "status": "feature-branch-seven-ggd-reconstructions-bound-native-parity-unrecovered",
+      "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 source-texture GGD reconstruction relationships are bound to Q/W/R and 5 remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
       "closureGates": [
         {
           "id": "reviewed-vfx-documents-released",
@@ -799,22 +824,22 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         },
         {
           "id": "reviewed-qwr-relationships-bound",
-          "nameZh": "7 組 Q/W/R 候選關係獲得逐技能綁定核准",
-          "state": "blocked",
-          "verified": false,
-          "detail": "Q/W/R 的 7 組來源名稱關係只保留為審查提案；作用中技能維持 origin/main 的共用 VFX。",
+          "nameZh": "7 組 Q/W/R 重建適配已綁定",
+          "state": "verified",
+          "verified": true,
+          "detail": "Q/W/R 已採用 7 組 owner 核准資源的 GGD 重建適配；使用原作粒子貼圖與 GGD 技能時序，非原生 Niagara 回放。",
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         },
@@ -827,8 +852,8 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         },
@@ -841,8 +866,8 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             },
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
@@ -860,8 +885,8 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         }
@@ -870,8 +895,8 @@
       "remaining": true,
       "closureGateSummary": {
         "total": 5,
-        "verified": 1,
-        "blocked": 4
+        "verified": 2,
+        "blocked": 3
       },
       "ownerReviewRequiredBeforeRuntimeMutation": false
     },
@@ -1014,8 +1039,8 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         },
@@ -1024,12 +1049,12 @@
           "nameZh": "核准動作、VFX、音訊已合成同一條時序",
           "state": "blocked",
           "verified": false,
-          "detail": "VFX 只有 Q/W/R 審查提案且未綁定，音訊沒有 GGD target；不能把兩份候選資料當作完整戰鬥時序。",
+          "detail": "VFX 已完成 Q/W/R 重建適配，音訊仍沒有 GGD target；尚不構成完整原作戰鬥時序。",
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             },
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
@@ -1047,8 +1072,8 @@
           "evidence": [
             {
               "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-              "bytes": 20023,
-              "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+              "bytes": 22508,
+              "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
             }
           ]
         }

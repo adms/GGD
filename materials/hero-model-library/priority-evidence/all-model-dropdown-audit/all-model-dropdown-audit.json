@@ -9,47 +9,47 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "e989c1a9ffefd5a3d7ee8405e67def618e9badd117960e191c95081bc75fd9f3",
-      "fileCount": 1030
+      "sha256": "6cc736a517ea29578394595da4095f0dee619cf17868456763b779667b6d339f",
+      "fileCount": 1052
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "8c6de79db243ffdc4669b206ee2bd0ae168d4aac0f04dfba64011abc8822e272",
+      "sha256": "2c9468a2f6cb46b3e413d7d2111679f1f5a40752497c76dcdc1c2f4efbf675e1",
       "fileCount": 154
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "e217f6c21962fe2dac430df88e0f8058513d7882f34ce2bca60d73bf20e97ceb"
+      "sha256": "58bb29bfabb0a014e555ab6d0c1c5d699693bb3b8d1f3f040f4ba03a6076c9f3"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "7a5e52c86c34161e279106cee1e105995518a28d5e2c18f8b72c60a397c2cf46"
+      "sha256": "ea924d3680af7056463780533f21d8e80593773f9e11acb9749f175d478263de"
     }
   },
   "summary": {
-    "modelAt1Documents": 1025,
+    "modelAt1Documents": 1047,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 519,
-    "championModelVersionRows": 576,
-    "sourceModelsRepresentedByFrozenVersions": 204,
+    "championPrimaryAndVersionSelectableModelKeys": 525,
+    "championModelVersionRows": 583,
+    "sourceModelsRepresentedByFrozenVersions": 209,
     "heroForgeHeroesWithOptions": 34,
     "heroForgeSelectableModelKeys": 46,
-    "allActualSelectableModelKeys": 558,
-    "centralSourceRows": 159,
-    "centralUniqueModelKeys": 152,
-    "centralRowsWithQualificationEvidence": 143,
-    "centralRegisteredRows": 146,
+    "allActualSelectableModelKeys": 564,
+    "centralSourceRows": 165,
+    "centralUniqueModelKeys": 158,
+    "centralRowsWithQualificationEvidence": 144,
+    "centralRegisteredRows": 151,
     "centralUnregisteredQualifiedRows": 9,
-    "centralUnregisteredPendingQualificationRows": 4,
+    "centralUnregisteredPendingQualificationRows": 5,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 43,
-    "readyUnregisteredCharacterOrMotionComponents": 41,
+    "readyUnregisteredIndependentComponents": 53,
+    "readyUnregisteredCharacterOrMotionComponents": 51,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 4,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
-    "unclassifiedOrNonHeroModelDocuments": 185,
-    "modelDocumentsWithoutResourceRole": 1025,
+    "unclassifiedOrNonHeroModelDocuments": 195,
+    "modelDocumentsWithoutResourceRole": 1047,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -200,6 +200,23 @@
   ],
   "centralUnregisteredPendingQualificationModels": [
     {
+      "id": "ou99:464696",
+      "modelKey": "ou99.464696",
+      "sourceCharacter": "拳四郎",
+      "sourceWork": "北斗神拳",
+      "validation": "retained-over-budget-source",
+      "modelDocumentGitPath": "content/models/ou99.464696.json",
+      "gitPath": "content/assets/models/ou99/ou99_464696.glb",
+      "sha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
+      "registeredFor": [],
+      "blockers": [
+        "central-index-declares-runtimeDropdownRegistered-false",
+        "no-champion-modelVersion-or-hero-forge-option-reference",
+        "target-hero-definition-or-approved-character-mapping-missing",
+        "validation-does-not-claim-backend-prepare-or-runtime-motion-passed"
+      ]
+    },
+    {
       "id": "ou99:465205",
       "modelKey": "ou99.465205",
       "sourceCharacter": "韩当武侠猛男",
@@ -270,6 +287,236 @@
   ],
   "centralRegistrationFlagMismatches": [],
   "readyUnregisteredCharacterOrMotionComponents": [
+    {
+      "id": "fateubw-cu_chulainn_lancer-runtime-component-v1",
+      "character": "Cu Chulainn (Lancer)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc.glb",
+      "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 7,
+      "animationClipCount": 7,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-diarmuid_ua_duibhne_lancer-runtime-component-v1",
+      "character": "Diarmuid Ua Duibhne (Lancer)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80.glb",
+      "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 7,
+      "animationClipCount": 7,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-emiya_archer-runtime-component-v1",
+      "character": "Emiya (Archer)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696.glb",
+      "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 11,
+      "animationClipCount": 11,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-gilles_de_rais_caster-runtime-component-v1",
+      "character": "Gilles de Rais (Caster)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb",
+      "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 4,
+      "animationClipCount": 4,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-hassan-i-sabbah_assassin-runtime-component-v1",
+      "character": "Hassan-i-Sabbah (Assassin)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3.glb",
+      "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 8,
+      "animationClipCount": 8,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-iskander_rider-runtime-component-v1",
+      "character": "Iskander (Rider)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3.glb",
+      "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 9,
+      "animationClipCount": 9,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-lancelot_berserker-runtime-component-v1",
+      "character": "Lancelot (Berserker)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb",
+      "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 13,
+      "animationClipCount": 13,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-medea_caster-runtime-component-v1",
+      "character": "Medea (Caster)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6.glb",
+      "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 6,
+      "animationClipCount": 6,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-nero_claudius_saber-runtime-component-v1",
+      "character": "Nero Claudius (Saber)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad.glb",
+      "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 6,
+      "animationClipCount": 6,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
+    {
+      "id": "fateubw-sasaki_kojiro_assassin-runtime-component-v1",
+      "character": "Sasaki Kojiro (Assassin)",
+      "resourceRole": "character-body",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7.glb",
+      "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+      "readiness": "git-runtime-component-complete; pending GGD hero definition",
+      "nativeAnimationCount": 10,
+      "animationClipCount": 10,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "六態映射含同來源語意備援，不宣稱每態皆為同名原生動作。",
+        "專案主人已核准登記；上游 ARR 權利狀態仍獨立保留。",
+        "尚未驗證 Main 合併後正式站部署。"
+      ]
+    },
     {
       "id": "historical-astralym-7bc2fa3f8",
       "character": "枯星龍",
@@ -2460,6 +2707,32 @@
       ]
     },
     {
+      "modelKey": "community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7",
+      "modelDocumentGitPath": "content/models/community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7.json",
+      "glbPath": "assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159",
+      "modelDocumentGitPath": "content/models/community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159.json",
+      "glbPath": "assets/models/community/5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
       "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
       "modelDocumentGitPath": "content/models/community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70.json",
       "glbPath": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
@@ -2486,6 +2759,19 @@
       ]
     },
     {
+      "modelKey": "community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172",
+      "modelDocumentGitPath": "content/models/community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172.json",
+      "glbPath": "assets/models/community/18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
       "modelKey": "community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4",
       "modelDocumentGitPath": "content/models/community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4.json",
       "glbPath": "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
@@ -2502,6 +2788,19 @@
       "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
       "modelDocumentGitPath": "content/models/community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa.json",
       "glbPath": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1",
+      "modelDocumentGitPath": "content/models/community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1.json",
+      "glbPath": "assets/models/community/e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3.glb",
       "semanticReferenceCount": 0,
       "semanticReferenceSamples": [],
       "classification": "role-and-usage-unresolved",
@@ -2551,9 +2850,74 @@
       ]
     },
     {
+      "modelKey": "community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02",
+      "modelDocumentGitPath": "content/models/community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02.json",
+      "glbPath": "assets/models/community/059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
       "modelKey": "community.body.5de9cf2a7afbb0e21cc2e402072b22ff4b380bb11ff0ea40",
       "modelDocumentGitPath": "content/models/community.body.5de9cf2a7afbb0e21cc2e402072b22ff4b380bb11ff0ea40.json",
       "glbPath": "assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
+      "modelDocumentGitPath": "content/models/community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9.json",
+      "glbPath": "assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9",
+      "modelDocumentGitPath": "content/models/community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9.json",
+      "glbPath": "assets/models/community/0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7",
+      "modelDocumentGitPath": "content/models/community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7.json",
+      "glbPath": "assets/models/community/9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18",
+      "modelDocumentGitPath": "content/models/community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18.json",
+      "glbPath": "assets/models/community/4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc.glb",
       "semanticReferenceCount": 0,
       "semanticReferenceSamples": [],
       "classification": "role-and-usage-unresolved",
@@ -2632,6 +2996,32 @@
       "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
       "modelDocumentGitPath": "content/models/community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399.json",
       "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc",
+      "modelDocumentGitPath": "content/models/community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc.json",
+      "glbPath": "assets/models/community/9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7.glb",
+      "semanticReferenceCount": 0,
+      "semanticReferenceSamples": [],
+      "classification": "role-and-usage-unresolved",
+      "blockers": [
+        "not-present-in-central-validated-model-index",
+        "no-champion-or-hero-forge-dropdown-reference",
+        "model-at-1-schema-has-no-resourceRole-field"
+      ]
+    },
+    {
+      "modelKey": "community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c",
+      "modelDocumentGitPath": "content/models/community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c.json",
+      "glbPath": "assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb",
       "semanticReferenceCount": 0,
       "semanticReferenceSamples": [],
       "classification": "role-and-usage-unresolved",
@@ -4314,19 +4704,6 @@
       ]
     },
     {
-      "modelKey": "ou99.464696",
-      "modelDocumentGitPath": "content/models/ou99.464696.json",
-      "glbPath": "assets/models/ou99/ou99_464696.glb",
-      "semanticReferenceCount": 0,
-      "semanticReferenceSamples": [],
-      "classification": "role-and-usage-unresolved",
-      "blockers": [
-        "not-present-in-central-validated-model-index",
-        "no-champion-or-hero-forge-dropdown-reference",
-        "model-at-1-schema-has-no-resourceRole-field"
-      ]
-    },
-    {
       "modelKey": "ou99.466002",
       "modelDocumentGitPath": "content/models/ou99.466002.json",
       "glbPath": "assets/models/ou99/ou99_466002.glb",
@@ -5405,6 +5782,7 @@
         "poppVfxDependencySupport",
         "postRegistrationReview",
         "projectSevenJapaneseVoiceIndex",
+        "s3PreparationSplit",
         "schema",
         "sourceManifests",
         "ssbuUltimateLocalRoster",
@@ -5415,7 +5793,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1025
+      "modelAt1DocumentsWithoutResourceRole": 1047
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

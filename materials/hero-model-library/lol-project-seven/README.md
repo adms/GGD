@@ -66,3 +66,8 @@ python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_batt
 python3 materials/hero-model-library/lol-project-seven/tools/audit_approved_battle_runtime.py \
   --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT"
 ```
+
+### 喊招缺格集中聽審
+
+`python3 materials/hero-model-library/lol-project-seven/tools/build_gap_review.py`
+從 `runtime-audit.json.pendingAmbiguousSkillCandidates` 選取尚有多種原生事件用途的片段，逐檔重驗本機 WAV SHA-256 後生成 `gap-listening-review.html`。沿用上述聽審伺服器，開啟 `/gap-listening-review.html` 即可逐段播放並匯出 `lol-gap-listening-decisions.json`。每筆匯出含 key、來源 SHA-256、來源路徑及明確決定；這份決定仍需整合程式核對後才能改 runtime，不會因為開啟頁面自動核准。`--check` 檢查頁面與來源是否一致。

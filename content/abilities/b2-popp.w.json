@@ -86,11 +86,17 @@
     },
     "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
   },
-  "vfxKey": "fx.prim.ice.pulse-sm",
+  "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
   "vfxLayers": [
     {
-      "attachTo": "caster",
-      "vfxKey": "fx.prim.ice.pulse-sm"
+      "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
+      "attachTo": "point",
+      "delayMs": 0
+    },
+    {
+      "vfxKey": "fx.strash.popp.nps-hyadaruko-hit",
+      "attachTo": "point",
+      "delayMs": 1000
     }
   ],
   "icon": "assets/icons/abilities/b2-popp.w.webp",

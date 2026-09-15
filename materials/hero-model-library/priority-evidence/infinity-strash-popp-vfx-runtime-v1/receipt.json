@@ -1,5 +1,49 @@
 {
   "schema": "ggd.popp-vfx-runtime-release@1",
+  "authority": {
+    "decision": "owner-requested-completion-of-reviewed-vfx-adaptation",
+    "date": "2026-09-15",
+    "ownerQuotes": [
+      "GGD 素材逐項審查中心 全ok",
+      "所有資源可以都上架",
+      "做完 1~7 阿"
+    ],
+    "scope": "Activate the seven existing Q/W/R GGD reconstruction relationships using reviewed original particle textures. No native Niagara replay or exact original spell equivalence is claimed.",
+    "previousCandidateOnlyCommit": "c7f440fadc5f9cca0e97a75c4e05c558eef544c4",
+    "previousWithdrawalReason": "The original review receipt authorized visual resources only. The subsequent owner completion request authorizes this documented GGD adaptation; original visual decisions stay immutable."
+  },
+  "rollbackAbilityBindings": [
+    {
+      "abilityId": "b2-popp.q",
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.w",
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.ice.pulse-sm"
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.r",
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    }
+  ],
   "heroId": "b2-popp",
   "nativeCharacterId": "PN020",
   "source": {
@@ -20,8 +64,8 @@
     },
     "bindingConfig": {
       "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/runtime-bindings.json",
-      "bytes": 1577,
-      "sha256": "ea7b333a958525c1d56a7667da26abe9bc0a8f227a5743180fc10a8e466bee39"
+      "bytes": 3266,
+      "sha256": "2cddd7fd48f2500297674b8e0833045fb600b22962f53b4a8c80a6850d32cabb"
     },
     "bindingProposals": {
       "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json",
@@ -35,8 +79,8 @@
     },
     "generator": {
       "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/publish_vfx_runtime.py",
-      "bytes": 11612,
-      "sha256": "f52c24f6b6205b9d543d8bf9b6b2c74450efd1726ac24120c62d8bbd45ce0eb4"
+      "bytes": 12208,
+      "sha256": "fb75c9173425f110a435d6d656d2817da90558aab1fd27ea1900633e7475092a"
     },
     "pipeline": {
       "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/run_vfx_runtime_release.py",
@@ -46,11 +90,10 @@
   },
   "summary": {
     "ownerApprovedVfxReleased": 12,
-    "ownerApprovedVfxReleasedUnbound": 12,
-    "abilityBindingsCreated": 0,
-    "abilityBindingsPreserved": 3,
+    "ownerApprovedVfxReleasedUnbound": 5,
     "candidateRelationshipsProposed": 7,
-    "candidateRelationshipsBound": 0,
+    "abilityBindingsCreated": 3,
+    "candidateRelationshipsBound": 7,
     "reserveCandidatesReleasedUnbound": 5,
     "sourceTexturesRetained": 9,
     "staticMeshSupportGlbsRetained": 33
@@ -58,15 +101,15 @@
   "timing": {
     "basis": "GGD ability castTimeSec plus reconstructed source phase name",
     "nativeNiagaraTimingClaim": false,
-    "note": "Delay values in the review proposals are deterministic preview timing only. The Unreal Niagara emitter timeline was not decoded and no proposal is active at runtime.",
-    "validatedRule": "proposal timing is retained as review metadata and is not active runtime binding"
+    "note": "Delay values are deterministic GGD playback timing. The Unreal Niagara emitter timeline was not decoded and is not claimed as native timing.",
+    "validatedRule": "every layer delayMs is between zero and its ability castTimeSec"
   },
   "meshLayerBoundary": {
     "sourceSupportGlbs": 33,
     "rootSpecificAttributions": 0,
     "runtimeModelFxBindingsCreated": 0,
     "status": "blocked-no-root-specific-mesh-attribution",
-    "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven proposed skill relationships."
+    "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven skill relationships."
   },
   "materials": {
     "documentsUseReviewedTexture": true,
@@ -78,6 +121,7 @@
       "candidateId": "popp-vfx-candidate-01",
       "releaseVfxId": "fx.strash.popp.nps-hyadaruko-core",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "ice",
       "phase": "core",
       "releaseDocument": {
@@ -99,12 +143,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-02",
       "releaseVfxId": "fx.strash.popp.nps-hyadaruko-hit",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "ice",
       "phase": "hit",
       "releaseDocument": {
@@ -126,12 +171,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-03",
       "releaseVfxId": "fx.strash.popp.nps-io-bullet-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "explosion",
       "phase": "projectile",
       "releaseDocument": {
@@ -159,6 +205,7 @@
       "candidateId": "popp-vfx-candidate-04",
       "releaseVfxId": "fx.strash.popp.nps-io-explosive-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "explosion",
       "phase": "impact",
       "releaseDocument": {
@@ -186,6 +233,7 @@
       "candidateId": "popp-vfx-candidate-05",
       "releaseVfxId": "fx.strash.popp.nps-iora-explosive-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "explosion",
       "phase": "impact",
       "releaseDocument": {
@@ -213,6 +261,7 @@
       "candidateId": "popp-vfx-candidate-06",
       "releaseVfxId": "fx.strash.popp.nps-mera-firetrail-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "fire",
       "phase": "firetrail",
       "releaseDocument": {
@@ -234,12 +283,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-07",
       "releaseVfxId": "fx.strash.popp.nps-merami-firetrail-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "fire",
       "phase": "firetrail",
       "releaseDocument": {
@@ -261,12 +311,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-08",
       "releaseVfxId": "fx.strash.popp.nps-merami-landing-2",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "fire",
       "phase": "landing",
       "releaseDocument": {
@@ -288,12 +339,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-09",
       "releaseVfxId": "fx.strash.popp.nps-merami-muzzle",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "fire",
       "phase": "muzzle",
       "releaseDocument": {
@@ -315,12 +367,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-10",
       "releaseVfxId": "fx.strash.popp.nps-merami-core",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "fire",
       "phase": "core",
       "releaseDocument": {
@@ -342,12 +395,13 @@
       "nativeNiagaraTimingRecovered": false,
       "rootSpecificMeshLayerRecovered": false,
       "ownerVisualDecision": "approve",
-      "skillBound": false
+      "skillBound": true
     },
     {
       "candidateId": "popp-vfx-candidate-11",
       "releaseVfxId": "fx.strash.popp.nps-raidein-charge-core",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "lightning",
       "phase": "charge",
       "releaseDocument": {
@@ -375,6 +429,7 @@
       "candidateId": "popp-vfx-candidate-12",
       "releaseVfxId": "fx.strash.popp.nps-ionazun-explosive-00",
       "sourceRootReference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+      "conversionKind": "ggd-reconstruction-using-original-particle-texture",
       "family": "explosion",
       "phase": "impact",
       "releaseDocument": {
@@ -399,65 +454,78 @@
       "skillBound": false
     }
   ],
-  "abilityBindings": [],
-  "preservedAbilityBindings": [
+  "abilityBindings": [
     {
       "abilityId": "b2-popp.q",
-      "vfxKey": "fx.prim.arcane.slash",
-      "vfxLayers": [
+      "castTimeSec": 0.5,
+      "primaryVfxId": "fx.strash.popp.nps-mera-firetrail-00",
+      "layers": [
         {
-          "attachTo": "caster",
-          "vfxKey": "fx.prim.arcane.slash"
+          "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+          "attachTo": "point",
+          "delayMs": 0
         }
       ],
-      "source": "origin/main active binding pinned in runtime-bindings.json",
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.q.json",
-        "bytes": 1631,
-        "sha256": "52811e195046a4089e4cece9f6949ea17a42fb77fe61cf98fb1280019940033d"
+        "bytes": 1682,
+        "sha256": "6196cece133da85e74487335b2887ba659811fecf344d8fa18e957c4dcb8216d"
       }
     },
     {
       "abilityId": "b2-popp.w",
-      "vfxKey": "fx.prim.ice.pulse-sm",
-      "vfxLayers": [
+      "castTimeSec": 1,
+      "primaryVfxId": "fx.strash.popp.nps-hyadaruko-core",
+      "layers": [
         {
-          "attachTo": "caster",
-          "vfxKey": "fx.prim.ice.pulse-sm"
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
+          "attachTo": "point",
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-hit",
+          "attachTo": "point",
+          "delayMs": 1000
         }
       ],
-      "source": "origin/main active binding pinned in runtime-bindings.json",
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.w.json",
-        "bytes": 2376,
-        "sha256": "4cc273f26620a94c182c92c2eea42c55be10b03e5e15d7adaedc62cc99973770"
+        "bytes": 2535,
+        "sha256": "c2429e55e1c4f938dd93ba37f5769fb9bbd0f60d1a50d9689454af5edb657c77"
       }
     },
     {
       "abilityId": "b2-popp.r",
-      "vfxKey": "fx.prim.arcane.bolt",
-      "vfxLayers": [
+      "castTimeSec": 1,
+      "primaryVfxId": "fx.strash.popp.nps-merami-muzzle",
+      "layers": [
         {
+          "vfxKey": "fx.strash.popp.nps-merami-muzzle",
           "attachTo": "caster",
-          "vfxKey": "fx.prim.arcane.bolt"
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-core",
+          "attachTo": "caster",
+          "delayMs": 100
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-firetrail-00",
+          "attachTo": "caster",
+          "delayMs": 180
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-landing-2",
+          "attachTo": "point",
+          "delayMs": 1000
         }
       ],
-      "source": "origin/main active binding pinned in runtime-bindings.json",
       "abilityDocument": {
         "gitPath": "content/abilities/b2-popp.r.json",
-        "bytes": 1564,
-        "sha256": "1fd49329a048bd7e6f1ea3d8a1093a53e9e8aea3b1ffad38df29ce978425a8a2"
+        "bytes": 1959,
+        "sha256": "ab9ad3977f2abf1d9eaff0c1dc280c7d4ac5924d6bf8f847b3aff0fdfb8121da"
       }
     }
-  ],
-  "proposedCandidateIds": [
-    "popp-vfx-candidate-01",
-    "popp-vfx-candidate-02",
-    "popp-vfx-candidate-06",
-    "popp-vfx-candidate-07",
-    "popp-vfx-candidate-08",
-    "popp-vfx-candidate-09",
-    "popp-vfx-candidate-10"
   ],
   "reserveCandidateIds": [
     "popp-vfx-candidate-03",
@@ -468,14 +536,13 @@
   ],
   "championMirror": {
     "gitPath": "content/champions/b2-popp.json",
-    "bytes": 18703,
-    "sha256": "8a0b3f7017cb3f713a3ddb369549487fd601e66e019ef45bc4b0068d7088a3bf"
+    "bytes": 19400,
+    "sha256": "72779598f7d0d94254b0d8ad35af74d3b026057b34e27fbd90397a9acb241abc"
   },
   "states": {
     "featureBranchVfxDocumentsResolvable": true,
-    "featureBranchSkillBindingsCreated": false,
-    "candidateOnly": true,
-    "existingAbilityBindingsPreserved": true,
+    "featureBranchSkillBindingsCreated": true,
+    "candidateOnly": false,
     "nativeNiagaraTimingRecovered": false,
     "rootSpecificMeshLayersBound": false,
     "fullCombatPlaybackVerified": false,

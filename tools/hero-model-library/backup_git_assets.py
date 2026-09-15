@@ -7,7 +7,8 @@ from pathlib import Path
 import argparse,gzip,hashlib,json,os,shutil,subprocess,tarfile
 
 REPO=Path(__file__).resolve().parents[2]
-SCOPES=['content/assets','content/models','tools','materials/hero-model-library',
+SCOPES=['content/assets','content/models','content/champions','content/abilities',
+        'content/vfx','content/config','apps/client/public','tools','materials/hero-model-library',
         'materials/asset-library','packages/shared/src/content','apps/content-api/src',
         'eslint.config.mjs']
 BUCKET='ggd-390630837668-ap-east-2-an'
@@ -35,14 +36,21 @@ def aws(args,action,resource):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--commit',required=True);parser.add_argument('--base',help='Optional ancestor with an existing fully verified local backup receipt');parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
     commit=subprocess.check_output(['git','rev-parse',args.commit+'^{commit}'],cwd=REPO,text=True).strip()
-    base=None;paths=SCOPES;removed=[];base_receipt=None
+    base=None;paths=SCOPES;removed=[];base_receipt=None;expanded_scopes=[]
     if args.base:
         base=subprocess.check_output(['git','rev-parse',args.base+'^{commit}'],cwd=REPO,text=True).strip()
         subprocess.run(['git','merge-base','--is-ancestor',base,commit],cwd=REPO,check=True)
         base_receipt=json.loads((args.output.resolve()/base/'receipt.json').read_text())
         assert base_receipt['commit']==base and base_receipt['fullGetAndEveryFileVerified']
         def changes(filter):return [p for p in subprocess.check_output(['git','diff','--no-renames','--name-only','-z','--diff-filter='+filter,base,commit,'--',*SCOPES],cwd=REPO,text=True).split('\0') if p]
-        paths=changes('ACMRT');removed=changes('D');assert paths,'No changed snapshot files'
+        paths=changes('ACMRT');removed=changes('D')
+        base_manifest=json.loads((args.output.resolve()/base/'manifest.json').read_text())
+        if base_manifest['commit']!=base:raise ValueError('Base manifest commit mismatch')
+        expanded_scopes=[scope for scope in SCOPES if not any(scope==old or scope.startswith(old+'/') for old in base_manifest['scopes'])]
+        if expanded_scopes:
+            expanded=[p for p in subprocess.check_output(['git','ls-tree','-r','--name-only','-z',commit,'--',*expanded_scopes],cwd=REPO,text=True).split('\0') if p]
+            paths=sorted(set(paths+expanded))
+        assert paths,'No changed snapshot files'
     out=args.output.resolve()/commit;out.mkdir(parents=True,exist_ok=True)
     archive=out/'assets-and-tools.tar.gz'
     prior_manifest=out/'manifest.json'
@@ -57,7 +65,7 @@ def main():
         # The raw TAR is deliberately retained locally as well.
     digest=sha(archive);rows=members(archive)
     uri=f's3://{BUCKET}/legacy/git-asset-snapshots/{commit}/{digest}.tar.gz'
-    manifest=dict(schema='ggd-git-asset-backup-manifest@1',commit=commit,scopes=SCOPES,baseCommit=base,baseReceipt=base_receipt,removedPaths=removed,files=rows,archiveSha256=digest,archiveBytes=archive.stat().st_size,s3Uri=uri,
+    manifest=dict(schema='ggd-git-asset-backup-manifest@1',commit=commit,scopes=SCOPES,expandedScopes=expanded_scopes,baseCommit=base,baseReceipt=base_receipt,removedPaths=removed,files=rows,archiveSha256=digest,archiveBytes=archive.stat().st_size,s3Uri=uri,
                   scopeBoundary='Committed files only. Original and intermediate local intakes require their independent source/conversion backups.')
     write(out/'manifest.json',manifest)
     print(json.dumps(dict(phase='archive-ready',commit=commit,files=len(rows),bytes=archive.stat().st_size)),flush=True)

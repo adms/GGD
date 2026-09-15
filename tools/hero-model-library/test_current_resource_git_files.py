@@ -190,14 +190,15 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         self.assertFalse(component['runtimeSelectable'])
         self.assertEqual(component['storageClass'],'s3-legacy-preparation')
 
-    def test_popp_owner_approval_boundary_keeps_runtime_unbound(self):
+    def test_popp_adaptation_authority_keeps_original_audio_and_native_claims_unbound(self):
         ledger = {'summary': {
             'eventAudioCandidates': 36, 'eventAudioReviewed': 36,
             'ggdVfxCandidates': 12, 'vfxVisuallyAccepted': 12,
-            'runtimeBindingsAddedByThisWorkflow': 0,
+            'runtimeBindingsAddedByThisWorkflow': 7,
         }}
         contract = {
             'schema': 'ggd.popp-integration-review@1',
+            'vfxRuntimeAdaptation': {'authority': {'decision': 'owner-requested-completion-of-reviewed-vfx-adaptation', 'ownerQuotes': ['做完 1~7 阿']}, 'summary': {'candidateRelationshipsBound': 7, 'abilityBindingsCreated': 3}},
             'portalOwnerReview': {
                 'audio': {'candidateCount': 36, 'approvedCount': 36, 'runtimeBindingAuthorizedCount': 0},
                 'vfx': {'candidateCount': 12, 'visuallyApprovedCount': 12, 'bindingApprovedCount': 0, 'runtimeBindingAuthorizedCount': 0},
@@ -210,15 +211,15 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
             },
             'vfxRuntimeCandidates': {'summary': {
                 'ggdVfxDocumentsBuilt': 12, 'visuallyAccepted': 12,
-                'sourceManifestVisuallyAccepted': 0, 'skillBindingsCreated': 0,
+                'sourceManifestVisuallyAccepted': 0, 'skillBindingsCreated': 7,
                 'sourceManifestSkillBindingsCreated': 0, 'releasedDocuments': 12,
-                'releaseDocumentsRuntimeResolvable': 12, 'runtimeSelectable': 0,
+                'releaseDocumentsRuntimeResolvable': 12, 'runtimeSelectable': 7,
                 'productionDeployed': 0,
             }},
         }
         proposals = {
-            'runtimeBindingsCreated': 0, 'runtimeAbilityBindingsCreated': 0,
-            'policy': {'runtimeMutationAllowed': False, 'nativeNiagaraTimingClaim': False},
+            'runtimeBindingsCreated': 7, 'runtimeAbilityBindingsCreated': 3,
+            'policy': {'runtimeMutationAllowed': True, 'nativeNiagaraTimingClaim': False},
         }
         verify_popp_approval_boundary(ledger, contract, proposals)
         ledger['summary']['eventAudioReviewed'] = 0
@@ -227,6 +228,15 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         ledger['summary']['eventAudioReviewed'] = 36
         proposals['runtimeBindingsCreated'] = 1
         with self.assertRaisesRegex(ValueError, 'overclaim runtime binding'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
+
+        proposals['runtimeBindingsCreated'] = 7
+        proposals['policy']['nativeNiagaraTimingClaim'] = True
+        with self.assertRaisesRegex(ValueError, 'overclaim runtime binding'):
+            verify_popp_approval_boundary(ledger, contract, proposals)
+        proposals['policy']['nativeNiagaraTimingClaim'] = False
+        contract.pop('vfxRuntimeAdaptation')
+        with self.assertRaisesRegex(ValueError, 'adaptation authorization'):
             verify_popp_approval_boundary(ledger, contract, proposals)
 
 

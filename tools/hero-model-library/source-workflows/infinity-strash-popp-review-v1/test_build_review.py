@@ -48,7 +48,7 @@ class PoppReviewTest(unittest.TestCase):
         expected_gate_counts = {
             "distinct-death-presentation": (3, 0),
             "source-toon-and-hair-colour-parity": (1, 3),
-            "original-vfx-conversion": (1, 4),
+            "original-vfx-conversion": (2, 3),
             "animation-events-and-sfx-binding": (2, 2),
             "skill-timing-and-full-combat-binding": (1, 3),
         }
@@ -66,7 +66,7 @@ class PoppReviewTest(unittest.TestCase):
         vfx = self.contract["vfxRuntimeCandidates"]
         self.assertEqual(vfx["summary"]["ggdVfxDocumentsBuilt"], 12)
         self.assertEqual(vfx["summary"]["identityExcludedRoots"], 2)
-        self.assertEqual(vfx["summary"]["skillBindingsCreated"], 0)
+        self.assertEqual(vfx["summary"]["skillBindingsCreated"], 7)
         self.assertEqual(vfx["summary"]["sourceManifestSkillBindingsCreated"], 0)
         self.assertEqual(vfx["summary"]["releasedDocuments"], 12)
         self.assertEqual(vfx["summary"]["visuallyAccepted"], 12)
@@ -75,10 +75,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(proposals["proposedCandidateCount"], 7)
         self.assertEqual(proposals["reserveCandidateCount"], 5)
         self.assertTrue(proposals["policy"]["visuallyApproved"])
-        self.assertFalse(proposals["policy"]["runtimeMutationAllowed"])
+        self.assertTrue(proposals["policy"]["runtimeMutationAllowed"])
         self.assertFalse(proposals["policy"]["nativeNiagaraTimingClaim"])
-        self.assertEqual(proposals["runtimeBindingsCreated"], 0)
-        self.assertEqual(proposals["runtimeAbilityBindingsCreated"], 0)
+        self.assertEqual(proposals["runtimeBindingsCreated"], 7)
+        self.assertEqual(proposals["runtimeAbilityBindingsCreated"], 3)
         gate = self.contract["eventAudioReviewGate"]
         self.assertEqual(gate["candidateCount"], 36)
         self.assertEqual(gate["reviewedCount"], 36)
@@ -114,10 +114,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(ledger["summary"]["vfxVisuallyAccepted"], 12)
         self.assertEqual(ledger["summary"]["vfxBindingProposals"], 7)
         self.assertEqual(ledger["summary"]["vfxReserveCandidates"], 5)
-        self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 0)
+        self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 7)
         self.assertEqual(ledger["summary"]["closureGates"], 20)
-        self.assertEqual(ledger["summary"]["closureGatesVerified"], 8)
-        self.assertEqual(ledger["summary"]["closureGatesBlocked"], 12)
+        self.assertEqual(ledger["summary"]["closureGatesVerified"], 9)
+        self.assertEqual(ledger["summary"]["closureGatesBlocked"], 11)
         self.assertEqual(ledger["weaponDecision"]["candidateCount"], 3)
         self.assertEqual(
             ledger["weaponDecision"]["selectedCandidateId"],
@@ -128,7 +128,7 @@ class PoppReviewTest(unittest.TestCase):
         self.assertFalse(by_id["original-vfx-conversion"]["ownerReviewRequiredBeforeRuntimeMutation"])
         self.assertEqual(
             by_id["original-vfx-conversion"]["status"],
-            "feature-branch-twelve-candidates-unbound-blocked-native-niagara-timing-and-root-mesh-attribution",
+            "feature-branch-seven-ggd-reconstructions-bound-native-parity-unrecovered",
         )
         self.assertTrue(by_id["animation-events-and-sfx-binding"]["ownerReviewRequiredBeforeRuntimeMutation"])
 
@@ -143,10 +143,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertIn("已核准並鎖定", page)
         self.assertIn("五項權威整合狀態", page)
         self.assertIn("asset-review-portal.html", page)
-        self.assertIn("VFX 語意配對（候選，未綁定）", page)
+        self.assertIn("VFX 技能適配（原作貼圖／GGD 重建）", page)
         self.assertIn("closureGateSummary", page)
         self.assertIn("Gate：", page)
-        self.assertIn("預覽已核准／候選未綁定", page)
+        self.assertIn("預覽已核准／GGD 適配已綁定", page)
         self.assertIn("candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)", page)
         self.assertNotIn("id=\"clearWeapon\"", page)
 

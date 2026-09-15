@@ -30,9 +30,14 @@ the queryable JSON cannot disagree.
 `vfx-binding-proposals.json` maps all twelve generated VFX candidates into
 seven source-name proposals for Q/W/R plus five unassigned reserves. The
 central review portal records visual approval for all 12 VFX previews. The
-newer 2026-09-15 owner instruction allows the reviewed resources to enter the
-feature branch, so `runtime-bindings.json` now authorizes the seven existing
-proposal relationships and preserves the five reserves without guessing.
+2026-09-15 follow-up “做完 1~7 阿” requests completion of these reviewed
+resources. The earlier c7f440fad candidate-only restriction recorded no owner
+rejection; it preserved the earlier visual-only decision. That historical
+receipt stays immutable; the new request and seven adaptation relationships
+are recorded in `runtime-bindings.json`, so `runtime-bindings.json` now authorizes the seven existing
+proposal relationships as GGD reconstructions using original particle textures.
+These are not native Niagara playback. The five reserves stay unpaired, and
+`rollbackAbilityBindings` preserves the three old generic bindings.
 
 `publish_vfx_runtime.py` is the sole writer for the 12 release VFX documents,
 the Q/W/R `vfxKey` and `vfxLayers` fields, the champion mirror, and the runtime

@@ -40,6 +40,21 @@ class InventoryHandoff(unittest.TestCase):
                     with self.subTest(source=source['id'], group=group['id'], hero=hero_id):
                         self.assertIn(source['id'], [s['id'] for s in heroes[hero_id]['audioSources']])
 
+    def test_registered_non_default_options_remain_selectable_without_becoming_default(self):
+        inventory=json.loads((DATA/'inventory.json').read_text())
+        for hero in inventory['heroes']:
+            champion=REPO/'content/champions'/f"{hero['runtimeHeroId']}.json"
+            if not champion.exists(): continue
+            registered=json.loads(champion.read_text()).get('modelVersions',[])
+            for option in hero['options']:
+                matches=[v for v in registered if v['sourceModelKey']==option['key']]
+                if matches and all(v.get('automaticEligible') is False for v in matches):
+                    with self.subTest(hero=hero['id'],model=option['key']):
+                        self.assertFalse(option['defaultEligible'])
+                        self.assertNotEqual((hero['automaticDefault'] or {}).get('key'),option['key'])
+        kenshiro=next(h for h in inventory['heroes'] if h['id']=='godie-umal')
+        self.assertIn('ou99.464696-standard-v1',[o['key'] for o in kenshiro['options']])
+
     def test_source_release_priority_uses_verified_calendar_dates(self):
         from default_policy import source_release_rank
         newest={'sourceGameReleasedAt':'2018-12-07'}

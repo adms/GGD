@@ -3,17 +3,85 @@
   "heroId": "b2-popp",
   "nativeCharacterId": "PN020",
   "authority": {
-    "decision": "owner-approved-current-review-assets-candidate-only",
+    "decision": "owner-requested-completion-of-reviewed-vfx-adaptation",
     "date": "2026-09-15",
-    "scope": "all 12 reviewed Popp VFX candidates may enter the feature branch; the seven source-name relationships remain review proposals and do not replace active skill VFX"
+    "ownerQuotes": [
+      "GGD 素材逐項審查中心 全ok",
+      "所有資源可以都上架",
+      "做完 1~7 阿"
+    ],
+    "scope": "Activate the seven existing Q/W/R GGD reconstruction relationships using reviewed original particle textures. No native Niagara replay or exact original spell equivalence is claimed.",
+    "previousCandidateOnlyCommit": "c7f440fadc5f9cca0e97a75c4e05c558eef544c4",
+    "previousWithdrawalReason": "The original review receipt authorized visual resources only. The subsequent owner completion request authorizes this documented GGD adaptation; original visual decisions stay immutable."
   },
   "timingPolicy": {
     "basis": "GGD ability castTimeSec plus reconstructed source phase name",
     "nativeNiagaraTimingClaim": false,
-    "note": "Delay values in the review proposals are deterministic preview timing only. The Unreal Niagara emitter timeline was not decoded and no proposal is active at runtime."
+    "note": "Delay values are deterministic GGD playback timing. The Unreal Niagara emitter timeline was not decoded and is not claimed as native timing."
   },
-  "bindings": [],
-  "preservedAbilityBindings": [
+  "bindings": [
+    {
+      "abilityId": "b2-popp.q",
+      "primaryCandidateId": "popp-vfx-candidate-06",
+      "layers": [
+        {
+          "candidateId": "popp-vfx-candidate-06",
+          "attachTo": "point",
+          "delayMs": 0
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.w",
+      "primaryCandidateId": "popp-vfx-candidate-01",
+      "layers": [
+        {
+          "candidateId": "popp-vfx-candidate-01",
+          "attachTo": "point",
+          "delayMs": 0
+        },
+        {
+          "candidateId": "popp-vfx-candidate-02",
+          "attachTo": "point",
+          "delayMs": 1000
+        }
+      ]
+    },
+    {
+      "abilityId": "b2-popp.r",
+      "primaryCandidateId": "popp-vfx-candidate-09",
+      "layers": [
+        {
+          "candidateId": "popp-vfx-candidate-09",
+          "attachTo": "caster",
+          "delayMs": 0
+        },
+        {
+          "candidateId": "popp-vfx-candidate-10",
+          "attachTo": "caster",
+          "delayMs": 100
+        },
+        {
+          "candidateId": "popp-vfx-candidate-07",
+          "attachTo": "caster",
+          "delayMs": 180
+        },
+        {
+          "candidateId": "popp-vfx-candidate-08",
+          "attachTo": "point",
+          "delayMs": 1000
+        }
+      ]
+    }
+  ],
+  "reserveCandidateIds": [
+    "popp-vfx-candidate-03",
+    "popp-vfx-candidate-04",
+    "popp-vfx-candidate-05",
+    "popp-vfx-candidate-11",
+    "popp-vfx-candidate-12"
+  ],
+  "rollbackAbilityBindings": [
     {
       "abilityId": "b2-popp.q",
       "vfxKey": "fx.prim.arcane.slash",
@@ -44,12 +112,5 @@
         }
       ]
     }
-  ],
-  "reserveCandidateIds": [
-    "popp-vfx-candidate-03",
-    "popp-vfx-candidate-04",
-    "popp-vfx-candidate-05",
-    "popp-vfx-candidate-11",
-    "popp-vfx-candidate-12"
   ]
 }

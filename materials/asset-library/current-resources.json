@@ -10,14 +10,14 @@
     },
     {
       "gitPath": "materials/hero-model-library/workflow-model-options.json",
-      "sha256": "ea69f5e60b845c1b4805205e3cf4f42a1414f9d1a7646d328642d4dc06105212"
+      "sha256": "3640e368dc9124e2014b62552de8f94676dd42eb095af01d86aeb793cbee96e8"
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
       "sha256": "ee6b537894f33346c4e0ea814331d8cef315a6851763ec3c75e37b0a7cf1f741"
     }
   ],
-  "modelSourceCount": 163,
+  "modelSourceCount": 165,
   "models": [
     {
       "id": "300heroes:20",
@@ -5415,6 +5415,100 @@
       "modelDocumentGitPath": "content/models/community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540.json"
     },
     {
+      "id": "ou99:464696",
+      "modelKey": "ou99.464696",
+      "glbPath": "assets/models/ou99/ou99_464696.glb",
+      "sha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
+      "bytes": 5118592,
+      "documentSha256": "b4597ea2856c1805e42d4e22cb79cac738d7af6bbb27b2d9b4ff64ba2ee07532",
+      "sourceCharacter": "拳四郎",
+      "sourceWork": "北斗神拳",
+      "sourceAssetId": "https://www.ou99.com/thread-464696-1-1.html",
+      "sourcePlatform": "Windows / Warcraft III community model",
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_464696.glb",
+      "identityStatus": "character-labelled-ou99-community-model",
+      "fullCharacterPackage": false,
+      "validation": "retained-over-budget-source",
+      "limitations": [
+        "Warcraft III 社群模型，不是 JUMP FORCE 遊戲擷取版。",
+        "保留 62 段來源動作；正式部署尚未驗證。"
+      ],
+      "validationEvidence": {
+        "gitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/receipt.json",
+        "sha256": "d407d99ee921751fe5e4aa9ae2def3d20a97d13ae97ac7e6d98ce5a8882f7ef8"
+      },
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/ou99/ou99_464696.glb",
+      "sourceId": "ou99:464696",
+      "automaticEligible": false,
+      "preparationBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.files.json",
+        "receiptGitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/stage-backup.json",
+        "receiptSha256": "3765e07425a62e0345b419a2ce3fcff4d30855c4962cba1fe3815c900ebeed30",
+        "allMemberSha256Verified": true
+      },
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
+      "modelDocumentGitPath": "content/models/ou99.464696.json"
+    },
+    {
+      "id": "ou99:464696:standard-v1",
+      "modelKey": "ou99.464696-standard-v1",
+      "glbPath": "assets/models/ou99/ou99_464696_standard_v1.glb",
+      "sha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42",
+      "bytes": 4042704,
+      "documentSha256": "9db5fc527cb5e91507506864a1e7aab069569cfb0438dd607b98313841c9b697",
+      "sourceCharacter": "拳四郎",
+      "sourceWork": "北斗神拳",
+      "sourceAssetId": "https://www.ou99.com/thread-464696-1-1.html",
+      "sourcePlatform": "Windows / Warcraft III community model",
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_464696_standard_v1.glb",
+      "identityStatus": "character-labelled-ou99-community-model",
+      "fullCharacterPackage": false,
+      "validation": "model-intake-and-visual-comparison-passed",
+      "limitations": [
+        "Warcraft III 社群模型，不是 JUMP FORCE 遊戲擷取版。",
+        "保留 62 段來源動作；正式部署尚未驗證。"
+      ],
+      "validationEvidence": {
+        "gitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/receipt.json",
+        "sha256": "d407d99ee921751fe5e4aa9ae2def3d20a97d13ae97ac7e6d98ce5a8882f7ef8"
+      },
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/ou99/ou99_464696_standard_v1.glb",
+      "sourceId": "ou99:464696",
+      "automaticEligible": false,
+      "preparationBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.files.json",
+        "receiptGitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/stage-backup.json",
+        "receiptSha256": "3765e07425a62e0345b419a2ce3fcff4d30855c4962cba1fe3815c900ebeed30",
+        "allMemberSha256Verified": true
+      },
+      "registeredFor": [
+        "godie-umal"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/ou99.464696-standard-v1.json"
+    },
+    {
       "id": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
       "modelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
       "glbPath": "assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
@@ -7570,17 +7664,17 @@
   },
   "poppIntegrationGapLedger": {
     "schema": "ggd.popp-integration-gap-ledger@1",
-    "sourceFingerprint": "dd01fee02c2b8156d36c4458975728d9da5d6f806e19cbff86f26510909b5163",
+    "sourceFingerprint": "cadb7b9c733ba4cf38739f34a08cf65e3c60cd1f6c6651fb458a089bad580d69",
     "gapLedgerGitPath": "materials/hero-model-library/infinity-strash/popp-integration-gaps.json",
-    "gapLedgerSha256": "ca56eb2e4dcafdec86650517f2d775625c226e0ec7637dac7571900cf540b6c6",
+    "gapLedgerSha256": "0c855f66f4ee7bca6ee90fdb778d96e09e01389bf1f8763735eb01be8a8f52f0",
     "definitionSourceGitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json",
     "definitionSourceSha256": "158eb8bfd41c618396ff899646b2cb459f37cbc466c1b6bfacac78088c9fcb31",
     "vfxBindingProposalGitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json",
     "vfxBindingProposalSha256": "2aba04b0263dfdad60955f0753562c88c055127504a6aae866188411982c5e0e",
     "reviewContractGitPath": "materials/hero-model-library/infinity-strash/popp-integration-review.json",
-    "reviewContractSha256": "78c422460ea53517c4a26edff02ecebf2474d5dfbaf987a8a30b5a5d823b00d9",
+    "reviewContractSha256": "7a4999a1ebf6d31699e6266d3a453a7819197fbca0680a8e94e0c4c8934a847e",
     "reviewPageGitPath": "apps/client/public/popp-integration-review.html",
-    "reviewPageSha256": "787919b41e41739c937585779f08110ed6f055f93710f2e36b056071fb317ca6",
+    "reviewPageSha256": "568f5201874ba21870508ef06d1dcf22a25f82f80284c4ce75bc2cd61e706c2b",
     "weaponDecision": {
       "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
       "selectionMode": "manual",
@@ -7601,10 +7695,10 @@
       "vfxVisuallyAccepted": 12,
       "vfxBindingProposals": 7,
       "vfxReserveCandidates": 5,
-      "runtimeBindingsAddedByThisWorkflow": 0,
+      "runtimeBindingsAddedByThisWorkflow": 7,
       "closureGates": 20,
-      "closureGatesVerified": 8,
-      "closureGatesBlocked": 12,
+      "closureGatesVerified": 9,
+      "closureGatesBlocked": 11,
       "productionDeploymentVerified": false
     },
     "ownerReview": {
@@ -7860,8 +7954,8 @@
           "綁定通過 VFX 與技能檢查"
         ],
         "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。",
-        "status": "feature-branch-twelve-candidates-unbound-blocked-native-niagara-timing-and-root-mesh-attribution",
-        "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 source-name relationships remain unbound Q/W/R review proposals and 5 remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+        "status": "feature-branch-seven-ggd-reconstructions-bound-native-parity-unrecovered",
+        "evidence": "17 VFX package references are retained. All 12 owner-approved reconstructions now have release VFX IDs; 7 source-texture GGD reconstruction relationships are bound to Q/W/R and 5 remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
         "closureGates": [
           {
             "id": "reviewed-vfx-documents-released",
@@ -7872,22 +7966,22 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           },
           {
             "id": "reviewed-qwr-relationships-bound",
-            "nameZh": "7 組 Q/W/R 候選關係獲得逐技能綁定核准",
-            "state": "blocked",
-            "verified": false,
-            "detail": "Q/W/R 的 7 組來源名稱關係只保留為審查提案；作用中技能維持 origin/main 的共用 VFX。",
+            "nameZh": "7 組 Q/W/R 重建適配已綁定",
+            "state": "verified",
+            "verified": true,
+            "detail": "Q/W/R 已採用 7 組 owner 核准資源的 GGD 重建適配；使用原作粒子貼圖與 GGD 技能時序，非原生 Niagara 回放。",
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           },
@@ -7900,8 +7994,8 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           },
@@ -7914,8 +8008,8 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               },
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json",
@@ -7933,8 +8027,8 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           }
@@ -7943,8 +8037,8 @@
         "remaining": true,
         "closureGateSummary": {
           "total": 5,
-          "verified": 1,
-          "blocked": 4
+          "verified": 2,
+          "blocked": 3
         },
         "ownerReviewRequiredBeforeRuntimeMutation": false
       },
@@ -8087,8 +8181,8 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           },
@@ -8097,12 +8191,12 @@
             "nameZh": "核准動作、VFX、音訊已合成同一條時序",
             "state": "blocked",
             "verified": false,
-            "detail": "VFX 只有 Q/W/R 審查提案且未綁定，音訊沒有 GGD target；不能把兩份候選資料當作完整戰鬥時序。",
+            "detail": "VFX 已完成 Q/W/R 重建適配，音訊仍沒有 GGD target；尚不構成完整原作戰鬥時序。",
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               },
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
@@ -8120,8 +8214,8 @@
             "evidence": [
               {
                 "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-                "bytes": 20023,
-                "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+                "bytes": 22508,
+                "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
               }
             ]
           }
@@ -8148,8 +8242,8 @@
         "basis": "source-spell-name-and-phase-only",
         "confidence": "medium-unverified",
         "visuallyApproved": true,
-        "runtimeMutationAllowed": false,
-        "note": "Owner approved all review-centre resources on 2026-09-15. The seven listed source-name relationships remain unbound review proposals; the five reserves remain unpaired.",
+        "runtimeMutationAllowed": true,
+        "note": "Owner requested completion of items 1-7 after approving review assets. Seven existing GGD reconstruction relationships are bound; five reserves remain unpaired.",
         "nativeNiagaraTimingClaim": false
       },
       "abilities": [
@@ -8202,12 +8296,12 @@
       },
       "proposedCandidateCount": 7,
       "reserveCandidateCount": 5,
-      "runtimeBindingsCreated": 0,
-      "runtimeAbilityBindingsCreated": 0,
+      "runtimeBindingsCreated": 7,
+      "runtimeAbilityBindingsCreated": 3,
       "runtimeRelease": {
         "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-        "bytes": 20023,
-        "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56"
+        "bytes": 22508,
+        "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da"
       }
     },
     "runtimeMutationAllowed": false,
@@ -8954,7 +9048,7 @@
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
     "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
-    "status": "12 owner-approved GGD VFX release documents present as unbound candidates; 7 source-name relationships retained as review proposals; active Q/W/R VFX preserved",
+    "status": "12 reviewed source-texture GGD reconstructions released; 7 relationships bound to Q/W/R; 5 reserves unpaired; not native Niagara playback",
     "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json",
     "receiptSha256": "f479b0558c69cb037e700b85c921abf8f36a509d33f51ae64a542891e3eabe5b",
     "backupReceiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-export-s3-backup-receipt.json",
@@ -9494,14 +9588,13 @@
     },
     "runtimeRelease": {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
-      "sha256": "53eb568cf870c514fd41b5ce03e193e23724691c7ce1286d9cca32e04162fb56",
+      "sha256": "7c5d0ace383fde60f6d3ccb98b476bc3e26a685661cd550fc4fff767adb8b6da",
       "summary": {
         "ownerApprovedVfxReleased": 12,
-        "ownerApprovedVfxReleasedUnbound": 12,
-        "abilityBindingsCreated": 0,
-        "abilityBindingsPreserved": 3,
+        "ownerApprovedVfxReleasedUnbound": 5,
         "candidateRelationshipsProposed": 7,
-        "candidateRelationshipsBound": 0,
+        "abilityBindingsCreated": 3,
+        "candidateRelationshipsBound": 7,
         "reserveCandidatesReleasedUnbound": 5,
         "sourceTexturesRetained": 9,
         "staticMeshSupportGlbsRetained": 33
@@ -9511,6 +9604,7 @@
           "candidateId": "popp-vfx-candidate-01",
           "releaseVfxId": "fx.strash.popp.nps-hyadaruko-core",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "ice",
           "phase": "core",
           "releaseDocument": {
@@ -9532,12 +9626,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-02",
           "releaseVfxId": "fx.strash.popp.nps-hyadaruko-hit",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "ice",
           "phase": "hit",
           "releaseDocument": {
@@ -9559,12 +9654,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-03",
           "releaseVfxId": "fx.strash.popp.nps-io-bullet-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "explosion",
           "phase": "projectile",
           "releaseDocument": {
@@ -9592,6 +9688,7 @@
           "candidateId": "popp-vfx-candidate-04",
           "releaseVfxId": "fx.strash.popp.nps-io-explosive-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "explosion",
           "phase": "impact",
           "releaseDocument": {
@@ -9619,6 +9716,7 @@
           "candidateId": "popp-vfx-candidate-05",
           "releaseVfxId": "fx.strash.popp.nps-iora-explosive-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "explosion",
           "phase": "impact",
           "releaseDocument": {
@@ -9646,6 +9744,7 @@
           "candidateId": "popp-vfx-candidate-06",
           "releaseVfxId": "fx.strash.popp.nps-mera-firetrail-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "fire",
           "phase": "firetrail",
           "releaseDocument": {
@@ -9667,12 +9766,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-07",
           "releaseVfxId": "fx.strash.popp.nps-merami-firetrail-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "fire",
           "phase": "firetrail",
           "releaseDocument": {
@@ -9694,12 +9794,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-08",
           "releaseVfxId": "fx.strash.popp.nps-merami-landing-2",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "fire",
           "phase": "landing",
           "releaseDocument": {
@@ -9721,12 +9822,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-09",
           "releaseVfxId": "fx.strash.popp.nps-merami-muzzle",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "fire",
           "phase": "muzzle",
           "releaseDocument": {
@@ -9748,12 +9850,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-10",
           "releaseVfxId": "fx.strash.popp.nps-merami-core",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "fire",
           "phase": "core",
           "releaseDocument": {
@@ -9775,12 +9878,13 @@
           "nativeNiagaraTimingRecovered": false,
           "rootSpecificMeshLayerRecovered": false,
           "ownerVisualDecision": "approve",
-          "skillBound": false
+          "skillBound": true
         },
         {
           "candidateId": "popp-vfx-candidate-11",
           "releaseVfxId": "fx.strash.popp.nps-raidein-charge-core",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "lightning",
           "phase": "charge",
           "releaseDocument": {
@@ -9808,6 +9912,7 @@
           "candidateId": "popp-vfx-candidate-12",
           "releaseVfxId": "fx.strash.popp.nps-ionazun-explosive-00",
           "sourceRootReference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+          "conversionKind": "ggd-reconstruction-using-original-particle-texture",
           "family": "explosion",
           "phase": "impact",
           "releaseDocument": {
@@ -9832,8 +9937,80 @@
           "skillBound": false
         }
       ],
-      "abilityBindings": [],
-      "preservedAbilityBindings": [
+      "abilityBindings": [
+        {
+          "abilityId": "b2-popp.q",
+          "castTimeSec": 0.5,
+          "primaryVfxId": "fx.strash.popp.nps-mera-firetrail-00",
+          "layers": [
+            {
+              "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+              "attachTo": "point",
+              "delayMs": 0
+            }
+          ],
+          "abilityDocument": {
+            "gitPath": "content/abilities/b2-popp.q.json",
+            "bytes": 1682,
+            "sha256": "6196cece133da85e74487335b2887ba659811fecf344d8fa18e957c4dcb8216d"
+          }
+        },
+        {
+          "abilityId": "b2-popp.w",
+          "castTimeSec": 1,
+          "primaryVfxId": "fx.strash.popp.nps-hyadaruko-core",
+          "layers": [
+            {
+              "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
+              "attachTo": "point",
+              "delayMs": 0
+            },
+            {
+              "vfxKey": "fx.strash.popp.nps-hyadaruko-hit",
+              "attachTo": "point",
+              "delayMs": 1000
+            }
+          ],
+          "abilityDocument": {
+            "gitPath": "content/abilities/b2-popp.w.json",
+            "bytes": 2535,
+            "sha256": "c2429e55e1c4f938dd93ba37f5769fb9bbd0f60d1a50d9689454af5edb657c77"
+          }
+        },
+        {
+          "abilityId": "b2-popp.r",
+          "castTimeSec": 1,
+          "primaryVfxId": "fx.strash.popp.nps-merami-muzzle",
+          "layers": [
+            {
+              "vfxKey": "fx.strash.popp.nps-merami-muzzle",
+              "attachTo": "caster",
+              "delayMs": 0
+            },
+            {
+              "vfxKey": "fx.strash.popp.nps-merami-core",
+              "attachTo": "caster",
+              "delayMs": 100
+            },
+            {
+              "vfxKey": "fx.strash.popp.nps-merami-firetrail-00",
+              "attachTo": "caster",
+              "delayMs": 180
+            },
+            {
+              "vfxKey": "fx.strash.popp.nps-merami-landing-2",
+              "attachTo": "point",
+              "delayMs": 1000
+            }
+          ],
+          "abilityDocument": {
+            "gitPath": "content/abilities/b2-popp.r.json",
+            "bytes": 1959,
+            "sha256": "ab9ad3977f2abf1d9eaff0c1dc280c7d4ac5924d6bf8f847b3aff0fdfb8121da"
+          }
+        }
+      ],
+      "rollbackAbilityBindings": [
         {
           "abilityId": "b2-popp.q",
           "vfxKey": "fx.prim.arcane.slash",
@@ -9842,13 +10019,7 @@
               "attachTo": "caster",
               "vfxKey": "fx.prim.arcane.slash"
             }
-          ],
-          "source": "origin/main active binding pinned in runtime-bindings.json",
-          "abilityDocument": {
-            "gitPath": "content/abilities/b2-popp.q.json",
-            "bytes": 1631,
-            "sha256": "52811e195046a4089e4cece9f6949ea17a42fb77fe61cf98fb1280019940033d"
-          }
+          ]
         },
         {
           "abilityId": "b2-popp.w",
@@ -9858,13 +10029,7 @@
               "attachTo": "caster",
               "vfxKey": "fx.prim.ice.pulse-sm"
             }
-          ],
-          "source": "origin/main active binding pinned in runtime-bindings.json",
-          "abilityDocument": {
-            "gitPath": "content/abilities/b2-popp.w.json",
-            "bytes": 2376,
-            "sha256": "4cc273f26620a94c182c92c2eea42c55be10b03e5e15d7adaedc62cc99973770"
-          }
+          ]
         },
         {
           "abilityId": "b2-popp.r",
@@ -9874,15 +10039,21 @@
               "attachTo": "caster",
               "vfxKey": "fx.prim.arcane.bolt"
             }
-          ],
-          "source": "origin/main active binding pinned in runtime-bindings.json",
-          "abilityDocument": {
-            "gitPath": "content/abilities/b2-popp.r.json",
-            "bytes": 1564,
-            "sha256": "1fd49329a048bd7e6f1ea3d8a1093a53e9e8aea3b1ffad38df29ce978425a8a2"
-          }
+          ]
         }
       ],
+      "authority": {
+        "decision": "owner-requested-completion-of-reviewed-vfx-adaptation",
+        "date": "2026-09-15",
+        "ownerQuotes": [
+          "GGD 素材逐項審查中心 全ok",
+          "所有資源可以都上架",
+          "做完 1~7 阿"
+        ],
+        "scope": "Activate the seven existing Q/W/R GGD reconstruction relationships using reviewed original particle textures. No native Niagara replay or exact original spell equivalence is claimed.",
+        "previousCandidateOnlyCommit": "c7f440fadc5f9cca0e97a75c4e05c558eef544c4",
+        "previousWithdrawalReason": "The original review receipt authorized visual resources only. The subsequent owner completion request authorizes this documented GGD adaptation; original visual decisions stay immutable."
+      },
       "proposedCandidateIds": [
         "popp-vfx-candidate-01",
         "popp-vfx-candidate-02",
@@ -9901,14 +10072,13 @@
       ],
       "championMirror": {
         "gitPath": "content/champions/b2-popp.json",
-        "bytes": 18703,
-        "sha256": "8a0b3f7017cb3f713a3ddb369549487fd601e66e019ef45bc4b0068d7088a3bf"
+        "bytes": 19400,
+        "sha256": "72779598f7d0d94254b0d8ad35af74d3b026057b34e27fbd90397a9acb241abc"
       },
       "states": {
         "featureBranchVfxDocumentsResolvable": true,
-        "featureBranchSkillBindingsCreated": false,
-        "candidateOnly": true,
-        "existingAbilityBindingsPreserved": true,
+        "featureBranchSkillBindingsCreated": true,
+        "candidateOnly": false,
         "nativeNiagaraTimingRecovered": false,
         "rootSpecificMeshLayersBound": false,
         "fullCombatPlaybackVerified": false,
@@ -9919,7 +10089,7 @@
         "rootSpecificAttributions": 0,
         "runtimeModelFxBindingsCreated": 0,
         "status": "blocked-no-root-specific-mesh-attribution",
-        "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven proposed skill relationships."
+        "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven skill relationships."
       }
     },
     "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1",
@@ -9956,12 +10126,12 @@
       "candidateRecipes": 14,
       "ggdVfxConvertedCandidates": 12,
       "identityExcludedRoots": 2,
-      "visuallyAccepted": 0,
-      "runtimeBindingsCreated": 0
+      "visuallyAccepted": 12,
+      "runtimeBindingsCreated": 7
     },
     "fullGetVerified": true,
     "allMemberSha256Verified": true,
-    "runtimeSelectable": false,
+    "runtimeSelectable": true,
     "productionDeploymentVerified": false
   },
   "note": "Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.",

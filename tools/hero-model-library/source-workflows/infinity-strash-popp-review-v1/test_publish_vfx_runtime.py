@@ -1,5 +1,7 @@
 import importlib.util
 import unittest
+import json
+from unittest.mock import patch
 from pathlib import Path
 
 
@@ -17,24 +19,36 @@ class PublishPoppVfxRuntimeTest(unittest.TestCase):
 
     def test_all_owner_approved_candidates_are_released(self):
         self.assertEqual(self.receipt["summary"]["ownerApprovedVfxReleased"], 12)
-        self.assertEqual(self.receipt["summary"]["ownerApprovedVfxReleasedUnbound"], 12)
-        self.assertEqual(self.receipt["summary"]["candidateRelationshipsProposed"], 7)
-        self.assertEqual(self.receipt["summary"]["candidateRelationshipsBound"], 0)
+        self.assertEqual(self.receipt["summary"]["candidateRelationshipsBound"], 7)
         self.assertEqual(self.receipt["summary"]["reserveCandidatesReleasedUnbound"], 5)
-        self.assertEqual(sum(row["skillBound"] for row in self.receipt["releasedVfx"]), 0)
+        self.assertEqual(sum(row["skillBound"] for row in self.receipt["releasedVfx"]), 7)
 
-    def test_q_w_r_keep_their_preexisting_generic_vfx(self):
-        self.assertEqual(self.receipt["abilityBindings"], [])
-        self.assertEqual([row["abilityId"] for row in self.receipt["preservedAbilityBindings"]], [
+    def test_q_w_r_bindings_are_bounded_and_resolve(self):
+        self.assertEqual([row["abilityId"] for row in self.receipt["abilityBindings"]], [
             "b2-popp.q", "b2-popp.w", "b2-popp.r"
         ])
-        released_ids = {row["releaseVfxId"] for row in self.receipt["releasedVfx"]}
-        for binding in self.receipt["preservedAbilityBindings"]:
-            self.assertNotIn(binding["vfxKey"], released_ids)
-            self.assertTrue(all(layer["vfxKey"] not in released_ids for layer in binding["vfxLayers"]))
-        self.assertFalse(self.receipt["states"]["featureBranchSkillBindingsCreated"])
-        self.assertTrue(self.receipt["states"]["candidateOnly"])
-        self.assertTrue(self.receipt["states"]["existingAbilityBindingsPreserved"])
+        by_id = {row["candidateId"]: row for row in self.receipt["releasedVfx"]}
+        for binding in self.receipt["abilityBindings"]:
+            self.assertLessEqual(len(binding["layers"]), 5)
+            for layer in binding["layers"]:
+                self.assertIn(layer["vfxKey"], {row["releaseVfxId"] for row in by_id.values()})
+                self.assertLessEqual(layer["delayMs"], binding["castTimeSec"] * 1000)
+
+    def test_changed_reviewed_texture_fails_publication(self):
+        original = MODULE.digest
+        def changed(path):
+            return "0" * 64 if path.suffix == ".png" else original(path)
+        with patch.object(MODULE, "digest", changed):
+            with self.assertRaisesRegex(ValueError, "runtime texture changed"):
+                MODULE.expected_outputs()
+
+    def test_generated_ability_and_champion_layers_match(self):
+        champion = json.loads(self.outputs[MODULE.CHAMPION])
+        for binding in self.receipt["abilityBindings"]:
+            ability = json.loads(self.outputs[MODULE.ROOT / "content/abilities" / (binding["abilityId"] + ".json")])
+            self.assertEqual(ability["vfxLayers"], champion["abilities"][ability["slot"]]["vfxLayers"])
+            self.assertEqual(ability["vfxLayers"], binding["layers"])
+        self.assertEqual(len(self.receipt["rollbackAbilityBindings"]), 3)
 
     def test_native_niagara_and_mesh_limits_stay_explicit(self):
         self.assertFalse(self.receipt["states"]["nativeNiagaraTimingRecovered"])

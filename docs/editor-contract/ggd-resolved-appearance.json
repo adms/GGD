@@ -6553,12 +6553,12 @@
     {
       "championId": "godie-umal",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.skin.barbarian",
-      "glbPath": "assets/models/champions/blocky-barbarian.glb",
-      "modelDocDigest": "6820809d7a62",
+      "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+      "glbPath": "assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb",
+      "modelDocDigest": "9fb1cc06f717",
       "scale": 1,
       "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {

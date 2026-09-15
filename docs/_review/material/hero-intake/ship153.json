@@ -3,7 +3,7 @@
  "batch": "ship153",
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
- "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons",
+ "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all",
  "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
@@ -26,7 +26,7 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "b7be6bfe7f760c4ea70dd223f42b1cdf9b3040c7a42794c61f45db8193ebf445",
+ "digest": "bdf28528dd68f22fcb766bf42a6763c027eee8e0816d525801c017db348c5f24",
  "heroes": [
   {
    "id": "b2-aladdin",
@@ -8124,8 +8124,8 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "champ.skin.barbarian",
-    "glbPath": "assets/models/champions/blocky-barbarian.glb",
+    "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+    "glbPath": "assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb",
     "bytes": 52124,
     "clipMap": {
      "idle": "idle",

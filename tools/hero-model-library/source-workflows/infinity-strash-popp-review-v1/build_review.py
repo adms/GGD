@@ -316,21 +316,15 @@ def build_contract() -> dict:
     vfx_runtime_release = read_json(VFX_RUNTIME_RELEASE)
     assert vfx_runtime_release["schema"] == "ggd.popp-vfx-runtime-release@1"
     assert vfx_runtime_release["heroId"] == HERO_ID
-    assert vfx_runtime_release["summary"] == {
-        "ownerApprovedVfxReleased": 12,
-        "ownerApprovedVfxReleasedUnbound": 12,
-        "abilityBindingsCreated": 0,
-        "abilityBindingsPreserved": 3,
-        "candidateRelationshipsProposed": 7,
-        "candidateRelationshipsBound": 0,
-        "reserveCandidatesReleasedUnbound": 5,
-        "sourceTexturesRetained": 9,
-        "staticMeshSupportGlbsRetained": 33,
-    }
+    release_summary = vfx_runtime_release["summary"]
+    assert release_summary["ownerApprovedVfxReleased"] == len(vfx_runtime_release["releasedVfx"])
+    assert release_summary["candidateRelationshipsBound"] == sum(row["skillBound"] for row in vfx_runtime_release["releasedVfx"])
+    assert release_summary["abilityBindingsCreated"] == len(vfx_runtime_release["abilityBindings"])
+    assert release_summary["candidateRelationshipsBound"] == len(proposed_candidate_ids)
+    assert release_summary["reserveCandidatesReleasedUnbound"] == len(reserve_candidate_ids)
     assert vfx_runtime_release["states"]["featureBranchVfxDocumentsResolvable"] is True
-    assert vfx_runtime_release["states"]["featureBranchSkillBindingsCreated"] is False
-    assert vfx_runtime_release["states"]["candidateOnly"] is True
-    assert vfx_runtime_release["states"]["existingAbilityBindingsPreserved"] is True
+    assert vfx_runtime_release["states"]["featureBranchSkillBindingsCreated"] is True
+    assert vfx_runtime_release["states"]["candidateOnly"] is False
     assert vfx_runtime_release["states"]["nativeNiagaraTimingRecovered"] is False
     assert vfx_runtime_release["states"]["rootSpecificMeshLayersBound"] is False
     assert vfx_runtime_release["states"]["fullCombatPlaybackVerified"] is False
@@ -423,8 +417,8 @@ def build_contract() -> dict:
             [vfx_release_evidence],
         ),
         closure_gate(
-            "reviewed-qwr-relationships-bound", "7 組 Q/W/R 候選關係獲得逐技能綁定核准", False,
-            "Q/W/R 的 7 組來源名稱關係只保留為審查提案；作用中技能維持 origin/main 的共用 VFX。",
+            "reviewed-qwr-relationships-bound", "7 組 Q/W/R 重建適配已綁定", vfx_runtime_release["summary"]["candidateRelationshipsBound"] == 7,
+            "Q/W/R 已採用 7 組 owner 核准資源的 GGD 重建適配；使用原作粒子貼圖與 GGD 技能時序，非原生 Niagara 回放。",
             [vfx_release_evidence],
         ),
         closure_gate(
@@ -478,7 +472,7 @@ def build_contract() -> dict:
         ),
         closure_gate(
             "approved-motion-vfx-audio-timeline", "核准動作、VFX、音訊已合成同一條時序", False,
-            "VFX 只有 Q/W/R 審查提案且未綁定，音訊沒有 GGD target；不能把兩份候選資料當作完整戰鬥時序。",
+            "VFX 已完成 Q/W/R 重建適配，音訊仍沒有 GGD target；尚不構成完整原作戰鬥時序。",
             [vfx_release_evidence, audio_receipt_evidence],
         ),
         closure_gate(
@@ -525,8 +519,8 @@ def build_contract() -> dict:
         },
         {
             "id": "original-vfx-conversion",
-            "status": "feature-branch-twelve-candidates-unbound-blocked-native-niagara-timing-and-root-mesh-attribution",
-            "evidence": f"{len(vfx_references)} VFX package references are retained. All {vfx_runtime_release['summary']['ownerApprovedVfxReleased']} owner-approved reconstructions now have release VFX IDs; {vfx_runtime_release['summary']['candidateRelationshipsProposed']} source-name relationships remain unbound Q/W/R review proposals and {vfx_runtime_release['summary']['reserveCandidatesReleasedUnbound']} remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
+            "status": "feature-branch-seven-ggd-reconstructions-bound-native-parity-unrecovered",
+            "evidence": f"{len(vfx_references)} VFX package references are retained. All {vfx_runtime_release['summary']['ownerApprovedVfxReleased']} owner-approved reconstructions now have release VFX IDs; {vfx_runtime_release['summary']['candidateRelationshipsBound']} source-texture GGD reconstruction relationships are bound to Q/W/R and {vfx_runtime_release['summary']['reserveCandidatesReleasedUnbound']} remain unpaired reserves. Exact native Niagara timing and root-specific mesh attribution remain unrecovered and are not claimed.",
             "closureGates": vfx_gates,
         },
         {
@@ -648,11 +642,14 @@ def build_contract() -> dict:
                 "releaseDocumentsRuntimeResolvable": vfx_runtime_release["summary"]["ownerApprovedVfxReleased"],
                 "skillBindingsCreated": vfx_runtime_release["summary"]["candidateRelationshipsBound"],
                 "sourceManifestSkillBindingsCreated": vfx_runtime["summary"]["skillBindingsCreated"],
+                "sourceManifestRuntimeSelectable": vfx_runtime["summary"]["runtimeSelectable"],
+                "runtimeSelectable": vfx_runtime_release["summary"]["candidateRelationshipsBound"],
             },
             "conversionBoundary": vfx_runtime["conversionBoundary"],
             "reviewPage": vfx_runtime["review"]["page"],
         },
         "portalOwnerReview": portal_owner_review,
+        "vfxRuntimeAdaptation": {"authority": vfx_runtime_release["authority"], "summary": vfx_runtime_release["summary"]},
         "approvedAudioTechnicalIntegration": {
             "receipt": file_evidence(APPROVED_AUDIO_RECEIPT),
             "nativeEventTable": file_evidence(APPROVED_AUDIO_EVENT_TABLE),
@@ -669,9 +666,9 @@ def build_contract() -> dict:
             "policy": {
                 **vfx_binding_proposals["policy"],
                 "visuallyApproved": True,
-                "runtimeMutationAllowed": False,
+                "runtimeMutationAllowed": vfx_runtime_release["states"]["featureBranchSkillBindingsCreated"],
                 "nativeNiagaraTimingClaim": False,
-                "note": "Owner approved all review-centre resources on 2026-09-15. The seven listed source-name relationships remain unbound review proposals; the five reserves remain unpaired.",
+                "note": "Owner requested completion of items 1-7 after approving review assets. Seven existing GGD reconstruction relationships are bound; five reserves remain unpaired.",
             },
             "proposedCandidateCount": len(proposed_candidate_ids),
             "reserveCandidateCount": len(reserve_candidate_ids),
@@ -767,8 +764,8 @@ textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1
 <div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1" {'checked disabled' if contract['weaponReview']['selectedCandidateId'] else ''}> 已核准 down＋升天淡出</label></div>
 <h2>三、五項權威整合狀態（已關閉 {contract['closedIntegrationGapCount']}，剩餘 {contract['remainingOpenIntegrationGapCount']}）</h2><ol id="gaps"></ol>
-<p class="note">{contract['vfxRuntimeCandidates']['summary']['releasedDocuments']} 個 owner 核准重建候選已有正式 VFX ID；{contract['vfxBindingReviewProposals']['proposedCandidateCount']} 個來源名稱關係只保留為 Q/W/R 審查提案，5 個 reserve 保留未配對。作用中技能維持既有共用 VFX。精確原生 Niagara 時序與 root-specific mesh layer 尚未恢復，不冒稱原生完整重建。音訊 {contract['eventAudioReviewGate']['candidateCount']} 項已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項，音訊事件身分與 runtime 綁定另行追蹤；原逐項收據仍由 <a href="/asset-review-portal.html">統一審查中心</a> 提供。</p>
-<h2>四、VFX 語意配對（候選，未綁定）</h2><div id="vfxProposals" class="grid"></div><p class="note">12 個重建預覽已有 owner 視覺核准；7 個既有來源名稱提案仍待逐技能核准，5 個語意未對應 reserve 維持未綁定。</p>
+<p class="note">{contract['vfxRuntimeCandidates']['summary']['releasedDocuments']} 個 owner 核准重建候選已有正式 VFX ID；{contract['vfxBindingReviewProposals']['proposedCandidateCount']} 個來源名稱關係已適配 Q/W/R，5 個 reserve 保留未配對。作用中技能使用核准原作貼圖的 GGD 重建特效。精確原生 Niagara 時序與 root-specific mesh layer 尚未恢復，不冒稱原生完整重建。音訊 {contract['eventAudioReviewGate']['candidateCount']} 項已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項，音訊事件身分與 runtime 綁定另行追蹤；原逐項收據仍由 <a href="/asset-review-portal.html">統一審查中心</a> 提供。</p>
+<h2>四、VFX 技能適配（原作貼圖／GGD 重建）</h2><div id="vfxProposals" class="grid"></div><p class="note">12 個重建預覽已有 owner 視覺核准；7 個既有來源名稱提案已依本次完成指令綁入 Q/W/R，5 個語意未對應 reserve 維持未綁定。</p>
 <h2>五、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
 <textarea id="reviewNote" placeholder="選擇理由、要修的顏色或動作問題"></textarea><div class="buttons"><button id="export">下載裁決 JSON</button></div></main>
 <script id="contract" type="application/json">{encoded}</script><script>
@@ -781,7 +778,7 @@ function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
 const clearWeapon=document.getElementById('clearWeapon');if(clearWeapon)clearWeapon.onclick=()=>{{state.weaponCandidateId=null;save()}};
 document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>{{const gates=g.closureGates.map(x=>`<li class="${{x.verified?'gate-ok':'gate-blocked'}}"><b>${{x.verified?'已驗證':'阻擋'}}</b> · ${{x.nameZh}}：${{x.detail}}</li>`).join('');return `<li><b>${{g.nameZh}}</b> <code>${{g.id}}</code> · <span class="status">${{g.closed?'closed':'remaining'}}／${{g.status}}</span><br><span class="note">${{g.evidence}}</span><br><span class="note">Gate：${{g.closureGateSummary.verified}}/${{g.closureGateSummary.total}} 已驗證，${{g.closureGateSummary.blocked}} 項阻擋。</span><ul class="gates">${{gates}}</ul><span class="note">關閉條件：${{g.closureCriteria.join('；')}}</span><br><span class="note">審查規則：${{g.ownerReviewPolicy}}</span></li>`}}).join('');
-document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">預覽已核准／候選未綁定</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
+document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">預覽已核准／GGD 適配已綁定</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
 const death=document.getElementById('deathFrame'), selected=D.weaponReview.candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)||D.weaponReview.candidates[0],base=selected.validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();
 document.getElementById('export').onclick=()=>{{save();const out={{schema:'ggd.popp-integration-review-decision@1',sourceFingerprint:D.sourceFingerprint,heroId:D.heroId,weaponCandidateId:state.weaponCandidateId,deathCandidateId:state.deathCandidateId,note:state.note}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\\n'],{{type:'application/json'}}));a.download='popp-integration-review-decision.json';a.click();URL.revokeObjectURL(a.href)}};

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Publish owner-approved Popp VFX documents as unbound runtime candidates.
+"""Publish owner-approved Popp VFX documents and deterministic Q/W/R bindings.
 
 The source candidates remain immutable review evidence.  This generator writes
-separate release IDs (without the ``.candidate`` suffix), preserves the existing
-Q/W/R VFX in standalone ability documents and their champion mirror, and emits a
-hash-pinned receipt.  Source-name relationships remain review proposals only.
+separate release IDs (without the ``.candidate`` suffix), updates the standalone
+ability documents and their champion mirror, and emits a hash-pinned receipt.
+It deliberately keeps the five unpaired reserve candidates out of skill bindings.
 """
 
 from __future__ import annotations
@@ -100,12 +100,10 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
         for layer in binding["layers"]
     }
     reserves = set(config["reserveCandidateIds"])
-    if configured:
-        raise ValueError("Popp source-name proposals must remain unbound candidates")
-    if reserves != set(proposals["reserveCandidateIds"]):
-        raise ValueError("runtime config drifted from the five reserve candidates")
-    if proposed & reserves or proposed | reserves != set(candidates):
-        raise ValueError("proposal/reserve candidate partition is incomplete or overlaps")
+    if configured != proposed or reserves != set(proposals["reserveCandidateIds"]):
+        raise ValueError("runtime config drifted from the seven proposals or five reserves")
+    if configured & reserves or configured | reserves != set(candidates):
+        raise ValueError("candidate partition is incomplete or overlaps")
 
     # The reconstruction index contains no root-specific StaticMesh attribution.
     # Do not guess one of the 33 recovered support meshes into a skill.
@@ -120,7 +118,13 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
         source_path = ROOT / row["vfxDocument"]["gitPath"]
         if digest(source_path) != row["vfxDocument"]["sha256"]:
             raise ValueError(f"candidate VFX changed: {source_path}")
+        texture = row["runtimeTexture"]
+        texture_path = ROOT / texture["gitPath"]
+        if not texture_path.is_file() or texture_path.stat().st_size != texture["bytes"] or digest(texture_path) != texture["sha256"]:
+            raise ValueError(f"reviewed runtime texture changed or missing: {texture_path}")
         doc = read(source_path)
+        if "content/" + doc.get("texture", "") != texture["gitPath"]:
+            raise ValueError(f"candidate texture differs from reviewed manifest: {candidate_id}")
         release_id = released_id(doc["id"])
         doc["id"] = release_id
         phase = row["phase"]
@@ -133,6 +137,7 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
             "candidateId": candidate_id,
             "releaseVfxId": release_id,
             "sourceRootReference": row["rootReference"],
+            "conversionKind": "ggd-reconstruction-using-original-particle-texture",
             "family": row["family"],
             "phase": phase,
             "releaseDocument": evidence(target, body),
@@ -150,31 +155,36 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
         }
 
     champion = read(CHAMPION)
-    preserved_ability_receipts = []
+    ability_receipts = []
     slot_for = {"b2-popp.q": "Q", "b2-popp.w": "W", "b2-popp.r": "R"}
-    preserved = config.get("preservedAbilityBindings", [])
-    if {row["abilityId"] for row in preserved} != set(slot_for):
-        raise ValueError("preserved Q/W/R binding set is incomplete")
-    for binding in preserved:
+    for binding in config["bindings"]:
         ability_id = binding["abilityId"]
         ability_path = ROOT / "content/abilities" / f"{ability_id}.json"
         ability = read(ability_path)
         slot = slot_for[ability_id]
         if ability.get("id") != ability_id or champion["abilities"][slot]["id"] != ability_id:
             raise ValueError(f"ability identity mismatch: {ability_id}")
-        primary = binding["vfxKey"]
-        layers = binding["vfxLayers"]
+        layers = []
+        for layer in binding["layers"]:
+            if layer["delayMs"] < 0 or layer["delayMs"] > round(float(ability["castTimeSec"]) * 1000):
+                raise ValueError(f"layer delay exceeds authored cast time: {ability_id}")
+            layers.append({
+                "vfxKey": released[layer["candidateId"]]["releaseVfxId"],
+                "attachTo": layer["attachTo"],
+                "delayMs": layer["delayMs"],
+            })
+        primary = released[binding["primaryCandidateId"]]["releaseVfxId"]
         ability["vfxKey"] = primary
         ability["vfxLayers"] = layers
         champion["abilities"][slot]["vfxKey"] = primary
         champion["abilities"][slot]["vfxLayers"] = layers
         body = encoded(ability)
         outputs[ability_path] = body
-        preserved_ability_receipts.append({
+        ability_receipts.append({
             "abilityId": ability_id,
-            "vfxKey": primary,
-            "vfxLayers": layers,
-            "source": "origin/main active binding pinned in runtime-bindings.json",
+            "castTimeSec": ability["castTimeSec"],
+            "primaryVfxId": primary,
+            "layers": layers,
             "abilityDocument": evidence(ability_path, body),
         })
     champion_body = encoded(champion)
@@ -182,6 +192,8 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
 
     receipt = {
         "schema": "ggd.popp-vfx-runtime-release@1",
+        "authority": config["authority"],
+        "rollbackAbilityBindings": config["rollbackAbilityBindings"],
         "heroId": "b2-popp",
         "nativeCharacterId": "PN020",
         "source": {
@@ -196,10 +208,9 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
         },
         "summary": {
             "ownerApprovedVfxReleased": len(released),
-            "ownerApprovedVfxReleasedUnbound": len(released),
-            "abilityBindingsCreated": 0,
-            "abilityBindingsPreserved": len(preserved_ability_receipts),
+            "ownerApprovedVfxReleasedUnbound": len(reserves),
             "candidateRelationshipsProposed": len(proposed),
+            "abilityBindingsCreated": len(ability_receipts),
             "candidateRelationshipsBound": len(configured),
             "reserveCandidatesReleasedUnbound": len(reserves),
             "sourceTexturesRetained": len({row["runtimeTexture"]["sha256"] for row in released.values()}),
@@ -207,14 +218,14 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
         },
         "timing": {
             **config["timingPolicy"],
-            "validatedRule": "proposal timing is retained as review metadata and is not active runtime binding",
+            "validatedRule": "every layer delayMs is between zero and its ability castTimeSec",
         },
         "meshLayerBoundary": {
             "sourceSupportGlbs": 33,
             "rootSpecificAttributions": 0,
             "runtimeModelFxBindingsCreated": 0,
             "status": "blocked-no-root-specific-mesh-attribution",
-            "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven proposed skill relationships."
+            "note": "All 33 recovered GLBs remain indexed support assets. None is guessed into the seven skill relationships."
         },
         "materials": {
             "documentsUseReviewedTexture": True,
@@ -222,16 +233,13 @@ def expected_outputs() -> tuple[dict[Path, bytes], dict]:
             "aimOrientedDirectedDocuments": sum(row["aimOriented"] for row in released.values()),
         },
         "releasedVfx": list(released.values()),
-        "abilityBindings": [],
-        "preservedAbilityBindings": preserved_ability_receipts,
-        "proposedCandidateIds": sorted(proposed),
+        "abilityBindings": ability_receipts,
         "reserveCandidateIds": sorted(reserves),
         "championMirror": evidence(CHAMPION, champion_body),
         "states": {
             "featureBranchVfxDocumentsResolvable": True,
-            "featureBranchSkillBindingsCreated": False,
-            "candidateOnly": True,
-            "existingAbilityBindingsPreserved": True,
+            "featureBranchSkillBindingsCreated": True,
+            "candidateOnly": False,
             "nativeNiagaraTimingRecovered": False,
             "rootSpecificMeshLayersBound": False,
             "fullCombatPlaybackVerified": False,

@@ -140,7 +140,11 @@ for id,h in heroes.items():
   if key and key not in seen:options.append(old(key));seen.add(key)
  options.sort(key=lambda o:(selection_rank(policy,id,o['id'],o['key'],o),source_release_rank(o),['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
  for o in options:
-  o['defaultEligible']=eligible(policy,id,o['id'],o['key'],o['kind'])
+  registered=[v for v in branches.get(id,{}).get('modelVersions',[]) if v['sourceModelKey']==o['key']]
+  # A registered candidate may be selectable without permission to become default.
+  source_eligible=by_key.get(o['key'],{}).get('automaticEligible') is not False
+  version_eligible=not registered or any(v.get('automaticEligible') is not False for v in registered)
+  o['defaultEligible']=source_eligible and version_eligible and eligible(policy,id,o['id'],o['key'],o['kind'])
   o['selectionClass']=selection_class(policy,id,o['id'],o['key'],o)
  automatic_default=next((o for o in options if o['defaultEligible']),None)
  default=automatic_default

@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "18c12dfa4129",
+  "hash": "3818eff98fe8",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -2157,6 +2157,12 @@
       "size": 306
     },
     {
+      "id": "ou99.464696-standard-v1",
+      "path": "models/ou99.464696-standard-v1.json",
+      "hash": "4315e8ae7509",
+      "size": 350
+    },
+    {
       "id": "ou99.465205",
       "path": "models/ou99.465205.json",
       "hash": "ec88a03128d6",
@@ -4119,6 +4125,12 @@
       "size": 606
     },
     {
+      "id": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+      "path": "models/version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4.json",
+      "hash": "9fb1cc06f717",
+      "size": 716
+    },
+    {
       "id": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
       "path": "models/version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b.json",
       "hash": "460775bd6f2f",
@@ -5101,6 +5113,12 @@
       "path": "models/version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d.json",
       "hash": "eb579be79551",
       "size": 708
+    },
+    {
+      "id": "version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b",
+      "path": "models/version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b.json",
+      "hash": "36d8ad96baba",
+      "size": 560
     },
     {
       "id": "version.body.b063e512a3346de9ea34bb8e79528e84e7d46ea3266e2bcb",

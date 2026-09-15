@@ -4,12 +4,12 @@
 
 ## 結果
 
-- `content/models` 有 1025 份 `model@1`。
-- 正式 champion 的主模型與 `modelVersions` 合計 519 個不同可選 model key；`modelVersions` 有 576 列。
+- `content/models` 有 1047 份 `model@1`。
+- 正式 champion 的主模型與 `modelVersions` 合計 525 個不同可選 model key；`modelVersions` 有 583 列。
 - Hero Forge 有 34 名英雄、46 個不同模型選項。
-- 中央索引有 159 筆來源；146 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，4 筆只證明 Git 來源存在，後台導入驗收仍未通過。
+- 中央索引有 165 筆來源；151 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，5 筆只證明 Git 來源存在，後台導入驗收仍未通過。
 - 中央登記旗標與實際參照不一致：0 筆。
-- `componentReady` 但尚未註冊：角色／動作元件 41 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
+- `componentReady` 但尚未註冊：角色／動作元件 51 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
 - 找到 67 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
 - 明確 `prop.*` 且無內容參照的道具文件 4 筆。
 
@@ -31,6 +31,7 @@
 
 | 來源 | 角色／版本 | model key | 現有證據 | 精確阻塞 |
 |---|---|---|---|---|
+| ou99:464696 | 拳四郎 | `ou99.464696` | retained-over-budget-source | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:465205 | 韩当武侠猛男 | `ou99.465205` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:472035 | WOW兽人祭祀法师 | `ou99.472035` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:487191 | SSR鬼神吕布鬼脸将军 | `ou99.487191` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
@@ -40,6 +41,16 @@
 
 | 元件 | 角色 | 類型 | 動作 | 精確阻塞 |
 |---|---|---|---:|---|
+| `fateubw-cu_chulainn_lancer-runtime-component-v1` | Cu Chulainn (Lancer) | character-body | 7 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-diarmuid_ua_duibhne_lancer-runtime-component-v1` | Diarmuid Ua Duibhne (Lancer) | character-body | 7 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-emiya_archer-runtime-component-v1` | Emiya (Archer) | character-body | 11 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-gilles_de_rais_caster-runtime-component-v1` | Gilles de Rais (Caster) | character-body | 4 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-hassan-i-sabbah_assassin-runtime-component-v1` | Hassan-i-Sabbah (Assassin) | character-body | 8 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-iskander_rider-runtime-component-v1` | Iskander (Rider) | character-body | 9 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-lancelot_berserker-runtime-component-v1` | Lancelot (Berserker) | character-body | 13 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-medea_caster-runtime-component-v1` | Medea (Caster) | character-body | 6 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-nero_claudius_saber-runtime-component-v1` | Nero Claudius (Saber) | character-body | 6 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-sasaki_kojiro_assassin-runtime-component-v1` | Sasaki Kojiro (Assassin) | character-body | 10 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
 | `historical-astralym-7bc2fa3f8` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `historical-astralym-decimated-f77cf1ee` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `infinity-strash-mystvearn-en653-01-static-skinned-v1` | 密斯特巴恩 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
@@ -97,13 +108,13 @@
 
 - 精確歷史來源 artifact：4 筆；`componentReady=false`，僅供還原與比對。
 - orphan frozen version：67 筆；文件沒有 hero ID，不能安全推回任何英雄。完整逐筆清單在 JSON。
-- 其他未被中央驗證索引或英雄下拉解釋的 `model@1`：185 筆。部分已有技能／VFX 等非英雄參照，其他缺權威角色欄位；完整逐筆清單在 JSON。
+- 其他未被中央驗證索引或英雄下拉解釋的 `model@1`：195 筆。部分已有技能／VFX 等非英雄參照，其他缺權威角色欄位；完整逐筆清單在 JSON。
 
 ## 特效與道具未使用清單的索引缺口
 
 current-resources.json has no VFX component collection and all model@1 documents lack resourceRole. Exact semantic references can prove that a model is used by VFX/ability content, but absence of such a reference cannot prove that an unreferenced model is VFX rather than a character, prop, reserved source, or orphan. Only the explicit prop.* prefix is reported separately.
 
-目前 1025 / 1025 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
+目前 1047 / 1047 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
 
 ## 重建
 

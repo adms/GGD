@@ -1,0 +1,341 @@
+{
+  "schema": "ggd.remaining-integration-validation@1",
+  "date": "2026-09-15",
+  "branch": "codex/hero-model-library-options-clean",
+  "skillsCheck": {
+    "status": "all-constituent-checks-passed-after-regeneration",
+    "commands": [
+      {
+        "command": "pnpm tiers:apply:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm spec:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm overview:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm tiers:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm mana:audit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm typecat:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillforge:audit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillforge:visual-review:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillforge:visual-sheets:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillforge:visual-advisory:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm vfxforge:handback:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm editorcov:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm bricks:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm assets:manifest:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm jasstpl:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm caps:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm collections:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillremake:docs:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillremake:json:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillremake:provenance:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm grail:wishes:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm contract:numbers:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm atlas:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm treasure:csv:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm docs:readme:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm docs:status:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm roster:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm legacyindex:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm pitch:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm newhero:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm lowdmg:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm anchors:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm statcaps:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm apconv:plan:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm apconv:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm apdmg:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm board:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm msgledger:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm skillnorm:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm speedtiers:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm jasscombo:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm vfxbind:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm models:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm modelpolicy:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm modelpolicy:priority-audit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm modelpolicy:component-audit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm models:historical-options:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm hero:intake:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm handoff:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm lod:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm audit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm echoloop:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm templates:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm prose:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm sfxbind:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm shapes:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm iconplan:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm formreceipts:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm beam:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm archetypes:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm enableaudit:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm review:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm declshape:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm decor:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm speedlists:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm locust:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm w3a:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm board:roll:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm ruleslip:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm receipt:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm handback:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm clipdeg:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm apcoeffdiff:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm decor:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm appearance:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm ptokens:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm coord:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm voices:check",
+        "exit": 0
+      },
+      {
+        "command": "pnpm combat:check",
+        "exit": 0
+      }
+    ]
+  },
+  "editorRelease": {
+    "status": "passed",
+    "tests": 599,
+    "productionBuild": "passed"
+  },
+  "coord": {
+    "status": "passed",
+    "packets": 31
+  },
+  "assetTests": {
+    "inventory": 10,
+    "currentResources": 11,
+    "popp": 13
+  },
+  "boundary": "Local branch checks only; no merge or production deployment verified."
+}

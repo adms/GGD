@@ -24,12 +24,12 @@ def read_ledger() -> dict:
     summary = payload.get("summary", {})
     if (summary.get("defined"), summary.get("closed"), summary.get("remaining")) != (5, 1, 4):
         raise ValueError("Popp gap ledger does not preserve the verified 1 closed / 4 remaining boundary")
-    if summary.get("runtimeBindingsAddedByThisWorkflow") != 0:
-        raise ValueError("Popp gap ledger must keep approved VFX documents candidate-only")
+    if summary.get("runtimeBindingsAddedByThisWorkflow") != 7:
+        raise ValueError("Popp gap ledger must retain seven approved reconstruction relationships")
     if (
         summary.get("closureGates") != 20
-        or summary.get("closureGatesVerified") != 8
-        or summary.get("closureGatesBlocked") != 12
+        or summary.get("closureGatesVerified") != 9
+        or summary.get("closureGatesBlocked") != 11
     ):
         raise ValueError("Popp gap ledger must pin the current per-condition gate boundary")
     if (
@@ -75,7 +75,7 @@ def render(payload: dict) -> str:
         f"{summary['vfxVisuallyAccepted']}；其中 {summary['vfxBindingProposals']} 個已依來源名稱整理成 Q/W/R 審查提案，"
         f"另 {summary['vfxReserveCandidates']} 個保留未配對。事件音訊候選 {summary['eventAudioCandidates']} 個，逐項聽審 "
         f"{summary['eventAudioReviewed']}。本流程新增的 VFX 技能綁定為 {summary['runtimeBindingsAddedByThisWorkflow']}；"
-        "Q/W/R 維持既有共用 VFX，精確原生 Niagara 時序與 root-specific mesh layer 仍明列缺口。",
+        "Q/W/R 使用原作粒子貼圖的 GGD 重建適配，精確原生 Niagara 時序與 root-specific mesh layer 仍明列缺口。",
         f"音訊技術收尾已由 manifest 流程產生 {summary['eventAudioGameFormatFiles']} 份不同 MP3，保留 "
         f"{summary['eventAudioCandidateRelationshipsConverted']} 筆候選關係並整理成 {summary['eventAudioNativeEventRows']} 個原生事件。"
         f"由於核准收據沒有指定唯一 GGD 技能／狀態目標，{summary['eventAudioRuntimeBlockers']} 筆仍逐項阻擋 runtime 綁定；正式站部署為 0。",
