@@ -50,6 +50,10 @@ function n(value: number): string {
   return value.toLocaleString("en-US");
 }
 
+function mib(bytes: number): string {
+  return (bytes / 1024 / 1024).toFixed(2);
+}
+
 function fingerprint(): string {
   const hash = createHash("sha256");
   for (const rel of SOURCES) {
@@ -117,6 +121,7 @@ function render(): string {
 | Mesh／draw call | ${n(HERO_MODEL_BUDGET.meshes.warn)} | ${n(HERO_MODEL_BUDGET.meshes.limit)} | 匯出後每個 node × primitive；材質拆分通常會增加 primitive |
 | 貼圖最長邊 | ${n(HERO_MODEL_BUDGET.texEdge.warn)} px | ${n(HERO_MODEL_BUDGET.texEdge.limit)} px | 每張內嵌貼圖的 max(width, height) |
 | 單段動畫通道 | ${n(HERO_MODEL_BUDGET.channels.warn)} | ${n(HERO_MODEL_BUDGET.channels.limit)} | 所有 clip 中最重的一段；不是全部 clips 相加 |
+| 貼圖 VRAM | ${mib(HERO_MODEL_BUDGET.vramBytes.warn)} MiB | ${mib(HERO_MODEL_BUDGET.vramBytes.limit)} MiB | 每張 寬×高×4（RGBA8）×4/3（mip）全部加總；PNG/JPEG 壓縮不減少 VRAM。每張都過最長邊的模型，張數多了仍會超線 |
 | GLB 單檔 | — | ${n(MODEL_UPLOAD_LIMITS.fileBytes / 1024 / 1024)} MiB | 完整、自含的 glTF 2.0 GLB |
 
 最低支援目標由設定檔指定為 **${lod.platformPolicy.minDevice}／${lod.platformPolicy.tabletFpsCap} fps**；手機政策是 \`${lod.platformPolicy.phone}\`。

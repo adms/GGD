@@ -14,7 +14,7 @@ import { createHash } from "node:crypto";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { HERO_MODEL_BUDGET } from "../content/modelUpload/budget";
+import { HERO_MODEL_BUDGET, textureVramBytes } from "../content/modelUpload/budget";
 import { modelUploadFixture } from "../content/modelUpload/fixtures";
 import { encodeUploadGlb } from "../content/modelUpload/glb";
 
@@ -22,13 +22,13 @@ const SCRIPT = resolve(__dirname, "../../../../tools/w3x-import/model_intake.py"
 /** ⭐ 從出貨上限推導（⛔ 不寫死 512：上限一調，夾具就會用錯的訊息紅）。 */
 const EDGE = HERO_MODEL_BUDGET.texEdge.limit * 2;
 
-/** 最小 GLB：一張 PNG（只有 IHDR 的寬高，`inspect()` 讀的就是那 8 個位元組）。 */
-function glb(edge: number): Buffer {
+/** 最小 GLB：`images` 張 PNG（共用一段只有 IHDR 寬高的位元組，`inspect()` 讀的就是那 8 個位元組）。 */
+function glb(edge: number, images = 1): Buffer {
   const png = Buffer.alloc(24);
   Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(png);
   png.writeUInt32BE(edge, 16);
   png.writeUInt32BE(edge, 20);
-  const text = JSON.stringify({ asset: { version: "2.0" }, images: [{ bufferView: 0, mimeType: "image/png" }], bufferViews: [{ buffer: 0, byteLength: 24 }], buffers: [{ byteLength: 24 }] });
+  const text = JSON.stringify({ asset: { version: "2.0" }, images: Array.from({ length: images }, () => ({ bufferView: 0, mimeType: "image/png" })), bufferViews: [{ buffer: 0, byteLength: 24 }], buffers: [{ byteLength: 24 }] });
   const u32 = (...values: number[]) => Buffer.from(new Uint32Array(values).buffer);
   const chunk = (type: number, data: Buffer) => Buffer.concat([u32(data.length, type), data]);
   const body = Buffer.concat([chunk(0x4e4f534a, Buffer.from(text.padEnd(Math.ceil(text.length / 4) * 4, " "))), chunk(0x004e4942, png)]);
@@ -87,5 +87,29 @@ describe("模型入庫棘輪的分母以關係判定（GH#1263）", () => {
     const frozen = scan(false, files);
     expect(frozen.out, frozen.out).toMatch(/⭐ ab_gltf —— [^\n]*：0 顆/);
     expect(frozen.code, frozen.out).toBe(0);
+  }, 120_000);
+});
+
+describe("GH#1174 英雄貼圖 VRAM 線 —— python 這一份的上限讀 budget.ts（⛔ 不抄字面值）", () => {
+  it("每張都剛好在邊長上限：塞得下的張數 ⇒ 不叫；多一張 ⇒ 叫", () => {
+    const edge = HERO_MODEL_BUDGET.texEdge.limit;
+    const fits = Math.floor(HERO_MODEL_BUDGET.vramBytes.limit / textureVramBytes(edge, edge));
+    const probe = (images: number) => {
+      const content = join(mkdtempSync(join(tmpdir(), "intake-vram-")), "content");
+      const file = join(content, "assets/models/champions/probe.glb");
+      try {
+        mkdirSync(dirname(file), { recursive: true });
+        writeFileSync(file, glb(edge, images));
+        const r = spawnSync("python3", [SCRIPT, file, "--no-validate", "--content", content], { encoding: "utf8" });
+        return `${r.stdout}${r.stderr}`;
+      } finally {
+        rmSync(dirname(content), { recursive: true, force: true });
+      }
+    };
+    const under = probe(fits), over = probe(fits + 1);
+    // ⭐ 量尺自證：先確認它真的掃到了（exit 2「讀不到預算」也不會印 VRAM —— 那不是「沒超線」）。
+    expect(under, under).toMatch(/⭐ 掃了 1 顆/);
+    expect(under).not.toMatch(/英雄貼圖 VRAM/);
+    expect(over, over).toMatch(/英雄貼圖 VRAM/);
   }, 120_000);
 });

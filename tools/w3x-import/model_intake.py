@@ -19,8 +19,8 @@
  ④ **貼圖整組掉成佔位圖** —— BLP 住在子目錄時查不到 ⇒ 靜默退回 8×8。
     ⚠️ 它與「這顆本來就沒貼圖」量起來一模一樣，所以要**單獨**問。
  ⑤ **正式採用與 runtime 診斷分流** —— 已註冊英雄身體或 `champions/` 路徑的模型，
-    三角面正式採用門檻讀 `modelUpload/adoptionPolicy.json`；draw call、貼圖與 28k
-    runtime 容量仍對照 `HERO_MODEL_BUDGET`，但 runtime 上限不能代替正式採用門檻。
+    三角面正式採用門檻讀 `modelUpload/adoptionPolicy.json`；draw call、貼圖邊長、英雄貼圖 VRAM
+    （GH#1174）與 28k runtime 容量仍對照 `HERO_MODEL_BUDGET`，但 runtime 上限不能代替正式採用門檻。
 
 用法：
     python3 tools/w3x-import/model_intake.py <路徑…>            # 只檢查（預設）
@@ -37,10 +37,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 #: ⚠️ `--content` 只給量尺自證的測試換一棵假內容樹（作者／CI 才會轉 ⇒ 旗標，⛔ 不進後台）。
 CONTENT = os.path.join(ROOT, "content")
 DEFAULT_SCAN = os.path.join(CONTENT, "assets", "models")
-# ⭐ runtime 容量診斷，與 `HERO_MODEL_BUDGET` 同步。28k 是較寬的 renderer
-#    safety ceiling，⛔ 不能代替 hero 正式採用規則；後者動態讀 ADOPTION_POLICY_JSON。
-#    改 runtime 上限時兩邊仍要一致，而 `--check` 會由 _budget_drift 擋漂移。
-BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 256}
+# ⭐ runtime 容量診斷的上限（各格的 `limit`）—— `main()` 開頭由 `read_hero_budget()` 從
+#    `budget.ts` 的 `HERO_MODEL_BUDGET` 讀進來，⛔ 不在這裡抄字面值（GH#1174，見該函式）。
+#    28k 是較寬的 renderer safety ceiling，⛔ 不能代替 hero 正式採用規則；後者動態讀 ADOPTION_POLICY_JSON。
+BUDGET: dict = {}
 #: ⭐ 兩個**量得出來**的貼圖例外 —— 它們不吃 `ArenaScene.SIGHTLINE_HEIGHT_CAP`(2.4 單位)，
 #: 在畫面上真的更大。⛔ 不是「重要模型」的白名單:每一列都寫得出螢幕像素高。
 #: 唯一真源在 `tools/model-budget/limits.ts` 的 `TEX_EDGE_EXEMPT`。
@@ -314,6 +314,46 @@ def tex_cap(path: str) -> int:
     return BUDGET["texEdge"]
 BUDGET_TS = os.path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts")
 ADOPTION_POLICY_JSON = os.path.join(ROOT, "packages/shared/src/content/modelUpload/adoptionPolicy.json")
+#: 這支檢查會用到的每一格 —— 讀回來缺任何一格就停（⛔ 不當成「沒有上限」）。
+BUDGET_KEYS = ("tris", "meshes", "texEdge", "vramBytes")
+
+
+def read_hero_budget() -> dict:
+    """⭐ 從出貨的 `HERO_MODEL_BUDGET` 讀每一格的 `limit` —— ⛔ 不在 python 裡抄一份（第〇·四守則）。
+
+    ⚠️ GH#1174 之前這裡是字面值 `{"tris": 28_000, "meshes": 6, "texEdge": 256}` ＋ `_budget_drift()` 用正則比對 TS。
+    ⛔ 而正則只讀得到**寫成字面值**的那幾格：`meshes` 是推導的（場景 mesh 線 × 25% ÷ 12）⇒ 從來沒被比對過；
+    新的 `vramBytes` 也是推導的（場景 VRAM 線 ÷ 12）⇒ 同一個盲點會多一格。⇒ 讀出貨的物件本身（同 `model_selections()` 的做法）。
+    """
+    script = ("const { HERO_MODEL_BUDGET: b } = await import(process.argv[1]);"
+              "process.stdout.write(JSON.stringify(Object.fromEntries(Object.entries(b).map(([k, v]) => [k, v.limit]))));")
+    out = subprocess.run(["node", "--import", "tsx", "--input-type=module", "-e", script, BUDGET_TS],
+                         cwd=ROOT, capture_output=True, text=True)
+    if out.returncode != 0:
+        raise ValueError(f"讀不到 {os.path.relpath(BUDGET_TS, ROOT)} 的 HERO_MODEL_BUDGET：{out.stderr.strip()[-300:]}")
+    budget = json.loads(out.stdout)
+    missing = [k for k in BUDGET_KEYS if not isinstance(budget.get(k), (int, float))]
+    if missing:
+        raise ValueError(f"HERO_MODEL_BUDGET 缺少 {missing}（讀到 {budget}）")
+    return budget
+
+
+def _image_size(d: bytes):
+    """內嵌貼圖的 (寬, 高) —— PNG 與 JPEG（上傳閘 `inspectModelUpload` 只收這兩種）；其餘回 None。"""
+    if d[:8] == b"\x89PNG\r\n\x1a\n" and len(d) >= 24:
+        return struct.unpack(">II", d[16:24])
+    if d[:2] == b"\xff\xd8":
+        i = 2
+        while i + 9 < len(d):
+            if d[i] != 0xFF:
+                i += 1
+                continue
+            marker, length = d[i + 1], struct.unpack(">H", d[i + 2:i + 4])[0]
+            if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+                h, w = struct.unpack(">HH", d[i + 5:i + 9])
+                return w, h
+            i += 2 + length
+    return None
 
 
 def read_hero_adoption_policy() -> dict:
@@ -378,14 +418,16 @@ def inspect(path):
             acc = j["accessors"][pr["indices"]] if "indices" in pr else j["accessors"][pr["attributes"]["POSITION"]]
             if pr.get("mode", 4) == 4:
                 tris += acc["count"] // 3
-    tex, n_img = 0, len(j.get("images", []))
+    tex, vram, n_img = 0, 0, len(j.get("images", []))
     for im in j.get("images", []):
         bv = j["bufferViews"][im["bufferView"]]
         o = bv.get("byteOffset", 0)
-        d = bytes(b[o:o + bv["byteLength"]])
-        if d[:8] == b"\x89PNG\r\n\x1a\n":
-            w, h = struct.unpack(">II", d[16:24])
+        size = _image_size(bytes(b[o:o + bv["byteLength"]]))
+        if size:
+            w, h = size
             tex = max(tex, w, h)
+            # ⭐ GH#1174 —— 同 `budget.ts::textureVramBytes`：RGBA8 × 4/3（mip），逐張加總。
+            vram += round(w * h * 4 * (4 / 3))
     zero = []
     for a in j.get("animations", []):
         span = 0.0
@@ -393,7 +435,7 @@ def inspect(path):
             span = max(span, (j["accessors"][s["input"]].get("max") or [0])[0])
         if span <= 0:
             zero.append(a.get("name", "?"))
-    return {"draws": draws, "distinct": len(keys), "tris": tris, "texEdge": tex,
+    return {"draws": draws, "distinct": len(keys), "tris": tris, "texEdge": tex, "vram": vram,
             "images": n_img, "zeroClips": zero, "anims": len(j.get("animations", [])),
             "skins": len(j.get("skins", [])), "skinned": skinned}
 
@@ -477,6 +519,12 @@ def file_issues(f, s, v, heroes, adoption):
                 f"⛔ 英雄模型三角面 {s['tris']:,} 超過正式採用門檻 {trigger:,}；"
                 f"請從保留原檔另產生 ≤{target:,} 面候選並完成視覺與骨架驗收"
             )
+        # ⭐ GH#1174 —— 每張都過邊長上限，張數一多照樣吃爆 VRAM（每支額度＝場景 VRAM 線 ÷ 12 席）。
+        if s["vram"] > BUDGET["vramBytes"]:
+            issues.append(
+                f"⛔ 英雄貼圖 VRAM {s['vram'] / 1048576:.2f} MiB > {BUDGET['vramBytes'] / 1048576:.2f} MiB"
+                "（RGBA8＋mip 逐張加總）⇒ 貼圖圖集走 tools/model-budget/optimize.ts 離線批次"
+            )
     if s["tris"] > BUDGET["tris"]:
         issues.append(
             f"⛔ runtime 容量診斷：三角面 {s['tris']:,} > {BUDGET['tris']:,}；"
@@ -491,24 +539,6 @@ def file_issues(f, s, v, heroes, adoption):
         elif s["skinned"] < s["draws"]:
             issues.append(f"⛔ {s['draws'] - s['skinned']}/{s['draws']} 塊網格沒有蒙皮權重（缺 JOINTS_0）")
     return issues
-
-
-def _budget_drift():
-    """⭐ python 這一份上限與 TS 那一份對不上 ⇒ 喊出來（⛔ 不要靜默用舊值）。"""
-    try:
-        src = open(BUDGET_TS, encoding="utf-8").read()
-    except OSError:
-        return None
-    import re
-    got = {}
-    m = re.search(r"tris:\s*\{\s*warn:\s*[\d_]+,\s*limit:\s*([\d_]+)", src)
-    if m:
-        got["tris"] = int(m.group(1).replace("_", ""))
-    m = re.search(r"texEdge:\s*\{\s*warn:\s*[\d_]+,\s*limit:\s*([\d_]+)", src)
-    if m:
-        got["texEdge"] = int(m.group(1).replace("_", ""))
-    bad = {k: (BUDGET[k], v) for k, v in got.items() if BUDGET.get(k) != v}
-    return bad or None
 
 
 def main() -> int:
@@ -540,10 +570,11 @@ def main() -> int:
         print("⛔ 沒有指定任何 .glb（用 --all 掃出貨模型目錄）")
         return 2
 
-    drift = _budget_drift()
-    if drift:
-        print(f"⛔ 預算上限與 {os.path.relpath(BUDGET_TS, ROOT)} 對不上：{drift}")
-        print("   ⇒ 兩邊同一個數字要一致，⛔ 不要在這裡用舊值繼續掃。")
+    try:
+        BUDGET.update(read_hero_budget())
+    except (OSError, ValueError) as exc:
+        print(f"⛔ {exc}")
+        print("   ⇒ 預算上限沒有可驗證真源，停止 intake；⛔ 不退回任何舊值（跑不起來與全部通過長得一樣）。")
         return 2
 
     try:

@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
 
+import { textureVramBytes } from "../../packages/shared/src/content/modelUpload/budget";
 import { geometryDiff, measureGlb, readGlb, readImages, rebuildGlb } from "./glb";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -38,6 +39,13 @@ describe("measureGlb reproduces the cross-checked numbers", () => {
     expect(m.joints).toBe(15);
     expect(m.clips).toBe(7); // idle/run/attack/cast/hurt/death + cheer
     expect(m.materials).toBe(1); // ONE draw call
+  });
+
+  it("GH#1174: the import gate's texture VRAM formula agrees with this parser on a shipped textured model", () => {
+    // ⭐ 兩份實作、一條對帳（本檔檔頭的做法）：匯入閘 `heroModelBudgetIssues` 讀 budget.ts 那一份。
+    const images = readImages(readGlb(TOWER));
+    expect(images.length).toBeGreaterThan(0);
+    expect(images.reduce((sum, img) => sum + textureVramBytes(img.w, img.h), 0)).toBe(measureGlb(TOWER).vramBytes);
   });
 
   it("shipping triangle total across content/assets/models matches the baseline", () => {
