@@ -723,12 +723,12 @@
       }
     ]
   },
-  "frozenChr0430DaiV5Candidate": {
-    "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v5",
+  "frozenChr0430DaiV6Candidate": {
+    "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v6-alpha",
     "gitModel": {
-      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
-      "bytes": 3010392,
-      "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+      "bytes": 3010632,
+      "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d"
     },
     "metrics": {
       "triangles": 7930,
@@ -741,30 +741,38 @@
     "validation": {
       "khronosErrors": 0,
       "threeViewWebgl": true,
-      "visualReview": "pending-owner-review",
-      "motionReview": "blocked-no-reviewed-motion-binding"
+      "visualReview": "pending-owner-v6-alpha-normalization-review",
+      "motionReview": "blocked-no-reviewed-motion-binding",
+      "stageBackupReadbackVerified": true
     },
     "evidence": [
       {
-        "relativePath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/freeze-receipt.json",
-        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/freeze-receipt.json",
+        "relativePath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/freeze-receipt.json",
         "exists": true,
-        "bytes": 1184,
-        "sha256": "68bf40ec442208f56cbf8981f9ce054b9646ffa864b99b07d552f3f0cbc432ad"
+        "bytes": 1084,
+        "sha256": "79cd425e79e2fe4799cbabe9e4ac10bc5985f253ce5ac3b0c3176381ebcaafd8"
       },
       {
-        "relativePath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/validation.json",
-        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/validation.json",
+        "relativePath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/validation.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/validation.json",
         "exists": true,
-        "bytes": 4057,
-        "sha256": "5f4744a9be075dddc8401c83518702a52f4cda96d06db24c588dcf6d47c23a43"
+        "bytes": 3601,
+        "sha256": "6aa425a4a8505789d34ba51d220dff434702a3ec28319c26fbb0024b6848f2fa"
       },
       {
-        "relativePath": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
-        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+        "relativePath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/visual-review.json",
         "exists": true,
-        "bytes": 3010392,
-        "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+        "bytes": 2339,
+        "sha256": "2535706f451eceedee50693f196acac9ce363b8be7b5c977726a27d5aaaa00a4"
+      },
+      {
+        "relativePath": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+        "exists": true,
+        "bytes": 3010632,
+        "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d"
       }
     ]
   },
@@ -825,13 +833,13 @@
     "result": "no eligible pilot",
     "closestCandidate": "chr0430 Dai JUMP FORCE original-source bundle",
     "modelReadiness": [
-      "V5 material-faithful candidate is frozen in Git: 7,930 triangles, 6 draw primitives, 256px textures, 159 joints, Khronos 0 errors and complete three-view WebGL evidence",
+      "V6 alpha-normalized candidate is frozen in Git: 7,930 triangles, 6 draw primitives, 256px textures, 159 joints, Khronos 0 errors, complete three-view WebGL evidence and a full-readback-verified stage archive",
       "All 20 source mesh objects remain represented; the 15 opaque material primitives use separate atlas tiles while eye, lens, eyeshadow, glass and hair remain separate"
     ],
     "modelBlockers": [
       "The current native model export has 0 animation clips",
       "No owner-reviewed borrowed or same-work motion set is bound, so a six-state clipMap cannot be registered without fabricating actions",
-      "V5 visual review remains pending in its frozen validation receipt"
+      "V6 owner visual review remains pending despite the completed technical render evidence"
     ],
     "vfxBlockers": [
       "Preserved particle, mesh, texture and material packages have no converted Unreal graph/parameter data or skill-event bindings."

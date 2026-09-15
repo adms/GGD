@@ -81,7 +81,7 @@ def block(plan: dict, audit: dict | None = None) -> str:
         "",
         f"本機 mirror 已固定在 `{mirror['rawGameRoot']}`：**{mirror['fileCount']:,} 檔／{mirror['bytes']:,} bytes**，六顆 authority PAK 的檔名、bytes 與 SHA-256 已 **{mirror['verifiedPakCount']}/6** 逐檔通過。完整索引與收據見 `{mirror['evidenceGitPath']}`；S3 狀態為 `{s3_status}`（{s3_note}）。後續抽取不再需要 LV99 分享。",
         "",
-        f"另外的未加密唯讀稽核已核對 Streaming {audit['frozenStreamingAudio']['sourceCopyIntegrity']['sourceAwbCount']} 個 AWB 與凍結副本完全相同，現有解碼 WAV {audit['frozenStreamingAudio']['decodedWavFiles']:,} 段；逐段說話者、語言、事件皆未審，因此不能綁英雄或技能。`chr0430` 達伊原始擷取與 VFX 套件仍完整保留；它的目前候選尚未滿足 draw-call 與動作要求。",
+        f"另外的未加密唯讀稽核已核對 Streaming {audit['frozenStreamingAudio']['sourceCopyIntegrity']['sourceAwbCount']} 個 AWB 與凍結副本完全相同，現有解碼 WAV {audit['frozenStreamingAudio']['decodedWavFiles']:,} 段；逐段說話者、語言、事件皆未審，因此不能綁英雄或技能。`chr0430` 達伊原始擷取與 VFX 套件仍完整保留；目前 v6 候選已通過面數、draw、貼圖與三視圖技術驗證，但仍缺動作綁定與 owner 視覺核准。",
         "",
         "| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |",
         "|---|---:|---:|---:|---|",
