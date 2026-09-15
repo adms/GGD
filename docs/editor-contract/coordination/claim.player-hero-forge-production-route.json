@@ -1,0 +1,88 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.player-hero-forge-production-route",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "a3a179e09940b4aed6207a2ecca30845231abdab",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "正式 edge 提供玩家限定英雄鑄造器並保留內部編輯器邊界",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "production edge 的預設 build 現在把 player mode 的英雄鑄造器放入 /editor/，HTML 帶 player-hero-forge 標記；PlayerHeroApp 只提供創作英雄與我的作品，未知或內部 editor 路徑會回到 /editor/hero-forge。完整內容編輯器仍只在 GGD_INCLUDE_EDITOR=1 時取代玩家 bundle，既有 production build path 都沒有開啟該旗標。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor build:player",
+        "expectedExit": 0
+      },
+      "commit": "bb4094e1e10c4994be2aaa4e3ba79bc39deaeb02",
+      "evidence": [
+        "apps/editor/src/PlayerHeroApp.tsx",
+        "apps/editor/vite.config.ts",
+        "docker/edge.Dockerfile",
+        "nginx/nginx.conf",
+        "deploy/helm/ggd/files/nginx.conf"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "玩家作品頁只列 hero 草稿，保留本機版本、雲端作品、投稿入口與既有社群英雄範例；完整 Editor 92 個測試檔共 600 tests passed、1 skipped，新增的玩家草稿隔離測試包含在內。另以真正 nginx 容器驗證 production 與 dev config：/editor/ 及 /editor/hero-forge 由 editor SPA 接手，不再落入 game client SPA，dev include 沒有重複 location。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/drafts/DraftLibrary.test.tsx src/readmeContract.test.ts --pool forks --maxWorkers 1 --minWorkers 1",
+        "expectedExit": 0
+      },
+      "commit": "bb4094e1e10c4994be2aaa4e3ba79bc39deaeb02",
+      "evidence": [
+        "apps/editor/src/drafts/DraftLibrary.test.tsx",
+        "tools/testrunner/internal/infracheck/editor_exposure_test.go",
+        "tools/testrunner/internal/infracheck/nginx_test.go",
+        "nginx/dev/editor.conf"
+      ]
+    }
+  ],
+  "validation": {
+    "requiredGatesStartedConcurrently": true,
+    "results": [
+      {
+        "command": "pnpm --filter @ggd/editor typecheck",
+        "exit": 0,
+        "detail": "TypeScript check passed."
+      },
+      {
+        "command": "pnpm --filter @ggd/editor test -- --pool forks --maxWorkers 1 --minWorkers 1",
+        "exit": 0,
+        "detail": "92 test files passed; 600 tests passed and 1 skipped."
+      },
+      {
+        "command": "pnpm --filter @ggd/editor build:player",
+        "exit": 0,
+        "detail": "Player production bundle built with the player-hero-forge HTML marker."
+      },
+      {
+        "command": "GOCACHE=/private/tmp/ggd-player-hero-go-cache go test -count=1 ./internal/infracheck/... (from tools/testrunner)",
+        "exit": 0,
+        "detail": "Production and dev nginx syntax/routing plus Helm copy sync passed in the real container test."
+      },
+      {
+        "command": "browser smoke at http://127.0.0.1:5290/editor/hero-forge",
+        "exit": 0,
+        "detail": "Rendered hero name, concept, origin, six-slot workflow, model/version controls, local works and authenticated submission controls. /editor/forge canonicalized to /editor/hero-forge without exposing the internal forge."
+      }
+    ],
+    "baselineEvidence": "Before this branch, https://ggd.adms.ai/editor/hero-forge returned the game-client login SPA even though the URL returned HTTP 200. This packet proves the branch build and local edge route only; Main must merge, deploy, and verify the production HTML marker before issue #1270 can close."
+  },
+  "ownerQuotes": [
+    {
+      "date": "2026-09-15",
+      "text": "玩家網頁版英雄鑄造器 完全不可用"
+    },
+    {
+      "date": "2026-09-15",
+      "text": "你要記得開票 跟 分支讓 main 可以合併"
+    }
+  ],
+  "asks": [
+    "請 Main review 並合併此 PR，觸發正式 edge image 重建與部署。",
+    "部署後請確認 https://ggd.adms.ai/editor/hero-forge 的 HTML 含 meta[name=ggd-app][content=player-hero-forge]，畫面顯示 GGD 英雄鑄造器而不是遊戲登入頁；確認後在 #1270 留下版本證據並關票。"
+  ]
+}
