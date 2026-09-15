@@ -100,7 +100,10 @@ export class ModelVersions {
    */
   private async normalize(source: { doc: ModelDoc; bytes: Uint8Array }): Promise<{ doc: ModelDoc; bytes: Uint8Array }> {
     try {
-      const { bytes, report } = await normalizeUploadedModel(source.bytes, { resizeImage: resizeImageWithFfmpeg });
+      // ⛔ 來源宣告了 hiddenPrimitives 就不合併 primitive（合併會重排索引，被藏的那塊會跟本體接成一塊）—— GH#1173
+      const { bytes, report } = await normalizeUploadedModel(source.bytes, {
+        resizeImage: resizeImageWithFfmpeg, preservePrimitiveIndices: (source.doc.hiddenPrimitives?.length ?? 0) > 0,
+      });
       if (report.texturesOverCap.length) {
         console.warn(`[modelVersions] ${source.doc.id}：${report.texturesOverCap.length} 張貼圖縮不動`
           + `（最長邊 ${report.texturesOverCap.join("/")}）—— 縮圖器回了 null，檢查 ffmpeg。`);
