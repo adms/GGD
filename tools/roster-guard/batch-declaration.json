@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-roster-batch-declaration@1",
+  "note": "⭐ GH#1227 上架名單的**逐群宣告**。⛔ 這裡**不抄任何一份名單**（第〇·四守則）：批次成員讀 docs/editor-contract/社群英雄126名上架狀態.md 的逐節表、上架讀 starter.go 的 starterChampions、下架讀 content/config/roster.json、待重上架讀 COMMUNITY_ACQUIRED_LEGACY、變身態讀卡上自己的 transform。⭐ 這份只寫**推導不出來的東西**：owner 的逐字範圍與每一批的人數、每一批在 git 上的狀態（starter: all＝整批在 starterChampions／none＝整批不在）、原作班底的人數、回收桶的逐張 id、以及「名單有、卡沒有」的豁免（每一列帶可反駁的理由）。閘：packages/shared/src/ops/rosterBatchDeclaration.test.ts ＋ pnpm roster:check（邏輯在 packages/shared/testkit/rosterDeclaration.ts）。⚠️ 某一批真的進了 starterChampions（例：#1185 LoL 第二批、#1205）⇒ 同一個 commit 把那一批的 starter 從 none 改成 all；⛔ 不要改測試。",
+  "ownerScope": {
+    "quote": "codex編輯器新上架名單範圍\n英雄範圍：\n\n1. 第一批社群英雄 37 名\n2. 第二批社群英雄 37 名\n3. LoL 第一批 7 名\n4. LoL 第二批 11 名\n5. 已取得模型之新增／重新上架英雄 34 名 合計 126 名。",
+    "said": "2026-09-11 12:17",
+    "source": "docs/_daily/2026-09-11.md:63（id:2f1fb70a；分行原文見 docs/_daily/ledger-source_temp_20260911.md:214）",
+    "authority": "docs/editor-contract/社群英雄126名上架狀態.md —— owner 2026-09-11 13:27 貼的是 GGD-community-acquired-heroes 那一份的路徑（docs/_daily/2026-09-11.md:32），這裡讀本 repo 的同名副本"
+  },
+  "batches": [
+    { "item": 1, "section": "第一批社群英雄", "expected": 37, "starter": "all", "ticket": "GH#1165" },
+    { "item": 2, "section": "第二批社群英雄", "expected": 37, "starter": "all", "ticket": "GH#1165" },
+    { "item": 3, "section": "LoL 第一批", "expected": 7, "starter": "all", "ticket": "GH#1158" },
+    { "item": 4, "section": "LoL 第二批", "expected": 11, "starter": "none", "ticket": "GH#1185" },
+    { "item": 5, "section": "已取得模型／重上架舊角", "expected": 34, "starter": "none", "ticket": "GH#1205" }
+  ],
+  "original": {
+    "name": "原作班底",
+    "rule": "starterChampions 裡不屬於上面任何一批的 id（含 roster.json 的 hiddenChampions）",
+    "expected": 49,
+    "provenance": "`git show 4b5713641~1:apps/platform/internal/curation/starter.go` 的 starterChampions —— 社群第一批上架的前一刻，49 名，與今天的原作班底逐名相同（2026-09-15 量）。⚠️ 這個數字不是 owner 說的，是 git 歷史量到的；原作下架一位就在同一個 commit 改它"
+  },
+  "legacyUnlisted": {
+    "name": "回收桶",
+    "reason": "這一類的定義就是「不在任何名單上」：不在 starterChampions、retiredChampions、COMMUNITY_ACQUIRED_LEGACY、126 名文件，也不是任何一張卡的變身態 ⇒ 狀態推導不出來，只能逐張明寫。⭐ 明寫的價值是反方向：一張沒有人決定過的卡掉進 content/_legacy/champions 會紅，⛔ 不會安靜地變成回收桶。變身態⛔ 不列（跟著本體）。⚠️ 「多半是 #323／#479 整批搬進 legacy 的不可選原作」是推論，沒有逐張核對",
+    "ownerQuote": "owner 2026-09-05 12:29（docs/_daily/2026-09-05.md:45，逐字）：「你應該知道我們有個 leagcy 資料夾可以運用 但留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」",
+    "ids": [
+      "godie-e00j", "godie-e00v", "godie-e012", "godie-e015", "godie-ecen", "godie-ekee", "godie-ewrd",
+      "godie-h001", "godie-h022", "godie-h02n", "godie-h02s", "godie-h02y", "godie-h02z", "godie-harf",
+      "godie-n01l", "godie-naka", "godie-ntin",
+      "godie-o01z", "godie-o02n", "godie-o02s", "godie-o02w", "godie-obla", "godie-opgh", "godie-oshd", "godie-othr",
+      "godie-u00b", "godie-u012", "godie-u01q", "godie-uwar"
+    ]
+  },
+  "missingCardExemptions": [
+    {
+      "id": "godie-eevi",
+      "reason": "COMMUNITY_ACQUIRED_LEGACY 把它列為重上架舊角（劍心拔刀齋），⛔ 而兩棵樹都沒有它的卡 —— 它在 GGD 從來沒有卡（#1205 註明 Eevi 不等同 godie-e012 佐佐木小次郎）。卡要不要建、還是只走投稿發布，歸 #1205",
+      "refute": "任一棵樹出現 godie-eevi.json，或它離開 COMMUNITY_ACQUIRED_LEGACY ⇒ 這一列作廢，閘會紅要你刪掉它"
+    }
+  ]
+}
