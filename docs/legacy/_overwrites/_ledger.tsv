@@ -10747,3 +10747,5 @@ overwrite_temp_20260915-203550	Edit	SKIP(git 有)	packages/shared/src/sim/SimWor
 20260915-204206	gen_board	SKIP(內容相同)	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html
 20260915-204644	gen_board	SKIP(內容相同)	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html
 20260917-004031	gen_board	產生器覆蓋前	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html	/private/tmp/ggd-integ-nc/docs/legacy/_overwrites/overwrite_temp_20260917-004031/docs/_release/ggd-board.html
+20260917-010351	preserve.sh	SKIP(git 有)	docs/_release/戰情版-20260917.md
+20260917-010352	preserve.sh	SKIP(git 有)	docs/_execution-batches.md
