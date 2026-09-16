@@ -17,6 +17,8 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readStarterRoster } from "../../packages/shared/testkit/starterRoster.ts";
+// ⭐ 變身共用是**執行期**解析的（owner 2026-09-17「變身都用本尊的就好」）⇒ 這裡讀同一支，⛔ 不自己再判一次
+import { resolveVoicePackId } from "../../apps/client/src/audio/selectVoiceLadder.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const LINES = join(ROOT, "content/assets/audio/voices/lines");
@@ -77,11 +79,21 @@ for (const id of roster) {
       : shipped?.textSource
         ? { source: shipped.textSource === "original" ? "原作語音" : "合成", text: shipped.text ?? "" }
         : null;
-  const hasVoicePack = !!voiced[id];
-  const twin = hasVoicePack ? null : packOwners.find((p) => coreName(p.name) === coreName(name) && p.name !== "(沒有英雄檔)");
+  // 遊戲裡這位實際會播誰的包（自己的，或變身對照裡本尊的）
+  const resolved = resolveVoicePackId(manifest, id);
+  const packId = resolved?.id ?? null;
+  const packLines = packId ? Object.keys(voiced[packId]?.lines ?? {}) : [];
+  const hasVoicePack = !!packId;
+  const viaForm = !!packId && packId !== id;
+  const packQuote = packLines.some((k) => k === "quote" || k.startsWith("quote."));
+  // ⭐ owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」
+  const defaultSlot = packQuote ? "quote" : ["victory", "taunt"].find((s) => packLines.includes(s)) ?? packLines[0] ?? null;
+  const twin = viaForm ? { id: packId, name: nameOf(packId) } : null;
   rows.push({
-    id, name, hasVoicePack, twin: twin ? { id: twin.id, name: twin.name } : null,
-    battle, takes: Math.max(orig.length, shipped ? 1 : 0),
+    id, name, hasVoicePack, viaForm, packId, twin,
+    battle: battle ?? (packQuote ? { source: viaForm ? `變身共用 ${packId}` : "語音包", text: "（原檔）" } : null),
+    defaultSlot, packSlots: packLines.length,
+    takes: Math.max(orig.length, shipped ? 1 : 0),
     select: sel ? { text: sel.jpQuote ?? "", real: !!sel.real } : null,
     unsourcedWhy: unsourced[id] ?? "",
     candidates: battle ? [] : candidatesFor(id, name),
@@ -114,19 +126,28 @@ const doc = [
   "",
   `## ⛔⛔ 整包語音都沒有的（${noPack.length} 位）`,
   "",
-  `這 ${noPack.length} 位在 \`voices/champions/MANIFEST.json\` 裡**一格語音都沒有**（⛔ 不只是缺名言）。其中 ${noPackTwin.length} 位的語音包其實做好了，只是掛在**同一個角色的另一個 id** 上（那個 id 沒有上架）⇒ 接過來就有聲音；另外 ${noPackAlone.length} 位本機連同名的包都沒有。`,
+  `⚠️ 這裡算的是**遊戲執行時**真的播得出聲音嗎（\`resolveVoicePackId\`：自己的包，沒有就走變身對照借本尊的）——`,
+  `owner 2026-09-17「變身都用本尊的就好」，那條路本來就是通的：${rows.filter((r) => r.viaForm).length} 位靠它有聲音。下面這 ${noPack.length} 位是**連本尊都沒有**的。`,
   "",
-  "| 英雄 | id | 同角色的語音包 | 那個包幾格 |",
+  "| 英雄 | id |",
+  "|---|---|",
+  ...noPack.map((r) => `| ${cell(r.name)} | \`${r.id}\` |`),
+  "",
+  `### 靠變身共用本尊語音的（${rows.filter((r) => r.viaForm).length} 位，⭐ 已經有聲音）`,
+  "",
+  "| 英雄 | id | 播的是誰的包 | 幾格 |",
   "|---|---|---|---:|",
-  ...noPack.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${r.twin ? `${cell(r.twin.name)} \`${r.twin.id}\`` : "⛔ 沒有"} | ${r.twin ? Object.keys(voiced[r.twin.id]?.lines ?? {}).length : "—"} |`),
+  ...rows.filter((r) => r.viaForm).map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${cell(nameOf(r.packId))} \`${r.packId}\` | ${r.packSlots} |`),
   "",
   `## ⛔ 戰鬥名言缺口（${missBattle.length} 位）`,
   "",
   "「素材庫候選」＝ 語音索引裡同名或已綁定的語音包。⚠️ 同名只是候選，⛔ 不是身分證明；⭐ 一句候選都沒有的，只能借別位英雄的聲音或由 owner 給台詞。",
   "",
-  "| 英雄 | id | 素材庫候選 | 選角名言沒來源的理由 |",
-  "|---|---|---|---|",
-  ...missBattle.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${r.candidates.length ? r.candidates.map((c) => `\`${c.id}\``).join("、") : "⛔ 零"} | ${cell(r.unsourcedWhy) || "—"} |`),
+  "⭐ owner 2026-09-17 的預設規則：**第一順位既有的名言，沒有就用勝利，再沒有就用嘲諷**（下面「預設要用哪一段」照這條算）。",
+  "",
+  "| 英雄 | id | 這位的語音包 | 預設要用哪一段 | 素材庫候選 |",
+  "|---|---|---|---|---|",
+  ...missBattle.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${r.packId ? `\`${r.packId}\`（${r.packSlots} 格）` : "⛔ 沒有"} | ${r.defaultSlot ? `\`${r.defaultSlot}\`` : "⛔ 只能借聲或給台詞"} | ${r.candidates.length ? r.candidates.map((c) => `\`${c.id}\``).join("、") : "⛔ 零"} |`),
   "",
 ].join("\n");
 
