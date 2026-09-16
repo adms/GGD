@@ -393,6 +393,9 @@
       "family": "groundDust",
       "soundLaunch": "wc3.markofchaos"
     },
+    "godie-e00r.w": {
+      "pitchDeg": 35
+    },
     "godie-e00s.q": {
       "family": "burst",
       "tint": [
@@ -1409,7 +1412,7 @@
     },
     "godie-umal.e": {
       "family": "shockwaveRing",
-      "pitchDeg": 89
+      "pitchDeg": 17
     },
     "godie-umal.ex": {
       "family": "shockwaveRing"
@@ -1418,7 +1421,7 @@
       "family": "burst",
       "w3xScale": 1.1,
       "soundLaunch": "wc3.gruntwhat2",
-      "pitchDeg": 89,
+      "pitchDeg": 17,
       "soundImpact": "wc3.peondeath"
     },
     "godie-umal.r": {
