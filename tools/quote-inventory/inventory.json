@@ -1,0 +1,1827 @@
+{
+ "schema": "ggd.champion-quote-inventory@1",
+ "generator": "tools/quote-inventory/gen.mjs",
+ "roster": 130,
+ "battleMissing": 24,
+ "selectMissing": 59,
+ "rows": [
+  {
+   "id": "godie-e001",
+   "name": "蟬在叫人壞掉 - 龍宮禮奈",
+   "battle": {
+    "source": "合成",
+    "text": "かな？かな？……嘘だッ！！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "嘘だ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e002",
+   "name": "亞瑟王 - Saber",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）VOICE_1935"
+   },
+   "takes": 2,
+   "select": {
+    "text": "問おう、あなたが私のマスターか",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e008",
+   "name": "火霧戰士 - 夏娜",
+   "battle": {
+    "source": "合成",
+    "text": "うるさいうるさいうるさい！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "うるさいうるさいうるさい！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00r",
+   "name": "最終泛用人型決戰兵器 - 初號機",
+   "battle": {
+    "source": "合成",
+    "text": "ウオオオオオオオッ！！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "逃げちゃダメだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00s",
+   "name": "白木老樹精 - 白木卡迪那",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "森（もり）の古木（こぼく）、その根で縛（しば）り上（あ）げてやろう。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00w",
+   "name": "神鳴流劍士 - 櫻綻剎那",
+   "battle": {
+    "source": "合成",
+    "text": "お嬢様は、この刹那が必ずお守りします！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "お嬢様は、私が守る",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-edem",
+   "name": "寫輪眼復仇者 - 宇智波佐助",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 5,
+   "select": {
+    "text": "お前を、殺す",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-efur",
+   "name": "揍敵客大家長 - 揍敵客桀諾",
+   "battle": {
+    "source": "合成",
+    "text": "殺しは仕事…感情でやるほど、耄碌しとらんよ。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "もし殺（ころ）したい奴（やつ）がいたら連絡（れんらく）くれ。3割引（さんわりび）きで請（う）け負（お）うぞ？",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-emfr",
+   "name": "魔法老師 - 涅吉。史普林。菲爾德",
+   "battle": {
+    "source": "合成",
+    "text": "ラステル・マ・スキル・マギステル！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "ラス・テル・マ・スキル・マギステル！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-emns",
+   "name": "奇樂 - 夜神月",
+   "battle": {
+    "source": "合成",
+    "text": "僕は…新世界の神となる。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "計画通り",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-etyr",
+   "name": "治癒系公主 - 木乃香",
+   "battle": {
+    "source": "合成",
+    "text": "せっちゃん、だーい好きやで〜！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "うちが、みんな元気にしたげる♪",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ewar",
+   "name": "龍之子 - 天地志狼",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "この乱世、俺が終わらせる！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h00l",
+   "name": "時空勇者 - 林克",
+   "battle": {
+    "source": "合成",
+    "text": "ハイヤーッ！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "ハイヤッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h01n",
+   "name": "開外掛的死神 - 黑崎一護",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 4,
+   "select": {
+    "text": "月牙天衝！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h01u",
+   "name": "亂世癿王者 - 呂布奉先",
+   "battle": {
+    "source": "合成",
+    "text": "天下無双の我が武、とくと見るがいい！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "我が名は呂布、天下無双！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h02k",
+   "name": "國寶級的畜生 - 熊貓",
+   "battle": {
+    "source": "合成",
+    "text": "昼寝と笹はオラの命。邪魔するヤツは頭突きだゾ"
+   },
+   "takes": 1,
+   "select": {
+    "text": "笹をよこせ…でなきゃ、噛むぞ",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h02v",
+   "name": "看似憂鬱的神獸 - 草泥馬",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "この草原は、俺のものだ…メェッ！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hapm",
+   "name": "海克力斯 - Berserker",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 1,
+   "select": {
+    "text": "グオオオオッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hart",
+   "name": "最終幻想 - 克勞德",
+   "battle": {
+    "source": "合成",
+    "text": "興味ないね"
+   },
+   "takes": 1,
+   "select": {
+    "text": "興味ないね",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hgam",
+   "name": "種子神奇寶貝 - 妙蛙種子",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "フシギダネ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hjai",
+   "name": "黑魔導士 - 莉娜因巴斯",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "ドラグ・スレイブ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:46",
+     "name": "莉娜·因巴斯",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "mba:Chara02",
+     "name": "莉娜·因巴斯",
+     "library": "MBA Complete Form 1.60",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "parallel-community-lina-ssbu-ceruleancast:lina-fighter-voice",
+     "name": "Lina fighter voice banks — unreviewed mobile crossover clips",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-hpb1",
+   "name": "獸矛傳承使 - 蒼月潮",
+   "battle": {
+    "source": "合成",
+    "text": "食えるもんなら、食ってみやがれ！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "とらァッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-huth",
+   "name": "超級普烏 - 魔人普烏",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）chr1030_ActVoice#202"
+   },
+   "takes": 3,
+   "select": {
+    "text": "お菓子にしてやる！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hvsh",
+   "name": "梅杜莎 - Rider",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 3,
+   "select": {
+    "text": "騎英の手綱（ベルレフォーン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hvwd",
+   "name": "除魔巫女 - 桔梗",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 2,
+   "select": {
+    "text": "一緒に地獄へ、犬夜叉",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-n003",
+   "name": "黑暗福音 - 依文潔琳",
+   "battle": {
+    "source": "合成",
+    "text": "くくく…私こそ闇の福音、真祖の吸血鬼よ"
+   },
+   "takes": 1,
+   "select": {
+    "text": "凍てつけ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-n00b",
+   "name": "小叮噹 - 哆拉A夢",
+   "battle": {
+    "source": "合成",
+    "text": "ぼく、ドラえもん!"
+   },
+   "takes": 1,
+   "select": {
+    "text": "タケコプター！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-nbbc",
+   "name": "傳說的龍騎士 - 勇者小呆",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "アバンストラッシュ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-audio:JForce_Dai",
+     "name": "小呆／達伊 / Dai",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-english_us-voice",
+     "name": "小呆／達伊／英文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+     "name": "小呆／達伊／何布／波普／英文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-japanese-voice",
+     "name": "小呆／達伊／日文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+     "name": "小呆／達伊／何布／波普／日文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-unclassified",
+     "name": "小呆／達伊／語系待核／unclassified",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-voice",
+     "name": "小呆／達伊／語系待核／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-nonlocalized-sound-effect",
+     "name": "小呆／達伊／非語系音效／sound-effect",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-nonlocalized-sound-effect",
+     "name": "小呆／達伊／何布／波普／非語系音效／sound-effect",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-nsjs",
+   "name": "妖狐藏馬 - 南野秀一",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "薔薇棘鞭殺（ローズウィップ）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o00k",
+   "name": "傲嬌電氣老鼠 - 皮卡娘",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）pikachu16.dsp"
+   },
+   "takes": 3,
+   "select": {
+    "text": "ピカ…ピカチュウ♡",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o00l",
+   "name": "獸神官 - 傑洛士",
+   "battle": {
+    "source": "合成",
+    "text": "それは、秘密です♪"
+   },
+   "takes": 1,
+   "select": {
+    "text": "それは秘密です♪",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o02p",
+   "name": "夢幻之星 - 初音",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）miku4"
+   },
+   "takes": 1,
+   "select": {
+    "text": "みくみくにしてあげる♪",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ofar",
+   "name": "神奇寶貝兒 - 皮卡丘",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）pikachu16.dsp"
+   },
+   "takes": 3,
+   "select": {
+    "text": "ピカチュウ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ogld",
+   "name": "美白大法師 - 黑人牙膏",
+   "battle": {
+    "source": "合成",
+    "text": "汚れは残さない。…あなたも、です。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "その歯、真っ白にしてやろう！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ogrh",
+   "name": "賽亞人 - 悟空",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "オッス！オラ悟空！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:112",
+     "name": "小悟空",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "thunderstore-goku",
+     "name": "孫悟空（一般形態；其他原生形態保留待核）",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-orkn",
+   "name": "電車癡漢 - 臭作",
+   "battle": {
+    "source": "合成",
+    "text": "ヒッヒッヒ…ええ子じゃのう。先生に任せなさい。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "むっふっふ…いいお嬢さんだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-osam",
+   "name": "犬妖 - 殺生丸",
+   "battle": {
+    "source": "合成",
+    "text": "この殺生丸に、斬れぬものなど無い。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "邪魔だ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00h",
+   "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+   "battle": {
+    "source": "合成",
+    "text": "オレの鬼眼を見たな…なら、死んでもらうぜ。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "俺の名は、鬼眼の狂",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00j",
+   "name": "神性的流失 - 賽菲洛斯",
+   "battle": {
+    "source": "合成",
+    "text": "私は…思い出には、ならないさ。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "僕はまた思い出になんかならない",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00k",
+   "name": "邪惡意念集合體 - 死之王",
+   "battle": {
+    "source": "合成",
+    "text": "生は過ち、死こそが救いである。"
+   },
+   "takes": 1,
+   "select": {
+    "text": "死こそが、救いだ…",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00n",
+   "name": "草帽小子 - 蒙其.D.魯夫",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 5,
+   "select": {
+    "text": "海賊王に、俺はなる！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00v",
+   "name": "黑手黨老大 - 基廉列克",
+   "battle": {
+    "source": "合成",
+    "text": "……フンッ。……ヴォアアアッ!!"
+   },
+   "takes": 1,
+   "select": {
+    "text": "逆らう奴は、ぶっ潰す",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ubal",
+   "name": "魔界霸主 - 巴恩大魔王",
+   "battle": {
+    "source": "合成",
+    "text": "知らなかったのか…?大魔王からは、逃げられない…!"
+   },
+   "takes": 1,
+   "select": {
+    "text": "今のはメラゾーマではない…メラだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ucrl",
+   "name": "職業獵人 - 傑 富力士",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "キルアじゃなきゃダメなんだ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-udea",
+   "name": "至尊學長 - 飛鼠先生",
+   "battle": {
+    "source": "合成",
+    "text": "上、上、下、下、左、右、左、右、B、A…チートコード入力完了ぉ！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "えっ、ちょっと待って、チートのテストコードってどれだっけ？",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-udre",
+   "name": "三刀流劍士 - 索隆",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "背中の傷は、剣士の恥だ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:85",
+     "name": "佐罗",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-umal",
+   "name": "北斗神拳掌門人 - 拳四郎",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "お前はもう死んでいる",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-audio:JForce_Kenshiro",
+     "name": "Kenshiro / 拳四郎",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-uvng",
+   "name": "邪眼師 - 飛影",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "邪王炎殺黒龍波！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-zombiex",
+   "name": "聖杯黑泥醬 - 喪標麥可",
+   "battle": {
+    "source": "合成",
+    "text": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー"
+   },
+   "takes": 1,
+   "select": {
+    "text": "カレーも、お前も、全部飲み込んでやる。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-01-20260907",
+   "name": "武藤遊戲",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ずっと俺のターン！"
+   },
+   "takes": 4,
+   "select": {
+    "text": "オシリスの天空竜！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-02-20260907",
+   "name": "八神庵",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）1003448717"
+   },
+   "takes": 3,
+   "select": {
+    "text": "禁千弐百十一式・八稚女！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-03-20260907",
+   "name": "不知火舞",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ごめんあそばせ！"
+   },
+   "takes": 6,
+   "select": {
+    "text": "超必殺忍蜂！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-04-20260907",
+   "name": "空條承太郎",
+   "battle": {
+    "source": "owner 名單",
+    "text": "オラオラオラオラ！"
+   },
+   "takes": 6,
+   "select": {
+    "text": "スタープラチナ・ザ・ワールド！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-05-20260907",
+   "name": "洛克人",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ティウンティウン"
+   },
+   "takes": 1,
+   "select": {
+    "text": "ロックバスター！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-06-20260907",
+   "name": "卡比",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice/kirby20.dsp"
+   },
+   "takes": 3,
+   "select": {
+    "text": "ウルトラソード！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-07-20260907",
+   "name": "西索",
+   "battle": {
+    "source": "owner 名單",
+    "text": "今すぐキミを壊したい…♥"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-08-20260907",
+   "name": "米卡莎",
+   "battle": {
+    "source": "owner 名單",
+    "text": "マフラーを巻いてくれてありがとう"
+   },
+   "takes": 1,
+   "select": {
+    "text": "雷槍！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-09-20260907",
+   "name": "赫蘿",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ぬしと旅がしたい"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-10-20260907",
+   "name": "魯路修",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ルルーシュ・ヴィ・ブリタニアが命じる。貴様たちは死ね！"
+   },
+   "takes": 2,
+   "select": {
+    "text": "絶対遵守のギアス！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-11-20260907",
+   "name": "利姆路",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）505624353"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-12-20260907",
+   "name": "衛宮士郎",
+   "battle": {
+    "source": "owner 名單",
+    "text": "体は剣で出来ている"
+   },
+   "takes": 3,
+   "select": {
+    "text": "無限の剣製（アンリミテッドブレイドワークス）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-13-20260907",
+   "name": "朝田詩乃",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-14-20260907",
+   "name": "殺老師",
+   "battle": {
+    "source": "owner 名單",
+    "text": "第二の刃持たざる者に暗殺者の資格なし！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-15-20260907",
+   "name": "比利海靈頓",
+   "battle": {
+    "source": "owner 名單",
+    "text": "仕方ないね"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-16-20260907",
+   "name": "魔法少女☆伊莉雅",
+   "battle": {
+    "source": "owner 名單",
+    "text": "このバカステッキ～！"
+   },
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-17-20260907",
+   "name": "安茲·烏爾·恭",
+   "battle": {
+    "source": "owner 名單",
+    "text": "我が名を知るが良い。我こそがアインズ・ウール・ゴウン"
+   },
+   "takes": 2,
+   "select": {
+    "text": "落ちよ、天（フォールン・ダウン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-18-20260907",
+   "name": "吉爾伽美什",
+   "battle": {
+    "source": "owner 名單",
+    "text": "君臨するとはこういう事よ！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "天地乖離す開闢の星（エヌマ・エリシュ）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-19-20260907",
+   "name": "桐谷和人",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ビーター、いい呼び名だ"
+   },
+   "takes": 1,
+   "select": {
+    "text": "スターバースト・ストリーム！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-20-20260907",
+   "name": "御坂美琴",
+   "battle": {
+    "source": "owner 名單",
+    "text": "超電磁砲！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "超電磁砲（レールガン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-21-20260907",
+   "name": "鹿目圓",
+   "battle": {
+    "source": "owner 名單",
+    "text": "全ての魔女を生まれる前に消し去りたい"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-22-20260907",
+   "name": "菜月昴",
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺はエミリアたんの一の騎士！ナツキ・スバルだ！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "死に戻り。",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-23-20260907",
+   "name": "坂田銀時",
+   "battle": {
+    "source": "owner 名單",
+    "text": "天然パーマに悪い奴はいない"
+   },
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-24-20260907",
+   "name": "奇犽",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ゴン、お前は光だ"
+   },
+   "takes": 6,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-25-20260907",
+   "name": "一拳超人",
+   "battle": {
+    "source": "owner 名單",
+    "text": "20文字以内で簡潔にまとめて出直してこい！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "マジシリーズ・マジ殴り！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-26-20260907",
+   "name": "名偵探柯南",
+   "battle": {
+    "source": "owner 名單",
+    "text": "バーロー"
+   },
+   "takes": 2,
+   "select": {
+    "text": "真実はいつも一つ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-27-20260907",
+   "name": "庫洛魔法使",
+   "battle": {
+    "source": "owner 名單",
+    "text": "はにゃ～ん"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-28-20260907",
+   "name": "艾莉絲·伯雷亞斯·格雷拉特",
+   "battle": {
+    "source": "owner 名單",
+    "text": "生意気よ、私を誰だと思ってるの？"
+   },
+   "takes": 1,
+   "select": {
+    "text": "光の太刀！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-29-20260907",
+   "name": "芙莉蓮",
+   "battle": {
+    "source": "owner 名單",
+    "text": "暗いよー！怖いよー！"
+   },
+   "takes": 3,
+   "select": {
+    "text": "ゾルトラーク！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-30-20260907",
+   "name": "尼古貓貓",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-31-20260907",
+   "name": "SUN樂",
+   "battle": {
+    "source": "owner 名單",
+    "text": "こっちはもっと理不尽なクソゲーをクリアし続けてるんだ"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-32-20260907",
+   "name": "阿薩謝爾",
+   "battle": {
+    "source": "owner 名單",
+    "text": "わしにはプライベートすら無いんかい！"
+   },
+   "takes": 1,
+   "select": {
+    "text": "ジ・エンド・オブ・ソン！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-33-20260907",
+   "name": "近衛刀太",
+   "battle": {
+    "source": "owner 名單",
+    "text": "だから進むぜ、その先に！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-34-20260907",
+   "name": "高速婆婆",
+   "battle": {
+    "source": "owner 名單",
+    "text": "てめえはホントにグッバイ野郎だぜ！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-35-20260907",
+   "name": "炭治郎",
+   "battle": {
+    "source": "owner 名單",
+    "text": "心はどこまでも強くなれる！"
+   },
+   "takes": 3,
+   "select": {
+    "text": "ヒノカミ神楽・円舞！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-36-20260907",
+   "name": "鬼畜王蘭斯",
+   "battle": {
+    "source": "owner 名單",
+    "text": "世の中には優先順位というものがあるのだ"
+   },
+   "takes": 1,
+   "select": {
+    "text": "ランスアタック！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-37-20260907",
+   "name": "吉伊卡哇",
+   "battle": {
+    "source": "owner 名單",
+    "text": "イヤ！イヤッ、ヤダーッ！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "b2-aladdin",
+   "name": "阿拉丁",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-albus",
+   "name": "阿爾巴斯",
+   "battle": {
+    "source": "owner 名單",
+    "text": "魔王討伐の旅を繰り返している"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-bojji",
+   "name": "波吉",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-boxxo",
+   "name": "阿箱＋拉蜜絲",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ざんねん"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-elma",
+   "name": "艾爾瑪",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-fushi",
+   "name": "不死",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-goblin",
+   "name": "哥布林殺手",
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺は世界を救わない。ゴブリンを殺すだけだ"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-guts",
+   "name": "凱茲",
+   "battle": {
+    "source": "owner 名單",
+    "text": "神に会えたら言っとけ！放っとけってな！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-haga",
+   "name": "羽賀",
+   "battle": {
+    "source": "owner 名單",
+    "text": "僕の仕事はゲーム内のバグをチェックするデバッガーなんです"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kaede",
+   "name": "楓",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kaiji",
+   "name": "伊藤開司",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ありがてえっ…！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-keyaru",
+   "name": "凱亞爾",
+   "battle": {
+    "source": "owner 名單",
+    "text": "この世界そのものを回復する"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kisaragi",
+   "name": "如月電車",
+   "battle": null,
+   "takes": 0,
+   "select": {
+    "text": "次は…どこにも、着きません。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "b2-klaus",
+   "name": "克勞斯",
+   "battle": {
+    "source": "owner 名單",
+    "text": "自動資源採取"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kumoko",
+   "name": "蜘蛛子",
+   "battle": {
+    "source": "owner 名單",
+    "text": "生まれてすぐ死亡とかシャレにならん"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-luckyman",
+   "name": "幸運超人",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-makoto",
+   "name": "深澄真",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-maomao",
+   "name": "貓貓",
+   "battle": {
+    "source": "owner 名單",
+    "text": "好んで毒を食らうのは私ぐらいか"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-maple",
+   "name": "梅普露",
+   "battle": {
+    "source": "owner 名單",
+    "text": "痛いのは嫌だから攻撃とか受けたくないし…"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-matthias",
+   "name": "馬提亞斯",
+   "battle": {
+    "source": "owner 名單",
+    "text": "連携プレイが得意なやつらには連携プレイだ！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-misery",
+   "name": "米瑟利",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-naofumi",
+   "name": "岩谷尚文",
+   "battle": {
+    "source": "owner 名單",
+    "text": "アイアンメイデン！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-ned",
+   "name": "青蛙劍士 Ned",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-noor",
+   "name": "諾爾",
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺には、才能がなかった…"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-nube",
+   "name": "鵺野鳴介",
+   "battle": {
+    "source": "owner 名單",
+    "text": "宇宙天地 與我力量 降伏群魔 迎来曙光"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-orphen",
+   "name": "歐菲",
+   "battle": null,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-popp",
+   "name": "何布",
+   "battle": {
+    "source": "owner 名單",
+    "text": "一瞬…だけど…閃光のように！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-rem",
+   "name": "蕾姆",
+   "battle": {
+    "source": "owner 名單",
+    "text": "レムはスバル君を信じています"
+   },
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-rin",
+   "name": "遠坂凜",
+   "battle": {
+    "source": "owner 名單",
+    "text": "うっかり遠坂"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-shadow",
+   "name": "闇影",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）fencer_select_01"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-shinchan",
+   "name": "野原新之助",
+   "battle": {
+    "source": "owner 名單",
+    "text": "ねぇねぇお姉さん！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-sinbad",
+   "name": "辛巴達",
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺は、人間だよ！人だからこそ夢を追う！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-takopi",
+   "name": "章魚嗶",
+   "battle": {
+    "source": "owner 名單",
+    "text": "今日もがんばるっピ！"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-touka",
+   "name": "托卡・史考特",
+   "battle": {
+    "source": "owner 名單",
+    "text": "理想的なふとももの形をした大根があったらニーソを履かせてやるのが男ってもんだろ"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-uncle",
+   "name": "異世界舅舅",
+   "battle": {
+    "source": "owner 名單",
+    "text": "異世界グランバハマルに17年いたが、ようやく帰ってきたぞ"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-yogiri",
+   "name": "高遠夜霧",
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺の能力が一つとは言ってないだろ"
+   },
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-zenitsu",
+   "name": "我妻善逸",
+   "battle": {
+    "source": "owner 名單",
+    "text": "雷の呼吸 壱ノ型 霹靂一閃！"
+   },
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "lol-karthus",
+   "name": "卡爾瑟斯",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）bd0bbe/00078-1154709670"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-leesin",
+   "name": "李星",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）f046bc/00195-1875226779"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-lux",
+   "name": "拉克絲",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）a08e1d/00287-708962889"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-missfortune",
+   "name": "好運姐",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）dfe023/00243-1755056024"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-warwick",
+   "name": "沃維克",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）b49dee/00144-1947782139"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-xerath",
+   "name": "齊勒斯",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）51d146/00013-375078456"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-yasuo",
+   "name": "犽宿",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）63fc90/00018-152596570"
+   },
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  }
+ ]
+}
