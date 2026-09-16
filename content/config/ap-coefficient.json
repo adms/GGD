@@ -6,6 +6,7 @@
   "base": 0.218,
   "keepAuthoredPerRankAp": false,
   "globalMult": 1.0,
+  "roundStep": 0.01,
   "cooldownSlopeExp": 1.0,
   "cooldown": {
     "normalizeToMidOfShape": true,

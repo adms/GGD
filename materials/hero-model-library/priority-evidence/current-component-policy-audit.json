@@ -14,13 +14,13 @@
     },
     {
       "path": "packages/shared/src/content/modelUpload/budget.ts",
-      "bytes": 6864,
-      "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+      "bytes": 10126,
+      "sha256": "814778538b7527f89efcc41ac4fb2ee9a2d7abdb3156d4d8bf2c2a7f4160f639"
     },
     {
       "path": "tools/model-budget/limits.ts",
-      "bytes": 21876,
-      "sha256": "d465af84df7072f848054afc12089eb65cf6b9855ae71f5d1839ced0928f73a1"
+      "bytes": 21404,
+      "sha256": "24e7360eab78ba818c0ca5823d406cf801f8554a4db2c897d6ade16439d2255d"
     },
     {
       "path": "tools/model-budget/glb.ts",

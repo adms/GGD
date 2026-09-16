@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔糖分補給〕",
   "provenance": "editor-json",
-  "description": "脫戰後累積一份補給，供 W 消耗；最多保存一份。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】脫戰後累積一份補給，供 W 消耗；最多保存一份。\n【待補機制】需脫戰保存一份補給給 W。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

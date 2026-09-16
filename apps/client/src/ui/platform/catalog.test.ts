@@ -78,6 +78,18 @@ describe("catalog owned/equipped derivation (webui-09)", () => {
     expect(rows[0]!.id).toBe("mystery");
     expect(rows[0]!.skins).toHaveLength(1);
   });
+
+  // GH#1177 —— 平台比內容舊的那段部署視窗：目錄還列著、內容已經寫 listed:false。
+  // ⛔ 沒買過的人不可以看到（按下去是 404）；⭐ 已購玩家照樣看得到自己的造型。
+  it("hides a delisted skin from non-owners but never from its owner", () => {
+    const doc = (id: string): SkinDoc => ({ id, schema: "skin@1", championId: "sela", name: id, mcoinPrice: 1, modelKey: "m", listed: false });
+    const skin = (id: string, owned: boolean) => ({ id, championId: "sela", price: 1, modelKey: "m", owned, equipped: false });
+    const rows = deriveStoreRows(
+      { champions: [{ id: "sela", price: 0, owned: true }], skins: [skin("skin.sela.a", false), skin("skin.sela.b", true)] },
+      new Map([["skin.sela.a", doc("skin.sela.a")], ["skin.sela.b", doc("skin.sela.b")]]),
+    );
+    expect(rows[0]!.skins.map((s) => s.id)).toEqual(["skin.sela.b"]);
+  });
 });
 
 // ---------------------------------------------------------------------------

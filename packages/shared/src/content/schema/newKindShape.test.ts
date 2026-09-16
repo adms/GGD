@@ -81,6 +81,9 @@ const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([
   // GH#1190 鄂爾 Q【暫時障礙】：作用範圍是「以落點為中心、半徑 radius 的碰撞圓柱」——
   //   它不打任何人，handler 只讀 radius／at；shape 對一根柱子沒有意義（沒有人讀）。
   ["spawnObstacle", "radius"],
+  // GH#1189 瑟雷西 W【互動物】：作用範圍是「以物件為心、半徑 radius 的接受圈」——
+  //   它不打任何人；誰吃到 onAccept 由**隊友的指令**決定，⛔ 不是圈內的人，shape 會是沒有人讀的欄位。
+  ["spawnInteractable", "radius"],
 ]);
 
 /**

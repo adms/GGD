@@ -103,6 +103,18 @@ export interface CastTimeRules {
    * 開始數」。瞬發技（吟唱 0）兩邊逐位元相同。
    */
   comboWindowFrom: ComboWindowFrom;
+  /**
+   * ⭐ GH#1191【持續引導】—— 引導中玩家下一條**主動移動／攻擊指令**時要不要打斷引導
+   * （該技能的 `channel.cancelOn` 有寫 `move` 才問這一格；只管真人座位）。
+   *
+   *   · `true`（出貨）：LoL 語意 —— 走開就斷，排好的波次一起作廢、收尾不跑。
+   *   · `false`：移動指令在引導期間被忽略，引導一定撐完（＝ 2026-09-15 之前稻草人 W／威寇茲 R
+   *     用「定身狀態＋延遲波次」近似時的手感）—— 一鍵 rollback。
+   *
+   * ⚠️ 爭議預設（分類裁定，⛔ 不是 owner 原話）：搖桿／虛擬搖桿**推著**時每一拍都送一條 move，
+   * 所以「按住搖桿同時按 W」會在下一個 tick 就斷掉。暈眩／沉默／擊倒／死亡**不歸這一格管**。
+   */
+  channelCancelOnMoveOrder: boolean;
 }
 
 /**
@@ -123,6 +135,7 @@ export const DEFAULT_CAST_TIME_RULES: CastTimeRules = Object.freeze({
   capSec: 4,
   castTimeMaxSec: 1,
   comboWindowFrom: "commit",
+  channelCancelOnMoveOrder: true,
 });
 
 /**
@@ -181,6 +194,7 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
         capSec?: unknown;
         castTimeMaxSec?: unknown;
         comboWindowFrom?: unknown;
+        channelCancelOnMoveOrder?: unknown;
       }
     | undefined;
   if (!d || d.schema !== "config.cast-time@1") return DEFAULT_CAST_TIME_RULES;
@@ -211,6 +225,11 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
       DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
     ),
     comboWindowFrom,
+    // ⚠️ 舊覆蓋層缺格 ⇒ 出貨值（同 comboWindowFrom）。
+    channelCancelOnMoveOrder:
+      typeof d.channelCancelOnMoveOrder === "boolean"
+        ? d.channelCancelOnMoveOrder
+        : DEFAULT_CAST_TIME_RULES.channelCancelOnMoveOrder,
   };
 }
 

@@ -1929,6 +1929,7 @@ owner 2026-08-24（逐字，講了三次，第三次收緊到 5 分鐘）：
 | 背景指令 > 5 分鐘沒新輸出 | `ps` 看 CPU%。**0% = 掛了**：kill → 單獨重跑那一支 |
 | 同一個閘紅第三次 | ⛔ 停 —— 那是迴圈不是壞運氣。找**結構性根因**（例：改了產生器的產物、mid-gate 改動） |
 | ⭐ 結構性解法 | ① `ship.mjs` 有**逐 suite 看門狗**（帳本估時 ×3 逾時 → kill 記 hung，⛔ 不是永遠等）② 閘跑的時候**⛔ 不動任何檔**（mid-run 改動 = 下一輪的紅） |
+| ⭐ vitest **預設**被看住（GH#1257） | `npx vitest run`／`pnpm --dir <包> test`／`pnpm test`／背景全套 —— 每一份 vitest 設定都展開 `vitest.shared.ts` 的 `VITEST_WATCHDOG`，啟動時自己掛上 `scripts/watchdog.sh --attach`（判死準則的**唯一**住處：整棵樹 CPU≈0 連續 N 秒）⇒ 自己停、印出**還沒跑完的檔**、離開碼 125（⛔ 不是測試紅的 1）、整棵樹收乾淨。⛔ 不要再另寫一隻看門狗、⛔ 不要 `pkill -f vitest`（會殺到別條 lane）。其他長指令：`bash scripts/watchdog.sh -- <指令>`。關掉：`GGD_VITEST_WATCHDOG_OFF=1`；閘：`everyVitestPackageIsWatched.test.ts` |
 
 ### ⚡ 平行工作流的四條加速規則（2026-08-21 量出來的）
 

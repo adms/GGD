@@ -26,6 +26,7 @@ export interface ProjectileHitEvent {
 }
 import { scale, addScaled, dist, sub } from "../math/vec2";
 import { flipToReturn, splitProjectile } from "../projectileSplit";
+import { forfeitProjectileRedirect, projectileRedirectStep } from "../projectileRedirect";
 import { sweptCircleVsCircle } from "../collision/intersect";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
@@ -52,6 +53,8 @@ export function projectileSystem(world: SimWorld): void {
       toDestroy.push(id);
       continue;
     }
+    // ⭐ GH#1187 鄂爾 R【撞擊改向】：移動之前先問「施法者的身體碰到我了嗎」—— 後段衝刺中 ⇒ 改向；沒按後段 ⇒ 作廢。
+    projectileRedirectStep(world, id, proj, t);
     // ⭐ GH#1197 阿璃 Q 回程：每 tick 朝施法者**當下**位置轉向；到人身上（或施法者沒了）就收。
     if (proj.phase === "return") {
       const ot = world.transform.get(proj.ownerId);
@@ -208,6 +211,8 @@ export function projectileSystem(world: SimWorld): void {
     if (p && !p.basic && p.origin.startsWith("ability:") && p.hitSet.size === 0) {
       recordAbilityWhiff(world, p.ownerId);
     }
+    // GH#1187：飛完／被清掉還沒被改向 ⇒ 改向機會作廢，這一次施放的後段窗口當場結束（⛔ 不留只剩空衝的窗）。
+    if (p) forfeitProjectileRedirect(world, p);
     // The payload carries the END POINT and whether the missile connected: a
     // projectile that expired on a wall/at max range gets a client FIZZLE, one
     // that landed does not (its impact fx already fired). Position travels in

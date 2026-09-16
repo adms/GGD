@@ -13,7 +13,10 @@ const FINGERPRINT = /^[a-f0-9]{8,64}$/;
  * 而沒有任何東西變紅（本檔的 node:test 夾具也抄了舊 key，且不在任何閘裡跑）。
  * 守衛：packages/shared/src/ops/editorFormReceiptHistoryReachable.test.ts（讀出貨的那一份 packet）。
  */
-export const EDITOR_FORM_RECEIPT_KEY = "claim.editor-form-receipts-spawn-obstacle-landed";
+// ⭐ 2026-09-15（v0.45.2 整合）：新積木 `spawnInteractable`（GH#1189 燈籠互動物）落地 ⇒ 181 顆的收據是一次**新的量測**，
+//   沿用分支（unchangedHistoricalReceipt）正確地拒絕沿用 ⇒ 同 key 會被 coord:check 判「同一題重問」。
+//   照前兩次（-spawn-obstacle → -spawn-obstacle-landed）的做法換 key；舊的收據檔留在原處當歷史。
+export const EDITOR_FORM_RECEIPT_KEY = "claim.editor-form-receipts-interactable-landed";
 
 /**
  * Census columns a receipt row copies verbatim from ggd-bricks.json that are

@@ -33,8 +33,11 @@ export interface DamageLineVariant {
   length: number;
   /** how WIDE the lash is, GGD units (one body = 1.2). Not a radius. */
   width: number;
-  /** where it points: through the event victim (default) or the body facing */
-  aim?: "facing" | "target";
+  /**
+   * where it points: through the event victim (default) or the body facing.
+   * GH#1197 `cast` = start AND direction frozen at the cast moment (`EffectContext.castFrame`).
+   */
+  aim?: "facing" | "target" | "cast";
   /** start at the caster's body (default true = 「面前」) or at the victim */
   fromCaster?: boolean;
   maxTargets?: number;

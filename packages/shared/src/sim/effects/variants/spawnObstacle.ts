@@ -4,5 +4,7 @@ export interface SpawnObstacleVariant {
   radius: number;
   durationSec: number;
   at?: "point" | "self";
+  /** 沿施放方向前推幾格（同 `spawnModelFx.offsetForwardU`）。缺 = 0 */
+  offsetForwardU?: number;
   shatterable?: boolean;
 }

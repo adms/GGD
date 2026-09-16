@@ -294,7 +294,8 @@ function planKey(file: string, plan: Plan): string {
   };
   return sha256(Buffer.from(JSON.stringify(shape)));
 }
-const TOOL_VERSION = "model-budget/optimize@2";
+// @3（GH#1198）：圖集 stage 會烘 tile／整格平移、同圖 emissive 一起搬 ⇒ 同一份來源的產物變了，舊側車不可以再算「up-to-date」。
+const TOOL_VERSION = "model-budget/optimize@3";
 
 // ---- texture resize (ffmpeg) ------------------------------------------------
 

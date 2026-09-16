@@ -120,7 +120,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { shapeTargets, type ShapedEffect } from "./shapeTargets";
 import { runEffects } from "./effectRunner";
 import { rebaseTriggerForDeferred } from "./deferredTrigger";
-import { aimDirection } from "./effectCommon";
+import { aimDirection, castFrameOf } from "./effectCommon";
 import { ringPoints } from "./modelFxPlacement";
 import { teleportBody } from "../movement/blink";
 import {
@@ -232,6 +232,11 @@ export interface DelayedWave {
    */
   advance?: { dir: Vec2; step: number; start: number };
   /**
+   * ⭐ GH#1197 威寇茲 W —— 排程那一刻凍住的施法者起點與施放方向，原樣交給每一發的 `ctx.castFrame`
+   * （讀者 `damageLine.aim:"cast"`）。缺席 ＝ 施法者當時已離場／面向是零向量 ⇒ 讀者退回當下身體。
+   */
+  castFrame?: { origin: Vec2; direction: Vec2 };
+  /**
    * `hitOncePerTarget` 開著時，這一串**已經打過誰**。
    * ⚠️ 只 `has`/`add`，⛔ **從不迭代** —— 迭代順序是 desync 的來源，
    * 而 `sim/purity.test.ts` 守的正是那件事。
@@ -278,6 +283,8 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
     // 找不到方向 = 施法者已離場或面向是零向量 → 這一串退化成不推進的原地連擊，
     // ⛔ 不是整串消失（一支安靜什麼都不做的技能是失敗形態②）。
     const dir = e.advance ? aimDirection(e.advance.dir, ctx) : undefined;
+    // ⭐ GH#1197 威寇茲 W：起點與施放方向也在**這一刻**凍住（巢狀 delayed 沿用外層凍的那一份）。
+    const castFrame = castFrameOf(ctx);
     // 錨點：優先用第一個目標的位置（「對目標連續 100 下」），否則落點，否則自己。
     // ⚠️ 推進版**一律從施法者自己出發**：一條「從我身上往前掃出去」的線，起點是
     // 我的身體。用目標當起點會讓線從對手腳下才開始，站在中間的人整場不會挨打。
@@ -320,6 +327,7 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
           }
         : {}),
       ...(anchor !== undefined ? { point: { x: anchor.x, z: anchor.z } } : {}),
+      ...(castFrame !== undefined ? { castFrame } : {}),
       // ⭐【週期領域】只有明說 `"caster"` 才跟著走 —— 省略／`"point"` 都退回釘住。
       ...(e.anchor === "caster" ? { followCaster: true } : {}),
       ...(dir && e.advance
@@ -414,6 +422,7 @@ export function delayedSystem(world: SimWorld): void {
         rank: wave.rank,
         targets: [],
         ...(point !== undefined ? { point } : {}),
+        ...(wave.castFrame !== undefined ? { castFrame: wave.castFrame } : {}),
         origin: wave.origin,
         ...(wave.abilitySlot !== undefined ? { abilitySlot: wave.abilitySlot } : {}),
         // ⭐ 承重的一行。掛在 `base` 上而不是逐發的 ctx 上，所以 `finalEffects`

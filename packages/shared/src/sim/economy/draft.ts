@@ -7,8 +7,9 @@
 import type { AugmentId, EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { AugmentDef, AugmentTier } from "../content/defs";
-import { Augments, LootTables } from "../content/registry";
-import { sellItem } from "./shop";
+import { Augments, Items, LootTables } from "../content/registry";
+import { commitShopSession, sellItem } from "./shop";
+import { shopAccess } from "./shopAccess";
 import { attachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
 import { grantItemFree } from "./shop";
@@ -441,15 +442,24 @@ export function applyItemPick(
   /**
    * ⭐ **背包滿時要換掉哪一格**（GH#1110 B）——⛔ 省略 ＝ 不換（既有行為）。
    *
-   * ⚠️ ⭐ 它受 `legendaryShelf.swapWhenFull` 管（出貨 **false**）：
-   *   ⛔ 開關關著時**連給了格子也不換** —— 那一格是 owner 的設計決定
-   *   （「先想清楚再拿」vs「隨時可換」），⛔ 不是我能自己轉的（第一守則）。
+   * ⚠️ ⭐ 它受 `legendaryShelf.swapWhenFull` 管（出貨 **true** —— Claude 依 owner 2026-09-08「A ＋ B 開票」
+   *   ＋ 2026-08-23 常設指令「自己判斷 但是留後台開關可以簡易 rollback」翻開的；⛔ owner 沒有說「預設開」）：
+   *   ⛔ 開關關著時**連給了格子也不換**（一鍵回到 A 段行為）。
+   * ⚠️ 換裝那一下是一次**賣出**，⇒ 它守商店**同一條** `shopAccess`（⛔ 在此之前繞過它：
+   *   活著的英雄在戰鬥中拿一張還開著的卡就能賣東西）。被擋 ⇒ 發拒絕原因、卡片留著。
    */
   swapSlot?: number,
 ): ItemPickResult {
   if (offer.picked || !offer.choices.includes(pick)) return "invalid";
   let slot = grantItemFree(world, offer.entity, pick);
-  if (slot < 0 && swapSlot !== undefined && world.legendaryShelf?.swapWhenFull === true) {
+  // ⚠️ `Items.tryGet(pick)`：`grantItemFree` 對**認不得的 id** 也回 -1 ——
+  //   ⛔ 沒有這一格，一張壞掉的卡會先把玩家的道具賣掉、再換不上。
+  if (slot < 0 && swapSlot !== undefined && world.legendaryShelf?.swapWhenFull === true && Items.tryGet(pick)) {
+    const access = shopAccess(world, offer.entity);
+    if (!access.open) {
+      world.emit("itemPickRejected", { entity: offer.entity, itemId: pick, reason: access.reason });
+      return "no-slot";
+    }
     // ⭐ 賣掉走**既有**的 `sellItem`（退款照 `sellRefundPct`）——
     //   ⛔ 不另寫一條退款路徑（第〇·四守則：同一個值不可以有第二個住處）。
     // ⚠️⚠️ ⭐ **這裡刻意不發第三個事件。**
@@ -466,6 +476,24 @@ export function applyItemPick(
     // ⭐ 真的需要「這兩則是同一次換裝」這個關聯時,⛔ 不要再加一個事件 ——
     //   在 `itemPicked` 上加一格 `swappedOutSlot`(⭐ 一個欄位,⛔ 不是一條新通道)。
     if (sellItem(world, offer.entity, swapSlot)) {
+      // ⛔⛔ 換裝**結清這一輪的整疊復原紀錄**（`commitShopSession`），⛔ 不是只 pop 剛推的那筆賣出。
+      //
+      // 2026-09-15 審查實跑重現（前一版的 `undoStack.pop()` 帶進來的洞）：先從寶具架買 X（實付 7200）
+      //   放進最後一格 → 用一張免費卡上的 X 換掉**那一格** → undo ⇒ pop 只拿掉賣出，底下那筆「買 X」
+      //   重新露出來，而那一格**仍然是 X**（`shop.ts` 的 stale 檢查只比 itemId）⇒ 退回 7200
+      //   ＋換裝賣出的 2880 ⇒ ⭐ 淨賺 0.4×實付、卡片被吃掉 —— 正是 `sellItem` 註解點名禁止的
+      //   「免費三選一換一筆錢」，也是 GH#1110 Known risks「換裝不可以拿來繞過商店的賣出限制」。
+      //
+      // ⭐ 為什麼整疊結清、⛔ 不是只作廢指到 `swapSlot` 的那幾筆（兩條都不印錢，挑前者）：
+      //   ① 與既有兩個「不能乾淨復原」的商店動作**同一條規則** —— 屬性強化與傳說寶玉成交時都結清整疊
+      //      （`shop.ts::buyItem` 那兩個 `undoStack.length = 0`）。⛔ 不另開第二種「部分作廢」規則。
+      //   ② undo 的無套利不變量（`shop.ts::undoShopAction` 檔頭）建立在**嚴格 LIFO**：每一筆復原的是
+      //      「它上面每一筆都復原之後」的狀態。從中間抽掉紀錄，後面的 undo 會把已經花在被作廢那筆上的
+      //      退款收回去 —— 推導（⛔ 未實跑）：賣 A → 買 B → 買 X → 換掉 X 的那一格，只作廢 X 的話終值是
+      //      `g0 − (1−r)·pX`，要 `paid_A > pB/r + pX` 才會變負。今天不會發生只是因為寶具統一價就是最高價
+      //      ⇒ ⛔ 那是**價格關係**在擋，不是 undo 自己的不變量在擋。
+      //   代價（玩家看得到）：換裝之後，這一輪**先前**買的東西不能再 undo（照常可以賣）—— 與買寶玉之後一樣。
+      commitShopSession(world, offer.entity);
       slot = grantItemFree(world, offer.entity, pick);
     }
   }

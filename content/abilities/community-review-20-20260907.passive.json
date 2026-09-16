@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔電荷累積〕",
   "provenance": "editor-json",
-  "description": "不同技能命中累積電荷，上限三層；下一次強化技消耗。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】不同技能命中累積電荷，上限三層；下一次強化技消耗。\n【待補機制】需三層電荷及下一次強化技消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

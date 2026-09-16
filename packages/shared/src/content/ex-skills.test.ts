@@ -185,9 +185,12 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
       // ⭐ GH#1020（2026-09-06）：EX 也可以是**鑰匙** —— 06-002 殺意本身零效果，
       //   而同一位英雄的猜猜拳三段各帶一段 `learned:EX` 追加 ⇒ 學了它，別的技能就變了。
       //   判準從資料推導：同英雄任一技能的條件樹裡有 `{kind:"learned", slot:"EX"}`。
+      // ⭐ 2026-09-15（v0.45.2 整合）：EX 也可以是**強化被動** —— 77-002 御雷劍的兩句話都是「改別支技能的數字」，
+      //   住在 `augment`（ability-augment@1）；GH#1239 拿掉五層都沒有的 40% 落雷之後它只剩 augment ⇒ 在此之前被判 inert。
       const doesSomething =
         def.effects.length > 0 ||
         passiveRanks.some((r) => (r.modifiers?.length ?? 0) > 0 || (r.hooks?.length ?? 0) > 0) ||
+        (def.augment?.targets.length ?? 0) > 0 ||
         isLearnedKey(id);
       expect(`${id}:does-something`).toBe(`${id}:${doesSomething ? "does-something" : "inert"}`);
       // the owning champion points back at it

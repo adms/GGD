@@ -362,6 +362,33 @@ export function StoreChampionGroup(props: {
                 購買
               </Btn>
             )}
+            {/* owner 2026-09-15（逐字）：「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」。
+                藍水晶價由平台算好（/store/catalog 的 crystalPrice ＝ M幣價 × 後台倍率），⛔ 客戶端不自己乘。 */}
+            {!sk.owned && (sk.crystalPrice ?? 0) > 0 && (
+              <>
+                <Price currency="crystal" amount={sk.crystalPrice ?? 0} size={12} />
+                <Btn
+                  small
+                  disabled={balanceOf(wallet, "crystal") < (sk.crystalPrice ?? 0)}
+                  title={
+                    balanceOf(wallet, "crystal") < (sk.crystalPrice ?? 0)
+                      ? shortfallHint("crystal")
+                      : `用藍水晶購買 ${sk.name}`
+                  }
+                  onClick={() =>
+                    props.onBuy({
+                      kind: "skin",
+                      id: sk.id,
+                      name: sk.name,
+                      price: sk.crystalPrice ?? 0,
+                      currency: "crystal",
+                    })
+                  }
+                >
+                  藍水晶購買
+                </Btn>
+              </>
+            )}
             {sk.owned && !sk.equipped && (
               <Btn small onClick={() => void props.onEquip(sk.championId, sk.id)}>
                 裝備

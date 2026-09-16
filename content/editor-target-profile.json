@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b9ef32801d67",
+    "contentVersion": "cv_34779cab62de",
     "collections": {
       "champions": {
-        "hash": "ba609c3db2bc",
+        "hash": "38b4462e74bc",
         "count": 153
       },
       "abilities": {
-        "hash": "0cf535753e2c",
+        "hash": "cf70c37fdf64",
         "count": 907
       },
       "items": {
@@ -22,8 +22,8 @@
         "count": 91
       },
       "projectiles": {
-        "hash": "952cffc4b28b",
-        "count": 21
+        "hash": "96d7945c88d3",
+        "count": 23
       },
       "status-effects": {
         "hash": "7219076b5f8e",
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "f057f8bcc755",
-        "count": 104
+        "hash": "e8bdc48673f6",
+        "count": 105
       },
       "models": {
-        "hash": "935ea3246b86",
-        "count": 1014
+        "hash": "d4a439925cfc",
+        "count": 1023
       },
       "vfx": {
         "hash": "7df129081586",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "fb8d3eb8",
+    "fingerprint": "96994f3b",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -139,6 +139,7 @@
       "screenShake",
       "shield",
       "shieldBreak",
+      "spawnInteractable",
       "spawnModelFx",
       "spawnObstacle",
       "spawnProjectile",
@@ -368,6 +369,7 @@
       "kind",
       "landRadius",
       "launchDistance",
+      "launchFrom",
       "launchHeight",
       "length",
       "level",
@@ -390,6 +392,7 @@
       "maxTargets",
       "maxTargetsCounts",
       "maxTotalJumps",
+      "maxUses",
       "minManaReserve",
       "minimumHp",
       "missChance",
@@ -400,6 +403,7 @@
       "modifiers",
       "moveSpeedMult",
       "offsetForwardU",
+      "onAccept",
       "onArrive",
       "onCap",
       "onCarrierDeath",
@@ -419,10 +423,13 @@
       "onLand",
       "onMissing",
       "onOwnerDeath",
+      "onPathHit",
+      "onRedirectHit",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
+      "pathWidth",
       "payCosts",
       "pctCurrentHealth",
       "pctCurrentMana",
@@ -762,6 +769,7 @@
       "kind",
       "landRadius",
       "launchDistance",
+      "launchFrom",
       "launchHeight",
       "length",
       "level",
@@ -787,6 +795,7 @@
       "maxTargets",
       "maxTargetsCounts",
       "maxTotalJumps",
+      "maxUses",
       "minManaReserve",
       "minimumHp",
       "missChance",
@@ -805,6 +814,7 @@
       "modifiers.value",
       "moveSpeedMult",
       "offsetForwardU",
+      "onAccept",
       "onArrive",
       "onCap",
       "onCarrierDeath",
@@ -824,10 +834,13 @@
       "onLand",
       "onMissing",
       "onOwnerDeath",
+      "onPathHit",
+      "onRedirectHit",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
+      "pathWidth",
       "payCosts",
       "pctCurrentHealth",
       "pctCurrentMana",
@@ -998,6 +1011,7 @@
       "castTimeSec",
       "castTimeTier",
       "castType",
+      "channel",
       "cooldown",
       "cooldownShape",
       "cooldownTier",
@@ -1181,6 +1195,7 @@
         "castTimeSec",
         "castTimeTier",
         "castType",
+        "channel",
         "cooldown",
         "cooldownShape",
         "cooldownTier",
@@ -7546,12 +7561,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "fb8d3eb8",
+    "engineFingerprint": "96994f3b",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fb8d3eb8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 96994f3b —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8397,11 +8412,11 @@
       }
     ]
   },
-  "assetManifestDigest": "50c49eebf530",
+  "assetManifestDigest": "ae0d8742fc1b",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2873,
-    "totalBytes": 1112669218
+    "entries": 2881,
+    "totalBytes": 1115095530
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8419,15 +8434,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "99148d5ca9dc",
+    "fingerprint": "45b204df71d9",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "c11b83625d05"
+        "digest": "cd8aed203f10"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "c9fd1a54a388"
+        "digest": "d6f1c36bb38f"
       },
       {
         "surface": "exact-ref-collector",
@@ -8475,7 +8490,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "5214d5735563",
+  "migrationFingerprint": "723a9dd208b2",
   "supportedModes": [
     "bootstrap"
   ],
@@ -8489,5 +8504,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "9dcf584d0e53"
+  "profileDigest": "3f540679fbf6"
 }

@@ -39,7 +39,7 @@
       "ex-release-weapons",
       "ex-origin-weapons"
     ],
-    "swapWhenFull": false
+    "swapWhenFull": true
   },
   "weaponShelfOpen": false,
   "vision": {
@@ -99,6 +99,12 @@
   "botShop": {
     "buyWeapons": true,
     "priceMult": 0.5
+  },
+  "botInteract": {
+    "autoAccept": false
+  },
+  "interactClick": {
+    "enemyFirst": true
   },
   "disadvantageWeights": {
     "roundGapPct": 50,

@@ -172,7 +172,17 @@ export function sanitizeCommand(raw: unknown): Command | undefined {
       return { kind: "undoLastShopStep" };
     case "pickOffer": {
       const offerId = toBoundedString(c.offerId);
-      return offerId !== undefined ? { kind: "pickOffer", offerId } : undefined;
+      if (offerId === undefined) return undefined;
+      // GH#1110 B —— 背包滿時要換掉哪一格（選填）。給了卻不是合法格號 ⇒ 整個指令丟掉
+      // （同 `useItem.target`）：⛔ 不可以悄悄降級成「不換」的那一次選取。
+      if (c.swapSlot === undefined) return { kind: "pickOffer", offerId };
+      const swapSlot = toItemSlot(c.swapSlot);
+      return swapSlot !== undefined ? { kind: "pickOffer", offerId, swapSlot } : undefined;
+    }
+    // 【互動物】（GH#1189）—— 只收一個非負整數 id；隊伍／距離／有效性由 sim 逐項驗。
+    case "interact": {
+      const objectId = toEntityId(c.objectId);
+      return objectId !== undefined ? { kind: "interact", objectId } : undefined;
     }
     case "rankUpAbility": {
       if (typeof c.slot !== "string" || !ABILITY_SLOTS.has(c.slot)) return undefined;

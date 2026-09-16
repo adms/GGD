@@ -1,6 +1,7 @@
 import type { EffectKindSpec } from "./effectKind";
 import { clampToBoundary, pushOutOfObstacle } from "../collision/resolve";
 import { obstaclesFor } from "../obstacles";
+import { addScaled, normalize } from "../math/vec2";
 
 /** 【暫時障礙】（GH#1190 鄂爾 Q）—— 生一根到期會消失的碰撞圓柱；碰撞邏輯在 `sim/obstacles.ts`。 */
 export const spawnObstacleEffect: EffectKindSpec<"spawnObstacle"> = {
@@ -8,10 +9,12 @@ export const spawnObstacleEffect: EffectKindSpec<"spawnObstacle"> = {
     const { world } = ctx;
     const ct = world.transform.get(ctx.caster);
     if (!ct) return;
-    const want =
+    const anchor =
       e.at === "self" || ctx.point === undefined
         ? { x: ct.pos.x, z: ct.pos.z }
         : { x: ctx.point.x, z: ctx.point.z };
+    // ⭐ GH#1190 鄂爾 Q「**終點**生柱」—— skillshot 沒有落點，終點 = 錨點沿施放方向前推（同 spawnModelFx.offsetForwardU）。
+    const want = e.offsetForwardU ? addScaled(anchor, normalize(ctx.direction ?? ct.facing), e.offsetForwardU) : anchor;
     // ⭐ GH#1190 驗收②「重疊／非法位置不殘留障礙」—— ⛔ 不是「不生」（那會靜默吞掉一次施放），
     //   ⭐ 而是**推到合法位置**：先推出既有的靜態／暫時障礙，再夾回場地邊界。
     //   ⚠️ 重用 `pushOutOfObstacle` / `clampToBoundary`，⛔ 不自己寫第二套碰撞。

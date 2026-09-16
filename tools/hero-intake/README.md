@@ -20,6 +20,26 @@ pnpm hero:intake --batch ship34 --from docs/_review/material/hero-intake/ship34.
 ⚠️ **`--check` 要打與當初一模一樣的那一行** —— 少一個 `--delivery` 會算出不同的 digest，
 而「材料過期」與「你少打了旗標」長得一樣。⇒ 材料裡存了 `invocation`，`--check` 紅的時候會把它印出來。
 
+⭐ **角色語音索引預設讀 git 裡那一份** `materials/hero-model-library/voice-index.json`（#1211；以前是寫死的 Dropbox 路徑 ⇒ CI 永遠讀不到 ⇒ `--check` 在 CI 永遠紅）。
+2026-09-15 逐組比對 `groups`：Dropbox 988 組 → git 1053 組 ＝ **0 刪、65 增**；共同的組裡 9 組在試聽審查欄位
+（`listeningReview*`／`battleReviewCandidateFiles`／`nativeTargetCandidateFiles`）不同，
+⭐ hero-intake 讀的欄位（id/name/heroIds/library/work/language/fileCount/speakerVerified/transcriptStatus）**0 改**。
+
+| 怎麼給 | 行為 |
+|---|---|
+| 都沒給（或 `GGD_VOICE_INDEX` 是空字串） | 讀 git 那一份 |
+| `--voice-index <路徑>`／`GGD_VOICE_INDEX=<路徑>`（旗標優先） | 只讀那一份；⛔ **讀不到（或沒有 `groups`）⇒ EXIT 2 並指名路徑**，⛔ 不悄悄退回 git 那一份 |
+| `--voice-index none` | 明確不讀 |
+
+⚠️ 相對路徑對 **repo 根**（`run.mjs` 所在往上兩層）解析，⛔ 不是對 cwd。
+
+↩ rollback：`GGD_VOICE_INDEX=<那條 Dropbox 路徑>`（或 `--voice-index <路徑>`）。
+⚠️ **rollback 的代價**：用 Dropbox 那份重產材料 ⇒ digest 回到 `e22fb25e81f1`；而 CI 讀得到 git 那一份、算出另一個 digest
+⇒ `pnpm hero:intake:check`（在 `skills:check` 裡）**在 CI 再紅**。⛔ 不是「CI 只比 core 而綠」。
+
+讀不到索引時 `--check` 只比 `digestParts.core`（模型／圖示／語音包），並**明說**「沒驗到 voice.candidates」—— ⛔ 不當成一致。
+讀得到索引時比完整 `digest`（含 voice.candidates）—— 守衛 `heroIntakeReview.test.ts` ①d。
+
 產出 `docs/_review/material/hero-intake/<批次>.json`（⛔ **不複製圖示** —— 頁面直接讀出貨樹那一張），後台
 **營運 → 🧍 新英雄上架檢核** 那一頁讀它，你只按**通過／退回**。
 

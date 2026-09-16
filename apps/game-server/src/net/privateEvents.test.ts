@@ -358,6 +358,8 @@ describe("private events — the addressing rules match what the sim really emit
     shopUndone: { id: 42, kind: "buy", itemId: "x", slot: 0, gold: 10 },
     // sim/coins.ts — seat only, because `no-champion` is one of its reasons
     coinDropRejected: { seatId: 3, reason: "alive" },
+    // sim/systems/CommandSystem.ts（GH#1189 互動物）—— `world.emit("interactRejected", { entity, seatId, objectId, reason })`
+    interactRejected: { entity: 42, seatId: 3, objectId: 7, reason: "gone" },
   };
 
   it("covers every rule, and every rule covers a real emit", () => {

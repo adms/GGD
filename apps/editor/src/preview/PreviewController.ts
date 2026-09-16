@@ -615,7 +615,9 @@ function effectLines(
         });
         break;
       case "dash":
-        out.push({ depth, kind: e.kind, summary: `dash ${e.mode} ${e.maxDistance}u @ ${e.speed}u/s` });
+        out.push({ depth, kind: e.kind, summary: `dash ${e.mode} ${e.maxDistance}u @ ${e.speed}u/s${e.onPathHit?.length ? "，沿途身體掃過的敵人（被擋停就只算到擋停點）:" : ""}` });
+        // GH#1190 鄂爾 E【衝刺沿途命中】—— 表單看到的 == 遊戲跑的。
+        if (e.onPathHit?.length) effectLines(e.onPathHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
       // TASK #247 follow-up. `leap` was added to the shared EffectDef union but
       // never taught to this switch, so 蒼月潮 07-03 — an ability whose ONLY
@@ -640,16 +642,30 @@ function effectLines(
         break;
       }
       case "spawnProjectile":
-        out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
+        out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}${e.launchFrom === "rangeEnd" ? "（射程盡頭生成、朝施法者飛回）" : ""}, on hit:` });
         effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
+        // GH#1187 鄂爾 R【撞擊改向】—— 後段衝刺撞到之後命中改跑這一串。
+        if (e.onRedirectHit?.length) {
+          out.push({ depth, kind: e.kind, summary: "被再次施放撞擊改向後，on hit:" });
+          effectLines(e.onRedirectHit, finalStats, attrs, maxRank, depth + 1, out);
+        }
         break;
       // GH#1190 鄂爾 Q【暫時障礙】—— 真碰撞圓柱，到期／被 dash.shatter 撞碎消失。
       case "spawnObstacle":
         out.push({
           depth,
           kind: e.kind,
-          summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
+          summary: `暫時障礙 半徑 ${e.radius}，${e.durationSec}s（${e.at === "self" ? "施法者腳下" : "落點"}${e.offsetForwardU ? `往前 ${e.offsetForwardU} 格` : ""}${e.shatterable === false ? "，不可撞碎" : "，可被衝刺撞碎"}）`,
         });
+        break;
+      // GH#1189 瑟雷西 W【互動物】—— 地上放一個物件，**隊友自己點**才對接受者跑 onAccept（施法者不搬人）。
+      case "spawnInteractable":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `互動物 接受圈半徑 ${e.radius}，${e.durationSec}s，最多 ${e.maxUses ?? 1} 位隊友（${e.at === "self" ? "施法者腳下" : "落點"}）—— 隊友點選時對接受者：`,
+        });
+        effectLines(e.onAccept, finalStats, attrs, maxRank, depth + 1, out);
         break;
       // GH#1197 瑟雷西 R【邊界陣】—— 正多邊形的**邊**，穿過那一段才對穿越者跑 onCross，那一段即消失。
       case "spawnThresholds":
@@ -888,7 +904,7 @@ function effectLines(
           kind: e.kind,
           summary:
             `直線 ${e.damageType} 傷害 — 長 ${e.length} × 寬 ${e.width}, ` +
-            `朝向 ${e.aim === "facing" ? "身體面向" : "事件目標"}, ` +
+            `朝向 ${e.aim === "facing" ? "身體面向" : e.aim === "cast" ? "施放那一刻（起點與方向凍結）" : "事件目標"}, ` +
             `最多 ${e.maxTargets ?? "預設"} 人` +
             `${e.includeOrigin ? " (含震央)" : ""}${e.canCrit ? " · 可爆擊" : ""}`,
         });

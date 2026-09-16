@@ -50,6 +50,8 @@ export function movementHold(world: SimWorld, id: EntityId): MovementHold {
   // Casting an ability with cast time roots the caster (channel lock).
   const abComp = world.abilities.get(id);
   if (abComp?.cast?.rooted) rooted = true;
+  // ⭐ GH#1191【持續引導】—— 效果開始之後還在撐的那一段同樣定住腳（走開要靠一條移動指令打斷它，見 abilities/channel.ts）。
+  if (abComp?.channel) rooted = true;
   // Post-resolve RECOVERY roots ONLY when the ability opted in
   // (`recoveryRoots: true`). The default deliberately leaves footwork free —
   // startup already hard-roots, and stacking a second root on every ability

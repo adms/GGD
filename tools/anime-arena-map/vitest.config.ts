@@ -1,5 +1,5 @@
 import { defineConfig } from "vitest/config";
-import { RESOLVE_TS_FIRST } from "../../vitest.shared";
+import { RESOLVE_TS_FIRST, VITEST_WATCHDOG } from "../../vitest.shared";
 
 // ⚠️ `RESOLVE_TS_FIRST` 不是可選的：這裡的測試 import `@ggd/shared/map/*`，
 // 沒有它 vitest 解不到 workspace 的 TypeScript 原始碼，整個測試**檔**會載入失敗，
@@ -7,5 +7,6 @@ import { RESOLVE_TS_FIRST } from "../../vitest.shared";
 // 逐字比照 tools/voxel-gen/vitest.config.ts 的理由。
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
-  test: { environment: "node", include: ["**/*.test.ts"], exclude: ["node_modules/**"] },
+  // ⏲️ GH#1257 —— 卡死時自己停下來、印出還沒跑完的檔（理由在 `vitest.shared.ts`）。
+  test: { ...VITEST_WATCHDOG, environment: "node", include: ["**/*.test.ts"], exclude: ["node_modules/**"] },
 });

@@ -1,12 +1,12 @@
 {
   "schema": "ggd-lol-batch2-authoring@1",
   "issue": 1185,
-  "releaseReady": false,
+  "releaseReady": true,
   "source": "packages/shared/src/content/heroForge/communityLolBatch2.ts",
   "generator": "tools/community-hero-forge/lol-batch2.mts",
-  "recipeSha256": "sha256:e4d74e5876afa72bcb6093dc5ab78563a9faca207050675087bba67fdef1ea4a",
-  "generatorVersion": "sha256:701f3a999846165e33cc9e6f04303c2599b5b40844a2b7cad95a9401515ad753",
-  "status": "candidate; source-critical mechanics pending Main",
+  "recipeSha256": "sha256:b842bb0190555ed0c5667ffb2ae0600a941972bdb843559eca46afce6cb6e23c",
+  "generatorVersion": "sha256:0563afa8d01d5576c1441e8d3b8be356c3f2c36f06891dfc5c1d4c4a6b1c264e",
+  "status": "release-ready in editor; Main mechanics bound (v0.45.2); formal service publication pending",
   "serviceImported": false,
   "published": false,
   "rows": [
@@ -14,8 +14,8 @@
       "id": "lol-sett",
       "name": "賽特",
       "revision": 1,
-      "projectSha256": "sha256:a8ad74d82f77866a23c4f87ff987f5c9861637b5831f3a1804c2a4c12e2620cd",
-      "draftSha256": "sha256:b232932b6750957cfdf3a7431e2a569b50a04ac15b9238021bd01862db3f8243",
+      "projectSha256": "sha256:001234a45eb9e1db8cb0d3bf3b7a23c3000f0bdaf29912a5db8a33a1a71cec78",
+      "draftSha256": "sha256:5a85aa53a83e5e6353833ed8e9da38c376191fcd48d632058198b38f9da6d53d",
       "slots": [
         "PASSIVE",
         "Q",
@@ -34,8 +34,8 @@
       "id": "lol-fiddlesticks",
       "name": "稻草人",
       "revision": 1,
-      "projectSha256": "sha256:f4c6356085a9a2f141eafc53ebf813d6a2421a4a69e2cc4304940368547c47ef",
-      "draftSha256": "sha256:4135091e27920e12afe7de00405cdbbcc07d2e8c8d8e0a2d200f26dc35489a75",
+      "projectSha256": "sha256:61af40b875e514f840ef776c7b3f3be4de9fb51415df7b5fd19facbb70ccead0",
+      "draftSha256": "sha256:8fe7e4ca1755949d4896e044cd05daf5cbb8acb5ddf5a13b29a3e99f66a73e6e",
       "slots": [
         "PASSIVE",
         "Q",
@@ -49,15 +49,15 @@
         "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
         "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80",
         "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
-        "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18"
+        "sha256:59ba7332983158d400e3448711b6a0892912367211a097561d920dca13b3013c"
       ]
     },
     {
       "id": "lol-ornn",
       "name": "鄂爾",
       "revision": 1,
-      "projectSha256": "sha256:53632481c00856d98afeddfdc219c036464c02656a74d4f09cc83c33996e88c3",
-      "draftSha256": "sha256:23b0d01c762b37759e81a53cc7ec3953571c0b1f3e5e381c3e4db770b770ddfd",
+      "projectSha256": "sha256:9737cf982614dff76cb1a1597a500a70d52abf84f090ed91554612171eae60fa",
+      "draftSha256": "sha256:e354d18c616e8fc0a56fa59729b0ffa10097154bea978866bd2d206d662557d0",
       "slots": [
         "PASSIVE",
         "Q",
@@ -70,7 +70,6 @@
       "templateVersions": [
         "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
         "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
-        "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
         "sha256:cd1a55b463af1810a2877caa1a555bc5133aea203f5bb08250897febe16549be"
       ]
     },
@@ -78,8 +77,8 @@
       "id": "lol-chogath",
       "name": "科加斯",
       "revision": 1,
-      "projectSha256": "sha256:f547a547355bc6c9a681179ef177893eebc476a134491e481650336c7178a88d",
-      "draftSha256": "sha256:d250ac01ec70c0abdf62788ed4088a5d14e3e52d5df48cbeb98163c8d7cb9b32",
+      "projectSha256": "sha256:415ecdedc449e0aae38576d1ed90393e1a9ef58f43d33de9610f235f0e1730c9",
+      "draftSha256": "sha256:663cf80825f87363ea02b986ff26a7b63cccfa267a4d7f3f6f2d8c5a80072524",
       "slots": [
         "PASSIVE",
         "Q",
@@ -98,8 +97,8 @@
       "id": "lol-ashe",
       "name": "艾希",
       "revision": 1,
-      "projectSha256": "sha256:08dfb1dbd8ba3df29893908dcecdf422aac4355acb50b45fa63e83e4ae1d6130",
-      "draftSha256": "sha256:0dea6de5e8c6b0387da67174f4f1f456dbda2cbff6605ec703a4cea2deeb6758",
+      "projectSha256": "sha256:373591ca3ab16ff3a57bf33eaf108426008545ab0036bc2586b84867f9bb89e2",
+      "draftSha256": "sha256:cf4dc840cd2f5d23a67768e6013daeeedf52737e53bb782cca17d3fff3c125af",
       "slots": [
         "PASSIVE",
         "Q",
@@ -119,8 +118,8 @@
       "id": "lol-blitzcrank",
       "name": "布里姿",
       "revision": 1,
-      "projectSha256": "sha256:10d6b1e2cb3496205ca671a9fd607d971191616bb7cd5913ad1ad67cfe73f766",
-      "draftSha256": "sha256:21c0973c4c2ca1997c327d332440b343acf5b97f9d3d9ad7712342ec74597ebe",
+      "projectSha256": "sha256:c6e676483e132cedf92da0577662e54051db04101e9b8132eb0cbbc37c53cbb8",
+      "draftSha256": "sha256:28d13e7ca121e18cf62e72f9fd2a127b21326acc8b65306a0feeac0db891e2c1",
       "slots": [
         "PASSIVE",
         "Q",
@@ -139,8 +138,8 @@
       "id": "lol-ahri",
       "name": "阿璃",
       "revision": 1,
-      "projectSha256": "sha256:d21e8f615cdd12f0d930a6c2d9e78d83bffa77bf3158203fc6dcbb9bab9801a7",
-      "draftSha256": "sha256:885df79d37c458c22c59b49b6a92849a6b08f478e567c45ee85af51464419b66",
+      "projectSha256": "sha256:ff05d406e3b456d371f88f3931efe8874a0befd2ed59c37691b0442ed9b1672f",
+      "draftSha256": "sha256:8de1e644dbed9a23201782e7c1d4c6b6a8cb957c235e4b466c896aa77c0d2e61",
       "slots": [
         "PASSIVE",
         "Q",
@@ -159,8 +158,8 @@
       "id": "lol-thresh",
       "name": "瑟雷西",
       "revision": 1,
-      "projectSha256": "sha256:9179aa2184c878d7112ba100db05440f9bbaf7fe2cf9f10a89acd345563be0d5",
-      "draftSha256": "sha256:7327facd2fd6fd400e26a6e1d3b0d67fdb61c05d1cb40fb09c3b326cb9348b1c",
+      "projectSha256": "sha256:f61fb86a1d50c25d5b8207ca088e437b2c9a9bceeb433c4e0de64a39773609d3",
+      "draftSha256": "sha256:a3c1a9100876936e5ee34d196781d82fbd40594e34ac35e8510738da2c13bc4d",
       "slots": [
         "PASSIVE",
         "Q",
@@ -172,16 +171,15 @@
       "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/thresh/",
       "templateVersions": [
         "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
-        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
-        "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458"
+        "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
       ]
     },
     {
       "id": "lol-velkoz",
       "name": "威寇茲",
       "revision": 1,
-      "projectSha256": "sha256:7e4043c0cc252de9e42838e89eabe16decbc572efda1881d0479c1ae48702c8f",
-      "draftSha256": "sha256:4c87508c802d8098a6f1c128415044a8a4bca7864f941b82da80ce1494fa50d0",
+      "projectSha256": "sha256:0212e0decda3f22d44eb6d9a463841914a305cf55605f56d5630c76a4363c7db",
+      "draftSha256": "sha256:e9eee7ae69b87e88b7e78ece3719eeeb9eb73db47f381d3d8b2094f37c5de3bc",
       "slots": [
         "PASSIVE",
         "Q",
@@ -201,8 +199,8 @@
       "id": "lol-malphite",
       "name": "墨菲特",
       "revision": 1,
-      "projectSha256": "sha256:4a348c0c631afa4e3198ea1cc8f48bbf806b68460df1ba8c64587e4b7533b81a",
-      "draftSha256": "sha256:c2134bfddfdc1ef1cacaf0aa763d0c7a5994910feca250072e701fcc6531b820",
+      "projectSha256": "sha256:8dafa115c8829b99320b39194080cb357c0c9128de054682b1be29d1f85bf49b",
+      "draftSha256": "sha256:8c55071d4c5e615505703a5857d0978d6636a059c5ea22a2bf5fdddc10e8e49c",
       "slots": [
         "PASSIVE",
         "Q",
@@ -221,8 +219,8 @@
       "id": "lol-garen",
       "name": "蓋倫",
       "revision": 1,
-      "projectSha256": "sha256:5ceabfd5bc0b09263f27dd213ec672162dc68fbea25236f7daa80e9cddca324e",
-      "draftSha256": "sha256:5ef20f71490eafde9d4be48c16c4aceeb98b8d30637d85b1cee17369980b8e07",
+      "projectSha256": "sha256:a0fa07c2a989d991ee2c4046b0bc9d5efe4777f9cbb5c3332cf3285842f01b00",
+      "draftSha256": "sha256:ba562346f5206bdcf6a6ba604014c8cacc3d0df26d4e2861bd48c950d449667f",
       "slots": [
         "PASSIVE",
         "Q",

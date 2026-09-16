@@ -34,6 +34,8 @@ import {
 // `sim/effects/knockbackLimits`），所以這一條不會產生模組循環。
 // ⛔ 出貨值只有一份：`DEFAULT_WALL_BLOCK`，⛔ 不在這裡重打四個字面值。
 import { DEFAULT_WALL_BLOCK, WALL_BLOCK_POLICIES } from "../../sim/movement/wallBlock";
+import { DEFAULT_PROJECTILE_REDIRECT } from "../../sim/projectileRedirectRules";
+import { DEFAULT_DASH_PATH } from "../../sim/dashPathRules";
 
 /** 四個級別的名字（schema / 後台下拉 / 技能欄位共用同一份）。 */
 export const zDisplacementTier = z.enum(DISPLACEMENT_TIER_NAMES);
@@ -113,6 +115,19 @@ export const zConfigDisplacementTiersDoc = z
       "@note 關掉之後技能照自己文件裡寫的距離走，等於這套級距沒有存在過。⚠️ 它**不會**連帶關掉速度夾限（那是下面獨立的一格）。\n" +
       "技能上填的位移級別（小/中/大/極大）要不要被翻成距離與速度。關掉＝只吃手寫數字。"),
     /**
+     * ⭐ GH#1260 B3 —— 沒標級別的位移距離，載入時吸到最近一格（`content/geometrySnap.ts`）。
+     * `.optional()`：線上耐久覆蓋層沒有這一格仍要過 strict；缺席 ⇒ 出貨值（開）。
+     */
+    snapUntiered: z
+      .boolean()
+      .optional()
+      .describe(
+        "@zh 沒標級別的位移距離吸到最近一格\n" +
+        "@note 技能上**沒填** `distanceTier` 的擊退／衝刺／固定瞬移／拋投距離，載入時靠到最近的級距值（被拋的目標走擊退梯）。⚠️ 只動距離，⛔ 不動速度。" +
+        "⭐ owner 2026-09-02「距離、範圍…全部都五級距化標籤化」。" +
+        "⭐ **一鍵 rollback**：關掉 ⇒ 逐位元回到手寫距離（有填級別的不受影響）。⚠️ 級距總開關關掉時這一格也不跑。",
+      ),
+    /**
      * ② 速度天花板的止血閥。⛔ 關掉 = GH#318 的穿牆回來。
      * 與 `enabled` 分開，因為「不想用級距」與「想讓人穿牆」不是同一件事。
      */
@@ -188,6 +203,39 @@ export const zConfigDisplacementTiersDoc = z
           .optional(),
       })
       .optional(),
+    /**
+     * ⭐ GH#1187【撞擊改向】（鄂爾 R 後段）的規則開關。**必須 `.optional()`**，理由與 `markedBlink` 逐字相同：
+     * 缺席時 `projectileRedirectFromDoc` 回**出貨值**（contact），⛔ 不是關掉。
+     */
+    projectileRedirect: z
+      .object({
+        mode: z
+          .enum(["contact", "press", "off"])
+          .describe(
+            "@zh 再次施放怎麼改向投射物（鄂爾 R）\n" +
+              "@note ⭐ GH#1187 分類時的爭議預設（⛔ 不是 owner 原話）＋ rollback 開關：`spawnProjectile.onRedirectHit` 那一族投射物被**同一次施放的後段**改向的條件。⚠️ 改成 press 或 off 之後，鄂爾 R 卡面「衝撞羊並改向」那一句的條件就不再成立，屬應急。\n" +
+              "@opt contact contact 後段衝刺時身體撞到才改向（出貨）\n" +
+              "@opt press press 按下後段就當場改朝那一按的方向（不必撞到）\n" +
+              "@opt off off 一律不改向（投射物照首段飛完，後段只剩衝刺）",
+          ),
+      })
+      .optional(),
+    /**
+     * ⭐ GH#1190【衝刺沿途命中】（鄂爾 E）的規則開關。**必須 `.optional()`**，理由與 `projectileRedirect` 逐字相同：
+     * 缺席時 `dashPathFromDoc` 回**出貨值**（sweep），⛔ 不是退回舊近似。
+     */
+    dashPath: z
+      .object({
+        mode: z
+          .enum(["sweep", "full"])
+          .describe(
+            "@zh 衝刺沿途命中怎麼結算（鄂爾 E）\n" +
+              "@note ⭐ GH#1190 修正輪的正確性爭議預設（⛔ 不是 owner 原話）＋ rollback 開關：`dash.onPathHit` 那一族「衝刺沿途打到的人」。⚠️ 改成 full 之後，被柱子或牆擋停的衝刺仍會打到擋停點**後面**的人（衝刺根本沒到那裡），屬應急。\n" +
+              "@opt sweep sweep 逐 tick 只打身體真的掃過的那一段；被擋停就只算到擋停點（出貨）\n" +
+              "@opt full full 施放那一刻沿整條衝刺長度一次結算，不管後來有沒有被擋停（舊近似）",
+          ),
+      })
+      .optional(),
     wallBlock: z
       .object({
         enabled: z
@@ -249,9 +297,13 @@ export const DEFAULT_DISPLACEMENT_TIERS_DOC = {
   id: DISPLACEMENT_TIERS_DOC_ID,
   schema: "config.displacement-tiers@1",
   enabled: DEFAULT_DISPLACEMENT_TIERS.enabled,
+  snapUntiered: DEFAULT_DISPLACEMENT_TIERS.snapUntiered,
   clampSpeed: DEFAULT_DISPLACEMENT_TIERS.clampSpeed,
   safetyFactor: DEFAULT_DISPLACEMENT_TIERS.safetyFactor,
   travel: DEFAULT_DISPLACEMENT_TIERS.travel,
   push: DEFAULT_DISPLACEMENT_TIERS.push,
   wallBlock: DEFAULT_WALL_BLOCK,
+  // ⭐ GH#1187／#1190 兩格衝刺互動的開關 —— 出貨值只有一份（`DEFAULT_PROJECTILE_REDIRECT`／`DEFAULT_DASH_PATH`），⛔ 不在這裡重打字面值。
+  projectileRedirect: DEFAULT_PROJECTILE_REDIRECT,
+  dashPath: DEFAULT_DASH_PATH,
 } as const;

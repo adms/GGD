@@ -71,74 +71,17 @@ const CEIL = Object.freeze({
   //   「⭐⭐⭐ **③ 的承重條**：級距真的會把 `cooldown` 陣列覆寫掉」。
   //   ⇒ 「級別贏」被拿掉的那一刻，那 739 個殘留會變成活的第二份住處 —— ⭐ 而**那一條**會紅。
   //   ⛔ 這次拿掉的只有「數量只能變少」，⛔ 不是那個性質。
-  // ⭐ 2026-09-07：18 → 3 —— ⛔ **不是放寬**，是判準修對了：原本只認「攻擊時」三個字，
-  //    而 19 支裡有 16 支的卡面用「普攻」寫著同一件事（假陽性 84%，逐支複查過）。
-  //    剩下的 3 支（77-002 御雷劍 · 92-04 馬勒戈壁 · 30-002 變態紳士）卡面真的沒提。
-  basicAttackHookNotOnCard: 3,
+  // ⭐⭐ `basicAttackHookNotOnCard` 也**不在**這張表了（GH#1239，2026-09-15）：它歸零了，
+  //   ⇒ 改成下面那一條**零容忍**的名單斷言（⛔ 一個上限 0 的數字只說得出「多了」，說不出「是哪一支」）。
 });
-
-/**
- * ⭐⭐ `onBasicAttack` **被當成別的 hook 的替身**的那 29 支（GH#1239）。
- *
- * ⛔ 這張名單**只能變短** —— ⛔ 而它**不是**「卡面忘了寫攻擊時」：
- * 逐支讀完卡面之後，它們描述的觸發條件**根本不是普攻**：
- *
- * | 卡面說的 | 擋住幾支 |
- * |---|---:|
- * | 資源／能源 | 6 · 其他 6 · 技能命中（非普攻）5 · 受擊／交鋒 5 |
- * | 友軍互動 3 · 助攻／擊殺 2 · 召喚物／陷阱 1 · 靜止／位移 1 | |
- *
- * 逐字例：`community-review-01`「**召喚物命中與陷阱成功觸發**」·
- * `community-review-09`「**參與有效助攻**」·`community-review-13`「**保持穩定姿勢**」。
- *
- * ⇒ ⭐⭐ **把「攻擊時」寫上這 29 張卡，只會讓它們用另一種方式說謊。**
- *   ⛔ 錯的不是文字，是引擎**沒有那些 hook** ⇒ 走第〇·五守則：
- *   盤點 → 按**擋住的支數**做機制 ⇒ 7 個機制解鎖 29 支，⛔ 不是 29 輪改文案。
- *
- * ⚠️ ⭐ 名單在這裡而**不是把上限從 3 調到 29** —— 上限調大會讓**下一支**
- *   真的「卡面忘了寫」的技能靜靜地混進來，⭐ 而那正是這條閘要抓的東西。
- */
-const BASIC_ATTACK_PLACEHOLDER: ReadonlySet<string> = new Set([
-  "community-review-01-20260907.passive",
-  "community-review-02-20260907.passive",
-  "community-review-04-20260907.passive",
-  "community-review-05-20260907.passive",
-  "community-review-07-20260907.passive",
-  "community-review-09-20260907.passive",
-  "community-review-10-20260907.passive",
-  "community-review-12-20260907.passive",
-  "community-review-13-20260907.passive",
-  "community-review-15-20260907.passive",
-  "community-review-16-20260907.passive",
-  "community-review-18-20260907.passive",
-  "community-review-19-20260907.passive",
-  "community-review-20-20260907.passive",
-  "community-review-21-20260907.passive",
-  "community-review-23-20260907.passive",
-  "community-review-24-20260907.passive",
-  "community-review-26-20260907.passive",
-  "community-review-27-20260907.passive",
-  "community-review-28-20260907.passive",
-  "community-review-29-20260907.passive",
-  "community-review-30-20260907.passive",
-  "community-review-32-20260907.passive",
-  "community-review-34-20260907.passive",
-  "community-review-36-20260907.passive",
-  "community-review-37-20260907.passive",
-  "godie-e00w.ex",
-  "godie-h02v.r",
-  "godie-o030.ex",]);
 
 describe("宣告的欄位與實際結構相符（GH#948）", () => {
   it("⭐ 儀器：普查真的掃到了技能（⛔ 否則下面全是 0 ≤ 上限）", () => {
     expect(census.counts["abilities"], "⛔ 一支技能都沒掃到").toBeGreaterThan(300);
   });
 
-  it("⭐⭐ 四條規則都**只能變少**（⛔ 新增一支不符就紅）", () => {
+  it("⭐⭐ 規則都**只能變少**（⛔ 新增一支不符就紅）", () => {
     for (const [k, cap] of Object.entries(CEIL)) {
-      // ⭐ `basicAttackHookNotOnCard` 走**名單**而不是數字（見上面那段）——
-      //   ⛔ 名單外的任何一支仍然紅，⭐ 而名單上修好的也要被拿掉（下一條）。
-      if (k === "basicAttackHookNotOnCard") continue;
       expect(
         census.counts[k],
         `⛔ ${k}：${census.counts[k]} > 上限 ${cap} ⇒ 又多了一支「宣告與實際不符」的技能。\n` +
@@ -147,29 +90,28 @@ describe("宣告的欄位與實際結構相符（GH#948）", () => {
     }
   });
 
-  it("⭐ `onBasicAttack` 替身：名單外的一律紅（⛔ 不是把上限調大）", () => {
-    const extra = census.basicAttackHookNotOnCard
-      .map((r) => r.id)
-      .filter((id) => !BASIC_ATTACK_PLACEHOLDER.has(id));
+  /**
+   * ⭐⭐ 掛 `onBasicAttack` 的技能，卡面（剝台詞後）一定要讓玩家讀得到「普攻觸發」（GH#1239）。
+   *
+   * 2026-09-15 歸零的三條路（⛔ 沒有一條是「把『攻擊時』硬寫上卡」）：
+   * - 26（＋5 支早已出普查的同型）社群天生技：卡面組成與同一名英雄 Q/W/E/R **同一個三行格式**
+   *   —— 【目前模板可執行】（recipe `currentBehavior`，與出貨 JSON 推導的那一句逐字比對過）／
+   *   【目標設計】（原始描述逐字）／【待補機制】（`requiredRefinement` 逐字）。
+   *   組字住 `tools/ship-81/passive_card.py` 一處（匯入器 `gen.py` 也呼叫它）。
+   *   ⛔ 真正要的 hook 還沒做 —— 那一半留在 `requiredRefinement` 與 GH#1239 的 B 段，⛔ 沒有被這一次宣告做完。
+   * - 92-04 馬勒戈壁 · 30-002 變態紳士：卡面**本來就說了**「攻擊身上有⋯的敵人」⇒ 補偵測器詞表。
+   * - 77-002 御雷劍：那條 40% 落雷 hook 在五層裡一層都沒有、而且與 augment 重複計數 ⇒ **拿掉 hook**。
+   */
+  it("⭐ `onBasicAttack` 上卡：名單必須是空的", () => {
     expect(
-      extra,
-      "⛔⛔ 這幾支掛了 `onBasicAttack` 而卡面沒說「普通攻擊」——\n" +
-        "   ⭐ 兩種可能，先分清楚再動手：\n" +
+      census.basicAttackHookNotOnCard.map((r) => r.id),
+      "⛔⛔ 這幾支掛了 `onBasicAttack` 而卡面沒說「普通攻擊」—— ⭐ 三種可能，先分清楚再動手：\n" +
         "   ① 卡面**其實說了**但用了新的詞 ⇒ 去 `tools/declared-shape/gen.ts` 把那個詞加進\n" +
-        "      `ON_BASIC_ATTACK_SAID`（⚠️ 這個病 2026-09-07 與 09-12 已經各犯過一次）\n" +
-        "   ② 這支的觸發條件**根本不是普攻** ⇒ 它借了 `onBasicAttack` 頂著（GH#1239）\n" +
-        "      ⇒ 補進 `BASIC_ATTACK_PLACEHOLDER` 並在那一段寫下它**真正**要的 hook。\n" +
-        "   ⛔ 兩者都**不是**「把『攻擊時』寫上卡面」。",
-    ).toEqual([]);
-  });
-
-  it("⭐ 替身名單只能變短（⛔ 修好了還留在名單上也紅）", () => {
-    const live = new Set(census.basicAttackHookNotOnCard.map((r) => r.id));
-    const healed = [...BASIC_ATTACK_PLACEHOLDER].filter((id) => !live.has(id));
-    expect(
-      healed,
-      "⭐ 這幾支已經不在普查裡了 —— 把 id 從 `BASIC_ATTACK_PLACEHOLDER` 拿掉。\n" +
-        "⛔ 不拿掉的話，這張名單會與世界脫節，而脫節的名單會讓上面那條開始放行真的缺陷。",
+        "      `ON_BASIC_ATTACK_SAID`（⚠️ 這個病 2026-09-07、09-12、09-15 已經各犯過一次）\n" +
+        "   ② 它借了 `onBasicAttack` 頂著一個引擎還沒有的 hook ⇒ 卡面照實寫出**目前**發生的事\n" +
+        "      （社群英雄走 `tools/ship-81/passive_card.py` 的三行格式），⛔ 並把真正要的 hook 留在待補\n" +
+        "   ③ 那個 hook 在設計的五層裡**一層都沒有** ⇒ 拿掉 hook（77-002 御雷劍的前例）\n" +
+        "   ⛔ 三者都**不是**「把上限調大」。",
     ).toEqual([]);
   });
 

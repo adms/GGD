@@ -119,6 +119,19 @@ export const LEGENDARY_PRICE_MULTIPLIER = 3;
 export const DEFAULT_SELL_REFUND_PCT = 0.4;
 
 /**
+ * 背包滿時，三選一可不可以當場賣掉一件換上新的（GH#1110 B）。後台欄位是
+ * `config.arena-rules@1` 的 `legendaryShelf.swapWhenFull`，執行期讀
+ * `world.legendaryShelf.swapWhenFull`（消費端 `economy/draft.ts::applyItemPick`）。
+ *
+ * ⭐ 出貨 **true** —— owner 2026-09-08 02:28 的原話是「隨機選寶具的時候 道具欄已滿 怎麼辦」與「A ＋ B 開票」
+ * （`docs/_daily/2026-09-08.md:13`）；「B＝讓玩家挑一件丟掉/賣掉再換上」是 Claude 補的定義，
+ * 「預設開」是 Claude 依常設指令的推論（⛔ 不是 owner 說的）。它與客戶端的換裝介面（`ui/panels/draftSwapPicker.tsx`）
+ * **同一個 commit** 翻開：在那之前玩家送不出「要丟哪一格」，開著也是空的。
+ * ⛔ 一鍵回頭：後台「背包滿時可以換掉一件」取消勾選。
+ */
+export const SWAP_WHEN_FULL = true;
+
+/**
  * 「寶具」的出貨定義 = `legendary-weapons` 那張表**整張**（49 把）。
  *
  * ⚠️ 這一支回答的是「**貨架**上有哪些」，⛔ 不是「玩家**拿得到**哪些」（GH#1030 假前提 #1

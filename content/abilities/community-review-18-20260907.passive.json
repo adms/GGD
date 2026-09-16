@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔王的財庫〕",
   "provenance": "editor-json",
-  "description": "技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。\n【待補機制】需每次施法一次財庫能量與 EX 消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

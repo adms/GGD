@@ -20,11 +20,11 @@
 
 | 票 | 槽 | 操作缺口 |
 |---|---|---|
-| [#1187](https://github.com/adms/GGD/issues/1187) | 阿璃 R、瑟雷西 Q、鄂爾 R | 次數型重施放、命中後自選進場、同一羊再次撞擊改向 |
+| [#1187](https://github.com/adms/GGD/issues/1187) | 阿璃 R、瑟雷西 Q、鄂爾 R | ⭐ 已接回配方：阿璃 R 三段各自瞄準（衝完才進冷卻）、瑟雷西 Q 鉤中才可再按飛向同一人、鄂爾 R 再按衝刺撞到同一隻火羊才改向擊飛（模擬守衛通過；⛔ 畫面、HUD 與編輯器往返未實機驗收） |
 | [#1189](https://github.com/adms/GGD/issues/1189) | 瑟雷西 W | 隊友自主點燈接受位移與護盾 |
-| [#1190](https://github.com/adms/GGD/issues/1190) | 鄂爾 Q、E | 暫時地形柱及撞有效地形才發生的震波 |
-| [#1191](https://github.com/adms/GGD/issues/1191) | 稻草人 W、威寇茲 R | 可中斷持續引導，結束後停止後續波次；射線持續瞄準 |
-| [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | 法球返航／魅惑、觸碰破牆、當前彈體分裂／固定裂痕與充能、僅解除既有減速 |
+| [#1190](https://github.com/adms/GGD/issues/1190) | 鄂爾 Q、E | ⭐ 已接回配方：Q 裂地終點生暫時柱、E 被柱／牆擋停才震波擊飛並撞碎柱；E 沿途傷害只打身體真的掃過的人（`dash.onPathHit`，柱子後面的人不挨打；後台 `displacement-tiers.dashPath.mode` 可切回舊結算）；E 衝刺與震波擊飛改走位移五級距（模擬守衛通過；⛔ 畫面與編輯器往返未實機驗收；PR 與 #1185 接入記錄未完成） |
+| [#1191](https://github.com/adms/GGD/issues/1191) | 稻草人 W、威寇茲 R | ⭐ 已接回配方：`channel` 持續引導 —— 移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）打斷後排好的波次作廢且不收割；稻草人 W 每打中一人才回血、撐滿才收割；威寇茲 R 引導中再按或推搖桿即轉向；波次與引導時長由同一個節拍推導（模擬守衛通過；⛔ 擊飛（非擊倒）與出貨預設的嘲弄不打斷；⛔ 畫面、吟唱條與編輯器往返未實機驗收） |
+| [#1197](https://github.com/adms/GGD/issues/1197) | 阿璃 Q／E、瑟雷西 R、威寇茲 Q／W、蓋倫 Q | ⭐ 六槽已接回配方（正常指令模擬守衛「bind:」通過）：阿璃 Q 回程彈 `imported.wave.arcane.return`、阿璃 E `applyStatus.charmed`、瑟雷西 R `spawnThresholds`、威寇茲 Q 分裂彈 `imported.bolt.void.split`＋`abilityOverrides.recast`、威寇茲 W 兩段 `damageLine.aim:"cast"`、蓋倫 Q `dispel.statusKinds:["slow"]`。⛔ 未滿足：威寇茲 W「兩次充能」—— Main 缺技能彈藥機制（`ability.charges`），要不要做由 owner 決定；⛔ 畫面與編輯器往返未實機驗收 |
 
 共 5 張票、14 槽，核對基準 Main `6da992509`；見 [main-requirements.json](./main-requirements.json)。這個數字不是其餘 52 槽均已取得完整來源驗收的宣稱。總票 [#1185](https://github.com/adms/GGD/issues/1185) 保持開啟；核心接回、必要驗證、投稿與管理員發布完成後才記錄關票。
 

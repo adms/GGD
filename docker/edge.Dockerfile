@@ -122,7 +122,15 @@ COPY content/augments/ content/augments/
 COPY content/status-effects/ content/status-effects/
 COPY content/loot-tables/ content/loot-tables/
 COPY content/arenas/ content/arenas/
-RUN pnpm --filter @ggd/editor exec vitest run src/hero/catalog.test.ts --pool forks --maxWorkers 1 --minWorkers 1
+# ⏲️ GH#1257 修正輪 —— `--config vite.config.ts` **必須寫明**。
+#   ⚠️ apps/editor 同層還有一份 `vitest.config.ts`（掛 vitest 看門狗用；vitest 的 findUp 同層優先選它），
+#     而它 import `../../vitest.shared` ⇒ 這個 stage 沒 COPY 它（也沒有 tools/vitest-watchdog/、scripts/watchdog.sh，
+#     alpine 也沒有 bash）⇒ 不寫明就死在載入設定：`Could not resolve "../../vitest.shared"`（c360c754d 審查時在模擬映像量到）。
+#     ⭐ 本機永遠綠，而 edge build 死掉時部署會靜默出貨舊映像（上面 GH#935 那段）。
+#   ⭐ 選 `--config` 而 ⛔ 不是 `GGD_VITEST_WATCHDOG_OFF=1`：那個開關只管「掛不掛」，⛔ 管不到設定檔的 import 解析；
+#     而這一步是單檔 smoke，映像裡本來就沒有看門狗可掛。vite.config.ts 的 import 全在上面的 COPY 範圍內。
+#   閘：`packages/shared/src/ops/dockerVitestConfigInContext.test.ts`（這一行讀到的設定＋它的依賴都要被 COPY 到）。
+RUN pnpm --filter @ggd/editor exec vitest run src/hero/catalog.test.ts --config vite.config.ts --pool forks --maxWorkers 1 --minWorkers 1
 # ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
 # apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
 # to import.meta.env.DEV, which is constant-folded to `false` in every

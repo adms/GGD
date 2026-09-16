@@ -85,6 +85,9 @@ func (h *Handlers) catalog(w http.ResponseWriter, r *http.Request) {
 type buyReq struct {
 	Kind string `json:"kind"`
 	ID   string `json:"id"`
+	// Currency picks the wallet for a skin: "mcoin" (default) or "crystal"
+	// (owner 2026-09-15「造型也可以用 藍水晶來買」). Champions ignore it.
+	Currency string `json:"currency"`
 }
 
 func (h *Handlers) buy(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +97,7 @@ func (h *Handlers) buy(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	wal, err := h.svc.Buy(r.Context(), me.AccountID, req.Kind, req.ID)
+	wal, err := h.svc.Buy(r.Context(), me.AccountID, req.Kind, req.ID, req.Currency)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

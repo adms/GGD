@@ -8,7 +8,7 @@ import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { ownerOnlyReasons } from "../form/ownerOnly";
 import { issuesToErrorMap, useEditorStore, type ErrorMap } from "../store";
-import { authorWarnings } from "../authorWarnings";
+import { GEOMETRY_SNAP_CONFIG_IDS, authorWarnings } from "../authorWarnings";
 import { PreviewPanel } from "../preview/PreviewPanel";
 import { AiFillProvider } from "../ai/AiFillContext";
 import { sourceWriteBlockers } from "../sourcePolicy";
@@ -85,7 +85,17 @@ export function EditorView() {
    * ⭐ GH#480 —— Zod 收得下但遊戲裡不會發生的那一族（說明↔JSON、空效果、台詞裡的機制數字）。
    * ⛔ 它**不**進 `errorCount`，所以 save 照樣按得下去（owner：「只是個警告標記，並不會擋」）。
    */
-  const warnings = useMemo(() => authorWarnings(collection, docId, draft), [collection, docId, draft]);
+  // ⭐ GH#1260 B3 修正輪：沒標級別的距離／範圍載入時吸格 ⇒ 抓後台那三張表，警示「寫 X、場上 Y」。
+  const snapConfigs = useQuery({
+    queryKey: ["editor", "geometry-snap-configs"],
+    queryFn: () => Promise.all(GEOMETRY_SNAP_CONFIG_IDS.map((id) => api.doc<Record<string, unknown>>("config", id))),
+    enabled: collection === "abilities",
+    staleTime: 60_000,
+  });
+  const warnings = useMemo(
+    () => authorWarnings(collection, docId, draft, snapConfigs.data),
+    [collection, docId, draft, snapConfigs.data],
+  );
   const writeBlockers = useMemo(
     () => collection ? sourceWriteBlockers(collection, draft, source.data ?? null) : [],
     [collection, draft, source.data],

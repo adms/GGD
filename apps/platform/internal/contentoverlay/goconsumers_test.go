@@ -50,6 +50,10 @@ const (
 	overrideUnlockCost  = 4242
 	overrideDamageDealt = 0.25
 	overrideCombatMax   = 42.0
+
+	// GH#1177 追加：fixture 分級表裡 `epic` 的價（⛔ 不是出貨價，出貨價住 content/）。
+	shippedEpicPrice  = 1350
+	overrideEpicPrice = 77
 )
 
 // censusContentDir extends testutil's store fixture with the two other docs the
@@ -88,6 +92,18 @@ func censusContentDir(t *testing.T) string {
   "autoPromote": false,
   "digestRecompute": true
 }`,
+		// ⭐ GH#1177 追加 —— 一份分級表 ＋ 一份**寫分級**的造型；探針量那一份造型在 /store/catalog 的價。
+		"config/skin-tier-prices.json": `{
+  "id": "skin-tier-prices",
+  "schema": "config.skin-tier-prices@1",
+  "tiers": { "epic": { "label": "史詩", "mcoin": 1350, "standard": "新動作、音效、粒子" } }
+}`,
+		"skins/skin.vex.epic.json": `{"id":"skin.vex.epic","schema":"skin@1","championId":"vex",
+  "name":"Epic Vex","priceTier":"epic","modelKey":"version.body.epic"}`,
+		"skins/_index.json": `{"collection":"skins","hash":"0","entries":[
+  {"id":"skin.sela.rogue","path":"skins/skin.sela.rogue.json","hash":"0","size":0},
+  {"id":"skin.thorne.barbarian","path":"skins/skin.thorne.barbarian.json","hash":"0","size":0},
+  {"id":"skin.vex.epic","path":"skins/skin.vex.epic.json","hash":"0","size":0}]}`,
 	}
 	for rel, body := range extra {
 		full := filepath.Join(dir, filepath.FromSlash(rel))
@@ -163,6 +179,31 @@ func probes() map[string]probe {
 			},
 			shipped:    shippedUnlockCost,
 			overridden: overrideUnlockCost,
+		},
+		"config/skin-tier-prices": {
+			override: map[string]any{
+				"id": "skin-tier-prices", "schema": "config.skin-tier-prices@1",
+				"tiers": map[string]any{
+					"epic": map[string]any{"label": "史詩", "mcoin": overrideEpicPrice, "standard": "新動作、音效、粒子"},
+				},
+			},
+			// ⭐ 讀玩家真的走的那條路：/store/catalog 上那一份**寫分級**的造型的價。
+			read: func(t *testing.T, ts *testutil.TS, token string) float64 {
+				r := ts.Do(http.MethodGet, "/api/v1/store/catalog", token, nil)
+				require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+				rows, _ := r.Body["skins"].([]any)
+				for _, row := range rows {
+					if m, _ := row.(map[string]any); m["id"] == "skin.vex.epic" {
+						price, ok := m["price"].(float64)
+						require.True(t, ok, "skin.vex.epic has no price: %s", string(r.Raw))
+						return price
+					}
+				}
+				t.Fatalf("skin.vex.epic is not on /store/catalog: %s", string(r.Raw))
+				return 0
+			},
+			shipped:    shippedEpicPrice,
+			overridden: overrideEpicPrice,
 		},
 		"config/combat-env": {
 			override: map[string]any{
