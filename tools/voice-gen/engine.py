@@ -63,9 +63,13 @@ CACHE_DIR = os.path.expanduser(
 # clip sits at the same level as the macOS-`say` clips it replaces.
 TARGET_LUFS = -16.0
 TRUE_PEAK_DB = -1.5
-# #158 ceiling: <=128 kbps, <=44.1 kHz. These are the ceiling, not a suggestion.
-MP3_BITRATE = "128k"
-MP3_RATE = "44100"
+# ⭐ #158 天花板的唯一住處是 packages/shared/src/content/audioAssetPolicy.ts（owner 2026-09-16：收成一份）
+# ⇒ 這裡**讀**它，⛔ 不抄第二份數字。讀不到就爆，⛔ 不退回預設值（退回去的那一版會安靜地出貨錯格式）。
+sys.path.insert(0, os.path.join(ROOT, "tools", "audio-intake"))
+import audio_intake as _audio_intake  # noqa: E402
+_AUDIO_POLICY = _audio_intake.load_policy()
+MP3_BITRATE = f"{_AUDIO_POLICY['bitrateKbpsMax']}k"
+MP3_RATE = str(_AUDIO_POLICY["sampleRateHzMax"])
 
 DEFAULT_ENGINE = "cosyvoice3"
 

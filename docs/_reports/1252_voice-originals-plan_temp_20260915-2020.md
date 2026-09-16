@@ -114,12 +114,15 @@
 **③ 小呆「混進悟空」的根因還沒查**
 owner 標「不是小呆」的 4 段全是**已經上線**的原作（候選 226 段裡沒有標）⇒ 下次先查這 4 格的來源資料夾、檔名、當初是哪一批匯入的。
 
-**④ 順手發現（未開票，等 owner 決定要不要開）**
-`.gitignore` 只忽略 `reference.wav`；後台上傳參考音時寫進的 `reference/` 資料夾會被 git 收進去。
+**④ ✅ 已修（owner 2026-09-16「1 2 都作」）**
+`.gitignore` 只忽略 `reference.wav`，而後台上傳參考音是寫進 `<hero>/reference/<檔名>`（`tools/voice-gen/src/serve.mjs` 的 `champDir` + `reference`）⇒ 會被 git 收進去。
+⇒ 補上 `content/assets/audio/voices/lines/**/reference/`；`git check-ignore` 驗過：上傳路徑被忽略、出貨的 `quote.mp3` 沒有被誤傷。
 
-**⑤ 檢查腳本兩個待定的值**
-- 音效長度下限暫定 0.02 秒（出貨的 11 支 UI／打擊音效本來就短於 0.15 秒，套語音的標準會誤報）。
-- 128k／44.1k 目前還有兩份副本（`engine.py`、`tools/audio-optimize/optimize.sh`），建議收成全庫一份。
+**⑤ ✅ 已修（同上）：出貨音訊格式收成一個住處**
+`packages/shared/src/content/audioAssetPolicy.ts` 是唯一住處（新增 `SFX_MIN_SECONDS = 0.02`，理由寫在該處註解）；
+`tools/audio-intake/audio_intake.py` 新增 `--print-policy [--shell]` 把門檻印給別的語言讀；
+`tools/voice-gen/engine.py` 與 `tools/audio-optimize/optimize.sh` 改成**讀**它，⛔ 兩邊都不再有 128k／44100 的字面值。
+閘：`packages/shared/src/ops/audioPolicySingleHome.test.ts`（跑起來比對＋掃第二份字面值；突變驗過：把 `MP3_RATE = "44100"` 塞回 engine.py ⇒ 紅）。
 
 ---
 
