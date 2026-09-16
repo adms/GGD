@@ -3,7 +3,7 @@
  "batch": "ship153",
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
- "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons",
+ "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all",
  "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
