@@ -7,6 +7,116 @@
   "ms": [
     {
       "kind": "ability",
+      "id": "acquired-astralym.ex",
+      "name": "末日也要蓋章",
+      "championName": "枯星龍",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "2 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-asuna.w",
+      "name": "閃光趕飯",
+      "championName": "亞絲娜／結城明日奈",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-cattiva.passive",
+      "name": "不是我打破的",
+      "championName": "搗蛋貓",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "2 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-inuyasha.ex",
+      "name": "爆流破先擋一下",
+      "championName": "犬夜叉",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-jetragon.w",
+      "name": "尾流加班",
+      "championName": "空渦龍",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-kuroyukihime.w",
+      "name": "先加速再解釋",
+      "championName": "黑雪姬",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-leafa.passive",
+      "name": "順風不用跑腿費",
+      "championName": "莉法",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "2 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-naruto.ex",
+      "name": "拉麵要趁熱",
+      "championName": "漩渦鳴人",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-pokemon-trainer.ex",
+      "name": "包包裡有傷藥",
+      "championName": "Pokémon Trainer",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "2 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "acquired-ram.ex",
+      "name": "今天也辛苦別人",
+      "championName": "拉姆",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
       "id": "community-review-07-20260907.ex",
       "name": "輕薄的假象",
       "championName": "西索",
@@ -260,9 +370,53 @@
     },
     {
       "kind": "ability",
+      "id": "lol-ahri.w",
+      "name": "魅火",
+      "championName": "阿璃",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "2 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-blitzcrank.w",
+      "name": "過載運轉",
+      "championName": "布里姿",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-garen.q",
+      "name": "致命打擊",
+      "championName": "蓋倫",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "4 秒"
+    },
+    {
+      "kind": "ability",
       "id": "lol-lux.ex",
       "name": "引路星芒",
       "championName": "拉克絲",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-malphite.q",
+      "name": "地震碎片",
+      "championName": "墨菲特",
       "context": "施放後增益",
       "op": "pctAdd",
       "amountText": "+10%",
@@ -290,6 +444,17 @@
       "amountText": "+10%",
       "tierText": "極小",
       "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-sett.q",
+      "name": "懾人猛拳",
+      "championName": "賽特",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "4 秒"
     },
     {
       "kind": "ability",

@@ -3,11 +3,1089 @@
   "note": "⛔ **產物** —— 改 `tools/resolved-appearance/gen.ts`，⛔ 不要手改。⭐ 每一列都是**出貨那支** `resolveAppearance()` 算出來的（⛔ 這裡零行外觀邏輯）。⚠️ ⭐ `isStandIn: true` 代表那位英雄站在**共用替身**網格上 —— 畫面看起來是正常的，⛔ 它只是**別人**。外部編輯器要據此警告，⛔ 不要忠實預覽一個錯的角色。",
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
-    "champions": 153,
-    "standIns": 3,
+    "champions": 190,
+    "standIns": 5,
     "failures": 0
   },
   "appearances": [
+    {
+      "championId": "acquired-alice",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+      "glbPath": "assets/models/community/724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed.glb",
+      "modelDocDigest": "ab47d14b8913",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-astralym",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "glbPath": "assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+      "modelDocDigest": "48557655afd7",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-asuna",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+      "glbPath": "assets/models/community/f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604.glb",
+      "modelDocDigest": "a18bf76c9be5",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 90,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk fast",
+        "attack": "attack 1",
+        "cast": "spell one",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-beatrice",
+      "schema": "resolved-appearance@1",
+      "modelKey": "champ.sela",
+      "glbPath": "assets/models/champions/blocky-mage.glb",
+      "modelDocDigest": "90b8a7ce5f18",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "attachPoints": {
+        "rightHand": {
+          "x": 0.34,
+          "y": 0.73,
+          "z": 0.11
+        },
+        "overhead": {
+          "x": 0,
+          "y": 1.95,
+          "z": 0
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": true,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-cattiva",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "glbPath": "assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+      "modelDocDigest": "e40233deaf57",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "NekoPunch_Loop",
+        "cast": "FarSkill_Action",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-dio",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+      "glbPath": "assets/models/community/fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397.glb",
+      "modelDocDigest": "22e279a04444",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-emilia",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+      "glbPath": "assets/models/community/4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea.glb",
+      "modelDocDigest": "067aa3bf4d17",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-inuyasha",
+      "schema": "resolved-appearance@1",
+      "modelKey": "ou99.452782",
+      "glbPath": "assets/models/ou99/ou99_452782.glb",
+      "modelDocDigest": "859e846ca013",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell One",
+        "hurt": "Stand - 1",
+        "death": "Death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-jetragon",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "glbPath": "assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+      "modelDocDigest": "e522f4186a9a",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "FarSkill_Action",
+        "cast": "JumpBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-kita-kita",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+      "glbPath": "assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+      "modelDocDigest": "ecc853f8a75c",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-kuroyukihime",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+      "glbPath": "assets/models/community/e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497.glb",
+      "modelDocDigest": "fca0733ad83d",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-leafa",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+      "glbPath": "assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb",
+      "modelDocDigest": "f168f7eab60e",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-lord-nightmares",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+      "glbPath": "assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+      "modelDocDigest": "8fa032d7c287",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "maryokudan_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-mario",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.linkstik",
+      "glbPath": "assets/models/imported/linkstik.glb",
+      "modelDocDigest": "4f7c98751335",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 270,
+      "effectiveYawOffsetDeg": 270,
+      "yawOffsetDeg": 270,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Attack - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Foot Left": {
+          "x": 0.0615,
+          "y": 0.0098,
+          "z": 0.1697
+        },
+        "Foot Right": {
+          "x": 0.0534,
+          "y": 0.0103,
+          "z": -0.2231
+        },
+        "Hand Right": {
+          "x": -0.0015,
+          "y": 0.6837,
+          "z": -0.4031
+        },
+        "Hand Left": {
+          "x": 0.1,
+          "y": 0.7039,
+          "z": 0.3712
+        },
+        "Weapon": {
+          "x": 0.7555,
+          "y": 0.8864,
+          "z": 0.6006
+        },
+        "Head -": {
+          "x": 0.1113,
+          "y": 1.3935,
+          "z": -0.0366
+        },
+        "Chest": {
+          "x": -0.019,
+          "y": 1.2094,
+          "z": -0.0404
+        },
+        "Origin": {
+          "x": 0.0056,
+          "y": -0.0203,
+          "z": -0.0389
+        },
+        "OverHead": {
+          "x": 0.0056,
+          "y": 1.8134,
+          "z": -0.0389
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-mewtwo",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.herobuu",
+      "glbPath": "assets/models/imported/herobuu.glb",
+      "modelDocDigest": "467119ccc454",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack -1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Foot Left": {
+          "x": -0.058,
+          "y": 0.1205,
+          "z": -0.2881
+        },
+        "Foot Right": {
+          "x": -0.058,
+          "y": 0.1205,
+          "z": 0.2901
+        },
+        "Chest": {
+          "x": 0.0058,
+          "y": 0.9178,
+          "z": 0
+        },
+        "Hand Left": {
+          "x": -0.2103,
+          "y": 0.9801,
+          "z": -0.7733
+        },
+        "Hand Right": {
+          "x": -0.2103,
+          "y": 0.9801,
+          "z": 0.7767
+        },
+        "Head -": {
+          "x": -0.1251,
+          "y": 1.4224,
+          "z": 0
+        },
+        "Origin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "OverHead": {
+          "x": -0.1251,
+          "y": 1.4224,
+          "z": 0
+        },
+        "Weapon": {
+          "x": -0.2103,
+          "y": 0.9801,
+          "z": 0.7767
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-minecraft",
+      "schema": "resolved-appearance@1",
+      "modelKey": "champ.thorne",
+      "glbPath": "assets/models/champions/blocky-knight.glb",
+      "modelDocDigest": "082b1a16e49d",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "attachPoints": {
+        "rightHand": {
+          "x": 0.34,
+          "y": 0.73,
+          "z": 0.11
+        },
+        "overhead": {
+          "x": 0,
+          "y": 1.95,
+          "z": 0
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": true,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-morgiana",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+      "glbPath": "assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb",
+      "modelDocDigest": "f0c8cca3647c",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-naruto",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+      "glbPath": "assets/models/community/e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78.glb",
+      "modelDocDigest": "29a314ebf9f6",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_04",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-pokemon-trainer",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.heropikachu",
+      "glbPath": "assets/models/imported/heropikachu.glb",
+      "modelDocDigest": "f2edf990f5e1",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell Throw",
+        "hurt": "Stand - 1",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Head -": {
+          "x": 0,
+          "y": 0.9281,
+          "z": 0
+        },
+        "Weapon": {
+          "x": 0.1299,
+          "y": 0.7425,
+          "z": 0.2413
+        },
+        "Hand Right": {
+          "x": 0.1299,
+          "y": 0.7425,
+          "z": 0.2413
+        },
+        "Hand Left": {
+          "x": 0.1299,
+          "y": 0.7425,
+          "z": -0.2413
+        },
+        "Foot Right": {
+          "x": 0,
+          "y": 0.3713,
+          "z": -0.1671
+        },
+        "Foot Left": {
+          "x": 0,
+          "y": 0.3713,
+          "z": 0.1671
+        },
+        "Origin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "Overhead": {
+          "x": 0,
+          "y": 1.2994,
+          "z": 0
+        },
+        "Chest": {
+          "x": 0,
+          "y": 0.6497,
+          "z": 0
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-ram",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.herooichi",
+      "glbPath": "assets/models/imported/herooichi.glb",
+      "modelDocDigest": "f9875b3c1ac0",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Foot Right": {
+          "x": -0.0305,
+          "y": 0.0656,
+          "z": 0.1057
+        },
+        "Foot Left": {
+          "x": -0.0278,
+          "y": 0.069,
+          "z": -0.108
+        },
+        "Hand Right": {
+          "x": 0.0897,
+          "y": 0.9789,
+          "z": 0.2233
+        },
+        "Hand Left": {
+          "x": 0.0897,
+          "y": 0.9789,
+          "z": -0.224
+        },
+        "Head": {
+          "x": 0.0082,
+          "y": 1.7853,
+          "z": 0.0071
+        },
+        "Chest": {
+          "x": -0.0027,
+          "y": 1.4345,
+          "z": 0.0025
+        },
+        "Origin": {
+          "x": -0.0101,
+          "y": 0.0247,
+          "z": 0.0042
+        },
+        "OverHead": {
+          "x": -0.0101,
+          "y": 2.028,
+          "z": 0.0042
+        },
+        "Weapon": {
+          "x": 0.0897,
+          "y": 0.9789,
+          "z": 0.2233
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-rim",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+      "glbPath": "assets/models/community/0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e.glb",
+      "modelDocDigest": "2c1a54b94eae",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-ryu",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.herokyo",
+      "glbPath": "assets/models/imported/herokyo.glb",
+      "modelDocDigest": "d7099dd69c9c",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Hand Right": {
+          "x": -0.0031,
+          "y": 0.8828,
+          "z": 0.5235
+        },
+        "Weapon": {
+          "x": 0.9617,
+          "y": 0.8838,
+          "z": 0.4884
+        },
+        "Hand Left": {
+          "x": 0.0258,
+          "y": 0.886,
+          "z": -0.539
+        },
+        "Head -": {
+          "x": 0.0444,
+          "y": 1.7139,
+          "z": -0.0012
+        },
+        "Chest": {
+          "x": -0.0318,
+          "y": 1.0933,
+          "z": -0.0018
+        },
+        "Foot Right": {
+          "x": 0.0183,
+          "y": 0.1874,
+          "z": 0.2163
+        },
+        "Foot Left": {
+          "x": 0.0212,
+          "y": 0.1861,
+          "z": -0.2408
+        },
+        "Origin": {
+          "x": 0,
+          "y": -0.0021,
+          "z": 0
+        },
+        "Overhead": {
+          "x": 0.0036,
+          "y": 1.7383,
+          "z": -0.0012
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-saya",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+      "glbPath": "assets/models/community/eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070.glb",
+      "modelDocDigest": "11d2a98dab79",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_02",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-wargreymon",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+      "glbPath": "assets/models/community/11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4.glb",
+      "modelDocDigest": "665c87f1c7eb",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_1",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-xiaodangjia",
+      "schema": "resolved-appearance@1",
+      "modelKey": "ou99.498407",
+      "glbPath": "assets/models/ou99/ou99_498407.glb",
+      "modelDocDigest": "8b38ed66903d",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 90,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "acquired-zero",
+      "schema": "resolved-appearance@1",
+      "modelKey": "imported.herosephiroth",
+      "glbPath": "assets/models/imported/herosephiroth.glb",
+      "modelDocDigest": "6ff0567d7bc7",
+      "scale": 1,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": null,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "attachPoints": {
+        "Hand Right": {
+          "x": -0.0025,
+          "y": 0.8971,
+          "z": 0.4307
+        },
+        "Weapon": {
+          "x": 0.7913,
+          "y": 0.8979,
+          "z": 0.4018
+        },
+        "Hand Left": {
+          "x": 0.0212,
+          "y": 0.8997,
+          "z": -0.4435
+        },
+        "Head -": {
+          "x": 0.0365,
+          "y": 1.5808,
+          "z": -0.001
+        },
+        "Chest": {
+          "x": -0.0262,
+          "y": 1.0702,
+          "z": -0.0015
+        },
+        "Foot Right": {
+          "x": 0.0151,
+          "y": 0.3249,
+          "z": 0.178
+        },
+        "Foot Left": {
+          "x": 0.0174,
+          "y": 0.3238,
+          "z": -0.1981
+        },
+        "Origin": {
+          "x": 0,
+          "y": 0.169,
+          "z": 0
+        },
+        "Overhead": {
+          "x": 0.003,
+          "y": 1.6009,
+          "z": -0.001
+        }
+      },
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
     {
       "championId": "b2-aladdin",
       "schema": "resolved-appearance@1",
@@ -6750,6 +7828,186 @@
       "resolverFingerprint": "21a5483cdc47"
     },
     {
+      "championId": "lol-ahri",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+      "glbPath": "assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+      "modelDocDigest": "98fa31450054",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "idle1",
+        "run": "run",
+        "attack": "attack1",
+        "cast": "spell1",
+        "hurt": "idle1",
+        "death": "death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-ashe",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+      "glbPath": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+      "modelDocDigest": "b943ec6106d6",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "ashe_idle1",
+        "run": "ashe_run",
+        "attack": "ashe_attack1",
+        "cast": "ashe_spell1",
+        "hurt": "ashe_idle1",
+        "death": "ashe_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-blitzcrank",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+      "glbPath": "assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+      "modelDocDigest": "05e7a2a46d65",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "blitzcrank_idle1",
+        "run": "blitzcrank_run",
+        "attack": "blitzcrank_attack1",
+        "cast": "blitzcrank_spell1",
+        "hurt": "blitzcrank_idle1",
+        "death": "blitzcrank_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-chogath",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+      "glbPath": "assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+      "modelDocDigest": "88dc90fc5871",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "chogath_idle1",
+        "run": "chogath_run",
+        "attack": "chogath_attack1",
+        "cast": "chogath_spell1",
+        "hurt": "chogath_idle1",
+        "death": "chogath_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-fiddlesticks",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+      "glbPath": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+      "modelDocDigest": "824221094474",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "fiddlesticks_idle1",
+        "run": "fiddlesticks_run",
+        "attack": "fiddlesticks_attack1_a",
+        "cast": "fiddlesticks_spell1",
+        "hurt": "fiddlesticks_idle1",
+        "death": "fiddlesticks_death_v2"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-garen",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+      "glbPath": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+      "modelDocDigest": "d019e9f48dcc",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "garen_2013_idle1",
+        "run": "garen_2013_run",
+        "attack": "garen_2013_attack_01",
+        "cast": "garen_2013_spell1",
+        "hurt": "garen_2013_idle1",
+        "death": "garen_2013_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
       "championId": "lol-karthus",
       "schema": "resolved-appearance@1",
       "modelKey": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
@@ -6840,6 +8098,36 @@
       "resolverFingerprint": "21a5483cdc47"
     },
     {
+      "championId": "lol-malphite",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+      "glbPath": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+      "modelDocDigest": "abb5ddcf3d3f",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "malphite_idle1",
+        "run": "malphite_run",
+        "attack": "malphite_attack1",
+        "cast": "malphite_spell1",
+        "hurt": "malphite_idle1",
+        "death": "malphite_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
       "championId": "lol-missfortune",
       "schema": "resolved-appearance@1",
       "modelKey": "version.body.69e09156dc9e456409f4c887b5a5f75f9d7b743f436c3c07",
@@ -6857,6 +8145,126 @@
         "cast": "missfortune_spell1",
         "hurt": "missfortune_idle1",
         "death": "missfortune_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-ornn",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+      "glbPath": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+      "modelDocDigest": "05bf880eedc5",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 180,
+      "effectiveYawOffsetDeg": 180,
+      "yawOffsetDeg": 180,
+      "clipMap": {
+        "idle": "ornn_idle1",
+        "run": "ornn_run",
+        "attack": "ornn_attack1",
+        "cast": "ornn_spell1",
+        "hurt": "ornn_idle1",
+        "death": "ornn_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-sett",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+      "glbPath": "assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+      "modelDocDigest": "134357d318e8",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "sett_idle",
+        "run": "sett_run",
+        "attack": "sett_attack1",
+        "cast": "sett_spell1_a",
+        "hurt": "sett_idle",
+        "death": "sett_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-thresh",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+      "glbPath": "assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+      "modelDocDigest": "9be5addceb3b",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "thresh_idle1",
+        "run": "thresh_run",
+        "attack": "thresh_attack1_long",
+        "cast": "thresh_spell1_in",
+        "hurt": "thresh_idle1",
+        "death": "thresh_death"
+      },
+      "attachPoints": {},
+      "teamTintMaterials": [],
+      "isStandIn": false,
+      "axesNotCovered": [
+        "skin",
+        "form",
+        "overlay",
+        "override"
+      ],
+      "resolverFingerprint": "21a5483cdc47"
+    },
+    {
+      "championId": "lol-velkoz",
+      "schema": "resolved-appearance@1",
+      "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+      "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "modelDocDigest": "a5bb2f2a5c05",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
+      "clipMap": {
+        "idle": "velkoz_idle1v2",
+        "run": "velkoz_run",
+        "attack": "velkoz_attack1",
+        "cast": "velkoz_spell1",
+        "hurt": "velkoz_idle1v2",
+        "death": "velkoz_death"
       },
       "attachPoints": {},
       "teamTintMaterials": [],

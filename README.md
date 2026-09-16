@@ -417,7 +417,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -453,7 +453,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -662,13 +662,13 @@ make lan-probe
 
 #### 🔴 每級成長 **100% 由出身決定**（三圍成長已經全部歸 0）
 
-> 力量／敏捷／智慧的**每級成長全部是 0**（153/153 張英雄卡，含變身態）。一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— 反解的目標就是上表那一格級距值（等級 99 的終值）。
+> 力量／敏捷／智慧的**每級成長全部是 0**（190/190 張英雄卡，含變身態）。一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— 反解的目標就是上表那一格級距值（等級 99 的終值）。
 >
 > ⭐ owner 的分工一句話：**初始＝個性（卡上的 `baseStats`），成長＝定位（出身的級距）**。兩位同出身的英雄可以有不同的起點，但他們在等級 99 收斂到同一格。
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -774,7 +774,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 > 這一節講的是**一支技能**的冷卻／距離／範圍／位移／傷害落在哪一格。
 
 <!-- BEGIN GENERATED:tiers -->
-#### ⭐ 技能五級距（9 張表 · 15 條梯子 · 母體 **130 位對戰可選英雄**）
+#### ⭐ 技能五級距（9 張表 · 15 條梯子 · 母體 **167 位對戰可選英雄**）
 
 > **級距名全專案只有一份**（`packages/shared/src/content/skillTiers.ts` 的 `SKILL_TIER_NAMES` = **極小** / **小** / **中** / **大** / **極大**）—— ⛔ 沒有「超大」，也沒有任何一軸可以自己再宣告一組。
 >
@@ -829,13 +829,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 冷卻 | w3x 匯進來的自由秒數 | owner 2026-08-19 **直接給滿**十五格（單體／範圍／變身各一列），⛔ 所以這一軸照抄，沒有推導梯子。不在格點上的走 `tierSnap` 靠攏 |
 | 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：（純基礎血量錨點 ＋ 初始加成）÷ owner 的「20 發要能殺死」→ 進位 = 極小。⛔ 推導鏈裡**沒有** HP 系統倍率（owner 2026-08-22「不能把系統倍率乘進去再反推」）；錨點血量是 `content/config/balance-anchors.json` 的**固定值**（owner 2026-09-12「以後固定數值 别再取中位數了」），⛔ 不再取名單中位（⚠️ 那一份的 `enabled` 翻成 `false` ＝ 一鍵退回取中位）。其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** `flat`/`perRank`（⛔ 不是相加） |
 
-> ⭐ **母體是 130 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— 那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`：對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。
+> ⭐ **母體是 167 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— 那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`：對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。
 >
-> ⚠️ 錨點是固定值時，這 130 位**⛔ 不進**級距推導 —— `anchors:build` 仍量名單中位，只用來印「固定值 vs 今天的名單中位」的偏差（⛔ 不改值）。
+> ⚠️ 錨點是固定值時，這 167 位**⛔ 不進**級距推導 —— `anchors:build` 仍量名單中位，只用來印「固定值 vs 今天的名單中位」的偏差（⛔ 不改值）。
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -849,7 +849,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下**六條**是**天生技（等級 1 就有）＋ Q/W/E/R/EX** 的**技能名稱＋一行效果**。天生技那條會標 `天生·被動`（光環／機率觸發／回復類）或 `天生·主動`（有冷卻、原本掛在 D 鍵的）。效果截斷到 34 字、說明截斷到 40 字，結尾的 `…` 是產生器加的。完整逐字內容在 [`docs/reference/abilities.md`](./docs/reference/abilities.md) 或 <http://localhost:39527/#codex>。
 
-> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 153 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
+> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 190 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
 
 **`b2-aladdin` 阿拉丁**（mage · 遠程） — 魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，…
 
@@ -2020,19 +2020,19 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **R** 天際斷章：鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。
 - **EX** 旋風縛步：將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。
 
-> 📖 **完整 153 名英雄**（含 23 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
+> 📖 **完整 190 名英雄**（含 60 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 開放 130 / 全 153 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 開放 130 / 全 190 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:all-heroes -->
-#### 全英雄列表（153 名）— 六個技能 slot 的**名稱**
+#### 全英雄列表（190 名）— 六個技能 slot 的**名稱**
 
 > ⭐ 這是 `content/champions/` 的**全部**英雄，⛔ 不是開放名單 —— 上面那一段才是「這一場能選誰」（130 名）。
 >
 > ⭐ 每一列六格＝**天生 / Q / W / E / R / EX**，只印**名稱**；一行效果在上面那一段，完整文字在 `docs/reference/abilities.md`。
 >
-> 分組：**原作 w3x 班底** 69 · **第二批社群英雄** 38 · **第一批社群英雄** 37 · **英雄聯盟** 7 · **其他** 2。
+> 分組：**原作 w3x 班底** 69 · **第二批社群英雄** 38 · **第一批社群英雄** 37 · **英雄聯盟** 18 · **其他** 28。
 
 | 英雄 | 稱號 | 上架 | 天生 | Q | W | E | R | EX |
 | --- | --- | :-: | --- | --- | --- | --- | --- | --- |
@@ -2180,13 +2180,50 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | **炭治郎**<br>`community-review-35-20260907` | — | ✅ | 〔嗅覺・破綻辨識〕 | 水之呼吸・水面斬 | 水之呼吸・水車 | 〔呼吸調整〕 | 火之神神樂・圓舞 | 〔呼吸切換〕 |
 | **鬼畜王蘭斯**<br>`community-review-36-20260907` | — | ✅ | 〔自信過剩〕 | 〔蠻力斬擊〕 | 〔本大爺還沒認真〕 | 〔霸王突進〕 | Rance Attack／蘭斯攻擊 | 〔跟著本大爺衝〕 |
 | **吉伊卡哇**<br>`community-review-37-20260907` | — | ✅ | 〔雖然害怕還是努力〕 | 〔討伐叉刺擊〕 | 〔哇啊啊撤退〕 | 〔點心時間〕 | 〔鼓起勇氣討伐〕 | 〔一起加油〕 |
+| **阿璃**<br>`lol-ahri` | — | ⛔ 未列入 | 銷魂 | 幻玉 | 魅火 | 傾城 | 飛仙 | 已讀不回 |
+| **艾希**<br>`lol-ashe` | — | ⛔ 未列入 | 冰霜射擊 | 專注射擊 | 萬箭齊發 | 鷹擊長空：強制簽收 | 魔法水晶箭 | 冷凍保存 |
+| **布里姿**<br>`lol-blitzcrank` | — | ⛔ 未列入 | 法力屏障 | 火箭抓取 | 過載運轉 | 充能一擊 | 靜電力場 | 七天鑑賞期 |
+| **科加斯**<br>`lol-chogath` | — | ⛔ 未列入 | 肉食者 | 破裂 | 野性尖嘯 | 恐懼尖刺 | 饗宴 | 吃太飽走不動 |
+| **稻草人**<br>`lol-fiddlesticks` | — | ⛔ 未列入 | 無害稻草人 | 恐懼 | 豐收之魘 | 駭懼收割 | 群鴉風暴 | 尖叫外包 |
+| **蓋倫**<br>`lol-garen` | — | ⛔ 未列入 | 堅韌 | 致命打擊 | 勇氣 | 審判 | 蒂瑪西亞制裁 | 蒂瑪西亞先休息 |
 | **卡爾瑟斯**<br>`lol-karthus` | — | ✅ | 未竟尾聲 | 暮點 | 亡途繫縛 | 荒蕪迴音 | 暮鐘終曲 | 靜默幕衣 |
 | **李星**<br>`lol-leesin` | — | ✅ | 回響拳 | 聽雷探手 | 定心護體 | 震地迴響 | 斷陣踢 | 逐響躍步 |
 | **拉克絲**<br>`lol-lux` | — | ✅ | 餘光 | 稜光束縛 | 折光護衣 | 流光之域 | 破曉光路 | 引路星芒 |
+| **墨菲特**<br>`lol-malphite` | — | ⛔ 未列入 | 花崗岩護盾 | 地震碎片 | 震雷之擊 | 大地震顫 | 勢不可擋 | 此處禁止停車 |
 | **好運姐**<br>`lol-missfortune` | — | ✅ | 先聲奪人 | 回聲雙響 | 揚帆快步 | 緋帆彈雨 | 扇港齊射 | 藏帆備彈 |
+| **鄂爾**<br>`lol-ornn` | — | ⛔ 未列入 | 活火爐 | 火山脈動 | 熾焰吹息 | 熔岩俯衝 | 鑄火者的呼喚 | 終身保固三秒 |
+| **賽特**<br>`lol-sett` | — | ⛔ 未列入 | 恆毅之泉 | 懾人猛拳 | 獸魂轟拳 | 碎顱猛擊 | 嘆為觀止 | 媽媽來電 |
+| **瑟雷西**<br>`lol-thresh` | — | ⛔ 未列入 | 靈魂饗宴 | 死亡宣告 | 鬼影燈籠 | 懾魂掃蕩 | 惡靈領域 | 本燈拒載 |
+| **威寇茲**<br>`lol-velkoz` | — | ⛔ 未列入 | 結構毀滅 | 分裂電漿 | 虛空裂痕 | 反物質瓦解 | 生化射線 | 論文退回重寫 |
 | **沃維克**<br>`lol-warwick` | — | ✅ | 嗅血 | 噬痕 | 循血疾行 | 驚獵嚎聲 | 獵衛封喉 | 血性護甲 |
 | **齊勒斯**<br>`lol-xerath` | — | ✅ | 逸散奧能 | 星牢光路 | 星核墜落 | 奧能拘束 | 星牢轟擊 | 回收奧能 |
 | **犽宿**<br>`lol-yasuo` | — | ✅ | 風行刃 | 斬風 | 迎風架勢 | 踏風進擊 | 天際斷章 | 旋風縛步 |
+| **愛麗絲·滋貝魯庫（Alice Zuberg）**<br>`acquired-alice` | — | ⛔ 未列入 | 整合騎士查票 | 金木樨停車單 | 騎士擔保 | 騎士查勤 | 花瓣罰單連發 | 今天不准加班受傷 |
+| **枯星龍**<br>`acquired-astralym` | — | ⛔ 未列入 | 星蝕欠款 | 逾期星光 | 失重通知 | 星間挪位 | 枯星下班鐘 | 末日也要蓋章 |
+| **亞絲娜／結城明日奈**<br>`acquired-asuna` | — | ⛔ 未列入 | 開飯倒數 | 細劍取餐號 | 閃光趕飯 | 插入隊伍最前面 | 星屑飛濺別灑到湯 | 晚餐預約成功 |
+| **碧翠絲**<br>`acquired-beatrice` | — | ⛔ 未列入 | 借書要留押金 | 陰影退件章 | 禁書封皮 | 門在這一邊 | 逾期罰款・陰 | 圖書館請安靜 |
+| **搗蛋貓**<br>`acquired-cattiva` | — | ⛔ 未列入 | 不是我打破的 | 貓拳簽收 | 你追不到我 | 紙箱撤離 | 連續貓貓拳 | 罐頭優先權 |
+| **DIO**<br>`acquired-dio` | — | ⛔ 未列入 | 吸血鬼加班制 | 無馱連打 | 飛刀考勤 | 世界・半秒鐘 | 壓路機停車費 | 輪到我的台詞 |
+| **愛蜜莉雅**<br>`acquired-emilia` | — | ⛔ 未列入 | 碎霜禮節 | 冰槍請簽收 | 精靈雪衣 | 冰花開席 | 永凍・試用版 | 熱茶先不要冰 |
+| **犬夜叉**<br>`acquired-inuyasha` | — | ⛔ 未列入 | 半妖起床氣 | 鐵碎牙拆門 | 風之傷清走廊 | 半妖跨欄 | 鐵碎牙不是開罐器 | 爆流破先擋一下 |
+| **空渦龍**<br>`acquired-jetragon` | — | ⛔ 未列入 | 航電預熱 | 龍式點射 | 尾流加班 | 貼地起飛 | 本航班不供餐 | 登機口改號 |
+| **吉他吉他老伯（阿德巴古·艾魯多魯）**<br>`acquired-kita-kita` | — | ⛔ 未列入 | 越挨打越想跳 | 別看下半身 | 觀眾席安全距離 | 舞步巡迴 | 全員原地學舞 | 跳累了先喝水 |
+| **黑雪姬**<br>`acquired-kuroyukihime` | — | ⛔ 未列入 | 延遲斬殺 | 你的連線已中斷 | 先加速再解釋 | 黑蓮快速登入 | 死亡穿刺強制登出 | 撤回上一則位置 |
+| **莉法**<br>`acquired-leafa` | — | ⛔ 未列入 | 順風不用跑腿費 | 精靈補給到府 | 外送區禁止停車 | 精靈抄近路 | 風精靈團購保險 | 風刃催單 |
+| **金色魔王／惡夢之王**<br>`acquired-lord-nightmares` | — | ⛔ 未列入 | 混沌客服工單 | 金色退件章 | 宇宙暫停受理 | 客服轉接 | 退回混沌重填 | 三單一起結案 |
+| **Mario**<br>`acquired-mario` | — | ⛔ 未列入 | 叮！不是薪水 | 火球通管 | 披風請讓路 | 水管工落地章 | 終極火焰報價 | 一枚硬幣套餐 |
+| **Mewtwo**<br>`acquired-mewtwo` | — | ⛔ 未列入 | 念力集中中 | 暗影球・已充電 | 念力保護殼 | 瞬間移動・區內 | 精神強念投訴 | 我究竟為何排隊 |
+| **Steve／Alex**<br>`acquired-minecraft` | — | ⛔ 未列入 | 挖礦不包加班 | 鑽石鎬・租的 | 一面不擋路的牆 | 礦車單程票 | TNT 結算日 | 工作台便當 |
+| **摩尔迦娜**<br>`acquired-morgiana` | — | ⛔ 未列入 | 腳力留一手 | 赤腳催辦 | 鎖鏈請回來 | 法納利斯跨步 | 炎鎖舞步 | 女僕式清場 |
+| **漩渦鳴人**<br>`acquired-naruto` | — | ⛔ 未列入 | 打架前先吃麵 | 螺旋丸加麵 | 影分身代排 | 忍者插隊術 | 螺旋手裡麵 | 拉麵要趁熱 |
+| **Pokémon Trainer**<br>`acquired-pokemon-trainer` | — | ⛔ 未列入 | 徽章集點卡 | 傑尼龜・水槍 | 妙蛙草・藤鞭 | 噴火龍・熱身 | 三重指令結帳 | 包包裡有傷藥 |
+| **拉姆**<br>`acquired-ram` | — | ⛔ 未列入 | 掃除前先開窗 | 風刃催你走 | 毒舌逆風 | 不想走樓梯 | 風暴大掃除 | 今天也辛苦別人 |
+| **莉姆（Rim；粉紅魔龍）**<br>`acquired-rim` | — | ⛔ 未列入 | 這個快熟了 | 午休咬一口 | 加班費先預支 | 便當在那邊 | 整份都我的 | 沒吃飽不准下班 |
+| **Ryu**<br>`acquired-ryu` | — | ⛔ 未列入 | 波升基本功 | 波動拳 | 升龍拳・有付費 | 龍捲旋風腿 | 真・升龍加班 | 無薪修行 |
+| **沙耶**<br>`acquired-saya` | — | ⛔ 未列入 | 吃一口就好 | 不明食材試吃 | 餐桌黏黏的 | 看見真實菜單 | 今晚全席開放 | 閉眼比較好吃 |
+| **戰鬥暴龍獸**<br>`acquired-wargreymon` | — | ⛔ 未列入 | 鍋蓋還沒掀 | 龍獸拆箱爪 | 勇氣鍋蓋 | 勇者快遞 | 蓋亞能量到付 | 恐龍火氣很大 |
+| **小當家**<br>`acquired-xiaodangjia` | — | ⛔ 未列入 | 試味不用錢 | 料理怎麼又發光 | 趁熱吃 | 猛火快炒 | 麻婆豆腐流水席 | 鍋蓋全席 |
+| **Zero**<br>`acquired-zero` | — | ⛔ 未列入 | 劍砲交班 | Z-Saber 簽核 | 蓄力離線砲 | 衝刺斬 | 零式連段 | 更新稍後提醒 |
 | **Sela, the Ember Sage**<br>`sela` | — | 骨架 | — | Ember Bolt | Cinder Ward | Scorch Ring | Firestorm | — |
 | **Thorne, the Bramble Knight**<br>`thorne` | — | 骨架 | — | Thorn Lash | Barkskin Bulwark | Root Snare | Bramble Burst | — |
 
@@ -2255,23 +2292,23 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 33 | `godie-e00t` | 貞子七夜怪談 | 待上架（本機發布已通過） |
 | 34 | `godie-h021` | 阿強一號破銅爛鐵 | 待上架（本機發布已通過） |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 全量 153 名，其中開放 130 名。另有 45 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 全量 190 名，其中開放 130 名。另有 45 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:all-heroes -->
 
 <!-- BEGIN GENERATED:abilities -->
-#### 技能 abilities（全 907 個；開放英雄的 779 個）
+#### 技能 abilities（全 1129 個；開放英雄的 779 個）
 
 > **開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄六條：天生 ＋ Q/W/E/R/EX，含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，讓 README 保持精簡。
 >
-> 每個英雄每個 slot 一份：天生 PASSIVE 150 · Q 152 · W 152 · E 152 · R 152 · EX 149。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 150 份（116 純被動 ＋ 34 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
+> 每個英雄每個 slot 一份：天生 PASSIVE 187 · Q 189 · W 189 · E 189 · R 189 · EX 186。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 187 份（153 純被動 ＋ 34 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
 >
 > ⚠️ 別跟舊的 `champion.passive` 區塊混為一談：那是掛在某個 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
 > 數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害跟表格不會相同。那是預期行為。
 
-> 📖 **全 907 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
+> 📖 **全 1129 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 開放英雄技能 779 / 全 907 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 開放英雄技能 779 / 全 1129 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -2447,7 +2484,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -2536,7 +2573,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -2591,55 +2628,55 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 101 | `applyStatus` | 137 | `blink` | 34 |
-| `carry` | 0 | `chainLightning` | 4 | `championForm` | 13 |
-| `comboStrikes` | 1 | `consumeStatus` | 28 | `convertTeam` | 0 |
-| `cycleBuff` | 1 | `damage` | 310 | `damageArea` | 60 |
-| `damageLine` | 27 | `dash` | 8 | `delayed` | 75 |
-| `devour` | 4 | `dispel` | 22 | `dot` | 42 |
+| `applyBuff` | 128 | `applyStatus` | 235 | `blink` | 43 |
+| `carry` | 1 | `chainLightning` | 4 | `championForm` | 13 |
+| `comboStrikes` | 1 | `consumeStatus` | 51 | `convertTeam` | 0 |
+| `cycleBuff` | 1 | `damage` | 410 | `damageArea` | 76 |
+| `damageLine` | 42 | `dash` | 17 | `delayed` | 97 |
+| `devour` | 5 | `dispel` | 23 | `dot` | 49 |
 | `evasion` | 3 | `eventValueConversion` | 5 | `extendBuff` | 1 |
-| `floatingText` | 9 | `grantAttribute` | 5 | `grantGold` | 2 |
-| `grantXp` | 1 | `heal` | 47 | `invulnerable` | 17 |
-| `knockback` | 42 | `leap` | 62 | `manaBarrier` | 4 |
+| `floatingText` | 13 | `grantAttribute` | 5 | `grantGold` | 2 |
+| `grantXp` | 1 | `heal` | 76 | `invulnerable` | 17 |
+| `knockback` | 59 | `leap` | 83 | `manaBarrier` | 4 |
 | `modifyCooldown` | 15 | `proxyCast` | 6 | `pull` | 5 |
-| `randomArea` | 7 | `restore` | 53 | `revive` | 1 |
-| `screenFlash` | 6 | `screenShake` | 17 | `shield` | 85 |
-| `shieldBreak` | 2 | `spawnInteractable` | 0 | `spawnModelFx` | 55 |
-| `spawnObstacle` | 0 | `spawnProjectile` | 4 | `spawnThresholds` | 0 |
-| `spawnVfx` | 60 | `spendHealth` | 4 | `spendMana` | 6 |
-| `summon` | 8 | `swapResource` | 1 | `taunt` | 2 |
+| `randomArea` | 7 | `restore` | 55 | `revive` | 1 |
+| `screenFlash` | 6 | `screenShake` | 17 | `shield` | 114 |
+| `shieldBreak` | 3 | `spawnInteractable` | 1 | `spawnModelFx` | 55 |
+| `spawnObstacle` | 1 | `spawnProjectile` | 20 | `spawnThresholds` | 1 |
+| `spawnVfx` | 84 | `spendHealth` | 4 | `spendMana` | 6 |
+| `summon` | 11 | `swapResource` | 1 | `taunt` | 4 |
 | `weightedBranch` | 13 |  |  |  |  |
 
 ### 觸發事件（hook event）—— 33 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
-| `onAbilityCast` | 施法時 | 25 |
-| `onAbilityHit` | 技能命中時 | 21 |
+| `onAbilityCast` | 施法時 | 54 |
+| `onAbilityHit` | 技能命中時 | 27 |
 | `onAllyDamaged` | 隊友受傷時 | 6 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
-| `onBasicAttack` | 普攻時 | 152 |
+| `onBasicAttack` | 普攻時 | 182 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 8 |
 | `onCrowdControlReceived` | 自己被控場時 | 4 |
 | `onDamageDealt` | 造成傷害時 | 7 |
-| `onDamageTaken` | 受到傷害時 | 51 |
+| `onDamageTaken` | 受到傷害時 | 69 |
 | `onDashOrBlink` | 位移時（衝刺／閃現／跳躍） | 10 |
 | `onDeath` | 死亡時 ⛔ 已知壞掉（GH#296） | 0 |
 | `onEvade` | 迴避成功時 | 14 |
 | `onFireRingIgnite` | 火圈點燃時 | 1 |
 | `onGuardianDown` | 守衛塔倒下時 | 0 |
 | `onHeal` | 治療真的補到血時 | 4 |
-| `onInterval` | 週期（每 N 秒） | 16 |
-| `onKill` | 擊殺時 | 15 |
+| `onInterval` | 週期（每 N 秒） | 22 |
+| `onKill` | 擊殺時 | 23 |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 |
 | `onOverheal` | 治療溢出時 | 0 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 |
 | `onReflectSuccess` | 反彈成功時 | 16 |
 | `onRevive` | 被復活時 | 2 |
 | `onRoundEnd` | 回合結束時 | 0 |
-| `onRoundStart` | 回合開始時 | 0 |
+| `onRoundStart` | 回合開始時 | 4 |
 | `onShieldBroken` | 護盾破碎時 | 0 |
 | `onShieldGained` | 獲得護盾時 | 2 |
 | `onStatCapReached` | 屬性首次到頂時 | 0 |
@@ -2660,8 +2697,8 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `kind` | 1 |
 | `learned` | 6 |
 | `recentCast` | 10 |
-| `stat` | 15 |
-| `status` | 46 |
+| `stat` | 23 |
+| `status` | 52 |
 
 ### 狀態標籤 —— 121 個（`content/status-effects/*.json` 逐檔數出來）
 
@@ -2683,7 +2720,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_34779cab62de` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_f70e9c51ade1` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

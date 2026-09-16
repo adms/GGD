@@ -3,8 +3,8 @@
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
     "engineFamilies": 47,
-    "templateDocs": 82,
-    "usable": 71,
+    "templateDocs": 89,
+    "usable": 78,
     "engineMissing": 10,
     "shells": 10,
     "zeroAdoption": 23,
@@ -280,7 +280,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 5,
-      "abilities": 124,
+      "abilities": 241,
       "terminal": false
     },
     {
@@ -307,7 +307,16 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 1,
-      "abilities": 35,
+      "abilities": 69,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "family": "single-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 28,
       "terminal": false
     },
     {
@@ -329,12 +338,21 @@
       "terminal": false
     },
     {
-      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
-      "family": "single-strike",
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "family": "buff-self",
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
       "abilities": 19,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "family": "heal",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 18,
       "terminal": false
     },
     {
@@ -347,39 +365,21 @@
       "terminal": false
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "family": "blink",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 1,
+      "abilities": 16,
+      "terminal": false
+    },
+    {
       "id": "tpl-instant-blast",
       "family": "instant-blast",
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
       "abilities": 16,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
-      "family": "heal",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 4,
-      "abilities": 14,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
-      "family": "blink",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 1,
-      "abilities": 14,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
-      "family": "buff-self",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 6,
-      "abilities": 14,
       "terminal": false
     },
     {
@@ -398,6 +398,15 @@
       "status": "enabled",
       "params": 8,
       "abilities": 14,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "family": "apply-status",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 3,
+      "abilities": 13,
       "terminal": false
     },
     {
@@ -446,6 +455,15 @@
       "terminal": false
     },
     {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "family": "periodic-field",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 9,
+      "abilities": 10,
+      "terminal": false
+    },
+    {
       "id": "tpl-beam-roll",
       "family": "beam-roll",
       "engineKnows": true,
@@ -464,11 +482,47 @@
       "terminal": false
     },
     {
+      "id": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+      "family": "on-attack",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
       "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
       "family": "line-strike",
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+      "family": "leap-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+      "family": "ally-shield",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+      "family": "lock-combo",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
       "abilities": 8,
       "terminal": false
     },
@@ -500,20 +554,11 @@
       "terminal": false
     },
     {
-      "id": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
-      "family": "on-attack",
+      "id": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+      "family": "ground-nova",
       "engineKnows": true,
       "status": "enabled",
-      "params": 6,
-      "abilities": 6,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
-      "family": "periodic-field",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 9,
+      "params": 4,
       "abilities": 6,
       "terminal": false
     },
@@ -545,11 +590,11 @@
       "terminal": false
     },
     {
-      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
-      "family": "apply-status",
+      "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+      "family": "charge-push",
       "engineKnows": true,
       "status": "enabled",
-      "params": 3,
+      "params": 11,
       "abilities": 5,
       "terminal": false
     },
@@ -590,20 +635,20 @@
       "terminal": false
     },
     {
-      "id": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
-      "family": "ground-nova",
+      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+      "family": "blink-strike",
       "engineKnows": true,
       "status": "enabled",
-      "params": 4,
+      "params": 6,
       "abilities": 4,
       "terminal": false
     },
     {
-      "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
-      "family": "charge-push",
+      "id": "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+      "family": "traveling-wave",
       "engineKnows": true,
       "status": "enabled",
-      "params": 11,
+      "params": 9,
       "abilities": 4,
       "terminal": false
     },
@@ -617,6 +662,15 @@
       "terminal": false
     },
     {
+      "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+      "family": "teleport",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 3,
+      "terminal": false
+    },
+    {
       "id": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
       "family": "line-sweep",
       "engineKnows": true,
@@ -626,21 +680,12 @@
       "terminal": false
     },
     {
-      "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
-      "family": "lock-combo",
+      "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+      "family": "drain-leech",
       "engineKnows": true,
       "status": "enabled",
-      "params": 10,
+      "params": 8,
       "abilities": 3,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
-      "family": "teleport",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 6,
-      "abilities": 2,
       "terminal": false
     },
     {
@@ -653,11 +698,20 @@
       "terminal": false
     },
     {
-      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
-      "family": "blink-strike",
+      "id": "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+      "family": "spend-resource",
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+      "family": "summon-agent",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
       "abilities": 2,
       "terminal": false
     },
@@ -667,24 +721,6 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 5,
-      "abilities": 2,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
-      "family": "leap-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 10,
-      "abilities": 2,
-      "terminal": false
-    },
-    {
-      "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
-      "family": "drain-leech",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
       "abilities": 2,
       "terminal": false
     },
@@ -734,6 +770,15 @@
       "terminal": false
     },
     {
+      "id": "hero-template.0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e",
+      "family": "charge-resource",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
       "family": "summon-agent",
       "engineKnows": true,
@@ -743,11 +788,29 @@
       "terminal": false
     },
     {
+      "id": "hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c",
+      "family": "projectile-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 7,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
       "family": "pull-throw",
       "engineKnows": true,
       "status": "enabled",
       "params": 12,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f",
+      "family": "orbit-array",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 7,
       "abilities": 1,
       "terminal": false
     },

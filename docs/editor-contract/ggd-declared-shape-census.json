@@ -2,11 +2,11 @@
   "schema": "ggd-declared-shape-census@1",
   "note": "⭐ 「宣告的欄位」對「實際的結構／卡面」（GH#948）—— ⛔ 產物，改 `tools/declared-shape/gen.ts`，⛔ 不要手改。⚠️ 卡面比對前**剝掉 `「…」`**（第〇·六守則細則②：那是角色對白，⛔ 不是效果）。",
   "counts": {
-    "abilities": 907,
+    "abilities": 1129,
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
-    "cooldownArrayAlongsideTier": 739,
-    "basicAttackHookNotOnCard": 0
+    "cooldownArrayAlongsideTier": 924,
+    "basicAttackHookNotOnCard": 1
   },
   "passiveWithCastTime": [
     {
@@ -184,17 +184,22 @@
     }
   ],
   "cooldownArrayAlongsideTier": {
-    "count": 739,
+    "count": 924,
     "sample": [
-      "b2-aladdin.e",
-      "b2-aladdin.ex",
-      "b2-aladdin.q",
-      "b2-aladdin.r",
-      "b2-aladdin.w",
-      "b2-albus.e",
-      "b2-albus.ex",
-      "b2-albus.q"
+      "acquired-alice.e",
+      "acquired-alice.ex",
+      "acquired-alice.q",
+      "acquired-alice.r",
+      "acquired-alice.w",
+      "acquired-astralym.e",
+      "acquired-astralym.ex",
+      "acquired-astralym.q"
     ]
   },
-  "basicAttackHookNotOnCard": []
+  "basicAttackHookNotOnCard": [
+    {
+      "id": "lol-sett.passive",
+      "name": "恆毅之泉"
+    }
+  ]
 }

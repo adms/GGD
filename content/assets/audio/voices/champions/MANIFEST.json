@@ -28,10 +28,10 @@
       "defeat"
     ]
   },
-  "generatedCount": 132,
-  "partialCount": 81,
+  "generatedCount": 133,
+  "partialCount": 82,
   "sharedCount": 20,
-  "championCount": 152,
+  "championCount": 153,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
     {
@@ -156,6 +156,113 @@
     }
   ],
   "champions": {
+    "acquired-lord-nightmares": {
+      "engine": "cosyvoice3",
+      "variant": "cv3-0.5b",
+      "tier": "combat-core",
+      "missingCategories": [
+        "quote",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.ex",
+        "victory",
+        "hurt",
+        "hurt-heavy",
+        "stun",
+        "poison",
+        "slow",
+        "blind",
+        "bind",
+        "knockdown",
+        "healed",
+        "confused",
+        "paralyzed",
+        "thanks",
+        "taunt",
+        "curse",
+        "hum",
+        "crit",
+        "block",
+        "dodge",
+        "sprint",
+        "jump",
+        "respond.ok",
+        "respond.no",
+        "puzzled",
+        "love",
+        "thumbs-up",
+        "retreat",
+        "charge",
+        "watch",
+        "free-move",
+        "first-blood",
+        "kill-1",
+        "kill-2",
+        "kill-3",
+        "kill-4",
+        "kill-5",
+        "unstoppable"
+      ],
+      "lines": {
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/attack-heavy.mp3",
+            "text": "（原檔）voice_attack_2",
+            "lang": "und",
+            "durationSec": 2.306032,
+            "speakerSim": null,
+            "hash": "58a17f757361e7c3da6a8409a27157eab13e755718fa207cf2ae6324476f8ccf"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/attack-light.mp3",
+            "text": "（原檔）voice_attack_1",
+            "lang": "und",
+            "durationSec": 1.394649,
+            "speakerSim": null,
+            "hash": "284b875b10e958f39839809258d13a652f008269343d586a53aa8e00746c223f"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.mp3",
+            "text": "（原檔）voice_death_1",
+            "lang": "und",
+            "durationSec": 0.901224,
+            "speakerSim": null,
+            "hash": "c4ac15b662dc4204719472ce80e430432ef3255e260c17b9963ad3eaf986b966"
+          },
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.2.mp3",
+            "text": "（原檔）voice_death_2",
+            "lang": "und",
+            "durationSec": 0.970884,
+            "speakerSim": null,
+            "hash": "f4a97e1709e83cb90bd14f0fe96cd23b67896ed9d5155fa70296289c8d425ab6"
+          },
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.3.mp3",
+            "text": "（原檔）voice_death_3",
+            "lang": "und",
+            "durationSec": 1.493333,
+            "speakerSim": null,
+            "hash": "aae7deeff1ebf922ccae613c6aa391bb0d83f64a5bf5d85c5cb85488160c231c"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/skill-name.r.mp3",
+            "text": "（原檔）voice_dazhao_2",
+            "lang": "und",
+            "durationSec": 1.79229,
+            "speakerSim": null,
+            "hash": "3896fc078c6067194933afc668b42e2de03f87c3274fa2f16fa55dcae1cc5852"
+          }
+        ]
+      }
+    },
     "b2-aladdin": {
       "engine": "cosyvoice3",
       "variant": "cv3-0.5b",

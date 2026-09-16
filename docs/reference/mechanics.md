@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_34779cab62de`
+contentVersion `cv_f70e9c51ade1`
 
 ---
 
@@ -16,89 +16,89 @@ contentVersion `cv_34779cab62de`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 101 | `b2-aladdin.e`、`b2-elma.e`、`b2-fushi.r`、`b2-guts.w`、`b2-kaede.q`、`b2-maple.e`、`b2-matthias.q`、`b2-ned.passive`、`b2-noor.q`、`b2-rem.e`、`b2-shadow.e`、`b2-sinbad.q` …（共 101） |
-| `applyStatus` | 掛狀態 | 137 | `b2-aladdin.q`、`b2-bojji.r`、`b2-bojji.w`、`b2-boxxo.q`、`b2-fushi.passive`、`b2-goblin.e`、`b2-haga.e`、`b2-haga.q`、`b2-kaede.q`、`b2-keyaru.e`、`b2-keyaru.passive`、`b2-kisaragi.ex` …（共 137） |
-| `blink` | 瞬移 | 34 | `b2-albus.e`、`b2-bojji.e`、`b2-fushi.ex`、`b2-haga.w`、`b2-kisaragi.e`、`b2-kisaragi.r`、`b2-klaus.e`、`b2-kumoko.e`、`b2-luckyman.ex`、`b2-misery.e`、`b2-naofumi.r`、`b2-ned.ex` …（共 34） |
-| `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `applyBuff` | 增益／減益（改屬性） | 128 | `acquired-astralym.ex`、`acquired-asuna.passive`、`acquired-asuna.w`、`acquired-cattiva.passive`、`acquired-cattiva.r`、`acquired-inuyasha.ex`、`acquired-jetragon.w`、`acquired-kuroyukihime.w`、`acquired-leafa.passive`、`acquired-naruto.ex`、`acquired-pokemon-trainer.ex`、`acquired-ram.ex` …（共 128） |
+| `applyStatus` | 掛狀態 | 235 | `acquired-alice.q`、`acquired-astralym.passive`、`acquired-astralym.q`、`acquired-astralym.w`、`acquired-asuna.q`、`acquired-asuna.r`、`acquired-beatrice.ex`、`acquired-beatrice.passive`、`acquired-beatrice.r`、`acquired-cattiva.ex`、`acquired-cattiva.q`、`acquired-dio.e` …（共 235） |
+| `blink` | 瞬移 | 43 | `acquired-astralym.e`、`acquired-asuna.e`、`acquired-beatrice.e`、`acquired-kuroyukihime.e`、`acquired-kuroyukihime.ex`、`acquired-lord-nightmares.e`、`acquired-mewtwo.e`、`b2-albus.e`、`b2-bojji.e`、`b2-fushi.ex`、`b2-haga.w`、`b2-kisaragi.e` …（共 43） |
+| `carry` | 背負（帶著隊友移動 + 不可被選取） | 1 | `lol-sett.r` |
 | `chainLightning` | 連鎖閃電 | 4 | `community-review-20-20260907.w`、`godie-o00k.r`、`godie-udea.r`、`lol-missfortune.q` |
 | `championForm` | 變身／切換形態 | 13 | `b2-maple.e`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-ogrh.e`、`godie-u034.r`、`godie-ucrl.r`、`godie-umal.r` …（共 13） |
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
-| `consumeStatus` | 足額消耗狀態並分支 | 28 | `b2-aladdin.w`、`b2-bojji.r`、`b2-boxxo.w`、`b2-fushi.w`、`b2-haga.r`、`b2-kaede.ex`、`b2-kaiji.e`、`b2-keyaru.ex`、`b2-keyaru.w`、`b2-kisaragi.e`、`b2-klaus.ex`、`b2-makoto.r` …（共 28） |
+| `consumeStatus` | 足額消耗狀態並分支 | 51 | `acquired-astralym.q`、`acquired-beatrice.r`、`acquired-emilia.passive`、`acquired-jetragon.r`、`acquired-lord-nightmares.ex`、`acquired-mario.ex`、`acquired-mewtwo.q`、`acquired-minecraft.q`、`acquired-minecraft.r`、`acquired-minecraft.w`、`acquired-morgiana.q`、`acquired-pokemon-trainer.r` …（共 51） |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 310 | `b2-albus.ex`、`b2-albus.q`、`b2-bojji.r`、`b2-bojji.w`、`b2-elma.r`、`b2-goblin.e`、`b2-goblin.q`、`b2-goblin.r`、`b2-guts.passive`、`b2-guts.r`、`b2-kaede.passive`、`b2-kaede.r` …（共 310） |
-| `damageArea` | 範圍傷害 | 60 | `b2-kisaragi.e`、`b2-kisaragi.r`、`b2-nube.r`、`b2-shinchan.r`、`b2-yogiri.r`、`community-review-02-20260907.q`、`community-review-03-20260907.q`、`community-review-05-20260907.w`、`community-review-11-20260907.q`、`community-review-21-20260907.q`、`community-review-26-20260907.q`、`godie-e002.w` …（共 60） |
-| `damageLine` | 直線傷害 | 27 | `b2-aladdin.r`、`b2-guts.q`、`b2-kaede.w`、`b2-ned.r`、`b2-popp.r`、`b2-shadow.r`、`b2-sinbad.r`、`b2-uncle.ex`、`godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex` …（共 27） |
-| `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
-| `delayed` | 延遲落地／排程 | 75 | `b2-boxxo.r`、`b2-goblin.q`、`b2-kaede.r`、`b2-klaus.r`、`b2-klaus.w`、`b2-kumoko.r`、`b2-makoto.e`、`b2-misery.ex`、`b2-shadow.w`、`b2-touka.q`、`b2-zenitsu.q`、`b2-zenitsu.r` …（共 75） |
-| `devour` | 吞噬 | 4 | `godie-e00r.q`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
-| `dispel` | 淨化／驅散 | 22 | `b2-boxxo.ex`、`b2-haga.ex`、`b2-haga.r`、`b2-keyaru.r`、`b2-maomao.r`、`b2-maomao.w`、`b2-nube.ex`、`b2-sinbad.ex`、`b2-takopi.r`、`b2-uncle.w`、`godie-e007.r`、`godie-e007.w` …（共 22） |
-| `dot` | 持續傷害（燃燒／流血／中毒） | 42 | `b2-albus.ex`、`b2-kumoko.w`、`b2-maomao.q`、`b2-maple.r`、`b2-orphen.q`、`community-review-02-20260907.e`、`community-review-02-20260907.ex`、`community-review-02-20260907.r`、`community-review-03-20260907.r`、`community-review-04-20260907.q`、`community-review-05-20260907.r`、`community-review-07-20260907.q` …（共 42） |
+| `damage` | 傷害 | 410 | `acquired-alice.e`、`acquired-astralym.q`、`acquired-astralym.r`、`acquired-astralym.w`、`acquired-asuna.e`、`acquired-asuna.q`、`acquired-asuna.r`、`acquired-beatrice.ex`、`acquired-beatrice.q`、`acquired-beatrice.r`、`acquired-cattiva.q`、`acquired-cattiva.r` …（共 410） |
+| `damageArea` | 範圍傷害 | 76 | `acquired-inuyasha.w`、`acquired-leafa.ex`、`acquired-minecraft.e`、`acquired-naruto.r`、`acquired-pokemon-trainer.e`、`acquired-ryu.e`、`acquired-wargreymon.ex`、`acquired-zero.e`、`b2-kisaragi.e`、`b2-kisaragi.r`、`b2-nube.r`、`b2-shinchan.r` …（共 76） |
+| `damageLine` | 直線傷害 | 42 | `acquired-mario.r`、`acquired-pokemon-trainer.w`、`acquired-ram.q`、`acquired-zero.q`、`b2-aladdin.r`、`b2-guts.q`、`b2-kaede.w`、`b2-ned.r`、`b2-popp.r`、`b2-shadow.r`、`b2-sinbad.r`、`b2-uncle.ex` …（共 42） |
+| `dash` | 衝刺（腳不離地） | 17 | `acquired-jetragon.e`、`acquired-minecraft.e`、`acquired-pokemon-trainer.e`、`acquired-ram.e`、`acquired-ryu.e`、`acquired-zero.e`、`godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w` …（共 17） |
+| `delayed` | 延遲落地／排程 | 97 | `acquired-astralym.r`、`acquired-emilia.r`、`acquired-inuyasha.w`、`acquired-jetragon.r`、`acquired-leafa.ex`、`acquired-lord-nightmares.r`、`acquired-minecraft.r`、`acquired-morgiana.r`、`acquired-naruto.r`、`acquired-saya.r`、`acquired-wargreymon.ex`、`acquired-xiaodangjia.r` …（共 97） |
+| `devour` | 吞噬 | 5 | `godie-e00r.q`、`godie-h02u.w`、`godie-h02v.w`、`lol-chogath.r`、`grail-ex-13` |
+| `dispel` | 淨化／驅散 | 23 | `b2-boxxo.ex`、`b2-haga.ex`、`b2-haga.r`、`b2-keyaru.r`、`b2-maomao.r`、`b2-maomao.w`、`b2-nube.ex`、`b2-sinbad.ex`、`b2-takopi.r`、`b2-uncle.w`、`godie-e007.r`、`godie-e007.w` …（共 23） |
+| `dot` | 持續傷害（燃燒／流血／中毒） | 49 | `acquired-alice.r`、`acquired-asuna.r`、`acquired-dio.q`、`acquired-inuyasha.r`、`acquired-ryu.r`、`acquired-saya.q`、`acquired-zero.r`、`b2-albus.ex`、`b2-kumoko.w`、`b2-maomao.q`、`b2-maple.r`、`b2-orphen.q` …（共 49） |
 | `evasion` | 迴避 | 3 | `b2-bojji.q`、`b2-luckyman.e`、`b2-luckyman.q` |
 | `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
-| `floatingText` | 特效文字（原作的 TextTag，例「1Hit…7Hit」） | 9 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r` |
+| `floatingText` | 特效文字（原作的 TextTag，例「1Hit…7Hit」） | 13 | `acquired-lord-nightmares.ex`、`godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r`、`lol-ashe.q`、`lol-blitzcrank.ex` …（共 13） |
 | `grantAttribute` | 加三圍（力／敏／智） | 5 | `godie-hpb1.passive`、`godie-hvsh.e`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
 | `grantGold` | 發錢 | 2 | `godie-h02u.r`、`godie-n00b.passive` |
 | `grantXp` | 發經驗值 | 1 | `godie-h02u.ex` |
-| `heal` | 治療（吃係數） | 47 | `b2-aladdin.ex`、`b2-albus.passive`、`b2-albus.r`、`b2-bojji.passive`、`b2-boxxo.ex`、`b2-boxxo.q`、`b2-boxxo.r`、`b2-elma.ex`、`b2-fushi.e`、`b2-fushi.w`、`b2-guts.e`、`b2-kaiji.ex` …（共 47） |
+| `heal` | 治療（吃係數） | 76 | `acquired-asuna.ex`、`acquired-cattiva.ex`、`acquired-dio.ex`、`acquired-dio.passive`、`acquired-emilia.ex`、`acquired-inuyasha.passive`、`acquired-kita-kita.ex`、`acquired-leafa.q`、`acquired-mario.ex`、`acquired-mewtwo.ex`、`acquired-minecraft.ex`、`acquired-naruto.passive` …（共 76） |
 | `invulnerable` | 免疫／魔免／免控 | 17 | `community-review-06-20260907.passive`、`community-review-22-20260907.passive`、`community-review-33-20260907.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-u00j.q`、`lol-karthus.passive`、`grail-c-12` …（共 17） |
-| `knockback` | 擊退／擊飛／拉扯／擊倒 | 42 | `b2-goblin.r`、`b2-guts.r`、`b2-makoto.q`、`b2-naofumi.e`、`b2-ned.e`、`b2-nube.q`、`b2-rem.ex`、`b2-shinchan.ex`、`b2-touka.r`、`community-review-03-20260907.e`、`community-review-08-20260907.ex`、`community-review-12-20260907.e` …（共 42） |
-| `leap` | 跳躍（拋物線離地） | 62 | `b2-albus.ex`、`b2-boxxo.e`、`b2-guts.r`、`b2-ned.q`、`b2-rem.ex`、`b2-takopi.q`、`b2-touka.w`、`community-review-02-20260907.e`、`community-review-02-20260907.ex`、`community-review-02-20260907.r`、`community-review-02-20260907.w`、`community-review-03-20260907.e` …（共 62） |
+| `knockback` | 擊退／擊飛／拉扯／擊倒 | 59 | `acquired-leafa.w`、`acquired-mario.w`、`acquired-morgiana.w`、`acquired-ram.r`、`acquired-ryu.w`、`b2-goblin.r`、`b2-guts.r`、`b2-makoto.q`、`b2-naofumi.e`、`b2-ned.e`、`b2-nube.q`、`b2-rem.ex` …（共 59） |
+| `leap` | 跳躍（拋物線離地） | 83 | `acquired-alice.e`、`acquired-asuna.r`、`acquired-cattiva.e`、`acquired-dio.q`、`acquired-inuyasha.e`、`acquired-inuyasha.r`、`acquired-kita-kita.e`、`acquired-leafa.e`、`acquired-leafa.w`、`acquired-mario.e`、`acquired-morgiana.e`、`acquired-naruto.e` …（共 83） |
 | `manaBarrier` | 魔力護盾 | 4 | `b2-kaede.e`、`b2-misery.r`、`b2-sinbad.w`、`godie-emns.passive` |
 | `modifyCooldown` | 改冷卻 | 15 | `b2-albus.w`、`b2-orphen.w`、`godie-h00l.ex`、`godie-h01n.r`、`grail-c-11`、`grail-c-13`、`grail-c-14`、`grail-a-05`、`grail-a-07`、`grail-a-17`、`grail-a-18`、`grail-ex-02` …（共 15） |
 | `proxyCast` | 代放別的技能 | 6 | `godie-h01u.r`、`grail-a-08`、`grail-ex-04`、`grail-ex-05`、`grail-ex-08`、`grail-ex-15` |
 | `pull` | 吸引（把目標拉到落點／錨點環） | 5 | `b2-goblin.w`、`b2-kisaragi.q`、`b2-noor.ex`、`b2-rem.q`、`b2-shadow.q` |
 | `randomArea` | 隨機落點 | 7 | `godie-e008.ex`、`godie-e00s.r`、`godie-e010.r`、`godie-efur.r`、`godie-ogld.ex`、`grail-c-19`、`grail-ex-09` |
-| `restore` | 回復（按最大值百分比） | 53 | `b2-aladdin.passive`、`b2-elma.passive`、`b2-elma.w`、`b2-haga.passive`、`b2-haga.r`、`b2-kaede.ex`、`b2-kaiji.passive`、`b2-kaiji.r`、`b2-keyaru.ex`、`b2-klaus.passive`、`b2-luckyman.passive`、`b2-maomao.passive` …（共 53） |
+| `restore` | 回復（按最大值百分比） | 55 | `b2-aladdin.passive`、`b2-elma.passive`、`b2-elma.w`、`b2-haga.passive`、`b2-haga.r`、`b2-kaede.ex`、`b2-kaiji.passive`、`b2-kaiji.r`、`b2-keyaru.ex`、`b2-klaus.passive`、`b2-luckyman.passive`、`b2-maomao.passive` …（共 55） |
 | `revive` | 復活 | 1 | `grail-ex-10` |
 | `screenFlash` | 畫面閃爍（全螢幕） | 6 | `godie-e002.ex`、`godie-e002.r`、`godie-e00l.ex`、`godie-e00l.r`、`godie-hart.r`、`godie-zombieking.passive` |
 | `screenShake` | 畫面震動 | 17 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r`、`godie-o00x.r` …（共 17） |
-| `shield` | 吸收（護盾） | 85 | `b2-aladdin.ex`、`b2-albus.r`、`b2-bojji.ex`、`b2-boxxo.passive`、`b2-boxxo.w`、`b2-elma.q`、`b2-elma.w`、`b2-fushi.e`、`b2-fushi.q`、`b2-goblin.ex`、`b2-goblin.passive`、`b2-guts.ex` …（共 85） |
-| `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
-| `spawnInteractable` | 互動物（技能放在地上、隊友自己點才觸發的物件；施法者不能替隊友決定） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `shield` | 吸收（護盾） | 114 | `acquired-alice.ex`、`acquired-alice.passive`、`acquired-alice.w`、`acquired-astralym.ex`、`acquired-asuna.w`、`acquired-beatrice.w`、`acquired-cattiva.e`、`acquired-emilia.w`、`acquired-inuyasha.ex`、`acquired-jetragon.ex`、`acquired-kita-kita.passive`、`acquired-kita-kita.w` …（共 114） |
+| `shieldBreak` | 破盾 | 3 | `lol-blitzcrank.r`、`grail-c-09`、`grail-ex-14` |
+| `spawnInteractable` | 互動物（技能放在地上、隊友自己點才觸發的物件；施法者不能替隊友決定） | 1 | `lol-thresh.w` |
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
-| `spawnObstacle` | 暫時障礙（技能生的碰撞圓柱：走不過、衝刺撞得到，到期或被撞碎消失） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `spawnProjectile` | 投射物 | 4 | `godie-e010.q`、`grail-c-16`、`grail-c-20`、`storm-arrow` |
-| `spawnThresholds` | 邊界陣（可穿越的段：穿過才觸發、各段獨立消失） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `spawnVfx` | 純演出（特效／音效） | 60 | `b2-kisaragi.e`、`b2-kisaragi.r`、`b2-naofumi.r`、`b2-orphen.r`、`b2-shadow.ex`、`b2-zenitsu.w`、`godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r` …（共 60） |
+| `spawnObstacle` | 暫時障礙（技能生的碰撞圓柱：走不過、衝刺撞得到，到期或被撞碎消失） | 1 | `lol-ornn.q` |
+| `spawnProjectile` | 投射物 | 20 | `acquired-beatrice.q`、`acquired-dio.w`、`acquired-emilia.q`、`acquired-jetragon.q`、`acquired-mario.q`、`acquired-mewtwo.q`、`acquired-pokemon-trainer.q`、`acquired-ryu.q`、`acquired-zero.w`、`godie-e010.q`、`lol-ahri.e`、`lol-ahri.q` …（共 20） |
+| `spawnThresholds` | 邊界陣（可穿越的段：穿過才觸發、各段獨立消失） | 1 | `lol-thresh.r` |
+| `spawnVfx` | 純演出（特效／音效） | 84 | `acquired-asuna.e`、`acquired-kuroyukihime.e`、`b2-kisaragi.e`、`b2-kisaragi.r`、`b2-naofumi.r`、`b2-orphen.r`、`b2-shadow.ex`、`b2-zenitsu.w`、`godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e` …（共 84） |
 | `spendHealth` | 支付生命（保留生存底線） | 4 | `b2-elma.q`、`b2-fushi.q`、`b2-guts.w`、`b2-rem.e` |
 | `spendMana` | 燒魔 | 6 | `b2-kaiji.q`、`b2-rin.q`、`godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
-| `summon` | 召喚 | 8 | `b2-aladdin.q`、`b2-aladdin.w`、`b2-uncle.r`、`community-review-01-20260907.q`、`community-review-01-20260907.w`、`community-review-17-20260907.w`、`godie-e00s.r`、`godie-e010.r` |
+| `summon` | 召喚 | 11 | `acquired-naruto.w`、`b2-aladdin.q`、`b2-aladdin.w`、`b2-uncle.r`、`community-review-01-20260907.q`、`community-review-01-20260907.w`、`community-review-17-20260907.w`、`godie-e00s.r`、`godie-e010.r`、`lol-fiddlesticks.ex`、`lol-fiddlesticks.passive` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
-| `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
+| `taunt` | 嘲諷 | 4 | `acquired-cattiva.w`、`acquired-morgiana.ex`、`godie-n00b.passive`、`godie-o00k.passive` |
 | `weightedBranch` | 加權分支（隨機挑一段） | 13 | `b2-kaiji.r`、`b2-kisaragi.r`、`b2-luckyman.r`、`godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`godie-o02p.ex`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` …（共 13） |
 
 ## 觸發事件（hook event） —— 33 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `onAbilityCast` | 施法時 | 25 | `b2-haga.passive`、`b2-haga.passive`、`godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`godie-o02p.ex`、`godie-u00j.ex`、`godie-u00j.ex`、`godie-u00k.passive`、`grail-c-12`、`grail-c-20`、`grail-a-08` …（共 25） |
-| `onAbilityHit` | 技能命中時 | 21 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18` …（共 21） |
+| `onAbilityCast` | 施法時 | 54 | `acquired-beatrice.passive`、`acquired-beatrice.passive`、`acquired-jetragon.passive`、`acquired-jetragon.passive`、`acquired-leafa.passive`、`acquired-leafa.passive`、`acquired-lord-nightmares.passive`、`acquired-mario.passive`、`acquired-mario.passive`、`acquired-mewtwo.passive`、`acquired-mewtwo.passive`、`acquired-morgiana.passive` …（共 54） |
+| `onAbilityHit` | 技能命中時 | 27 | `acquired-asuna.passive`、`acquired-asuna.passive`、`acquired-saya.passive`、`acquired-saya.passive`、`godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w` …（共 27） |
 | `onAllyDamaged` | 隊友受傷時 | 6 | `b2-naofumi.passive`、`b2-naofumi.passive`、`b2-nube.passive`、`b2-nube.passive`、`b2-takopi.passive`、`b2-takopi.passive` |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普攻時 | 152 | `b2-albus.passive`、`b2-albus.passive`、`b2-guts.passive`、`b2-guts.passive`、`b2-kaede.passive`、`b2-kaede.passive`、`b2-orphen.passive`、`b2-orphen.passive`、`b2-rin.passive`、`b2-rin.passive`、`community-review-01-20260907.passive`、`community-review-02-20260907.passive` …（共 152） |
+| `onBasicAttack` | 普攻時 | 182 | `acquired-astralym.passive`、`acquired-astralym.passive`、`acquired-cattiva.r`、`acquired-cattiva.r`、`acquired-dio.passive`、`acquired-dio.passive`、`acquired-emilia.passive`、`acquired-emilia.passive`、`acquired-kuroyukihime.passive`、`acquired-minecraft.passive`、`acquired-minecraft.passive`、`acquired-rim.passive` …（共 182） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 8 | `b2-goblin.passive`、`b2-goblin.passive`、`b2-kumoko.passive`、`b2-kumoko.passive`、`b2-matthias.passive`、`b2-matthias.passive`、`b2-shinchan.passive`、`b2-shinchan.passive` |
 | `onCrowdControlReceived` | 自己被控場時 | 4 | `b2-misery.passive`、`b2-misery.passive`、`b2-yogiri.passive`、`b2-yogiri.passive` |
 | `onDamageDealt` | 造成傷害時 | 7 | `godie-emfr.e`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`grail-a-10`、`grail-a-18` |
-| `onDamageTaken` | 受到傷害時 | 51 | `b2-boxxo.passive`、`b2-boxxo.passive`、`b2-elma.passive`、`b2-elma.passive`、`b2-fushi.passive`、`b2-fushi.passive`、`b2-kisaragi.passive`、`b2-kisaragi.passive`、`b2-maple.passive`、`b2-noor.q`、`b2-noor.q`、`b2-rem.passive` …（共 51） |
+| `onDamageTaken` | 受到傷害時 | 69 | `acquired-alice.passive`、`acquired-alice.passive`、`acquired-cattiva.passive`、`acquired-cattiva.passive`、`acquired-inuyasha.passive`、`acquired-inuyasha.passive`、`acquired-kita-kita.passive`、`acquired-kita-kita.passive`、`acquired-wargreymon.passive`、`acquired-wargreymon.passive`、`b2-boxxo.passive`、`b2-boxxo.passive` …（共 69） |
 | `onDashOrBlink` | 位移時（衝刺／閃現／跳躍） | 10 | `b2-ned.passive`、`b2-ned.passive`、`b2-popp.passive`、`b2-popp.passive`、`b2-sinbad.passive`、`b2-sinbad.passive`、`b2-touka.passive`、`b2-touka.passive`、`b2-zenitsu.passive`、`b2-zenitsu.passive` |
 | `onDeath` | 死亡時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onEvade` | 迴避成功時 | 14 | `b2-bojji.passive`、`b2-bojji.passive`、`b2-luckyman.passive`、`b2-luckyman.passive`、`godie-e00w.passive`、`godie-h02k.r`、`godie-h02k.r`、`godie-h02k.r`、`grail-c-02`、`grail-c-03`、`grail-a-01`、`grail-a-02` …（共 14） |
 | `onFireRingIgnite` | 火圈點燃時 | 1 | `grail-ex-09` |
 | `onGuardianDown` | 守衛塔倒下時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onHeal` | 治療真的補到血時 | 4 | `b2-keyaru.passive`、`b2-keyaru.passive`、`b2-maomao.passive`、`b2-maomao.passive` |
-| `onInterval` | 週期（每 N 秒） | 16 | `b2-klaus.passive`、`b2-klaus.passive`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00r.q` …（共 16） |
-| `onKill` | 擊殺時 | 15 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombieking.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03` …（共 15） |
+| `onInterval` | 週期（每 N 秒） | 22 | `b2-klaus.passive`、`b2-klaus.passive`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00r.q` …（共 22） |
+| `onKill` | 擊殺時 | 23 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombieking.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`lol-ahri.passive`、`lol-ahri.passive`、`lol-ahri.passive`、`lol-ahri.passive` …（共 23） |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onReflectSuccess` | 反彈成功時 | 16 | `b2-noor.passive`、`b2-noor.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.ex`、`godie-e00l.r`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h00l.r`、`godie-h02k.w`、`grail-c-02` …（共 16） |
 | `onRevive` | 被復活時 | 2 | `grail-a-07`、`grail-ex-11` |
 | `onRoundEnd` | 回合結束時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onRoundStart` | 回合開始時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onRoundStart` | 回合開始時 | 4 | `lol-fiddlesticks.passive`、`lol-fiddlesticks.passive`、`lol-ornn.passive`、`lol-ornn.passive` |
 | `onShieldBroken` | 護盾破碎時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldGained` | 獲得護盾時 | 2 | `b2-uncle.passive`、`b2-uncle.passive` |
 | `onStatCapReached` | 屬性首次到頂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -119,8 +119,8 @@ contentVersion `cv_34779cab62de`
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 6 | `godie-hpb1.e`、`godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
 | `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 10 | `b2-albus.r`、`b2-boxxo.r`、`b2-maple.w`、`b2-naofumi.r`、`b2-popp.ex`、`godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r`、`godie-hpb1.w` |
-| `stat` | 屬性門檻（血量低於 X%…） | 15 | `b2-elma.w`、`b2-guts.e`、`b2-guts.passive`、`b2-rem.r`、`b2-yogiri.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w` …（共 15） |
-| `status` | 身上有某狀態時 | 46 | `b2-fushi.e`、`b2-goblin.r`、`b2-haga.w`、`b2-kaede.passive`、`b2-klaus.w`、`b2-kumoko.w`、`b2-misery.ex`、`b2-yogiri.w`、`b2-zenitsu.r`、`godie-e007.ex`、`godie-e00r.q`、`godie-edem.r` …（共 46） |
+| `stat` | 屬性門檻（血量低於 X%…） | 23 | `acquired-inuyasha.passive`、`acquired-kuroyukihime.passive`、`acquired-kuroyukihime.r`、`acquired-rim.passive`、`acquired-rim.r`、`b2-elma.w`、`b2-guts.e`、`b2-guts.passive`、`b2-rem.r`、`b2-yogiri.w`、`godie-e002.w`、`godie-e00l.w` …（共 23） |
+| `status` | 身上有某狀態時 | 52 | `acquired-dio.passive`、`acquired-minecraft.passive`、`b2-fushi.e`、`b2-goblin.r`、`b2-haga.w`、`b2-kaede.passive`、`b2-klaus.w`、`b2-kumoko.w`、`b2-misery.ex`、`b2-yogiri.w`、`b2-zenitsu.r`、`godie-e007.ex` …（共 52） |
 
 ## 狀態標籤 —— 121 個
 

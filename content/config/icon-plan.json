@@ -2,31 +2,31 @@
   "id": "icon-plan",
   "schema": "config.icon-plan@1",
   "templateVersion": "icon-gen/1",
-  "contentDigest": "520cdd6371309de6",
+  "contentDigest": "a6862d3b5dbdafe7",
   "counts": {
     "total": {
-      "docs": 1202,
+      "docs": 1461,
       "have": 1202,
       "drop": 0,
       "blocked": 0,
-      "generate": 0,
-      "tier1": 0,
-      "tier2": 0
+      "generate": 259,
+      "tier1": 37,
+      "tier2": 222
     },
     "byFamily": {
       "champions": {
-        "docs": 153,
+        "docs": 190,
         "have": 153,
         "drop": 0,
         "blocked": 0,
-        "generate": 0
+        "generate": 37
       },
       "abilities": {
-        "docs": 907,
+        "docs": 1129,
         "have": 907,
         "drop": 0,
         "blocked": 0,
-        "generate": 0
+        "generate": 222
       },
       "items": {
         "docs": 142,
@@ -37,14 +37,1092 @@
       }
     }
   },
-  "provenance": {},
+  "provenance": {
+    "not-imported": 259
+  },
   "dropped": {},
   "blocked": {},
   "generate": {
-    "tier1": [],
-    "tier2": []
+    "tier1": [
+      {
+        "id": "acquired-alice",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-astralym",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-asuna",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-beatrice",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-cattiva",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-dio",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-emilia",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-inuyasha",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-jetragon",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-kita-kita",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-kuroyukihime",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-leafa",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-lord-nightmares",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-mario",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-mewtwo",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-minecraft",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-morgiana",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-naruto",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-pokemon-trainer",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-ram",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-rim",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-ryu",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-saya",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-wargreymon",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-xiaodangjia",
+        "family": "champions"
+      },
+      {
+        "id": "acquired-zero",
+        "family": "champions"
+      },
+      {
+        "id": "lol-ahri",
+        "family": "champions"
+      },
+      {
+        "id": "lol-ashe",
+        "family": "champions"
+      },
+      {
+        "id": "lol-blitzcrank",
+        "family": "champions"
+      },
+      {
+        "id": "lol-chogath",
+        "family": "champions"
+      },
+      {
+        "id": "lol-fiddlesticks",
+        "family": "champions"
+      },
+      {
+        "id": "lol-garen",
+        "family": "champions"
+      },
+      {
+        "id": "lol-malphite",
+        "family": "champions"
+      },
+      {
+        "id": "lol-ornn",
+        "family": "champions"
+      },
+      {
+        "id": "lol-sett",
+        "family": "champions"
+      },
+      {
+        "id": "lol-thresh",
+        "family": "champions"
+      },
+      {
+        "id": "lol-velkoz",
+        "family": "champions"
+      }
+    ],
+    "tier2": [
+      {
+        "id": "acquired-alice.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-alice.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-alice.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-alice.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-alice.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-alice.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-astralym.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-asuna.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-beatrice.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-cattiva.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-dio.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-emilia.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-inuyasha.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-jetragon.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kita-kita.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-kuroyukihime.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-leafa.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-lord-nightmares.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mario.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-mewtwo.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-minecraft.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-morgiana.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-naruto.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-pokemon-trainer.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ram.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-rim.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-ryu.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-saya.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-wargreymon.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-xiaodangjia.w",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.e",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.q",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.r",
+        "family": "abilities"
+      },
+      {
+        "id": "acquired-zero.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ahri.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ashe.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-blitzcrank.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-chogath.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-fiddlesticks.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-garen.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-malphite.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-ornn.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-sett.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-thresh.w",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.e",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.ex",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.passive",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.q",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.r",
+        "family": "abilities"
+      },
+      {
+        "id": "lol-velkoz.w",
+        "family": "abilities"
+      }
+    ]
   },
-  "vetoed": [],
+  "vetoed": [
+    "acquired-alice",
+    "acquired-astralym",
+    "acquired-asuna",
+    "acquired-beatrice",
+    "acquired-cattiva",
+    "acquired-dio",
+    "acquired-emilia",
+    "acquired-inuyasha",
+    "acquired-jetragon",
+    "acquired-kita-kita",
+    "acquired-kuroyukihime",
+    "acquired-leafa",
+    "acquired-lord-nightmares",
+    "acquired-mario",
+    "acquired-mewtwo",
+    "acquired-minecraft",
+    "acquired-morgiana",
+    "acquired-naruto",
+    "acquired-pokemon-trainer",
+    "acquired-ram",
+    "acquired-rim",
+    "acquired-ryu",
+    "acquired-saya",
+    "acquired-wargreymon",
+    "acquired-xiaodangjia",
+    "acquired-zero",
+    "lol-ahri",
+    "lol-ashe",
+    "lol-blitzcrank",
+    "lol-chogath",
+    "lol-fiddlesticks",
+    "lol-garen",
+    "lol-malphite",
+    "lol-ornn",
+    "lol-sett",
+    "lol-thresh",
+    "lol-velkoz"
+  ],
   "missingSurfaceFiles": [
     "data/curation/whitelist.json"
   ]

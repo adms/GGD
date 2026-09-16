@@ -484,6 +484,8 @@ const NO_SOURCE_REASON = {
     "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
   lolNoVoiceLines:
     "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+  batch4NotAuthored:
+    "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
   formOfUnsourced:
     "變身態 —— 本體自己也還沒有可引用的名言,⇒ 一起留空（FORM_OF 推導的結果,⛔ 不是各自的判斷）。",
 };
@@ -528,6 +530,27 @@ const UNSOURCED = {
   "lol-lux": "lolNoVoiceLines", "lol-missfortune": "lolNoVoiceLines",
   "lol-warwick": "lolNoVoiceLines", "lol-xerath": "lolNoVoiceLines",
   "lol-yasuo": "lolNoVoiceLines",
+
+  // ── 第四批 37 名（GH#1185／#1205）—— 先上架，名言之後有出處再補 ──
+  "acquired-alice": "batch4NotAuthored", "acquired-astralym": "batch4NotAuthored",
+  "acquired-asuna": "batch4NotAuthored", "acquired-beatrice": "batch4NotAuthored",
+  "acquired-cattiva": "batch4NotAuthored", "acquired-dio": "batch4NotAuthored",
+  "acquired-emilia": "batch4NotAuthored", "acquired-inuyasha": "batch4NotAuthored",
+  "acquired-jetragon": "batch4NotAuthored", "acquired-kita-kita": "batch4NotAuthored",
+  "acquired-kuroyukihime": "batch4NotAuthored", "acquired-leafa": "batch4NotAuthored",
+  "acquired-lord-nightmares": "batch4NotAuthored", "acquired-mario": "batch4NotAuthored",
+  "acquired-mewtwo": "batch4NotAuthored", "acquired-minecraft": "batch4NotAuthored",
+  "acquired-morgiana": "batch4NotAuthored", "acquired-naruto": "batch4NotAuthored",
+  "acquired-pokemon-trainer": "batch4NotAuthored", "acquired-ram": "batch4NotAuthored",
+  "acquired-rim": "batch4NotAuthored", "acquired-ryu": "batch4NotAuthored",
+  "acquired-saya": "batch4NotAuthored", "acquired-wargreymon": "batch4NotAuthored",
+  "acquired-xiaodangjia": "batch4NotAuthored", "acquired-zero": "batch4NotAuthored",
+  "lol-ahri": "batch4NotAuthored", "lol-ashe": "batch4NotAuthored",
+  "lol-blitzcrank": "batch4NotAuthored", "lol-chogath": "batch4NotAuthored",
+  "lol-fiddlesticks": "batch4NotAuthored", "lol-garen": "batch4NotAuthored",
+  "lol-malphite": "batch4NotAuthored", "lol-ornn": "batch4NotAuthored",
+  "lol-sett": "batch4NotAuthored", "lol-thresh": "batch4NotAuthored",
+  "lol-velkoz": "batch4NotAuthored",
 
   // ── 變身態,本體也留空 ─────────────────────────────────────────────────────
   "b2-maple-alt-9769eb88b85b": "formOfUnsourced",
