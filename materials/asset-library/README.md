@@ -68,9 +68,12 @@ python3 tools/hero-model-library/query.py 拳四郎 --downloads
 python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
 python3 tools/hero-model-library/query_voice.py 莉娜
 python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json
+python3 tools/hero-model-library/query_voice.py lol-sett --files --json
 python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py Palworld
 python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py 'Fate-Unlimited' --json
 ```
+
+2026-09-16 語音缺口對應由 `voice-gap-source-mappings-20260916.json` 維護；基礎語音索引重建後，再執行 `python3 tools/hero-model-library/sync_voice_gap_source_mappings.py --workspace ..`。它會把 LoL 第二批 11 名的本機 `ja_JP` 解碼收據和已核對角色群組回寫中央 JSON/GZIP/Markdown；只登記來源關係，不會把未聽審片段自動升格為 runtime 戰鬥語音。
 
 Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。Git 的機器查詢入口是 `materials/hero-model-library/source-inventories/windows-game-library.json.gz`；它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整未壓縮 JSON 與原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/` 及 S3 `legacy/`，Git 只收壓縮正規化索引與重建／查詢程式。
 

@@ -1949,7 +1949,9 @@
       "name": "龙教练",
       "library": "300英雄",
       "sourceId": "300heroes:159",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-wargreymon"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -1979,7 +1981,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 214
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-wargreymon",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:160",
@@ -2137,7 +2147,9 @@
       "name": "黑雪姬",
       "library": "300英雄",
       "sourceId": "300heroes:164",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-kuroyukihime"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -2167,7 +2179,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 187
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-kuroyukihime",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:165",
@@ -4756,7 +4776,9 @@
       "name": "爱蜜莉雅",
       "library": "300英雄",
       "sourceId": "300heroes:238",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-emilia"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -4788,7 +4810,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 190
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-emilia",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:239",
@@ -5135,7 +5165,9 @@
       "name": "爱丽丝",
       "library": "300英雄",
       "sourceId": "300heroes:249",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-alice"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -5165,7 +5197,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 235
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-alice",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:250",
@@ -5480,7 +5520,9 @@
       "name": "莉法",
       "library": "300英雄",
       "sourceId": "300heroes:260",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-leafa"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -5509,7 +5551,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 167
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-leafa",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:262",
@@ -6381,7 +6431,9 @@
       "name": "莉姆",
       "library": "300英雄",
       "sourceId": "300heroes:289",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-rim"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -6410,14 +6462,24 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 326
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-rim",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:29",
       "name": "沙耶",
       "library": "300英雄",
       "sourceId": "300heroes:29",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-saya"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -6445,7 +6507,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 194
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-saya",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:290",
@@ -8886,7 +8956,9 @@
       "name": "摩尔迦娜",
       "library": "300英雄",
       "sourceId": "300heroes:62",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-morgiana"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -8918,7 +8990,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 282
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-morgiana",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:63",
@@ -9280,7 +9360,9 @@
       "name": "狂暴补师",
       "library": "300英雄",
       "sourceId": "300heroes:76",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-asuna"
+      ],
       "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -9316,7 +9398,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 522
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-asuna",
+          "relationship": "adaptation-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "300heroes:78",
@@ -11195,7 +11285,9 @@
       "name": "地圖音訊檔名／asuna2",
       "library": "公開來源",
       "sourceId": "hive-anime-team-survival",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-asuna"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -11218,7 +11310,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 1
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-asuna",
+          "relationship": "filename-candidate-only",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "hive-anime-team-survival:cloud",
@@ -15979,7 +16079,9 @@
       "name": "NS 原生音訊／vc_mewtwo",
       "library": "公開來源",
       "sourceId": "parallel-voice-ssbu-japanese",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-mewtwo"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -16071,7 +16173,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 24
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-mewtwo",
+          "relationship": "canonical-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-voice-ssbu-japanese:vc_palutena",
@@ -16474,7 +16584,9 @@
       "name": "NS 原生音訊／vc_ptrainer",
       "library": "公開來源",
       "sourceId": "parallel-voice-ssbu-japanese",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-pokemon-trainer"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -16567,7 +16679,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 58
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-pokemon-trainer",
+          "relationship": "canonical-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-voice-ssbu-japanese:vc_purin",
@@ -17070,7 +17190,9 @@
       "name": "NS 原生音訊／vc_ryu",
       "library": "公開來源",
       "sourceId": "parallel-voice-ssbu-japanese",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-ryu"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -17162,7 +17284,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 55
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-ryu",
+          "relationship": "canonical-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-voice-ssbu-japanese:vc_shulk",
@@ -18619,7 +18749,9 @@
       "name": "SSBM / Characters_Mario",
       "library": "公開來源",
       "sourceId": "parallel-voice-melee-local-29",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-mario"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -18642,7 +18774,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 32
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-mario",
+          "relationship": "canonical-game-character-package",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-voice-melee-local-29:SSBM_Characters_Master_Hand_and_Crazy_Hand",
@@ -18679,7 +18819,9 @@
       "name": "SSBM / Characters_Mewtwo",
       "library": "公開來源",
       "sourceId": "parallel-voice-melee-local-29",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-mewtwo"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -18702,7 +18844,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 36
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-mewtwo",
+          "relationship": "canonical-game-character-package",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-voice-melee-local-29:SSBM_Characters_Mr_Game_and_Watch",
@@ -33187,7 +33337,9 @@
       "name": "Naruto",
       "library": "公開來源",
       "sourceId": "parallel-ps-jumpforce-local-next32",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-naruto"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -33210,7 +33362,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 218
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-naruto",
+          "relationship": "canonical-game-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
@@ -33787,7 +33947,9 @@
       "name": "DIO",
       "library": "公開來源",
       "sourceId": "parallel-ps-jumpforce-local-final3",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-dio"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -33810,7 +33972,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 243
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-dio",
+          "relationship": "canonical-game-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "kof-xiv-mai-audio:Mai_Shiranui_XIV-sfx-label-unreviewed",
@@ -38620,7 +38790,9 @@
       "name": "League of Legends / Blitzcrank / ja_JP / 16.18.8159717",
       "library": "公開來源",
       "sourceId": "lol-riot-ja-jp-16.18.8159717",
-      "heroIds": [],
+      "heroIds": [
+        "lol-blitzcrank"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -38645,7 +38817,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 263
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-blitzcrank",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-brand-ja-jp-16-18-8159717",
@@ -38780,7 +38960,9 @@
       "name": "League of Legends / Chogath / ja_JP / 16.18.8159717",
       "library": "公開來源",
       "sourceId": "lol-riot-ja-jp-16.18.8159717",
-      "heroIds": [],
+      "heroIds": [
+        "lol-chogath"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -38805,7 +38987,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 191
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-chogath",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-corki-ja-jp-16-18-8159717",
@@ -39036,7 +39226,9 @@
       "name": "League of Legends / Garen / ja_JP / 16.18.8159717",
       "library": "公開來源",
       "sourceId": "lol-riot-ja-jp-16.18.8159717",
-      "heroIds": [],
+      "heroIds": [
+        "lol-garen"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -39061,7 +39253,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 479
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-garen",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-gnar-ja-jp-16-18-8159717",
@@ -39786,7 +39986,9 @@
       "name": "League of Legends / Malphite / ja_JP / 16.18.8159717",
       "library": "公開來源",
       "sourceId": "lol-riot-ja-jp-16.18.8159717",
-      "heroIds": [],
+      "heroIds": [
+        "lol-malphite"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -39811,7 +40013,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "unclassified": 151
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-malphite",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "lol-riot-ja-jp-16.18.8159717:lol-malzahar-ja-jp-16-18-8159717",
@@ -41822,7 +42032,9 @@
       "name": "枯星龍 Astralym 非語言叫聲",
       "library": "公開來源",
       "sourceId": "gamevault-palworld-astralym-audio",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-astralym"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -41849,14 +42061,24 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "sound-effect": 6
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-astralym",
+          "relationship": "nonverbal-creature-sfx",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "palworld-cattiva-gamevault:cattiva-cries",
       "name": "搗蛋貓 Cattiva 非語言叫聲",
       "library": "公開來源",
       "sourceId": "palworld-cattiva-gamevault",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-cattiva"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -41881,14 +42103,24 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "sound-effect": 6
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-cattiva",
+          "relationship": "nonverbal-creature-sfx",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "gamevault-palworld-jetragon-cries:jetragon-cries",
       "name": "空渦龍 Jetragon 非語言叫聲",
       "library": "公開來源",
       "sourceId": "gamevault-palworld-jetragon-cries",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-jetragon"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -41913,7 +42145,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "sound-effect": 6
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-jetragon",
+          "relationship": "nonverbal-creature-sfx",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "lol-project-seven-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
@@ -43203,7 +43443,9 @@
       "name": "Naruto",
       "library": "本機遊戲",
       "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-naruto"
+      ],
       "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
       "language": "unreviewed",
       "speakerVerified": false,
@@ -43228,7 +43470,15 @@
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
         "voice-source-label-unreviewed": 119
-      }
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "acquired-naruto",
+          "relationship": "canonical-installed-game-character-bank",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     },
     {
       "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0130",
@@ -44887,6 +45137,307 @@
       "categoryCounts": {
         "sound-effect": 2
       }
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-sett-ja-jp-16-18-8159717",
+      "name": "League of Legends / Sett / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-sett"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 662,
+      "bytes": 810790528,
+      "knownDurationSeconds": 2926.3651700680257,
+      "durationMeasuredFiles": 662,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 662
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-sett",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-fiddlesticks-ja-jp-16-18-8159717",
+      "name": "League of Legends / FiddleSticks / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-fiddlesticks"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 671,
+      "bytes": 939554880,
+      "knownDurationSeconds": 3202.182675736954,
+      "durationMeasuredFiles": 671,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 671
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-fiddlesticks",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ornn-ja-jp-16-18-8159717",
+      "name": "League of Legends / Ornn / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-ornn"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 765,
+      "bytes": 634949176,
+      "knownDurationSeconds": 2390.472539682542,
+      "durationMeasuredFiles": 765,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 765
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-ornn",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ashe-ja-jp-16-18-8159717",
+      "name": "League of Legends / Ashe / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-ashe"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1160,
+      "bytes": 1363667980,
+      "knownDurationSeconds": 4851.181360544223,
+      "durationMeasuredFiles": 1160,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 1160
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-ashe",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-ahri-ja-jp-16-18-8159717",
+      "name": "League of Legends / Ahri / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-ahri"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1378,
+      "bytes": 1645167660,
+      "knownDurationSeconds": 5144.119160997733,
+      "durationMeasuredFiles": 1378,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 1378
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-ahri",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-thresh-ja-jp-16-18-8159717",
+      "name": "League of Legends / Thresh / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-thresh"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 568,
+      "bytes": 687344912,
+      "knownDurationSeconds": 2916.882199546485,
+      "durationMeasuredFiles": 568,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 568
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-thresh",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
+    },
+    {
+      "id": "lol-riot-ja-jp-16.18.8159717:lol-velkoz-ja-jp-16-18-8159717",
+      "name": "League of Legends / Velkoz / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "heroIds": [
+        "lol-velkoz"
+      ],
+      "mappingEvidence": "Riot 官方 ja_JP 角色目錄與解碼收據；逐段說話者、台詞及 GGD 戰鬥事件仍待聽審",
+      "language": "unreviewed",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 348,
+      "bytes": 517891012,
+      "knownDurationSeconds": 1575.7378231292503,
+      "durationMeasuredFiles": 348,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:lol-riot-ja-jp-16.18.8159717"
+      ],
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "work": "League of Legends",
+      "languagePreferenceRank": 0,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "runtimeApproved": false,
+      "categoryCounts": {
+        "unclassified": 348
+      },
+      "heroBindingEvidence": [
+        {
+          "heroId": "lol-velkoz",
+          "relationship": "official-ja-jp-native-character-directory",
+          "runtimeApproved": false,
+          "authority": "materials/hero-model-library/voice-gap-source-mappings-20260916.json"
+        }
+      ]
     }
   ],
   "backups": {
@@ -46152,6 +46703,34 @@
     {
       "path": "content/assets/audio/original/strash/popp/MANIFEST.json",
       "sha256": "7e7511adc82707ddf4be521fb43450ff5df44c3a1b3cf05272b83caf3eda5627"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Sett.ja_JP/decoding.json",
+      "sha256": "e610038a7a704e21e80ec2f118e74a6397b9d73f0fcea1c2e352c6f7eb961ce3"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/FiddleSticks.ja_JP/decoding.json",
+      "sha256": "50a5474a646e45d5806c3e897ff0b3b639f855561b616d9780f8e84a38b1f037"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Ornn.ja_JP/decoding.json",
+      "sha256": "42e8ba1d3270e44ac03966a8e19d99231120b3f8d8e961d5b70647fb7fe00c01"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Ashe.ja_JP/decoding.json",
+      "sha256": "8c0c288b8f244fc2ea0511312df3291a8eb6872b8ee5a8cd4494301bff73b33a"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Ahri.ja_JP/decoding.json",
+      "sha256": "c1408d85a1f833f1d009014b06f945703415dca8ad4a8fb66f1c70a6d241cbb5"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Thresh.ja_JP/decoding.json",
+      "sha256": "2596d91bed9a9dd8a9cb28f3f67785513a377ce2023548077835e6c9abb68a63"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Velkoz.ja_JP/decoding.json",
+      "sha256": "9dfa090f8d80d14726c950f7e66b9fb085fc3e4885bbdc0ca4d457a733054c37"
     }
   ],
   "audioSourceLeads": [
@@ -96893,13 +97472,13 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 1053,
-    "audioFiles": 292199,
-    "bytes": 141921968123,
-    "sourceFileRelationshipRows": 292199,
-    "uniqueLocalPaths": 291751,
-    "uniqueSha256Payloads": 259330,
-    "uniqueLocalPathBytes": 141349039407,
+    "groups": 1060,
+    "audioFiles": 297751,
+    "bytes": 148521334271,
+    "sourceFileRelationshipRows": 297751,
+    "uniqueLocalPaths": 297303,
+    "uniqueSha256Payloads": 264819,
+    "uniqueLocalPathBytes": 147948405555,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
@@ -96918,8 +97497,8 @@
     "poppNativeEventRows": 8,
     "poppRuntimeBindings": 0
   },
-  "sourceFileManifestSha256": "253c0f50259b08f55fb1f950b1dc3b85490852849058e800fe8c27fe10fd0c3e",
-  "uncompressedFileManifestSha256": "25e57d5ab087d1695f09465ada46283a1f5c555e6f1e97af321ccc13f6349163",
+  "sourceFileManifestSha256": "d50fb514de209397632ea9b4a5263cb90b545de139aed19347b2f62033dcb80d",
+  "uncompressedFileManifestSha256": "2c7a5d849be54938892533272ff549338548a3a223e7483df34ca512996663cd",
   "poppApprovedAudio": {
     "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json",
     "receiptSha256": "707785c3162e89ca725e1c4931b23cbca1f5b541296a2df97ff79897a316be51",
@@ -96932,5 +97511,12 @@
     "runtimeBindings": 0,
     "runtimeSelectable": false,
     "productionDeployed": false
+  },
+  "voiceGapSourceMappings": {
+    "path": "materials/hero-model-library/voice-gap-source-mappings-20260916.json",
+    "sha256": "0dd95db738e78a4f06b4067f672c18f63ac32a8d5f38bc3172ec3801c34d51b4",
+    "lolSecondBatch": 11,
+    "explicitHeroGroupBindings": 21,
+    "noExactVoiceGroups": 8
   }
 }
