@@ -58,12 +58,7 @@ AUDIO_EXT = (".mp3", ".wav", ".ogg", ".oga", ".opus", ".flac", ".m4a", ".aac", "
 
 POLICY_TS = "packages/shared/src/content/audioAssetPolicy.ts"
 VOICE_LIB = "tools/voice-gen/src/combatLinesLib.mjs"
-#: ⭐ 音效的長度下限 —— **這支是它唯一的住處**。0.02 秒 ＜ 一個 MP3 幀（1152／44100 ≈ 26 ms）⇒ ＝「至少有一幀聲音」。
-#: ⛔ 不套語音的 0.15 秒：出貨的 11 支音效本來就比 0.15 秒短（`sfx/fx/tick.mp3` 0.04 秒、`sfx/ui-type.mp3` 0.045 秒、
-#:    `sfx/fx/footstep.mp3` 0.07 秒…），那是設計（UI／打擊的「一下」），⛔ 不是壞檔（2026-09-15 實測）。
-SFX_MIN_SECONDS = 0.02
-#: ⑦ 語音單聲道：主 session 2026-09-15 規格「（語音）單聲道」；語音管線 `engine.py` 與 `import-original-direct.py` 本來就出 `-ac 1`。
-VOICE_CHANNELS = 1
+#: ⭐ 音效長度下限與聲道數**都住在 POLICY_TS**（owner 2026-09-16：收成一份）⇒ 這支只讀，⛔ 不抄。
 #: 解出來的長度與標頭差多少算截斷：max(0.1 秒, 5%)。
 TRUNCATION_TOLERANCE = (0.1, 0.05)
 #: 轉檔前後長度漂移上限（`tools/audio-optimize/optimize.sh` 同一個數：換位元率 ⛔ 不應該動到長度）。
@@ -137,14 +132,14 @@ def load_policy() -> dict:
         "sampleRateHzMax": int(num(body, r"sampleRateHz:\s*([\d_]+)", f"{POLICY_TS} 的 sampleRateHz")),
         "voiceMinSeconds": num(lib, r"^export const MIN_SECONDS\s*=\s*([\d.]+)\s*;", f"{VOICE_LIB} 的 MIN_SECONDS"),
         "silencePeakDb": num(lib, r"^export const MIN_MAX_VOLUME_DB\s*=\s*(-?[\d.]+)\s*;", f"{VOICE_LIB} 的 MIN_MAX_VOLUME_DB"),
-        "sfxMinSeconds": SFX_MIN_SECONDS,
-        "voiceChannels": VOICE_CHANNELS,
+        "sfxMinSeconds": num(ts, r"^export const SFX_MIN_SECONDS\s*=\s*([\d.]+)\s*;", f"{POLICY_TS} 的 SFX_MIN_SECONDS"),
+        "voiceChannels": int(num(body, r"channels:\s*([\d_]+)", f"{POLICY_TS} 的 channels")),
         "codec": "libmp3lame",
         "sources": {
             "bitrateKbpsMax／sampleRateHzMax": f"{POLICY_TS}（GENERATED_COMBAT_FX_AUDIO_POLICY；audioAssets.test.ts 檔頭：整個音訊庫同一個 #158 天花板）",
             "voiceMinSeconds／silencePeakDb": f"{VOICE_LIB}（MIN_SECONDS／MIN_MAX_VOLUME_DB）",
-            "sfxMinSeconds": "tools/audio-intake/audio_intake.py SFX_MIN_SECONDS（理由見該行）",
-            "voiceChannels": "tools/audio-intake/audio_intake.py VOICE_CHANNELS",
+            "sfxMinSeconds": f"{POLICY_TS}（SFX_MIN_SECONDS；理由寫在那份的註解）",
+            "voiceChannels": f"{POLICY_TS}（GENERATED_COMBAT_FX_AUDIO_POLICY.channels）",
         },
     }
 
@@ -890,7 +885,17 @@ def main() -> int:
     ap.add_argument("--content", metavar="DIR", help="⚠️ 只給量尺自證的測試：換一棵內容樹")
     ap.add_argument("--no-cache", action="store_true", help=f"不讀寫量測快取（{CACHE_PATH}）")
     ap.add_argument("--jobs", type=int, default=min(16, os.cpu_count() or 4))
+    #: ⭐ 別的語言（engine.py／optimize.sh）從這裡拿天花板 —— ⛔ 不要在那邊各抄一份數字
+    ap.add_argument("--print-policy", action="store_true", help="印出載入到的門檻（JSON）後結束")
+    ap.add_argument("--shell", action="store_true", help="--print-policy 改印 shell 變數指派（給 eval）")
     a = ap.parse_args()
+    if a.print_policy:
+        p = load_policy()
+        if a.shell:
+            print(f"GGD_AUDIO_SR={p['sampleRateHzMax']}; GGD_AUDIO_KBPS={p['bitrateKbpsMax']}; GGD_AUDIO_CHANNELS={p['voiceChannels']}")
+        else:
+            print(json.dumps(p, ensure_ascii=False, indent=1))
+        return 0
     if a.upload:
         return upload_archive(a.upload, a.dry_run)
     if a.content:
@@ -917,7 +922,7 @@ def main() -> int:
     rows = build_rows(files, refs, policy, cache, a.jobs, a.all, a.kind)
     settle_never_grow(rows, policy, cache, a.jobs)
     print(f"⭐ 音訊入庫檢查：天花板 {policy['bitrateKbpsMax']} kbps／{policy['sampleRateHzMax']} Hz（讀 {POLICY_TS}）"
-          f" · 語音 ≥{policy['voiceMinSeconds']:g} 秒、峰值 ≥{policy['silencePeakDb']:g} dB（讀 {VOICE_LIB}）· 音效 ≥{SFX_MIN_SECONDS:g} 秒")
+          f" · 語音 ≥{policy['voiceMinSeconds']:g} 秒、峰值 ≥{policy['silencePeakDb']:g} dB（讀 {VOICE_LIB}）· 音效 ≥{policy['sfxMinSeconds']:g} 秒")
     print(f"   量尺自證：{' · '.join(calib)} ✓")
     code = 0
     if a.fix:

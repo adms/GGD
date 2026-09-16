@@ -114,15 +114,28 @@
 **③ 小呆「混進悟空」的根因還沒查**
 owner 標「不是小呆」的 4 段全是**已經上線**的原作（候選 226 段裡沒有標）⇒ 下次先查這 4 格的來源資料夾、檔名、當初是哪一批匯入的。
 
-**④ 順手發現（未開票，等 owner 決定要不要開）**
-`.gitignore` 只忽略 `reference.wav`；後台上傳參考音時寫進的 `reference/` 資料夾會被 git 收進去。
+**④ ✅ 已修（owner 2026-09-16「1 2 都作」）**
+`.gitignore` 只忽略 `reference.wav`，而後台上傳參考音是寫進 `<hero>/reference/<檔名>`（`tools/voice-gen/src/serve.mjs` 的 `champDir` + `reference`）⇒ 會被 git 收進去。
+⇒ 補上 `content/assets/audio/voices/lines/**/reference/`；`git check-ignore` 驗過：上傳路徑被忽略、出貨的 `quote.mp3` 沒有被誤傷。
 
-**⑤ 檢查腳本兩個待定的值**
-- 音效長度下限暫定 0.02 秒（出貨的 11 支 UI／打擊音效本來就短於 0.15 秒，套語音的標準會誤報）。
-- 128k／44.1k 目前還有兩份副本（`engine.py`、`tools/audio-optimize/optimize.sh`），建議收成全庫一份。
+**⑤ ✅ 已修（同上）：出貨音訊格式收成一個住處**
+`packages/shared/src/content/audioAssetPolicy.ts` 是唯一住處（新增 `SFX_MIN_SECONDS = 0.02`，理由寫在該處註解）；
+`tools/audio-intake/audio_intake.py` 新增 `--print-policy [--shell]` 把門檻印給別的語言讀；
+`tools/voice-gen/engine.py` 與 `tools/audio-optimize/optimize.sh` 改成**讀**它，⛔ 兩邊都不再有 128k／44100 的字面值。
+閘：`packages/shared/src/ops/audioPolicySingleHome.test.ts`（跑起來比對＋掃第二份字面值；突變驗過：把 `MP3_RATE = "44100"` 塞回 engine.py ⇒ 紅）。
 
 ---
 
-## 四、等 owner 的
+## 四、坂田銀時 / J-Stars Victory —— ⛔ 先不做（owner 2026-09-16）
 
-- **坂田銀時**：J-Stars Victory 在 LV99（192.168.0.127）E 槽 `E:\Game\單機遊戲\模擬器\PSV\` 的 PS Vita 版（`.vpk` 約 1.4 GB），這台 Mac 讀不到那顆 E 槽 ⇒ 請開唯讀分享，或把 `.vpk` 拷過來。同一款遊戲裡另有 12 位 GGD 英雄的原作語音（奇犽也在）。明細：工作資料 `jstars/findings.json`。
+> 銀時的 J-Stars Victory 這個我們先不作
+
+⇒ 銀時這一版**維持現狀**（18 格全部來自 300 英雄，其中 12 格原作、6 格合成，而合成的參考音也是從 300 英雄複製的）。
+owner 2026-09-15 說過「不使用300英雄裡的中文語音」與「whisper 判中文就不要上架」⇒ **執行計畫時銀時那 15 段中文一律不上**，但**不另找替代來源**，直到 owner 說要做。
+
+之後若要做，現況記在這裡免得重查：
+- 檔在 LV99（192.168.0.127）`E:\Game\單機遊戲\模擬器\PSV\`，PS Vita 北美版 PCSE00595：`.7z` 1.76 GB、`.vpk` 1.52 GB。
+- 分享已經開了（SMB share `Game`），我也掛得起來（唯讀），⛔ 但 **macOS 隱私權擋住這個 app 讀網路磁碟**（`ls` 回 Operation not permitted）⇒ 要 owner 在「系統設定 → 隱私權與安全性 → 檔案與檔案夾 → Claude」勾「網路卷宗」，或由 owner 把 `.vpk` 拷到本機。
+- 還需要 owner 同意安裝兩個開源工具：`vgmstream`（遊戲音訊轉檔）、必要時 `PyCriCodecs`（拆 CRI 封包）。
+- PS3 樣本的語音 cue 名是 `cv_<三碼角色ID><三碼編號>_jp` ⇒ 高機率可以照檔名分出銀時。同一款遊戲裡另有 12 位 GGD 英雄的原作語音（奇犽也在）。
+- 明細：工作資料 `jstars/findings.json`。

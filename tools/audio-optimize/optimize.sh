@@ -51,9 +51,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 AUDIO_DIR="$REPO_ROOT/content/assets/audio"
-CEILING_SR=44100
-THRESH_BR=130000          # re-encode above this (tolerance over the 128k target)
-TARGET_BR="128k"          # CBR output bitrate
+# ⭐ 天花板從唯一的住處讀（packages/shared/src/content/audioAssetPolicy.ts）——
+# ⛔ 這裡不抄第二份數字（閘：packages/shared/src/ops/audioPolicySingleHome.test.ts）。
+eval "$(python3 "$REPO_ROOT/tools/audio-intake/audio_intake.py" --print-policy --shell)" || {
+  echo "⛔ 讀不到出貨音訊天花板（tools/audio-intake/audio_intake.py --print-policy）" >&2; exit 2; }
+CEILING_SR="$GGD_AUDIO_SR"
+TARGET_BR="${GGD_AUDIO_KBPS}k"           # CBR output bitrate
+THRESH_BR=$(( GGD_AUDIO_KBPS * 1000 + 2000 ))   # 超過才重編（對真 CBR 的 2k 容差）
 
 DRY_RUN=0
 [[ "${1:-}" == "--dry-run" || "${1:-}" == "-n" ]] && DRY_RUN=1
