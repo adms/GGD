@@ -80,7 +80,7 @@ const errorText = (): string | null => document.querySelector(".preview3d-error"
 const liveRoots = (scene: Scene) => scene.transformNodes.filter((n) => n.name === "editor-model-root" && !n.isDisposed());
 
 /** 在**那一幀裡**讀像素並算數；順便縮一張 96px 的縮圖給報告的接觸表。 */
-function measure(engine: Engine, scene: Scene, thumb: boolean): Promise<Pick<AuditResult, "nonBackgroundPixels" | "litPixels" | "frame" | "thumb">> {
+function measure(engine: Engine, scene: Scene, thumb: boolean, thumbPx = THUMB): Promise<Pick<AuditResult, "nonBackgroundPixels" | "litPixels" | "frame" | "thumb">> {
   const grid = scene.getMeshByName("ground-grid");
   const gridWas = grid?.isEnabled() ?? false;
   grid?.setEnabled(false);
@@ -123,9 +123,9 @@ function measure(engine: Engine, scene: Scene, thumb: boolean): Promise<Pick<Aud
           // ⇒ 裁**中央正方形**（fitModelInView 會把模型置中）再縮到 THUMB px，長寬比不變。
           const side = Math.min(w, h);
           const small = document.createElement("canvas");
-          small.width = THUMB;
-          small.height = THUMB;
-          small.getContext("2d")!.drawImage(full, (w - side) / 2, (h - side) / 2, side, side, 0, 0, THUMB, THUMB);
+          small.width = thumbPx;
+          small.height = thumbPx;
+          small.getContext("2d")!.drawImage(full, (w - side) / 2, (h - side) / 2, side, side, 0, 0, thumbPx, thumbPx);
           dataUrl = small.toDataURL("image/jpeg", 0.7);
         }
         resolve({ nonBackgroundPixels: nb, litPixels: lit, frame: [w, h], thumb: dataUrl });
@@ -135,7 +135,13 @@ function measure(engine: Engine, scene: Scene, thumb: boolean): Promise<Pick<Aud
   });
 }
 
-async function auditDoc(id: string, doc: Record<string, unknown> | null, thumb = true): Promise<AuditResult> {
+async function auditDoc(
+  id: string,
+  doc: Record<string, unknown> | null,
+  thumb = true,
+  pose?: { clip: string; seconds: number },
+  thumbPx = THUMB,
+): Promise<AuditResult> {
   const t0 = performance.now();
   const base = { id, meshes: 0, nonBackgroundPixels: 0, litPixels: 0, frame: [0, 0] as [number, number] };
   if (!doc) return { ...base, status: "doc-missing", ms: 0 };
@@ -154,7 +160,20 @@ async function auditDoc(id: string, doc: Record<string, unknown> | null, thumb =
   if (!outcome) return { ...base, status: "timeout", ms: Math.round(performance.now() - t0) };
   if (outcome.kind !== "ready") return { ...base, status: outcome.kind, error: outcome.err, ms: Math.round(performance.now() - t0) };
   const s = stage()!;
-  const m = await measure(s.engine, s.scene, thumb);
+  if (pose) {
+    // GH#1186：停在「某個動作的第幾秒」再拍 —— 逐動作顯示／隱藏只有這樣量得到
+    const groups = s.scene.animationGroups;
+    const g = [...groups].reverse().find((x) => x.name === pose.clip);
+    if (!g) {
+      return { ...base, status: "doc-invalid", error: `找不到動作「${pose.clip}」`, ms: Math.round(performance.now() - t0) };
+    }
+    const fps = g.targetedAnimations[0]?.animation.framePerSecond ?? 60;
+    groups.forEach((x) => x.stop());
+    g.start(false, 1.0, g.from, g.to);
+    g.goToFrame(g.from + pose.seconds * fps);
+    g.pause();
+  }
+  const m = await measure(s.engine, s.scene, thumb, thumbPx);
   return {
     ...base,
     ...m,
@@ -178,6 +197,7 @@ declare global {
     __cal?: { negative: AuditResult; positive: AuditResult; ok: boolean };
     __startCalibrate: () => void;
     __audit: (id: string, thumb?: boolean) => Promise<AuditResult>;
+    __auditPose: (id: string, clip: string, seconds: number, thumbPx?: number) => Promise<AuditResult>;
     __calibrate: () => Promise<{ negative: AuditResult; positive: AuditResult; ok: boolean }>;
     __catalog: () => Promise<{ admin: string[]; adminError: string | null; editor: string[] }>;
     __results: AuditResult[];
@@ -185,6 +205,13 @@ declare global {
 }
 
 window.__results = [];
+/**
+ * GH#1186：停在某個動作的第幾秒再拍（逐動作顯示／隱藏只有這樣量得到）。
+ * ⚠️ 連續兩次拍**同一個 glbPath** 會乾等到 TIMEOUT_MS：ModelPanel 看到路徑沒變就不重新載入，
+ *    等不到新的 editor-model-root ⇒ 排工作時讓 A／B 兩顆交錯。
+ */
+window.__auditPose = (id, clip, seconds, thumbPx = 256) =>
+  fetchDoc(id).then((doc) => auditDoc(id, doc, true, { clip, seconds }, thumbPx));
 window.__audit = async (id, thumb = true) => {
   const r = await auditDoc(id, await fetchDoc(id), thumb);
   window.__results.push(r);
