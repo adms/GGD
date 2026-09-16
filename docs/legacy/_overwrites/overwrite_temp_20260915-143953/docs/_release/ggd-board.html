@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-16 14:48 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-15 14:34 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.45.2 · 資料截至 2026-09-16 14:48 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-16 14:48 (GMT+8)</h1><div class="meta"><span>帳本 <b>29</b> 份</span><span>點名票號 <b>479</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.45.1 · 資料截至 2026-09-15 14:34 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-15 14:34 (GMT+8)</h1><div class="meta"><span>帳本 <b>28</b> 份</span><span>點名票號 <b>475</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1696,77 +1696,9 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:43</td><td>Transcribe Lina MBA voice clips with whisper 我說過有個原則 如果有原板語音就直接對應使用 不需要轉錄生成</td><td>1170</td></tr>
 <tr><td>13:46</td><td>你可以查之前創建新角色已經有此原則</td><td>1170</td></tr>
 <tr><td>13:53</td><td>其他角色也是 你可以盤點哪些是語音生成 對照一下現有的素材庫來取代上架</td><td>1170</td></tr>
-<tr><td>20:16</td><td>不行 你要替我發佈全部角色 這是這一個新版的主要目的</td><td>⏸ 未對票</td></tr>
-<tr><td>20:16</td><td>用最快最有效率的方法來做</td><td>⏸ 未對票</td></tr>
-<tr><td>20:27</td><td>你只剩下五分鐘</td><td>⏸ 未對票</td></tr>
-<tr><td>20:45</td><td>hard stop 沒時間了</td><td>⏸ 未對票</td></tr>
-<tr><td>15:13</td><td>#1177 模型版本上架為造型（後台可上架／定價／下架；出貨內容一件都沒上架，售價由你決定） =&gt; 新模型加購參考 LOL 分級標價 PR #1152 · [codex][feature]… 你已經裁決「先請 Codex 移到 S3 再合」，Codex 那批分支全部停放、不會併入。=&gt; 應該做好了吧 可以。S3 搬移與完整讀回已完成，乾淨分支也通過 #1252 的兩個核心閘：歷史 blob 額外量 3.17%（&lt;5%）、新 Git GLB 29 顆且未引用 0 顆；40 顆未綁定 GLB 與 254 份準備材料已留在 S3。現在只剩把乾淨分支推上去、開取代 #1152 的 PR，Main 就能直接審查合併</td><td>1177 1252 1152</td></tr>
-<tr><td>15:44</td><td>S3 搬移已完成，Main 應改合併 [PR #1267](https://github.com/adms/GGD/pull/1267)；舊 [PR #1152](https://github.com/adms/GGD/pull/1152) 已留下替代 PR 說明。 * [#1252](https://github.com/adms/GGD/issues/1252) 已附完整收據並關票。 * 29 個遊戲實際引用的 GLB 留在 Git，未引用新增 GLB 為 0。 * 40 個未綁定 GLB 與 254 個準備／證據檔已移到指定 S3。 * S3 共 294 檔、130,452,084 bytes，完整下載、解包及逐檔 SHA-256 驗證通過。 * Git 歷史額外 blob 為 3.167323%，低於 #1252 的 5% 上限。 * 跨平台產生器問題已修正；macOS 與 Linux 容器現在得到相同 <code>hero-intake</code> digest。 * 最新提交：<code>1804c918a</code>，分支已推送且沒有衝突。 * [2026-09-11～2026-09-15 清單](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/近四日新增模型動作特效清單.md) 已更新。 目前 GitHub 顯示 PR MERGEABLE，但必要 CI 正在重新執行，因此暫時標為 <code>BLOCKED</code>。這只是等待最新 CI；檢查通過後 Main 就能直接合併 #1267，不用再處理 S3 或重建素材分支。</td><td>1267 1252</td></tr>
-<tr><td>15:46</td><td>LoL 點數購買分級為一般 390/520/750/975、史詩 1350、傳說 1820、終極 3250 =&gt; 對應打幾場的獎勵呢? 記得後台可動態參數設定</td><td>1177</td></tr>
-<tr><td>17:03</td><td>造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)</td><td>1177</td></tr>
-<tr><td>11:54</td><td>你寫英文看不懂</td><td>⏸ 未對票</td></tr>
-<tr><td>11:58</td><td>看不懂英文</td><td>⏸ 未對票</td></tr>
-<tr><td>12:01</td><td>開一張票 英靈殿 hover 過去 3d model 會 pop out 放大 檢查一下 129個模型已經入庫可在後台下拉選單選擇並預覽 (開票)</td><td>⏸ 未對票</td></tr>
-<tr><td>12:59</td><td>這批已完成並推送，不再重跑小呆、何布、巴恩的既有流程。 * 清單已更新：[2026-09-11～2026-09-15 新增模型、動作、特效與語音清單](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/近四日新增模型動作特效清單.md) * 新增可續跑的多來源自動化管線，涵蓋抓取索引、轉換、驗證、整合與中央索引；已通過階段會由收據跳過。 * 管線驗證：27/27 階段通過。 * 主要提交：<code>2b2ab1037</code> * S3…</td><td>#1152</td></tr>
-<tr><td>13:24</td><td>你再重新 check 資源狀況，包含後來有新的原作語音(例如 LINA 從MBA抽出取來的) 優先預設取代掉之前合成語音，但沒有原作語音還是可以用合成比什麼都沒有好 1. 要直接合進去？ 2. 全部藏起來 3. godie-o030、godie-orkn 給我看 before/after阿 4. godie-n00b 減面阿 5. 超夢在 Hero Forge 的預設模型：跟 godie-huth 用的是同一個模型檔 都給我看阿 請你比對 # 2026-09-11～2026-09-15 新增模型、動作、特效與語音清單 更新資源上架，如果還有缺少任何資源列表給我</td><td>⏸ 未對票</td></tr>
-<tr><td>13:54</td><td>但不要直接取代 給我一個審核表 逐項用讓我允許上架 並起角色為群組一鍵通過 or not</td><td>⏸ 未對票</td></tr>
-<tr><td>14:08</td><td>你再重新 check 資源狀況，包含後來有新的原作語音(例如 LINA 從MBA抽出取來的) 優先預設取代掉之前合成語音，但沒有原作語音還是可以用合成比什麼都沒有好 1. 要直接合進去？ 2. 全部藏起來 3. godie-o030、godie-orkn 給我看 before/after阿 4. godie-n00b 減面阿 5. 超夢在 Hero Forge 的預設模型：跟 godie-huth 用的是同一個模型檔 都給我看阿 如果有原板語音就直接對應使用 不需要轉錄生成 你可以盤點哪些是語音生成 對照一下現有的素材庫來取代上架 但不要直接取代 給我一個審核表 逐項用讓我允許上架 並起角色為…</td><td>⏸ 未對票</td></tr>
-<tr><td>14:10</td><td>這段時間你都用英文 我全部看不懂 你要記得中文回答</td><td>⏸ 未對票</td></tr>
-<tr><td>14:34</td><td>超夢在 Hero Forge 的預設模型就是魔人普烏那顆檔??? =&gt; 完全不一樣模型跟貼圖吧 18 位英雄在比賽裡是側著走的（哆啦A夢、臭作、飛鼠先生、凱亞爾、西索等，名單在對照頁）請開票修正</td><td>⏸ 未對票</td></tr>
-<tr><td>15:11</td><td>不要再用英文 看不懂 This can’t be undone. Anything in the artifact that uses this file will stop working. Claude wants to permanently delete asset 66319234710fa16ce632c85625657b42 from the asset store of https://claude.ai/code/artifact/265a762b-a576-46b2-ac33-ff2a9aa9f2a2 (visible to viewers of the artifact)…</td><td>⏸ 未對票</td></tr>
-<tr><td>15:27</td><td>原作語音上架審核 你應該沒有完全對上 例如小呆所有技能應該都有語音 等 盡量對上所有原作音效 然後允許部分音效上架/不上架 超夢要怎麼處理 =&gt; C</td><td>⏸ 未對票</td></tr>
-<tr><td>15:40</td><td>GGD └── vfx/ ├── runtime/ ├── primitives/ │ ├── Ribbon │ ├── Beam │ ├── GroundCrack │ ├── CrystalEruption │ ├── Shockwave │ ├── Projectile │ ├── Debris │ └── GPUEmitter ├── shaders/ │ ├── noise │ ├── sdf │ ├── distortion │ └── fracture └── presets/ ├── FrostLance ├── Lightning ├── Meteor └── ...</td><td>⏸ 未對票</td></tr>
-<tr><td>15:41</td><td>Babylon Native VFX Extraction Plan Goal 現有遊戲使用 Babylon.js。 參考以下 MIT 開源 Three.js VFX 專案： https://github.com/achrefelouafi/LinearAbiltyCastingThreeJS 目標不是把 Three.js 專案完整 port 到 Babylon.js。 目標是： 用最低開發成本，抽取原專案最有價值的 VFX 演算法、Shader、Procedural Geometry 與 Effect Composition 思路，建立 Babylon Native 可重複利用的技能特效模組…</td><td>⏸ 未對票</td></tr>
-<tr><td>15:50</td><td>你記得開新分支 讓 main 之後可以選擇合併與否</td><td>⏸ 未對票</td></tr>
-<tr><td>15:51</td><td>你自己開分支來做 #1265 讓 main 之後可以選擇合併吧</td><td>#1265</td></tr>
-<tr><td>15:52</td><td>你如何判斷圖片及語音音效呢？用純地端嗎</td><td>⏸ 未對票</td></tr>
-<tr><td>16:35</td><td>我發現我的磁碟都要被這個專案佔滿了 可以請你重新盤點是否有可刪除的無用資料嗎?</td><td>⏸ 未對票</td></tr>
-<tr><td>16:38</td><td>結論是 有什麼可以用的嗎</td><td>⏸ 未對票</td></tr>
-<tr><td>16:39</td><td>好阿 讓我看畫面</td><td>⏸ 未對票</td></tr>
-<tr><td>16:55</td><td>go</td><td>⏸ 未對票</td></tr>
-<tr><td>16:56</td><td>go</td><td>⏸ 未對票</td></tr>
-<tr><td>16:59</td><td>這跟 Dropbox 是 870 GB 有什麼關係</td><td>⏸ 未對票</td></tr>
-<tr><td>17:28</td><td>請你整理成一份報告 md 給我</td><td>⏸ 未對票</td></tr>
-<tr><td>17:39</td><td>應該是變成特效模板之一上架就可以了 不用硬綁在目前的技能上 除非你有推薦</td><td>⏸ 未對票</td></tr>
-<tr><td>17:40</td><td>而且特效不只 Spike 吧</td><td>⏸ 未對票</td></tr>
-<tr><td>18:01</td><td>PR #1267 的 Codex 工作已經做完。 目前狀態： * 最新 commit：<code>b842347593b6244ff393bf8b05b3ae6d32795e53</code> * 本機 HEAD 與遠端分支完全一致 * 工作區乾淨，沒有未提交內容 * PR 已開啟且不是 Draft * GitHub CI 的 <code>setup</code> 還在執行，因此暫時顯示 <code>BLOCKED</code> * 尚未合併，後續由 Main 等 CI 完成後審查、合併 * 正式站部署也要等 Main 合併後才能核對 所以不需要我再重做或繼續修改這張 PR。現在是「Codex 已交付，等待 CI 與 Main 合併」</td><td>1267</td></tr>
-<tr><td>17:54</td><td>我只想找低垂的果實 不想花太多時間跟 token 搞這個 miner plus</td><td>⏸ 未對票</td></tr>
-<tr><td>17:55</td><td>ok 那你要註記 這條支線合併的價值是什麼 所以暫時不合併</td><td>⏸ 未對票</td></tr>
-<tr><td>18:07</td><td>整位允許上架 應該放在該角色最後一格，原本整位允許上架的位置放的則是跳到最後一個的位置</td><td>⏸ 未對票</td></tr>
-<tr><td>19:17</td><td>（AskUserQuestion「哆啦A夢舊模型要怎麼辦：留著可以選／拿掉舊版／這版先不換」owner 選的選項）拿掉舊版</td><td>1263</td></tr>
-<tr><td>19:12</td><td>哥布林殺手現在的「受傷、重傷、擊殺」三格，上線的是無聲的佔位檔被放大後的雜音 =&gt; 套用你覺得最接近風格的角色語音就好 話少 低沉 頭盔悶住 請你多設計一個 script 給語音及音效使用跟模型、圖片上架的檢查及轉換類似，實際遊戲會使用的語音跟音效是 128bit 44khz mp3 而不是更高音質的聲音檔 (若原本音質就更低就不用轉換浪費空間了) 然後全部檢查轉換所有上架角色語音，轉換上架的檔案會上 git，原始素材或半成品等上 S3，還沒用到/上架的語音檔保持原始沒關係 黑魔導士 - 莉娜因巴斯 godie-h020・godie-hjai （原檔）voice_attack_2, vc_ze…</td><td>⏸ 未對票</td></tr>
-<tr><td>19:14</td><td>上傳備份後可以刪除 zip 了</td><td>⏸ 未對票</td></tr>
-<tr><td>19:25</td><td>請你查證是否為真後，用開票守則開票以下 bug 回報 1. 滿裝後再跳出裝備獎勵沒辦法跳過也不能賣裝 2. [重要][緊急] 手把可否重頭玩到尾 3. 所有新的模組定位角度有問題-螃蟹走路 4. BOT 不要三人同隊選一樣的角色避免過度失衡 5. 木乃香 強度需要調整 6. 推薦碼變成選項不需讓玩家也可以直接註冊，但是後台還是要批核 (但新帳號使用推薦碼後還是可以讓介紹人自動審批過) 這個變成後台選項可以切換</td><td>⏸ 未對票</td></tr>
-<tr><td>19:27</td><td>你不要自己比 你做一頁 我幫你比較勾選就好 不要浪費 token</td><td>⏸ 未對票</td></tr>
-<tr><td>19:34</td><td>其餘 LoL 11＋模型角色 3445/45 本機發布通過，但 PR #1228 仍是 Draft、尚未合併⏳ 尚未正式上架 =&gt; ?</td><td>#1228</td></tr>
-<tr><td>19:39</td><td>v0.45.2 部署後先實機看過鄂爾、阿璃、瑟雷西、稻草人、威寇茲這幾招，再翻開關 =&gt; 不需要 直接上就好</td><td>⏸ 未對票</td></tr>
-<tr><td>19:42</td><td>你查看一下 最近一週有許多新分支等你合併上架</td><td>⏸ 未對票</td></tr>
-<tr><td>19:52</td><td>你自己可以用 whisper 本地端測試超過 1秒以上的語音是否為中文 就不要上架</td><td>⏸ 未對票</td></tr>
-<tr><td>19:53</td><td>但其實我已經要做完了</td><td>⏸ 未對票</td></tr>
-<tr><td>19:55</td><td>我已經全部判斷完了</td><td>⏸ 未對票</td></tr>
-<tr><td>20:02</td><td>好了 請你全部整理告一個段落 讓 main 合併上架</td><td>⏸ 未對票</td></tr>
-<tr><td>20:04</td><td>為何初號機還沒綁定模型？</td><td>⏸ 未對票</td></tr>
-<tr><td>20:07</td><td>論壇模型都要接上才對</td><td>⏸ 未對票</td></tr>
-<tr><td>20:08</td><td>你要不要先盤點還沒接上論壇的模型跟角色有哪些 然後開張票先</td><td>⏸ 未對票</td></tr>
-<tr><td>20:10</td><td>你可以先暫緩 先寫個 plan 我們找時間再執行</td><td>⏸ 未對票</td></tr>
-<tr><td>20:11</td><td>你應該要趕快上架 BMPNDD 了 我十分鐘後要出門</td><td>⏸ 未對票</td></tr>
-<tr><td>20:11</td><td>我等等要出門了 你快做完</td><td>⏸ 未對票</td></tr>
-<tr><td>20:12</td><td>whisper 判斷中文還需兩三分鐘 =&gt; 請你停掉 下次在座</td><td>⏸ 未對票</td></tr>
-<tr><td>20:12</td><td>那些都是後台下拉式選單 可以加購的選項 都寫到計畫裡</td><td>⏸ 未對票</td></tr>
-<tr><td>20:12</td><td>你可以先把計畫寫好 commit + push</td><td>⏸ 未對票</td></tr>
-<tr><td>20:12</td><td>你可以先把計畫寫好 commit + push</td><td>⏸ 未對票</td></tr>
-<tr><td>20:14</td><td>所以你這版應該是全角色都上了 不會卡了吧</td><td>⏸ 未對票</td></tr>
-<tr><td>20:18</td><td>我已經有開啟了 請你自己去路徑讀去</td><td>⏸ 未對票</td></tr>
+<tr><td>13:54</td><td>但不要直接取代 給我一個審核表 逐項用讓我允許上架 並起角色為群組一鍵通過 or not</td><td>1170</td></tr>
 <tr><td>14:13</td><td>（13:5x 重送的整合訊息，新增最後一句）盡量開多工作流來完成</td><td>1252</td></tr>
-</table></div>
-<p># 2026-09-16</p>
-<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
-<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
-<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
-<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
-<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
-<tr><td>14:47</td><td>Try again</td><td>⏸ 未對票</td></tr>
-<tr><td>14:48</td><td>請用中文</td><td>⏸ 未對票</td></tr>
+<tr><td>14:34</td><td>超夢在 Hero Forge 的預設模型就是魔人普烏那顆檔??? =&gt; 完全不一樣模型跟貼圖吧 18 位英雄在比賽裡是側著走的（哆啦A夢、臭作、飛鼠先生、凱亞爾、西索等，名單在對照頁）請開票修正</td><td>1266</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
