@@ -48,8 +48,13 @@ const originals = read(join(LINES, "COMBAT_ORIGINALS.json"), { champions: {} }).
 const select = read(join(ROOT, "content/assets/audio/voices/quotes/quotes.json"), { quotes: {}, unsourced: [] });
 const unsourced = Object.fromEntries((select.unsourced ?? []).map((u) => [u.id, u.why ?? ""]));
 const index = read(join(ROOT, "materials/hero-model-library/voice-index.json"), { groups: [] }).groups ?? [];
+const manifest = read(join(ROOT, "content/assets/audio/voices/champions/MANIFEST.json"), { champions: {} });
+const voiced = manifest.champions ?? {};
+/** 同一個角色、語音包卻掛在另一個（沒上架的）id 上 —— 招牌名字相同就算 */
+const coreName = (n) => String(n).replace(/^.*?[-－]\s*/, "").trim();
 
 const nameOf = (id) => read(join(ROOT, `content/champions/${id}.json`), {})?.name ?? id;
+const packOwners = Object.keys(voiced).map((id) => ({ id, name: nameOf(id) }));
 /** 這位英雄在素材庫裡找得到的原作語音包（同名或已綁 heroIds）—— ⚠️ 同名只是候選，⛔ 不是身分證明 */
 const candidatesFor = (id, name) => {
   const tokens = (name.replace(/^.*?[-－]\s*/, "").split(/[\s·.,、（）()]+/).filter((t) => t.length >= 2));
@@ -72,8 +77,10 @@ for (const id of roster) {
       : shipped?.textSource
         ? { source: shipped.textSource === "original" ? "原作語音" : "合成", text: shipped.text ?? "" }
         : null;
+  const hasVoicePack = !!voiced[id];
+  const twin = hasVoicePack ? null : packOwners.find((p) => coreName(p.name) === coreName(name) && p.name !== "(沒有英雄檔)");
   rows.push({
-    id, name,
+    id, name, hasVoicePack, twin: twin ? { id: twin.id, name: twin.name } : null,
     battle, takes: Math.max(orig.length, shipped ? 1 : 0),
     select: sel ? { text: sel.jpQuote ?? "", real: !!sel.real } : null,
     unsourcedWhy: unsourced[id] ?? "",
@@ -82,6 +89,9 @@ for (const id of roster) {
 }
 
 const missBattle = rows.filter((r) => !r.battle);
+const noPack = rows.filter((r) => !r.hasVoicePack);          // 整包語音都沒有（⛔ 不只是名言）
+const noPackTwin = noPack.filter((r) => r.twin);              // 同角色的包掛在別的 id
+const noPackAlone = noPack.filter((r) => !r.twin);
 const missSelect = rows.filter((r) => !r.select);
 const ratchet = read(RATCHET, { battleMissing: missBattle.length, selectMissing: missSelect.length });
 
@@ -96,9 +106,19 @@ const doc = [
   "",
   `出貨名單 **${roster.length}** 位：戰鬥名言有 **${roster.length - missBattle.length}** 位（⛔ 缺 **${missBattle.length}**）· 選角名言有 **${roster.length - missSelect.length}** 位（⛔ 缺 **${missSelect.length}**）。`,
   "",
+  `⛔⛔ 其中 **${noPack.length}** 位在遊戲裡**一格語音都沒有**（${noPackTwin.length} 位的包掛在同角色的另一個 id 上）—— 見下面第一節。`,
+  "",
   "| 英雄 | id | 戰鬥名言 | 來源 | 段數 | 選角名言 |",
   "|---|---|---|---|---:|---|",
   ...rows.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${r.battle ? cell(r.battle.text) : "⛔ 無"} | ${r.battle?.source ?? "—"} | ${r.takes || "—"} | ${r.select ? cell(r.select.text) : "⛔ 無"} |`),
+  "",
+  `## ⛔⛔ 整包語音都沒有的（${noPack.length} 位）`,
+  "",
+  `這 ${noPack.length} 位在 \`voices/champions/MANIFEST.json\` 裡**一格語音都沒有**（⛔ 不只是缺名言）。其中 ${noPackTwin.length} 位的語音包其實做好了，只是掛在**同一個角色的另一個 id** 上（那個 id 沒有上架）⇒ 接過來就有聲音；另外 ${noPackAlone.length} 位本機連同名的包都沒有。`,
+  "",
+  "| 英雄 | id | 同角色的語音包 | 那個包幾格 |",
+  "|---|---|---|---:|",
+  ...noPack.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${r.twin ? `${cell(r.twin.name)} \`${r.twin.id}\`` : "⛔ 沒有"} | ${r.twin ? Object.keys(voiced[r.twin.id]?.lines ?? {}).length : "—"} |`),
   "",
   `## ⛔ 戰鬥名言缺口（${missBattle.length} 位）`,
   "",
@@ -110,7 +130,7 @@ const doc = [
   "",
 ].join("\n");
 
-const inventory = { schema: "ggd.champion-quote-inventory@1", generator: "tools/quote-inventory/gen.mjs", roster: roster.length, battleMissing: missBattle.length, selectMissing: missSelect.length, rows };
+const inventory = { schema: "ggd.champion-quote-inventory@1", generator: "tools/quote-inventory/gen.mjs", roster: roster.length, battleMissing: missBattle.length, selectMissing: missSelect.length, noVoicePack: noPack.length, noVoicePackWithTwin: noPackTwin.length, rows };
 const stale = [];
 const put = (path, text) => {
   const prev = existsSync(path) ? readFileSync(path, "utf8") : null;

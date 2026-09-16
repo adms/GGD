@@ -4,10 +4,14 @@
  "roster": 130,
  "battleMissing": 24,
  "selectMissing": 59,
+ "noVoicePack": 12,
+ "noVoicePackWithTwin": 9,
  "rows": [
   {
    "id": "godie-e001",
    "name": "蟬在叫人壞掉 - 龍宮禮奈",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "かな？かな？……嘘だッ！！"
@@ -23,6 +27,8 @@
   {
    "id": "godie-e002",
    "name": "亞瑟王 - Saber",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）VOICE_1935"
@@ -38,6 +44,8 @@
   {
    "id": "godie-e008",
    "name": "火霧戰士 - 夏娜",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "うるさいうるさいうるさい！"
@@ -53,6 +61,8 @@
   {
    "id": "godie-e00r",
    "name": "最終泛用人型決戰兵器 - 初號機",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "ウオオオオオオオッ！！"
@@ -68,6 +78,8 @@
   {
    "id": "godie-e00s",
    "name": "白木老樹精 - 白木卡迪那",
+   "hasVoicePack": false,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": {
@@ -80,6 +92,8 @@
   {
    "id": "godie-e00w",
    "name": "神鳴流劍士 - 櫻綻剎那",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "お嬢様は、この刹那が必ずお守りします！"
@@ -95,6 +109,8 @@
   {
    "id": "godie-edem",
    "name": "寫輪眼復仇者 - 宇智波佐助",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -110,6 +126,8 @@
   {
    "id": "godie-efur",
    "name": "揍敵客大家長 - 揍敵客桀諾",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "殺しは仕事…感情でやるほど、耄碌しとらんよ。"
@@ -125,6 +143,8 @@
   {
    "id": "godie-emfr",
    "name": "魔法老師 - 涅吉。史普林。菲爾德",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "ラステル・マ・スキル・マギステル！"
@@ -140,6 +160,8 @@
   {
    "id": "godie-emns",
    "name": "奇樂 - 夜神月",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "僕は…新世界の神となる。"
@@ -155,6 +177,8 @@
   {
    "id": "godie-etyr",
    "name": "治癒系公主 - 木乃香",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "せっちゃん、だーい好きやで〜！"
@@ -170,6 +194,11 @@
   {
    "id": "godie-ewar",
    "name": "龍之子 - 天地志狼",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-e007",
+    "name": "龍之子 - 天地志狼"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -182,6 +211,8 @@
   {
    "id": "godie-h00l",
    "name": "時空勇者 - 林克",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "ハイヤーッ！"
@@ -197,6 +228,8 @@
   {
    "id": "godie-h01n",
    "name": "開外掛的死神 - 黑崎一護",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -212,6 +245,8 @@
   {
    "id": "godie-h01u",
    "name": "亂世癿王者 - 呂布奉先",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "天下無双の我が武、とくと見るがいい！"
@@ -227,6 +262,8 @@
   {
    "id": "godie-h02k",
    "name": "國寶級的畜生 - 熊貓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "昼寝と笹はオラの命。邪魔するヤツは頭突きだゾ"
@@ -242,6 +279,11 @@
   {
    "id": "godie-h02v",
    "name": "看似憂鬱的神獸 - 草泥馬",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-h02u",
+    "name": "看似憂鬱的神獸 - 草泥馬"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -254,6 +296,8 @@
   {
    "id": "godie-hapm",
    "name": "海克力斯 - Berserker",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -269,6 +313,8 @@
   {
    "id": "godie-hart",
    "name": "最終幻想 - 克勞德",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "興味ないね"
@@ -284,6 +330,8 @@
   {
    "id": "godie-hgam",
    "name": "種子神奇寶貝 - 妙蛙種子",
+   "hasVoicePack": false,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": {
@@ -296,6 +344,11 @@
   {
    "id": "godie-hjai",
    "name": "黑魔導士 - 莉娜因巴斯",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-h020",
+    "name": "黑魔導士 - 莉娜因巴斯"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -330,6 +383,8 @@
   {
    "id": "godie-hpb1",
    "name": "獸矛傳承使 - 蒼月潮",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "食えるもんなら、食ってみやがれ！"
@@ -345,6 +400,8 @@
   {
    "id": "godie-huth",
    "name": "超級普烏 - 魔人普烏",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）chr1030_ActVoice#202"
@@ -360,6 +417,8 @@
   {
    "id": "godie-hvsh",
    "name": "梅杜莎 - Rider",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -375,6 +434,8 @@
   {
    "id": "godie-hvwd",
    "name": "除魔巫女 - 桔梗",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -390,6 +451,8 @@
   {
    "id": "godie-n003",
    "name": "黑暗福音 - 依文潔琳",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "くくく…私こそ闇の福音、真祖の吸血鬼よ"
@@ -405,6 +468,8 @@
   {
    "id": "godie-n00b",
    "name": "小叮噹 - 哆拉A夢",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "ぼく、ドラえもん!"
@@ -420,6 +485,11 @@
   {
    "id": "godie-nbbc",
    "name": "傳說的龍騎士 - 勇者小呆",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-n01c",
+    "name": "傳說的龍騎士 - 勇者小呆"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -496,6 +566,11 @@
   {
    "id": "godie-nsjs",
    "name": "妖狐藏馬 - 南野秀一",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-n00p",
+    "name": "妖狐藏馬 - 南野秀一"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -508,6 +583,8 @@
   {
    "id": "godie-o00k",
    "name": "傲嬌電氣老鼠 - 皮卡娘",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）pikachu16.dsp"
@@ -523,6 +600,8 @@
   {
    "id": "godie-o00l",
    "name": "獸神官 - 傑洛士",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "それは、秘密です♪"
@@ -538,6 +617,8 @@
   {
    "id": "godie-o02p",
    "name": "夢幻之星 - 初音",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）miku4"
@@ -553,6 +634,8 @@
   {
    "id": "godie-ofar",
    "name": "神奇寶貝兒 - 皮卡丘",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）pikachu16.dsp"
@@ -568,6 +651,8 @@
   {
    "id": "godie-ogld",
    "name": "美白大法師 - 黑人牙膏",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "汚れは残さない。…あなたも、です。"
@@ -583,6 +668,11 @@
   {
    "id": "godie-ogrh",
    "name": "賽亞人 - 悟空",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-o00x",
+    "name": "超級賽亞人 - 悟空"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -610,6 +700,8 @@
   {
    "id": "godie-orkn",
    "name": "電車癡漢 - 臭作",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "ヒッヒッヒ…ええ子じゃのう。先生に任せなさい。"
@@ -625,6 +717,8 @@
   {
    "id": "godie-osam",
    "name": "犬妖 - 殺生丸",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "この殺生丸に、斬れぬものなど無い。"
@@ -640,6 +734,8 @@
   {
    "id": "godie-u00h",
    "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "オレの鬼眼を見たな…なら、死んでもらうぜ。"
@@ -655,6 +751,8 @@
   {
    "id": "godie-u00j",
    "name": "神性的流失 - 賽菲洛斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "私は…思い出には、ならないさ。"
@@ -670,6 +768,8 @@
   {
    "id": "godie-u00k",
    "name": "邪惡意念集合體 - 死之王",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "生は過ち、死こそが救いである。"
@@ -685,6 +785,8 @@
   {
    "id": "godie-u00n",
    "name": "草帽小子 - 蒙其.D.魯夫",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -700,6 +802,8 @@
   {
    "id": "godie-u00v",
    "name": "黑手黨老大 - 基廉列克",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "……フンッ。……ヴォアアアッ!!"
@@ -715,6 +819,8 @@
   {
    "id": "godie-ubal",
    "name": "魔界霸主 - 巴恩大魔王",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "知らなかったのか…?大魔王からは、逃げられない…!"
@@ -730,6 +836,8 @@
   {
    "id": "godie-ucrl",
    "name": "職業獵人 - 傑 富力士",
+   "hasVoicePack": false,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": {
@@ -742,6 +850,8 @@
   {
    "id": "godie-udea",
    "name": "至尊學長 - 飛鼠先生",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "上、上、下、下、左、右、左、右、B、A…チートコード入力完了ぉ！"
@@ -757,6 +867,11 @@
   {
    "id": "godie-udre",
    "name": "三刀流劍士 - 索隆",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-u01u",
+    "name": "三刀流劍士 - 索隆"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -777,6 +892,11 @@
   {
    "id": "godie-umal",
    "name": "北斗神拳掌門人 - 拳四郎",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-u00l",
+    "name": "北斗之鼠 - 拳四郎"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -797,6 +917,11 @@
   {
    "id": "godie-uvng",
    "name": "邪眼師 - 飛影",
+   "hasVoicePack": false,
+   "twin": {
+    "id": "godie-u010",
+    "name": "邪眼師 - 飛影"
+   },
    "battle": null,
    "takes": 0,
    "select": {
@@ -809,6 +934,8 @@
   {
    "id": "godie-zombiex",
    "name": "聖杯黑泥醬 - 喪標麥可",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "合成",
     "text": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー"
@@ -824,6 +951,8 @@
   {
    "id": "community-review-01-20260907",
    "name": "武藤遊戲",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ずっと俺のターン！"
@@ -839,6 +968,8 @@
   {
    "id": "community-review-02-20260907",
    "name": "八神庵",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）1003448717"
@@ -854,6 +985,8 @@
   {
    "id": "community-review-03-20260907",
    "name": "不知火舞",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ごめんあそばせ！"
@@ -869,6 +1002,8 @@
   {
    "id": "community-review-04-20260907",
    "name": "空條承太郎",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "オラオラオラオラ！"
@@ -884,6 +1019,8 @@
   {
    "id": "community-review-05-20260907",
    "name": "洛克人",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ティウンティウン"
@@ -899,6 +1036,8 @@
   {
    "id": "community-review-06-20260907",
    "name": "卡比",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice/kirby20.dsp"
@@ -914,6 +1053,8 @@
   {
    "id": "community-review-07-20260907",
    "name": "西索",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "今すぐキミを壊したい…♥"
@@ -926,6 +1067,8 @@
   {
    "id": "community-review-08-20260907",
    "name": "米卡莎",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "マフラーを巻いてくれてありがとう"
@@ -941,6 +1084,8 @@
   {
    "id": "community-review-09-20260907",
    "name": "赫蘿",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ぬしと旅がしたい"
@@ -953,6 +1098,8 @@
   {
    "id": "community-review-10-20260907",
    "name": "魯路修",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ルルーシュ・ヴィ・ブリタニアが命じる。貴様たちは死ね！"
@@ -968,6 +1115,8 @@
   {
    "id": "community-review-11-20260907",
    "name": "利姆路",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）505624353"
@@ -980,6 +1129,8 @@
   {
    "id": "community-review-12-20260907",
    "name": "衛宮士郎",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "体は剣で出来ている"
@@ -995,6 +1146,8 @@
   {
    "id": "community-review-13-20260907",
    "name": "朝田詩乃",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -1007,6 +1160,8 @@
   {
    "id": "community-review-14-20260907",
    "name": "殺老師",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "第二の刃持たざる者に暗殺者の資格なし！"
@@ -1019,6 +1174,8 @@
   {
    "id": "community-review-15-20260907",
    "name": "比利海靈頓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "仕方ないね"
@@ -1031,6 +1188,8 @@
   {
    "id": "community-review-16-20260907",
    "name": "魔法少女☆伊莉雅",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "このバカステッキ～！"
@@ -1043,6 +1202,8 @@
   {
    "id": "community-review-17-20260907",
    "name": "安茲·烏爾·恭",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "我が名を知るが良い。我こそがアインズ・ウール・ゴウン"
@@ -1058,6 +1219,8 @@
   {
    "id": "community-review-18-20260907",
    "name": "吉爾伽美什",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "君臨するとはこういう事よ！"
@@ -1073,6 +1236,8 @@
   {
    "id": "community-review-19-20260907",
    "name": "桐谷和人",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ビーター、いい呼び名だ"
@@ -1088,6 +1253,8 @@
   {
    "id": "community-review-20-20260907",
    "name": "御坂美琴",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "超電磁砲！"
@@ -1103,6 +1270,8 @@
   {
    "id": "community-review-21-20260907",
    "name": "鹿目圓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "全ての魔女を生まれる前に消し去りたい"
@@ -1115,6 +1284,8 @@
   {
    "id": "community-review-22-20260907",
    "name": "菜月昴",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺はエミリアたんの一の騎士！ナツキ・スバルだ！"
@@ -1130,6 +1301,8 @@
   {
    "id": "community-review-23-20260907",
    "name": "坂田銀時",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "天然パーマに悪い奴はいない"
@@ -1142,6 +1315,8 @@
   {
    "id": "community-review-24-20260907",
    "name": "奇犽",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ゴン、お前は光だ"
@@ -1154,6 +1329,8 @@
   {
    "id": "community-review-25-20260907",
    "name": "一拳超人",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "20文字以内で簡潔にまとめて出直してこい！"
@@ -1169,6 +1346,8 @@
   {
    "id": "community-review-26-20260907",
    "name": "名偵探柯南",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "バーロー"
@@ -1184,6 +1363,8 @@
   {
    "id": "community-review-27-20260907",
    "name": "庫洛魔法使",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "はにゃ～ん"
@@ -1196,6 +1377,8 @@
   {
    "id": "community-review-28-20260907",
    "name": "艾莉絲·伯雷亞斯·格雷拉特",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "生意気よ、私を誰だと思ってるの？"
@@ -1211,6 +1394,8 @@
   {
    "id": "community-review-29-20260907",
    "name": "芙莉蓮",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "暗いよー！怖いよー！"
@@ -1226,6 +1411,8 @@
   {
    "id": "community-review-30-20260907",
    "name": "尼古貓貓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1235,6 +1422,8 @@
   {
    "id": "community-review-31-20260907",
    "name": "SUN樂",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "こっちはもっと理不尽なクソゲーをクリアし続けてるんだ"
@@ -1247,6 +1436,8 @@
   {
    "id": "community-review-32-20260907",
    "name": "阿薩謝爾",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "わしにはプライベートすら無いんかい！"
@@ -1262,6 +1453,8 @@
   {
    "id": "community-review-33-20260907",
    "name": "近衛刀太",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "だから進むぜ、その先に！"
@@ -1274,6 +1467,8 @@
   {
    "id": "community-review-34-20260907",
    "name": "高速婆婆",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "てめえはホントにグッバイ野郎だぜ！"
@@ -1286,6 +1481,8 @@
   {
    "id": "community-review-35-20260907",
    "name": "炭治郎",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "心はどこまでも強くなれる！"
@@ -1301,6 +1498,8 @@
   {
    "id": "community-review-36-20260907",
    "name": "鬼畜王蘭斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "世の中には優先順位というものがあるのだ"
@@ -1316,6 +1515,8 @@
   {
    "id": "community-review-37-20260907",
    "name": "吉伊卡哇",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "イヤ！イヤッ、ヤダーッ！"
@@ -1328,6 +1529,8 @@
   {
    "id": "b2-aladdin",
    "name": "阿拉丁",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1337,6 +1540,8 @@
   {
    "id": "b2-albus",
    "name": "阿爾巴斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "魔王討伐の旅を繰り返している"
@@ -1349,6 +1554,8 @@
   {
    "id": "b2-bojji",
    "name": "波吉",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1358,6 +1565,8 @@
   {
    "id": "b2-boxxo",
    "name": "阿箱＋拉蜜絲",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ざんねん"
@@ -1370,6 +1579,8 @@
   {
    "id": "b2-elma",
    "name": "艾爾瑪",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1379,6 +1590,8 @@
   {
    "id": "b2-fushi",
    "name": "不死",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1388,6 +1601,8 @@
   {
    "id": "b2-goblin",
    "name": "哥布林殺手",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺は世界を救わない。ゴブリンを殺すだけだ"
@@ -1400,6 +1615,8 @@
   {
    "id": "b2-guts",
    "name": "凱茲",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "神に会えたら言っとけ！放っとけってな！"
@@ -1412,6 +1629,8 @@
   {
    "id": "b2-haga",
    "name": "羽賀",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "僕の仕事はゲーム内のバグをチェックするデバッガーなんです"
@@ -1424,6 +1643,8 @@
   {
    "id": "b2-kaede",
    "name": "楓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1433,6 +1654,8 @@
   {
    "id": "b2-kaiji",
    "name": "伊藤開司",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ありがてえっ…！"
@@ -1445,6 +1668,8 @@
   {
    "id": "b2-keyaru",
    "name": "凱亞爾",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "この世界そのものを回復する"
@@ -1457,6 +1682,8 @@
   {
    "id": "b2-kisaragi",
    "name": "如月電車",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": {
@@ -1469,6 +1696,8 @@
   {
    "id": "b2-klaus",
    "name": "克勞斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "自動資源採取"
@@ -1481,6 +1710,8 @@
   {
    "id": "b2-kumoko",
    "name": "蜘蛛子",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "生まれてすぐ死亡とかシャレにならん"
@@ -1493,6 +1724,8 @@
   {
    "id": "b2-luckyman",
    "name": "幸運超人",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1502,6 +1735,8 @@
   {
    "id": "b2-makoto",
    "name": "深澄真",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1511,6 +1746,8 @@
   {
    "id": "b2-maomao",
    "name": "貓貓",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "好んで毒を食らうのは私ぐらいか"
@@ -1523,6 +1760,8 @@
   {
    "id": "b2-maple",
    "name": "梅普露",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "痛いのは嫌だから攻撃とか受けたくないし…"
@@ -1535,6 +1774,8 @@
   {
    "id": "b2-matthias",
    "name": "馬提亞斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "連携プレイが得意なやつらには連携プレイだ！"
@@ -1547,6 +1788,8 @@
   {
    "id": "b2-misery",
    "name": "米瑟利",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1556,6 +1799,8 @@
   {
    "id": "b2-naofumi",
    "name": "岩谷尚文",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "アイアンメイデン！"
@@ -1568,6 +1813,8 @@
   {
    "id": "b2-ned",
    "name": "青蛙劍士 Ned",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1577,6 +1824,8 @@
   {
    "id": "b2-noor",
    "name": "諾爾",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺には、才能がなかった…"
@@ -1589,6 +1838,8 @@
   {
    "id": "b2-nube",
    "name": "鵺野鳴介",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "宇宙天地 與我力量 降伏群魔 迎来曙光"
@@ -1601,6 +1852,8 @@
   {
    "id": "b2-orphen",
    "name": "歐菲",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": null,
    "takes": 0,
    "select": null,
@@ -1610,6 +1863,8 @@
   {
    "id": "b2-popp",
    "name": "何布",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "一瞬…だけど…閃光のように！"
@@ -1622,6 +1877,8 @@
   {
    "id": "b2-rem",
    "name": "蕾姆",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "レムはスバル君を信じています"
@@ -1634,6 +1891,8 @@
   {
    "id": "b2-rin",
    "name": "遠坂凜",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "うっかり遠坂"
@@ -1646,6 +1905,8 @@
   {
    "id": "b2-shadow",
    "name": "闇影",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）fencer_select_01"
@@ -1658,6 +1919,8 @@
   {
    "id": "b2-shinchan",
    "name": "野原新之助",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "ねぇねぇお姉さん！"
@@ -1670,6 +1933,8 @@
   {
    "id": "b2-sinbad",
    "name": "辛巴達",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺は、人間だよ！人だからこそ夢を追う！"
@@ -1682,6 +1947,8 @@
   {
    "id": "b2-takopi",
    "name": "章魚嗶",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "今日もがんばるっピ！"
@@ -1694,6 +1961,8 @@
   {
    "id": "b2-touka",
    "name": "托卡・史考特",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "理想的なふとももの形をした大根があったらニーソを履かせてやるのが男ってもんだろ"
@@ -1706,6 +1975,8 @@
   {
    "id": "b2-uncle",
    "name": "異世界舅舅",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "異世界グランバハマルに17年いたが、ようやく帰ってきたぞ"
@@ -1718,6 +1989,8 @@
   {
    "id": "b2-yogiri",
    "name": "高遠夜霧",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺の能力が一つとは言ってないだろ"
@@ -1730,6 +2003,8 @@
   {
    "id": "b2-zenitsu",
    "name": "我妻善逸",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "owner 名單",
     "text": "雷の呼吸 壱ノ型 霹靂一閃！"
@@ -1742,6 +2017,8 @@
   {
    "id": "lol-karthus",
    "name": "卡爾瑟斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）bd0bbe/00078-1154709670"
@@ -1754,6 +2031,8 @@
   {
    "id": "lol-leesin",
    "name": "李星",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）f046bc/00195-1875226779"
@@ -1766,6 +2045,8 @@
   {
    "id": "lol-lux",
    "name": "拉克絲",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）a08e1d/00287-708962889"
@@ -1778,6 +2059,8 @@
   {
    "id": "lol-missfortune",
    "name": "好運姐",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）dfe023/00243-1755056024"
@@ -1790,6 +2073,8 @@
   {
    "id": "lol-warwick",
    "name": "沃維克",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）b49dee/00144-1947782139"
@@ -1802,6 +2087,8 @@
   {
    "id": "lol-xerath",
    "name": "齊勒斯",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）51d146/00013-375078456"
@@ -1814,6 +2101,8 @@
   {
    "id": "lol-yasuo",
    "name": "犽宿",
+   "hasVoicePack": true,
+   "twin": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）63fc90/00018-152596570"
