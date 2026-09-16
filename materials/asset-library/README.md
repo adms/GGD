@@ -94,9 +94,9 @@ FateUBW 實檔驗證使用 `python3 tools/hero-model-library/verify_fateubw_rese
 
 ### PR #1152 準備材料 S3 分流
 
-依 [#1252](https://github.com/adms/GGD/issues/1252) 的 Main 合併條件，40 顆未被 `content/models` 引用的 GLB 與 254 份截圖／音訊／過程證據已移至 S3 `legacy/`，合計 294 檔／130,452,084 bytes。Git 保留 [逐檔 SHA-256 與還原清單](pr1152-s3-split.json)；本機原件保留。
+依 [#1252](https://github.com/adms/GGD/issues/1252) 的 Main 合併條件，40 顆未被 `content/models` 引用的 GLB 與 274 份截圖／音訊／過程證據已移至 S3 `legacy/`，合計 314 檔／140,909,684 bytes。Git 保留 [逐檔 SHA-256 與還原清單](pr1152-s3-split.json)；本機原件保留。
 
-S3 完整讀回與逐檔 SHA-256 已驗證：`s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz`。需重建這些來源索引或觀看證據時，先執行：
+S3 完整讀回與逐檔 SHA-256 已驗證：`s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz`。需重建這些來源索引或觀看證據時，先執行：
 
 ```sh
 python3 tools/hero-model-library/prepare_pr1152_s3_split.py restore --manifest materials/asset-library/pr1152-s3-split.json

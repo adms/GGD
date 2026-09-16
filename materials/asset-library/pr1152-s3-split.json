@@ -2,19 +2,19 @@
   "schema": "ggd.pr1152-s3-preparation-split@1",
   "decisionIssue": "https://github.com/adms/GGD/issues/1252",
   "baseCommit": "a3a179e09940b4aed6207a2ecca30845231abdab",
-  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
-  "archiveSha256": "4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640",
-  "archiveBytes": 102989386,
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+  "archiveSha256": "13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431",
+  "archiveBytes": 105046546,
   "fullGetAndEveryFileVerified": true,
   "localPreserved": true,
   "profile": "vibe-coding",
   "region": "ap-east-2",
   "summary": {
-    "files": 294,
-    "bytes": 130452084,
+    "files": 314,
+    "bytes": 140909684,
     "unreferencedModelComponents": 40,
-    "preparationEvidenceFiles": 254
+    "preparationEvidenceFiles": 274
   },
   "gitSummary": {
     "referencedModelComponents": 29,
@@ -302,6 +302,13 @@
       "storageRole": "unreferenced-model-component"
     },
     {
+      "repoPath": "materials/hero-model-library/lol-project-seven/gap-listening-review.html",
+      "archiveMember": "materials/hero-model-library/lol-project-seven/gap-listening-review.html",
+      "bytes": 9240,
+      "sha256": "b53c5a14d33fa17b089d8bd976f9aad5a38f576c2a8545eb43a9968b657513ec",
+      "storageRole": "preparation-evidence"
+    },
+    {
       "repoPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
       "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
       "bytes": 2213678,
@@ -313,6 +320,20 @@
       "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
       "bytes": 10109187,
       "sha256": "c3fc6883512a5e3fd6ee45c2bacc4bbe07a58f6f7e3b52cc7203a37021f132d6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+      "bytes": 487157,
+      "sha256": "c7983de3796097f632ae144b07d8878526ea57ec0c2911e2e8cf59887c9406ce",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json",
+      "bytes": 263032,
+      "sha256": "c1575fd43da7bce8a60f233d6df8624def9ae79560f758b05dfaf6e9f0e04cb2",
       "storageRole": "preparation-evidence"
     },
     {
@@ -561,6 +582,13 @@
       "storageRole": "preparation-evidence"
     },
     {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-catalog.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-catalog.json",
+      "bytes": 867754,
+      "sha256": "9067c118a7e2ab7411fc81c930493a3e603167e033f8dc178f7fc1fe86655c4a",
+      "storageRole": "preparation-evidence"
+    },
+    {
       "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-contact-sheet.png",
       "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-contact-sheet.png",
       "bytes": 298891,
@@ -572,6 +600,13 @@
       "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidate-preview.png",
       "bytes": 1164349,
       "sha256": "bdf620955918b3b708af8b523b8294e9c188d501a043b5e7d213de4939a8d85c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "bytes": 1311582,
+      "sha256": "b67d7657b6d451aaa8320980deeddd05e60bd7a8a47d80dbfe21895309c3f888",
       "storageRole": "preparation-evidence"
     },
     {
@@ -670,6 +705,13 @@
       "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-14.png",
       "bytes": 88810,
       "sha256": "be34dd296363f551dea31f07f973e4787d6a804ed31fd4ab2569c0e58c0716e9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+      "bytes": 41833,
+      "sha256": "343451b2a9995a21929f8640700d61b235bfd03b72e48e2a61ccadd747a74f16",
       "storageRole": "preparation-evidence"
     },
     {
@@ -2077,6 +2119,104 @@
       "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/isometric.png",
       "bytes": 258549,
       "sha256": "6ffdfaea108d1535d9c6a8a528edf6c1e0e0724e00baee8ced5c6817376da6bc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+      "bytes": 451676,
+      "sha256": "b9be39434a38a2a6e55e86f8ed5b0701f5039b581d661a85d01cd509186ea6fd",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json",
+      "archiveMember": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json",
+      "bytes": 977230,
+      "sha256": "4ce25924d2e9d510547711ee88f0633c66aafb31394d769037379aed149944a7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/review/fate-unlimited-codes-ps2-audio-review-v1/review-queue.json",
+      "archiveMember": "materials/hero-model-library/review/fate-unlimited-codes-ps2-audio-review-v1/review-queue.json",
+      "bytes": 1127765,
+      "sha256": "480e259f81c7bedee7b91dbe8e47db8256b5c6eb38d042108b26cde2319d71d5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
+      "bytes": 299179,
+      "sha256": "5a4ce974251a709cca05f8aebae25a15a2a521313e9cea49500a33fb6ff488c4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+      "bytes": 501344,
+      "sha256": "271a8eea3bd5615c4538d9e96a121bcd22fa0b9ad234f76a378f3d192d24cf65",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+      "bytes": 585667,
+      "sha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png",
+      "bytes": 450816,
+      "sha256": "3431f8eea4161d98baf9d2ac36e98e520c04766963258ccc17091a1c5a5cf5c0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png",
+      "bytes": 432035,
+      "sha256": "0156c126c78784712ffae39a210f209081530a997f24505234d35805b8a66ecc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png",
+      "bytes": 201924,
+      "sha256": "4497edb77c318771fe5641170dddee63c3b627110988baf825fb077c56d54796",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json",
+      "bytes": 1088832,
+      "sha256": "5592185f369e2e78a12fd2787f23575b03801abd6d4d91853ea86013de623eb6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html",
+      "bytes": 56067,
+      "sha256": "295e0d67101af6dc1d5bf9739bb2b9e54f1a0ff4fb5186f94e4a5858903afe6f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "bytes": 556429,
+      "sha256": "86ea37571fa74492ee1a9643127a29685654f23bfc7a851ab95548a46617b2a7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json",
+      "bytes": 726195,
+      "sha256": "bd327f0d68fe8884ad116763941d756c76a019d47e4d0e0b5d365bdd8ef089be",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+      "bytes": 21843,
+      "sha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
       "storageRole": "preparation-evidence"
     }
   ],

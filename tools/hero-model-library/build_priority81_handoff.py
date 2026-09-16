@@ -27,7 +27,10 @@ KEY = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]*\Z")
 
 
 def json_bytes(value):
-    return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+    # This machine index is intentionally compact.  It grows with every pinned
+    # asset and is consumed through jq/Python; the paired Markdown file remains
+    # the human-readable review surface.
+    return (json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
 
 
 def sha_file(path):

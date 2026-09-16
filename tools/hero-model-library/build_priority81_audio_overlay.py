@@ -28,7 +28,9 @@ LOL_RUNTIME_REGISTRATION = Path("materials/hero-model-library/lol-project-seven/
 
 
 def encode(value):
-    return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+    # Keep the large machine overlay compact and deterministic.  Reviewers use
+    # the generated summaries while programs parse this file as JSON.
+    return (json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
 
 
 def sha(path):
