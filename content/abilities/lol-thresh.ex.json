@@ -1,0 +1,92 @@
+{
+  "id": "lol-thresh.ex",
+  "name": "本燈拒載",
+  "provenance": "editor-json",
+  "description": "把貼身敵人向外推，給隊友清出上車位置。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "極小"
+      },
+      "radius": 3,
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 2,
+          "speed": 12,
+          "from": "caster",
+          "subtractGap": false,
+          "launchHeight": 0
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "lol-thresh.rejected",
+          "duration": 1,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          },
+          "radius": 2,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "launchHeight": 0
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-thresh.rejected",
+              "duration": 1,
+              "sourceScope": "caster",
+              "moveSpeedMult": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

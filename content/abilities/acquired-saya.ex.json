@@ -1,0 +1,45 @@
+{
+  "id": "acquired-saya.ex",
+  "name": "閉眼比較好吃",
+  "provenance": "editor-json",
+  "description": "附近落點敵人失手率45%，持續1.2秒，用來抵擋追擊。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "acquired-saya.disruption",
+      "duration": 1.2,
+      "missChance": 0.45
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+    "params": {
+      "radius": 250,
+      "status": {
+        "statusId": "acquired-saya.disruption",
+        "duration": 1.2,
+        "missChance": 0.45
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+  },
+  "schema": "ability@1",
+  "radiusTier": "小"
+}

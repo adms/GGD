@@ -1,0 +1,89 @@
+{
+  "id": "acquired-pokemon-trainer.w",
+  "name": "妙蛙草・藤鞭",
+  "provenance": "editor-json",
+  "description": "直線草刃造成小級魔法傷害，命中者鎖足 0.5 秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小"
+      },
+      "length": 6,
+      "width": 1,
+      "aim": "facing",
+      "fromCaster": true,
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-pokemon-trainer.vine",
+          "duration": 0.5,
+          "applyTo": "target",
+          "root": true
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 6,
+          "width": 1,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-pokemon-trainer.vine",
+              "duration": 0.5,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "root": true
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

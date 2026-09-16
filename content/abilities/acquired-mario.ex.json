@@ -1,0 +1,116 @@
+{
+  "id": "acquired-mario.ex",
+  "name": "一枚硬幣套餐",
+  "provenance": "editor-json",
+  "description": "消耗硬幣時回復 100 生命並取得 80 護盾；無硬幣只回復 40 生命，不生成金幣。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-mario.coin",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "ratios": []
+          },
+          "applyTo": "self"
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 80,
+            "ratios": []
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "acquired-mario.lunch",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 40,
+            "ratios": []
+          },
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-mario.coin",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 100,
+                "ratios": []
+              },
+              "applyTo": "self"
+            },
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 80,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "acquired-mario.lunch",
+              "onExisting": "keepLarger"
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 40,
+                "ratios": []
+              },
+              "applyTo": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

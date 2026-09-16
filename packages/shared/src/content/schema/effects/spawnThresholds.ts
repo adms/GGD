@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EFFECT_COMMON_SHAPE, zEffectDef } from "./_shared";
+import { EFFECT_COMMON_SHAPE, zAoeTier, zEffectDef } from "./_shared";
 
 /**
  * 【邊界陣】（GH#1197 瑟雷西 R）—— 以落點為中心放一圈 `sides` 段**可穿越的邊界**（正多邊形的邊），
@@ -15,6 +15,8 @@ export const zSpawnThresholds = z
     sides: z.union([z.literal(3), z.literal(4), z.literal(5), z.literal(6), z.literal(8)]),
     /** 中心到頂點的距離（格） */
     radius: z.number().positive().max(40),
+    /** ⭐ 五級距（第〇·四守則）：`radiusTier` 填了就由 `resolveRadiusTier()` 在載入時翻成 `radius`；兩個都有 ⇒ 級別贏。⛔ 沒有這一格的話 `apply_tiers.py` 收級距會被 schema 擋下（GH#1185 量到）。 */
+    radiusTier: zAoeTier.optional(),
     /** 存活秒數；到期未被穿越的段一起消失 */
     durationSec: z.number().positive().max(60),
     /** 穿越那一段時對穿越者跑的效果樹（減速／傷害／…） */

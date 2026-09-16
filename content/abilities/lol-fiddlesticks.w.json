@@ -1,0 +1,130 @@
+{
+  "id": "lol-fiddlesticks.w",
+  "name": "豐收之魘",
+  "provenance": "editor-json",
+  "description": "站定引導 2 秒，周圍敵人每 0.5 秒受傷、每打中一人自身回血；撐滿再收割一次。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑會打斷，打斷後不再汲取也不收割。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "single",
+      "delaySec": 0.25,
+      "count": 4,
+      "intervalSec": 0.5,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          },
+          "radius": 3,
+          "onHitTargets": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 20,
+                "ratios": [],
+                "perRank": [
+                  0,
+                  10,
+                  20,
+                  30
+                ]
+              },
+              "applyTo": "self"
+            }
+          ],
+          "onHitTargetsMode": "perTarget",
+          "radiusTier": "極小"
+        }
+      ],
+      "stopOnCasterDeath": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.25,
+          "count": 4,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "radius": 2.5,
+              "onHitTargets": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 20,
+                    "ratios": [],
+                    "perRank": [
+                      0,
+                      10,
+                      20,
+                      30
+                    ]
+                  },
+                  "applyTo": "self"
+                }
+              ],
+              "onHitTargetsMode": "perTarget"
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "channel": {
+    "durationSec": 2,
+    "onComplete": [
+      {
+        "kind": "damageArea",
+        "damageType": "magic",
+        "amount": {
+          "damageTier": "小"
+        },
+        "radius": 3,
+        "radiusTier": "極小"
+      }
+    ]
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

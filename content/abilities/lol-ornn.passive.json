@@ -1,0 +1,159 @@
+{
+  "id": "lol-ornn.passive",
+  "name": "活火爐",
+  "provenance": "editor-json",
+  "description": "增加雙抗，普攻可消耗自身施加的焦化追加傷害及短擊退。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onRoundStart",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "pctAdd",
+                    "value": 0.1
+                  },
+                  {
+                    "stat": "mr",
+                    "op": "pctAdd",
+                    "value": 0.1
+                  }
+                ],
+                "permanent": true,
+                "statusId": "lol-ornn.forge-stats",
+                "applyTo": "self",
+                "stackKey": "lol-ornn.forge-stats",
+                "maxStacks": 1
+              }
+            ],
+            "target": "self"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "lol-ornn.brittle",
+                "count": 1,
+                "subject": "target",
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.fire.explosion",
+                    "at": "target"
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 2,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "launchHeight": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onRoundStart",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "pctAdd",
+                  "value": 0.1
+                },
+                {
+                  "stat": "mr",
+                  "op": "pctAdd",
+                  "value": 0.1
+                }
+              ],
+              "statusId": "lol-ornn.forge-stats",
+              "stackKey": "lol-ornn.forge-stats",
+              "maxStacks": 1,
+              "permanent": true
+            }
+          ],
+          "target": "self"
+        },
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "target",
+              "statusId": "lol-ornn.brittle",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.fire.explosion",
+                  "at": "target"
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 0.5,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

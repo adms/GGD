@@ -1,0 +1,557 @@
+{
+  "id": "lol-chogath",
+  "name": "科加斯",
+  "description": "設計草案，尚未完成上架驗收。擊殺補給、前排控制與低血吞噬\n\n概念來源：LoL 科加斯\nhttps://www.leagueoflegends.com/zh-tw/champions/chogath/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。\n• Q：原地擊飛含0.2單位的小推移。\n• W：錐形改成短寬直帶，保留方向與沉默用途。\n• E：不改用無條件額外普攻被動；確實只有三次額度。\n• R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。\n• EX：不増大模型、不新增飽食資源。\n\n採用所選 GGD 模型與特效。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "坦克",
+  "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 27.67734693877551,
+    "healthRegen": 0.08196326530612243,
+    "maxMana": 0.9209183673469388,
+    "manaRegen": 0,
+    "ad": 1.8716734693877548,
+    "as": 0,
+    "mr": 5.279591836734694,
+    "armor": 1.5605204081632653,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 29,
+    "agi": 18,
+    "int": 13,
+    "strGrowth": 2.78,
+    "agiGrowth": 1.67,
+    "intGrowth": 1.25,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-chogath.q",
+      "name": "破裂",
+      "provenance": "editor-json",
+      "description": "落點預警後地刺傷害、短擊飛與緩速。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies",
+          "delaySec": 0.5,
+          "count": 1,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.earth.shockwave",
+              "at": "point"
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "launchHeight": 1
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-chogath.rupture-slow",
+              "duration": 1.5,
+              "moveSpeedMult": 0.65
+            }
+          ],
+          "targetMode": "reresolve",
+          "stopOnCasterDeath": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.5,
+              "count": 1,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.earth.shockwave",
+                  "at": "point"
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 0.2,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-chogath.rupture-slow",
+                  "duration": 1.5,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.65
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 2,
+              "side": "enemies",
+              "targetMode": "reresolve"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "W": {
+      "id": "lol-chogath.w",
+      "name": "野性尖嘯",
+      "provenance": "editor-json",
+      "description": "前方短寬帶造成魔法傷害並沉默。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 4,
+          "width": 3,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-chogath.scream",
+              "duration": 1,
+              "silenced": true
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 4,
+              "width": 3,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-chogath.scream",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "silenced": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "lol-chogath.e",
+      "name": "恐懼尖刺",
+      "provenance": "editor-json",
+      "description": "接下來三次普攻向前噴刺，傷害及緩速。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 6,
+          "statusId": "lol-chogath.spikes",
+          "applyTo": "self",
+          "stackKey": "lol-chogath.spikes",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "length": 4,
+                  "width": 1.2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "sourceScope": "caster",
+                      "statusId": "lol-chogath.spike-slow",
+                      "duration": 1,
+                      "moveSpeedMult": 0.75
+                    }
+                  ]
+                }
+              ],
+              "maxTriggers": 3,
+              "onConsumed": "detachSource"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 6,
+              "modifiers": [],
+              "statusId": "lol-chogath.spikes",
+              "stackKey": "lol-chogath.spikes",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damageLine",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "length": 4,
+                      "width": 1.2,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "onHitTargets": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "lol-chogath.spike-slow",
+                          "duration": 1,
+                          "sourceScope": "caster",
+                          "moveSpeedMult": 0.75
+                        }
+                      ]
+                    }
+                  ],
+                  "maxTriggers": 3,
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "lol-chogath.r",
+      "name": "饗宴",
+      "provenance": "editor-json",
+      "description": "近距真傷；處決線內吞噬並獲得有上限的最大生命成長。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "condition": {
+            "not": {
+              "kind": "stat",
+              "subject": "target",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.2
+            }
+          },
+          "damageType": "true",
+          "amount": {
+            "damageTier": "中"
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "condition": {
+            "not": {
+              "kind": "stat",
+              "subject": "target",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.2
+            }
+          },
+          "vfxId": "fx.prim.blood.nova",
+          "at": "target"
+        },
+        {
+          "kind": "devour",
+          "shape": "single",
+          "thresholdPctOfMax": [
+            0.2
+          ],
+          "healPct": 0,
+          "victim": "any",
+          "throughShields": true,
+          "onDevour": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "maxHealth",
+                  "op": "flat",
+                  "value": 40
+                }
+              ],
+              "permanent": true,
+              "permanentScope": "match",
+              "applyTo": "self",
+              "stackKey": "lol-chogath.feast-growth",
+              "maxStacks": 6
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "中"
+              },
+              "condition": {
+                "not": {
+                  "kind": "stat",
+                  "subject": "target",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.2
+                }
+              }
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.blood.nova",
+              "at": "target",
+              "condition": {
+                "not": {
+                  "kind": "stat",
+                  "subject": "target",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.2
+                }
+              }
+            },
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.2
+              ],
+              "victim": "any",
+              "healPct": 0,
+              "throughShields": true,
+              "onDevour": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "permanent": true,
+                  "permanentScope": "match",
+                  "modifiers": [
+                    {
+                      "stat": "maxHealth",
+                      "op": "flat",
+                      "value": 40
+                    }
+                  ],
+                  "stackKey": "lol-chogath.feast-growth",
+                  "maxStacks": 6
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "lol-chogath.ex",
+  "passiveAbility": "lol-chogath.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

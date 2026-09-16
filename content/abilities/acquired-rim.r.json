@@ -1,0 +1,115 @@
+{
+  "id": "acquired-rim.r",
+  "name": "整份都我的",
+  "provenance": "editor-json",
+  "description": "近距離造成小級物理傷害並回復120生命；目標生命低於40%再追加小級傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "radius": 3,
+  "rangeTier": "極小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 120,
+        "ratios": [],
+        "perRank": [
+          0,
+          90,
+          180
+        ]
+      },
+      "applyTo": "self"
+    },
+    {
+      "kind": "damage",
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.4
+      },
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "targeted",
+      "effects": [
+        {
+          "kind": "damage",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical"
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              90,
+              180
+            ]
+          },
+          "applyTo": "self"
+        },
+        {
+          "kind": "damage",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "condition": {
+            "kind": "stat",
+            "subject": "target",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.4
+          }
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

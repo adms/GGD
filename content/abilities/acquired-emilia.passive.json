@@ -1,0 +1,99 @@
+{
+  "id": "acquired-emilia.passive",
+  "name": "碎霜禮節",
+  "provenance": "editor-json",
+  "description": "普攻消耗目標身上自己的寒霜，追加極小級魔法傷害並鎖足 0.5 秒；內置冷卻 2 秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "acquired-emilia.frost",
+                "count": 1,
+                "subject": "target",
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "sourceScope": "caster",
+                    "statusId": "acquired-emilia.freeze",
+                    "duration": 0.5,
+                    "applyTo": "target",
+                    "root": true
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 2
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "internalCooldown": 2,
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "target",
+              "statusId": "acquired-emilia.frost",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-emilia.freeze",
+                  "duration": 0.5,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "root": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

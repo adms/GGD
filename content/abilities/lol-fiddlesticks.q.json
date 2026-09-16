@@ -1,0 +1,61 @@
+{
+  "id": "lol-fiddlesticks.q",
+  "name": "恐懼",
+  "provenance": "editor-json",
+  "description": "指定敵人傷害並恐懼。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "極小"
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "lol-fiddlesticks.fear",
+      "duration": 1,
+      "feared": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+    "params": {
+      "damage": {
+        "damageTier": "極小"
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.1,
+      "status": {
+        "statusId": "lol-fiddlesticks.fear",
+        "duration": 1,
+        "feared": true
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+  },
+  "schema": "ability@1"
+}

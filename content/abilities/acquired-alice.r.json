@@ -1,0 +1,58 @@
+{
+  "id": "acquired-alice.r",
+  "name": "花瓣罰單連發",
+  "provenance": "editor-json",
+  "description": "周圍向內依序發出6道射線，每道極小級魔法傷害；在Q鎖足後施放。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "intervalSec": 0.15,
+      "durationSec": 0.9,
+      "tickOnApply": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f",
+    "params": {
+      "rayCount": 6,
+      "reach": 300,
+      "aim": "inward",
+      "rayIntervalSec": 0.15,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "magic"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:df96cb85812262d65ca34099f73ffd259827a553bfda55efc1a81af7ea2bb88a"
+  },
+  "schema": "ability@1",
+  "radiusTier": "中"
+}

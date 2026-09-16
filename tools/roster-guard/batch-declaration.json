@@ -8,11 +8,43 @@
     "authority": "docs/editor-contract/社群英雄126名上架狀態.md —— owner 2026-09-11 13:27 貼的是 GGD-community-acquired-heroes 那一份的路徑（docs/_daily/2026-09-11.md:32），這裡讀本 repo 的同名副本"
   },
   "batches": [
-    { "item": 1, "section": "第一批社群英雄", "expected": 37, "starter": "all", "ticket": "GH#1165" },
-    { "item": 2, "section": "第二批社群英雄", "expected": 37, "starter": "all", "ticket": "GH#1165" },
-    { "item": 3, "section": "LoL 第一批", "expected": 7, "starter": "all", "ticket": "GH#1158" },
-    { "item": 4, "section": "LoL 第二批", "expected": 11, "starter": "none", "ticket": "GH#1185" },
-    { "item": 5, "section": "已取得模型／重上架舊角", "expected": 34, "starter": "none", "ticket": "GH#1205" }
+    {
+      "item": 1,
+      "section": "第一批社群英雄",
+      "expected": 37,
+      "starter": "all",
+      "ticket": "GH#1165"
+    },
+    {
+      "item": 2,
+      "section": "第二批社群英雄",
+      "expected": 37,
+      "starter": "all",
+      "ticket": "GH#1165"
+    },
+    {
+      "item": 3,
+      "section": "LoL 第一批",
+      "expected": 7,
+      "starter": "all",
+      "ticket": "GH#1158"
+    },
+    {
+      "item": 4,
+      "section": "LoL 第二批",
+      "expected": 11,
+      "starter": "all",
+      "ticket": "GH#1185",
+      "starterNote": "owner 2026-09-16「全部英雄上架是預設的 不需要我審查通過」⇒ 11 名整批進 starterChampions（內容側由 tools/ship-81/batch37.py 產生）"
+    },
+    {
+      "item": 5,
+      "section": "已取得模型／重上架舊角",
+      "expected": 34,
+      "starter": "partial",
+      "ticket": "GH#1205",
+      "starterNote": "owner 2026-09-16「全部英雄上架是預設的 不需要我審查通過」⇒ 26 名新角先整批上架；8 名舊角接管（godie-*）會覆寫既有官方卡，另一批做（先留底＋rollback 版本）"
+    }
   ],
   "original": {
     "name": "原作班底",
@@ -24,11 +56,35 @@
     "reason": "docs/legacy-index-champions.json 把退休卡照三條規則算成已下架／待重上架／從未開放（回收桶），變身態跟著本體 —— ⛔ 那三條規則與詞彙只住 build_index.py。⚠️ 「從未開放」是**補集**（不在 retiredChampions、也不在 COMMUNITY_ACQUIRED_LEGACY）⇒ 一張沒有人決定過的卡掉進 content/_legacy/champions 會安靜地落進去。⭐ 這裡逐張明寫「看過了、它確實是從未開放」的**本體**，讓那張新卡紅。變身態⛔ 不列（跟著本體）⇒ 索引的「從未開放」張數 ＝ 這裡的本體數 ＋ 本體在這裡的變身態數（roster:check 每次印換算）。⚠️ 「多半是 #323／#479 整批搬進 legacy 的不可選原作」是推論，沒有逐張核對。⚠️ 要不要有這一份明寫清單是 Claude 挑的預設（GH#1227），⛔ 不是 owner 的裁決；rollback＝刪掉這個欄位與閘的 ②③ 對應段，回到只靠補集",
     "provenance": "規則與詞彙住 docs/legacy-index.md（tools/legacy-index/build_index.py）。「沒開放的英雄搬進退休區」的**裁決**是 owner 2026-08-13 00:23（索引那一段逐字）。「回收桶」這個**詞**取自 owner 2026-09-05 12:29，⚠️ 帳本 docs/_daily/2026-09-05.md:45 那一列標的是**純討論**（legacy 索引概念）—— ⛔ 不是裁決，⛔ 不是這份清單的依據",
     "ids": [
-      "godie-e00j", "godie-e00v", "godie-e012", "godie-e015", "godie-ecen", "godie-ekee", "godie-ewrd",
-      "godie-h001", "godie-h022", "godie-h02n", "godie-h02s", "godie-h02y", "godie-h02z", "godie-harf",
-      "godie-n01l", "godie-naka", "godie-ntin",
-      "godie-o01z", "godie-o02n", "godie-o02s", "godie-o02w", "godie-obla", "godie-opgh", "godie-oshd", "godie-othr",
-      "godie-u00b", "godie-u012", "godie-u01q", "godie-uwar"
+      "godie-e00j",
+      "godie-e00v",
+      "godie-e012",
+      "godie-e015",
+      "godie-ecen",
+      "godie-ekee",
+      "godie-ewrd",
+      "godie-h001",
+      "godie-h022",
+      "godie-h02n",
+      "godie-h02s",
+      "godie-h02y",
+      "godie-h02z",
+      "godie-harf",
+      "godie-n01l",
+      "godie-naka",
+      "godie-ntin",
+      "godie-o01z",
+      "godie-o02n",
+      "godie-o02s",
+      "godie-o02w",
+      "godie-obla",
+      "godie-opgh",
+      "godie-oshd",
+      "godie-othr",
+      "godie-u00b",
+      "godie-u012",
+      "godie-u01q",
+      "godie-uwar"
     ]
   },
   "missingCardExemptions": [

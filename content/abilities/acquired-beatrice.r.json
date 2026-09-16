@@ -1,0 +1,112 @@
+{
+  "id": "acquired-beatrice.r",
+  "name": "逾期罰款・陰",
+  "provenance": "editor-json",
+  "description": "消耗書籤時對指定敵人造成大級魔法傷害；無書籤時為中級。兩種情況都沉默目標 0.7 秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 3,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-beatrice.bookmark",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大"
+          }
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "acquired-beatrice.hush",
+      "duration": 0.7,
+      "applyTo": "target",
+      "silenced": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-beatrice.bookmark",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              }
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "acquired-beatrice.hush",
+          "duration": 0.7,
+          "sourceScope": "caster",
+          "applyTo": "target",
+          "silenced": true
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

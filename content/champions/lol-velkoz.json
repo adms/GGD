@@ -1,0 +1,499 @@
+{
+  "id": "lol-velkoz",
+  "name": "威寇茲",
+  "description": "設計草案，尚未完成上架驗收。三次命中拆解與直線追打砲台\n\n概念來源：LoL 威寇茲\nhttps://www.leagueoflegends.com/zh-tw/champions/velkoz/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。\n• Q：主彈（imported.bolt.void.split）命中敵人時，或飛行中 1 秒內再按 Q，從主彈當下位置左右各分出一發子彈（垂直 90 度），子彈不再打主彈打過的人；主彈飛完之後再按不會有任何效果。\n• W：兩段裂痕的起點與方向都凍在施放那一刻（damageLine.aim:cast）：施法者轉身或走開，延遲的第二段仍落在原裂痕上。⛔ 未滿足：原作「兩次充能」—— Main 沒有技能彈藥機制（ability.charges），這一槽仍是一般冷卻，要不要做彈藥由 owner 決定。\n• E：近遠受害者都同一小推移；沒有額外專用判斷。\n• R：持續引導 2.5 秒（channel）朝施放方向射線，每 0.5 秒判定一次、共 5 次（首發在半拍後，引導時長由節拍推導；原作是連續傷害）；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的射線作廢；普通受傷不打斷；擊飛（非擊倒）不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• EX：會失去該目標R真傷資格，真有交換代價。\n\n採用所選 GGD 模型與特效。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-velkoz.q",
+      "name": "分裂電漿",
+      "provenance": "editor-json",
+      "description": "直線電漿命中造成傷害及緩速；命中或飛行中再按一次，從電漿當下位置左右分裂出兩發子彈。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.void.split",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-velkoz.plasma",
+              "duration": 1.5,
+              "moveSpeedMult": 0.7
+            }
+          ]
+        }
+      ],
+      "recastEffects": [],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c",
+        "params": {
+          "projectileId": "imported.bolt.void.split",
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.1,
+          "status": {
+            "statusId": "lol-velkoz.plasma",
+            "duration": 1.5,
+            "moveSpeedMult": 0.7
+          }
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:93c3c9cb238173b69acbc8d0014b7003e2e0bf2f09f31484fc5589621e525075"
+      },
+      "recast": {
+        "charges": 1,
+        "windowSec": 1
+      }
+    },
+    "W": {
+      "id": "lol-velkoz.w",
+      "name": "虛空裂痕",
+      "provenance": "editor-json",
+      "description": "直線裂痕先小爆，延遲後在同一條裂痕上再爆；施法者走開或轉身也不會帶走裂痕。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          },
+          "length": 7,
+          "width": 1.5,
+          "aim": "cast",
+          "fromCaster": true,
+          "includeOrigin": true
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.6,
+          "count": 1,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 7,
+              "width": 1.5,
+              "aim": "cast",
+              "fromCaster": true,
+              "includeOrigin": true
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "length": 7,
+              "width": 1.5,
+              "aim": "cast",
+              "fromCaster": true,
+              "includeOrigin": true
+            },
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.6,
+              "count": 1,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "length": 7,
+                  "width": 1.5,
+                  "aim": "cast",
+                  "fromCaster": true,
+                  "includeOrigin": true
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "lol-velkoz.e",
+      "name": "反物質瓦解",
+      "provenance": "editor-json",
+      "description": "落點爆破、短击飛並向外小推。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies",
+          "delaySec": 0.5,
+          "count": 1,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.void.shockwave",
+              "at": "point"
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "launchHeight": 1
+            }
+          ],
+          "targetMode": "reresolve",
+          "stopOnCasterDeath": true,
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.5,
+              "count": 1,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.void.shockwave",
+                  "at": "point"
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 0.6,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 2,
+              "side": "enemies",
+              "targetMode": "reresolve"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "lol-velkoz.r",
+      "name": "生化射線",
+      "provenance": "editor-json",
+      "description": "朝瞄準方向站定引導 2.5 秒，射線判定 5 次，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑會打斷，打斷後不再射出。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.25,
+          "count": 5,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "length": 9,
+              "width": 1.3,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "victimCondition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "lol-velkoz.researched",
+                  "appliedBy": "self"
+                }
+              }
+            },
+            {
+              "kind": "damageLine",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "length": 9,
+              "width": 1.3,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "victimCondition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "lol-velkoz.researched",
+                "appliedBy": "self"
+              }
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.25,
+              "count": 5,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "length": 9,
+                  "width": 1.3,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "victimCondition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "lol-velkoz.researched",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "damageLine",
+                  "damageType": "true",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "length": 9,
+                  "width": 1.3,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "victimCondition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "lol-velkoz.researched",
+                    "appliedBy": "self"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "channel": {
+        "durationSec": 2.5
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "lol-velkoz.ex",
+  "passiveAbility": "lol-velkoz.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

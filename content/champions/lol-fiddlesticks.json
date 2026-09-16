@@ -1,0 +1,442 @@
+{
+  "id": "lol-fiddlesticks",
+  "name": "稻草人",
+  "description": "設計草案，尚未完成上架驗收。恐懼接近、近身汲取與進場風暴\n\n概念來源：LoL 稻草人\nhttps://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。\n• Q：不額外給未被看見時群體恐懼。\n• W：持續引導 2 秒（channel）：每 0.5 秒以自身為圓心打一圈（首發在半拍後、共 4 發，引導時長由節拍推導），每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷；擊飛（非擊倒）不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• E：弧形與中央命中改為窄直帶，整條帶吃沉默。\n• R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。\n• EX：只會既有代理普攻，不是三具複製 QWER 的分身。\n\n採用所選 GGD 模型與特效。",
+  "role": "mage",
+  "attackType": "melee",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-fiddlesticks.q",
+      "name": "恐懼",
+      "provenance": "editor-json",
+      "description": "指定敵人傷害並恐懼。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "lol-fiddlesticks.fear",
+          "duration": 1,
+          "feared": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "極小"
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.1,
+          "status": {
+            "statusId": "lol-fiddlesticks.fear",
+            "duration": 1,
+            "feared": true
+          }
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      }
+    },
+    "W": {
+      "id": "lol-fiddlesticks.w",
+      "name": "豐收之魘",
+      "provenance": "editor-json",
+      "description": "站定引導 2 秒，周圍敵人每 0.5 秒受傷、每打中一人自身回血；撐滿再收割一次。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑會打斷，打斷後不再汲取也不收割。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.25,
+          "count": 4,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "radius": 3,
+              "onHitTargets": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 20,
+                    "ratios": [],
+                    "perRank": [
+                      0,
+                      10,
+                      20,
+                      30
+                    ]
+                  },
+                  "applyTo": "self"
+                }
+              ],
+              "onHitTargetsMode": "perTarget",
+              "radiusTier": "極小"
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 0.25,
+              "count": 4,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "radius": 2.5,
+                  "onHitTargets": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 20,
+                        "ratios": [],
+                        "perRank": [
+                          0,
+                          10,
+                          20,
+                          30
+                        ]
+                      },
+                      "applyTo": "self"
+                    }
+                  ],
+                  "onHitTargetsMode": "perTarget"
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "channel": {
+        "durationSec": 2,
+        "onComplete": [
+          {
+            "kind": "damageArea",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小"
+            },
+            "radius": 3
+          }
+        ]
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "lol-fiddlesticks.e",
+      "name": "駭懼收割",
+      "provenance": "editor-json",
+      "description": "前方窄帶斬擊、減速並短暫沉默。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 5,
+          "width": 1.5,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-fiddlesticks.reap",
+              "duration": 1,
+              "moveSpeedMult": 0.7,
+              "silenced": true
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 5,
+              "width": 1.5,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-fiddlesticks.reap",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7,
+                  "silenced": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "lol-fiddlesticks.r",
+      "name": "群鴉風暴",
+      "provenance": "editor-json",
+      "description": "長起手躍至落點，著地後開啟跟身三秒群鴉傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.1,
+          "onLand": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "radius": 3,
+              "side": "enemies",
+              "delaySec": 0.1,
+              "count": 6,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "targetMode": "reresolve",
+              "anchor": "caster",
+              "stopOnCasterDeath": true,
+              "radiusTier": "極小"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 1,
+      "castTimeTier": "極大",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "leap",
+              "applyTo": "self",
+              "mode": "toPoint",
+              "apexHeight": 0,
+              "durationSec": 0.1,
+              "onLand": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "delaySec": 0.1,
+                  "count": 6,
+                  "intervalSec": 0.5,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ],
+                  "stopOnCasterDeath": true,
+                  "radius": 2.5,
+                  "side": "enemies",
+                  "targetMode": "reresolve",
+                  "anchor": "caster"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "lol-fiddlesticks.ex",
+  "passiveAbility": "lol-fiddlesticks.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

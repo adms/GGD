@@ -1,0 +1,83 @@
+{
+  "id": "acquired-ryu.r",
+  "name": "真・升龍加班",
+  "provenance": "editor-json",
+  "description": "近距鎖足目標並完成五次短連擊與收尾；不具無敵或即死。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "radius": 3,
+  "rangeTier": "極小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "lock-combo",
+      "duration": 0.8999999999999999,
+      "applyTo": "target",
+      "root": true
+    },
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小"
+      },
+      "intervalSec": 0.18,
+      "durationSec": 0.8999999999999999
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.8999999999999999,
+      "landRadius": 3,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小"
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+    "params": {
+      "hitCount": 5,
+      "hitIntervalSec": 0.18,
+      "perHitDamage": {
+        "damageTier": "極小"
+      },
+      "finisherDamage": {
+        "damageTier": "小"
+      },
+      "finisherRadius": 150,
+      "damageType": "physical",
+      "lockTarget": "root",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.1
+}

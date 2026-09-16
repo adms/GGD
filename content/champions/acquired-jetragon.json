@@ -1,0 +1,426 @@
+{
+  "id": "acquired-jetragon",
+  "name": "空渦龍",
+  "description": "把競技場當跑道的高速龍砲手；衝刺蓄能，再用定點連續轟擊逼敵人換位。笑點是起飛前還要排隊驗票。\n\n概念來源：Palworld／幻獸帕魯 空渦龍／Jetragon\nhttps://www.pocketpair.jp/games/palworld/\n\n本遊戲改編：\n• 保留高速龍與飛彈意象；位移是地面短衝，不提供常駐飛行、乘騎或全圖飛彈。\n• E 施放取得一層 5 秒航電蓄能，R 消耗後增加一輪轟擊；每輪重解落點，敵人可走開。\n• EX 驗票護盾會讓自己停用普攻 0.8 秒，仍可移動與施法。\n\n採用所選 GGD 模型與特效。",
+  "role": "marksman",
+  "attackType": "ranged",
+  "archetype": "marksman",
+  "origin": "射手",
+  "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 29.202653061224485,
+    "healthRegen": 0.07234693877551021,
+    "maxMana": 19.291836734693877,
+    "manaRegen": 0,
+    "ad": 7.6918367346938785,
+    "as": 0,
+    "mr": 1.3198979591836735,
+    "armor": 0,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 29,
+    "int": 18,
+    "strGrowth": 1.25,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.67,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-jetragon.q",
+      "name": "龍式點射",
+      "provenance": "editor-json",
+      "description": "射出一發奧術彈，命中造成小級魔法傷害並減速 25% 持續 1 秒。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-jetragon.drag",
+              "duration": 1,
+              "applyTo": "target",
+              "moveSpeedMult": 0.75
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.arcane",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-jetragon.drag",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "moveSpeedMult": 0.75
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "W": {
+      "id": "acquired-jetragon.w",
+      "name": "尾流加班",
+      "provenance": "editor-json",
+      "description": "獲得 3 秒極小級移速加成；用來選擇 E 的衝刺角度。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3,
+          "statusId": "acquired-jetragon.slipstream",
+          "applyTo": "self",
+          "stackKey": "acquired-jetragon.slipstream",
+          "maxStacks": 1
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "statusId": "acquired-jetragon.slipstream",
+              "stackKey": "acquired-jetragon.slipstream",
+              "duration": 3,
+              "maxStacks": 1,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "acquired-jetragon.e",
+      "name": "貼地起飛",
+      "provenance": "editor-json",
+      "description": "朝指定方向固定衝刺 4 單位；落點不額外造成傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 12,
+          "maxDistance": 5.5
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "toPoint",
+              "speed": 12,
+              "maxDistance": 4
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "acquired-jetragon.r",
+      "name": "本航班不供餐",
+      "provenance": "editor-json",
+      "description": "落點連炸三輪；有航電蓄能時消耗並改為四輪，每輪極小級傷害且重新選取圈內敵人。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-jetragon.fuel",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "radius": 3,
+              "side": "enemies",
+              "delaySec": 0.3,
+              "count": 4,
+              "intervalSec": 0.7,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "targetMode": "reresolve",
+              "anchor": "point",
+              "radiusTier": "極小"
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "radius": 3,
+              "side": "enemies",
+              "delaySec": 0.3,
+              "count": 3,
+              "intervalSec": 0.7,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "targetMode": "reresolve",
+              "anchor": "point",
+              "radiusTier": "極小"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-jetragon.fuel",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2.5,
+                  "side": "enemies",
+                  "delaySec": 0.3,
+                  "count": 4,
+                  "intervalSec": 0.7,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2.5,
+                  "side": "enemies",
+                  "delaySec": 0.3,
+                  "count": 3,
+                  "intervalSec": 0.7,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "acquired-jetragon.ex",
+  "passiveAbility": "acquired-jetragon.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

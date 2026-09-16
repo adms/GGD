@@ -1,0 +1,86 @@
+{
+  "id": "acquired-saya.q",
+  "name": "不明食材試吃",
+  "provenance": "editor-json",
+  "description": "給指定敵人3秒持續魔法傷害，施放時回復自己50生命。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "極小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.69
+          }
+        ]
+      }
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 50,
+        "perRank": [
+          0,
+          25,
+          50,
+          75
+        ]
+      },
+      "applyTo": "self"
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.23
+          }
+        ]
+      },
+      "intervalSec": 1,
+      "durationSec": 3,
+      "stacking": "refresh"
+    }
+  ],
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+    "params": {
+      "damageTier": "極小",
+      "damageType": "magic",
+      "leechFlat": 50,
+      "intervalSec": 1,
+      "durationSec": 3,
+      "stacking": "refresh"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.1
+}

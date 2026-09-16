@@ -1,0 +1,72 @@
+{
+  "id": "lol-velkoz.q",
+  "name": "分裂電漿",
+  "provenance": "editor-json",
+  "description": "直線電漿命中造成傷害及緩速；命中或飛行中再按一次，從電漿當下位置左右分裂出兩發子彈。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.bolt.void.split",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "lol-velkoz.plasma",
+          "duration": 1.5,
+          "moveSpeedMult": 0.7
+        }
+      ]
+    }
+  ],
+  "recastEffects": [],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c",
+    "params": {
+      "projectileId": "imported.bolt.void.split",
+      "damage": {
+        "damageTier": "小"
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.1,
+      "status": {
+        "statusId": "lol-velkoz.plasma",
+        "duration": 1.5,
+        "moveSpeedMult": 0.7
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:93c3c9cb238173b69acbc8d0014b7003e2e0bf2f09f31484fc5589621e525075"
+  },
+  "recast": {
+    "charges": 1,
+    "windowSec": 1
+  },
+  "schema": "ability@1"
+}

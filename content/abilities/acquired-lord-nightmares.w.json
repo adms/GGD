@@ -1,0 +1,51 @@
+{
+  "id": "acquired-lord-nightmares.w",
+  "name": "宇宙暫停受理",
+  "provenance": "editor-json",
+  "description": "指定區域敵人鎖足1.2秒，準備後續區域技能。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "acquired-lord-nightmares.disruption",
+      "duration": 1.2,
+      "root": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+    "params": {
+      "radius": 250,
+      "status": {
+        "statusId": "acquired-lord-nightmares.disruption",
+        "duration": 1.2,
+        "root": true
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+  },
+  "schema": "ability@1",
+  "radiusTier": "小"
+}

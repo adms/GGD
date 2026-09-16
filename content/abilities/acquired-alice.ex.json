@@ -1,0 +1,45 @@
+{
+  "id": "acquired-alice.ex",
+  "name": "今天不准加班受傷",
+  "provenance": "editor-json",
+  "description": "自身獲得3秒180護盾，抵擋被集火。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 180,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all"
+    }
+  ],
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+    "params": {
+      "target": "self",
+      "amount": {
+        "flat": 180,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.1
+}

@@ -1,0 +1,157 @@
+{
+  "id": "lol-ahri.passive",
+  "name": "銷魂",
+  "provenance": "editor-json",
+  "description": "擊殺九個小兵/野怪回復；擊殺英雄額外回復。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onKill",
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "lol-ahri.essence",
+                "count": 8,
+                "subject": "self",
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.nature.pulse-sm",
+                    "at": "self"
+                  }
+                ],
+                "onMissing": [
+                  {
+                    "kind": "applyStatus",
+                    "sourceScope": "caster",
+                    "statusId": "lol-ahri.essence",
+                    "stacks": 1,
+                    "duration": 60,
+                    "applyTo": "self"
+                  }
+                ]
+              }
+            ],
+            "target": "self",
+            "victim": "mob"
+          },
+          {
+            "on": "onKill",
+            "effects": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 180,
+                  "ratios": []
+                },
+                "applyTo": "self"
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.nature.pulse-sm",
+                "at": "self"
+              }
+            ],
+            "target": "self",
+            "victim": "enemyChampion"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onKill",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "lol-ahri.essence",
+              "appliedBy": "self",
+              "count": 8,
+              "onConsumed": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 120,
+                    "ratios": []
+                  },
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.nature.pulse-sm",
+                  "at": "self"
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ahri.essence",
+                  "duration": 60,
+                  "sourceScope": "caster",
+                  "applyTo": "self",
+                  "stacks": 1
+                }
+              ]
+            }
+          ],
+          "target": "self",
+          "victim": "mob"
+        },
+        {
+          "on": "onKill",
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 180,
+                "ratios": []
+              },
+              "applyTo": "self"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "at": "self"
+            }
+          ],
+          "target": "self",
+          "victim": "enemyChampion"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

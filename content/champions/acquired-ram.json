@@ -1,0 +1,377 @@
+{
+  "id": "acquired-ram",
+  "name": "拉姆",
+  "description": "以風刃、挪位和拉扯維持輸出窗口的女僕；E 後接 Q 補一道風刃。掃除只做最低限度，嘲諷倒是全勤。\n\n概念來源：Re:從零開始的異世界生活 拉姆／Ram\nhttps://re-zero-anime.jp/tv/character/\n\n本遊戲改編：\n• 以風魔法與毒舌意象改編，不給千里眼全圖揭露、原作完整鬼族能力或長時間飛行。\n• 風勢是 E 施放取得的 4 秒標記；Q 消耗增加一道直線判定，不是技能重置。\n\n採用所選 GGD 模型與特效。 目前使用已核准 GGD 替代模型 imported.herooichi；來源本尊缺六動作，之後以獨立模型版本替換，不覆寫此版。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "imported.herooichi",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 1.25,
+    "agiGrowth": 1.67,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-ram.q",
+      "name": "風刃催你走",
+      "provenance": "editor-json",
+      "description": "先斬出小級魔法風刃；持有風勢時消耗，再補一道極小級風刃。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 6,
+          "width": 1,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-ram.wind",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "length": 6,
+              "width": 1,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 6,
+              "width": 1,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-ram.wind",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "length": 6,
+                  "width": 1,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "W": {
+      "id": "acquired-ram.w",
+      "name": "毒舌逆風",
+      "provenance": "editor-json",
+      "description": "指定敵人受到極小級魔法傷害並減速 35% 持續 1.5 秒；沒有強制改變其施法方向。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-ram.headwind",
+          "duration": 1.5,
+          "applyTo": "target",
+          "moveSpeedMult": 0.65
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-ram.headwind",
+              "duration": 1.5,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "moveSpeedMult": 0.65
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "acquired-ram.e",
+      "name": "不想走樓梯",
+      "provenance": "editor-json",
+      "description": "朝指定方向固定短衝 2.5 單位；不具穿牆或無敵保證。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 4.5,
+      "radius": 3,
+      "rangeTier": "小",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 12,
+          "maxDistance": 5.5
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "toPoint",
+              "speed": 12,
+              "maxDistance": 2.5
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "acquired-ram.r",
+      "name": "風暴大掃除",
+      "provenance": "editor-json",
+      "description": "落點造成大級魔法傷害並向施法者拉近命中敵人 2 單位；不是持續吸附龍捲。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大"
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 2,
+          "speed": 10,
+          "from": "pull",
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 10,
+              "subtractGap": false,
+              "from": "pull",
+              "uncontrollable": false
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "acquired-ram.ex",
+  "passiveAbility": "acquired-ram.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

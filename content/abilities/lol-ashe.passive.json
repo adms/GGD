@@ -1,0 +1,131 @@
+{
+  "id": "lol-ashe.passive",
+  "name": "冰霜射擊",
+  "provenance": "editor-json",
+  "description": "普攻減速；攻擊已帶自身霜痕的目標追加傷害，並累积最多四層專注。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "lol-ashe.frost",
+                  "appliedBy": "self"
+                },
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "lol-ashe.frost",
+                "duration": 2,
+                "moveSpeedMult": 0.8
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.ice.pulse-sm",
+                "at": "target"
+              },
+              {
+                "kind": "applyStatus",
+                "condition": {
+                  "not": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "lol-ashe.focus",
+                    "appliedBy": "self",
+                    "minStacks": 4
+                  }
+                },
+                "sourceScope": "caster",
+                "statusId": "lol-ashe.focus",
+                "stacks": 1,
+                "duration": 4,
+                "applyTo": "self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "lol-ashe.frost",
+                "appliedBy": "self"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-ashe.frost",
+              "duration": 2,
+              "sourceScope": "caster",
+              "moveSpeedMult": 0.8
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "at": "target"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-ashe.focus",
+              "duration": 4,
+              "sourceScope": "caster",
+              "applyTo": "self",
+              "stacks": 1,
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "lol-ashe.focus",
+                  "appliedBy": "self",
+                  "minStacks": 4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

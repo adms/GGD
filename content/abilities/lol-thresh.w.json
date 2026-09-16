@@ -1,0 +1,108 @@
+{
+  "id": "lol-thresh.w",
+  "name": "鬼影燈籠",
+  "provenance": "editor-json",
+  "description": "朝地面丟出燈籠：落點圈內的隊友獲得護盾；隊友自己點燈才飛回瑟雷西身邊。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 180,
+        "ratios": [],
+        "perRank": [
+          0,
+          135,
+          270,
+          405
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "lol-thresh.lantern",
+      "onExisting": "keepLarger"
+    },
+    {
+      "kind": "spawnInteractable",
+      "radius": 3,
+      "durationSec": 6,
+      "maxUses": 1,
+      "onAccept": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "caster",
+          "applyTo": "target"
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "ground",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "allies",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 180,
+            "ratios": [],
+            "perRank": [
+              0,
+              135,
+              270,
+              405
+            ]
+          },
+          "duration": 3,
+          "stackKey": "lol-thresh.lantern",
+          "onExisting": "keepLarger",
+          "absorbs": "all"
+        },
+        {
+          "kind": "spawnInteractable",
+          "radius": 2.5,
+          "durationSec": 6,
+          "maxUses": 1,
+          "onAccept": [
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "caster",
+              "applyTo": "target"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

@@ -1,0 +1,122 @@
+{
+  "id": "acquired-zero.w",
+  "name": "蓄力離線砲",
+  "provenance": "editor-json",
+  "description": "有能源時消耗並射出中級魔法傷害彈；無能源時射出極小級彈。傷害在投射物命中時結算。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "radius": 3,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-zero.charge",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            }
+          ]
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-zero.charge",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.arcane",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                }
+              ]
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.arcane",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

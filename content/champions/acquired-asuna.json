@@ -1,0 +1,341 @@
+{
+  "id": "acquired-asuna",
+  "name": "亞絲娜／結城明日奈",
+  "description": "閃光劍士趕著吃晚餐：加速靠近、細劍連刺，把黏人的敵人切成排隊狀態。\n\n概念來源：刀劍神域 Sword Art Online 亞絲娜／結城明日奈\nhttps://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md\n\n本遊戲改編：\n• 星屑飛濺以有限次連擊表現，不加入原作劍技硬直或新連擊資源。\n• W加速→E貼身→Q减速→R連段；對手可在貼身前控制或撤離。\n\n採用所選 GGD 模型與特效。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "法刺",
+  "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 10,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 6.100816326530613,
+    "healthRegen": 0.07555510204081634,
+    "maxMana": 0.8520408163265306,
+    "manaRegen": 0,
+    "ad": 1.29534693877551,
+    "as": 0,
+    "mr": 1.3198979591836735,
+    "armor": 0.06742857142857146,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 12,
+    "agi": 25,
+    "int": 23,
+    "strGrowth": 1.18,
+    "agiGrowth": 2.36,
+    "intGrowth": 2.17,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-asuna.q",
+      "name": "細劍取餐號",
+      "provenance": "editor-json",
+      "description": "近戰小級物理傷害并減速25%，持續1.2秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "acquired-asuna.ticket",
+          "duration": 1.2,
+          "applyTo": "target",
+          "moveSpeedMult": 0.75
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      }
+    },
+    "W": {
+      "id": "acquired-asuna.w",
+      "name": "閃光趕飯",
+      "provenance": "editor-json",
+      "description": "獲得3秒極小級移速與90護盾，準備突進。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 90,
+            "ratios": [],
+            "perRank": [
+              0,
+              45,
+              90,
+              135
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "acquired-asuna.dinner",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+      }
+    },
+    "E": {
+      "id": "acquired-asuna.e",
+      "name": "插入隊伍最前面",
+      "provenance": "editor-json",
+      "description": "短距離突進指定敵人旁造成小級物理傷害，落點保留距離。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash",
+              "at": "point"
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+        "params": {
+          "range": 6,
+          "stopShortUnits": 1.8,
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
+      }
+    },
+    "R": {
+      "id": "acquired-asuna.r",
+      "name": "星屑飛濺別灑到湯",
+      "provenance": "editor-json",
+      "description": "近戰鎖足後四次連刺与收尾，施法者没有無敵。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 3,
+      "radius": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "lock-combo",
+          "duration": 0.8,
+          "applyTo": "target",
+          "root": true
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.2,
+          "durationSec": 0.8
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.8,
+          "landRadius": 3,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+        "params": {
+          "hitCount": 4,
+          "hitIntervalSec": 0.2,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "root",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
+      },
+      "castTimeSec": 0.1
+    }
+  },
+  "exAbility": "acquired-asuna.ex",
+  "passiveAbility": "acquired-asuna.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

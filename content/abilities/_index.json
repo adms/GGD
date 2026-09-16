@@ -1,7 +1,943 @@
 {
   "collection": "abilities",
-  "hash": "cf70c37fdf64",
+  "hash": "468819cc6295",
   "entries": [
+    {
+      "id": "acquired-alice.e",
+      "path": "abilities/acquired-alice.e.json",
+      "hash": "6f1ac91caea9",
+      "size": 1402
+    },
+    {
+      "id": "acquired-alice.ex",
+      "path": "abilities/acquired-alice.ex.json",
+      "hash": "c703905287e5",
+      "size": 945
+    },
+    {
+      "id": "acquired-alice.passive",
+      "path": "abilities/acquired-alice.passive.json",
+      "hash": "1fd69e6d6a6b",
+      "size": 1672
+    },
+    {
+      "id": "acquired-alice.q",
+      "path": "abilities/acquired-alice.q.json",
+      "hash": "fe7a2af1f966",
+      "size": 1079
+    },
+    {
+      "id": "acquired-alice.r",
+      "path": "abilities/acquired-alice.r.json",
+      "hash": "cc3934c7c556",
+      "size": 1279
+    },
+    {
+      "id": "acquired-alice.w",
+      "path": "abilities/acquired-alice.w.json",
+      "hash": "8c49f64b7392",
+      "size": 1186
+    },
+    {
+      "id": "acquired-astralym.e",
+      "path": "abilities/acquired-astralym.e.json",
+      "hash": "459e7e76d8f7",
+      "size": 1135
+    },
+    {
+      "id": "acquired-astralym.ex",
+      "path": "abilities/acquired-astralym.ex.json",
+      "hash": "5ffac1eced95",
+      "size": 2129
+    },
+    {
+      "id": "acquired-astralym.passive",
+      "path": "abilities/acquired-astralym.passive.json",
+      "hash": "ea57b5922ff6",
+      "size": 1504
+    },
+    {
+      "id": "acquired-astralym.q",
+      "path": "abilities/acquired-astralym.q.json",
+      "hash": "0640da92bd9a",
+      "size": 2677
+    },
+    {
+      "id": "acquired-astralym.r",
+      "path": "abilities/acquired-astralym.r.json",
+      "hash": "2cf676e2ef79",
+      "size": 1909
+    },
+    {
+      "id": "acquired-astralym.w",
+      "path": "abilities/acquired-astralym.w.json",
+      "hash": "0a25b28e9a78",
+      "size": 1673
+    },
+    {
+      "id": "acquired-asuna.e",
+      "path": "abilities/acquired-asuna.e.json",
+      "hash": "d0ce9e54426e",
+      "size": 1446
+    },
+    {
+      "id": "acquired-asuna.ex",
+      "path": "abilities/acquired-asuna.ex.json",
+      "hash": "06698657c6c1",
+      "size": 852
+    },
+    {
+      "id": "acquired-asuna.passive",
+      "path": "abilities/acquired-asuna.passive.json",
+      "hash": "3348e8d032b0",
+      "size": 1737
+    },
+    {
+      "id": "acquired-asuna.q",
+      "path": "abilities/acquired-asuna.q.json",
+      "hash": "fb8f5f924683",
+      "size": 1240
+    },
+    {
+      "id": "acquired-asuna.r",
+      "path": "abilities/acquired-asuna.r.json",
+      "hash": "f40abf19cc4e",
+      "size": 1881
+    },
+    {
+      "id": "acquired-asuna.w",
+      "path": "abilities/acquired-asuna.w.json",
+      "hash": "3a9ac820cce9",
+      "size": 1370
+    },
+    {
+      "id": "acquired-beatrice.e",
+      "path": "abilities/acquired-beatrice.e.json",
+      "hash": "40f9b74f833b",
+      "size": 1123
+    },
+    {
+      "id": "acquired-beatrice.ex",
+      "path": "abilities/acquired-beatrice.ex.json",
+      "hash": "00a0cdb85f5a",
+      "size": 1656
+    },
+    {
+      "id": "acquired-beatrice.passive",
+      "path": "abilities/acquired-beatrice.passive.json",
+      "hash": "d918177223ac",
+      "size": 1522
+    },
+    {
+      "id": "acquired-beatrice.q",
+      "path": "abilities/acquired-beatrice.q.json",
+      "hash": "c499ed83e7b6",
+      "size": 1545
+    },
+    {
+      "id": "acquired-beatrice.r",
+      "path": "abilities/acquired-beatrice.r.json",
+      "hash": "a9a4454c0696",
+      "size": 2612
+    },
+    {
+      "id": "acquired-beatrice.w",
+      "path": "abilities/acquired-beatrice.w.json",
+      "hash": "dc3421b086d3",
+      "size": 1625
+    },
+    {
+      "id": "acquired-cattiva.e",
+      "path": "abilities/acquired-cattiva.e.json",
+      "hash": "0012cd1c4d4c",
+      "size": 2077
+    },
+    {
+      "id": "acquired-cattiva.ex",
+      "path": "abilities/acquired-cattiva.ex.json",
+      "hash": "486299e7dbf4",
+      "size": 1568
+    },
+    {
+      "id": "acquired-cattiva.passive",
+      "path": "abilities/acquired-cattiva.passive.json",
+      "hash": "ac3e217c7708",
+      "size": 2017
+    },
+    {
+      "id": "acquired-cattiva.q",
+      "path": "abilities/acquired-cattiva.q.json",
+      "hash": "dfead4c076e6",
+      "size": 1663
+    },
+    {
+      "id": "acquired-cattiva.r",
+      "path": "abilities/acquired-cattiva.r.json",
+      "hash": "0cb8fec87d24",
+      "size": 2227
+    },
+    {
+      "id": "acquired-cattiva.w",
+      "path": "abilities/acquired-cattiva.w.json",
+      "hash": "18442d165b96",
+      "size": 1096
+    },
+    {
+      "id": "acquired-dio.e",
+      "path": "abilities/acquired-dio.e.json",
+      "hash": "168b742a0bdd",
+      "size": 1382
+    },
+    {
+      "id": "acquired-dio.ex",
+      "path": "abilities/acquired-dio.ex.json",
+      "hash": "25fe63f5aca9",
+      "size": 1625
+    },
+    {
+      "id": "acquired-dio.passive",
+      "path": "abilities/acquired-dio.passive.json",
+      "hash": "7e0c64474fac",
+      "size": 1878
+    },
+    {
+      "id": "acquired-dio.q",
+      "path": "abilities/acquired-dio.q.json",
+      "hash": "b9c7a3386640",
+      "size": 1810
+    },
+    {
+      "id": "acquired-dio.r",
+      "path": "abilities/acquired-dio.r.json",
+      "hash": "a30170a1f68f",
+      "size": 1658
+    },
+    {
+      "id": "acquired-dio.w",
+      "path": "abilities/acquired-dio.w.json",
+      "hash": "11d2a8dbfe0c",
+      "size": 2063
+    },
+    {
+      "id": "acquired-emilia.e",
+      "path": "abilities/acquired-emilia.e.json",
+      "hash": "acf75a8f3094",
+      "size": 1662
+    },
+    {
+      "id": "acquired-emilia.ex",
+      "path": "abilities/acquired-emilia.ex.json",
+      "hash": "ec12e42ce4a0",
+      "size": 1567
+    },
+    {
+      "id": "acquired-emilia.passive",
+      "path": "abilities/acquired-emilia.passive.json",
+      "hash": "c60f7a4c754c",
+      "size": 2674
+    },
+    {
+      "id": "acquired-emilia.q",
+      "path": "abilities/acquired-emilia.q.json",
+      "hash": "aeb42c3df25f",
+      "size": 2490
+    },
+    {
+      "id": "acquired-emilia.r",
+      "path": "abilities/acquired-emilia.r.json",
+      "hash": "aa234a47540b",
+      "size": 1922
+    },
+    {
+      "id": "acquired-emilia.w",
+      "path": "abilities/acquired-emilia.w.json",
+      "hash": "fa1904b23d83",
+      "size": 1630
+    },
+    {
+      "id": "acquired-inuyasha.e",
+      "path": "abilities/acquired-inuyasha.e.json",
+      "hash": "64c32c87bd79",
+      "size": 1399
+    },
+    {
+      "id": "acquired-inuyasha.ex",
+      "path": "abilities/acquired-inuyasha.ex.json",
+      "hash": "8bb9c94497c5",
+      "size": 1261
+    },
+    {
+      "id": "acquired-inuyasha.passive",
+      "path": "abilities/acquired-inuyasha.passive.json",
+      "hash": "c80d9b46ab7d",
+      "size": 1842
+    },
+    {
+      "id": "acquired-inuyasha.q",
+      "path": "abilities/acquired-inuyasha.q.json",
+      "hash": "6325505aa194",
+      "size": 1237
+    },
+    {
+      "id": "acquired-inuyasha.r",
+      "path": "abilities/acquired-inuyasha.r.json",
+      "hash": "771c548777cd",
+      "size": 1935
+    },
+    {
+      "id": "acquired-inuyasha.w",
+      "path": "abilities/acquired-inuyasha.w.json",
+      "hash": "fd37804e9e8b",
+      "size": 1920
+    },
+    {
+      "id": "acquired-jetragon.e",
+      "path": "abilities/acquired-jetragon.e.json",
+      "hash": "382bacb68d04",
+      "size": 1172
+    },
+    {
+      "id": "acquired-jetragon.ex",
+      "path": "abilities/acquired-jetragon.ex.json",
+      "hash": "0d490746f9a8",
+      "size": 1828
+    },
+    {
+      "id": "acquired-jetragon.passive",
+      "path": "abilities/acquired-jetragon.passive.json",
+      "hash": "d62c9229aed3",
+      "size": 1532
+    },
+    {
+      "id": "acquired-jetragon.q",
+      "path": "abilities/acquired-jetragon.q.json",
+      "hash": "a0c84456b737",
+      "size": 2060
+    },
+    {
+      "id": "acquired-jetragon.r",
+      "path": "abilities/acquired-jetragon.r.json",
+      "hash": "80dfa0c1df69",
+      "size": 3723
+    },
+    {
+      "id": "acquired-jetragon.w",
+      "path": "abilities/acquired-jetragon.w.json",
+      "hash": "e25758add720",
+      "size": 1660
+    },
+    {
+      "id": "acquired-kita-kita.e",
+      "path": "abilities/acquired-kita-kita.e.json",
+      "hash": "0b11ef567661",
+      "size": 1427
+    },
+    {
+      "id": "acquired-kita-kita.ex",
+      "path": "abilities/acquired-kita-kita.ex.json",
+      "hash": "7a5c2b23a2c2",
+      "size": 907
+    },
+    {
+      "id": "acquired-kita-kita.passive",
+      "path": "abilities/acquired-kita-kita.passive.json",
+      "hash": "decc31c09be3",
+      "size": 1679
+    },
+    {
+      "id": "acquired-kita-kita.q",
+      "path": "abilities/acquired-kita-kita.q.json",
+      "hash": "13afcdac48ed",
+      "size": 1089
+    },
+    {
+      "id": "acquired-kita-kita.r",
+      "path": "abilities/acquired-kita-kita.r.json",
+      "hash": "6f58b753d026",
+      "size": 1086
+    },
+    {
+      "id": "acquired-kita-kita.w",
+      "path": "abilities/acquired-kita-kita.w.json",
+      "hash": "a4d702d09267",
+      "size": 1246
+    },
+    {
+      "id": "acquired-kuroyukihime.e",
+      "path": "abilities/acquired-kuroyukihime.e.json",
+      "hash": "f46b93ed92ae",
+      "size": 1426
+    },
+    {
+      "id": "acquired-kuroyukihime.ex",
+      "path": "abilities/acquired-kuroyukihime.ex.json",
+      "hash": "d37dc76d3501",
+      "size": 819
+    },
+    {
+      "id": "acquired-kuroyukihime.passive",
+      "path": "abilities/acquired-kuroyukihime.passive.json",
+      "hash": "5dd751774ca0",
+      "size": 1684
+    },
+    {
+      "id": "acquired-kuroyukihime.q",
+      "path": "abilities/acquired-kuroyukihime.q.json",
+      "hash": "067fc8eab1ee",
+      "size": 1264
+    },
+    {
+      "id": "acquired-kuroyukihime.r",
+      "path": "abilities/acquired-kuroyukihime.r.json",
+      "hash": "d64d27ed1ec6",
+      "size": 1928
+    },
+    {
+      "id": "acquired-kuroyukihime.w",
+      "path": "abilities/acquired-kuroyukihime.w.json",
+      "hash": "464f08fe4866",
+      "size": 1244
+    },
+    {
+      "id": "acquired-leafa.e",
+      "path": "abilities/acquired-leafa.e.json",
+      "hash": "4e006c845fdc",
+      "size": 1429
+    },
+    {
+      "id": "acquired-leafa.ex",
+      "path": "abilities/acquired-leafa.ex.json",
+      "hash": "0f08f7d7f5fa",
+      "size": 1829
+    },
+    {
+      "id": "acquired-leafa.passive",
+      "path": "abilities/acquired-leafa.passive.json",
+      "hash": "ce83006c28cf",
+      "size": 1774
+    },
+    {
+      "id": "acquired-leafa.q",
+      "path": "abilities/acquired-leafa.q.json",
+      "hash": "d22701b3ad59",
+      "size": 1116
+    },
+    {
+      "id": "acquired-leafa.r",
+      "path": "abilities/acquired-leafa.r.json",
+      "hash": "510884cfc088",
+      "size": 1185
+    },
+    {
+      "id": "acquired-leafa.w",
+      "path": "abilities/acquired-leafa.w.json",
+      "hash": "d7f2fe1bd65f",
+      "size": 1692
+    },
+    {
+      "id": "acquired-lord-nightmares.e",
+      "path": "abilities/acquired-lord-nightmares.e.json",
+      "hash": "d59e2e543acb",
+      "size": 862
+    },
+    {
+      "id": "acquired-lord-nightmares.ex",
+      "path": "abilities/acquired-lord-nightmares.ex.json",
+      "hash": "890cf246237c",
+      "size": 1659
+    },
+    {
+      "id": "acquired-lord-nightmares.passive",
+      "path": "abilities/acquired-lord-nightmares.passive.json",
+      "hash": "f4eca5f327c2",
+      "size": 1270
+    },
+    {
+      "id": "acquired-lord-nightmares.q",
+      "path": "abilities/acquired-lord-nightmares.q.json",
+      "hash": "5e0ad6b35d12",
+      "size": 1066
+    },
+    {
+      "id": "acquired-lord-nightmares.r",
+      "path": "abilities/acquired-lord-nightmares.r.json",
+      "hash": "9b6c1de3e6b8",
+      "size": 1488
+    },
+    {
+      "id": "acquired-lord-nightmares.w",
+      "path": "abilities/acquired-lord-nightmares.w.json",
+      "hash": "59a790bd44b3",
+      "size": 1112
+    },
+    {
+      "id": "acquired-mario.e",
+      "path": "abilities/acquired-mario.e.json",
+      "hash": "101ece54c63b",
+      "size": 1651
+    },
+    {
+      "id": "acquired-mario.ex",
+      "path": "abilities/acquired-mario.ex.json",
+      "hash": "9533b5decec7",
+      "size": 2708
+    },
+    {
+      "id": "acquired-mario.passive",
+      "path": "abilities/acquired-mario.passive.json",
+      "hash": "5ec4cb24c1ac",
+      "size": 1527
+    },
+    {
+      "id": "acquired-mario.q",
+      "path": "abilities/acquired-mario.q.json",
+      "hash": "c7af17e4f44e",
+      "size": 1562
+    },
+    {
+      "id": "acquired-mario.r",
+      "path": "abilities/acquired-mario.r.json",
+      "hash": "6f135268a4dc",
+      "size": 2026
+    },
+    {
+      "id": "acquired-mario.w",
+      "path": "abilities/acquired-mario.w.json",
+      "hash": "a465867226d8",
+      "size": 1725
+    },
+    {
+      "id": "acquired-mewtwo.e",
+      "path": "abilities/acquired-mewtwo.e.json",
+      "hash": "46ea18f7e8ec",
+      "size": 1118
+    },
+    {
+      "id": "acquired-mewtwo.ex",
+      "path": "abilities/acquired-mewtwo.ex.json",
+      "hash": "41c104e7063e",
+      "size": 1577
+    },
+    {
+      "id": "acquired-mewtwo.passive",
+      "path": "abilities/acquired-mewtwo.passive.json",
+      "hash": "bd9084d047ac",
+      "size": 1528
+    },
+    {
+      "id": "acquired-mewtwo.q",
+      "path": "abilities/acquired-mewtwo.q.json",
+      "hash": "03011f99c51b",
+      "size": 2915
+    },
+    {
+      "id": "acquired-mewtwo.r",
+      "path": "abilities/acquired-mewtwo.r.json",
+      "hash": "91f7644441f8",
+      "size": 1632
+    },
+    {
+      "id": "acquired-mewtwo.w",
+      "path": "abilities/acquired-mewtwo.w.json",
+      "hash": "12539eb41fa2",
+      "size": 1635
+    },
+    {
+      "id": "acquired-minecraft.e",
+      "path": "abilities/acquired-minecraft.e.json",
+      "hash": "80f35c532cb7",
+      "size": 1805
+    },
+    {
+      "id": "acquired-minecraft.ex",
+      "path": "abilities/acquired-minecraft.ex.json",
+      "hash": "925025ff6ed4",
+      "size": 1602
+    },
+    {
+      "id": "acquired-minecraft.passive",
+      "path": "abilities/acquired-minecraft.passive.json",
+      "hash": "74490b44941e",
+      "size": 2179
+    },
+    {
+      "id": "acquired-minecraft.q",
+      "path": "abilities/acquired-minecraft.q.json",
+      "hash": "98a9251f1f1b",
+      "size": 2204
+    },
+    {
+      "id": "acquired-minecraft.r",
+      "path": "abilities/acquired-minecraft.r.json",
+      "hash": "f61a7328f742",
+      "size": 3543
+    },
+    {
+      "id": "acquired-minecraft.w",
+      "path": "abilities/acquired-minecraft.w.json",
+      "hash": "aa47930024f7",
+      "size": 3176
+    },
+    {
+      "id": "acquired-morgiana.e",
+      "path": "abilities/acquired-morgiana.e.json",
+      "hash": "837f9b221333",
+      "size": 1653
+    },
+    {
+      "id": "acquired-morgiana.ex",
+      "path": "abilities/acquired-morgiana.ex.json",
+      "hash": "b8340301782e",
+      "size": 1650
+    },
+    {
+      "id": "acquired-morgiana.passive",
+      "path": "abilities/acquired-morgiana.passive.json",
+      "hash": "e537287a9326",
+      "size": 1529
+    },
+    {
+      "id": "acquired-morgiana.q",
+      "path": "abilities/acquired-morgiana.q.json",
+      "hash": "aa61b616c39c",
+      "size": 2678
+    },
+    {
+      "id": "acquired-morgiana.r",
+      "path": "abilities/acquired-morgiana.r.json",
+      "hash": "4efa3af4c48c",
+      "size": 1905
+    },
+    {
+      "id": "acquired-morgiana.w",
+      "path": "abilities/acquired-morgiana.w.json",
+      "hash": "6dc39db5f0d7",
+      "size": 1646
+    },
+    {
+      "id": "acquired-naruto.e",
+      "path": "abilities/acquired-naruto.e.json",
+      "hash": "078a2873cb3f",
+      "size": 1406
+    },
+    {
+      "id": "acquired-naruto.ex",
+      "path": "abilities/acquired-naruto.ex.json",
+      "hash": "a0d4eb586c37",
+      "size": 1198
+    },
+    {
+      "id": "acquired-naruto.passive",
+      "path": "abilities/acquired-naruto.passive.json",
+      "hash": "3a38f4b2e271",
+      "size": 1411
+    },
+    {
+      "id": "acquired-naruto.q",
+      "path": "abilities/acquired-naruto.q.json",
+      "hash": "3a580df09989",
+      "size": 1241
+    },
+    {
+      "id": "acquired-naruto.r",
+      "path": "abilities/acquired-naruto.r.json",
+      "hash": "d7b9460f2917",
+      "size": 1885
+    },
+    {
+      "id": "acquired-naruto.w",
+      "path": "abilities/acquired-naruto.w.json",
+      "hash": "a0777b301b86",
+      "size": 1292
+    },
+    {
+      "id": "acquired-pokemon-trainer.e",
+      "path": "abilities/acquired-pokemon-trainer.e.json",
+      "hash": "6b389aa68c8b",
+      "size": 1817
+    },
+    {
+      "id": "acquired-pokemon-trainer.ex",
+      "path": "abilities/acquired-pokemon-trainer.ex.json",
+      "hash": "3483abf0a5a2",
+      "size": 1926
+    },
+    {
+      "id": "acquired-pokemon-trainer.passive",
+      "path": "abilities/acquired-pokemon-trainer.passive.json",
+      "hash": "1d694bed5d8e",
+      "size": 3132
+    },
+    {
+      "id": "acquired-pokemon-trainer.q",
+      "path": "abilities/acquired-pokemon-trainer.q.json",
+      "hash": "5116e173f7f2",
+      "size": 2097
+    },
+    {
+      "id": "acquired-pokemon-trainer.r",
+      "path": "abilities/acquired-pokemon-trainer.r.json",
+      "hash": "e7c70e1c3150",
+      "size": 4100
+    },
+    {
+      "id": "acquired-pokemon-trainer.w",
+      "path": "abilities/acquired-pokemon-trainer.w.json",
+      "hash": "959a86c8b10c",
+      "size": 2040
+    },
+    {
+      "id": "acquired-ram.e",
+      "path": "abilities/acquired-ram.e.json",
+      "hash": "f2d8f23d44a8",
+      "size": 1176
+    },
+    {
+      "id": "acquired-ram.ex",
+      "path": "abilities/acquired-ram.ex.json",
+      "hash": "b3c1f688a15e",
+      "size": 1888
+    },
+    {
+      "id": "acquired-ram.passive",
+      "path": "abilities/acquired-ram.passive.json",
+      "hash": "52e25b3406df",
+      "size": 1502
+    },
+    {
+      "id": "acquired-ram.q",
+      "path": "abilities/acquired-ram.q.json",
+      "hash": "5fbc543f529e",
+      "size": 2575
+    },
+    {
+      "id": "acquired-ram.r",
+      "path": "abilities/acquired-ram.r.json",
+      "hash": "624d4d2d80b2",
+      "size": 1605
+    },
+    {
+      "id": "acquired-ram.w",
+      "path": "abilities/acquired-ram.w.json",
+      "hash": "b3f653a241cc",
+      "size": 1705
+    },
+    {
+      "id": "acquired-rim.e",
+      "path": "abilities/acquired-rim.e.json",
+      "hash": "dbfb12a9d259",
+      "size": 1403
+    },
+    {
+      "id": "acquired-rim.ex",
+      "path": "abilities/acquired-rim.ex.json",
+      "hash": "cd34d63e7140",
+      "size": 1046
+    },
+    {
+      "id": "acquired-rim.passive",
+      "path": "abilities/acquired-rim.passive.json",
+      "hash": "7ee065a4c606",
+      "size": 1681
+    },
+    {
+      "id": "acquired-rim.q",
+      "path": "abilities/acquired-rim.q.json",
+      "hash": "73abc15b0e98",
+      "size": 1233
+    },
+    {
+      "id": "acquired-rim.r",
+      "path": "abilities/acquired-rim.r.json",
+      "hash": "5374f2c7de1b",
+      "size": 2391
+    },
+    {
+      "id": "acquired-rim.w",
+      "path": "abilities/acquired-rim.w.json",
+      "hash": "804af81906b2",
+      "size": 1244
+    },
+    {
+      "id": "acquired-ryu.e",
+      "path": "abilities/acquired-ryu.e.json",
+      "hash": "fb69837d290e",
+      "size": 1778
+    },
+    {
+      "id": "acquired-ryu.ex",
+      "path": "abilities/acquired-ryu.ex.json",
+      "hash": "fcab3f6be3ba",
+      "size": 1784
+    },
+    {
+      "id": "acquired-ryu.passive",
+      "path": "abilities/acquired-ryu.passive.json",
+      "hash": "c114ac453572",
+      "size": 1539
+    },
+    {
+      "id": "acquired-ryu.q",
+      "path": "abilities/acquired-ryu.q.json",
+      "hash": "0b8bbad223f6",
+      "size": 1527
+    },
+    {
+      "id": "acquired-ryu.r",
+      "path": "abilities/acquired-ryu.r.json",
+      "hash": "8fd61c220e1e",
+      "size": 1843
+    },
+    {
+      "id": "acquired-ryu.w",
+      "path": "abilities/acquired-ryu.w.json",
+      "hash": "d1187a466006",
+      "size": 2997
+    },
+    {
+      "id": "acquired-saya.e",
+      "path": "abilities/acquired-saya.e.json",
+      "hash": "6df9ae8b94ca",
+      "size": 1217
+    },
+    {
+      "id": "acquired-saya.ex",
+      "path": "abilities/acquired-saya.ex.json",
+      "hash": "047b7467be96",
+      "size": 1045
+    },
+    {
+      "id": "acquired-saya.passive",
+      "path": "abilities/acquired-saya.passive.json",
+      "hash": "7f5f75b5ed99",
+      "size": 1404
+    },
+    {
+      "id": "acquired-saya.q",
+      "path": "abilities/acquired-saya.q.json",
+      "hash": "149251326d64",
+      "size": 1705
+    },
+    {
+      "id": "acquired-saya.r",
+      "path": "abilities/acquired-saya.r.json",
+      "hash": "7ec7e80b45c5",
+      "size": 1490
+    },
+    {
+      "id": "acquired-saya.w",
+      "path": "abilities/acquired-saya.w.json",
+      "hash": "afeadc312f7d",
+      "size": 1071
+    },
+    {
+      "id": "acquired-wargreymon.e",
+      "path": "abilities/acquired-wargreymon.e.json",
+      "hash": "38b385a38236",
+      "size": 1419
+    },
+    {
+      "id": "acquired-wargreymon.ex",
+      "path": "abilities/acquired-wargreymon.ex.json",
+      "hash": "5bdb29859d1b",
+      "size": 1852
+    },
+    {
+      "id": "acquired-wargreymon.passive",
+      "path": "abilities/acquired-wargreymon.passive.json",
+      "hash": "4c30b3da4cd2",
+      "size": 1682
+    },
+    {
+      "id": "acquired-wargreymon.q",
+      "path": "abilities/acquired-wargreymon.q.json",
+      "hash": "31f29a20e9f2",
+      "size": 1253
+    },
+    {
+      "id": "acquired-wargreymon.r",
+      "path": "abilities/acquired-wargreymon.r.json",
+      "hash": "d1952ec534ae",
+      "size": 1107
+    },
+    {
+      "id": "acquired-wargreymon.w",
+      "path": "abilities/acquired-wargreymon.w.json",
+      "hash": "5bd0fcfc593d",
+      "size": 1172
+    },
+    {
+      "id": "acquired-xiaodangjia.e",
+      "path": "abilities/acquired-xiaodangjia.e.json",
+      "hash": "943717b8c99e",
+      "size": 1119
+    },
+    {
+      "id": "acquired-xiaodangjia.ex",
+      "path": "abilities/acquired-xiaodangjia.ex.json",
+      "hash": "2270953664e0",
+      "size": 1005
+    },
+    {
+      "id": "acquired-xiaodangjia.passive",
+      "path": "abilities/acquired-xiaodangjia.passive.json",
+      "hash": "238c9205911f",
+      "size": 1413
+    },
+    {
+      "id": "acquired-xiaodangjia.q",
+      "path": "abilities/acquired-xiaodangjia.q.json",
+      "hash": "104119dd440e",
+      "size": 1095
+    },
+    {
+      "id": "acquired-xiaodangjia.r",
+      "path": "abilities/acquired-xiaodangjia.r.json",
+      "hash": "6d89443440d6",
+      "size": 1506
+    },
+    {
+      "id": "acquired-xiaodangjia.w",
+      "path": "abilities/acquired-xiaodangjia.w.json",
+      "hash": "9eb75ec01249",
+      "size": 1110
+    },
+    {
+      "id": "acquired-zero.e",
+      "path": "abilities/acquired-zero.e.json",
+      "hash": "e2009b510f27",
+      "size": 1770
+    },
+    {
+      "id": "acquired-zero.ex",
+      "path": "abilities/acquired-zero.ex.json",
+      "hash": "603479e5f120",
+      "size": 1659
+    },
+    {
+      "id": "acquired-zero.passive",
+      "path": "abilities/acquired-zero.passive.json",
+      "hash": "8673a7f07df3",
+      "size": 1520
+    },
+    {
+      "id": "acquired-zero.q",
+      "path": "abilities/acquired-zero.q.json",
+      "hash": "78708e12b926",
+      "size": 1488
+    },
+    {
+      "id": "acquired-zero.r",
+      "path": "abilities/acquired-zero.r.json",
+      "hash": "7de896c67251",
+      "size": 1790
+    },
+    {
+      "id": "acquired-zero.w",
+      "path": "abilities/acquired-zero.w.json",
+      "hash": "c0ec22a61596",
+      "size": 2931
+    },
     {
       "id": "b2-aladdin.e",
       "path": "abilities/b2-aladdin.e.json",
@@ -5145,6 +6081,222 @@
       "size": 1185
     },
     {
+      "id": "lol-ahri.e",
+      "path": "abilities/lol-ahri.e.json",
+      "hash": "336f07a7dedb",
+      "size": 2000
+    },
+    {
+      "id": "lol-ahri.ex",
+      "path": "abilities/lol-ahri.ex.json",
+      "hash": "59c8ced5cb98",
+      "size": 1429
+    },
+    {
+      "id": "lol-ahri.passive",
+      "path": "abilities/lol-ahri.passive.json",
+      "hash": "f33ed447a436",
+      "size": 4066
+    },
+    {
+      "id": "lol-ahri.q",
+      "path": "abilities/lol-ahri.q.json",
+      "hash": "8a18563b6818",
+      "size": 1599
+    },
+    {
+      "id": "lol-ahri.r",
+      "path": "abilities/lol-ahri.r.json",
+      "hash": "3e720f2a8e7a",
+      "size": 1976
+    },
+    {
+      "id": "lol-ahri.w",
+      "path": "abilities/lol-ahri.w.json",
+      "hash": "371133b4c64c",
+      "size": 2684
+    },
+    {
+      "id": "lol-ashe.e",
+      "path": "abilities/lol-ashe.e.json",
+      "hash": "15704866de8a",
+      "size": 2195
+    },
+    {
+      "id": "lol-ashe.ex",
+      "path": "abilities/lol-ashe.ex.json",
+      "hash": "af60256deae8",
+      "size": 1716
+    },
+    {
+      "id": "lol-ashe.passive",
+      "path": "abilities/lol-ashe.passive.json",
+      "hash": "89d043841957",
+      "size": 3556
+    },
+    {
+      "id": "lol-ashe.q",
+      "path": "abilities/lol-ashe.q.json",
+      "hash": "c5e44331dae1",
+      "size": 2997
+    },
+    {
+      "id": "lol-ashe.r",
+      "path": "abilities/lol-ashe.r.json",
+      "hash": "ab7edab1400e",
+      "size": 2963
+    },
+    {
+      "id": "lol-ashe.w",
+      "path": "abilities/lol-ashe.w.json",
+      "hash": "22b6a7b39be5",
+      "size": 1965
+    },
+    {
+      "id": "lol-blitzcrank.e",
+      "path": "abilities/lol-blitzcrank.e.json",
+      "hash": "535da5244723",
+      "size": 2642
+    },
+    {
+      "id": "lol-blitzcrank.ex",
+      "path": "abilities/lol-blitzcrank.ex.json",
+      "hash": "5398a1734529",
+      "size": 2792
+    },
+    {
+      "id": "lol-blitzcrank.passive",
+      "path": "abilities/lol-blitzcrank.passive.json",
+      "hash": "700f5b37118b",
+      "size": 2698
+    },
+    {
+      "id": "lol-blitzcrank.q",
+      "path": "abilities/lol-blitzcrank.q.json",
+      "hash": "1c8daaaedaa3",
+      "size": 2305
+    },
+    {
+      "id": "lol-blitzcrank.r",
+      "path": "abilities/lol-blitzcrank.r.json",
+      "hash": "b41b8868e361",
+      "size": 2089
+    },
+    {
+      "id": "lol-blitzcrank.w",
+      "path": "abilities/lol-blitzcrank.w.json",
+      "hash": "92667d412c6f",
+      "size": 2731
+    },
+    {
+      "id": "lol-chogath.e",
+      "path": "abilities/lol-chogath.e.json",
+      "hash": "c0d65a109509",
+      "size": 3144
+    },
+    {
+      "id": "lol-chogath.ex",
+      "path": "abilities/lol-chogath.ex.json",
+      "hash": "5e040456479b",
+      "size": 1539
+    },
+    {
+      "id": "lol-chogath.passive",
+      "path": "abilities/lol-chogath.passive.json",
+      "hash": "10aca76cb1b0",
+      "size": 2041
+    },
+    {
+      "id": "lol-chogath.q",
+      "path": "abilities/lol-chogath.q.json",
+      "hash": "f8d14b1f9855",
+      "size": 2979
+    },
+    {
+      "id": "lol-chogath.r",
+      "path": "abilities/lol-chogath.r.json",
+      "hash": "84890465dc0a",
+      "size": 3649
+    },
+    {
+      "id": "lol-chogath.w",
+      "path": "abilities/lol-chogath.w.json",
+      "hash": "37708815c3b3",
+      "size": 1947
+    },
+    {
+      "id": "lol-fiddlesticks.e",
+      "path": "abilities/lol-fiddlesticks.e.json",
+      "hash": "b90e0a295925",
+      "size": 2030
+    },
+    {
+      "id": "lol-fiddlesticks.ex",
+      "path": "abilities/lol-fiddlesticks.ex.json",
+      "hash": "f79def8be223",
+      "size": 1228
+    },
+    {
+      "id": "lol-fiddlesticks.passive",
+      "path": "abilities/lol-fiddlesticks.passive.json",
+      "hash": "7ce56b8899f3",
+      "size": 1985
+    },
+    {
+      "id": "lol-fiddlesticks.q",
+      "path": "abilities/lol-fiddlesticks.q.json",
+      "hash": "1cfb83e57cb5",
+      "size": 1244
+    },
+    {
+      "id": "lol-fiddlesticks.r",
+      "path": "abilities/lol-fiddlesticks.r.json",
+      "hash": "4c0c7698de4e",
+      "size": 2483
+    },
+    {
+      "id": "lol-fiddlesticks.w",
+      "path": "abilities/lol-fiddlesticks.w.json",
+      "hash": "693eb8f51adb",
+      "size": 3082
+    },
+    {
+      "id": "lol-garen.e",
+      "path": "abilities/lol-garen.e.json",
+      "hash": "4c8d664b2690",
+      "size": 1473
+    },
+    {
+      "id": "lol-garen.ex",
+      "path": "abilities/lol-garen.ex.json",
+      "hash": "9ad0dc4160a8",
+      "size": 1529
+    },
+    {
+      "id": "lol-garen.passive",
+      "path": "abilities/lol-garen.passive.json",
+      "hash": "126937b86318",
+      "size": 3163
+    },
+    {
+      "id": "lol-garen.q",
+      "path": "abilities/lol-garen.q.json",
+      "hash": "65007126af37",
+      "size": 3304
+    },
+    {
+      "id": "lol-garen.r",
+      "path": "abilities/lol-garen.r.json",
+      "hash": "c1d9c9f2676b",
+      "size": 1650
+    },
+    {
+      "id": "lol-garen.w",
+      "path": "abilities/lol-garen.w.json",
+      "hash": "d152f38e34ef",
+      "size": 1116
+    },
+    {
       "id": "lol-karthus.e",
       "path": "abilities/lol-karthus.e.json",
       "hash": "e7d267395159",
@@ -5253,6 +6405,42 @@
       "size": 1148
     },
     {
+      "id": "lol-malphite.e",
+      "path": "abilities/lol-malphite.e.json",
+      "hash": "e58672ad605d",
+      "size": 2355
+    },
+    {
+      "id": "lol-malphite.ex",
+      "path": "abilities/lol-malphite.ex.json",
+      "hash": "2581b176f78d",
+      "size": 2157
+    },
+    {
+      "id": "lol-malphite.passive",
+      "path": "abilities/lol-malphite.passive.json",
+      "hash": "ad92116760eb",
+      "size": 3430
+    },
+    {
+      "id": "lol-malphite.q",
+      "path": "abilities/lol-malphite.q.json",
+      "hash": "a6de9cf74e7c",
+      "size": 2312
+    },
+    {
+      "id": "lol-malphite.r",
+      "path": "abilities/lol-malphite.r.json",
+      "hash": "7e6788ee0a7b",
+      "size": 2313
+    },
+    {
+      "id": "lol-malphite.w",
+      "path": "abilities/lol-malphite.w.json",
+      "hash": "615b655a789e",
+      "size": 2597
+    },
+    {
       "id": "lol-missfortune.e",
       "path": "abilities/lol-missfortune.e.json",
       "hash": "5a5831611f6f",
@@ -5287,6 +6475,150 @@
       "path": "abilities/lol-missfortune.w.json",
       "hash": "caaffdf7bc5b",
       "size": 1333
+    },
+    {
+      "id": "lol-ornn.e",
+      "path": "abilities/lol-ornn.e.json",
+      "hash": "db19a111d976",
+      "size": 3336
+    },
+    {
+      "id": "lol-ornn.ex",
+      "path": "abilities/lol-ornn.ex.json",
+      "hash": "4d69dd6c72a8",
+      "size": 983
+    },
+    {
+      "id": "lol-ornn.passive",
+      "path": "abilities/lol-ornn.passive.json",
+      "hash": "f77101e2bc38",
+      "size": 4260
+    },
+    {
+      "id": "lol-ornn.q",
+      "path": "abilities/lol-ornn.q.json",
+      "hash": "bfd7e88360e9",
+      "size": 2350
+    },
+    {
+      "id": "lol-ornn.r",
+      "path": "abilities/lol-ornn.r.json",
+      "hash": "4de3ae751a3a",
+      "size": 3552
+    },
+    {
+      "id": "lol-ornn.w",
+      "path": "abilities/lol-ornn.w.json",
+      "hash": "f18a447ee6bf",
+      "size": 1877
+    },
+    {
+      "id": "lol-sett.e",
+      "path": "abilities/lol-sett.e.json",
+      "hash": "1b298d486d22",
+      "size": 2220
+    },
+    {
+      "id": "lol-sett.ex",
+      "path": "abilities/lol-sett.ex.json",
+      "hash": "5eeefc1f5203",
+      "size": 1512
+    },
+    {
+      "id": "lol-sett.passive",
+      "path": "abilities/lol-sett.passive.json",
+      "hash": "da7fc0250371",
+      "size": 5689
+    },
+    {
+      "id": "lol-sett.q",
+      "path": "abilities/lol-sett.q.json",
+      "hash": "0c179835d3d0",
+      "size": 3010
+    },
+    {
+      "id": "lol-sett.r",
+      "path": "abilities/lol-sett.r.json",
+      "hash": "bbe1108f9e73",
+      "size": 3143
+    },
+    {
+      "id": "lol-sett.w",
+      "path": "abilities/lol-sett.w.json",
+      "hash": "481151c1001d",
+      "size": 12139
+    },
+    {
+      "id": "lol-thresh.e",
+      "path": "abilities/lol-thresh.e.json",
+      "hash": "54e75c6d072f",
+      "size": 2390
+    },
+    {
+      "id": "lol-thresh.ex",
+      "path": "abilities/lol-thresh.ex.json",
+      "hash": "74459908946e",
+      "size": 2175
+    },
+    {
+      "id": "lol-thresh.passive",
+      "path": "abilities/lol-thresh.passive.json",
+      "hash": "fe90f2eeb921",
+      "size": 2475
+    },
+    {
+      "id": "lol-thresh.q",
+      "path": "abilities/lol-thresh.q.json",
+      "hash": "55d24a976d8d",
+      "size": 2575
+    },
+    {
+      "id": "lol-thresh.r",
+      "path": "abilities/lol-thresh.r.json",
+      "hash": "dde8ecaf2cf1",
+      "size": 2009
+    },
+    {
+      "id": "lol-thresh.w",
+      "path": "abilities/lol-thresh.w.json",
+      "hash": "d818b650d73a",
+      "size": 2295
+    },
+    {
+      "id": "lol-velkoz.e",
+      "path": "abilities/lol-velkoz.e.json",
+      "hash": "00dc0f810bda",
+      "size": 2552
+    },
+    {
+      "id": "lol-velkoz.ex",
+      "path": "abilities/lol-velkoz.ex.json",
+      "hash": "9e150b6da647",
+      "size": 2687
+    },
+    {
+      "id": "lol-velkoz.passive",
+      "path": "abilities/lol-velkoz.passive.json",
+      "hash": "8ed9fd136cb6",
+      "size": 3428
+    },
+    {
+      "id": "lol-velkoz.q",
+      "path": "abilities/lol-velkoz.q.json",
+      "hash": "a2a0b33e4115",
+      "size": 1618
+    },
+    {
+      "id": "lol-velkoz.r",
+      "path": "abilities/lol-velkoz.r.json",
+      "hash": "d8c7f569924d",
+      "size": 3721
+    },
+    {
+      "id": "lol-velkoz.w",
+      "path": "abilities/lol-velkoz.w.json",
+      "hash": "534f4e1a5875",
+      "size": 2588
     },
     {
       "id": "lol-warwick.e",

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EFFECT_COMMON_SHAPE, zEffectDef } from "./_shared";
+import { EFFECT_COMMON_SHAPE, zAoeTier, zEffectDef } from "./_shared";
 
 /**
  * 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 技能在地上放一個**隊友自己決定要不要用**的物件。
@@ -18,6 +18,8 @@ export const zSpawnInteractable = z
     ...EFFECT_COMMON_SHAPE,
     /** 接受距離（格）：隊友的身體要碰到以物件為心、這個半徑的圓才點得到 */
     radius: z.number().positive().max(20),
+    /** ⭐ 五級距（第〇·四守則）：`radiusTier` 填了就由 `resolveRadiusTier()` 在載入時翻成 `radius`；兩個都有 ⇒ 級別贏。⛔ 沒有這一格的話 `apply_tiers.py` 收級距會被 schema 擋下（GH#1185 量到）。 */
+    radiusTier: zAoeTier.optional(),
     /** 存活秒數；到期消失 */
     durationSec: z.number().positive().max(60),
     /** 最多幾位隊友可以用（用完即消失）。缺 = 1 */

@@ -1,0 +1,59 @@
+{
+  "id": "acquired-naruto.w",
+  "name": "影分身代排",
+  "provenance": "editor-json",
+  "description": "召喚2個同體分身，存在6秒、傷害20%、生命25%，最多2個，本體死亡消失。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "summon",
+      "body": "self",
+      "championId": "self",
+      "count": 2,
+      "durationSec": 6,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 2,
+      "onOwnerDeath": "despawn",
+      "hpMult": 0.25,
+      "damageMult": 0.2
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+    "params": {
+      "count": 2,
+      "body": "self",
+      "durationSec": 6,
+      "damageMult": 0.2,
+      "hpMult": 0.25,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 2,
+      "onOwnerDeath": "despawn",
+      "cleanse": "none"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:28911a3620fffaad01d4b1d5cb95b4ba5fcf53474b5534c3012ac4cf4ad22a4b"
+  },
+  "schema": "ability@1"
+}

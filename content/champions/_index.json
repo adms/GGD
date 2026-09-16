@@ -1,7 +1,163 @@
 {
   "collection": "champions",
-  "hash": "38b4462e74bc",
+  "hash": "55f1069429ab",
   "entries": [
+    {
+      "id": "acquired-alice",
+      "path": "champions/acquired-alice.json",
+      "hash": "3c41cb686be3",
+      "size": 7613
+    },
+    {
+      "id": "acquired-astralym",
+      "path": "champions/acquired-astralym.json",
+      "hash": "f72e30bdd179",
+      "size": 10447
+    },
+    {
+      "id": "acquired-asuna",
+      "path": "champions/acquired-asuna.json",
+      "hash": "4b67d015f223",
+      "size": 8760
+    },
+    {
+      "id": "acquired-beatrice",
+      "path": "champions/acquired-beatrice.json",
+      "hash": "a5b130545782",
+      "size": 9884
+    },
+    {
+      "id": "acquired-cattiva",
+      "path": "champions/acquired-cattiva.json",
+      "hash": "b8dabb19ccad",
+      "size": 9963
+    },
+    {
+      "id": "acquired-dio",
+      "path": "champions/acquired-dio.json",
+      "hash": "6d494cca349a",
+      "size": 9929
+    },
+    {
+      "id": "acquired-emilia",
+      "path": "champions/acquired-emilia.json",
+      "hash": "d54935b3685f",
+      "size": 10725
+    },
+    {
+      "id": "acquired-inuyasha",
+      "path": "champions/acquired-inuyasha.json",
+      "hash": "04d1a10254e9",
+      "size": 9279
+    },
+    {
+      "id": "acquired-jetragon",
+      "path": "champions/acquired-jetragon.json",
+      "hash": "12d060d89c7d",
+      "size": 11826
+    },
+    {
+      "id": "acquired-kita-kita",
+      "path": "champions/acquired-kita-kita.json",
+      "hash": "e08d8070d659",
+      "size": 7519
+    },
+    {
+      "id": "acquired-kuroyukihime",
+      "path": "champions/acquired-kuroyukihime.json",
+      "hash": "b6e46f08c0e6",
+      "size": 8624
+    },
+    {
+      "id": "acquired-leafa",
+      "path": "champions/acquired-leafa.json",
+      "hash": "0ae28b7bc987",
+      "size": 8161
+    },
+    {
+      "id": "acquired-lord-nightmares",
+      "path": "champions/acquired-lord-nightmares.json",
+      "hash": "e06b326420b6",
+      "size": 7060
+    },
+    {
+      "id": "acquired-mario",
+      "path": "champions/acquired-mario.json",
+      "hash": "77d4bb937fc0",
+      "size": 10050
+    },
+    {
+      "id": "acquired-mewtwo",
+      "path": "champions/acquired-mewtwo.json",
+      "hash": "cc1743d1a5ed",
+      "size": 10346
+    },
+    {
+      "id": "acquired-minecraft",
+      "path": "champions/acquired-minecraft.json",
+      "hash": "a430da04bd37",
+      "size": 14420
+    },
+    {
+      "id": "acquired-morgiana",
+      "path": "champions/acquired-morgiana.json",
+      "hash": "d5146ed36b87",
+      "size": 10955
+    },
+    {
+      "id": "acquired-naruto",
+      "path": "champions/acquired-naruto.json",
+      "hash": "8edbfe3246ef",
+      "size": 8548
+    },
+    {
+      "id": "acquired-pokemon-trainer",
+      "path": "champions/acquired-pokemon-trainer.json",
+      "hash": "a438a8258110",
+      "size": 13662
+    },
+    {
+      "id": "acquired-ram",
+      "path": "champions/acquired-ram.json",
+      "hash": "ca94615c1be9",
+      "size": 10072
+    },
+    {
+      "id": "acquired-rim",
+      "path": "champions/acquired-rim.json",
+      "hash": "7cfe8a6ddfc4",
+      "size": 9250
+    },
+    {
+      "id": "acquired-ryu",
+      "path": "champions/acquired-ryu.json",
+      "hash": "ffa504cec8c6",
+      "size": 11347
+    },
+    {
+      "id": "acquired-saya",
+      "path": "champions/acquired-saya.json",
+      "hash": "db163b23b4ab",
+      "size": 8144
+    },
+    {
+      "id": "acquired-wargreymon",
+      "path": "champions/acquired-wargreymon.json",
+      "hash": "2a24f9fd1e8d",
+      "size": 7551
+    },
+    {
+      "id": "acquired-xiaodangjia",
+      "path": "champions/acquired-xiaodangjia.json",
+      "hash": "88822bef5670",
+      "size": 7392
+    },
+    {
+      "id": "acquired-zero",
+      "path": "champions/acquired-zero.json",
+      "hash": "4d85994e0d60",
+      "size": 11207
+    },
     {
       "id": "b2-aladdin",
       "path": "champions/b2-aladdin.json",
@@ -867,6 +1023,42 @@
       "size": 8104
     },
     {
+      "id": "lol-ahri",
+      "path": "champions/lol-ahri.json",
+      "hash": "07af00acc2e8",
+      "size": 12123
+    },
+    {
+      "id": "lol-ashe",
+      "path": "champions/lol-ashe.json",
+      "hash": "ad7dde163ca1",
+      "size": 13793
+    },
+    {
+      "id": "lol-blitzcrank",
+      "path": "champions/lol-blitzcrank.json",
+      "hash": "9df30c8b80c8",
+      "size": 13408
+    },
+    {
+      "id": "lol-chogath",
+      "path": "champions/lol-chogath.json",
+      "hash": "dda9824ab3c4",
+      "size": 15666
+    },
+    {
+      "id": "lol-fiddlesticks",
+      "path": "champions/lol-fiddlesticks.json",
+      "hash": "4b75721c7f2b",
+      "size": 12934
+    },
+    {
+      "id": "lol-garen",
+      "path": "champions/lol-garen.json",
+      "hash": "4188f304ab22",
+      "size": 11195
+    },
+    {
       "id": "lol-karthus",
       "path": "champions/lol-karthus.json",
       "hash": "18cb7a539db7",
@@ -885,10 +1077,40 @@
       "size": 14093
     },
     {
+      "id": "lol-malphite",
+      "path": "champions/lol-malphite.json",
+      "hash": "21d154ba21ea",
+      "size": 13187
+    },
+    {
       "id": "lol-missfortune",
       "path": "champions/lol-missfortune.json",
       "hash": "fc14256478c4",
       "size": 14382
+    },
+    {
+      "id": "lol-ornn",
+      "path": "champions/lol-ornn.json",
+      "hash": "5e550c044553",
+      "size": 16528
+    },
+    {
+      "id": "lol-sett",
+      "path": "champions/lol-sett.json",
+      "hash": "c1ef14e89e09",
+      "size": 25760
+    },
+    {
+      "id": "lol-thresh",
+      "path": "champions/lol-thresh.json",
+      "hash": "89edda0a1379",
+      "size": 13429
+    },
+    {
+      "id": "lol-velkoz",
+      "path": "champions/lol-velkoz.json",
+      "hash": "f55db5eb6a39",
+      "size": 15159
     },
     {
       "id": "lol-warwick",

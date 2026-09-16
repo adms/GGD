@@ -1,14 +1,14 @@
 {
-  "contentVersion": "cv_34779cab62de",
+  "contentVersion": "cv_1b6da25fe1f7",
   "collections": {
     "champions": {
-      "hash": "38b4462e74bc",
-      "count": 153,
+      "hash": "55f1069429ab",
+      "count": 190,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "cf70c37fdf64",
-      "count": 907,
+      "hash": "468819cc6295",
+      "count": 1129,
       "path": "abilities/_index.json"
     },
     "items": {
@@ -47,7 +47,7 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "e8bdc48673f6",
+      "hash": "f9b9343a6751",
       "count": 105,
       "path": "config/_index.json"
     },
@@ -67,13 +67,13 @@
       "path": "skins/_index.json"
     },
     "ability-templates": {
-      "hash": "a28a14aad4f4",
-      "count": 82,
+      "hash": "b67dbb330302",
+      "count": 89,
       "path": "ability-templates/_index.json"
     },
     "vfx-scripts": {
-      "hash": "15ff12a31066",
-      "count": 45,
+      "hash": "5a5dcb1cbe14",
+      "count": 230,
       "path": "vfx-scripts/_index.json"
     },
     "vfx-subtypes": {

@@ -442,6 +442,49 @@ var (
 		"lol-warwick",
 		"lol-xerath",
 		"lol-yasuo",
+		// ⭐⭐ GH#1185 / GH#1205 —— 第四批 37 名（LoL 第二批 11 ＋ 已取得素材 26）。
+		//    > owner 2026-09-15（逐字）：「你要替我發佈全部角色 這是這一個新版的主要目的」
+		//    > owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」
+		//    招式來源是出貨的 `communityLolBatch2.ts` 與 `communityAcquired.ts`（⛔ 不是我編的），
+		//    模型是配方自己帶的 `modelKey`（45 顆都已經在 content/models）。
+		//    內容側由 `tools/ship-81/batch37.py` 產生（同 lol7 那一條管線的第四批）。
+		"acquired-alice",        // 愛麗絲·滋貝魯庫（Alice Zuberg） — 刀劍神域 Sword Art Online
+		"acquired-astralym",     // 枯星龍 — Palworld／幻獸帕魯
+		"acquired-asuna",        // 亞絲娜／結城明日奈 — 刀劍神域 Sword Art Online
+		"acquired-beatrice",     // 碧翠絲 — Re:從零開始的異世界生活
+		"acquired-cattiva",      // 搗蛋貓 — Palworld／幻獸帕魯
+		"acquired-dio",          // DIO — JoJo 的奇妙冒險：星塵遠征軍
+		"acquired-emilia",       // 愛蜜莉雅 — Re:從零開始的異世界生活
+		"acquired-inuyasha",     // 犬夜叉 — 犬夜叉
+		"acquired-jetragon",     // 空渦龍 — Palworld／幻獸帕魯
+		"acquired-kita-kita",    // 吉他吉他老伯（阿德巴古·艾魯多魯） — 咕嚕咕嚕魔法陣
+		"acquired-kuroyukihime", // 黑雪姬 — 加速世界
+		"acquired-leafa",        // 莉法 — 刀劍神域 Sword Art Online
+		"acquired-lord-nightmares", // 金色魔王／惡夢之王 — 秀逗魔導士
+		"acquired-mario",        // Mario — Super Mario／超級瑪利歐
+		"acquired-mewtwo",       // Mewtwo — Pokémon／寶可夢
+		"acquired-minecraft",    // Steve／Alex — Minecraft／當個創世神
+		"acquired-morgiana",     // 摩尔迦娜 — MAGI／魔奇少年
+		"acquired-naruto",       // 漩渦鳴人 — 火影忍者 NARUTO
+		"acquired-pokemon-trainer", // Pokémon Trainer — Pokémon／任天堂明星大亂鬥
+		"acquired-ram",          // 拉姆 — Re:從零開始的異世界生活
+		"acquired-rim",          // 莉姆（Rim；粉紅魔龍） — 迷宮黑心企業／異世界迷宮黑心企業
+		"acquired-ryu",          // Ryu — Street Fighter／快打旋風
+		"acquired-saya",         // 沙耶 — 沙耶之歌
+		"acquired-wargreymon",   // 戰鬥暴龍獸 — 數碼寶貝大冒險
+		"acquired-xiaodangjia",  // 小當家 — 中華一番！
+		"acquired-zero",         // Zero — Mega Man X／洛克人 X
+		"lol-ahri",              // 阿璃 — 阿璃
+		"lol-ashe",              // 艾希 — 艾希
+		"lol-blitzcrank",        // 布里姿 — 布里姿
+		"lol-chogath",           // 科加斯 — 科加斯
+		"lol-fiddlesticks",      // 稻草人 — 稻草人
+		"lol-garen",             // 蓋倫 — 蓋倫
+		"lol-malphite",          // 墨菲特 — 墨菲特
+		"lol-ornn",              // 鄂爾 — 鄂爾
+		"lol-sett",              // 賽特 — 賽特
+		"lol-thresh",            // 瑟雷西 — 瑟雷西
+		"lol-velkoz",            // 威寇茲 — 威寇茲
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,

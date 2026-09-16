@@ -1,0 +1,70 @@
+{
+  "id": "acquired-cattiva.ex",
+  "name": "罐頭優先權",
+  "provenance": "editor-json",
+  "description": "回復自身 100 生命，但吃罐頭時繳械 1 秒；仍可移動與施法。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "ratios": []
+      },
+      "applyTo": "self"
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "acquired-cattiva.snack",
+      "duration": 1,
+      "applyTo": "self",
+      "disarmed": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "ratios": []
+          },
+          "applyTo": "self"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "acquired-cattiva.snack",
+          "duration": 1,
+          "sourceScope": "caster",
+          "applyTo": "self",
+          "disarmed": true
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "radiusTier": "極小"
+}

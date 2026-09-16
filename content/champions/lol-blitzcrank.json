@@ -1,0 +1,481 @@
+{
+  "id": "lol-blitzcrank",
+  "name": "布里姿",
+  "description": "設計草案，尚未完成上架驗收。拉人、過熱衝刺與打斷連招\n\n概念來源：LoL 布里姿\nhttps://www.leagueoflegends.com/zh-tw/champions/blitzcrank/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：按最大魔力而非即時魔力；致死一擊能否先觸發須依現有onDamageTaken時序驗證。\n• Q：既有投射物代理手臂；拉回受共通落點/牆規則限制。\n• W：保持加速後自緩速代價，無第二段按鍵。\n• E：追加GGD傷害級距，不承諾原作雙倍普攻公式。\n• R：R學習後普攻延遲電擊暫未接；保留主動破盾沉默。\n• EX：只消耗自己的Q收據，不影響別人的抓取狀態。\n\n採用所選 GGD 模型與特效。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "坦克",
+  "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 27.67734693877551,
+    "healthRegen": 0.08196326530612243,
+    "maxMana": 0.9209183673469388,
+    "manaRegen": 0,
+    "ad": 1.8716734693877548,
+    "as": 0,
+    "mr": 5.279591836734694,
+    "armor": 1.5605204081632653,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 29,
+    "agi": 18,
+    "int": 13,
+    "strGrowth": 2.78,
+    "agiGrowth": 1.67,
+    "intGrowth": 1.25,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-blitzcrank.q",
+      "name": "火箭抓取",
+      "provenance": "editor-json",
+      "description": "直線手臂命中第一位敵人，造成傷害並拉回。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "leap",
+              "applyTo": "target",
+              "mode": "inPlace",
+              "apexHeight": 0,
+              "durationSec": 0.15,
+              "dragToCaster": true
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-blitzcrank.grabbed",
+              "duration": 2
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "leap",
+                  "applyTo": "target",
+                  "mode": "inPlace",
+                  "dragToCaster": true,
+                  "apexHeight": 0,
+                  "durationSec": 0.15
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-blitzcrank.grabbed",
+                  "duration": 2,
+                  "sourceScope": "caster"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "W": {
+      "id": "lol-blitzcrank.w",
+      "name": "過載運轉",
+      "provenance": "editor-json",
+      "description": "三秒移速與攻速提升，結束後一秒自緩速。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.25
+            }
+          ],
+          "duration": 3,
+          "statusId": "lol-blitzcrank.overdrive",
+          "applyTo": "self",
+          "stackKey": "lol-blitzcrank.overdrive",
+          "maxStacks": 1
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 3,
+          "count": 1,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-blitzcrank.overheat",
+              "duration": 1,
+              "applyTo": "self",
+              "moveSpeedMult": 0.7
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.25
+                }
+              ],
+              "statusId": "lol-blitzcrank.overdrive",
+              "stackKey": "lol-blitzcrank.overdrive",
+              "maxStacks": 1
+            },
+            {
+              "kind": "delayed",
+              "shape": "single",
+              "delaySec": 3,
+              "count": 1,
+              "intervalSec": 0.5,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-blitzcrank.overheat",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "applyTo": "self",
+                  "moveSpeedMult": 0.7
+                }
+              ],
+              "stopOnCasterDeath": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "lol-blitzcrank.e",
+      "name": "充能一擊",
+      "provenance": "editor-json",
+      "description": "下一次普攻追加物理傷害並擊飛。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 5,
+          "statusId": "lol-blitzcrank.fist",
+          "applyTo": "self",
+          "stackKey": "lol-blitzcrank.fist",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 2,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                }
+              ],
+              "maxTriggers": 1,
+              "onConsumed": "detachSource"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 5,
+              "modifiers": [],
+              "statusId": "lol-blitzcrank.fist",
+              "stackKey": "lol-blitzcrank.fist",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    },
+                    {
+                      "kind": "knockback",
+                      "distance": 0.2,
+                      "speed": 12,
+                      "from": "caster",
+                      "subtractGap": false,
+                      "launchHeight": 1
+                    }
+                  ],
+                  "maxTriggers": 1,
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "lol-blitzcrank.r",
+      "name": "靜電力場",
+      "provenance": "editor-json",
+      "description": "移除身旁敵人护盾，傷害並短暫沉默。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "shieldBreak",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies",
+          "radiusTier": "極小"
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          },
+          "radius": 3,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-blitzcrank.static-silence",
+              "duration": 0.7,
+              "silenced": true
+            }
+          ],
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "shieldBreak",
+              "shape": "circle",
+              "radius": 3,
+              "side": "enemies"
+            },
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              },
+              "radius": 3,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-blitzcrank.static-silence",
+                  "duration": 0.7,
+                  "sourceScope": "caster",
+                  "silenced": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "lol-blitzcrank.ex",
+  "passiveAbility": "lol-blitzcrank.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

@@ -1,0 +1,109 @@
+{
+  "id": "lol-blitzcrank.passive",
+  "name": "法力屏障",
+  "provenance": "editor-json",
+  "description": "低於30%生命受擊時取得魔力比例護盾。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 0,
+                  "ratios": [
+                    {
+                      "stat": "maxMana",
+                      "coeff": 0.2
+                    }
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "lol-blitzcrank.mana-barrier",
+                "onExisting": "keepLarger"
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.lightning.pulse",
+                "at": "self"
+              }
+            ],
+            "internalCooldown": 20,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.3
+            },
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 0,
+                "ratios": [
+                  {
+                    "stat": "maxMana",
+                    "coeff": 0.2
+                  }
+                ]
+              },
+              "duration": 3,
+              "stackKey": "lol-blitzcrank.mana-barrier",
+              "onExisting": "keepLarger",
+              "absorbs": "all"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.pulse",
+              "at": "self"
+            }
+          ],
+          "target": "self",
+          "internalCooldown": 20,
+          "condition": {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.3
+          }
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

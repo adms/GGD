@@ -1,0 +1,87 @@
+{
+  "id": "acquired-inuyasha.w",
+  "name": "風之傷清走廊",
+  "provenance": "editor-json",
+  "description": "向前推出風刃，小級物理傷害，行進段同一敵人只命中一次。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 10,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "finalEffects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "radius": 4.5,
+          "includeOrigin": true,
+          "radiusTier": "小"
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.1,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+    "params": {
+      "stepSize": 60,
+      "stepCount": 10,
+      "stepIntervalSec": 0.05,
+      "aoePerStep": 150,
+      "terminalBurst": 250,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:189e2e089e4e9a2edab69755d0a5d9aeb3eb8d9f2b4c8ec1ec23566bbf77e032"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,486 @@
+{
+  "id": "lol-ashe",
+  "name": "艾希",
+  "description": "設計草案，尚未完成上架驗收。普攻黏人、四層專注與遠距先手\n\n概念來源：LoL 艾希\nhttps://www.leagueoflegends.com/zh-tw/champions/ashe/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。\n• Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。\n• W：錐形多箭簡化為一次短寬直帶；同敵只計一發。\n• R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。\n• EX：保鮮箱只提供盾與鎖足，沒有無敵。\n• E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。\n\n採用所選 GGD 模型與特效。",
+  "role": "marksman",
+  "attackType": "ranged",
+  "archetype": "marksman",
+  "origin": "射手",
+  "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 29.202653061224485,
+    "healthRegen": 0.07234693877551021,
+    "maxMana": 19.291836734693877,
+    "manaRegen": 0,
+    "ad": 7.6918367346938785,
+    "as": 0,
+    "mr": 1.3198979591836735,
+    "armor": 0,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 29,
+    "int": 18,
+    "strGrowth": 1.25,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.67,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-ashe.q",
+      "name": "專注射擊",
+      "provenance": "editor-json",
+      "description": "消耗四層專注，四秒加攻速並每次普攻追加小額傷害。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "lol-ashe.focus",
+          "count": 4,
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.4
+                }
+              ],
+              "duration": 4,
+              "statusId": "lol-ashe.focus-active",
+              "applyTo": "self",
+              "stackKey": "lol-ashe.focus-active",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ice.pulse-lg",
+              "at": "self"
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "先普攻累積四層專注",
+              "applyTo": "self"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+        "params": {
+          "statusId": "lol-ashe.focus",
+          "minStacks": 4,
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "missingText": "先普攻累積四層專注",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.4
+                }
+              ],
+              "statusId": "lol-ashe.focus-active",
+              "stackKey": "lol-ashe.focus-active",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ice.pulse-lg",
+              "at": "self"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:297c2306b1acc7f739c89fffd6d24c407f4ea6222bfb0da19e47a27a28fd180f"
+      }
+    },
+    "W": {
+      "id": "lol-ashe.w",
+      "name": "萬箭齊發",
+      "provenance": "editor-json",
+      "description": "朝面向射出短寬箭幕，傷害並施加霜痕緩速。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 7,
+          "width": 3,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ashe.frost",
+              "duration": 2,
+              "moveSpeedMult": 0.8
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 7,
+              "width": 3,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ashe.frost",
+                  "duration": 2,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.8
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "E": {
+      "id": "lol-ashe.e",
+      "name": "鷹擊長空：強制簽收",
+      "provenance": "editor-json",
+      "description": "指定區域出現送件預警，0.7 秒後使仍在區域內的敵人繳械 0.8 秒，不能普攻但仍可移動與施法。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies",
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ashe.delivery-signature",
+              "duration": 0.8,
+              "applyTo": "target",
+              "disarmed": true
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ice.shockwave",
+              "at": "point"
+            }
+          ],
+          "targetMode": "reresolve",
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "radius": 2,
+              "side": "enemies",
+              "delaySec": 0.7,
+              "targetMode": "reresolve",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ashe.delivery-signature",
+                  "duration": 0.8,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "disarmed": true
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.ice.shockwave",
+                  "at": "point"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "lol-ashe.r",
+      "name": "魔法水晶箭",
+      "provenance": "editor-json",
+      "description": "發射會碰撞的直線冰箭，主目標暈眩，周圍緩速。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ashe.arrow-stun",
+              "duration": 1.2,
+              "stun": true
+            },
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "radius": 3,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "sourceScope": "caster",
+                  "statusId": "lol-ashe.arrow-slow",
+                  "duration": 1.5,
+                  "moveSpeedMult": 0.65
+                }
+              ],
+              "radiusTier": "極小"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ashe.arrow-stun",
+                  "duration": 1.2,
+                  "sourceScope": "caster",
+                  "stun": true
+                },
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "radius": 2,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "lol-ashe.arrow-slow",
+                      "duration": 1.5,
+                      "sourceScope": "caster",
+                      "moveSpeedMult": 0.65
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小"
+    }
+  },
+  "exAbility": "lol-ashe.ex",
+  "passiveAbility": "lol-ashe.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "acquired-leafa.ex",
+  "name": "風刃催單",
+  "provenance": "editor-json",
+  "description": "直線風刃造成小級魔法傷害，給撤退隊友爭取空間。",
+  "slot": "EX",
+  "castType": "skillshot",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 3,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 10,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ],
+      "finalEffects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "radius": 4.5,
+          "includeOrigin": true,
+          "radiusTier": "小"
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.1,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+    "params": {
+      "stepSize": 60,
+      "stepCount": 10,
+      "stepIntervalSec": 0.05,
+      "aoePerStep": 150,
+      "terminalBurst": 250,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "magic"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:189e2e089e4e9a2edab69755d0a5d9aeb3eb8d9f2b4c8ec1ec23566bbf77e032"
+  },
+  "schema": "ability@1"
+}

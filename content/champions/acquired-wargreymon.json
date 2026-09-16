@@ -1,0 +1,298 @@
+{
+  "id": "acquired-wargreymon",
+  "name": "戰鬥暴龍獸",
+  "description": "背盾像鍋蓋、蓋亞能量像外送：先貼身拆包，再把火球送到收件地。\n\n概念來源：數碼寶貝大冒險 戰鬥暴龍獸\nhttps://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md\n\n本遊戲改編：\n• 龍獸剋星不新增物種判斷；以近戰爪擊和短效護盾表現。\n• E貼身→Q減速→R落點爆破；對手可拉開距離避開R。\n\n採用所選 GGD 模型與特效。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.13085306122448978,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-wargreymon.q",
+      "name": "龍獸拆箱爪",
+      "provenance": "editor-json",
+      "description": "爪擊造成小級物理傷害並減速30%，持續1.5秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "acquired-wargreymon.claw",
+          "duration": 1.5,
+          "applyTo": "target",
+          "moveSpeedMult": 0.7
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      }
+    },
+    "W": {
+      "id": "acquired-wargreymon.w",
+      "name": "勇氣鍋蓋",
+      "provenance": "editor-json",
+      "description": "獲得3秒140護盾，準備承受貼身反擊。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 140,
+            "ratios": [],
+            "perRank": [
+              0,
+              70,
+              140,
+              210
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all"
+        }
+      ],
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+        "params": {
+          "target": "self",
+          "amount": {
+            "flat": 140,
+            "ratios": [],
+            "perRank": [
+              0,
+              70,
+              140,
+              210
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+      },
+      "castTimeSec": 0.1
+    },
+    "E": {
+      "id": "acquired-wargreymon.e",
+      "name": "勇者快遞",
+      "provenance": "editor-json",
+      "description": "跳至落點造成極小級物理傷害，接近收件人。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.8,
+          "durationSec": 0.35,
+          "landRadius": 3,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 200,
+          "durationSec": 0.35,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
+      }
+    },
+    "R": {
+      "id": "acquired-wargreymon.r",
+      "name": "蓋亞能量到付",
+      "provenance": "editor-json",
+      "description": "指定區域爆發大級魔法傷害；延長前搖給對手走位空間。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": []
+          }
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "template": {
+        "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "params": {
+          "radius": 350,
+          "damage": {
+            "damageTier": "大",
+            "ratios": []
+          },
+          "damageType": "magic"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+      },
+      "radiusTier": "中"
+    }
+  },
+  "exAbility": "acquired-wargreymon.ex",
+  "passiveAbility": "acquired-wargreymon.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

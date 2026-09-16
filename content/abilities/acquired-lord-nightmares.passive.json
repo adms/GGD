@@ -1,0 +1,53 @@
+{
+  "id": "acquired-lord-nightmares.passive",
+  "name": "混沌客服工單",
+  "provenance": "editor-json",
+  "description": "每次施法累積1層自身工單，上限3，持續15秒，供EX消耗。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "acquired-lord-nightmares.chaos",
+                "stacks": 1,
+                "refresh": "keep",
+                "duration": 15
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e",
+    "params": {
+      "event": "onAbilityCast",
+      "statusId": "acquired-lord-nightmares.chaos",
+      "perEvent": 1,
+      "maxStacks": 3,
+      "durationSec": 15
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:de6287f0c106ed9930cb698a08b173b665f3906742d732fcfd60035554bf7c37"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "acquired-cattiva.passive",
+  "name": "不是我打破的",
+  "provenance": "editor-json",
+  "description": "受傷後取得 2 秒極小級移速加成，內置冷卻 4 秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "msBonusTier": "極小"
+                  }
+                ],
+                "duration": 2,
+                "statusId": "acquired-cattiva.scamper",
+                "applyTo": "self",
+                "stackKey": "acquired-cattiva.scamper",
+                "maxStacks": 1
+              }
+            ],
+            "internalCooldown": 4,
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "target": "self",
+          "internalCooldown": 4,
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "statusId": "acquired-cattiva.scamper",
+              "stackKey": "acquired-cattiva.scamper",
+              "duration": 2,
+              "maxStacks": 1,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

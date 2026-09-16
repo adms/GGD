@@ -201,7 +201,7 @@ export function createCommunityHeroRecipe(recipe: CommunityHeroExample, projectI
         params: withHeroId(definition.params) } }],
       templateConflictPolicy: "reject",
       tuning: { cooldownSec: passive ? 0 : 10, manaCost: passive ? 0 : 40, range: passive ? 0 : 6 },
-      abilityOverrides: withHeroId({ provenance: "editor-json", ...(passive ? {} : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: definition.effects } : {}), ...definition.abilityOverrides }),
+      abilityOverrides: withHeroId({ provenance: "editor-json", ...(passive ? { castTimeTier: "極小" as const } : { rangeTier: definition.range ?? "中", cooldownTier: definition.cooldown ?? (slot === "EX" ? "大" : "小"), manaCostTier: definition.mana ?? "小", castTimeTier: definition.cast ?? "小" }), ...(definition.effects ? { effects: definition.effects } : {}), ...definition.abilityOverrides }),
       capabilityIds: [...template.requires], directionOptionIds: [], fallbackOptionIds: [],
     }];
   })));
