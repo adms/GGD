@@ -95,7 +95,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-lord-nightmares.q.webp"
     },
     "W": {
       "id": "acquired-lord-nightmares.w",
@@ -145,7 +146,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-lord-nightmares.w.webp"
     },
     "E": {
       "id": "acquired-lord-nightmares.e",
@@ -185,7 +187,8 @@
         "params": {},
         "inheritDefaults": true,
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-lord-nightmares.e.webp"
     },
     "R": {
       "id": "acquired-lord-nightmares.r",
@@ -251,7 +254,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-lord-nightmares.r.webp"
     }
   },
   "exAbility": "acquired-lord-nightmares.ex",
@@ -264,5 +268,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-lord-nightmares.webp"
 }

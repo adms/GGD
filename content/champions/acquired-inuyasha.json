@@ -102,7 +102,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-inuyasha.q.webp"
     },
     "W": {
       "id": "acquired-inuyasha.w",
@@ -188,7 +189,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:189e2e089e4e9a2edab69755d0a5d9aeb3eb8d9f2b4c8ec1ec23566bbf77e032"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-inuyasha.w.webp"
     },
     "E": {
       "id": "acquired-inuyasha.e",
@@ -254,7 +256,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-inuyasha.e.webp"
     },
     "R": {
       "id": "acquired-inuyasha.r",
@@ -340,7 +343,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/acquired-inuyasha.r.webp"
     }
   },
   "exAbility": "acquired-inuyasha.ex",
@@ -353,5 +357,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-inuyasha.webp"
 }

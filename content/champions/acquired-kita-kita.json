@@ -94,7 +94,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-kita-kita.q.webp"
     },
     "W": {
       "id": "acquired-kita-kita.w",
@@ -159,7 +160,8 @@
         "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
       },
       "castTimeSec": 0.1,
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-kita-kita.w.webp"
     },
     "E": {
       "id": "acquired-kita-kita.e",
@@ -225,7 +227,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-kita-kita.e.webp"
     },
     "R": {
       "id": "acquired-kita-kita.r",
@@ -273,7 +276,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "icon": "assets/icons/abilities/acquired-kita-kita.r.webp"
     }
   },
   "exAbility": "acquired-kita-kita.ex",
@@ -286,5 +290,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-kita-kita.webp"
 }

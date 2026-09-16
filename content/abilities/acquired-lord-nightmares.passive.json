@@ -49,5 +49,7 @@
     "inheritDefaults": true,
     "contentSha256": "sha256:de6287f0c106ed9930cb698a08b173b665f3906742d732fcfd60035554bf7c37"
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0,
+  "icon": "assets/icons/abilities/acquired-lord-nightmares.passive.webp"
 }

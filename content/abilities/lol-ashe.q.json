@@ -82,7 +82,7 @@
       "statusId": "lol-ashe.focus",
       "minStacks": 4,
       "castType": "self",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0,
       "missingText": "先普攻累積四層專注",
       "effects": [
         {
@@ -124,5 +124,6 @@
     "inheritDefaults": true,
     "contentSha256": "sha256:297c2306b1acc7f739c89fffd6d24c407f4ea6222bfb0da19e47a27a28fd180f"
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-ashe.q.webp"
 }

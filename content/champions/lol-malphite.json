@@ -109,7 +109,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -147,7 +147,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.q.webp"
     },
     "W": {
       "id": "lol-malphite.w",
@@ -216,7 +217,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -259,7 +260,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.w.webp"
     },
     "E": {
       "id": "lol-malphite.e",
@@ -323,7 +325,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -360,7 +362,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.e.webp"
     },
     "R": {
       "id": "lol-malphite.r",
@@ -424,7 +427,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -462,7 +465,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-malphite.r.webp"
     }
   },
   "exAbility": "lol-malphite.ex",
@@ -475,5 +479,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-malphite.webp"
 }

@@ -84,7 +84,7 @@
     "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
     "params": {
       "castType": "skillshot",
-      "castTimeSec": 0.1,
+      "castTimeSec": 1,
       "radius": 2.5,
       "side": "enemies",
       "effects": [
@@ -143,5 +143,6 @@
     "windowSec": 3
   },
   "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-ornn.r.webp",
   "radiusTier": "極小"
 }

@@ -94,7 +94,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-xiaodangjia.q.webp"
     },
     "W": {
       "id": "acquired-xiaodangjia.w",
@@ -154,7 +155,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-xiaodangjia.w.webp"
     },
     "E": {
       "id": "acquired-xiaodangjia.e",
@@ -207,7 +209,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-xiaodangjia.e.webp"
     },
     "R": {
       "id": "acquired-xiaodangjia.r",
@@ -273,7 +276,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-xiaodangjia.r.webp"
     }
   },
   "exAbility": "acquired-xiaodangjia.ex",
@@ -286,5 +290,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-xiaodangjia.webp"
 }

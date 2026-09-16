@@ -104,7 +104,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-leafa.q.webp"
     },
     "W": {
       "id": "acquired-leafa.w",
@@ -181,7 +182,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-leafa.w.webp"
     },
     "E": {
       "id": "acquired-leafa.e",
@@ -247,7 +249,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-leafa.e.webp"
     },
     "R": {
       "id": "acquired-leafa.r",
@@ -308,7 +311,8 @@
         "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
       },
       "castTimeSec": 0.1,
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-leafa.r.webp"
     }
   },
   "exAbility": "acquired-leafa.ex",
@@ -321,5 +325,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-leafa.webp"
 }

@@ -95,7 +95,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -119,7 +119,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-cattiva.q.webp"
     },
     "W": {
       "id": "acquired-cattiva.w",
@@ -158,7 +159,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -171,7 +172,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-cattiva.w.webp"
     },
     "E": {
       "id": "acquired-cattiva.e",
@@ -231,7 +233,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -265,7 +267,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-cattiva.e.webp"
     },
     "R": {
       "id": "acquired-cattiva.r",
@@ -323,7 +326,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -357,7 +360,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-cattiva.r.webp"
     }
   },
   "exAbility": "acquired-cattiva.ex",
@@ -370,5 +374,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-cattiva.webp"
 }

@@ -102,7 +102,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-wargreymon.q.webp"
     },
     "W": {
       "id": "acquired-wargreymon.w",
@@ -164,7 +165,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/acquired-wargreymon.w.webp"
     },
     "E": {
       "id": "acquired-wargreymon.e",
@@ -230,7 +232,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-wargreymon.e.webp"
     },
     "R": {
       "id": "acquired-wargreymon.r",
@@ -281,7 +284,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/acquired-wargreymon.r.webp"
     }
   },
   "exAbility": "acquired-wargreymon.ex",
@@ -294,5 +298,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-wargreymon.webp"
 }

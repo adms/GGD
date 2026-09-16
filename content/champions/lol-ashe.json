@@ -130,7 +130,7 @@
           "statusId": "lol-ashe.focus",
           "minStacks": 4,
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0,
           "missingText": "先普攻累積四層專注",
           "effects": [
             {
@@ -171,7 +171,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:297c2306b1acc7f739c89fffd6d24c407f4ea6222bfb0da19e47a27a28fd180f"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-ashe.q.webp"
     },
     "W": {
       "id": "lol-ashe.w",
@@ -228,7 +229,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -258,7 +259,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ashe.w.webp"
     },
     "E": {
       "id": "lol-ashe.e",
@@ -349,7 +351,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ashe.e.webp"
     },
     "R": {
       "id": "lol-ashe.r",
@@ -422,7 +425,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.5,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -469,7 +472,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ashe.r.webp"
     }
   },
   "exAbility": "lol-ashe.ex",
@@ -482,5 +486,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-ashe.webp"
 }

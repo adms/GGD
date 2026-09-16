@@ -1,17 +1,17 @@
 {
   "schema": "ggd-batch37-report@1",
   "heroes": 37,
-  "withChampionIcon": 0,
-  "abilityIcons": 0,
+  "withChampionIcon": 37,
+  "abilityIcons": 222,
   "abilitySlots": 222,
-  "withPlaceholders": 37,
+  "withPlaceholders": 0,
   "rows": [
     {
       "id": "acquired-alice",
       "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
       "origin": "坦克",
       "role": "tank",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-alice.webp",
       "abilities": [
         "acquired-alice.passive",
         "acquired-alice.q",
@@ -20,7 +20,7 @@
         "acquired-alice.r",
         "acquired-alice.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-alice.q",
         "acquired-alice.w",
@@ -50,25 +50,14 @@
         "sourceWork": "刀劍神域 Sword Art Online",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-alice.webp 與 content/assets/icons/champions/acquired-alice.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-alice.passive', 'acquired-alice.q', 'acquired-alice.w', 'acquired-alice.e', 'acquired-alice.r', 'acquired-alice.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-astralym",
       "name": "枯星龍",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-astralym.webp",
       "abilities": [
         "acquired-astralym.passive",
         "acquired-astralym.q",
@@ -77,7 +66,7 @@
         "acquired-astralym.r",
         "acquired-astralym.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-astralym.q",
         "acquired-astralym.w",
@@ -105,25 +94,14 @@
         "sourceWork": "Palworld／幻獸帕魯",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-astralym.webp 與 content/assets/icons/champions/acquired-astralym.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-astralym.passive', 'acquired-astralym.q', 'acquired-astralym.w', 'acquired-astralym.e', 'acquired-astralym.r', 'acquired-astralym.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-asuna",
       "name": "亞絲娜／結城明日奈",
       "origin": "法刺",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-asuna.webp",
       "abilities": [
         "acquired-asuna.passive",
         "acquired-asuna.q",
@@ -132,7 +110,7 @@
         "acquired-asuna.r",
         "acquired-asuna.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-asuna.q",
         "acquired-asuna.w",
@@ -163,25 +141,14 @@
         "sourceWork": "刀劍神域 Sword Art Online",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-asuna.webp 與 content/assets/icons/champions/acquired-asuna.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-asuna.passive', 'acquired-asuna.q', 'acquired-asuna.w', 'acquired-asuna.e', 'acquired-asuna.r', 'acquired-asuna.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-beatrice",
       "name": "碧翠絲",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-beatrice.webp",
       "abilities": [
         "acquired-beatrice.passive",
         "acquired-beatrice.q",
@@ -190,7 +157,7 @@
         "acquired-beatrice.r",
         "acquired-beatrice.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-beatrice.q",
         "acquired-beatrice.w",
@@ -217,25 +184,14 @@
         "sourceWork": "Re:從零開始的異世界生活",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-beatrice.webp 與 content/assets/icons/champions/acquired-beatrice.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-beatrice.passive', 'acquired-beatrice.q', 'acquired-beatrice.w', 'acquired-beatrice.e', 'acquired-beatrice.r', 'acquired-beatrice.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-cattiva",
       "name": "搗蛋貓",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-cattiva.webp",
       "abilities": [
         "acquired-cattiva.passive",
         "acquired-cattiva.q",
@@ -244,7 +200,7 @@
         "acquired-cattiva.r",
         "acquired-cattiva.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-cattiva.q",
         "acquired-cattiva.w",
@@ -271,25 +227,14 @@
         "sourceWork": "Palworld／幻獸帕魯",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-cattiva.webp 與 content/assets/icons/champions/acquired-cattiva.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-cattiva.passive', 'acquired-cattiva.q', 'acquired-cattiva.w', 'acquired-cattiva.e', 'acquired-cattiva.r', 'acquired-cattiva.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-dio",
       "name": "DIO",
       "origin": "狂戰",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-dio.webp",
       "abilities": [
         "acquired-dio.passive",
         "acquired-dio.q",
@@ -298,7 +243,7 @@
         "acquired-dio.r",
         "acquired-dio.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-dio.q",
         "acquired-dio.w",
@@ -327,25 +272,14 @@
         "sourceWork": "JoJo 的奇妙冒險：星塵遠征軍",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-dio.webp 與 content/assets/icons/champions/acquired-dio.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-dio.passive', 'acquired-dio.q', 'acquired-dio.w', 'acquired-dio.e', 'acquired-dio.r', 'acquired-dio.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-emilia",
       "name": "愛蜜莉雅",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-emilia.webp",
       "abilities": [
         "acquired-emilia.passive",
         "acquired-emilia.q",
@@ -354,7 +288,7 @@
         "acquired-emilia.r",
         "acquired-emilia.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-emilia.q",
         "acquired-emilia.w",
@@ -381,25 +315,14 @@
         "sourceWork": "Re:從零開始的異世界生活",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-emilia.webp 與 content/assets/icons/champions/acquired-emilia.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-emilia.passive', 'acquired-emilia.q', 'acquired-emilia.w', 'acquired-emilia.e', 'acquired-emilia.r', 'acquired-emilia.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-inuyasha",
       "name": "犬夜叉",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-inuyasha.webp",
       "abilities": [
         "acquired-inuyasha.passive",
         "acquired-inuyasha.q",
@@ -408,7 +331,7 @@
         "acquired-inuyasha.r",
         "acquired-inuyasha.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-inuyasha.q",
         "acquired-inuyasha.w",
@@ -439,25 +362,14 @@
         "sourceWork": "犬夜叉",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-inuyasha.webp 與 content/assets/icons/champions/acquired-inuyasha.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-inuyasha.passive', 'acquired-inuyasha.q', 'acquired-inuyasha.w', 'acquired-inuyasha.e', 'acquired-inuyasha.r', 'acquired-inuyasha.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-jetragon",
       "name": "空渦龍",
       "origin": "射手",
       "role": "marksman",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-jetragon.webp",
       "abilities": [
         "acquired-jetragon.passive",
         "acquired-jetragon.q",
@@ -466,7 +378,7 @@
         "acquired-jetragon.r",
         "acquired-jetragon.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-jetragon.q",
         "acquired-jetragon.w",
@@ -494,25 +406,14 @@
         "sourceWork": "Palworld／幻獸帕魯",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-jetragon.webp 與 content/assets/icons/champions/acquired-jetragon.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-jetragon.passive', 'acquired-jetragon.q', 'acquired-jetragon.w', 'acquired-jetragon.e', 'acquired-jetragon.r', 'acquired-jetragon.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-kita-kita",
       "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
       "origin": "軟輔",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-kita-kita.webp",
       "abilities": [
         "acquired-kita-kita.passive",
         "acquired-kita-kita.q",
@@ -521,7 +422,7 @@
         "acquired-kita-kita.r",
         "acquired-kita-kita.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-kita-kita.q",
         "acquired-kita-kita.w",
@@ -551,25 +452,14 @@
         "sourceWork": "咕嚕咕嚕魔法陣",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-kita-kita.webp 與 content/assets/icons/champions/acquired-kita-kita.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-kita-kita.passive', 'acquired-kita-kita.q', 'acquired-kita-kita.w', 'acquired-kita-kita.e', 'acquired-kita-kita.r', 'acquired-kita-kita.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-kuroyukihime",
       "name": "黑雪姬",
       "origin": "法刺",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-kuroyukihime.webp",
       "abilities": [
         "acquired-kuroyukihime.passive",
         "acquired-kuroyukihime.q",
@@ -578,7 +468,7 @@
         "acquired-kuroyukihime.r",
         "acquired-kuroyukihime.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-kuroyukihime.q",
         "acquired-kuroyukihime.w",
@@ -609,25 +499,14 @@
         "sourceWork": "加速世界",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-kuroyukihime.webp 與 content/assets/icons/champions/acquired-kuroyukihime.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-kuroyukihime.passive', 'acquired-kuroyukihime.q', 'acquired-kuroyukihime.w', 'acquired-kuroyukihime.e', 'acquired-kuroyukihime.r', 'acquired-kuroyukihime.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-leafa",
       "name": "莉法",
       "origin": "軟輔",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-leafa.webp",
       "abilities": [
         "acquired-leafa.passive",
         "acquired-leafa.q",
@@ -636,7 +515,7 @@
         "acquired-leafa.r",
         "acquired-leafa.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-leafa.q",
         "acquired-leafa.w",
@@ -667,25 +546,14 @@
         "sourceWork": "刀劍神域 Sword Art Online",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-leafa.webp 與 content/assets/icons/champions/acquired-leafa.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-leafa.passive', 'acquired-leafa.q', 'acquired-leafa.w', 'acquired-leafa.e', 'acquired-leafa.r', 'acquired-leafa.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-lord-nightmares",
       "name": "金色魔王／惡夢之王",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-lord-nightmares.webp",
       "abilities": [
         "acquired-lord-nightmares.passive",
         "acquired-lord-nightmares.q",
@@ -694,7 +562,7 @@
         "acquired-lord-nightmares.r",
         "acquired-lord-nightmares.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-lord-nightmares.q",
         "acquired-lord-nightmares.w",
@@ -725,25 +593,14 @@
         "sourceWork": "秀逗魔導士",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-lord-nightmares.webp 與 content/assets/icons/champions/acquired-lord-nightmares.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-lord-nightmares.passive', 'acquired-lord-nightmares.q', 'acquired-lord-nightmares.w', 'acquired-lord-nightmares.e', 'acquired-lord-nightmares.r', 'acquired-lord-nightmares.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-mario",
       "name": "Mario",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-mario.webp",
       "abilities": [
         "acquired-mario.passive",
         "acquired-mario.q",
@@ -752,7 +609,7 @@
         "acquired-mario.r",
         "acquired-mario.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-mario.q",
         "acquired-mario.w",
@@ -780,25 +637,14 @@
         "sourceWork": "Super Mario／超級瑪利歐",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-mario.webp 與 content/assets/icons/champions/acquired-mario.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-mario.passive', 'acquired-mario.q', 'acquired-mario.w', 'acquired-mario.e', 'acquired-mario.r', 'acquired-mario.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-mewtwo",
       "name": "Mewtwo",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-mewtwo.webp",
       "abilities": [
         "acquired-mewtwo.passive",
         "acquired-mewtwo.q",
@@ -807,7 +653,7 @@
         "acquired-mewtwo.r",
         "acquired-mewtwo.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-mewtwo.q",
         "acquired-mewtwo.w",
@@ -834,25 +680,14 @@
         "sourceWork": "Pokémon／寶可夢",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-mewtwo.webp 與 content/assets/icons/champions/acquired-mewtwo.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-mewtwo.passive', 'acquired-mewtwo.q', 'acquired-mewtwo.w', 'acquired-mewtwo.e', 'acquired-mewtwo.r', 'acquired-mewtwo.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-minecraft",
       "name": "Steve／Alex",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-minecraft.webp",
       "abilities": [
         "acquired-minecraft.passive",
         "acquired-minecraft.q",
@@ -861,7 +696,7 @@
         "acquired-minecraft.r",
         "acquired-minecraft.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-minecraft.q",
         "acquired-minecraft.w",
@@ -889,25 +724,14 @@
         "sourceWork": "Minecraft／當個創世神",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-minecraft.webp 與 content/assets/icons/champions/acquired-minecraft.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-minecraft.passive', 'acquired-minecraft.q', 'acquired-minecraft.w', 'acquired-minecraft.e', 'acquired-minecraft.r', 'acquired-minecraft.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-morgiana",
       "name": "摩尔迦娜",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-morgiana.webp",
       "abilities": [
         "acquired-morgiana.passive",
         "acquired-morgiana.q",
@@ -916,7 +740,7 @@
         "acquired-morgiana.r",
         "acquired-morgiana.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-morgiana.q",
         "acquired-morgiana.w",
@@ -943,25 +767,14 @@
         "sourceWork": "MAGI／魔奇少年",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-morgiana.webp 與 content/assets/icons/champions/acquired-morgiana.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-morgiana.passive', 'acquired-morgiana.q', 'acquired-morgiana.w', 'acquired-morgiana.e', 'acquired-morgiana.r', 'acquired-morgiana.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-naruto",
       "name": "漩渦鳴人",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-naruto.webp",
       "abilities": [
         "acquired-naruto.passive",
         "acquired-naruto.q",
@@ -970,7 +783,7 @@
         "acquired-naruto.r",
         "acquired-naruto.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-naruto.q",
         "acquired-naruto.w",
@@ -1001,25 +814,14 @@
         "sourceWork": "火影忍者 NARUTO",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-naruto.webp 與 content/assets/icons/champions/acquired-naruto.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-naruto.passive', 'acquired-naruto.q', 'acquired-naruto.w', 'acquired-naruto.e', 'acquired-naruto.r', 'acquired-naruto.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-pokemon-trainer",
       "name": "Pokémon Trainer",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-pokemon-trainer.webp",
       "abilities": [
         "acquired-pokemon-trainer.passive",
         "acquired-pokemon-trainer.q",
@@ -1028,7 +830,7 @@
         "acquired-pokemon-trainer.r",
         "acquired-pokemon-trainer.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-pokemon-trainer.q",
         "acquired-pokemon-trainer.w",
@@ -1055,25 +857,14 @@
         "sourceWork": "Pokémon／任天堂明星大亂鬥",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-pokemon-trainer.webp 與 content/assets/icons/champions/acquired-pokemon-trainer.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-pokemon-trainer.passive', 'acquired-pokemon-trainer.q', 'acquired-pokemon-trainer.w', 'acquired-pokemon-trainer.e', 'acquired-pokemon-trainer.r', 'acquired-pokemon-trainer.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-ram",
       "name": "拉姆",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-ram.webp",
       "abilities": [
         "acquired-ram.passive",
         "acquired-ram.q",
@@ -1082,7 +873,7 @@
         "acquired-ram.r",
         "acquired-ram.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-ram.q",
         "acquired-ram.w",
@@ -1109,25 +900,14 @@
         "sourceWork": "Re:從零開始的異世界生活",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-ram.webp 與 content/assets/icons/champions/acquired-ram.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-ram.passive', 'acquired-ram.q', 'acquired-ram.w', 'acquired-ram.e', 'acquired-ram.r', 'acquired-ram.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-rim",
       "name": "莉姆（Rim；粉紅魔龍）",
       "origin": "狂戰",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-rim.webp",
       "abilities": [
         "acquired-rim.passive",
         "acquired-rim.q",
@@ -1136,7 +916,7 @@
         "acquired-rim.r",
         "acquired-rim.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-rim.q",
         "acquired-rim.w",
@@ -1167,25 +947,14 @@
         "sourceWork": "迷宮黑心企業／異世界迷宮黑心企業",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-rim.webp 與 content/assets/icons/champions/acquired-rim.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-rim.passive', 'acquired-rim.q', 'acquired-rim.w', 'acquired-rim.e', 'acquired-rim.r', 'acquired-rim.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-ryu",
       "name": "Ryu",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-ryu.webp",
       "abilities": [
         "acquired-ryu.passive",
         "acquired-ryu.q",
@@ -1194,7 +963,7 @@
         "acquired-ryu.r",
         "acquired-ryu.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-ryu.q",
         "acquired-ryu.w",
@@ -1222,25 +991,14 @@
         "sourceWork": "Street Fighter／快打旋風",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-ryu.webp 與 content/assets/icons/champions/acquired-ryu.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-ryu.passive', 'acquired-ryu.q', 'acquired-ryu.w', 'acquired-ryu.e', 'acquired-ryu.r', 'acquired-ryu.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-saya",
       "name": "沙耶",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-saya.webp",
       "abilities": [
         "acquired-saya.passive",
         "acquired-saya.q",
@@ -1249,7 +1007,7 @@
         "acquired-saya.r",
         "acquired-saya.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-saya.q",
         "acquired-saya.w",
@@ -1279,25 +1037,14 @@
         "sourceWork": "沙耶之歌",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-saya.webp 與 content/assets/icons/champions/acquired-saya.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-saya.passive', 'acquired-saya.q', 'acquired-saya.w', 'acquired-saya.e', 'acquired-saya.r', 'acquired-saya.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-wargreymon",
       "name": "戰鬥暴龍獸",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-wargreymon.webp",
       "abilities": [
         "acquired-wargreymon.passive",
         "acquired-wargreymon.q",
@@ -1306,7 +1053,7 @@
         "acquired-wargreymon.r",
         "acquired-wargreymon.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-wargreymon.q",
         "acquired-wargreymon.w",
@@ -1337,25 +1084,14 @@
         "sourceWork": "數碼寶貝大冒險",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-wargreymon.webp 與 content/assets/icons/champions/acquired-wargreymon.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-wargreymon.passive', 'acquired-wargreymon.q', 'acquired-wargreymon.w', 'acquired-wargreymon.e', 'acquired-wargreymon.r', 'acquired-wargreymon.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-xiaodangjia",
       "name": "小當家",
       "origin": "軟輔",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-xiaodangjia.webp",
       "abilities": [
         "acquired-xiaodangjia.passive",
         "acquired-xiaodangjia.q",
@@ -1364,7 +1100,7 @@
         "acquired-xiaodangjia.r",
         "acquired-xiaodangjia.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-xiaodangjia.q",
         "acquired-xiaodangjia.w",
@@ -1395,25 +1131,14 @@
         "sourceWork": "中華一番！",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-xiaodangjia.webp 與 content/assets/icons/champions/acquired-xiaodangjia.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-xiaodangjia.passive', 'acquired-xiaodangjia.q', 'acquired-xiaodangjia.w', 'acquired-xiaodangjia.e', 'acquired-xiaodangjia.r', 'acquired-xiaodangjia.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "acquired-zero",
       "name": "Zero",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/acquired-zero.webp",
       "abilities": [
         "acquired-zero.passive",
         "acquired-zero.q",
@@ -1422,7 +1147,7 @@
         "acquired-zero.r",
         "acquired-zero.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "acquired-zero.q",
         "acquired-zero.w",
@@ -1450,25 +1175,14 @@
         "sourceWork": "Mega Man X／洛克人 X",
         "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/acquired-zero.webp 與 content/assets/icons/champions/acquired-zero.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['acquired-zero.passive', 'acquired-zero.q', 'acquired-zero.w', 'acquired-zero.e', 'acquired-zero.r', 'acquired-zero.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-ahri",
       "name": "阿璃",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-ahri.webp",
       "abilities": [
         "lol-ahri.passive",
         "lol-ahri.q",
@@ -1477,7 +1191,7 @@
         "lol-ahri.r",
         "lol-ahri.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-ahri.q",
         "lol-ahri.w",
@@ -1508,25 +1222,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-ahri.webp 與 content/assets/icons/champions/lol-ahri.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-ahri.passive', 'lol-ahri.q', 'lol-ahri.w', 'lol-ahri.e', 'lol-ahri.r', 'lol-ahri.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-ashe",
       "name": "艾希",
       "origin": "射手",
       "role": "marksman",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-ashe.webp",
       "abilities": [
         "lol-ashe.passive",
         "lol-ashe.q",
@@ -1535,7 +1238,7 @@
         "lol-ashe.r",
         "lol-ashe.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-ashe.q",
         "lol-ashe.w",
@@ -1567,25 +1270,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-ashe.webp 與 content/assets/icons/champions/lol-ashe.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-ashe.passive', 'lol-ashe.q', 'lol-ashe.w', 'lol-ashe.e', 'lol-ashe.r', 'lol-ashe.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-blitzcrank",
       "name": "布里姿",
       "origin": "坦克",
       "role": "tank",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-blitzcrank.webp",
       "abilities": [
         "lol-blitzcrank.passive",
         "lol-blitzcrank.q",
@@ -1594,7 +1286,7 @@
         "lol-blitzcrank.r",
         "lol-blitzcrank.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-blitzcrank.q",
         "lol-blitzcrank.w",
@@ -1625,25 +1317,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-blitzcrank.webp 與 content/assets/icons/champions/lol-blitzcrank.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-blitzcrank.passive', 'lol-blitzcrank.q', 'lol-blitzcrank.w', 'lol-blitzcrank.e', 'lol-blitzcrank.r', 'lol-blitzcrank.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-chogath",
       "name": "科加斯",
       "origin": "坦克",
       "role": "tank",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-chogath.webp",
       "abilities": [
         "lol-chogath.passive",
         "lol-chogath.q",
@@ -1652,7 +1333,7 @@
         "lol-chogath.r",
         "lol-chogath.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-chogath.q",
         "lol-chogath.w",
@@ -1683,25 +1364,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-chogath.webp 與 content/assets/icons/champions/lol-chogath.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-chogath.passive', 'lol-chogath.q', 'lol-chogath.w', 'lol-chogath.e', 'lol-chogath.r', 'lol-chogath.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-fiddlesticks",
       "name": "稻草人",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-fiddlesticks.webp",
       "abilities": [
         "lol-fiddlesticks.passive",
         "lol-fiddlesticks.q",
@@ -1710,7 +1380,7 @@
         "lol-fiddlesticks.r",
         "lol-fiddlesticks.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-fiddlesticks.q",
         "lol-fiddlesticks.w",
@@ -1743,25 +1413,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-fiddlesticks.webp 與 content/assets/icons/champions/lol-fiddlesticks.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-fiddlesticks.passive', 'lol-fiddlesticks.q', 'lol-fiddlesticks.w', 'lol-fiddlesticks.e', 'lol-fiddlesticks.r', 'lol-fiddlesticks.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-garen",
       "name": "蓋倫",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-garen.webp",
       "abilities": [
         "lol-garen.passive",
         "lol-garen.q",
@@ -1770,7 +1429,7 @@
         "lol-garen.r",
         "lol-garen.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-garen.q",
         "lol-garen.w",
@@ -1803,25 +1462,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-garen.webp 與 content/assets/icons/champions/lol-garen.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-garen.passive', 'lol-garen.q', 'lol-garen.w', 'lol-garen.e', 'lol-garen.r', 'lol-garen.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-malphite",
       "name": "墨菲特",
       "origin": "坦克",
       "role": "tank",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-malphite.webp",
       "abilities": [
         "lol-malphite.passive",
         "lol-malphite.q",
@@ -1830,7 +1478,7 @@
         "lol-malphite.r",
         "lol-malphite.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-malphite.q",
         "lol-malphite.w",
@@ -1861,25 +1509,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-malphite.webp 與 content/assets/icons/champions/lol-malphite.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-malphite.passive', 'lol-malphite.q', 'lol-malphite.w', 'lol-malphite.e', 'lol-malphite.r', 'lol-malphite.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-ornn",
       "name": "鄂爾",
       "origin": "坦克",
       "role": "tank",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-ornn.webp",
       "abilities": [
         "lol-ornn.passive",
         "lol-ornn.q",
@@ -1888,7 +1525,7 @@
         "lol-ornn.r",
         "lol-ornn.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-ornn.q",
         "lol-ornn.w",
@@ -1920,25 +1557,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-ornn.webp 與 content/assets/icons/champions/lol-ornn.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-ornn.passive', 'lol-ornn.q', 'lol-ornn.w', 'lol-ornn.e', 'lol-ornn.r', 'lol-ornn.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-sett",
       "name": "賽特",
       "origin": "鬥士",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-sett.webp",
       "abilities": [
         "lol-sett.passive",
         "lol-sett.q",
@@ -1947,7 +1573,7 @@
         "lol-sett.r",
         "lol-sett.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-sett.q",
         "lol-sett.w",
@@ -1978,25 +1604,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-sett.webp 與 content/assets/icons/champions/lol-sett.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-sett.passive', 'lol-sett.q', 'lol-sett.w', 'lol-sett.e', 'lol-sett.r', 'lol-sett.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-thresh",
       "name": "瑟雷西",
       "origin": "軟輔",
       "role": "fighter",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-thresh.webp",
       "abilities": [
         "lol-thresh.passive",
         "lol-thresh.q",
@@ -2005,7 +1620,7 @@
         "lol-thresh.r",
         "lol-thresh.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-thresh.q",
         "lol-thresh.w",
@@ -2036,25 +1651,14 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-thresh.webp 與 content/assets/icons/champions/lol-thresh.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-thresh.passive', 'lol-thresh.q', 'lol-thresh.w', 'lol-thresh.e', 'lol-thresh.r', 'lol-thresh.ex']"
-        }
-      ]
+      "placeholders": []
     },
     {
       "id": "lol-velkoz",
       "name": "威寇茲",
       "origin": "法師",
       "role": "mage",
-      "icon": null,
+      "icon": "assets/icons/champions/lol-velkoz.webp",
       "abilities": [
         "lol-velkoz.passive",
         "lol-velkoz.q",
@@ -2063,7 +1667,7 @@
         "lol-velkoz.r",
         "lol-velkoz.ex"
       ],
-      "abilityIcons": 0,
+      "abilityIcons": 6,
       "vfxScripts": [
         "lol-velkoz.q",
         "lol-velkoz.w",
@@ -2095,18 +1699,7 @@
         ],
         "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
       },
-      "placeholders": [
-        {
-          "field": "icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 沒有產好的頭圖（找過 docs/_reports/community-hero-icons-20260909/champions/lol-velkoz.webp 與 content/assets/icons/champions/lol-velkoz.webp）"
-        },
-        {
-          "field": "abilities[].icon",
-          "state": "no-generated-icon",
-          "why": "⛔ 6 格技能沒有產好的圖示：['lol-velkoz.passive', 'lol-velkoz.q', 'lol-velkoz.w', 'lol-velkoz.e', 'lol-velkoz.r', 'lol-velkoz.ex']"
-        }
-      ]
+      "placeholders": []
     }
   ]
 }

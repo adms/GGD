@@ -1,942 +1,942 @@
 {
   "collection": "abilities",
-  "hash": "468819cc6295",
+  "hash": "df1183b3c576",
   "entries": [
     {
       "id": "acquired-alice.e",
       "path": "abilities/acquired-alice.e.json",
-      "hash": "6f1ac91caea9",
-      "size": 1402
+      "hash": "9f854c21540d",
+      "size": 1460
     },
     {
       "id": "acquired-alice.ex",
       "path": "abilities/acquired-alice.ex.json",
-      "hash": "c703905287e5",
-      "size": 945
+      "hash": "2dd684aca4e3",
+      "size": 1004
     },
     {
       "id": "acquired-alice.passive",
       "path": "abilities/acquired-alice.passive.json",
-      "hash": "1fd69e6d6a6b",
-      "size": 1672
+      "hash": "dadcc7203628",
+      "size": 1760
     },
     {
       "id": "acquired-alice.q",
       "path": "abilities/acquired-alice.q.json",
-      "hash": "fe7a2af1f966",
-      "size": 1079
+      "hash": "8d032d407dbc",
+      "size": 1137
     },
     {
       "id": "acquired-alice.r",
       "path": "abilities/acquired-alice.r.json",
-      "hash": "cc3934c7c556",
-      "size": 1279
+      "hash": "ad56d964cd8f",
+      "size": 1337
     },
     {
       "id": "acquired-alice.w",
       "path": "abilities/acquired-alice.w.json",
-      "hash": "8c49f64b7392",
-      "size": 1186
+      "hash": "0d762cd5b72a",
+      "size": 1244
     },
     {
       "id": "acquired-astralym.e",
       "path": "abilities/acquired-astralym.e.json",
-      "hash": "459e7e76d8f7",
-      "size": 1135
+      "hash": "7ea8ac1a6126",
+      "size": 1196
     },
     {
       "id": "acquired-astralym.ex",
       "path": "abilities/acquired-astralym.ex.json",
-      "hash": "5ffac1eced95",
-      "size": 2129
+      "hash": "fddda2cd6a5e",
+      "size": 2191
     },
     {
       "id": "acquired-astralym.passive",
       "path": "abilities/acquired-astralym.passive.json",
-      "hash": "ea57b5922ff6",
-      "size": 1504
+      "hash": "a61a347279b7",
+      "size": 1596
     },
     {
       "id": "acquired-astralym.q",
       "path": "abilities/acquired-astralym.q.json",
-      "hash": "0640da92bd9a",
-      "size": 2677
+      "hash": "fb8fc85d53e4",
+      "size": 2738
     },
     {
       "id": "acquired-astralym.r",
       "path": "abilities/acquired-astralym.r.json",
-      "hash": "2cf676e2ef79",
-      "size": 1909
+      "hash": "ee029dd2bb07",
+      "size": 1970
     },
     {
       "id": "acquired-astralym.w",
       "path": "abilities/acquired-astralym.w.json",
-      "hash": "0a25b28e9a78",
-      "size": 1673
+      "hash": "1d727d452238",
+      "size": 1734
     },
     {
       "id": "acquired-asuna.e",
       "path": "abilities/acquired-asuna.e.json",
-      "hash": "d0ce9e54426e",
-      "size": 1446
+      "hash": "4ce64e740677",
+      "size": 1504
     },
     {
       "id": "acquired-asuna.ex",
       "path": "abilities/acquired-asuna.ex.json",
-      "hash": "06698657c6c1",
-      "size": 852
+      "hash": "68e86a3d3554",
+      "size": 911
     },
     {
       "id": "acquired-asuna.passive",
       "path": "abilities/acquired-asuna.passive.json",
-      "hash": "3348e8d032b0",
-      "size": 1737
+      "hash": "602750d6bd72",
+      "size": 1826
     },
     {
       "id": "acquired-asuna.q",
       "path": "abilities/acquired-asuna.q.json",
-      "hash": "fb8f5f924683",
-      "size": 1240
+      "hash": "87db8f2bd3ba",
+      "size": 1298
     },
     {
       "id": "acquired-asuna.r",
       "path": "abilities/acquired-asuna.r.json",
-      "hash": "f40abf19cc4e",
-      "size": 1881
+      "hash": "3f9d3602c8b7",
+      "size": 1939
     },
     {
       "id": "acquired-asuna.w",
       "path": "abilities/acquired-asuna.w.json",
-      "hash": "3a9ac820cce9",
-      "size": 1370
+      "hash": "f2f242484204",
+      "size": 1428
     },
     {
       "id": "acquired-beatrice.e",
       "path": "abilities/acquired-beatrice.e.json",
-      "hash": "40f9b74f833b",
-      "size": 1123
+      "hash": "f6741783a5c5",
+      "size": 1184
     },
     {
       "id": "acquired-beatrice.ex",
       "path": "abilities/acquired-beatrice.ex.json",
-      "hash": "00a0cdb85f5a",
-      "size": 1656
+      "hash": "3c9fe822a5a4",
+      "size": 1718
     },
     {
       "id": "acquired-beatrice.passive",
       "path": "abilities/acquired-beatrice.passive.json",
-      "hash": "d918177223ac",
-      "size": 1522
+      "hash": "cb3737980401",
+      "size": 1609
     },
     {
       "id": "acquired-beatrice.q",
       "path": "abilities/acquired-beatrice.q.json",
-      "hash": "c499ed83e7b6",
-      "size": 1545
+      "hash": "5700a13a3d8f",
+      "size": 1606
     },
     {
       "id": "acquired-beatrice.r",
       "path": "abilities/acquired-beatrice.r.json",
-      "hash": "a9a4454c0696",
-      "size": 2612
+      "hash": "dd9ac74582dd",
+      "size": 2673
     },
     {
       "id": "acquired-beatrice.w",
       "path": "abilities/acquired-beatrice.w.json",
-      "hash": "dc3421b086d3",
-      "size": 1625
+      "hash": "1500ef32480b",
+      "size": 1686
     },
     {
       "id": "acquired-cattiva.e",
       "path": "abilities/acquired-cattiva.e.json",
-      "hash": "0012cd1c4d4c",
-      "size": 2077
+      "hash": "733e1bd6de31",
+      "size": 2137
     },
     {
       "id": "acquired-cattiva.ex",
       "path": "abilities/acquired-cattiva.ex.json",
-      "hash": "486299e7dbf4",
-      "size": 1568
+      "hash": "cf27982b8258",
+      "size": 1629
     },
     {
       "id": "acquired-cattiva.passive",
       "path": "abilities/acquired-cattiva.passive.json",
-      "hash": "ac3e217c7708",
-      "size": 2017
+      "hash": "448332024a32",
+      "size": 2108
     },
     {
       "id": "acquired-cattiva.q",
       "path": "abilities/acquired-cattiva.q.json",
-      "hash": "dfead4c076e6",
-      "size": 1663
+      "hash": "42aa92553bb1",
+      "size": 1723
     },
     {
       "id": "acquired-cattiva.r",
       "path": "abilities/acquired-cattiva.r.json",
-      "hash": "0cb8fec87d24",
-      "size": 2227
+      "hash": "6ec18c4b1d55",
+      "size": 2287
     },
     {
       "id": "acquired-cattiva.w",
       "path": "abilities/acquired-cattiva.w.json",
-      "hash": "18442d165b96",
-      "size": 1096
+      "hash": "9349b2b6c556",
+      "size": 1156
     },
     {
       "id": "acquired-dio.e",
       "path": "abilities/acquired-dio.e.json",
-      "hash": "168b742a0bdd",
-      "size": 1382
+      "hash": "902336719799",
+      "size": 1438
     },
     {
       "id": "acquired-dio.ex",
       "path": "abilities/acquired-dio.ex.json",
-      "hash": "25fe63f5aca9",
-      "size": 1625
+      "hash": "bdfdd294b97c",
+      "size": 1682
     },
     {
       "id": "acquired-dio.passive",
       "path": "abilities/acquired-dio.passive.json",
-      "hash": "7e0c64474fac",
-      "size": 1878
+      "hash": "41e5c0ce70eb",
+      "size": 1965
     },
     {
       "id": "acquired-dio.q",
       "path": "abilities/acquired-dio.q.json",
-      "hash": "b9c7a3386640",
-      "size": 1810
+      "hash": "9afe13957910",
+      "size": 1866
     },
     {
       "id": "acquired-dio.r",
       "path": "abilities/acquired-dio.r.json",
-      "hash": "a30170a1f68f",
-      "size": 1658
+      "hash": "c22585d3dca9",
+      "size": 1714
     },
     {
       "id": "acquired-dio.w",
       "path": "abilities/acquired-dio.w.json",
-      "hash": "11d2a8dbfe0c",
-      "size": 2063
+      "hash": "a9acef6637b5",
+      "size": 2119
     },
     {
       "id": "acquired-emilia.e",
       "path": "abilities/acquired-emilia.e.json",
-      "hash": "acf75a8f3094",
-      "size": 1662
+      "hash": "1214d16d0795",
+      "size": 1721
     },
     {
       "id": "acquired-emilia.ex",
       "path": "abilities/acquired-emilia.ex.json",
-      "hash": "ec12e42ce4a0",
-      "size": 1567
+      "hash": "f49dd056a89e",
+      "size": 1627
     },
     {
       "id": "acquired-emilia.passive",
       "path": "abilities/acquired-emilia.passive.json",
-      "hash": "c60f7a4c754c",
-      "size": 2674
+      "hash": "fbf962751bd9",
+      "size": 2764
     },
     {
       "id": "acquired-emilia.q",
       "path": "abilities/acquired-emilia.q.json",
-      "hash": "aeb42c3df25f",
-      "size": 2490
+      "hash": "821fd95ca114",
+      "size": 2549
     },
     {
       "id": "acquired-emilia.r",
       "path": "abilities/acquired-emilia.r.json",
-      "hash": "aa234a47540b",
-      "size": 1922
+      "hash": "e4a3915ecd58",
+      "size": 1981
     },
     {
       "id": "acquired-emilia.w",
       "path": "abilities/acquired-emilia.w.json",
-      "hash": "fa1904b23d83",
-      "size": 1630
+      "hash": "f25f2e2ed946",
+      "size": 1689
     },
     {
       "id": "acquired-inuyasha.e",
       "path": "abilities/acquired-inuyasha.e.json",
-      "hash": "64c32c87bd79",
-      "size": 1399
+      "hash": "1512f45c3b94",
+      "size": 1460
     },
     {
       "id": "acquired-inuyasha.ex",
       "path": "abilities/acquired-inuyasha.ex.json",
-      "hash": "8bb9c94497c5",
-      "size": 1261
+      "hash": "790932b647d4",
+      "size": 1323
     },
     {
       "id": "acquired-inuyasha.passive",
       "path": "abilities/acquired-inuyasha.passive.json",
-      "hash": "c80d9b46ab7d",
-      "size": 1842
+      "hash": "c5882d75f1f6",
+      "size": 1929
     },
     {
       "id": "acquired-inuyasha.q",
       "path": "abilities/acquired-inuyasha.q.json",
-      "hash": "6325505aa194",
-      "size": 1237
+      "hash": "2e84ceb0373d",
+      "size": 1298
     },
     {
       "id": "acquired-inuyasha.r",
       "path": "abilities/acquired-inuyasha.r.json",
-      "hash": "771c548777cd",
-      "size": 1935
+      "hash": "0613a344218d",
+      "size": 1996
     },
     {
       "id": "acquired-inuyasha.w",
       "path": "abilities/acquired-inuyasha.w.json",
-      "hash": "fd37804e9e8b",
-      "size": 1920
+      "hash": "27df31d76e8f",
+      "size": 1981
     },
     {
       "id": "acquired-jetragon.e",
       "path": "abilities/acquired-jetragon.e.json",
-      "hash": "382bacb68d04",
-      "size": 1172
+      "hash": "4c2026487aaa",
+      "size": 1233
     },
     {
       "id": "acquired-jetragon.ex",
       "path": "abilities/acquired-jetragon.ex.json",
-      "hash": "0d490746f9a8",
-      "size": 1828
+      "hash": "be43bfb6301d",
+      "size": 1890
     },
     {
       "id": "acquired-jetragon.passive",
       "path": "abilities/acquired-jetragon.passive.json",
-      "hash": "d62c9229aed3",
-      "size": 1532
+      "hash": "99158fff0caf",
+      "size": 1619
     },
     {
       "id": "acquired-jetragon.q",
       "path": "abilities/acquired-jetragon.q.json",
-      "hash": "a0c84456b737",
-      "size": 2060
+      "hash": "b43df66be8fe",
+      "size": 2121
     },
     {
       "id": "acquired-jetragon.r",
       "path": "abilities/acquired-jetragon.r.json",
-      "hash": "80dfa0c1df69",
-      "size": 3723
+      "hash": "434d73465353",
+      "size": 3784
     },
     {
       "id": "acquired-jetragon.w",
       "path": "abilities/acquired-jetragon.w.json",
-      "hash": "e25758add720",
-      "size": 1660
+      "hash": "13b3cf06633e",
+      "size": 1721
     },
     {
       "id": "acquired-kita-kita.e",
       "path": "abilities/acquired-kita-kita.e.json",
-      "hash": "0b11ef567661",
-      "size": 1427
+      "hash": "12a4de61b153",
+      "size": 1489
     },
     {
       "id": "acquired-kita-kita.ex",
       "path": "abilities/acquired-kita-kita.ex.json",
-      "hash": "7a5c2b23a2c2",
-      "size": 907
+      "hash": "f9d9ad38c4cd",
+      "size": 970
     },
     {
       "id": "acquired-kita-kita.passive",
       "path": "abilities/acquired-kita-kita.passive.json",
-      "hash": "decc31c09be3",
-      "size": 1679
+      "hash": "b283e16c5bcd",
+      "size": 1772
     },
     {
       "id": "acquired-kita-kita.q",
       "path": "abilities/acquired-kita-kita.q.json",
-      "hash": "13afcdac48ed",
-      "size": 1089
+      "hash": "e7c690a5bba5",
+      "size": 1151
     },
     {
       "id": "acquired-kita-kita.r",
       "path": "abilities/acquired-kita-kita.r.json",
-      "hash": "6f58b753d026",
-      "size": 1086
+      "hash": "4aeaa2baef8c",
+      "size": 1148
     },
     {
       "id": "acquired-kita-kita.w",
       "path": "abilities/acquired-kita-kita.w.json",
-      "hash": "a4d702d09267",
-      "size": 1246
+      "hash": "e8a2854c958c",
+      "size": 1308
     },
     {
       "id": "acquired-kuroyukihime.e",
       "path": "abilities/acquired-kuroyukihime.e.json",
-      "hash": "f46b93ed92ae",
-      "size": 1426
+      "hash": "e0560cde4da1",
+      "size": 1491
     },
     {
       "id": "acquired-kuroyukihime.ex",
       "path": "abilities/acquired-kuroyukihime.ex.json",
-      "hash": "d37dc76d3501",
-      "size": 819
+      "hash": "6652a016c975",
+      "size": 885
     },
     {
       "id": "acquired-kuroyukihime.passive",
       "path": "abilities/acquired-kuroyukihime.passive.json",
-      "hash": "5dd751774ca0",
-      "size": 1684
+      "hash": "aa03bbf40b42",
+      "size": 1780
     },
     {
       "id": "acquired-kuroyukihime.q",
       "path": "abilities/acquired-kuroyukihime.q.json",
-      "hash": "067fc8eab1ee",
-      "size": 1264
+      "hash": "049379a55836",
+      "size": 1329
     },
     {
       "id": "acquired-kuroyukihime.r",
       "path": "abilities/acquired-kuroyukihime.r.json",
-      "hash": "d64d27ed1ec6",
-      "size": 1928
+      "hash": "9c07f6cea6ca",
+      "size": 1993
     },
     {
       "id": "acquired-kuroyukihime.w",
       "path": "abilities/acquired-kuroyukihime.w.json",
-      "hash": "464f08fe4866",
-      "size": 1244
+      "hash": "81bcd34db22a",
+      "size": 1309
     },
     {
       "id": "acquired-leafa.e",
       "path": "abilities/acquired-leafa.e.json",
-      "hash": "4e006c845fdc",
-      "size": 1429
+      "hash": "deb02aeca696",
+      "size": 1487
     },
     {
       "id": "acquired-leafa.ex",
       "path": "abilities/acquired-leafa.ex.json",
-      "hash": "0f08f7d7f5fa",
-      "size": 1829
+      "hash": "c33654e7399f",
+      "size": 1888
     },
     {
       "id": "acquired-leafa.passive",
       "path": "abilities/acquired-leafa.passive.json",
-      "hash": "ce83006c28cf",
-      "size": 1774
+      "hash": "ce126de3ca8d",
+      "size": 1863
     },
     {
       "id": "acquired-leafa.q",
       "path": "abilities/acquired-leafa.q.json",
-      "hash": "d22701b3ad59",
-      "size": 1116
+      "hash": "cdbfb3e4bc0e",
+      "size": 1174
     },
     {
       "id": "acquired-leafa.r",
       "path": "abilities/acquired-leafa.r.json",
-      "hash": "510884cfc088",
-      "size": 1185
+      "hash": "9569952d174a",
+      "size": 1243
     },
     {
       "id": "acquired-leafa.w",
       "path": "abilities/acquired-leafa.w.json",
-      "hash": "d7f2fe1bd65f",
-      "size": 1692
+      "hash": "f20927d852ba",
+      "size": 1750
     },
     {
       "id": "acquired-lord-nightmares.e",
       "path": "abilities/acquired-lord-nightmares.e.json",
-      "hash": "d59e2e543acb",
-      "size": 862
+      "hash": "e1842c825624",
+      "size": 930
     },
     {
       "id": "acquired-lord-nightmares.ex",
       "path": "abilities/acquired-lord-nightmares.ex.json",
-      "hash": "890cf246237c",
-      "size": 1659
+      "hash": "bf7b79d32cd4",
+      "size": 1728
     },
     {
       "id": "acquired-lord-nightmares.passive",
       "path": "abilities/acquired-lord-nightmares.passive.json",
-      "hash": "f4eca5f327c2",
-      "size": 1270
+      "hash": "8ae40868edee",
+      "size": 1364
     },
     {
       "id": "acquired-lord-nightmares.q",
       "path": "abilities/acquired-lord-nightmares.q.json",
-      "hash": "5e0ad6b35d12",
-      "size": 1066
+      "hash": "623c706b2311",
+      "size": 1134
     },
     {
       "id": "acquired-lord-nightmares.r",
       "path": "abilities/acquired-lord-nightmares.r.json",
-      "hash": "9b6c1de3e6b8",
-      "size": 1488
+      "hash": "18f609b19216",
+      "size": 1556
     },
     {
       "id": "acquired-lord-nightmares.w",
       "path": "abilities/acquired-lord-nightmares.w.json",
-      "hash": "59a790bd44b3",
-      "size": 1112
+      "hash": "6a938b99b00a",
+      "size": 1180
     },
     {
       "id": "acquired-mario.e",
       "path": "abilities/acquired-mario.e.json",
-      "hash": "101ece54c63b",
-      "size": 1651
+      "hash": "25195f14085b",
+      "size": 1709
     },
     {
       "id": "acquired-mario.ex",
       "path": "abilities/acquired-mario.ex.json",
-      "hash": "9533b5decec7",
-      "size": 2708
+      "hash": "40ce90a3ab43",
+      "size": 2767
     },
     {
       "id": "acquired-mario.passive",
       "path": "abilities/acquired-mario.passive.json",
-      "hash": "5ec4cb24c1ac",
-      "size": 1527
+      "hash": "4f1e58eaab1c",
+      "size": 1611
     },
     {
       "id": "acquired-mario.q",
       "path": "abilities/acquired-mario.q.json",
-      "hash": "c7af17e4f44e",
-      "size": 1562
+      "hash": "f2d114e34abb",
+      "size": 1620
     },
     {
       "id": "acquired-mario.r",
       "path": "abilities/acquired-mario.r.json",
-      "hash": "6f135268a4dc",
-      "size": 2026
+      "hash": "fee3668ad815",
+      "size": 2084
     },
     {
       "id": "acquired-mario.w",
       "path": "abilities/acquired-mario.w.json",
-      "hash": "a465867226d8",
-      "size": 1725
+      "hash": "e2c7e2a8f457",
+      "size": 1783
     },
     {
       "id": "acquired-mewtwo.e",
       "path": "abilities/acquired-mewtwo.e.json",
-      "hash": "46ea18f7e8ec",
-      "size": 1118
+      "hash": "4485a6765e82",
+      "size": 1177
     },
     {
       "id": "acquired-mewtwo.ex",
       "path": "abilities/acquired-mewtwo.ex.json",
-      "hash": "41c104e7063e",
-      "size": 1577
+      "hash": "f199e2bf8ca3",
+      "size": 1637
     },
     {
       "id": "acquired-mewtwo.passive",
       "path": "abilities/acquired-mewtwo.passive.json",
-      "hash": "bd9084d047ac",
-      "size": 1528
+      "hash": "7cebf427207d",
+      "size": 1613
     },
     {
       "id": "acquired-mewtwo.q",
       "path": "abilities/acquired-mewtwo.q.json",
-      "hash": "03011f99c51b",
-      "size": 2915
+      "hash": "a13c63d1ff46",
+      "size": 2974
     },
     {
       "id": "acquired-mewtwo.r",
       "path": "abilities/acquired-mewtwo.r.json",
-      "hash": "91f7644441f8",
-      "size": 1632
+      "hash": "63a3cd4278be",
+      "size": 1691
     },
     {
       "id": "acquired-mewtwo.w",
       "path": "abilities/acquired-mewtwo.w.json",
-      "hash": "12539eb41fa2",
-      "size": 1635
+      "hash": "ef1e67941375",
+      "size": 1694
     },
     {
       "id": "acquired-minecraft.e",
       "path": "abilities/acquired-minecraft.e.json",
-      "hash": "80f35c532cb7",
-      "size": 1805
+      "hash": "30130b49b831",
+      "size": 1867
     },
     {
       "id": "acquired-minecraft.ex",
       "path": "abilities/acquired-minecraft.ex.json",
-      "hash": "925025ff6ed4",
-      "size": 1602
+      "hash": "f6aee6e5cf4a",
+      "size": 1665
     },
     {
       "id": "acquired-minecraft.passive",
       "path": "abilities/acquired-minecraft.passive.json",
-      "hash": "74490b44941e",
-      "size": 2179
+      "hash": "722dd9896904",
+      "size": 2267
     },
     {
       "id": "acquired-minecraft.q",
       "path": "abilities/acquired-minecraft.q.json",
-      "hash": "98a9251f1f1b",
-      "size": 2204
+      "hash": "1bdb582d5b2f",
+      "size": 2266
     },
     {
       "id": "acquired-minecraft.r",
       "path": "abilities/acquired-minecraft.r.json",
-      "hash": "f61a7328f742",
-      "size": 3543
+      "hash": "c03e39ae6ad2",
+      "size": 3605
     },
     {
       "id": "acquired-minecraft.w",
       "path": "abilities/acquired-minecraft.w.json",
-      "hash": "aa47930024f7",
-      "size": 3176
+      "hash": "cebacde018a0",
+      "size": 3238
     },
     {
       "id": "acquired-morgiana.e",
       "path": "abilities/acquired-morgiana.e.json",
-      "hash": "837f9b221333",
-      "size": 1653
+      "hash": "4300cf9a82b1",
+      "size": 1714
     },
     {
       "id": "acquired-morgiana.ex",
       "path": "abilities/acquired-morgiana.ex.json",
-      "hash": "b8340301782e",
-      "size": 1650
+      "hash": "4d3176f63288",
+      "size": 1712
     },
     {
       "id": "acquired-morgiana.passive",
       "path": "abilities/acquired-morgiana.passive.json",
-      "hash": "e537287a9326",
-      "size": 1529
+      "hash": "a71c91f3ece2",
+      "size": 1616
     },
     {
       "id": "acquired-morgiana.q",
       "path": "abilities/acquired-morgiana.q.json",
-      "hash": "aa61b616c39c",
-      "size": 2678
+      "hash": "32ff4aad7ced",
+      "size": 2739
     },
     {
       "id": "acquired-morgiana.r",
       "path": "abilities/acquired-morgiana.r.json",
-      "hash": "4efa3af4c48c",
-      "size": 1905
+      "hash": "82ab12b2b807",
+      "size": 1966
     },
     {
       "id": "acquired-morgiana.w",
       "path": "abilities/acquired-morgiana.w.json",
-      "hash": "6dc39db5f0d7",
-      "size": 1646
+      "hash": "fe1cf7c61a6a",
+      "size": 1707
     },
     {
       "id": "acquired-naruto.e",
       "path": "abilities/acquired-naruto.e.json",
-      "hash": "078a2873cb3f",
-      "size": 1406
+      "hash": "5df209204851",
+      "size": 1465
     },
     {
       "id": "acquired-naruto.ex",
       "path": "abilities/acquired-naruto.ex.json",
-      "hash": "a0d4eb586c37",
-      "size": 1198
+      "hash": "42229c3e36cc",
+      "size": 1258
     },
     {
       "id": "acquired-naruto.passive",
       "path": "abilities/acquired-naruto.passive.json",
-      "hash": "3a38f4b2e271",
-      "size": 1411
+      "hash": "ebd2f8175b68",
+      "size": 1501
     },
     {
       "id": "acquired-naruto.q",
       "path": "abilities/acquired-naruto.q.json",
-      "hash": "3a580df09989",
-      "size": 1241
+      "hash": "17826f1f2348",
+      "size": 1300
     },
     {
       "id": "acquired-naruto.r",
       "path": "abilities/acquired-naruto.r.json",
-      "hash": "d7b9460f2917",
-      "size": 1885
+      "hash": "fc39a1df058b",
+      "size": 1944
     },
     {
       "id": "acquired-naruto.w",
       "path": "abilities/acquired-naruto.w.json",
-      "hash": "a0777b301b86",
-      "size": 1292
+      "hash": "a0707ebdd67c",
+      "size": 1351
     },
     {
       "id": "acquired-pokemon-trainer.e",
       "path": "abilities/acquired-pokemon-trainer.e.json",
-      "hash": "6b389aa68c8b",
-      "size": 1817
+      "hash": "d3bbeb7fce3d",
+      "size": 1885
     },
     {
       "id": "acquired-pokemon-trainer.ex",
       "path": "abilities/acquired-pokemon-trainer.ex.json",
-      "hash": "3483abf0a5a2",
-      "size": 1926
+      "hash": "d9a0b03fff71",
+      "size": 1995
     },
     {
       "id": "acquired-pokemon-trainer.passive",
       "path": "abilities/acquired-pokemon-trainer.passive.json",
-      "hash": "1d694bed5d8e",
-      "size": 3132
+      "hash": "fd6c6812c0cc",
+      "size": 3226
     },
     {
       "id": "acquired-pokemon-trainer.q",
       "path": "abilities/acquired-pokemon-trainer.q.json",
-      "hash": "5116e173f7f2",
-      "size": 2097
+      "hash": "8ae7203e36a4",
+      "size": 2165
     },
     {
       "id": "acquired-pokemon-trainer.r",
       "path": "abilities/acquired-pokemon-trainer.r.json",
-      "hash": "e7c70e1c3150",
-      "size": 4100
+      "hash": "573dadaa44e9",
+      "size": 4168
     },
     {
       "id": "acquired-pokemon-trainer.w",
       "path": "abilities/acquired-pokemon-trainer.w.json",
-      "hash": "959a86c8b10c",
-      "size": 2040
+      "hash": "f3436d1b67a2",
+      "size": 2108
     },
     {
       "id": "acquired-ram.e",
       "path": "abilities/acquired-ram.e.json",
-      "hash": "f2d8f23d44a8",
-      "size": 1176
+      "hash": "b4d11138e8f7",
+      "size": 1232
     },
     {
       "id": "acquired-ram.ex",
       "path": "abilities/acquired-ram.ex.json",
-      "hash": "b3c1f688a15e",
-      "size": 1888
+      "hash": "a254b22319e6",
+      "size": 1945
     },
     {
       "id": "acquired-ram.passive",
       "path": "abilities/acquired-ram.passive.json",
-      "hash": "52e25b3406df",
-      "size": 1502
+      "hash": "ec24bf6c9ee7",
+      "size": 1584
     },
     {
       "id": "acquired-ram.q",
       "path": "abilities/acquired-ram.q.json",
-      "hash": "5fbc543f529e",
-      "size": 2575
+      "hash": "b9694f949451",
+      "size": 2631
     },
     {
       "id": "acquired-ram.r",
       "path": "abilities/acquired-ram.r.json",
-      "hash": "624d4d2d80b2",
-      "size": 1605
+      "hash": "c7f36f14d99b",
+      "size": 1661
     },
     {
       "id": "acquired-ram.w",
       "path": "abilities/acquired-ram.w.json",
-      "hash": "b3f653a241cc",
-      "size": 1705
+      "hash": "485d2fa57038",
+      "size": 1761
     },
     {
       "id": "acquired-rim.e",
       "path": "abilities/acquired-rim.e.json",
-      "hash": "dbfb12a9d259",
-      "size": 1403
+      "hash": "86d171c585b5",
+      "size": 1459
     },
     {
       "id": "acquired-rim.ex",
       "path": "abilities/acquired-rim.ex.json",
-      "hash": "cd34d63e7140",
-      "size": 1046
+      "hash": "1f7e699a3796",
+      "size": 1103
     },
     {
       "id": "acquired-rim.passive",
       "path": "abilities/acquired-rim.passive.json",
-      "hash": "7ee065a4c606",
-      "size": 1681
+      "hash": "e9989534b094",
+      "size": 1768
     },
     {
       "id": "acquired-rim.q",
       "path": "abilities/acquired-rim.q.json",
-      "hash": "73abc15b0e98",
-      "size": 1233
+      "hash": "886e6bf02fde",
+      "size": 1289
     },
     {
       "id": "acquired-rim.r",
       "path": "abilities/acquired-rim.r.json",
-      "hash": "5374f2c7de1b",
-      "size": 2391
+      "hash": "e3014847030f",
+      "size": 2447
     },
     {
       "id": "acquired-rim.w",
       "path": "abilities/acquired-rim.w.json",
-      "hash": "804af81906b2",
-      "size": 1244
+      "hash": "0aa5b61ecdf0",
+      "size": 1300
     },
     {
       "id": "acquired-ryu.e",
       "path": "abilities/acquired-ryu.e.json",
-      "hash": "fb69837d290e",
-      "size": 1778
+      "hash": "cbb61935692b",
+      "size": 1834
     },
     {
       "id": "acquired-ryu.ex",
       "path": "abilities/acquired-ryu.ex.json",
-      "hash": "fcab3f6be3ba",
-      "size": 1784
+      "hash": "95f01c6dffac",
+      "size": 1841
     },
     {
       "id": "acquired-ryu.passive",
       "path": "abilities/acquired-ryu.passive.json",
-      "hash": "c114ac453572",
-      "size": 1539
+      "hash": "74d5c724bcd4",
+      "size": 1621
     },
     {
       "id": "acquired-ryu.q",
       "path": "abilities/acquired-ryu.q.json",
-      "hash": "0b8bbad223f6",
-      "size": 1527
+      "hash": "a392ca598027",
+      "size": 1583
     },
     {
       "id": "acquired-ryu.r",
       "path": "abilities/acquired-ryu.r.json",
-      "hash": "8fd61c220e1e",
-      "size": 1843
+      "hash": "824cc1acab6b",
+      "size": 1899
     },
     {
       "id": "acquired-ryu.w",
       "path": "abilities/acquired-ryu.w.json",
-      "hash": "d1187a466006",
-      "size": 2997
+      "hash": "2b5b0805fb16",
+      "size": 3053
     },
     {
       "id": "acquired-saya.e",
       "path": "abilities/acquired-saya.e.json",
-      "hash": "6df9ae8b94ca",
-      "size": 1217
+      "hash": "3c9bb2e650d0",
+      "size": 1274
     },
     {
       "id": "acquired-saya.ex",
       "path": "abilities/acquired-saya.ex.json",
-      "hash": "047b7467be96",
-      "size": 1045
+      "hash": "14e9a76ca63d",
+      "size": 1103
     },
     {
       "id": "acquired-saya.passive",
       "path": "abilities/acquired-saya.passive.json",
-      "hash": "7f5f75b5ed99",
-      "size": 1404
+      "hash": "1b3f0f8506e8",
+      "size": 1492
     },
     {
       "id": "acquired-saya.q",
       "path": "abilities/acquired-saya.q.json",
-      "hash": "149251326d64",
-      "size": 1705
+      "hash": "b219d2556269",
+      "size": 1762
     },
     {
       "id": "acquired-saya.r",
       "path": "abilities/acquired-saya.r.json",
-      "hash": "7ec7e80b45c5",
-      "size": 1490
+      "hash": "14a5ecedf2ff",
+      "size": 1547
     },
     {
       "id": "acquired-saya.w",
       "path": "abilities/acquired-saya.w.json",
-      "hash": "afeadc312f7d",
-      "size": 1071
+      "hash": "ef164d74b5b9",
+      "size": 1128
     },
     {
       "id": "acquired-wargreymon.e",
       "path": "abilities/acquired-wargreymon.e.json",
-      "hash": "38b385a38236",
-      "size": 1419
+      "hash": "719fcb3ba558",
+      "size": 1482
     },
     {
       "id": "acquired-wargreymon.ex",
       "path": "abilities/acquired-wargreymon.ex.json",
-      "hash": "5bdb29859d1b",
-      "size": 1852
+      "hash": "b6af8adc96fa",
+      "size": 1916
     },
     {
       "id": "acquired-wargreymon.passive",
       "path": "abilities/acquired-wargreymon.passive.json",
-      "hash": "4c30b3da4cd2",
-      "size": 1682
+      "hash": "193fdc064805",
+      "size": 1776
     },
     {
       "id": "acquired-wargreymon.q",
       "path": "abilities/acquired-wargreymon.q.json",
-      "hash": "31f29a20e9f2",
-      "size": 1253
+      "hash": "1c9bdb519c4f",
+      "size": 1316
     },
     {
       "id": "acquired-wargreymon.r",
       "path": "abilities/acquired-wargreymon.r.json",
-      "hash": "d1952ec534ae",
-      "size": 1107
+      "hash": "6c48a10658b8",
+      "size": 1170
     },
     {
       "id": "acquired-wargreymon.w",
       "path": "abilities/acquired-wargreymon.w.json",
-      "hash": "5bd0fcfc593d",
-      "size": 1172
+      "hash": "4606764c3045",
+      "size": 1235
     },
     {
       "id": "acquired-xiaodangjia.e",
       "path": "abilities/acquired-xiaodangjia.e.json",
-      "hash": "943717b8c99e",
-      "size": 1119
+      "hash": "5a6ba76e3aab",
+      "size": 1183
     },
     {
       "id": "acquired-xiaodangjia.ex",
       "path": "abilities/acquired-xiaodangjia.ex.json",
-      "hash": "2270953664e0",
-      "size": 1005
+      "hash": "438b2e0fd198",
+      "size": 1070
     },
     {
       "id": "acquired-xiaodangjia.passive",
       "path": "abilities/acquired-xiaodangjia.passive.json",
-      "hash": "238c9205911f",
-      "size": 1413
+      "hash": "d321f6bc6bc8",
+      "size": 1508
     },
     {
       "id": "acquired-xiaodangjia.q",
       "path": "abilities/acquired-xiaodangjia.q.json",
-      "hash": "104119dd440e",
-      "size": 1095
+      "hash": "27d51ab15b27",
+      "size": 1159
     },
     {
       "id": "acquired-xiaodangjia.r",
       "path": "abilities/acquired-xiaodangjia.r.json",
-      "hash": "6d89443440d6",
-      "size": 1506
+      "hash": "b3cbaa3662f6",
+      "size": 1570
     },
     {
       "id": "acquired-xiaodangjia.w",
       "path": "abilities/acquired-xiaodangjia.w.json",
-      "hash": "9eb75ec01249",
-      "size": 1110
+      "hash": "89fb6aec56a5",
+      "size": 1174
     },
     {
       "id": "acquired-zero.e",
       "path": "abilities/acquired-zero.e.json",
-      "hash": "e2009b510f27",
-      "size": 1770
+      "hash": "abf06420cfbb",
+      "size": 1827
     },
     {
       "id": "acquired-zero.ex",
       "path": "abilities/acquired-zero.ex.json",
-      "hash": "603479e5f120",
-      "size": 1659
+      "hash": "42faf381a85e",
+      "size": 1717
     },
     {
       "id": "acquired-zero.passive",
       "path": "abilities/acquired-zero.passive.json",
-      "hash": "8673a7f07df3",
-      "size": 1520
+      "hash": "e7100a968b87",
+      "size": 1603
     },
     {
       "id": "acquired-zero.q",
       "path": "abilities/acquired-zero.q.json",
-      "hash": "78708e12b926",
-      "size": 1488
+      "hash": "df379b9042b8",
+      "size": 1545
     },
     {
       "id": "acquired-zero.r",
       "path": "abilities/acquired-zero.r.json",
-      "hash": "7de896c67251",
-      "size": 1790
+      "hash": "dac6c427ffba",
+      "size": 1847
     },
     {
       "id": "acquired-zero.w",
       "path": "abilities/acquired-zero.w.json",
-      "hash": "c0ec22a61596",
-      "size": 2931
+      "hash": "f284d21a67f1",
+      "size": 2988
     },
     {
       "id": "b2-aladdin.e",
@@ -6083,218 +6083,218 @@
     {
       "id": "lol-ahri.e",
       "path": "abilities/lol-ahri.e.json",
-      "hash": "336f07a7dedb",
-      "size": 2000
+      "hash": "39ca5657b2f5",
+      "size": 2052
     },
     {
       "id": "lol-ahri.ex",
       "path": "abilities/lol-ahri.ex.json",
-      "hash": "59c8ced5cb98",
-      "size": 1429
+      "hash": "0e6138b98a06",
+      "size": 1482
     },
     {
       "id": "lol-ahri.passive",
       "path": "abilities/lol-ahri.passive.json",
-      "hash": "f33ed447a436",
-      "size": 4066
+      "hash": "5487675adfcd",
+      "size": 4144
     },
     {
       "id": "lol-ahri.q",
       "path": "abilities/lol-ahri.q.json",
-      "hash": "8a18563b6818",
-      "size": 1599
+      "hash": "4ea213beccfb",
+      "size": 1651
     },
     {
       "id": "lol-ahri.r",
       "path": "abilities/lol-ahri.r.json",
-      "hash": "3e720f2a8e7a",
-      "size": 1976
+      "hash": "5bb0c9bbeae6",
+      "size": 2028
     },
     {
       "id": "lol-ahri.w",
       "path": "abilities/lol-ahri.w.json",
-      "hash": "371133b4c64c",
-      "size": 2684
+      "hash": "85573936e909",
+      "size": 2736
     },
     {
       "id": "lol-ashe.e",
       "path": "abilities/lol-ashe.e.json",
-      "hash": "15704866de8a",
-      "size": 2195
+      "hash": "5172dca44a87",
+      "size": 2247
     },
     {
       "id": "lol-ashe.ex",
       "path": "abilities/lol-ashe.ex.json",
-      "hash": "af60256deae8",
-      "size": 1716
+      "hash": "c7943dd769e1",
+      "size": 1769
     },
     {
       "id": "lol-ashe.passive",
       "path": "abilities/lol-ashe.passive.json",
-      "hash": "89d043841957",
-      "size": 3556
+      "hash": "f0697bed8a63",
+      "size": 3634
     },
     {
       "id": "lol-ashe.q",
       "path": "abilities/lol-ashe.q.json",
-      "hash": "c5e44331dae1",
-      "size": 2997
+      "hash": "d585ddc6a341",
+      "size": 3047
     },
     {
       "id": "lol-ashe.r",
       "path": "abilities/lol-ashe.r.json",
-      "hash": "ab7edab1400e",
-      "size": 2963
+      "hash": "33e16ec327ea",
+      "size": 3015
     },
     {
       "id": "lol-ashe.w",
       "path": "abilities/lol-ashe.w.json",
-      "hash": "22b6a7b39be5",
-      "size": 1965
+      "hash": "dcffcbb2a17b",
+      "size": 2017
     },
     {
       "id": "lol-blitzcrank.e",
       "path": "abilities/lol-blitzcrank.e.json",
-      "hash": "535da5244723",
-      "size": 2642
+      "hash": "7cd777135948",
+      "size": 2700
     },
     {
       "id": "lol-blitzcrank.ex",
       "path": "abilities/lol-blitzcrank.ex.json",
-      "hash": "5398a1734529",
-      "size": 2792
+      "hash": "035dc702c0bf",
+      "size": 2851
     },
     {
       "id": "lol-blitzcrank.passive",
       "path": "abilities/lol-blitzcrank.passive.json",
-      "hash": "700f5b37118b",
-      "size": 2698
+      "hash": "d8181d8f4eae",
+      "size": 2782
     },
     {
       "id": "lol-blitzcrank.q",
       "path": "abilities/lol-blitzcrank.q.json",
-      "hash": "1c8daaaedaa3",
-      "size": 2305
+      "hash": "c5e3330d0fc6",
+      "size": 2363
     },
     {
       "id": "lol-blitzcrank.r",
       "path": "abilities/lol-blitzcrank.r.json",
-      "hash": "b41b8868e361",
-      "size": 2089
+      "hash": "0311a1acf3c1",
+      "size": 2147
     },
     {
       "id": "lol-blitzcrank.w",
       "path": "abilities/lol-blitzcrank.w.json",
-      "hash": "92667d412c6f",
-      "size": 2731
+      "hash": "a2f7f3a025db",
+      "size": 2789
     },
     {
       "id": "lol-chogath.e",
       "path": "abilities/lol-chogath.e.json",
-      "hash": "c0d65a109509",
-      "size": 3144
+      "hash": "5a6c0c464fb3",
+      "size": 3199
     },
     {
       "id": "lol-chogath.ex",
       "path": "abilities/lol-chogath.ex.json",
-      "hash": "5e040456479b",
-      "size": 1539
+      "hash": "9b6dd9a70e15",
+      "size": 1595
     },
     {
       "id": "lol-chogath.passive",
       "path": "abilities/lol-chogath.passive.json",
-      "hash": "10aca76cb1b0",
-      "size": 2041
+      "hash": "89f7444d8b39",
+      "size": 2122
     },
     {
       "id": "lol-chogath.q",
       "path": "abilities/lol-chogath.q.json",
-      "hash": "f8d14b1f9855",
-      "size": 2979
+      "hash": "dbec432a445c",
+      "size": 3034
     },
     {
       "id": "lol-chogath.r",
       "path": "abilities/lol-chogath.r.json",
-      "hash": "84890465dc0a",
-      "size": 3649
+      "hash": "50262ce0f52d",
+      "size": 3704
     },
     {
       "id": "lol-chogath.w",
       "path": "abilities/lol-chogath.w.json",
-      "hash": "37708815c3b3",
-      "size": 1947
+      "hash": "a5b467c5205c",
+      "size": 2002
     },
     {
       "id": "lol-fiddlesticks.e",
       "path": "abilities/lol-fiddlesticks.e.json",
-      "hash": "b90e0a295925",
-      "size": 2030
+      "hash": "f4a72fb58e81",
+      "size": 2090
     },
     {
       "id": "lol-fiddlesticks.ex",
       "path": "abilities/lol-fiddlesticks.ex.json",
-      "hash": "f79def8be223",
-      "size": 1228
+      "hash": "b9b222e6e663",
+      "size": 1289
     },
     {
       "id": "lol-fiddlesticks.passive",
       "path": "abilities/lol-fiddlesticks.passive.json",
-      "hash": "7ce56b8899f3",
-      "size": 1985
+      "hash": "e3268b2e5902",
+      "size": 2071
     },
     {
       "id": "lol-fiddlesticks.q",
       "path": "abilities/lol-fiddlesticks.q.json",
-      "hash": "1cfb83e57cb5",
-      "size": 1244
+      "hash": "5f4f52f0ce50",
+      "size": 1304
     },
     {
       "id": "lol-fiddlesticks.r",
       "path": "abilities/lol-fiddlesticks.r.json",
-      "hash": "4c0c7698de4e",
-      "size": 2483
+      "hash": "bd748f71f8ab",
+      "size": 2543
     },
     {
       "id": "lol-fiddlesticks.w",
       "path": "abilities/lol-fiddlesticks.w.json",
-      "hash": "693eb8f51adb",
-      "size": 3082
+      "hash": "61c962f9bccf",
+      "size": 3142
     },
     {
       "id": "lol-garen.e",
       "path": "abilities/lol-garen.e.json",
-      "hash": "4c8d664b2690",
-      "size": 1473
+      "hash": "0bcac60d88f3",
+      "size": 1526
     },
     {
       "id": "lol-garen.ex",
       "path": "abilities/lol-garen.ex.json",
-      "hash": "9ad0dc4160a8",
-      "size": 1529
+      "hash": "c7b4830e0cc0",
+      "size": 1583
     },
     {
       "id": "lol-garen.passive",
       "path": "abilities/lol-garen.passive.json",
-      "hash": "126937b86318",
-      "size": 3163
+      "hash": "956fff66289e",
+      "size": 3242
     },
     {
       "id": "lol-garen.q",
       "path": "abilities/lol-garen.q.json",
-      "hash": "65007126af37",
-      "size": 3304
+      "hash": "493b9243779d",
+      "size": 3357
     },
     {
       "id": "lol-garen.r",
       "path": "abilities/lol-garen.r.json",
-      "hash": "c1d9c9f2676b",
-      "size": 1650
+      "hash": "20eb34e82e8f",
+      "size": 1703
     },
     {
       "id": "lol-garen.w",
       "path": "abilities/lol-garen.w.json",
-      "hash": "d152f38e34ef",
-      "size": 1116
+      "hash": "6212fbf463af",
+      "size": 1167
     },
     {
       "id": "lol-karthus.e",
@@ -6407,38 +6407,38 @@
     {
       "id": "lol-malphite.e",
       "path": "abilities/lol-malphite.e.json",
-      "hash": "e58672ad605d",
-      "size": 2355
+      "hash": "ddd4480ebe6d",
+      "size": 2411
     },
     {
       "id": "lol-malphite.ex",
       "path": "abilities/lol-malphite.ex.json",
-      "hash": "2581b176f78d",
-      "size": 2157
+      "hash": "4329549478ac",
+      "size": 2214
     },
     {
       "id": "lol-malphite.passive",
       "path": "abilities/lol-malphite.passive.json",
-      "hash": "ad92116760eb",
-      "size": 3430
+      "hash": "2e370be70249",
+      "size": 3512
     },
     {
       "id": "lol-malphite.q",
       "path": "abilities/lol-malphite.q.json",
-      "hash": "a6de9cf74e7c",
-      "size": 2312
+      "hash": "aca4b920bd7d",
+      "size": 2368
     },
     {
       "id": "lol-malphite.r",
       "path": "abilities/lol-malphite.r.json",
-      "hash": "7e6788ee0a7b",
-      "size": 2313
+      "hash": "1607db4a323d",
+      "size": 2369
     },
     {
       "id": "lol-malphite.w",
       "path": "abilities/lol-malphite.w.json",
-      "hash": "615b655a789e",
-      "size": 2597
+      "hash": "95d79915fc5c",
+      "size": 2653
     },
     {
       "id": "lol-missfortune.e",
@@ -6479,146 +6479,146 @@
     {
       "id": "lol-ornn.e",
       "path": "abilities/lol-ornn.e.json",
-      "hash": "db19a111d976",
-      "size": 3336
+      "hash": "78fb6c58f83a",
+      "size": 3388
     },
     {
       "id": "lol-ornn.ex",
       "path": "abilities/lol-ornn.ex.json",
-      "hash": "4d69dd6c72a8",
-      "size": 983
+      "hash": "74226f8e378b",
+      "size": 1036
     },
     {
       "id": "lol-ornn.passive",
       "path": "abilities/lol-ornn.passive.json",
-      "hash": "f77101e2bc38",
-      "size": 4260
+      "hash": "ac6616693f46",
+      "size": 4338
     },
     {
       "id": "lol-ornn.q",
       "path": "abilities/lol-ornn.q.json",
-      "hash": "bfd7e88360e9",
-      "size": 2350
+      "hash": "e75d93949053",
+      "size": 2402
     },
     {
       "id": "lol-ornn.r",
       "path": "abilities/lol-ornn.r.json",
-      "hash": "4de3ae751a3a",
-      "size": 3552
+      "hash": "fae5f4200264",
+      "size": 3602
     },
     {
       "id": "lol-ornn.w",
       "path": "abilities/lol-ornn.w.json",
-      "hash": "f18a447ee6bf",
-      "size": 1877
+      "hash": "cd02c9a5d8d8",
+      "size": 1929
     },
     {
       "id": "lol-sett.e",
       "path": "abilities/lol-sett.e.json",
-      "hash": "1b298d486d22",
-      "size": 2220
+      "hash": "719db86df800",
+      "size": 2272
     },
     {
       "id": "lol-sett.ex",
       "path": "abilities/lol-sett.ex.json",
-      "hash": "5eeefc1f5203",
-      "size": 1512
+      "hash": "d721e0f251a9",
+      "size": 1565
     },
     {
       "id": "lol-sett.passive",
       "path": "abilities/lol-sett.passive.json",
-      "hash": "da7fc0250371",
-      "size": 5689
+      "hash": "1aca6f688b62",
+      "size": 5767
     },
     {
       "id": "lol-sett.q",
       "path": "abilities/lol-sett.q.json",
-      "hash": "0c179835d3d0",
-      "size": 3010
+      "hash": "17ea65aec796",
+      "size": 3062
     },
     {
       "id": "lol-sett.r",
       "path": "abilities/lol-sett.r.json",
-      "hash": "bbe1108f9e73",
-      "size": 3143
+      "hash": "ec764b92f7b5",
+      "size": 3195
     },
     {
       "id": "lol-sett.w",
       "path": "abilities/lol-sett.w.json",
-      "hash": "481151c1001d",
-      "size": 12139
+      "hash": "1d74a665e90b",
+      "size": 12191
     },
     {
       "id": "lol-thresh.e",
       "path": "abilities/lol-thresh.e.json",
-      "hash": "54e75c6d072f",
-      "size": 2390
+      "hash": "1d6e4f5bbc94",
+      "size": 2444
     },
     {
       "id": "lol-thresh.ex",
       "path": "abilities/lol-thresh.ex.json",
-      "hash": "74459908946e",
-      "size": 2175
+      "hash": "a1b42725747d",
+      "size": 2230
     },
     {
       "id": "lol-thresh.passive",
       "path": "abilities/lol-thresh.passive.json",
-      "hash": "fe90f2eeb921",
-      "size": 2475
+      "hash": "f6e21caf151b",
+      "size": 2555
     },
     {
       "id": "lol-thresh.q",
       "path": "abilities/lol-thresh.q.json",
-      "hash": "55d24a976d8d",
-      "size": 2575
+      "hash": "b85b8c19c597",
+      "size": 2629
     },
     {
       "id": "lol-thresh.r",
       "path": "abilities/lol-thresh.r.json",
-      "hash": "dde8ecaf2cf1",
-      "size": 2009
+      "hash": "cfb23e207217",
+      "size": 2063
     },
     {
       "id": "lol-thresh.w",
       "path": "abilities/lol-thresh.w.json",
-      "hash": "d818b650d73a",
-      "size": 2295
+      "hash": "1f4f644b61a2",
+      "size": 2349
     },
     {
       "id": "lol-velkoz.e",
       "path": "abilities/lol-velkoz.e.json",
-      "hash": "00dc0f810bda",
-      "size": 2552
+      "hash": "6ff855b4bfb5",
+      "size": 2606
     },
     {
       "id": "lol-velkoz.ex",
       "path": "abilities/lol-velkoz.ex.json",
-      "hash": "9e150b6da647",
-      "size": 2687
+      "hash": "fe3888e68c3f",
+      "size": 2742
     },
     {
       "id": "lol-velkoz.passive",
       "path": "abilities/lol-velkoz.passive.json",
-      "hash": "8ed9fd136cb6",
-      "size": 3428
+      "hash": "1846702c37d4",
+      "size": 3508
     },
     {
       "id": "lol-velkoz.q",
       "path": "abilities/lol-velkoz.q.json",
-      "hash": "a2a0b33e4115",
-      "size": 1618
+      "hash": "38d9ee4aaaf7",
+      "size": 1672
     },
     {
       "id": "lol-velkoz.r",
       "path": "abilities/lol-velkoz.r.json",
-      "hash": "d8c7f569924d",
-      "size": 3721
+      "hash": "9618f0d87d4e",
+      "size": 3775
     },
     {
       "id": "lol-velkoz.w",
       "path": "abilities/lol-velkoz.w.json",
-      "hash": "534f4e1a5875",
-      "size": 2588
+      "hash": "1aaecbb91f79",
+      "size": 2642
     },
     {
       "id": "lol-warwick.e",

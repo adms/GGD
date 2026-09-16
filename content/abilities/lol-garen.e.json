@@ -58,11 +58,12 @@
       "applyTo": "enemies",
       "damageTier": "中",
       "damageType": "physical",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.2,
       "radius": 4.5
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-garen.e.webp"
 }

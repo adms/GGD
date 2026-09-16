@@ -128,7 +128,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/acquired-dio.q.webp"
     },
     "W": {
       "id": "acquired-dio.w",
@@ -185,7 +186,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -215,7 +216,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-dio.w.webp"
     },
     "E": {
       "id": "acquired-dio.e",
@@ -258,7 +260,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -275,7 +277,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-dio.e.webp"
     },
     "R": {
       "id": "acquired-dio.r",
@@ -324,7 +327,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.5,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -348,7 +351,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-dio.r.webp"
     }
   },
   "exAbility": "acquired-dio.ex",
@@ -361,5 +365,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-dio.webp"
 }

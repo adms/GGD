@@ -109,7 +109,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -146,7 +146,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.q.webp"
     },
     "W": {
       "id": "lol-ornn.w",
@@ -202,7 +203,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.5,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -231,7 +232,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.w.webp"
     },
     "E": {
       "id": "lol-ornn.e",
@@ -314,7 +316,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -369,7 +371,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.e.webp"
     },
     "R": {
       "id": "lol-ornn.r",
@@ -457,7 +460,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 1,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -515,7 +518,8 @@
         "charges": 1,
         "windowSec": 3
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.r.webp"
     }
   },
   "exAbility": "lol-ornn.ex",
@@ -528,5 +532,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-ornn.webp"
 }

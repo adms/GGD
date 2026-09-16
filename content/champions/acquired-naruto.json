@@ -102,7 +102,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-naruto.q.webp"
     },
     "W": {
       "id": "acquired-naruto.w",
@@ -160,7 +161,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:28911a3620fffaad01d4b1d5cb95b4ba5fcf53474b5534c3012ac4cf4ad22a4b"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-naruto.w.webp"
     },
     "E": {
       "id": "acquired-naruto.e",
@@ -224,7 +226,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-naruto.e.webp"
     },
     "R": {
       "id": "acquired-naruto.r",
@@ -308,7 +311,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:189e2e089e4e9a2edab69755d0a5d9aeb3eb8d9f2b4c8ec1ec23566bbf77e032"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-naruto.r.webp"
     }
   },
   "exAbility": "acquired-naruto.ex",
@@ -321,5 +325,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-naruto.webp"
 }

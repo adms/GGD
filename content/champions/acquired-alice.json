@@ -94,7 +94,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-alice.q.webp"
     },
     "W": {
       "id": "acquired-alice.w",
@@ -157,7 +158,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/acquired-alice.w.webp"
     },
     "E": {
       "id": "acquired-alice.e",
@@ -223,7 +225,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
-      }
+      },
+      "icon": "assets/icons/abilities/acquired-alice.e.webp"
     },
     "R": {
       "id": "acquired-alice.r",
@@ -280,7 +283,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:df96cb85812262d65ca34099f73ffd259827a553bfda55efc1a81af7ea2bb88a"
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/acquired-alice.r.webp"
     }
   },
   "exAbility": "acquired-alice.ex",
@@ -293,5 +297,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-alice.webp"
 }

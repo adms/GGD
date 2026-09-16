@@ -47,7 +47,7 @@
         "damageTier": "極小"
       },
       "damageType": "magic",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.2,
       "status": {
         "statusId": "lol-fiddlesticks.fear",
         "duration": 1,
@@ -57,5 +57,6 @@
     "inheritDefaults": true,
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-fiddlesticks.q.webp"
 }

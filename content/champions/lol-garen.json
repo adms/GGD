@@ -128,7 +128,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -186,7 +186,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-garen.q.webp"
     },
     "W": {
       "id": "lol-garen.w",
@@ -243,11 +244,12 @@
           },
           "duration": 2,
           "absorbs": "all",
-          "castTimeSec": 0.1
+          "castTimeSec": 0
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-garen.w.webp"
     },
     "E": {
       "id": "lol-garen.e",
@@ -309,12 +311,13 @@
           "applyTo": "enemies",
           "damageTier": "中",
           "damageType": "physical",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 4.5
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-garen.e.webp"
     },
     "R": {
       "id": "lol-garen.r",
@@ -365,7 +368,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -391,7 +394,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-garen.r.webp"
     }
   },
   "exAbility": "lol-garen.ex",
@@ -404,5 +408,6 @@
   ],
   "buildPriority": [],
   "tags": [],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-garen.webp"
 }
