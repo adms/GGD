@@ -3790,21 +3790,21 @@
     {
       "championId": "godie-e00r",
       "schema": "resolved-appearance@1",
-      "modelKey": "w3x.stock.satyrtrickster",
-      "glbPath": "assets/models/imported/satyrtrickster.glb",
-      "modelDocDigest": "4c7ec17ffebe",
-      "scale": 130.7692,
+      "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+      "glbPath": "assets/models/ou99/versions/ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd.glb",
+      "modelDocDigest": "8dd913525cf3",
+      "scale": 1,
       "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
         "idle": "Stand",
         "run": "Walk",
-        "attack": "Attack",
-        "cast": "Stand Ready",
-        "hurt": "Stand - 2",
-        "death": "Death"
+        "attack": "Attack 1",
+        "cast": "Attack 1",
+        "hurt": "Stand",
+        "death": "death"
       },
       "attachPoints": {},
       "teamTintMaterials": [],
@@ -4837,36 +4837,25 @@
     {
       "championId": "godie-h02k",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.skin.barbarian",
-      "glbPath": "assets/models/champions/blocky-barbarian.glb",
-      "modelDocDigest": "6820809d7a62",
+      "modelKey": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+      "glbPath": "assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb",
+      "modelDocDigest": "01d993768f55",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 0,
-      "yawOffsetDeg": 0,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 90,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -7672,36 +7661,25 @@
     {
       "championId": "godie-umal",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.skin.barbarian",
-      "glbPath": "assets/models/champions/blocky-barbarian.glb",
-      "modelDocDigest": "6820809d7a62",
+      "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+      "glbPath": "assets/models/ou99/versions/92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a.glb",
+      "modelDocDigest": "12d54ed3a26c",
       "scale": 1,
-      "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "collisionRadius": 0.55,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",

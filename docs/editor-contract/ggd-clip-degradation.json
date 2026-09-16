@@ -56,17 +56,17 @@
     }
   },
   "population": {
-    "glbFiles": 1115,
-    "animatedModels": 939,
+    "glbFiles": 1119,
+    "animatedModels": 943,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 820,
-      "pct": 87.3
+      "models": 824,
+      "pct": 87.4
     },
     "cast": {
-      "models": 548,
+      "models": 551,
       "pct": 58.4
     },
     "celebrate": {
@@ -74,28 +74,28 @@
       "pct": 4
     },
     "death": {
-      "models": 619,
-      "pct": 65.9
+      "models": 623,
+      "pct": 66.1
     },
     "dodge": {
-      "models": 526,
-      "pct": 56
+      "models": 530,
+      "pct": 56.2
     },
     "guard": {
       "models": 11,
       "pct": 1.2
     },
     "hurt": {
-      "models": 92,
-      "pct": 9.8
+      "models": 93,
+      "pct": 9.9
     },
     "idle": {
-      "models": 904,
+      "models": 908,
       "pct": 96.3
     },
     "run": {
-      "models": 852,
-      "pct": 90.7
+      "models": 856,
+      "pct": 90.8
     }
   },
   "degradesTo": "idle",
@@ -4824,6 +4824,11 @@
       "celebrate",
       "hurt"
     ],
+    "content/assets/models/imported/versions/dea0c0e38be2cf832a0b3da80ea25c52f61b2bec9233bd389cc7b8b401854a6b.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/imported/versions/e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2.glb": [
       "celebrate",
       "guard",
@@ -5845,6 +5850,10 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a.glb": [
+      "celebrate",
+      "guard"
+    ],
     "content/assets/models/ou99/versions/95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d.glb": [
       "celebrate",
       "guard",
@@ -5920,11 +5929,22 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/ou99/versions/ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/ou99/versions/d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c.glb": [
       "celebrate",
       "guard"
     ],
     "content/assets/models/ou99/versions/d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb": [
       "celebrate",
       "guard",
       "hurt"

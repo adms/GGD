@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2881,
-    "totalBytes": 1115095530
+    "entries": 2885,
+    "totalBytes": 1120701554
   },
   "entries": [
     {
@@ -22096,7 +22096,9 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399"
+        "version.body.0314a5256adb62a38113091f6302fd37cf637bc05f99bce7",
+        "version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399",
+        "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4"
       ]
     },
     {
@@ -28829,6 +28831,17 @@
       ]
     },
     {
+      "path": "assets/models/imported/versions/dea0c0e38be2cf832a0b3da80ea25c52f61b2bec9233bd389cc7b8b401854a6b.glb",
+      "bytes": 760652,
+      "sha256": "dea0c0e38be2cf832a0b3da80ea25c52f61b2bec9233bd389cc7b8b401854a6b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.55be69fe0b0a5d52e642fed79d2beee8059bd86b0726b85e"
+      ]
+    },
+    {
       "path": "assets/models/imported/versions/e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2.glb",
       "bytes": 264736,
       "sha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
@@ -29480,8 +29493,8 @@
     },
     {
       "path": "assets/models/ou99/ou99_464696.glb",
-      "bytes": 5118592,
-      "sha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
+      "bytes": 4119592,
+      "sha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -30294,8 +30307,8 @@
     },
     {
       "path": "assets/models/ou99/ou99_498341.glb",
-      "bytes": 1038860,
-      "sha256": "914f4225e2418b1b038c84a31bf32f706d38bbf1e6ff7609103317132a77937f",
+      "bytes": 716744,
+      "sha256": "ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -30928,6 +30941,17 @@
       ]
     },
     {
+      "path": "assets/models/ou99/versions/92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a.glb",
+      "bytes": 4119592,
+      "sha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675"
+      ]
+    },
+    {
       "path": "assets/models/ou99/versions/95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d.glb",
       "bytes": 2266088,
       "sha256": "95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d",
@@ -31093,6 +31117,17 @@
       ]
     },
     {
+      "path": "assets/models/ou99/versions/ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd.glb",
+      "bytes": 716744,
+      "sha256": "ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.6762543e2beb02d969c86576c4f12079362e820376133999"
+      ]
+    },
+    {
       "path": "assets/models/ou99/versions/d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c.glb",
       "bytes": 2721148,
       "sha256": "d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c",
@@ -31112,6 +31147,17 @@
       "refs": [
         "bundle",
         "version.body.b4ff5a804c418807cf914810d3a45d9989f1c847069f7aec"
+      ]
+    },
+    {
+      "path": "assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb",
+      "bytes": 1330152,
+      "sha256": "d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48"
       ]
     },
     {
