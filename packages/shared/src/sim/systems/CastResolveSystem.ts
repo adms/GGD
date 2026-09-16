@@ -16,8 +16,12 @@ import { applyAugmentToEffects, collectAugmentOps } from "../abilities/abilityAu
 import { armRecovery } from "../abilities/abilityRecovery";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（與 abilitySystem.ts 共用同一支，⛔ 不是第二份判準）。
 import { spellWardRefusesCast } from "../spellWardCast";
+// ⭐ GH#1191 ——【持續引導】：效果開始之後還要撐的那一段（sim/abilities/channel.ts）。
+import { beginChannel, channelSystem } from "../abilities/channel";
 
 export function castResolveSystem(world: SimWorld): void {
+  // 先結算**已經在引導**的（打斷／撐滿）；這一 tick 才解算完的吟唱在下面開始引導，下一 tick 才被檢查。
+  channelSystem(world);
   for (const [id, ab] of world.abilities) {
     const cast = ab.cast;
     if (!cast) continue;
@@ -123,6 +127,8 @@ export function castResolveSystem(world: SimWorld): void {
         castCommitTick: cast.beganTick ?? world.tick,
         rng: world.rng,
       });
+      // ⭐ GH#1191 —— 有吟唱的技能在這裡開始引導（`abilitySystem.ts` 瞬發那一行的雙胞胎）。
+      beginChannel(world, id, cast.abilityId, def, { slot: cast.slot, rank: cast.rank, ...(cast.castInstance !== undefined ? { castInstance: cast.castInstance } : {}), commitTick: cast.beganTick ?? world.tick, targets, ...(cast.point !== undefined ? { point: cast.point } : {}), ...(cast.direction !== undefined ? { direction: cast.direction } : {}) });
     }
     // ⛔ `onAbilityCast` 不受攔截影響（他確實放了一發）；被吃掉的是「命中」。
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);

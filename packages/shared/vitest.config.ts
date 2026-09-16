@@ -1,5 +1,5 @@
 import { defineConfig } from "vitest/config";
-import { RESOLVE_TS_FIRST } from "../../vitest.shared";
+import { RESOLVE_TS_FIRST, VITEST_WATCHDOG } from "../../vitest.shared";
 
 /**
  * GH#428 —— 這個檔在 2026-08-20 之前**不存在**，而 repo 根的 `vitest.config.ts`
@@ -45,6 +45,8 @@ export default defineConfig({
   // `vitest.shared.ts` 的檔頭，守衛是 `src/staleArtifacts.test.ts`。
   resolve: RESOLVE_TS_FIRST,
   test: {
+    // ⏲️ GH#1257 —— 卡死（整棵樹 CPU≈0）時自己停下來、印出還沒跑完的檔。理由在 `vitest.shared.ts`。
+    ...VITEST_WATCHDOG,
     // 明寫出來，不是靠 vitest 預設 —— 這個套件是純邏輯（sim / content / ops），
     // 任何人想在這裡開 jsdom 都應該是一個看得見的決定。
     environment: "node",

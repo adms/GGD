@@ -171,7 +171,7 @@
       ],
       "cooldownTier": "大",
       "provenance": "editor-json",
-      "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離{{push}}距離並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -270,7 +270,7 @@
       ],
       "cooldownTier": "小",
       "provenance": "editor-json",
-      "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出{{push}}距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "apexHeight": 0.4,
@@ -413,7 +413,7 @@
       "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
       "label": "ou99 「白西装七夜志贵」（相似造型）",
       "sourceModelKey": "ou99.459257",
-      "modelSha256": "16e858afd2ce2548d90a97a2fb79ad9aeca1ab9e2bc4e3dcf1be26260fb44a35",
+      "modelSha256": "f15d5cf77b211a5aecb9bee48b3f1158cb96d347a316aa23040728d45471243d",
       "binarySha256": "c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197",
       "registeredAt": "2026-09-10T11:33:24.879Z",
       "source": {
@@ -428,7 +428,7 @@
       "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
       "label": "原上線模型",
       "sourceModelKey": "ou99.459257",
-      "modelSha256": "460775bd6f2f4e02a5de58713cd51db429f9809a85927a283190dd2de3353e78",
+      "modelSha256": "0e41f4d4f31bf9f228673e6e243848a9b2f5135fe7735abd1b5831141f21625b",
       "binarySha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
       "registeredAt": "2026-09-10T14:45:38.409Z",
       "source": {
@@ -462,7 +462,7 @@
       "modelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
       "label": "白西装七夜志贵（論壇相似模型）",
       "sourceModelKey": "ou99.459257-standard-v2",
-      "modelSha256": "fd543e0b1006706ff39c5c1416fb98263d62e287b17e4cbd92fe83cbdd56ec26",
+      "modelSha256": "382e317ab9b0b12160b0b06574438c3fda02e63bc400a13067ece1e24f505493",
       "binarySha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
       "registeredAt": "2026-09-10T14:48:54.293Z",
       "source": {
@@ -480,7 +480,7 @@
       "modelKey": "version.body.6669e62fc12a89c589d1333582b62657a535f59ba18a7d47",
       "label": "白西装七夜志贵（論壇相似模型）",
       "sourceModelKey": "ou99.459257-standard-v2",
-      "modelSha256": "350b61daab18ce973eb5a04045fadd7ece6795eb849aeef89b5937cd11112e33",
+      "modelSha256": "9366198f300aed4f527685f0b2250873e2d26471721ed95c19ee5db50f0a83d3",
       "binarySha256": "686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a",
       "registeredAt": "2026-09-12T23:08:07.667Z",
       "source": {
@@ -516,7 +516,7 @@
       "modelKey": "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
       "label": "白西装七夜志贵（論壇相似模型）",
       "sourceModelKey": "ou99.459257-standard-v2",
-      "modelSha256": "66ea0afb7a80a0286864e19a9f9295975250254af79dfa132ae71719ee55118a",
+      "modelSha256": "587b8b6f67c34ec693838d85a5ef95e417fa0eff5d0cb80e1001a2cd6e2e7d4a",
       "binarySha256": "686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a",
       "registeredAt": "2026-09-13T00:08:59.973Z",
       "source": {

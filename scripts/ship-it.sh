@@ -95,6 +95,9 @@ step "3.5/4  收尾 commit（公告帳本 ＋ 戰情板版號）"
 bash scripts/genrun.sh board:build >/dev/null 2>&1 || echo "⚠️ board:build 失敗（戰情板版號那一格會過期）"
 # ⭐ board:build 會在 docs/legacy/_overwrites/ 留底＋記帳 ⇒ docs/legacy-index.md 也跟著過期（legacyIndexFresh 在 CI 紅，v0.39.4 量到）
 bash scripts/genrun.sh legacyindex:build >/dev/null 2>&1 || echo "⚠️ legacyindex:build 失敗（legacy 索引會過期）"
+# ⛔ GH#1256：**不收**根目錄捷徑 `GGD戰情版.md` —— 這支沒有一步改指它（改指它的是 board:roll，由 bmpndd 的 B·M 收尾連同新日檔同一個 commit 收）。
+#   在這裡只收捷徑 ⇒ 它指向的新日檔（未追蹤，`git diff` 看不到）不在 commit 裡 ⇒ 反方向的同一個紅（捷徑指向樹裡沒有的日檔），
+#   而且繞過 GGD_BMPNDD_BOARD_WRAP=off 那格開關。
 WRAP_PATHS="docs/_release/_announced.tsv docs/_release/_deployed.tsv docs/_release/ggd-board.html docs/legacy-index.md docs/legacy/_overwrites/_ledger.tsv"
 if ! git diff --quiet -- $WRAP_PATHS; then
   printf 'chore(release): 🧾 %s 收尾 —— 公告帳本 ＋ 戰情板版號（ship-it 3.5）\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n' "$TAG" > "$TMPD/ship-wrap-${TAG}.txt"

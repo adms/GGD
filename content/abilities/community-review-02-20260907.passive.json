@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔八神之炎〕",
   "provenance": "editor-json",
-  "description": "不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。\n【待補機制】需技能命中三層紫炎與終結技消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

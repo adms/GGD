@@ -18,9 +18,11 @@ import { DASH_ON_END_MAX_EFFECTS } from "./kindLimits";
 import type { DisplaceEvent } from "../movement/leap";
 import { abilityIdOfOrigin } from "../combat/damage";
 import { TICK_HZ } from "../../constants";
+import type { EntityId } from "../../ids";
+import { enemiesInCapsule } from "./capsuleEnemies";
 
 export const dashEffect: EffectKindSpec<"dash"> = {
-  apply(e, ctx) {
+  apply(e, ctx, bakeList, runList) {
     const { world } = ctx;
     const t = world.transform.get(ctx.caster);
     if (!t) return;
@@ -62,19 +64,39 @@ export const dashEffect: EffectKindSpec<"dash"> = {
       } satisfies DisplaceEvent);
     }
 
-    // ⭐ S7 —— 缺席 = 沒有回呼 = 這個欄位出現之前的行為，一個 tick 都不差。
-    if (!e.onEnd || e.onEnd.length === 0) return;
     // `startDash` 在方向為零向量時**不建 override**，那時登記一筆回呼會讓它在
     // 下一個 tick 立刻付掉（衝刺根本沒發生）—— 所以照著 override 有沒有真的
     // 建起來決定，⛔ 不是照著我們「有沒有呼叫」決定。
-    if (world.nav.get(ctx.caster)?.override?.kind !== "dash") return;
+    const dashing = world.nav.get(ctx.caster)?.override?.kind === "dash";
+
+    // ⭐ GH#1190 鄂爾 E【衝刺沿途命中】—— 缺席 = 這一格出現之前的行為，一個 tick 都不差。
+    //   `sweep`（出貨）：登記進佇列，`dashOnEnd.ts::sweepDashPath` 逐 tick 只打身體真的掃過的那一段。
+    //   `full`：施放這一刻沿整條 `maxDistance` 一次結算（舊近似，後台 `dashPath.mode` 的 rollback）。
+    const pathChain = dashing && e.onPathHit !== undefined && e.onPathHit.length > 0
+      ? bakeList(e.onPathHit.slice(0, DASH_ON_END_MAX_EFFECTS), ctx)
+      : undefined;
+    const halfWidth = (e.pathWidth ?? 2 * t.radius) / 2;
+    if (pathChain !== undefined && world.dashPath.mode === "full") {
+      const d = normalize(dir);
+      const end = { x: t.pos.x + d.x * e.maxDistance, z: t.pos.z + d.z * e.maxDistance };
+      const struck = enemiesInCapsule(world, ctx.caster, t.zone, t.pos, end, halfWidth, null).map((v) => v.id);
+      if (struck.length > 0) runList(pathChain, { ...ctx, targets: struck });
+    }
+    const sweep = pathChain !== undefined && world.dashPath.mode === "sweep";
+
+    // ⭐ S7 —— 缺席 = 沒有回呼 = 這個欄位出現之前的行為，一個 tick 都不差。
+    if ((!e.onEnd || e.onEnd.length === 0) && !sweep) return;
+    if (!dashing) return;
 
     dashOnEndQueue(world).push({
       castInstance: ctx.castInstance,
       caster: ctx.caster,
       from: { x: t.pos.x, z: t.pos.z },
       maxDistance: e.maxDistance,
-      effects: e.onEnd.slice(0, DASH_ON_END_MAX_EFFECTS),
+      effects: (e.onEnd ?? []).slice(0, DASH_ON_END_MAX_EFFECTS),
+      ...(sweep && pathChain !== undefined
+        ? { path: { effects: pathChain, halfWidth, last: { x: t.pos.x, z: t.pos.z }, hit: new Set<EntityId>() } }
+        : {}),
       rank: ctx.rank,
       origin: ctx.origin,
       ...(ctx.abilitySlot !== undefined ? { abilitySlot: ctx.abilitySlot } : {}),
@@ -92,7 +114,11 @@ export const dashEffect: EffectKindSpec<"dash"> = {
    * 那一刻的狀態。
    */
   bake(e, ctx, bakeList) {
-    if (!e.onEnd) return e;
-    return { ...e, onEnd: bakeList(e.onEnd, ctx) };
+    if (!e.onEnd && !e.onPathHit) return e;
+    return {
+      ...e,
+      ...(e.onEnd ? { onEnd: bakeList(e.onEnd, ctx) } : {}),
+      ...(e.onPathHit ? { onPathHit: bakeList(e.onPathHit, ctx) } : {}),
+    };
   },
 };

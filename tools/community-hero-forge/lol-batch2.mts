@@ -44,5 +44,9 @@ write("authoring-manifest.json", { schema: "ggd-lol-batch2-authoring@1", issue: 
   releaseReady: COMMUNITY_LOL_BATCH2_RELEASE_READY, source: "packages/shared/src/content/heroForge/communityLolBatch2.ts",
   generator: "tools/community-hero-forge/lol-batch2.mts", recipeSha256: contentSha256(COMMUNITY_LOL_BATCH2_EXAMPLES),
   generatorVersion,
-  status: "candidate; source-critical mechanics pending Main", serviceImported: false, published: false, rows });
-console.log(`${check ? "verified" : "rebuilt"}: 11 editable candidates / 66 slots; not publication-ready`);
+  // ⭐ status 跟著開關推導（⛔ 寫死一句「pending Main」會在翻開之後變成謊話）；serviceImported／published 是正式站的事，這支量不到 ⇒ 維持 false。
+  status: COMMUNITY_LOL_BATCH2_RELEASE_READY
+    ? "release-ready in editor; Main mechanics bound (v0.45.2); formal service publication pending"
+    : "candidate; source-critical mechanics pending Main",
+  serviceImported: false, published: false, rows });
+console.log(`${check ? "verified" : "rebuilt"}: 11 editable candidates / 66 slots; ${COMMUNITY_LOL_BATCH2_RELEASE_READY ? "release-ready in editor (formal service publication pending)" : "not publication-ready"}`);

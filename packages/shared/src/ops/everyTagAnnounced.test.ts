@@ -5,8 +5,8 @@
  * >  github release note 跟 discord 每個版本號都不能跳過」
  *
  * ── ⭐ 根因（2026-09-01 量到，⛔ 比「忘記」難看）───────────────────────────
- * `scripts/bmpndd.sh` 是**一個指令**，而它第 21 行就 `. docker/.env`
- *（Discord 的 webhook 住那裡）。⭐ 而我**七次部署一次都沒跑它** ——
+ * `scripts/bmpndd.sh` 是**一個指令**，而它（當時的）第 21 行就 `. docker/.env`
+ *（Discord 的 webhook 住那裡；⚠️ GH#1256 起改由它呼叫的 `ship-it.sh:19` 載入，閘不再吃正式站 env）。⭐ 而我**七次部署一次都沒跑它** ——
  * 全部是手打重組 `release.sh` → `gh release create` → `mini-deploy.sh`。
  * ⇒ ⛔ 每一次 `release.sh` 都印「沒設 GGD_DISCORD_WEBHOOK ⇒ **沒發**玩家公告」，
  *   ⭐ 而我七次都讀過那一行然後往下做。

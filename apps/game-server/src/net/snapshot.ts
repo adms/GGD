@@ -690,7 +690,8 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       const nav = world.nav.get(id);
       if (nav?.override) flags |= ENTITY_FLAG.DASHING;
       const ab = world.abilities.get(id);
-      if (ab?.cast) flags |= ENTITY_FLAG.CASTING;
+      // GH#1191【持續引導】（`ab.channel`）與吟唱同一顆：身體都歸伺服器（預測影子的 predictionHold.casting 一起扣住）。
+      if (ab?.cast || ab?.channel) flags |= ENTITY_FLAG.CASTING;
       if (ab?.windup) flags |= ENTITY_FLAG.WINDUP;
       const st = world.status.get(id);
       if (st) {

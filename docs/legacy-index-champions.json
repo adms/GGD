@@ -1,0 +1,324 @@
+{
+  "generatedBy": "tools/legacy-index/build_index.py",
+  "schema": "ggd-legacy-champion-status@1",
+  "note": "⚙️ 產生的，⛔ 不要手改 —— `pnpm legacyindex:build`（`--check` 同時比對這一份與 docs/legacy-index.md）。docs/legacy-index.md「退休英雄卡」那一段的機器可讀版：規則照順序、變身態看卡上 transform.counterpartId 的本體。讀它的：packages/shared/testkit/rosterDeclaration.ts（GH#1227 逐群宣告閘）—— ⛔ 那一側不再推導一次。",
+  "rules": [
+    {
+      "order": 1,
+      "status": "retired",
+      "label": "已下架",
+      "rule": "它或本體在 `content/config/roster.json` 的 `retiredChampions`",
+      "count": 7
+    },
+    {
+      "order": 2,
+      "status": "reopen",
+      "label": "待重上架（#1205）",
+      "rule": "它或本體在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY`",
+      "count": 8
+    },
+    {
+      "order": 3,
+      "status": "never",
+      "label": "從未開放（回收桶）",
+      "rule": "其他",
+      "count": 33
+    }
+  ],
+  "reopenWithoutLegacyCard": [
+    {
+      "id": "godie-eevi",
+      "liveCard": false
+    }
+  ],
+  "cards": [
+    {
+      "file": "godie-e00j.json",
+      "id": "godie-e00j",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-e00k.json",
+      "id": "godie-e00k",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-e00q.json",
+      "id": "godie-e00q",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-e00t.json",
+      "id": "godie-e00t",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-e00u.json",
+      "id": "godie-e00u",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-e00v.json",
+      "id": "godie-e00v",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-e00z.json",
+      "id": "godie-e00z",
+      "base": "godie-e00k",
+      "status": "retired"
+    },
+    {
+      "file": "godie-e012.json",
+      "id": "godie-e012",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-e015.json",
+      "id": "godie-e015",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-ecen.json",
+      "id": "godie-ecen",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-ekee.json",
+      "id": "godie-ekee",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-ewrd.json",
+      "id": "godie-ewrd",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h001.json",
+      "id": "godie-h001",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h00w.json",
+      "id": "godie-h00w",
+      "base": "godie-harf",
+      "status": "never"
+    },
+    {
+      "file": "godie-h021.json",
+      "id": "godie-h021",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-h022.json",
+      "id": "godie-h022",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h02n.json",
+      "id": "godie-h02n",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h02s.json",
+      "id": "godie-h02s",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h02y.json",
+      "id": "godie-h02y",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-h02z.json",
+      "id": "godie-h02z",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-harf.json",
+      "id": "godie-harf",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-hblm.json",
+      "id": "godie-hblm",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-hlgr.json",
+      "id": "godie-hlgr",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-hpal.json",
+      "id": "godie-hpal",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-n01b.json",
+      "id": "godie-n01b",
+      "base": "godie-nman",
+      "status": "reopen"
+    },
+    {
+      "file": "godie-n01l.json",
+      "id": "godie-n01l",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-naka.json",
+      "id": "godie-naka",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-nbst.json",
+      "id": "godie-nbst",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-nman.json",
+      "id": "godie-nman",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-nplh.json",
+      "id": "godie-nplh",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-ntin.json",
+      "id": "godie-ntin",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-o01z.json",
+      "id": "godie-o01z",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-o02n.json",
+      "id": "godie-o02n",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-o02o.json",
+      "id": "godie-o02o",
+      "base": "godie-o02n",
+      "status": "never"
+    },
+    {
+      "file": "godie-o02s.json",
+      "id": "godie-o02s",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-o02v.json",
+      "id": "godie-o02v",
+      "base": "godie-o01z",
+      "status": "never"
+    },
+    {
+      "file": "godie-o02w.json",
+      "id": "godie-o02w",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-obla.json",
+      "id": "godie-obla",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-opgh.json",
+      "id": "godie-opgh",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-oshd.json",
+      "id": "godie-oshd",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-othr.json",
+      "id": "godie-othr",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-u00b.json",
+      "id": "godie-u00b",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-u011.json",
+      "id": "godie-u011",
+      "base": "godie-u012",
+      "status": "never"
+    },
+    {
+      "file": "godie-u012.json",
+      "id": "godie-u012",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-u01f.json",
+      "id": "godie-u01f",
+      "base": null,
+      "status": "retired"
+    },
+    {
+      "file": "godie-u01q.json",
+      "id": "godie-u01q",
+      "base": null,
+      "status": "never"
+    },
+    {
+      "file": "godie-usyl.json",
+      "id": "godie-usyl",
+      "base": null,
+      "status": "reopen"
+    },
+    {
+      "file": "godie-uwar.json",
+      "id": "godie-uwar",
+      "base": null,
+      "status": "never"
+    }
+  ]
+}

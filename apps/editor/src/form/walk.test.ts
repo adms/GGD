@@ -254,6 +254,8 @@ describe("discriminated EffectDef union (editor-02)", () => {
         //   ⚠️ 照這張名單上面的告誡：補 tag **不是修好**（`PreviewController.effectLines`
         //   也學了它，`AbilityTerrainFx` 則負責把它畫出來）。
         "spawnObstacle",
+        // ⭐ GH#1189 瑟雷西 W【互動物】—— 隊友送 interact 指令才觸發。與 `PreviewController` 的 case 同時進來。
+        "spawnInteractable",
         "spawnProjectile",
         // ⭐ GH#1197 瑟雷西 R【邊界陣】—— ⚠️ 它在 union 裡**已經一陣子了**，
         //   而這張名單一直沒補 ⇒ 這條絆線從那時起就紅著（⛔ 不是這一次新長出來的）。

@@ -323,8 +323,8 @@ const PARALLEL = [
   //    （本 repo 已記錄過:一條永遠不會綠的閘與一個不存在的閘沒有差別）。
   //    ⇒ 包成**棘輪**:顆數變多才紅,變少要求收緊基準線,持平印警示行放行。
   //    突變驗過（#1230 當時的單一數字）:基準線 284(變多)⇒exit 1 · 286(變少)⇒exit 1 · 285(持平)⇒exit 0。
-  //    ⚠️ GH#1263 起不再是單一數字 285:分母以關係判定,`intake-ratchet.txt` 有三格
-  //    a（玩家預設拿得到）· b（可切換、非預設）· a_body_tex（預設身體貼圖超過上限的格數）。
+  //    ⚠️ GH#1263 起不再是單一數字 285:分母以關係判定,`intake-ratchet.txt` 有四格
+  //    a（玩家預設拿得到）· b（可切換、非預設）· a_body_tex（預設身體貼圖超過上限的格數）· ab_gltf（(a)(b) 裡嚴格 glTF 驗證有錯的顆數,GH#1173）。
   //    ⛔ a／b 設在 2026-09-15 現況,含 #1230 之後新進的 40 顆 ⇒ 見那個檔的誠實說明。
   { name: "model-intake", cmd: ["bash", ["scripts/model-intake-or-warn.sh"]] },
   // 🚦 GH#1122 —— 這兩支也在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過。
@@ -436,7 +436,7 @@ mkdirSync(LOGDIR, { recursive: true });
 //   帳本 `docs/_data/deploy-timings.json` 裡最慢的一支**健康** vitest 是 **755 秒**，
 //   ⇒ 10 分鐘的地板**低於它** ⇒ ⭐ 看門狗會在一次正常的跑上開火，
 //     而 exit 124 與「閘真的紅了」⛔ 分不出來（08-28 連續四次誤殺就是這個形狀：假紅蓋掉真紅）。
-//   ⚠️ 15 分鐘留 19% 餘裕，⛔ 而仍然低於 `scripts/watchdog.sh` 的 LIMIT_MIN=20 ——
+//   ⚠️ 15 分鐘留 19% 餘裕，⛔ 而仍然低於 `scripts/watchdog.sh` 的 `LIMIT_MIN`（值只住那一行，⛔ 這裡不抄 —— GH#1257 抓到這裡還寫著 20，而它早就是 60）——
 //     ⭐ 那是刻意的：**單支**先被收掉（看得到是哪一支），⛔ 不是整跑被砍。
 //   ⭐ 守衛 `ops/shipScriptWatchdog.test.ts` 從**帳本**推導這條線，⛔ 不抄字面值 ⇒
 //     suite 再長大它會再紅一次，而那正是它該做的事。
@@ -444,6 +444,11 @@ const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 15 * 
 const WATCHDOG_MULT = Number(process.env.GGD_SHIP_WATCHDOG_MULT ?? 3);
 // 送出 SIGKILL（或看到 exit）之後,還等多久 `close` —— 等不到就自己收尾。
 const WATCHDOG_GRACE_MS = Number(process.env.GGD_SHIP_WATCHDOG_GRACE_MS ?? 20000);
+// ⏲️ GH#1257 —— 每一支 vitest 現在自己也掛著看門狗（`scripts/watchdog.sh --attach`，整棵樹 CPU≈0 就開火）。
+//   ⭐ 在這支底下讓它**只記錄不開火**：收 suite 的是上面這隻逐 suite 看門狗（hung 判定、帳本、最後那張失敗表都在這裡），
+//   ⛔ 兩隻搶著開火會讓同一次卡死一邊記成 hung、一邊記成 125 的紅。它印出來的「還沒跑完的檔」照樣進 suite 的 log。
+//   🔙 `GGD_VITEST_WATCHDOG_RECORD_ONLY=0 pnpm ship:check` ⇒ 讓 vitest 那隻照樣開火。
+process.env.GGD_VITEST_WATCHDOG_RECORD_ONLY ??= "1";
 
 /**
  * ⭐ 這一支上一次跑了多久 —— 從**同一份**帳本讀中位數（⛔ 不是另開一份估時表）。

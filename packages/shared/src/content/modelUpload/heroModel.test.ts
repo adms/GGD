@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { modelUploadFixture } from "./fixtures";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel, heroModelBudgetIssues } from "./heroModel";
 import { inspectModelUpload } from "./inspect";
-import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET, textureVramBytes } from "./budget";
 import { encodeUploadGlb } from "./glb";
 
 function sourceWithLeadingZeroClip() {
@@ -101,4 +101,18 @@ it("applies the formal adoption decimation policy only above 10,000 triangles", 
   expect(adoptionErrors(10_001)).toEqual([
     expect.stringMatching(/三角面 10001 .*門檻 10000.*不超過 8000 面/),
   ]);
+});
+
+// ⭐ GH#1174 —— 每張貼圖都**剛好在**邊長上限（⇒ 「貼圖邊長」那一列一定不叫），只靠張數跨過 VRAM 線。
+// 兩個方向都跑：多一張 ⇒ 叫；少那一張 ⇒ 不叫（⛔ 單邊校準的尺證明不了「沒有」）。張數從出貨上限推導。
+it("rejects a body whose textures each fit the edge cap but together exceed the per-hero VRAM line", async () => {
+  const inspected = await inspectModelUpload(modelUploadFixture().bytes);
+  const edge = HERO_MODEL_BUDGET.texEdge.limit;
+  const fits = Math.floor(HERO_MODEL_BUDGET.vramBytes.limit / textureVramBytes(edge, edge));
+  const vramErrors = (count: number) => heroModelBudgetIssues({
+    ...inspected,
+    textures: Array.from({ length: count }, (_, index) => ({ width: edge, height: edge, bytes: 20, sha256: `t${index}` })),
+  }).errors.filter((issue) => issue.includes("VRAM"));
+  expect(vramErrors(fits)).toEqual([]);
+  expect(vramErrors(fits + 1)).toEqual([expect.stringContaining(`超過英雄模型上限 ${HERO_MODEL_BUDGET.vramBytes.limit}`)]);
 });

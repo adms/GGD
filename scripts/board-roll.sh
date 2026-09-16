@@ -10,6 +10,12 @@
 # 用法：
 #   bash scripts/board-roll.sh            # 輪替（含備份）＋重建七天窗
 #   bash scripts/board-roll.sh --check    # 唯讀閘：今天那一份不存在／窗過期 ⇒ 回非零
+#   bash scripts/board-roll.sh --where    # 印出**哪一份**是戰情版（bmpndd.sh 的 B／M 讀它，⛔ 不各寫一份 glob）
+#
+# ⭐ GH#1256「戰情版」是哪一份：owner 叫「戰情版」的是這支寫的 `docs/_release/戰情版-YYYYMMDD.md`。
+#   · `docs/_execution-batches.md` —— owner 叫它「執行批次計畫」，⛔ 不是戰情版
+#   · `docs/_release/ggd-board.html` —— 戰情板網頁（`tools/board/gen_board.py`，每次改寫前自己留底）
+#   · 根目錄 `GGD戰情版.md` —— 指向今天那一份的**捷徑**（被 git 追蹤的符號連結；追不追蹤見檔尾那段）
 #
 # ⭐ 為什麼是指令＋閘不是判準：CLAUDE.md 記過五次「要記得⋯」失效。
 #    「今天有沒有輪替」是一個**日期比對**，不是感覺。
@@ -22,6 +28,7 @@ DAILY=docs/_daily
 TODAY=$(date +%Y%m%d)
 CUR=$(ls "$REL"/戰情版-*.md 2>/dev/null | sort | tail -1)
 [ -z "$CUR" ] && { echo "⛔ 找不到任何 $REL/戰情版-*.md"; exit 1; }
+[ "${1:-}" = "--where" ] && { echo "$CUR"; exit 0; }
 CUR_DATE=$(basename "$CUR" .md | sed 's/[^0-9]//g')
 TARGET="$REL/戰情版-${TODAY}.md"
 
@@ -53,14 +60,23 @@ if [ "$CHECK" = 1 ]; then
   TARGET="$REL/戰情版-${TODAY}.md"
 fi
 
-if [ "$CUR_DATE" != "$TODAY" ]; then
-  STAMP=$(date +%Y%m%d-%H%M)
-  BAK="$REL/戰情版_temp_${STAMP}.md"
-  cp "$CUR" "$BAK"                      # ⭐ 輪替前**整份**備份（owner 逐字）
-  cp "$CUR" "$TARGET"
-  echo "📦 備份：$CUR → $BAK"
-  echo "🔄 輪替：今天那一份 = $TARGET"
-fi
+# ── ⭐ 用時間區隔：**每一次改寫之前**都留一份（GH#1256）──────────────────────
+# owner 2026-09-15：「「戰情版」有三份同名的檔=> 用時間區隔 全部都要備份」
+# owner 2026-08-26：「每天自動輪替，輪替前整份備份 戰情版_temp_{timstamp}.md」
+# ⛔ 在此之前只有**換日那一刻**留底；同一天就地改寫（待裁決區塊、七天窗）幾十次一次都不留。
+# ⇒ 改寫全部先寫進暫存檔 WORK，檔尾只有**一個**寫入點：換日或內容有變才留底，再寫回。
+#   · 內容沒變 ⇒ 不留（⛔ 不然每跑一次就多一份）
+#   · 同一分鐘已經有一份 ⇒ 改用到秒的檔名；還是撞 ⇒ ⛔ 不蓋舊的、這一輪不改寫
+keep_copy() {
+  local dest="$REL/戰情版_temp_$(date +%Y%m%d-%H%M).md"
+  [ -e "$dest" ] && dest="$REL/戰情版_temp_$(date +%Y%m%d-%H%M%S).md"
+  if [ -e "$dest" ]; then echo "⛔ 留底檔 $dest 已經存在 —— ⛔ 不蓋舊的，這一輪不改寫戰情版"; return 1; fi
+  cp "$1" "$dest" && echo "📦 留底：$1 → $dest"
+}
+SRC="$TARGET"; [ -f "$TARGET" ] || SRC="$CUR"   # 換日：今天那一份從最新一份起算
+_tmpd="${TMPDIR:-/tmp}"; WORK=$(mktemp "${_tmpd%/}/board-roll.XXXXXX") || exit 1
+trap 'rm -f "$WORK"' EXIT
+cp "$SRC" "$WORK" || exit 1
 
 # ── 🧑‍⚖️ 待你裁決的批次（GH#785）────────────────────────────────────────────
 # owner 2026-08-27:「你還是沒告訴我去後台哪裡審查」——更早的病是:批次帳本誠實記著
@@ -69,7 +85,7 @@ fi
 if [ "$CHECK" != 1 ]; then
   DIGEST=$(node tools/review/pending-digest.mjs --limit 8 2>/dev/null || true)
   if [ -n "$DIGEST" ]; then
-    python3 - "$TARGET" <<PYEOF
+    python3 - "$WORK" <<PYEOF
 import re, sys
 target = sys.argv[1]
 digest = """$DIGEST"""
@@ -92,22 +108,34 @@ fi
 # owner 2026-08-26：「**GGD 戰情版.md 應該在我本機端阿**」
 # ⇒ 檔名每天換（那是紀錄），⛔ 但**找它的路徑不可以每天換**。symlink 一行解決，
 #   ⛔ 不是複製一份（複製＝同一份知識兩個住處，第〇·四守則）。
+# ⭐ GH#1256 修正輪：它**仍然被 git 追蹤**。e525a37b5 曾把它移出 git（目標每天換 ⇒ commit 新日檔時漏帶連結，
+#   d935cfc98 ⇒ 乾淨 checkout 上這條 --check 紅），⛔ 已由主 session 2026-09-15 裁決 revert：owner 本機工作樹
+#   有它的未提交改動，未追蹤化會卡住那棵樹的 pull。⇒ 「漏帶連結 ⇒ 紅」這個洞仍然開著（開關見下）。建立在檔尾（寫完才指過去）。
+# 🔙 GGD_BOARD_LINK_REQUIRED（環境變數，只有作者／CI 會轉）：
+#   auto（預設）＝ 問 git「它有沒有被追蹤」：追蹤中 ⇒ --check 要求它**存在**且指對；沒追蹤（或不在 git 樹裡）⇒ 存在才驗
+#   1 ＝ 一律要求 · 0 ＝ 存在才驗
+#   ⇒ 哪天要改回不追蹤，只要 revert 那個 revert（它連 .gitignore 一起帶回），⛔ 不必再改這支或 CI。
 LINK=GGD戰情版.md
 WANT="$TARGET"
-if [ "$CHECK" = 1 ]; then
+case "${GGD_BOARD_LINK_REQUIRED:-auto}" in
+  1) NEED_LINK=1 ;;
+  0) NEED_LINK=0 ;;
+  auto) NEED_LINK=0; git ls-files --error-unmatch -- "$LINK" >/dev/null 2>&1 && NEED_LINK=1 ;;
+  *) echo "⛔ GGD_BOARD_LINK_REQUIRED='${GGD_BOARD_LINK_REQUIRED}' 不認得（合法：auto｜1｜0）"; exit 1 ;;
+esac
+if [ "$CHECK" = 1 ] && { [ "$NEED_LINK" = 1 ] || [ -e "$LINK" ] || [ -L "$LINK" ]; }; then
   HAVE=$(readlink "$LINK" 2>/dev/null || true)
   if [ "$HAVE" != "$WANT" ]; then
-    echo "⛔ 根目錄的 $LINK 指向 '${HAVE:-（不存在）}'，應該是 '$WANT'"
+    echo "⛔ 根目錄的 $LINK 指向 '${HAVE:-（不存在或不是連結）}'，應該是 '$WANT'"
     echo "   跑：bash scripts/board-roll.sh"
     exit 1
   fi
-else
-  ln -sfn "$WANT" "$LINK"
-  echo "🔗 固定入口：$LINK → $WANT"
 fi
 
 # ── 七天滾動窗：以**今天**為右界往前推 6 天 ─────────────────────────────
-python3 - "$TARGET" "$TODAY" "$CHECK" <<'PY'
+# （--check 讀正本、不寫；輪替／改寫讀寫 WORK，檔尾才決定要不要留底寫回）
+PYT="$WORK"; [ "$CHECK" = 1 ] && PYT="$TARGET"
+python3 - "$PYT" "$TODAY" "$CHECK" <<'PY' || exit $?
 import sys, os, re, datetime, collections
 target, today, check = sys.argv[1], sys.argv[2], sys.argv[3] == "1"
 end = datetime.datetime.strptime(today, "%Y%m%d").date()
@@ -205,3 +233,13 @@ if new != src:
 else:
     print(f"✓ 七天窗已是最新：{start} → {end} · {len(rows)} 則")
 PY
+[ "$CHECK" = 1 ] && exit 0
+
+# ── 唯一的寫入點：換日或內容有變 ⇒ 先留底（改寫前那一份）再寫回 ────────────
+if [ "$SRC" != "$TARGET" ] || ! cmp -s "$WORK" "$TARGET"; then
+  keep_copy "$SRC" || exit 1
+  [ "$SRC" != "$TARGET" ] && echo "🔄 輪替：今天那一份 = $TARGET"
+  cat "$WORK" > "$TARGET" || exit 1
+fi
+ln -sfn "$WANT" "$LINK"
+echo "🔗 固定入口：$LINK → $WANT"

@@ -56,6 +56,11 @@ export interface RangeTiers {
    * ⚠️ 關掉**不會**讓技能失去射程 —— 手寫的 `range` 一直都在。
    */
   enabled: boolean;
+  /**
+   * ⭐ GH#1260 B3 —— **沒標級別的施法距離**要不要在載入時吸到最近一格
+   * （「值 → 級別」只住 `geometrySnap.ts`）。⭐ rollback：false ⇒ 回到手寫的 `range`。
+   */
+  snapUntiered: boolean;
   /** 級別 → 施法距離（GGD 單位）。五格都要有值。 */
   range: Readonly<Record<RangeTierName, number>>;
 }
@@ -66,6 +71,7 @@ export interface RangeTiers {
  */
 export const DEFAULT_RANGE_TIERS: RangeTiers = Object.freeze({
   enabled: true,
+  snapUntiered: true,
   range: ladderWindow(DUEL_ZONE_RADIUS_REF, 1),
 });
 
@@ -84,7 +90,9 @@ function clampRange(v: unknown, fallback: number): number {
 
 /** 把一份 `config.range-tiers@1` 文件正規化成級距表。認不得 → 出貨值。 */
 export function rangeTiersFromDoc(doc: unknown): RangeTiers {
-  const d = doc as { schema?: string; enabled?: unknown; range?: Record<string, unknown> } | undefined;
+  const d = doc as
+    | { schema?: string; enabled?: unknown; snapUntiered?: unknown; range?: Record<string, unknown> }
+    | undefined;
   if (!d || d.schema !== "config.range-tiers@1") return DEFAULT_RANGE_TIERS;
   const src = d.range ?? {};
   const range = {} as Record<RangeTierName, number>;
@@ -93,6 +101,7 @@ export function rangeTiersFromDoc(doc: unknown): RangeTiers {
   }
   return {
     enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_RANGE_TIERS.enabled,
+    snapUntiered: typeof d.snapUntiered === "boolean" ? d.snapUntiered : DEFAULT_RANGE_TIERS.snapUntiered,
     range: Object.freeze(range),
   };
 }

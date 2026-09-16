@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T17:49:44+08:00",
-  "inputsSha256": "6c62286f61cd1d7cab1a1337b538ab70235b1337aea1272f971667c2412d3e18",
+  "generatedAt": "2026-09-16T15:12:03+08:00",
+  "inputsSha256": "a8924e5eed9c1a5afb527ba110da4d51577289d6f779c6ba2d1f587d9264de6a",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -6413,7 +6413,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f",
+        "modelKey": "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220",
         "mode": "manual"
       },
       "downloadSources": [
@@ -13243,7 +13243,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+        "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
         "mode": "manual"
       },
       "downloadSources": [
@@ -19526,7 +19526,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.0758526c616aafc9ef5aee24fa58e959ceacaea8b646f986",
+        "modelKey": "version.body.0a0d16b904a2effafb841128d8dfc9630fc1001515087362",
         "mode": "manual"
       },
       "downloadSources": [
@@ -23495,7 +23495,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
+        "modelKey": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
         "mode": "manual"
       },
       "downloadSources": [
@@ -27650,7 +27650,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+        "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
         "mode": "manual"
       },
       "downloadSources": [],
@@ -44596,7 +44596,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+        "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
         "mode": "manual"
       },
       "downloadSources": [],
@@ -55755,7 +55755,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+        "modelKey": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
         "mode": "manual"
       },
       "downloadSources": [],
@@ -62052,7 +62052,7 @@
           "s3Uri": null
         }
       },
-      "defaultSelectionMode": "automatic",
+      "defaultSelectionMode": "manual",
       "current": {
         "key": "imported.doraemon-cat",
         "id": "imported.doraemon-cat",
@@ -62111,8 +62111,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
-        "mode": "auto"
+        "modelKey": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
+        "mode": "manual"
       },
       "downloadSources": [
         "owner-model-002"
@@ -79406,8 +79406,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
-        "mode": "auto"
+        "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-042"
@@ -83948,8 +83948,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
-        "mode": "auto"
+        "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-042"
@@ -84069,7 +84069,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.c462be5cabf1c6528b2023539dfaaae6504b7cb3af483702",
+        "modelKey": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
         "mode": "manual"
       },
       "downloadSources": [
@@ -96918,7 +96918,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+        "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
         "mode": "manual"
       },
       "downloadSources": [
@@ -110227,7 +110227,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+        "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
         "mode": "manual"
       },
       "downloadSources": [

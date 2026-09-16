@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "899e14fa667d",
-  "capabilityFingerprint": "fb8d3eb8",
+  "fingerprint": "9879991dbf0f",
+  "capabilityFingerprint": "96994f3b",
   "required": [
     {
       "group": "abilityField",
@@ -217,6 +217,10 @@
     {
       "group": "abilityField",
       "name": "castType"
+    },
+    {
+      "group": "abilityField",
+      "name": "channel"
     },
     {
       "group": "abilityField",
@@ -2972,6 +2976,16 @@
     {
       "group": "configField",
       "name": "bothDraftsExtraSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "botInteract",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "botInteract.autoAccept",
       "owner": "config.arena-rules@1"
     },
     {
@@ -8666,6 +8680,11 @@
     },
     {
       "group": "configField",
+      "name": "channelCancelOnMoveOrder",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
       "name": "clampSpeed",
       "owner": "config.displacement-tiers@1"
     },
@@ -8981,6 +9000,11 @@
     },
     {
       "group": "configField",
+      "name": "crystalPerMcoin",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
       "name": "crystalRewards",
       "owner": "config.store@1"
     },
@@ -9113,6 +9137,26 @@
       "group": "configField",
       "name": "dashAngleDeg",
       "owner": "config.vfx-families@1"
+    },
+    {
+      "group": "configField",
+      "name": "dashPath",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "dashPath.mode",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "dashPath.mode=full",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "dashPath.mode=sweep",
+      "owner": "config.displacement-tiers@1"
     },
     {
       "group": "configField",
@@ -11372,6 +11416,11 @@
     {
       "group": "configField",
       "name": "id",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
       "owner": "config.arena-rules@1"
     },
     {
@@ -12033,6 +12082,16 @@
       "group": "configField",
       "name": "intensity",
       "owner": "config.gore@1"
+    },
+    {
+      "group": "configField",
+      "name": "interactClick",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "interactClick.enemyFirst",
+      "owner": "config.arena-rules@1"
     },
     {
       "group": "configField",
@@ -14222,6 +14281,11 @@
     {
       "group": "configField",
       "name": "note",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
       "owner": "config.combo-strikes@1"
     },
     {
@@ -15821,6 +15885,31 @@
     },
     {
       "group": "configField",
+      "name": "projectileRedirect",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "projectileRedirect.mode",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "projectileRedirect.mode=contact",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "projectileRedirect.mode=off",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "projectileRedirect.mode=press",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
       "name": "proportionality",
       "owner": "config.authoring-rules@1"
     },
@@ -17306,6 +17395,11 @@
     },
     {
       "group": "configField",
+      "name": "roundStep",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "roundVolley",
       "owner": "config.victory-fx@1"
     },
@@ -17728,6 +17822,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.store@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.skin-tier-prices@1"
     },
     {
       "group": "configField",
@@ -19496,6 +19595,21 @@
     },
     {
       "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.aoe-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.range-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "snapUntiered",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
       "name": "soundEnabled",
       "owner": "config.vfx-families@1"
     },
@@ -20323,6 +20437,26 @@
       "group": "configField",
       "name": "tick.tickHz",
       "owner": "config@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.label",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.mcoin",
+      "owner": "config.skin-tier-prices@1"
+    },
+    {
+      "group": "configField",
+      "name": "tiers.*.standard",
+      "owner": "config.skin-tier-prices@1"
     },
     {
       "group": "configField",
@@ -21467,6 +21601,10 @@
     },
     {
       "group": "effectField",
+      "name": "launchFrom"
+    },
+    {
+      "group": "effectField",
       "name": "launchHeight"
     },
     {
@@ -21555,6 +21693,10 @@
     },
     {
       "group": "effectField",
+      "name": "maxUses"
+    },
+    {
+      "group": "effectField",
       "name": "minimumHp"
     },
     {
@@ -21592,6 +21734,10 @@
     {
       "group": "effectField",
       "name": "offsetForwardU"
+    },
+    {
+      "group": "effectField",
+      "name": "onAccept"
     },
     {
       "group": "effectField",
@@ -21672,6 +21818,14 @@
     {
       "group": "effectField",
       "name": "onOwnerDeath"
+    },
+    {
+      "group": "effectField",
+      "name": "onPathHit"
+    },
+    {
+      "group": "effectField",
+      "name": "onRedirectHit"
     },
     {
       "group": "effectField",
@@ -22631,6 +22785,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "launchFrom"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "launchHeight"
     },
     {
@@ -22731,6 +22889,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "maxUses"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "minimumHp"
     },
     {
@@ -22800,6 +22962,10 @@
     {
       "group": "effectFieldPath",
       "name": "offsetForwardU"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onAccept"
     },
     {
       "group": "effectFieldPath",
@@ -22883,6 +23049,14 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "onPathHit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onRedirectHit"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "onTouch"
     },
     {
@@ -22892,6 +23066,10 @@
     {
       "group": "effectFieldPath",
       "name": "path"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pathWidth"
     },
     {
       "group": "effectFieldPath",
@@ -23506,6 +23684,10 @@
       "name": "who"
     },
     {
+      "group": "effectField",
+      "name": "pathWidth"
+    },
+    {
       "group": "effectFieldPath",
       "name": "width"
     },
@@ -24072,6 +24254,10 @@
     {
       "group": "effectKind",
       "name": "shieldBreak"
+    },
+    {
+      "group": "effectKind",
+      "name": "spawnInteractable"
     },
     {
       "group": "effectKind",
@@ -24699,6 +24885,11 @@
     },
     {
       "group": "skinField",
+      "name": "listed",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
       "name": "mcoinPrice",
       "owner": "skin@1"
     },
@@ -24710,6 +24901,11 @@
     {
       "group": "skinField",
       "name": "name",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "priceTier",
       "owner": "skin@1"
     },
     {
@@ -25469,24 +25665,24 @@
     }
   ],
   "counts": {
-    "effectKind": 51,
-    "effectField": 280,
+    "effectKind": 52,
+    "effectField": 286,
     "hookEvent": 33,
     "hookField": 22,
-    "abilityField": 41,
+    "abilityField": 42,
     "auraField": 8,
     "templateFamily": 47,
     "conditionLeaf": 10,
     "conditionLeafField": 19,
-    "effectFieldPath": 456,
+    "effectFieldPath": 462,
     "vfxField": 91,
     "modelField": 47,
     "projectileField": 21,
-    "skinField": 9,
+    "skinField": 11,
     "vfxScriptField": 8,
-    "configField": 4091,
+    "configField": 4117,
     "_notRequired": 15,
-    "_total": 5234,
+    "_total": 5276,
     "_ownerOnly": 39
   }
 }

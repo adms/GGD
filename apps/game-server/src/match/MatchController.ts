@@ -68,6 +68,8 @@ import {
 } from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import { markedBlinkFromDoc } from "@ggd/shared/sim/movement/markedBlink";
+import { projectileRedirectFromDoc } from "@ggd/shared/sim/projectileRedirectRules";
+import { dashPathFromDoc } from "@ggd/shared/sim/dashPathRules";
 import { wallBlockFromDoc } from "@ggd/shared/sim/movement/wallBlock";
 import {
   CAST_APPROACH_DOC_ID,
@@ -542,6 +544,12 @@ export const DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT = false;
  * ⭐ 一鍵 rollback ＝ 把它調大（極大值 ⇒ 只剩回合結束那一則），⛔ 不必動線路。
  */
 export const LIVE_SCORE_PERIOD_TICKS = TICK_HZ;
+
+/**
+ * AI 座位的三選一卡開出來之後，等幾個 tick 才代選（中場迴圈的 `age > AI_OFFER_PICK_DELAY_TICKS`）。
+ * ⭐ 具名是為了讓測試**推導**它（GH#1110 審查：`offerSwap.test.ts` 曾經抄一份字面值 11）—— ⛔ 值沒有動。
+ */
+export const AI_OFFER_PICK_DELAY_TICKS = 10;
 
 /** `config.match@1` 的文件 id（`phaseConfig` 的三支 resolve* 讀的是同一份）。 */
 const MATCH_CONFIG_DOC_ID = "config.match";
@@ -1473,6 +1481,8 @@ export class MatchController {
     //   和 `per-level-bonus` 同一條路，已知限制也一樣（後台改了要重啟 shard）。
     this.world.wallBlock = wallBlockFromDoc(Configs.tryGet("displacement-tiers"));
     this.world.markedBlink = markedBlinkFromDoc(Configs.tryGet("displacement-tiers"));
+    this.world.projectileRedirect = projectileRedirectFromDoc(Configs.tryGet("displacement-tiers")); // GH#1187 鄂爾 R 撞擊改向開關
+    this.world.dashPath = dashPathFromDoc(Configs.tryGet("displacement-tiers")); // GH#1190 鄂爾 E 衝刺沿途命中開關
     // ⭐ 走過去放技能 (`config.cast-approach@1`, owner 2026-08-22「超過施法距離人物不會
     //   走過去放技能（做成後台開關）」)。⛔ GH#1051：在此之前 `castApproachRules(world)` 讀的是
     //   一格**零寫入端**的欄位 ⇒ 場上永遠出貨預設、後台關不掉（#1035 的形狀：三個住處齊全 ≠ 已上線）。
@@ -1621,7 +1631,7 @@ export class MatchController {
       const seat = new Seat(
         seatId,
         asTeamId(spec.teamId),
-        new AIDriver((itemId) => this.whitelist.allowsItem(itemId), this.rules.botShop),
+        new AIDriver((itemId) => this.whitelist.allowsItem(itemId), this.rules.botShop, this.rules.botInteract),
       );
       seat.accountId = spec.accountId ?? `bot-${spec.seatId}`;
       seat.displayName = spec.displayName ?? (spec.isBot ? `Bot ${spec.seatId}` : `Player ${spec.seatId}`);
@@ -4297,23 +4307,20 @@ export class MatchController {
    * 它必須傳進來而不是在這裡推導:同一支 `applyPick` 兩個呼叫點,一個是玩家
    * 的 `pickOffer` 事件、一個是 `advancePhase` 的安全網,而「選取率」把這兩種
    * 混在一起就是一半的樣本是隨機數 —— 隨機數的選取率沒有任何意義。
+   *
+   * `swapSlot`(GH#1110 B)= 玩家指定「背包滿時賣掉哪一格」。⛔ 系統代選永遠不帶它
+   * (⛔ 不替玩家挑一件丟掉;AI 座位不換裝)。
    */
-  private applyPick(offerId: string, offer: StoredOffer, choiceIdx: number, auto: boolean): void {
+  private applyPick(
+    offerId: string,
+    offer: StoredOffer,
+    choiceIdx: number,
+    auto: boolean,
+    swapSlot?: number,
+  ): void {
     const choice = offer.choices[choiceIdx] ?? offer.choices[0]!;
-    // #207:記在 apply 的入口,**在任何一條 return 之前**。下面 attr 那一支
-    // (`applyAttrPick`)是有可能失敗的,但卡片已經被消耗掉了(這個方法無條件
-    // `offers.delete`),所以那仍然是「這張被選走了」。
-    this.ledger.recordOffer({
-      seatId: offer.seatId,
-      round: this.phase.round,
-      tick: this.world.tick,
-      kind: MatchController.offerKindOf(offer),
-      offered: [...offer.choices],
-      picked: choice,
-      auto,
-      // `declined` 由 recordOffer 自己從 offered − picked 推導 —— 呼叫端不算,
-      // 不然「沒選的那兩張」會有兩個版本。
-    });
+    /** 道具卡背包滿、而且是**系統代選**:這張卡給不出去,消耗掉(帳本記 picked=null)。 */
+    let landedNowhere = false;
     if (offer.kind === "item") {
       // A 傳說寶玉 card holds an inventory slot from the moment it is rolled
       // (task #82). Release it FIRST so the grant below can use the very slot
@@ -4322,17 +4329,23 @@ export class MatchController {
       // outlived its card would cost the player a slot for the rest of the
       // match.
       if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
-      const picked = applyItemPick(this.world, offer, choice as ItemId);
+      const picked = applyItemPick(this.world, offer, choice as ItemId, swapSlot);
       // ⭐⭐ GH#1110（owner 2026-09-06「A ＋ B 開票」的 A）——
       //   背包滿的時候**留著這張卡**，⛔ 不消耗那次機會。
       //   ⚠️ 在此之前這個方法無條件 `offers.delete` ⇒ 玩家點了一張卡、
       //   什麼都沒發生、而卡片消失了。
       //   ⚠️ ⭐ 寶玉的格子上面剛剛才 `releaseOrbSlot` 過 —— 要**放回去**，
       //   ⛔ 否則留著的那張卡下一次按下去仍然沒有格子（而且那一格永久漏掉）。
-      if (picked === "no-slot") {
+      // ⚠️ 只有**玩家按的**才留卡。系統代選（AI 座位 age>10 那一條、過期安全網）留卡
+      //   ⇒ 下一 tick 同一條迴圈又來一次 ⇒ ⛔ 逐 tick 重試、逐 tick 發拒絕事件，
+      //   而且那張 AI 的卡讓 `offers.size === 0` 永遠不成立（全 bot 局等滿中場）。
+      //   代選本來就不會替人挑一件丟掉 ⇒ 那張卡給不出去 ⇒ 消耗掉。
+      if (picked === "no-slot" && !auto) {
         if (offer.reservesSlot) reserveOrbSlot(this.world, offer.entity);
+        // ⛔ 不記帳：卡片沒有被消耗（在此之前入口先記 ⇒ AI 座位逐 tick 灌一筆）。
         return;
       }
+      landedNowhere = picked === "no-slot";
     } else if (offer.kind === "attr") {
       // 能力屬性強化 (#260). The 375g was charged when the card OPENED, so the
       // pick is a pure grant: it adds the rolled 力/敏/智 magnitude into
@@ -4342,6 +4355,21 @@ export class MatchController {
     } else {
       applyAugmentPick(this.world, offer, choice as AugmentId);
     }
+    // #207:卡片**被消耗的那一刻**記一筆,⭐ 每張卡恰好一筆。attr 那一支
+    // (`applyAttrPick`)有可能失敗,但卡片照樣消耗,所以那仍然是「這張被選走了」。
+    // ⚠️ 在此之前記在入口(任何 return 之前)——而 GH#1110 A 加了一條「背包滿留卡」的
+    // return 之後,入口那一筆就變成「每按一次記一次」。
+    this.ledger.recordOffer({
+      seatId: offer.seatId,
+      round: this.phase.round,
+      tick: this.world.tick,
+      kind: MatchController.offerKindOf(offer),
+      offered: [...offer.choices],
+      picked: landedNowhere ? null : choice,
+      auto,
+      // `declined` 由 recordOffer 自己從 offered − picked 推導 —— 呼叫端不算,
+      // 不然「沒選的那兩張」會有兩個版本。
+    });
     this.offers.delete(offerId);
   }
 
@@ -5526,7 +5554,9 @@ export class MatchController {
         const offer = this.offers.get(offerId);
         if (offer && offer.seatId === (ev.data.seatId as SeatId)) {
           // auto = false —— 這是玩家(或 AI 的 brain)真的按下去的那一張。
-          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false);
+          // swapSlot(GH#1110 B)—— 背包滿時要換掉哪一格,`validateInput` 已驗過格號。
+          const swapSlot = typeof ev.data.swapSlot === "number" ? ev.data.swapSlot : undefined;
+          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false, swapSlot);
         }
       } else if (ev.type === "legendaryOrbRolled") {
         // 傳說寶玉 (task #82): the SIM rolled the 3-choose-1 (so it rides
@@ -5621,7 +5651,7 @@ export class MatchController {
           // ⚠️ `|| earlyDue` 那一項只可能碰到**非真人**的卡（早退成立時,真人的卡
           // 依定義已經是空的）—— 它在的理由是「⛔ 不可以把一張沒收掉的卡帶進
           // combat」:今天 `expired` 那條路也是先把每一張卡收乾淨才推進相位。
-          if ((seat?.driverKind === "ai" && age > 10) || expired || earlyDue) {
+          if ((seat?.driverKind === "ai" && age > AI_OFFER_PICK_DELAY_TICKS) || expired || earlyDue) {
             // auto = true —— 系統代選(AI 座位的延遲自動選,或 #207 的過期
             // 安全網)。`aggregateOfferChoices` 把它算進 `autoPicked` 而不是
             // `picked`,所以取捨率不會被代選稀釋。

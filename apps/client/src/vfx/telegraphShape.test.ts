@@ -185,8 +185,11 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
     // exactly CLAUDE.md 失敗形態⑥ and is why the assertions that MATTER in this
     // file are the geometry ones below. These two PINs stay only as a
     // cheap "the sim still does what the telegraph assumes" tripwire.
-    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/spawnProjectile.ts"), "utf8")))
-      .toContain("remainingRange: resolveAbilityRange(world, def.maxRange)");
+    // ⚠️ MOVED AGAIN 2026-09-15（GH#1187 `launchFrom:"rangeEnd"`）：射程先算進 `range`，
+    //   正常投射物仍是 `remainingRange: range`（回程彈才用射程盡頭到施法者的 `reach`）⇒ PIN 跟著新寫法，語意不變。
+    const spawnSrc = stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/spawnProjectile.ts"), "utf8"));
+    expect(spawnSrc).toContain("const range = resolveAbilityRange(world, def.maxRange)");
+    expect(spawnSrc).toContain("remainingRange: fromEnd ? reach : range");
     // … and so is its HIT RADIUS. An earlier revision of this test asserted the
     // opposite ("hit radius really is not"), which made every skillshot
     // corridor 1/mult too narrow — a telegraph that lies about how wide it

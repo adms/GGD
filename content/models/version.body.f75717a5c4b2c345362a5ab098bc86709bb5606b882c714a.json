@@ -1,0 +1,67 @@
+{
+  "id": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/0356ce4cd145672eaa66037cbc789cc293ab74726721b93007e5ebc9cc32b424.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.herorider",
+    "legacyAppearance": false
+  },
+  "attachPoints": {
+    "foot Right": {
+      "x": -0.0271,
+      "y": 0.0332,
+      "z": 0.0942
+    },
+    "foot Left": {
+      "x": -0.0247,
+      "y": 0.0363,
+      "z": -0.0962
+    },
+    "Hand Right": {
+      "x": 0.0775,
+      "y": 0.8297,
+      "z": 0.2176
+    },
+    "Hand Left": {
+      "x": 0.0751,
+      "y": 0.8296,
+      "z": -0.2178
+    },
+    "Head": {
+      "x": 0.0073,
+      "y": 1.5655,
+      "z": 0.0063
+    },
+    "Chest": {
+      "x": -0.0024,
+      "y": 1.2529,
+      "z": 0.0022
+    },
+    "Origin": {
+      "x": -0.009,
+      "y": -0.0032,
+      "z": 0.0038
+    },
+    "OverHead": {
+      "x": -0.009,
+      "y": 1.7817,
+      "z": 0.0038
+    },
+    "Weapon": {
+      "x": 0.2271,
+      "y": 0.6055,
+      "z": 0.2176
+    }
+  },
+  "yawOffsetDeg": 90
+}

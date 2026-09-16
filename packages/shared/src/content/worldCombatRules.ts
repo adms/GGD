@@ -3,6 +3,8 @@ import { normalizeCombatEnv, type CombatEnvKey } from "../sim/combatEnv";
 import { baseBonusFromDoc, perLevelBonusFromDoc } from "../sim/baseBonus";
 import { statCapsFromDoc } from "../sim/statCaps";
 import { markedBlinkFromDoc } from "../sim/movement/markedBlink";
+import { projectileRedirectFromDoc } from "../sim/projectileRedirectRules";
+import { dashPathFromDoc } from "../sim/dashPathRules";
 import { wallBlockFromDoc } from "../sim/movement/wallBlock";
 import { combatFeelFromDoc, COMBAT_FEEL_DOC_ID } from "../sim/combatFeel";
 import { shieldRulesFromDoc, SHIELD_DOC_ID } from "../sim/shieldRules";
@@ -41,6 +43,8 @@ export function worldCombatRules(configs: readonly { id?: unknown }[]) {
     perLevelBonus: perLevelBonusFromDoc(get("per-level-bonus")),
     wallBlock: wallBlockFromDoc(get("displacement-tiers")),
     markedBlink: markedBlinkFromDoc(get("displacement-tiers")),
+    projectileRedirect: projectileRedirectFromDoc(get("displacement-tiers")),
+    dashPath: dashPathFromDoc(get("displacement-tiers")),
     statCaps: statCapsFromDoc(get("stat-caps")),
     combatFeel: combatFeelFromDoc(get(COMBAT_FEEL_DOC_ID)),
     economy: normalizeEconomyRules({ ...match?.economy, roundGrantKeepsRemainder: match?.progression?.roundGrantKeepsRemainder }),

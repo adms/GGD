@@ -39,7 +39,9 @@ function spawnChild(world: SimWorld, parentId: EntityId, proj: ProjectileComp, c
     remainingRange: resolveAbilityRange(world, def.maxRange),
     hitRadius: def.hitRadius,
     pierce: def.pierce ?? false,
-    hitSet: new Set(),
+    // GH#1197「沒有額外命中」：子彈繼承主彈打過的人 —— 從撞擊點朝他那一側分出的子彈出生就貼著他，
+    // ⛔ 新的空集合會讓同一個人被同一次施放再打一下（實測：偏一側站 ⇒ 2 下）。只 has／add。
+    hitSet: new Set(proj.hitSet),
     onHit: proj.onHit, // 子彈繼承主彈已烘好的 onHit
     rank: proj.rank,
     origin: proj.origin,

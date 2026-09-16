@@ -1676,7 +1676,7 @@ def build(git_link_root=ROOT):
         if (s3_split.get('schema')!='ggd.pr1152-s3-preparation-split@1'
             or s3_split.get('fullGetAndEveryFileVerified') is not True
             or s3_split.get('summary',{}).get('unreferencedModelComponents')!=40
-            or s3_split.get('summary',{}).get('preparationEvidenceFiles')!=254):
+            or s3_split.get('summary',{}).get('preparationEvidenceFiles')!=274):
             raise ValueError('PR 1152 S3 preparation split is absent or incomplete')
         result=apply_s3_preparation_split(result,s3_split)
         result['s3PreparationSplit']={

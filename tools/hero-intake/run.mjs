@@ -76,14 +76,6 @@ const DELIVERY_ROOT = opt("--delivery-root", null) ?? (() => {
 
 const readJson = (p, d = null) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return d; } };
 const sha256 = (b) => createHash("sha256").update(b).digest("hex");
-// `localeCompare()` follows the host ICU/locale, so macOS and GitHub's Linux
-// runner can order IDs differently and produce different receipt digests.
-// Asset IDs are ASCII contract keys; compare their code points directly.
-const compareId = (a, b) => {
-  const left = String(a);
-  const right = String(b);
-  return left < right ? -1 : left > right ? 1 : 0;
-};
 
 // ────────────────────────────── 英雄清單 ──────────────────────────────
 /** `--heroes a,b` ｜ `--from <json>`（吃 id 陣列／{champions:{Name:{ownerName}}}／[{id,name}]）｜ `--all` */
@@ -108,7 +100,7 @@ function heroList() {
     return readdirSync(join(CONTENT, "champions"))
       .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
       .map((f) => ({ id: f.slice(0, -5) }))
-      .sort((a, b) => compareId(a.id, b.id));
+      .sort((a, b) => a.id.localeCompare(b.id));
   }
   die("要給 --heroes a,b ｜ --from <json> ｜ --all");
   return [];
@@ -223,11 +215,11 @@ function deliveryFileAtDeclaredPath(file) {
  * 交付表的 `identityIds` 與中央元件的 `identityIds` 做完全相等 join。
  * ⛔ 不用名字模糊比對；`zero-megaman` 因此不會誤接 `Zero Lancer`。
  */
-function acceptedComponentsFor(d, heroId = null) {
+function acceptedComponentsFor(d) {
   const identities = [...new Set((d?.identityIds ?? []).map(String).filter(Boolean))];
   const found = new Map();
   for (const identity of identities) for (const c of componentIndex.byIdentity.get(identity) ?? []) found.set(String(c.id), c);
-  const components = [...found.values()].sort((a, b) => compareId(a.id, b.id));
+  const components = [...found.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
   if (components.length === 0) return null;
 
   const checked = components.map((c) => {
@@ -238,23 +230,19 @@ function acceptedComponentsFor(d, heroId = null) {
     const actualSha256 = exists ? sha256(readFileSync(abs)) : null;
     const accepted = c.componentReady === true && c.converted === true && c.structuralValidationPassed === true && c.visualValidationPassed === true;
     const independent = c.fullHeroModel === false && c.runtimeSelectable === false && c.runtimeDropdownRegistered === false && (c.heroIds ?? []).length === 0;
-    const registered = c.runtimeSelectable === true && c.runtimeDropdownRegistered === true && Boolean(heroId) && (c.heroIds ?? []).includes(heroId);
     const tracked = Boolean(gitPath && trackedHere.has(gitPath));
     const bytesMatch = exists && Number(c.bytes) === bytes;
     const sha256Match = exists && String(c.sha256 ?? "") === actualSha256;
-    const verified = accepted && (independent || registered) && tracked && bytesMatch && sha256Match;
+    const verified = accepted && independent && tracked && bytesMatch && sha256Match;
     const problems = [];
     if (!accepted) problems.push("未通過完整元件驗收旗標");
-    if (!independent && !registered) problems.push("既非未綁定獨立元件，也不是此英雄已登記候選");
+    if (!independent) problems.push("不是未綁定的獨立元件");
     if (!exists) problems.push("Git 路徑沒有實檔");
     if (!tracked) problems.push("Git 路徑未追蹤");
     if (exists && !bytesMatch) problems.push("位元組數不符");
     if (exists && !sha256Match) problems.push("SHA-256 不符");
     return {
       id: String(c.id), sourceId: c.sourceId ?? null, sourceGame: c.sourceGame ?? null,
-      runtimeSelectable: c.runtimeSelectable === true,
-      runtimeDropdownRegistered: c.runtimeDropdownRegistered === true,
-      runtimeModelKey: c.runtimeModelKey ?? null,
       nativeId: c.nativeId ?? null, readiness: c.readiness ?? null,
       gitPath: gitPath || null, bytes, sha256: c.sha256 ?? null, verified, problems,
       nativeAnimationCount: Number(c.nativeAnimationCount ?? 0),
@@ -427,27 +415,23 @@ function checkModel(champ, id, d = null) {
     //    ② 有 modelKey ⇒ 檔**本來就在這個 repo**（`existing-finished-files-copied-byte-identical`）⇒ 去查那把 key
     if (files.length === 0) {
       if (!key) {
-        const acquired = acceptedComponentsFor(d, id);
+        const acquired = acceptedComponentsFor(d);
         if (acquired) {
           const actionSummary = acquired.nativeAnimationCount > 0
             ? `原生／來源動作 ${acquired.nativeAnimationCount} 段${acquired.animationNames.length ? `（${acquired.animationNames.join("、")}）` : ""}`
             : "原生動作 0 段";
           const bad = acquired.components.filter((c) => !c.verified);
-          const registered = acquired.components.filter((c) => c.runtimeDropdownRegistered && c.runtimeSelectable);
           return {
-            ok: registered.length > 0, modelKey: registered[0]?.runtimeModelKey ?? null, clipMap: null,
-            deliveryStatus: status,
-            deliveryStatusText: "已有已驗收模型元件；原交付狀態只代表完整英雄動作尚未交付",
+            ok: false, modelKey: null, clipMap: null,
+            deliveryStatus: status, deliveryStatusText: statusText,
             componentStatus: "accepted-independent-components-pending-hero-integration",
-            componentStatusText: "已驗收獨立模型元件，⛔ 尚未完成完整英雄整合",
+            componentStatusText: "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
             files: 0, filesInRepo: 0,
             ...acquired,
             gap: bad.length
-              ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}；修復前不能選用或宣稱已上架`
-              : registered.length
-                ? `中央素材庫已有 ${acquired.componentCount} 個已驗收元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。本尊非預設 model@1 已進 Hero Forge 下拉候選；仍待 Main 合併、正式發布與正式站切換驗證`
-                : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 仍缺 model@1／標準六動作映射或後台選項；既有 acquired-* Hero Forge 配方不等於 content/champions 正式英雄，也不能選用或宣稱已上架`,
-            severity: bad.length || !registered.length ? "blocker" : "warning",
+              ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}`
+              : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架`,
+            severity: "blocker",
           };
         }
         return {
@@ -539,21 +523,28 @@ function generateIcon(id) {
 const voicePack = readJson(join(ROOT, MANIFEST_REL), { champions: {} });
 const REQUIRED = readJson(join(ROOT, CATEGORIES_REL), {})?.shipGate?.required ?? [];
 
-/** owner 的角色語音索引（本機素材庫）—— 有就用來找「這位角色有沒有原作語音」 */
+/**
+ * owner 的角色語音索引 —— 有就用來找「這位角色有沒有原作語音」。
+ *
+ * ⭐ 預設讀 **git 裡那一份**（#1211）。在此之前預設是一條寫死的 Dropbox 絕對路徑 ⇒ CI 永遠讀不到
+ * ⇒ `voice.candidates` 全空 ⇒ digest 永遠對不上（形態⑨：永遠不會綠的閘，而本機永遠綠）。
+ * 2026-09-15 量到（逐組比對 `groups`）：Dropbox 988 組 → repo 1053 組 ＝ **0 刪、65 增**；共同的 988 組裡
+ * 9 組在試聽審查欄位（listeningReview*／battleReviewCandidateFiles／nativeTargetCandidateFiles）不同，
+ * ⭐ 這支讀的欄位（id/name/heroIds/library/work/language/fileCount/speakerVerified/transcriptStatus）**0 改**。
+ * ↩ rollback：`GGD_VOICE_INDEX=<那條 Dropbox 路徑>`（或 `--voice-index`）。`--voice-index none` ＝ 明確不讀索引。
+ * ⚠️ rollback 的代價：用 Dropbox 那份重產 ⇒ digest 回到 e22fb25e81f1，而 CI 讀得到 git 那一份（算出另一個 digest）
+ *    ⇒ `hero:intake:check`（skills:check）在 CI **再紅**。
+ * ⛔ 顯式指定（`--voice-index <路徑>`／`GGD_VOICE_INDEX`）卻讀不到 ⇒ die，⛔ 不悄悄退回 git 那一份
+ *    （rollback 開關打錯字、或在沒有 Dropbox 的機器上翻，否則會靜默不生效）。相對路徑對 repo 根（ROOT）解析，⛔ 不是 cwd。
+ */
+const VOICE_INDEX_IN_GIT = "materials/hero-model-library/voice-index.json";
+const VOICE_INDEX_SOURCE = has("--voice-index") ? "--voice-index" : VOICE_INDEX ? "GGD_VOICE_INDEX" : null;
+const voiceIndexTried = VOICE_INDEX === "none" ? [] : [VOICE_INDEX_SOURCE ? VOICE_INDEX : VOICE_INDEX_IN_GIT];
 function loadVoiceIndex() {
-  const repositoryIndex = join(ROOT, "materials/hero-model-library/voice-index.json");
-  const candidates = [
-    VOICE_INDEX,
-    repositoryIndex,
-    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
-  ].filter(Boolean);
-  for (const p of candidates) {
-    const d = readJson(p);
-    if (d?.groups) {
-      const resolved = resolve(p);
-      const path = resolved === repositoryIndex ? relative(ROOT, resolved) : p;
-      return { path, groups: d.groups };
-    }
+  for (const p of voiceIndexTried) {
+    const d = p ? readJson(resolve(ROOT, p)) : null;
+    if (d?.groups) return { path: p, groups: d.groups };
+    if (VOICE_INDEX_SOURCE) die(`${VOICE_INDEX_SOURCE} 指定的角色語音索引讀不到（或沒有 groups）：${p ? resolve(ROOT, p) : "（沒給路徑）"} ⇒ ⛔ 不悄悄退回 ${VOICE_INDEX_IN_GIT}`);
   }
   return null;
 }
@@ -683,7 +674,8 @@ const deliveryDouble = [...deliveryClaimed.entries()].filter(([, ids]) => ids.le
 
 // ⭐ digest 要涵蓋**頁面上看得到的每一件事** —— ⛔ 只放 glbPath/bytes 的話，
 // 「模型交付狀態變了」這種改動不會讓舊裁決過期（而 owner 正是照那一欄按的）。
-const digest = sha256(JSON.stringify(rows.map((r) => [
+const candidatesKey = (r) => (r.voice.candidates ?? []).map((c) => `${c.groupId}:${c.confidence}`).join("|");
+const digestRow = (r) => [
   r.id, r.ready, r.deliveryIdentityIds, r.model.ok, r.model.deliveryStatus ?? "", r.model.componentStatus ?? "",
   r.model.filesInRepo ?? -1, r.model.files ?? -1, r.model.filesAtSource ?? -1,
   r.model.filesAtDeclaredGitPath ?? -1, r.model.filesArchivedInRepo ?? -1,
@@ -691,8 +683,15 @@ const digest = sha256(JSON.stringify(rows.map((r) => [
   r.model.filesOnlyInSourceHistory ?? -1, r.model.filesGone ?? -1,
   r.model.componentCount ?? 0, r.model.componentFilesInRepo ?? 0, r.model.nativeAnimationCount ?? 0,
   (r.model.components ?? []).map((c) => `${c.id}:${c.sha256}:${c.verified}:${c.nativeAnimationCount}`).join("|"),
-  r.model.glbPath ?? "", r.model.bytes ?? 0, r.icon.path ?? "", r.icon.bytes ?? 0, r.voice.haveRequired, r.voice.categories, (r.voice.candidates ?? []).map((c) => `${c.groupId}:${c.confidence}`).join("|"),
-])));
+  r.model.glbPath ?? "", r.model.bytes ?? 0, r.icon.path ?? "", r.icon.bytes ?? 0, r.voice.haveRequired, r.voice.categories,
+];
+// ⚠️ `digest` 的公式**一個位元組都不動**（裁決綁它：`tools/review/heroIntake.mjs` 的 stale）。
+// ⭐ 另外拆兩份，讓 --check 在「讀不到語音索引」時仍能比對其餘、並**明說**沒驗到哪一段（#1211）。
+const digest = sha256(JSON.stringify(rows.map((r) => [...digestRow(r), candidatesKey(r)])));
+const digestParts = {
+  core: sha256(JSON.stringify(rows.map(digestRow))),
+  voiceCandidates: sha256(JSON.stringify(rows.map((r) => [r.id, candidatesKey(r)]))),
+};
 const doc = {
   schema: "ggd-hero-intake@1",
   batch: BATCH,
@@ -726,6 +725,7 @@ const doc = {
     modelCompletelyMissing: rows.filter((r) => r.model.files === 0 && !r.model.modelKey && !r.model.componentCount).length,
   },
   digest,
+  digestParts,
   heroes: rows,
 };
 
@@ -733,14 +733,29 @@ const target = join(outDir, `${BATCH}.json`);
 if (CHECK) {
   const prev = readJson(target);
   if (!prev) die(`${relative(ROOT, target)} 還沒產生 —— 跑一次 node tools/hero-intake/run.mjs --batch ${BATCH} …`);
-  if (prev.digest !== digest) {
+  // ⭐ 語音候選驗不驗得到：這次讀到索引，或材料當初本來就沒讀索引（兩邊都是空的，照樣可比）
+  const voiceVerifiable = index !== null || !prev.voiceIndex;
+  const stale = [];
+  const unverified = [];
+  if (voiceVerifiable) {
+    if (prev.digest !== digest) stale.push(`digest ${prev.digest?.slice(0, 12)} ≠ ${digest.slice(0, 12)}`);
+  } else if (!prev.digestParts) {
+    die(`讀不到角色語音索引（試過：${voiceIndexTried.join("、") || "（--voice-index none）"}），而材料沒有 digestParts ⇒ ⛔ 什麼都驗不了，⛔ 不當成一致 —— 重跑一次產生器`);
+  } else {
+    unverified.push(`voice.candidates（缺角色語音索引：材料當初讀 ${prev.voiceIndex}；這次試過 ${voiceIndexTried.join("、") || "（--voice-index none）"} 都讀不到）`);
+  }
+  if (prev.digestParts && prev.digestParts.core !== digestParts.core) {
+    stale.push(`git 可導的那一份（模型／圖示／語音包）digestParts.core ${prev.digestParts.core?.slice(0, 12)} ≠ ${digestParts.core.slice(0, 12)}`);
+  }
+  if (stale.length) {
     die(
-      `材料過期：磁碟上的英雄狀態已經變了（digest ${prev.digest?.slice(0, 12)} ≠ ${digest.slice(0, 12)}）\n` +
-        `   ⭐ 這一份當初是這樣算的：${prev.invocation ?? "（舊材料沒記）"}\n` +
+      `材料過期：磁碟上的英雄狀態已經變了（${[...new Set(stale)].join("；")}）\n` +
+        `   ⭐ 這一份當初是這樣算的：${prev.invocation ?? "（舊材料沒記）"}；語音索引：${prev.voiceIndex ?? "（沒讀）"} → 這次：${index?.path ?? "（沒讀到）"}\n` +
         `   ⚠️ 少一個旗標（例如 --delivery）也會得到不同的 digest —— ⛔ 那不是「英雄變了」`,
     );
   }
   console.log(`[hero-intake] --check ✓ ${relative(ROOT, target)} 是最新的（${prev.counts.heroes} 位）`);
+  if (unverified.length) console.warn(`[hero-intake] ⚠️ 沒驗到：${unverified.join("；")} —— ⛔ 只比對了其餘（digestParts.core），⛔ 不是全部一致`);
   process.exit(0);
 }
 mkdirSync(dirname(target), { recursive: true });

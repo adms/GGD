@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔魔術師的節奏〕",
   "provenance": "editor-json",
-  "description": "以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

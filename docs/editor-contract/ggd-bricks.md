@@ -4,14 +4,14 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`fb8d3eb8`
+capability 指紋：`96994f3b`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 180 |
-| effect | 51 |
+| total | 181 |
+| effect | 52 |
 | hook | 33 |
 | leaf | 10 |
 | template | 47 |
@@ -19,25 +19,25 @@ capability 指紋：`fb8d3eb8`
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 18 |
-| gated | 139 |
+| gated | 140 |
 | gaps | 55 |
 | missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 45 |
+| zeroAdoption | 46 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（74 份）→ 後台自己的 readSchema()（1213 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（75 份）→ 後台自己的 readSchema()（1223 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts-spawn-obstacle-landed.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 180 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
-## `effect`（51）
+## `effect`（52）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 93 |
 | `applyStatus` | 25 | 0 | 0 | ✅ | ✅ | 134 |
-| `blink` | 12 | 1 | 0 | ✅ | ✅ | 33 |
+| `blink` | 13 | 2 | 0 | ✅ | ✅ | 33 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 4 |
 | `championForm` | 3 | 0 | 0 | ✅ | ✅ | 13 |
@@ -46,9 +46,9 @@ capability 指紋：`fb8d3eb8`
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 298 |
-| `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 59 |
+| `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 58 |
 | `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 27 |
-| `dash` | 9 | 1 | 0 | ✅ | ✅ | 8 |
+| `dash` | 11 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 72 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
 | `dispel` | 11 | 1 | 0 | ✅ | ✅ | 17 |
@@ -63,7 +63,7 @@ capability 指紋：`fb8d3eb8`
 | `heal` | 3 | 0 | 0 | ✅ | ✅ | 47 |
 | `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 11 |
 | `knockback` | 13 | 1 | 0 | ✅ | ✅ | 40 |
-| `leap` | 9 | 0 | 0 | ✅ | ✅ | 62 |
+| `leap` | 11 | 2 | 0 | ✅ | ✅ | 62 |
 | `manaBarrier` | 11 | 1 | 0 | ✅ | ✅ | 4 |
 | `modifyCooldown` | 15 | 1 | 0 | ✅ | ✅ | 4 |
 | `proxyCast` | 16 | 1 | 0 | ✅ | ✅ | 1 |
@@ -75,9 +75,10 @@ capability 指紋：`fb8d3eb8`
 | `screenShake` | 8 | 0 | 0 | ✅ | ✅ | 17 |
 | `shield` | 6 | 0 | 0 | ✅ | ✅ | 81 |
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 0 |
+| `spawnInteractable` | 6 | 0 | 0 | ✅ | ✅ | 0 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
-| `spawnObstacle` | 5 | 0 | 0 | ✅ | ✅ | 0 |
-| `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
+| `spawnObstacle` | 6 | 0 | 0 | ✅ | ✅ | 0 |
+| `spawnProjectile` | 5 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnThresholds` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 60 |
 | `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 4 |
@@ -95,7 +96,7 @@ capability 指紋：`fb8d3eb8`
 | `onAbilityHit` | 22 | 0 | 0 | ✅ | ✅ | 4 |
 | `onAllyDamaged` | 22 | 0 | 0 | ✅ | ✅ | 3 |
 | `onAllyDeath` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 80 |
+| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 79 |
 | `onBossSpawn` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onBoundaryTouch` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onCrowdControlApplied` | 22 | 0 | 0 | ✅ | ✅ | 4 |

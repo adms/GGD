@@ -321,7 +321,7 @@ describe("AP 係數六維公式（GH#942）", () => {
     ) as Record<string, unknown>;
     // ⭐ `keepAuthoredPerRankAp`（GH#1105 的 B）也在這條裡：它是一格**會改變場上數值**的語意開關
     //   ⇒ 出貨檔與 `DEFAULT_` 漂開就是「後台顯示的與跑的不是同一件事」。
-    for (const k of ["base", "globalMult", "cooldownSlopeExp", "keepAuthoredPerRankAp"]) {
+    for (const k of ["base", "globalMult", "cooldownSlopeExp", "keepAuthoredPerRankAp", "roundStep"]) {
       expect(shipped[k], `⛔ ${k} 與 DEFAULT_ 漂開了`).toBe(
         (DEFAULT_AP_COEFFICIENT as unknown as Record<string, unknown>)[k],
       );

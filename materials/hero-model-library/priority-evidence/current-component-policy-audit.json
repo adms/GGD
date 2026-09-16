@@ -9,8 +9,8 @@
     },
     {
       "path": "materials/asset-library/pr1152-s3-split.json",
-      "bytes": 130028,
-      "sha256": "425e757ee747e68fb4dcf911f8b7f072255b23dc92b3147d016e8fa41e3e38e6"
+      "bytes": 138128,
+      "sha256": "f1203e90d1cf75bdd29402049b29a286556b214e64ead7fa9c705eb3d7e7d752"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -19,13 +19,13 @@
     },
     {
       "path": "packages/shared/src/content/modelUpload/budget.ts",
-      "bytes": 6864,
-      "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+      "bytes": 10126,
+      "sha256": "814778538b7527f89efcc41ac4fb2ee9a2d7abdb3156d4d8bf2c2a7f4160f639"
     },
     {
       "path": "tools/model-budget/limits.ts",
-      "bytes": 21656,
-      "sha256": "09fb1ac4341108c2ce593838d9305febf06c3b679859d13efe7fa58c74d3e1b1"
+      "bytes": 21184,
+      "sha256": "ea27075bc05b93c0643fbd57044883ff1bb241c9f02bc968f54268b92e8314f9"
     },
     {
       "path": "tools/model-budget/glb.ts",
@@ -572,8 +572,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -629,8 +629,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -686,8 +686,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -743,8 +743,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -800,8 +800,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -857,8 +857,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -914,8 +914,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -971,8 +971,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1028,8 +1028,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1085,8 +1085,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1338,8 +1338,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1493,8 +1493,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1550,8 +1550,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1607,8 +1607,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1664,8 +1664,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1721,8 +1721,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1778,8 +1778,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1835,8 +1835,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1892,8 +1892,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -1998,8 +1998,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2153,8 +2153,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2308,8 +2308,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2414,8 +2414,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2569,8 +2569,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2675,8 +2675,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2732,8 +2732,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2789,8 +2789,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
@@ -2846,8 +2846,8 @@
       },
       "storage": {
         "class": "s3-legacy-preparation",
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.tar.gz",
-        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/4304e59a0680c8d40880702b2448718df783df4665c41d59c5b2d282f7315640.files.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
         "archiveMember": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
         "fullGetAndEveryFileVerified": true,
         "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."

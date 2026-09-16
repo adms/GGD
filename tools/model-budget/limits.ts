@@ -1,4 +1,4 @@
-import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET, TEX_INFO_MB, TEX_LIMIT_MB, TEX_WARN_MB } from "../../packages/shared/src/content/modelUpload/budget";
 export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT };
 
 /**
@@ -99,19 +99,10 @@ export const MESH_LIMIT = round(6.0 / (C_MESH_MS * DERATE), 10);
 export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES;
 
 /**
- * Texture VRAM is deliberately NOT derived from a guessed hardware ceiling.
- * Nobody here has measured what iOS Safari will tolerate, and inventing a
- * number would make the page lie with confidence. It is derived from the
- * CONTENT instead: the worst combat frame needs ~12 MB of actual image
- * information once the 25 duplicate copies of one 24-colour palette are
- * deduplicated and right-sized (task #99 texture probe). The limit is 4× that,
- * the warning 2.7× — i.e. "you may spend four times what the art actually
- * needs, and no more". OVER on this axis means wasteful, not crashing, and the
- * page says so in those words.
+ * Texture VRAM scene line —— ⭐ GH#1174 起住 `budget.ts`（英雄 VRAM 線要從它推導，而 budget.ts
+ * 不可以反向 import 這一支），推導理由也搬過去了；⛔ 這裡只是 re-export。
  */
-export const TEX_INFO_MB = 12;
-export const TEX_LIMIT_MB = TEX_INFO_MB * 4; // 48
-export const TEX_WARN_MB = TEX_INFO_MB * 8 / 3; // 32
+export { TEX_INFO_MB, TEX_LIMIT_MB, TEX_WARN_MB };
 
 /**
  * Triangles. This remains a content guard rather than a device benchmark:

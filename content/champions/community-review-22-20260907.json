@@ -115,7 +115,7 @@
       "id": "community-review-22-20260907.w",
       "name": "〔鞭繩牽制〕",
       "provenance": "editor-json",
-      "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲{{push}}距離，0.45 秒拋物線，落地{{radius}}範圍小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
       "slot": "W",
       "castType": "ground",
       "maxRank": 4,
@@ -341,7 +341,7 @@
       "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
       "label": "ou99 貼文 #311294（相似造型）",
       "sourceModelKey": "ou99.311294",
-      "modelSha256": "7ee5a5282234dd3ba048321d84e10333603a387ffa32927a95797cb408582e6e",
+      "modelSha256": "062daba66c04364cd23c094bea6cc8b268380e35dff2da4e1b2e18f8c77dd29f",
       "binarySha256": "bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9",
       "registeredAt": "2026-09-10T11:25:32.174Z",
       "source": {
@@ -356,7 +356,7 @@
       "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
       "label": "原上線模型",
       "sourceModelKey": "ou99.311294",
-      "modelSha256": "65a6524005796e3306e77f1e7e1667838c498f2473d9be3f3bda96485c9bc014",
+      "modelSha256": "520f9763456cd89238ecb430ee7c7d72cebfccea8c5f2f781ac525858502d078",
       "binarySha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
       "registeredAt": "2026-09-10T14:45:31.415Z",
       "source": {
@@ -390,7 +390,7 @@
       "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
       "label": "菜月昴（論壇模型）",
       "sourceModelKey": "ou99.311294-standard-v2",
-      "modelSha256": "8e6e48b3155057f885634df3a9d3a7a288a451aa7a25537bec53ca52b1aee7fd",
+      "modelSha256": "ad46cc7afe26afb048a0d597677dbbcb683f866e29331d45d6a0c95b8c45f4f2",
       "binarySha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
       "registeredAt": "2026-09-10T14:48:48.570Z",
       "source": {
@@ -426,7 +426,7 @@
       "modelKey": "version.body.7919e337bb1ff2951b09593af79b1d3f780724ddf3a24332",
       "label": "菜月昴（論壇模型）",
       "sourceModelKey": "ou99.311294-standard-v2",
-      "modelSha256": "2003ad3d38168d93f616698d32dea12efb483883370d94055f30bd1a016a6abc",
+      "modelSha256": "a208c1fe119eb4f79d48fd680ff10c67b82f7f2ce8fbeabfc012ed1bb9bbf32a",
       "binarySha256": "f26cc59dc0901c51e2e1858db05b80a792279d78c04f28f82c33e8f41758e36e",
       "registeredAt": "2026-09-12T23:02:32.797Z",
       "source": {
@@ -464,7 +464,7 @@
       "modelKey": "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd",
       "label": "菜月昴（論壇模型）",
       "sourceModelKey": "ou99.311294-standard-v2",
-      "modelSha256": "2a3e1e3eba49d8623aeb2b69df4b0a94150418aa50b4af9ab1c70c7ee39e85fb",
+      "modelSha256": "1ee799ed2f2cd71472ba2b125d3821c004df63c30d4592aabe732a5a12388f8c",
       "binarySha256": "f26cc59dc0901c51e2e1858db05b80a792279d78c04f28f82c33e8f41758e36e",
       "registeredAt": "2026-09-13T00:08:48.697Z",
       "source": {

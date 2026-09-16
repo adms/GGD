@@ -66,6 +66,12 @@ export interface AoeTiers {
    * 這一格只管「級別要不要被翻譯成半徑」。
    */
   enabled: boolean;
+  /**
+   * ⭐ GH#1260 B3 —— **沒標級別的半徑**要不要在載入時吸到最近一格。
+   * 「值 → 級別」只住 `geometrySnap.ts`；`enabled:false` 時一併不跑。
+   * ⭐ rollback：false ⇒ 逐位元回到作者手寫的半徑。
+   */
+  snapUntiered: boolean;
   /** 級別 → 半徑（GGD 單位）。五格都要有值。 */
   radius: Readonly<Record<AoeTierName, number>>;
 }
@@ -81,8 +87,21 @@ export interface AoeTiers {
  */
 export const DEFAULT_AOE_TIERS: AoeTiers = Object.freeze({
   enabled: true,
+  snapUntiered: true,
   radius: ladderWindow(DUEL_ZONE_RADIUS_REF, 1),
 });
+
+/**
+ * ⭐ kind → 「這個節點的半徑住哪一格」。預設 `radius`；`leap` 的落地爆炸半徑住 `landRadius`
+ * （GH#1260 B3：41 支模板技的 2.75 就住在這裡，而它在此之前沒有級別可填）。
+ * ⛔ 一張表不是一個 if：`resolveRadiusTier`（級別 → 值）與 `geometrySnap.ts`（值 → 級別）共用它。
+ */
+const RADIUS_FIELD_BY_KIND: Readonly<Record<string, string | undefined>> = Object.freeze({
+  leap: "landRadius",
+});
+export function radiusFieldOf(kind: unknown): string {
+  return (typeof kind === "string" ? RADIUS_FIELD_BY_KIND[kind] : undefined) ?? "radius";
+}
 
 /**
  * 單一級別半徑的上下界。`schema/config.ts` 與後台欄位共用這一組。
@@ -102,7 +121,9 @@ function clampRadius(v: unknown, fallback: number): number {
 
 /** 把一份 `config.aoe-tiers@1` 文件正規化成級距表。認不得 → 出貨值。 */
 export function aoeTiersFromDoc(doc: unknown): AoeTiers {
-  const d = doc as { schema?: string; enabled?: unknown; radius?: Record<string, unknown> } | undefined;
+  const d = doc as
+    | { schema?: string; enabled?: unknown; snapUntiered?: unknown; radius?: Record<string, unknown> }
+    | undefined;
   if (!d || d.schema !== "config.aoe-tiers@1") return DEFAULT_AOE_TIERS;
   const src = d.radius ?? {};
   const radius = {} as Record<AoeTierName, number>;
@@ -111,6 +132,7 @@ export function aoeTiersFromDoc(doc: unknown): AoeTiers {
   }
   return {
     enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_AOE_TIERS.enabled,
+    snapUntiered: typeof d.snapUntiered === "boolean" ? d.snapUntiered : DEFAULT_AOE_TIERS.snapUntiered,
     radius: Object.freeze(radius),
   };
 }
@@ -143,7 +165,7 @@ export function resolveRadiusTier<T extends Record<string, unknown>>(def: T, tie
     const tier = rec["radiusTier"];
     if (typeof tier === "string") {
       const r = tiers.radius[tier as AoeTierName];
-      if (typeof r === "number") out["radius"] = r;
+      if (typeof r === "number") out[radiusFieldOf(rec["kind"])] = r;
     }
     return out;
   }

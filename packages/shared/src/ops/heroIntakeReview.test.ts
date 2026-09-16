@@ -21,6 +21,11 @@
  *  · `heroIntake.mjs` 的 `stale` 改成永遠 false → 第 ② 條紅（重跑後舊裁決被算成有效）。實測過。
  *  · `run.mjs` 的「files 空 ＋ 沒有 modelKey ⇒ blocker」改成 warning → 第 ④ 條紅（8 位沒有模型的
  *    英雄被算成可上架）。實測過。
+ *  · #1211：`run.mjs` 的 `prev.digestParts.core !== digestParts.core` 改成永遠 false ⇒ ①c 的指令 EXIT 0
+ *    （讀不到語音索引時，git 可導那一份過期也靜默綠）⇒ ①c 紅。⚠️ 在 scratch 複本上跑（出貨那支的突變編輯被權限擋下），
+ *    指令與 ①c 逐字相同。
+ *  · #1211 追加：出貨 `run.mjs` 的 `voiceVerifiable` 改成 `false && (…)`（讀得到索引也只比 core）⇒ ①d 的第一個指令
+ *    EXIT 0（「拿掉 b2-goblin 在 parallel-community-goblin-slayer-ssbu 的綁定之後仍然綠」）⇒ ①d 紅。實測過，已用 Edit 改回。
  */
 import { describe, expect, it } from "vitest";
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
@@ -53,6 +58,57 @@ describe("新英雄上架一頁檢核 (hero-intake-review)", () => {
       `hero-intake --check 回了 ${r.status}：\n${r.stdout}\n${r.stderr}\n` +
         "⇒ 材料過期（磁碟上的模型／圖示／語音已經變了）。重跑 pnpm hero:intake --batch ship153 --all。",
     ).toBe(0);
+  });
+
+  // ⭐ #1211：語音索引讀不到時（CI 以前就是這樣 —— 它住 Dropbox），--check ⛔ 不可以靜默綠，也⛔ 不可以瞎：
+  //   明說沒驗到 voice.candidates，而 git 可導的那一份（digestParts.core）照樣比、過期照樣紅。
+  const checkNoIndex = (...extra: string[]) =>
+    spawnSync("node", ["tools/hero-intake/run.mjs", "--batch", "ship153", "--check", "--voice-index", "none", ...extra], {
+      cwd: REPO, encoding: "utf8", timeout: 180_000,
+    });
+  it("⭐ ①b 讀不到語音索引：照樣綠，⛔ 但要明說沒驗到哪一段", () => {
+    const r = checkNoIndex("--all");
+    expect(r.status, r.stdout + r.stderr).toBe(0);
+    expect(r.stderr, "⛔ 缺席被當成一致而靜默綠").toMatch(/沒驗到：voice\.candidates/);
+  });
+  it("⛔ ①c 讀不到語音索引，而磁碟算出來的 git 可導那一份不一樣（少一位英雄）⇒ 照樣紅", () => {
+    const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship153.json"), "utf8")) as { heroes: { id: string }[] };
+    const r = checkNoIndex("--heroes", doc.heroes.slice(1).map((h) => h.id).join(","));
+    expect(r.status, r.stdout + r.stderr).toBe(2);
+    expect(r.stderr).toMatch(/digestParts\.core/);
+  });
+  // ⭐ ①b／①c 只管「讀不到索引」那一邊；①d 管另一邊：讀得到時 ⛔ 不可以退化成只比 core（CI 當初紅的正是 candidates 那一軸）
+  it("⛔ ①d 讀得到語音索引，而某位英雄的 heroIds 綁定被拿掉 ⇒ 完整 digest 照樣紅；顯式指定讀不到 ⇒ die", () => {
+    type Cand = { groupId: string; confidence: string };
+    const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship153.json"), "utf8")) as {
+      heroes: { id: string; voice: { candidates?: Cand[] } }[];
+    };
+    // ⭐ 從出貨材料推導挑哪一組（第一位有「索引已綁 heroId」候選的英雄），⛔ 不寫死 id
+    const hero = doc.heroes.find((h) => (h.voice.candidates ?? []).some((c) => c.confidence === "high"));
+    expect(hero, "出貨材料裡沒有任何 heroIds 綁定的候選 ⇒ 這條守衛量不到東西").toBeDefined();
+    const gid = hero!.voice.candidates!.find((c) => c.confidence === "high")!.groupId;
+    const index = JSON.parse(readFileSync(join(REPO, "materials/hero-model-library/voice-index.json"), "utf8")) as {
+      groups: { id?: string; groupId?: string; heroIds?: string[] }[];
+    };
+    const g = index.groups.find((x) => String(x.id ?? x.groupId) === gid)!;
+    g.heroIds = (g.heroIds ?? []).filter((id) => id !== hero!.id);
+    const dir = mkdtempSync(join(tmpdir(), "hero-intake-voice-"));
+    const check = (indexPath: string) =>
+      spawnSync("node", ["tools/hero-intake/run.mjs", "--batch", "ship153", "--all", "--check", "--voice-index", indexPath], {
+        cwd: REPO, encoding: "utf8", timeout: 180_000,
+      });
+    try {
+      writeFileSync(join(dir, "voice-index.json"), JSON.stringify(index));
+      const r = check(join(dir, "voice-index.json"));
+      expect(r.status, `拿掉 ${hero!.id} 在 ${gid} 的綁定之後仍然綠：\n${r.stdout}\n${r.stderr}`).toBe(2);
+      expect(r.stderr, "⛔ 要是讀到複本之後比出來的過期，⛔ 不是讀不到").toMatch(/材料過期：.*digest [0-9a-f]{12} ≠/);
+      const missing = join(dir, "typo.json");
+      const m = check(missing);
+      expect(m.status, "⛔ 顯式指定的索引讀不到卻悄悄退回 git 那一份").toBe(2);
+      expect(m.stderr).toContain(missing);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it("⭐ ② 裁決綁在那一份材料上：材料重跑過 ⇒ 舊裁決標 stale", async () => {

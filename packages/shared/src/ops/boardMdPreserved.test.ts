@@ -29,8 +29,10 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 describe("戰情版(md) 的寫入端會留底（owner 2026-08-30）", () => {
   it("⭐ `bmpndd.sh` 的 M 步在動戰情版**之前**叫 preserve", () => {
     const src = readFileSync(join(REPO, "scripts/bmpndd.sh"), "utf-8");
-    const preserve = src.indexOf("preserve.sh");
-    const board = src.indexOf("_execution-batches.md");
+    // ⭐ GH#1256：戰情版＝`board-roll.sh --where` 回的日檔（⛔ 不再是 _execution-batches.md）。
+    //   行為層的守衛在 bmpnddBoardAndEnv.test.ts（真的跑出貨的 bmpndd.sh）；這一條只留順序。
+    const preserve = src.indexOf("bash scripts/preserve.sh");
+    const board = src.indexOf("BOARD=$(board_path)");
     expect(preserve, "⛔ `bmpndd.sh` 沒有叫 `scripts/preserve.sh` —— hook 對檔案 API 直寫是瞎的").toBeGreaterThan(0);
     expect(
       preserve > board,

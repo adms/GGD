@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔希望的連結〕",
   "provenance": "editor-json",
-  "description": "有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。\n【待補機制】需有效治療／吸收量計算希望，溢出不計。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

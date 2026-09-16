@@ -1,0 +1,67 @@
+{
+  "id": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/5239e1d214e9a2e9829c646274d50392d1e52e0ef70abef1ceb568269cc848d3.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Attack",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.sesshomaru",
+    "legacyAppearance": false
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.0009,
+      "y": 0.8726,
+      "z": 0.4423
+    },
+    "Weapon": {
+      "x": 0.6951,
+      "y": 0.8544,
+      "z": 0.4444
+    },
+    "Head -": {
+      "x": 0.029,
+      "y": 1.6291,
+      "z": -0.0021
+    },
+    "Hand Left": {
+      "x": -0.3135,
+      "y": 1.0998,
+      "z": -0.537
+    },
+    "Chest": {
+      "x": -0.0036,
+      "y": 1.3198,
+      "z": -0.0019
+    },
+    "Foot Right": {
+      "x": -0.065,
+      "y": 0.1534,
+      "z": 0.1809
+    },
+    "Foot Left": {
+      "x": -0.0652,
+      "y": 0.1532,
+      "z": -0.1823
+    },
+    "Origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "Overhead": {
+      "x": 0,
+      "y": 1.7094,
+      "z": 0
+    }
+  },
+  "yawOffsetDeg": 90
+}

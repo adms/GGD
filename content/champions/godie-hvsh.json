@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+  "modelKey": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -434,6 +434,23 @@
         "reference": "300heroes:2bfb288f7feb077d82852876",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.herorider",
+      "modelSha256": "6cdb56acd0ccdf54d36cf794f54867189f59d6855dea48b8688c086d68e6f80a",
+      "binarySha256": "0356ce4cd145672eaa66037cbc789cc293ab74726721b93007e5ebc9cc32b424",
+      "registeredAt": "2026-09-15T03:56:35.790Z",
+      "source": {
+        "kind": "exact",
+        "character": "梅杜莎 - Rider",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herorider.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     },
     {
       "modelKey": "version.body.268aa54510b30fc8c1efb2ff7de4c2a99cca982c2e8593fe",

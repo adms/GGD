@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔嗅覺・破綻辨識〕",
   "provenance": "editor-json",
-  "description": "成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。\n【待補機制】需有效閃避後近身破綻標記與下一刀消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

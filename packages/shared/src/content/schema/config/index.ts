@@ -82,6 +82,9 @@ import { zConfigRosterDoc } from "./roster";
 import { zConfigBossIntroDoc } from "./bossIntro";
 import { zConfigMatchDoc } from "./match";
 import { zConfigStoreDoc } from "./store";
+// ⭐ GH#1177 追加 —— 造型分級售價表。⚠️ 漏掉這一行 = skin-tier-prices.json 進了 content/ 之後
+// 整份內容驗證失敗 → 骨架英雄（消費端是 Go 也一樣：擋下整份 bundle 的是這個 union）。
+import { zConfigSkinTierPricesDoc } from "./skinTierPrices";
 import { zConfigArenaRulesDoc } from "./arenaRules";
 import { zConfigCombatEnvDoc } from "./combatEnv";
 import { zConfigAmbientVfxDoc } from "./ambientVfx";
@@ -243,6 +246,7 @@ export * from "./statCaps";
 export * from "./statNormalization";
 export * from "./stealth";
 export * from "./store";
+export * from "./skinTierPrices";
 export * from "./taunt";
 export * from "./hudLayout";
 export * from "./voxelLook";
@@ -271,6 +275,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigBossIntroDoc,
   zConfigMatchDoc,
   zConfigStoreDoc,
+  zConfigSkinTierPricesDoc,
   zConfigArenaRulesDoc,
   zConfigCombatEnvDoc,
   zConfigAmbientVfxDoc,

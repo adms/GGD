@@ -1,6 +1,6 @@
 import { availableParallelism } from "node:os";
 import { defineConfig } from "vitest/config";
-import { RESOLVE_TS_FIRST } from "../../vitest.shared";
+import { RESOLVE_TS_FIRST, VITEST_WATCHDOG } from "../../vitest.shared";
 
 // This package is the one that mixes bare `@ggd/shared/*` specifiers (resolved
 // through the package `exports` map) with @ggd/shared's own extensionless
@@ -42,6 +42,8 @@ const MAX_FORKS = Number(process.env.GGD_VITEST_MAX_FORKS) || Math.min(16, avail
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
   test: {
+    // ⏲️ GH#1257 —— 卡死（整棵樹 CPU≈0）時自己停下來、印出還沒跑完的檔。理由在 `vitest.shared.ts`。
+    ...VITEST_WATCHDOG,
     // ⏱ GH#979 —— vitest 預設 5 秒在 CI runner 上不夠（見 repo 根的 vitest.config.ts）。
     //   ⭐ 放寬**時鐘**，⛔ 不是放寬斷言。
     //

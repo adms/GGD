@@ -98,9 +98,12 @@ export class ModelVersions {
    * 「貼圖邊長 512 超過上限 256」把它擋下來 —— ⭐ 而那句話指著錯的方向
    * （看起來像內容有問題，其實是修正器沒跑）。
    */
-  private async normalize(source: { doc: ModelDoc; bytes: Uint8Array }): Promise<{ doc: ModelDoc; bytes: Uint8Array }> {
+  private async normalize(source: { doc: ModelDoc; bytes: Uint8Array }, preservePrimitives = false): Promise<{ doc: ModelDoc; bytes: Uint8Array }> {
     try {
-      const { bytes, report } = await normalizeUploadedModel(source.bytes, { resizeImage: resizeImageWithFfmpeg });
+      // ⛔ 來源宣告了 hiddenPrimitives 就不合併 primitive（合併會重排索引，被藏的那塊會跟本體接成一塊）—— GH#1173
+      const { bytes, report } = await normalizeUploadedModel(source.bytes, {
+        resizeImage: resizeImageWithFfmpeg, preservePrimitiveIndices: preservePrimitives || (source.doc.hiddenPrimitives?.length ?? 0) > 0,
+      });
       if (report.texturesOverCap.length) {
         console.warn(`[modelVersions] ${source.doc.id}：${report.texturesOverCap.length} 張貼圖縮不動`
           + `（最長邊 ${report.texturesOverCap.join("/")}）—— 縮圖器回了 null，檢查 ffmpeg。`);
@@ -133,7 +136,13 @@ export class ModelVersions {
     }
   }
 
-  async prepare(id: string, command: ModelVersionCommand): Promise<{ champion: ChampionDoc; artifacts: FrozenBody[] }> {
+  /**
+   * `options.preservePrimitives` —— ⭐ 作者工具專用（GH#1173 修正輪；後台 HTTP 路由不傳）：這一次註冊**不合併任何 primitive**。
+   * 用途：`tools/model-fix/register-normalized-version.mts` 在合併會把半透明（BLEND）的塊接起來時改走這條 ——
+   * Babylon 逐塊按包圍球中心排半透明順序，接成一塊就變成固定的索引順序（莉娜 `imported.linainvers` 兩塊 BLEND）。
+   * ⛔ 預設行為不變（`normalizeUploadedModel` 合併 BLEND 不看繪製順序是既有缺陷，另票）。
+   */
+  async prepare(id: string, command: ModelVersionCommand, options: { preservePrimitives?: boolean } = {}): Promise<{ champion: ChampionDoc; artifacts: FrozenBody[] }> {
     const champion = this.champion(id);
     this.assertCurrent(champion.id, command.expectedHash);
     if (command.action === "activate" || command.action === "automatic") {
@@ -148,7 +157,7 @@ export class ModelVersions {
     //   丟掉長度為零的署名片段、**把貼圖縮到 256**。⛔ 不做減面/圖集（那些會改變輪廓）。
     // ⚠️ 正規化在 `freeze()` **之前** ⇒ 凍結下來的就是正規化後的位元組，
     //   而 `verify()` 比對的也是那一份 ⇒ 不可變性不受影響。
-    const candidate = await this.normalize(this.source(command.sourceModelKey));
+    const candidate = await this.normalize(this.source(command.sourceModelKey), options.preservePrimitives === true);
     if (candidate.doc.heroBody === false) throw new ModelVersionError("此模型已停用作為英雄身體。", 422);
     const inspected = await inspectModelUpload(candidate.bytes).catch((error: unknown) => { throw new ModelVersionError(error instanceof Error ? error.message : "模型驗證失敗。", 422); });
     const budget = heroModelBudgetIssues(inspected);

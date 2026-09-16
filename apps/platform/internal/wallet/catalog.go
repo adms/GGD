@@ -27,8 +27,32 @@ type SkinDef struct {
 	Schema     string `json:"schema"`
 	ChampionID string `json:"championId"`
 	Name       string `json:"name"`
-	MCoinPrice int    `json:"mcoinPrice"`
-	ModelKey   string `json:"modelKey"`
+	// MCoinPrice is the LITERAL price and PriceTier the tier name (GH#1177 追加):
+	// exactly one is set, and neither is read directly — the price is
+	// Catalog.SkinPrice (skinprice.go). Both are POINTERS because ABSENT must not
+	// read as 0 (= free) or as "" (= a real, unknown tier name).
+	MCoinPrice *int    `json:"mcoinPrice,omitempty"`
+	PriceTier  *string `json:"priceTier,omitempty"`
+	ModelKey   string  `json:"modelKey"`
+	// Listed is skin@1's GH#1177 商店上架開關. A POINTER because ABSENT must read
+	// as listed: every skin doc that shipped before the field existed keeps
+	// selling. Read it through OnSale, never directly.
+	Listed *bool `json:"listed,omitempty"`
+}
+
+// OnSale reports whether the store still SELLS this skin (skin@1 `listed`,
+// absent == true). It does not decide ownership: a delisted skin a player
+// already bought stays theirs — see Catalog.OnShelf.
+func (sk SkinDef) OnSale() bool { return sk.Listed == nil || *sk.Listed }
+
+// OnShelf is THE catalog visibility rule for one skin row (GH#1177): a skin
+// that is on sale is shown to everyone; a delisted one (listed:false) is shown
+// only to a player who already owns it, so 下架 stops new sales without taking
+// a paid cosmetic away. CatalogFor filters every row through it and Buy refuses
+// anything that is not OnSale, so the two cannot drift apart.
+func (c Catalog) OnShelf(id string, owned bool) bool {
+	sk, ok := c.Skins[id]
+	return ok && (owned || sk.OnSale())
 }
 
 // storeDoc mirrors content/config/store.json (config.store@1).
@@ -93,8 +117,10 @@ type championIndex struct {
 // Catalog is the store catalog loaded from CONTENT_DIR at boot. It is the BASE
 // layer, not the final word on price: the operator's 商店經濟 override is laid
 // over it per request by Service.effective (see economy.go), and WithEconomy is
-// what performs that derivation. Everything else here — the roster, the skins,
-// the M COIN reward table — is boot-time truth with no override path.
+// what performs that derivation. The 造型分級售價 table is the second overlaid
+// thing (GH#1177 追加, skinprice.go: withSkinTierPrices). Everything else here —
+// the roster, the skin docs themselves, the M COIN reward table — is boot-time
+// truth with no override path.
 type Catalog struct {
 	// ChampionPrices maps championId -> 藍水晶 unlock price (0 = free starter).
 	//
@@ -116,9 +142,17 @@ type Catalog struct {
 	// Skins maps skinId -> definition.
 	Skins map[string]SkinDef
 
-	freeIDs       map[string]struct{}
-	championOrder []string
-	skinOrder     []string
+	// skinTiers is the 造型分級售價 table in force (tier id -> M COIN): the shipped
+	// config/skin-tier-prices.json at boot, the operator's overlay per request
+	// (Service.effective). Read only through SkinPrice (skinprice.go).
+	skinTiers map[string]int
+	// skinCrystalPerMcoin is the 藍水晶 price of a skin per M幣 of its price
+	// (owner 2026-09-15「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」).
+	// 0 ⇒ skins are not sold for 藍水晶. Read only through SkinCrystalPrice.
+	skinCrystalPerMcoin int
+	freeIDs             map[string]struct{}
+	championOrder       []string
+	skinOrder           []string
 }
 
 // PriceOf is THE pricing rule, in one place: a champion on the free list costs
@@ -198,12 +232,15 @@ func EmptyCatalog() Catalog {
 		UnlockCost:     CrystalUnlockCost,
 		Rewards:        map[int]int{},
 		Skins:          map[string]SkinDef{},
+		skinTiers:      map[string]int{},
 		freeIDs:        map[string]struct{}{},
 	}
 }
 
-// LoadCatalog reads config/store.json plus the skins collection from the
-// read-only content tree. A missing content dir / store doc yields an empty
+// LoadCatalog reads config/store.json, config/skin-tier-prices.json (GH#1177
+// 追加) and the skins collection from the read-only content tree. A skin whose
+// price does not resolve (both / neither of mcoinPrice·priceTier, or a tier the
+// table does not have) is a hard error, never a free skin. A missing content dir / store doc yields an empty
 // catalog (with a nil error) so the platform can boot without content mounted;
 // malformed content is a hard error.
 //
@@ -266,6 +303,17 @@ func LoadCatalog(contentDir string) (Catalog, error) {
 		cat.Rewards[place] = v
 	}
 
+	// GH#1177 追加：分級表先讀 —— loadSkins 要拿它驗每一份寫了 priceTier 的造型。
+	tiers, err := loadSkinTierPrices(contentDir)
+	if err != nil {
+		return cat, err
+	}
+	cat.skinTiers = tiers
+	perMcoin, err := loadSkinCrystalPerMcoin(contentDir)
+	if err != nil {
+		return cat, err
+	}
+	cat.skinCrystalPerMcoin = perMcoin
 	if err := loadSkins(contentDir, &cat); err != nil {
 		return cat, err
 	}
@@ -362,8 +410,20 @@ func loadSkins(contentDir string, cat *Catalog) error {
 		if sk.Schema != SchemaSkin {
 			return fmt.Errorf("wallet: %s: schema %q, want %q", file, sk.Schema, SchemaSkin)
 		}
-		if sk.ID == "" || sk.ChampionID == "" || sk.ModelKey == "" || sk.MCoinPrice < 0 {
+		if sk.ID == "" || sk.ChampionID == "" || sk.ModelKey == "" {
 			return fmt.Errorf("wallet: %s: invalid skin doc", file)
+		}
+		// GH#1177 追加：售價要解析得出來（恰好一種寫法、分級在表上）—— ⛔ 解析不出來不是 0 元，是壞內容。
+		price, err := resolveSkinPrice(sk, cat.skinTiers)
+		if err != nil {
+			tier := ""
+			if sk.PriceTier != nil {
+				tier = *sk.PriceTier
+			}
+			return fmt.Errorf("wallet: %s: priceTier %q: %w", file, tier, err)
+		}
+		if price < 0 {
+			return fmt.Errorf("wallet: %s: negative mcoinPrice %d", file, price)
 		}
 		if strings.TrimSuffix(filepath.Base(file), ".json") != sk.ID {
 			return fmt.Errorf("wallet: %s: filename stem must equal doc id %q", file, sk.ID)
