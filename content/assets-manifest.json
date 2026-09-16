@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2885,
-    "totalBytes": 1120701554
+    "entries": 3187,
+    "totalBytes": 1180954220
   },
   "entries": [
     {
@@ -7190,6 +7190,1826 @@
       "kind": "audio",
       "refs": [
         "audio-map",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.e.webp",
+      "bytes": 7028,
+      "sha256": "d81c9566917f34051057b1cb36ec0f458787738f45bff1ff4cb8a4156870a8d8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice",
+        "acquired-alice.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.ex.webp",
+      "bytes": 10074,
+      "sha256": "d7c82c327fcbbc44675ad0b2e4cb2ea92bf6af080fcc8d443b85e403c5579d60",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.passive.webp",
+      "bytes": 6558,
+      "sha256": "3f30fbfd98d9393f9fb63bc301bacb91ad8f0ed14d13f6226c98280a5a81787c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.q.webp",
+      "bytes": 11396,
+      "sha256": "3f8331938926c74119ccf8c3c1076ed2931c1461131fdecf0c2ca4fd522a49b9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice",
+        "acquired-alice.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.r.webp",
+      "bytes": 10048,
+      "sha256": "bc4c85a79a75548a0dcf5cc0637be9021c6eacb539eb60bf3d23ad4f19a821cb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice",
+        "acquired-alice.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-alice.w.webp",
+      "bytes": 9170,
+      "sha256": "c9e2ab1ef9184a0de705bfdf81cc2c78d9d16adef2e6701971fa41dc2b925364",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice",
+        "acquired-alice.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.e.webp",
+      "bytes": 8372,
+      "sha256": "1f910cff322d59fe4b6e012b5a0c745e13c1a26813dc0fb2cc346be40b2695f6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym",
+        "acquired-astralym.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.ex.webp",
+      "bytes": 8426,
+      "sha256": "6ef27e9fe0326ac3fe6b4a07206797128d1ce8a2336ed49480715cb803439c1b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.passive.webp",
+      "bytes": 8152,
+      "sha256": "7ac030054d74f711a325c1ff1eff331076972cba0172ec4d10e4b0fbbe39ce11",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.q.webp",
+      "bytes": 8888,
+      "sha256": "c72bc800bfd953e4959347223ebd6a1a50b733e00cef2b624aa4ffe938a94cde",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym",
+        "acquired-astralym.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.r.webp",
+      "bytes": 4570,
+      "sha256": "f6095e00e0f7be7012c6978838a89f7635e24d9e4e193cabb4093d94ed7f16df",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym",
+        "acquired-astralym.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-astralym.w.webp",
+      "bytes": 6394,
+      "sha256": "396040c7c4d0b735b6e7d090fca26db5b0c5514f5fd772beb87f0ba2433d19a4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym",
+        "acquired-astralym.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.e.webp",
+      "bytes": 8906,
+      "sha256": "899268fe55c42d0a7b12e894f1840b16d73485fa606b08913ba2f6b4b09ff97a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna",
+        "acquired-asuna.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.ex.webp",
+      "bytes": 8910,
+      "sha256": "a71ccd7406617f4cdf1ae7df4db50b7e527cdfe1a80a6544e34604d8fb33d060",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.passive.webp",
+      "bytes": 7108,
+      "sha256": "605da03e635f2030a4a8b2acfcd73f2daadec3b69ae1893d299fcf0bcaeb303d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.q.webp",
+      "bytes": 7662,
+      "sha256": "f12984239ced547218ef81cbfa2670d69d4fcb3c44d3871620e2eb4caea33dd5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna",
+        "acquired-asuna.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.r.webp",
+      "bytes": 10388,
+      "sha256": "e850f9f2c87320744dce0ea58432d1d8fa5a0d35a29842511f2a123ca2a45163",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna",
+        "acquired-asuna.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-asuna.w.webp",
+      "bytes": 8538,
+      "sha256": "79b584adc8704d71dbfab3b5f3f520e9f9f9dad29d30d6064fb2a6282cf13b6e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna",
+        "acquired-asuna.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.e.webp",
+      "bytes": 11638,
+      "sha256": "0494a925d4430715bc351a3b3c67145101fa59af32b6d5fccc7183f07f026112",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice",
+        "acquired-beatrice.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.ex.webp",
+      "bytes": 5446,
+      "sha256": "001aec3142d30ce74692b151a37b588d0e2f70bc1786e6dbe1cc7a97dfabac6c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.passive.webp",
+      "bytes": 8662,
+      "sha256": "a714d71707ce004bb8fcc7746dd40c0c49dac6bfeb07380fbfd3b7fcd743f722",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.q.webp",
+      "bytes": 9370,
+      "sha256": "c925aa7af8d53b039faa81e3a3e8d62aea0c901a0d792f7ff370dfdb0f6aeb19",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice",
+        "acquired-beatrice.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.r.webp",
+      "bytes": 8488,
+      "sha256": "214adfb3d604ad6734e922a01e9e7c49a5ad2e61eff8ae35c79f392d7ba04c8c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice",
+        "acquired-beatrice.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-beatrice.w.webp",
+      "bytes": 9962,
+      "sha256": "65d7577f5616b69d93949745f1cbf003d956dc1a495600e1ee28556bf7a07d83",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice",
+        "acquired-beatrice.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.e.webp",
+      "bytes": 2790,
+      "sha256": "456ea37601d87b06005a9803353e9e790588149ccae6beee2aa4ea276d81339e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva",
+        "acquired-cattiva.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.ex.webp",
+      "bytes": 5768,
+      "sha256": "02131f2275490b581d622aa39a1e47e473afa6915dc67ec820cea3caf50fef6e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.passive.webp",
+      "bytes": 5336,
+      "sha256": "deaac2d4e163bc7cd3a32240264ea712f98a4daaccbb90ff83a5e6659b789083",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.q.webp",
+      "bytes": 9310,
+      "sha256": "b6b7d02e5e461dc759907339d26192f275e5d66c88d80017f59ec64fe0fef1bb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva",
+        "acquired-cattiva.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.r.webp",
+      "bytes": 6394,
+      "sha256": "04a1eebce3376e45ec0898a088c254982eff9431f34483b13fc86a1fd1b787f3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva",
+        "acquired-cattiva.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-cattiva.w.webp",
+      "bytes": 6958,
+      "sha256": "7b9f6ec52e25bd76e2aeba4e7ed2901e7129e49f53e586d6c8488199d8f406f7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva",
+        "acquired-cattiva.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.e.webp",
+      "bytes": 10614,
+      "sha256": "48062021c6d073cc91e479c7ec09ffa7c610255ecbd1d5402f1c9fcd62b0be33",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio",
+        "acquired-dio.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.ex.webp",
+      "bytes": 6020,
+      "sha256": "29ed555a98739c89f04d5b24cc4d379c20d751e37df3564f2e8582d7bc67ff03",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.passive.webp",
+      "bytes": 2628,
+      "sha256": "65239c7905d2121d5b597c828e0dbc358751c09b65f3cc1d98cf461184abdb48",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.q.webp",
+      "bytes": 8680,
+      "sha256": "d7286a9b872f55244b110acba4f2906f7bfae00703d83206286791edada0adfa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio",
+        "acquired-dio.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.r.webp",
+      "bytes": 8510,
+      "sha256": "981e2e418b8fd9bec4932d5e3b6e4a13a5597a6d9cd4b8ac509605999a17d4fa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio",
+        "acquired-dio.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-dio.w.webp",
+      "bytes": 8300,
+      "sha256": "e234bd2099edd3a76ff86236ad71d199c4aed8f8fa0f8a6a1ed49b920f6c935e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio",
+        "acquired-dio.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.e.webp",
+      "bytes": 6596,
+      "sha256": "927ce9bb4876e1015f41e73693be45c556d7d32142f5eb146741a17f92b84b8f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia",
+        "acquired-emilia.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.ex.webp",
+      "bytes": 4884,
+      "sha256": "a3851d85115aa2dab291a0e372b652317f5dae28f073ec03305fefbc4ef9d9c5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.passive.webp",
+      "bytes": 9334,
+      "sha256": "99280fec681bb3641dee6ffec99c9adf7192c36a1c5974c1c23a061565663635",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.q.webp",
+      "bytes": 9782,
+      "sha256": "3efcfea9b42dd9aa750581873216510ced5b7de151b76d2b68e4e2acadd40172",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia",
+        "acquired-emilia.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.r.webp",
+      "bytes": 5920,
+      "sha256": "107e78f851d8af7b8e4870504d369a0b9bf6b946c5ca92687765ea5ac6f88e0c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia",
+        "acquired-emilia.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-emilia.w.webp",
+      "bytes": 6140,
+      "sha256": "a71da0d547be95ee9fc47e40f986d8fc5d30df9dbffe94f9142b0bb06fd75ff7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia",
+        "acquired-emilia.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.e.webp",
+      "bytes": 9538,
+      "sha256": "42445fc838f8f438d0d487ed36ce60773861a8505d1d7ad1c6e71f842bf1932e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha",
+        "acquired-inuyasha.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.ex.webp",
+      "bytes": 12320,
+      "sha256": "5c51912a7ccedf15f2035f88830890711689e410c12d7c815d72fd3799fb0c78",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.passive.webp",
+      "bytes": 7984,
+      "sha256": "2daf9c8a28aa9a1a32257388528690faefc24b3384146fee7eafbdd67eff3633",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.q.webp",
+      "bytes": 6486,
+      "sha256": "c2e87e5ee323abbe76a4b86f64b54f75f3f17bcc5acb3a40a903f71c3d251a85",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha",
+        "acquired-inuyasha.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.r.webp",
+      "bytes": 7102,
+      "sha256": "d1d57e2ab7dbeef7ebfd30f19c3e4f32ab1e0573cebf10c11da039ec22e1aa20",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha",
+        "acquired-inuyasha.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-inuyasha.w.webp",
+      "bytes": 8944,
+      "sha256": "1380a6961f5eb164df7b5bde168aee01108eaa93cd2bcfb4556a52f72294f10f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha",
+        "acquired-inuyasha.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.e.webp",
+      "bytes": 6830,
+      "sha256": "c8b81e1a5105b748dbf57f8eb19f9d97ec089f71d3983774862b3f41bd3e862b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon",
+        "acquired-jetragon.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.ex.webp",
+      "bytes": 11668,
+      "sha256": "f7013d56ba341dd41759865c6bcb1f547cdb7ab186ec2249aba4520c12300eb0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.passive.webp",
+      "bytes": 8896,
+      "sha256": "cf152d0a71edae5eb24e921ed70e163dad6921a4ccc2514cd693ebbc78caf6cb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.q.webp",
+      "bytes": 5654,
+      "sha256": "2d153067acca8ba7c3e894dbe159cd6f11ed7ff49691333c75056ccda3260fe4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon",
+        "acquired-jetragon.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.r.webp",
+      "bytes": 5160,
+      "sha256": "64d98bcacae7c859dd078e8bbc2c9abf734602aebf190c6fbbf658f3cf858c65",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon",
+        "acquired-jetragon.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-jetragon.w.webp",
+      "bytes": 7880,
+      "sha256": "18d42065347a997577133cb1a1f0e8cf6dcbb3a86455e746118c349193b5754f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon",
+        "acquired-jetragon.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.e.webp",
+      "bytes": 8778,
+      "sha256": "583455ebd373ddaaf99ef3a34d3542eed8cf4c228d949318383e789ec8f5ae18",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita",
+        "acquired-kita-kita.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.ex.webp",
+      "bytes": 7686,
+      "sha256": "81ec4150b24771ac6702a2e2c2b49601d41354b5b681d5ddaf22df0db1aed222",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.passive.webp",
+      "bytes": 10936,
+      "sha256": "7a140621a9b3226c94ebe28ef5eea9c9cff381bed14ad95d5558ff5655597e70",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.q.webp",
+      "bytes": 9784,
+      "sha256": "cc88e4230ba3f09064782b70aac30b85cbb650619030eecfbb778ad48320db17",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita",
+        "acquired-kita-kita.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.r.webp",
+      "bytes": 9358,
+      "sha256": "18bba095b655b57f0fda7084cd8c71da0ad01c109a792c4e24b01c2b5bdeb958",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita",
+        "acquired-kita-kita.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kita-kita.w.webp",
+      "bytes": 9378,
+      "sha256": "9932b1e84e05e3f50ebc0a780ab820ac50ca11b68a22e0b1c3ea1d0d1ea18a44",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita",
+        "acquired-kita-kita.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.e.webp",
+      "bytes": 6322,
+      "sha256": "729433050a82b537a9f13bb944a94e115b0db2a5a35b0aa0fb7aa828741f93b7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime",
+        "acquired-kuroyukihime.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.ex.webp",
+      "bytes": 10936,
+      "sha256": "1c8a5c418ee04dd03a7fac5a12d676596a5f469a599f176b17d7efe5b38aaded",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.passive.webp",
+      "bytes": 8182,
+      "sha256": "9b32f629baeb8052bbc34361f44fb4f2404ff0658fe637673ffc04505dd66934",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.q.webp",
+      "bytes": 6990,
+      "sha256": "943bb6648028bc250a6baa2fe876f463ac81ed2cc04603348065e1ad2bb12fa3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime",
+        "acquired-kuroyukihime.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.r.webp",
+      "bytes": 8514,
+      "sha256": "27c2b146b579baf182bdcd72a640a057e426ee0ddb35afeee0a4f30cc4c8bf33",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime",
+        "acquired-kuroyukihime.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-kuroyukihime.w.webp",
+      "bytes": 11268,
+      "sha256": "4d057b2ca53df2a96b111613ca0c20c78c72eaf0922e21c4b40acd10ab50efc0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime",
+        "acquired-kuroyukihime.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.e.webp",
+      "bytes": 6440,
+      "sha256": "0e8d41e2ab360d700b6a7c6a337f8d445ad36deb1ed2d49746d67658110321fa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa",
+        "acquired-leafa.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.ex.webp",
+      "bytes": 10840,
+      "sha256": "dceb9c4d5883868fb4c02756f309e4106e978f8dcd811191573f726af244677a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.passive.webp",
+      "bytes": 10516,
+      "sha256": "b7e2ef36557a535f967b95710e78870f2a2f7739e12db2ac52d65908f2f4676c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.q.webp",
+      "bytes": 11738,
+      "sha256": "eec77ead38953fe3df2fd44a785fd3a978c3f13b96090bf76b1e6732061d671e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa",
+        "acquired-leafa.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.r.webp",
+      "bytes": 8694,
+      "sha256": "fed15ba15251da504f4e18a94a0e194b15506a10dde2b34c6e294cdb5df2b938",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa",
+        "acquired-leafa.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-leafa.w.webp",
+      "bytes": 10026,
+      "sha256": "4638b6f6f68661dc4013925dc87cf106e84224a4ea3637f1d44bfb6394961664",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa",
+        "acquired-leafa.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.e.webp",
+      "bytes": 12160,
+      "sha256": "508b009401f2389a5cd2cb9a7f88d0a585be0167d82de2aab0bfde3a3b750bb9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares",
+        "acquired-lord-nightmares.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.ex.webp",
+      "bytes": 12804,
+      "sha256": "a58e2998d514b412bffa86cb1322f52598ad14a741e203bc3f7b589445513f13",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.passive.webp",
+      "bytes": 13674,
+      "sha256": "17d184de49a90f36b32612d8e443691c39c62a6b7488ab08010997f3294cf952",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.q.webp",
+      "bytes": 9780,
+      "sha256": "71ac20c9cbc2601d01e3bedd021f9e63e6e93eddec3dbaf24762389b06563f66",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares",
+        "acquired-lord-nightmares.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.r.webp",
+      "bytes": 11076,
+      "sha256": "b2f40b865b8a8d9f201acbe6cc1c574ff79aee02e9c30ec1b79e97c6ad04ca79",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares",
+        "acquired-lord-nightmares.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-lord-nightmares.w.webp",
+      "bytes": 6068,
+      "sha256": "ff4d8280b47a42d547d03b6c0f6c453efacd5c84f61b05b069d6591e50b80d97",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares",
+        "acquired-lord-nightmares.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.e.webp",
+      "bytes": 7866,
+      "sha256": "7072d0588f8c71bbe118d35dce316e03c041ddca0696a72cc1d5f93af0cb8dc1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario",
+        "acquired-mario.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.ex.webp",
+      "bytes": 6726,
+      "sha256": "dd2a8e8d7a5310342fb6fc1a4a3e22f3345bc2f7e0992e61c320c6a339dfbab0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.passive.webp",
+      "bytes": 11214,
+      "sha256": "05eda44d4e443f2230fa6084779d6790d4b1d031971da50519c9374bfa8a90e6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.q.webp",
+      "bytes": 6148,
+      "sha256": "11b8de9232ef439a2f0250909891038d2f23713cd2173065e8184cc9b43f3d70",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario",
+        "acquired-mario.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.r.webp",
+      "bytes": 8146,
+      "sha256": "b639ac4a87e13a03ae4b040bc1f4a37ad87e8aa4a504bd816895ea44100ece36",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario",
+        "acquired-mario.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mario.w.webp",
+      "bytes": 9800,
+      "sha256": "f1537d9497e3dcf5b8ad13a677296d4af1fd6a96a761fbb8a8f01e7a8a330bd4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario",
+        "acquired-mario.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.e.webp",
+      "bytes": 10464,
+      "sha256": "15d013c0308c3d8eef21094aa32a0e07a4d1d6dfeb27b4b9f5cd5753091dffea",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo",
+        "acquired-mewtwo.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.ex.webp",
+      "bytes": 8322,
+      "sha256": "18766a2a9100cf07dc568a98e369596808f7a92060a0e3c9836723137186b581",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.passive.webp",
+      "bytes": 10242,
+      "sha256": "8c08e7b1d91c4d2eeeb84cff549852286985b39d3d22d919153e6203edfa3d8e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.q.webp",
+      "bytes": 7014,
+      "sha256": "69185c8b199f6fa7369779c6d8fb6d5ae8b0aa361d0ef77bf561e1b250679047",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo",
+        "acquired-mewtwo.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.r.webp",
+      "bytes": 8144,
+      "sha256": "2c19058542d76655505f3e53fac35ed9ae2e16c2fc697d1305b66572b25381b6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo",
+        "acquired-mewtwo.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-mewtwo.w.webp",
+      "bytes": 8304,
+      "sha256": "5472b6a0452dbcbb1576ecfdcdfa766aba65e4492122309c0770f676bc6d591a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo",
+        "acquired-mewtwo.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.e.webp",
+      "bytes": 5158,
+      "sha256": "8c639c22b904c3ed3c3fe6114253c6d85495cabd196de78ed6982f1ea5c8d506",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft",
+        "acquired-minecraft.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.ex.webp",
+      "bytes": 8804,
+      "sha256": "367e0fb3678552e2c47293a69f10c473bd538ea80eccf8b6beb9cf98f5afeb3f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.passive.webp",
+      "bytes": 5968,
+      "sha256": "124b69ee4c3f53bffb5bb23f14927e3bdd507fde5304bd0955df97ddf7e0c660",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.q.webp",
+      "bytes": 4592,
+      "sha256": "bad5826c87196139b63399cc84b735bc46d2e052ce5cc5124db344fa6abaaaed",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft",
+        "acquired-minecraft.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.r.webp",
+      "bytes": 6952,
+      "sha256": "815f2ada0d55f3ef1c04f5e5a6a106bbdfc3ed981be162dcf8749a737492812f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft",
+        "acquired-minecraft.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-minecraft.w.webp",
+      "bytes": 3420,
+      "sha256": "ae60a75bf8e4b393d1c8c0e02b8b77b4b4ab55b84f841a122a666fa96a37cc73",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft",
+        "acquired-minecraft.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.e.webp",
+      "bytes": 9002,
+      "sha256": "e35b6f07f5c8fbdc98def11a5b4d1d3620f550bf597bfa7e9af15dfdd58944c5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana",
+        "acquired-morgiana.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.ex.webp",
+      "bytes": 7244,
+      "sha256": "c2218944ed2f04adddadc325f19f714300c0e7271fd9dbeec49ecd3ff59fd208",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.passive.webp",
+      "bytes": 9048,
+      "sha256": "14525e9357c83f1931f6be770e74bf077b14612bd0b003a47a1c02d347f998cb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.q.webp",
+      "bytes": 8052,
+      "sha256": "e7ea354b7f7a4db9556dd5f25206e209f789d592f0fb1f399fd28b1cbf45f8b7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana",
+        "acquired-morgiana.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.r.webp",
+      "bytes": 8594,
+      "sha256": "162432465c63e8211881e934622dbd64de7a548a1ba4b73049efbbc381735fc7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana",
+        "acquired-morgiana.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-morgiana.w.webp",
+      "bytes": 8886,
+      "sha256": "20214aa2ad139bf94ede4fa7a50db3199fd7b7d932f553d2eb55bffb470b5eeb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana",
+        "acquired-morgiana.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.e.webp",
+      "bytes": 7008,
+      "sha256": "dd5b242a6400c508208e74d1e241f09222d2360a47b6cf199541f7801e68c6bd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto",
+        "acquired-naruto.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.ex.webp",
+      "bytes": 6032,
+      "sha256": "2c8eeb9888a683dfe34ccc2a77fdbc50c0fc291550b4338030733c6708afeeef",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.passive.webp",
+      "bytes": 6852,
+      "sha256": "d2bf2363553d3b2cb2b6939e31761f60263ffacc96d920d32c1e15a6fd5a8d52",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.q.webp",
+      "bytes": 10234,
+      "sha256": "367e36dc423a3dc96c7cedff9a4e9c732c51e6036927bac8c90f3cfb802c3ab0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto",
+        "acquired-naruto.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.r.webp",
+      "bytes": 8548,
+      "sha256": "515c08076f1a83210c2cd0662c1c26b58e3b5379e1609c080e701a65a1312313",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto",
+        "acquired-naruto.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-naruto.w.webp",
+      "bytes": 8016,
+      "sha256": "665490e6f33d0a1f4c2935a735e33e93b3f6b57c3bf1f47186966196122193e9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto",
+        "acquired-naruto.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.e.webp",
+      "bytes": 6530,
+      "sha256": "da01c6cd50f16de75d754e62189f94aaccefac980e599dba39a4ff834124e690",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer",
+        "acquired-pokemon-trainer.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.ex.webp",
+      "bytes": 9456,
+      "sha256": "5244cc9f347cb2e95cb92293d011b52dec23d0658d6b6b5618719d4bfd5d6998",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.passive.webp",
+      "bytes": 8688,
+      "sha256": "fca91b199f7e8c957d4bedcd92cc5d86c427690e1cedb2a6d2ec8c5ea6bf6ae4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.q.webp",
+      "bytes": 7836,
+      "sha256": "f030a0e03fe90de8cbb8b796ce3c202f4688ac6d85d05e9e77f1a787a376c92e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer",
+        "acquired-pokemon-trainer.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.r.webp",
+      "bytes": 9886,
+      "sha256": "d3dea8d4068dd9a8858f293a8ebfa53251be1ed060b6a32dd5ba949b6eed9759",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer",
+        "acquired-pokemon-trainer.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-pokemon-trainer.w.webp",
+      "bytes": 7044,
+      "sha256": "86c219ab759816ccd7575262e8d245a0de3a8c233bf2bba8ff1b644a424c0fc4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer",
+        "acquired-pokemon-trainer.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.e.webp",
+      "bytes": 5380,
+      "sha256": "db762c7a87669dcdc46f0120f2d07e3386f67434b1d2a78bff261ba13e69b4da",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram",
+        "acquired-ram.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.ex.webp",
+      "bytes": 5850,
+      "sha256": "4b2c1fa17a0f29084d5fd15b4272be87d19c36b9939311ed2ca33b6d55926a73",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.passive.webp",
+      "bytes": 7526,
+      "sha256": "6923d8dff53dd72ea5ac619ec94a3af01007c4d09ce3457067b2356dcd47a511",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.q.webp",
+      "bytes": 9550,
+      "sha256": "0da701274220f0f270d3933743bbb636bdd798fbe9fa69341dcc59307407ec5f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram",
+        "acquired-ram.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.r.webp",
+      "bytes": 6424,
+      "sha256": "44d7ca2f4dd7e64b214b6b8d7529bdd9a1360c1861650b5ca12ffcc8a061082f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram",
+        "acquired-ram.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ram.w.webp",
+      "bytes": 7968,
+      "sha256": "fb48a5fd609358b85bb006b350824166079172f13a5276c4178af9b0ed03f119",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram",
+        "acquired-ram.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.e.webp",
+      "bytes": 4166,
+      "sha256": "bfd6ba236756ae219ae6f7877edc5858dbcee662554bd2e2803354e0286e4049",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim",
+        "acquired-rim.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.ex.webp",
+      "bytes": 6312,
+      "sha256": "ea99fc183b20fa145cb68c990b928268af8bd68951cc5ac3c497bae3a6126b0f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.passive.webp",
+      "bytes": 6190,
+      "sha256": "616e405a92b2d7ec4f28ed18949a8f12b7ad1becf5e1b811cfdfbc2c4c88f4d5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.q.webp",
+      "bytes": 9486,
+      "sha256": "b5dd8efc6529f05168aaf2cbe187ed39b8c0b9bb2c77ed989a4837eeb85f73e1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim",
+        "acquired-rim.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.r.webp",
+      "bytes": 7420,
+      "sha256": "13306e7c8ec937859cf02c619f99d3e32bd6e138e062f3e63441776422f7c97f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim",
+        "acquired-rim.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-rim.w.webp",
+      "bytes": 6218,
+      "sha256": "ef93c576dd5e35765ef6841dc313481f0ff434559c5715459051f2116d9022ff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim",
+        "acquired-rim.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.e.webp",
+      "bytes": 10116,
+      "sha256": "ba8f541d7d9df259c5ae27b66befe3148eeea79028b5ea085c46a7c2d6602c1e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu",
+        "acquired-ryu.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.ex.webp",
+      "bytes": 9682,
+      "sha256": "0855bdd23a3488e62f303dd0b6c468b43b647090151159375899897f2a15abe1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.passive.webp",
+      "bytes": 7608,
+      "sha256": "538ac00e6c7d615464b3b22da4f308fdc1a0cf67fcfd1a5a417b3c7ee81000e8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.q.webp",
+      "bytes": 9026,
+      "sha256": "8de109856d6ad9d725daf494051fb073183225984cd10f65089101cf5ff547d8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu",
+        "acquired-ryu.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.r.webp",
+      "bytes": 10526,
+      "sha256": "62832ca5b1ded39f9a6ad5e0d84e48a7699a36d7eeaa773965320cad463483c0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu",
+        "acquired-ryu.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-ryu.w.webp",
+      "bytes": 7226,
+      "sha256": "48c31e6a743c69381a521c1fd8e68d6ebedcb92cff5dafe2a58a5d3dcfe8e781",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu",
+        "acquired-ryu.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.e.webp",
+      "bytes": 10104,
+      "sha256": "b980baf39f6fed9b705cce6602d78fe5ab82de067e672d4cc7616dba8ff370a9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya",
+        "acquired-saya.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.ex.webp",
+      "bytes": 5548,
+      "sha256": "e9fcc33b5906e2124be39ff02e372782f9772ebcb8cd3c296e9091b4f70ec427",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.passive.webp",
+      "bytes": 8626,
+      "sha256": "f172e95e8717644fc35a1916f13d3a9d577342f7af5a260d9078836431df3dcc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.q.webp",
+      "bytes": 5286,
+      "sha256": "0b1e8cc1696dd54144e2f587beb672c9644cb7ace1c7ee4d7b46288393e52a8f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya",
+        "acquired-saya.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.r.webp",
+      "bytes": 4584,
+      "sha256": "272f5093ece5099dedb32fcbe17a94c1c9610436721e46ef747f14c10810fe23",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya",
+        "acquired-saya.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-saya.w.webp",
+      "bytes": 7980,
+      "sha256": "a5550eb78928ec6bd529ba11acbdf3dc8c40de798d18c92080126dddb8b873df",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya",
+        "acquired-saya.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.e.webp",
+      "bytes": 7554,
+      "sha256": "9062c9238c1eff7ccb3b802c43e746a2aceb72a5c1b9f611737f4051f4b08653",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon",
+        "acquired-wargreymon.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.ex.webp",
+      "bytes": 10494,
+      "sha256": "9378c14474b18c47837d03545430c99d1beaaf88dfabe649cc6a1fe862997adb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.passive.webp",
+      "bytes": 10324,
+      "sha256": "6c97dcc0e7174906a8cd6d52924049d51803ca8db15a5d57784f5082a9442a80",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.q.webp",
+      "bytes": 6076,
+      "sha256": "d3cc57fd14b8a88793abc58c6ce8b3687c9d0418338cb985704b074ea7ab7953",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon",
+        "acquired-wargreymon.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.r.webp",
+      "bytes": 9090,
+      "sha256": "32e2741861fe86dd78dc2d7f9c0891c964621d09f99e6508354d535cba32b494",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon",
+        "acquired-wargreymon.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-wargreymon.w.webp",
+      "bytes": 9342,
+      "sha256": "739f00132e185356581d5dce78e42153546852ea0d2b100531975e21d80e887a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon",
+        "acquired-wargreymon.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.e.webp",
+      "bytes": 4722,
+      "sha256": "2342a1886a4f5f2a64a9065e1814ddd2fb90d21dd9f4e6f4a99a017c3da2af98",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia",
+        "acquired-xiaodangjia.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.ex.webp",
+      "bytes": 10030,
+      "sha256": "02f212ad340bc58ba87c003696bd4a66c04f8647be89b84bd40ada96d6ed5c02",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.passive.webp",
+      "bytes": 8996,
+      "sha256": "7bfcd0d38ca9d25c48abbaff88d9368a97f5a8792e240d8192f022f63de944ca",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.q.webp",
+      "bytes": 10630,
+      "sha256": "5f03f1bd00b15d391df9087fe9f15efdbd6c7017aee4e408cab8b8fdfc0f2201",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia",
+        "acquired-xiaodangjia.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.r.webp",
+      "bytes": 8040,
+      "sha256": "3445ca1292245ce296865e7bfd91d385ab7312f0dd5d312a84a035f61c2ee047",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia",
+        "acquired-xiaodangjia.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-xiaodangjia.w.webp",
+      "bytes": 6512,
+      "sha256": "cc536e659a4447f4fd53b1c4617250e7fdf062fc081f4f122bf1c93eb9b07940",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia",
+        "acquired-xiaodangjia.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.e.webp",
+      "bytes": 7934,
+      "sha256": "a7ac99fc753fc0cfae5bdf08ab58ce00a191ac21669fadfa8e4f81d3e9adb590",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero",
+        "acquired-zero.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.ex.webp",
+      "bytes": 8574,
+      "sha256": "83c9fe1ab7cffac5d92ee44a6daad35ed0fc5ab964b4e86d0ca1d9f6fb525680",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.passive.webp",
+      "bytes": 7646,
+      "sha256": "d83dd18f950d6d8f7a51265baf422c728f2eb8f9d798f1e819788adc2728c52c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.q.webp",
+      "bytes": 6946,
+      "sha256": "da895ebf751ee575811ed6ca13ba7a8732bc4369986fc7bf787b174dae4c084c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero",
+        "acquired-zero.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.r.webp",
+      "bytes": 6078,
+      "sha256": "f8258938fb91a41fd9ea697006191b45a2fd3233bff341a9ee112580b71ff575",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero",
+        "acquired-zero.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/acquired-zero.w.webp",
+      "bytes": 10118,
+      "sha256": "7b1c4714dc92189e233d5fba0a9aacfe77be121ffe0062aabe988071d57e59d5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero",
+        "acquired-zero.w",
         "bundle"
       ]
     },
@@ -17187,6 +19007,426 @@
       ]
     },
     {
+      "path": "assets/icons/abilities/lol-ahri.e.webp",
+      "bytes": 3844,
+      "sha256": "934e624294589c5620d36936090d2cbafe9914f93b4453cda3e0d1781f778534",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri",
+        "lol-ahri.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ahri.ex.webp",
+      "bytes": 2920,
+      "sha256": "1d9863f30022642d60835dd99a20294a792798867a632e50330035a874e78090",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ahri.passive.webp",
+      "bytes": 5448,
+      "sha256": "b25f0d0d2468f40b311e00745276cb0dbfd78e9110fb516bd0a70b15d94852ea",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ahri.q.webp",
+      "bytes": 10770,
+      "sha256": "32c8707a8c204769857f14e1daf3b585abdf40ec1984c7b1196b6cfdfc832de9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri",
+        "lol-ahri.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ahri.r.webp",
+      "bytes": 7268,
+      "sha256": "2270adecb2f568a365c4488dd929353d7e67cc522ae0f5368d0dcc902fbd1ffb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri",
+        "lol-ahri.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ahri.w.webp",
+      "bytes": 7812,
+      "sha256": "60a8c15a0fc9e0f988452c1c2a2008a1bd9e441819589c074029d3518623d09d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri",
+        "lol-ahri.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.e.webp",
+      "bytes": 6174,
+      "sha256": "d72f2645da0822d80a29b8f716e2a21368f58a8f85bedc9817c851d58c10c372",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe",
+        "lol-ashe.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.ex.webp",
+      "bytes": 9562,
+      "sha256": "4e95a1e1b1d6fffd7e16cd0792166ca11112b16baad02446ece1d394ac1aa45a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.passive.webp",
+      "bytes": 5478,
+      "sha256": "44fb4460a723a5de26fcf5d1faf68a0b9252d5e3449a3126dbe036c15be2ca5e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.q.webp",
+      "bytes": 7384,
+      "sha256": "5f1282a317026a25ab124a2811ca50ef3f5298429dd2325bae42919bfd83e81d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe",
+        "lol-ashe.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.r.webp",
+      "bytes": 6484,
+      "sha256": "22ebd015c7f76d3b96a61a9f1bc142f1b507e6f6c647ef2a37de8dc66b73d296",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe",
+        "lol-ashe.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ashe.w.webp",
+      "bytes": 5066,
+      "sha256": "2bc1321e5675a6e95c5b4cb11c6549a343a2d28fd17d034359df67f0fe26949b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe",
+        "lol-ashe.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.e.webp",
+      "bytes": 11018,
+      "sha256": "e24daa89d4685f1817d6f29c8657d9fd6894285066935444f4860f39ad5e648b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank",
+        "lol-blitzcrank.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.ex.webp",
+      "bytes": 8330,
+      "sha256": "2c8111b881978cbd47902e8b19907247208a34893fe36f2277c487c13476a9a8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.passive.webp",
+      "bytes": 10308,
+      "sha256": "3aff9338ce4de6e2051ad09448eea3e5fd0d8d0b5e97f885c72acbff5d9a8adf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.q.webp",
+      "bytes": 8182,
+      "sha256": "3213e242e7683ecf357e2083f24c4157498712be03d3ca4365e324b2b252b633",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank",
+        "lol-blitzcrank.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.r.webp",
+      "bytes": 10076,
+      "sha256": "52c5550fb5d6b8240a939c424fdf9737490d8c8224252f48c51f3b8ec321689a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank",
+        "lol-blitzcrank.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-blitzcrank.w.webp",
+      "bytes": 9008,
+      "sha256": "02e22abce20704a6e569baeb921588c10dcfae04260177c11cc10d2bca03a288",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank",
+        "lol-blitzcrank.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.e.webp",
+      "bytes": 9616,
+      "sha256": "6118db7b9749e5be2ea3ed01403885a10cc8d7fbd4b5b314fd21deaf8721270f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath",
+        "lol-chogath.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.ex.webp",
+      "bytes": 7260,
+      "sha256": "7232cd9069e303bffc417cc154a164d3982e4f6cee20a4bb63b526ee171b8cb3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.passive.webp",
+      "bytes": 8934,
+      "sha256": "4c1191eb2fae19b77d6bbffd1d2c1695da0da6e85a60011c8fbe9abeed24428a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.q.webp",
+      "bytes": 5630,
+      "sha256": "24cd2b8e79287f9257589d6d1d9db2835ac8af106eabd19129bb246e1cb29638",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath",
+        "lol-chogath.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.r.webp",
+      "bytes": 7366,
+      "sha256": "18fb0b250222fa1743f51c6a056e26d6cf23a392fd520ea0396bc0145871f6e0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath",
+        "lol-chogath.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-chogath.w.webp",
+      "bytes": 10078,
+      "sha256": "ae8ffc31e517290a999479a2927365f868afcc627adb7e6dbdd0b788aec2ba93",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath",
+        "lol-chogath.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.e.webp",
+      "bytes": 4304,
+      "sha256": "56a3a5e4529701136f8616ebaea3995d9531f055c605f9dafb42f8d4b99bf4e5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks",
+        "lol-fiddlesticks.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.ex.webp",
+      "bytes": 6376,
+      "sha256": "16cd29f29ca8702e40f3e75af9924a2332f75e2d856d68a67851fdd847113961",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.passive.webp",
+      "bytes": 5734,
+      "sha256": "ecd710e81cf0df075e8e37ea354330a2cc641866819e06cfd397cf4e0e28a7d1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.q.webp",
+      "bytes": 6964,
+      "sha256": "ac5692c29109963f20d927cd63e02b94122393109b4f4baf15c1fbe2eb6cd6a7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks",
+        "lol-fiddlesticks.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.r.webp",
+      "bytes": 9814,
+      "sha256": "892c5d6bb497172056205ce2a27a60cc59fb650439d90a40cb97da524d84e6ce",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks",
+        "lol-fiddlesticks.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-fiddlesticks.w.webp",
+      "bytes": 7904,
+      "sha256": "06d7ac1018316f70176911204768abc6e09b45d4c03a301d0cac205c8f773949",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks",
+        "lol-fiddlesticks.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.e.webp",
+      "bytes": 10934,
+      "sha256": "550bb25deb1576dea7c7961436bc05d78ff8b810f66da16e6d65f0a1bce25f72",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen",
+        "lol-garen.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.ex.webp",
+      "bytes": 10140,
+      "sha256": "82e944b2f7a103510a131ca7496ac4e9651a2769f988a7f5f0a285d8045c695a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.passive.webp",
+      "bytes": 6842,
+      "sha256": "3a2527bb44abac9c1ec6aedb1cf368031ec6c32c5e3c635dad4b3342e51ac881",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.q.webp",
+      "bytes": 6470,
+      "sha256": "8ef2802330c6a97375addcbbadde99c9879e26b201304414fcbbf1bc0ef4b9b3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen",
+        "lol-garen.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.r.webp",
+      "bytes": 12134,
+      "sha256": "6d6b16d1c4c85ccc11be3efed25cef8bd9f2b7f617deae4ad45dc5dca09cf568",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen",
+        "lol-garen.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-garen.w.webp",
+      "bytes": 6144,
+      "sha256": "ae5517c50f4c14abb1af8f912976bf3cd1f3eeb6c17a3b514d2b5555a7c0a31c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen",
+        "lol-garen.w"
+      ]
+    },
+    {
       "path": "assets/icons/abilities/lol-karthus.e.webp",
       "bytes": 7838,
       "sha256": "759b087c9ca1e6dec92ab8e2a7777adbe94e6cab4bcc57b3bb13ad913070f38f",
@@ -17397,6 +19637,76 @@
       ]
     },
     {
+      "path": "assets/icons/abilities/lol-malphite.e.webp",
+      "bytes": 8204,
+      "sha256": "fed2c0c007b24fb58d6a7ddececab8afc76769038f25ed26c3bdee9fc22e58ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite",
+        "lol-malphite.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-malphite.ex.webp",
+      "bytes": 8000,
+      "sha256": "acd35a06583843e3556d4c3290a2aeded28471fcc97757be93fb827764a55b02",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-malphite.passive.webp",
+      "bytes": 7532,
+      "sha256": "fd95d6b9ab9e06a27df22f4692e5dd37469dc35efb66d63adb4c71723d1b1a79",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-malphite.q.webp",
+      "bytes": 5114,
+      "sha256": "fe5adb0da0dd95ffc5b494e5fc20fbac1ca9c31df2088fb9a47eb94f5dc51e7f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite",
+        "lol-malphite.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-malphite.r.webp",
+      "bytes": 6648,
+      "sha256": "6516cefc39d52e22ebda7b417135b1d84cfb80c6d4b86ce1b57a38194d4b675b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite",
+        "lol-malphite.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-malphite.w.webp",
+      "bytes": 9806,
+      "sha256": "6bbb1fe30c30ef3a69842c14be51a3ff80d156f79da0f777dd03e1dafe30e014",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite",
+        "lol-malphite.w"
+      ]
+    },
+    {
       "path": "assets/icons/abilities/lol-missfortune.e.webp",
       "bytes": 6566,
       "sha256": "b29025d0de354173d5c7d20037d0bfcff54d8182462de0e4e1515f58ea104db1",
@@ -17464,6 +19774,286 @@
         "bundle",
         "lol-missfortune",
         "lol-missfortune.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.e.webp",
+      "bytes": 7668,
+      "sha256": "a8f76fcdee1865f28d0e27d94e5158c924e54c2489d731246ef1d5c844a9a9d5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn",
+        "lol-ornn.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.ex.webp",
+      "bytes": 8552,
+      "sha256": "cdbfa6f079a32cafd87c6f55b5d0ccd62dec459e8ccd60e60e9f7abf55db0c3a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.passive.webp",
+      "bytes": 4840,
+      "sha256": "4d2c39c3bca4380bc724dc63354a5696c81d96c4211747eba62b7be61511ea75",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.q.webp",
+      "bytes": 5572,
+      "sha256": "8923e1bdffbfd7ba7c64477d24d6add4a5feb2a8e5b57ea13d27566b2ef7c0e3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn",
+        "lol-ornn.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.r.webp",
+      "bytes": 7696,
+      "sha256": "2170bc862e4ada28694458a69839f47c96e81606586593333400ff1983ff4d7f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn",
+        "lol-ornn.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-ornn.w.webp",
+      "bytes": 8992,
+      "sha256": "52b0524dac8de70d4f2403b681211108a7ba7a0917ced64158213447c894faf8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn",
+        "lol-ornn.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.e.webp",
+      "bytes": 9756,
+      "sha256": "3dd3d4d1c9242c85b291c95f4dbff1fdc347ade9df8726e8c56f6be7b699e5ca",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett",
+        "lol-sett.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.ex.webp",
+      "bytes": 5938,
+      "sha256": "39a3e8db2857415419c2baec216f8113413642275be1edd3a5966c19d9279b20",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.passive.webp",
+      "bytes": 6962,
+      "sha256": "613ff6820dca196789fd3373729d94f932e8c4609a7fcedf42b38f43d671b245",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.q.webp",
+      "bytes": 7646,
+      "sha256": "463f1fd4e3ea87480486df38348b5a4d741a6ae63c179bd29bd0678bb0fe4359",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett",
+        "lol-sett.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.r.webp",
+      "bytes": 9476,
+      "sha256": "ca6b8f4ea67f70a1520ea2f7643ad85e141bdeca2bb964e051f529904678b1c8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett",
+        "lol-sett.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-sett.w.webp",
+      "bytes": 8588,
+      "sha256": "6ad31220e8d23481b8ffcda0f44ddd207dcb0357f472e2967137bf643a17bfad",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett",
+        "lol-sett.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.e.webp",
+      "bytes": 9084,
+      "sha256": "e9eddb1cf1ad1708cf1c5c3cbb686e629fdd43c236ad2f2028a4eedf5b0296f5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh",
+        "lol-thresh.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.ex.webp",
+      "bytes": 9624,
+      "sha256": "8a9b49def759f44bc514c7ecfc4ebbcd38b5569ebfc883f2c25dc82289eb9135",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.passive.webp",
+      "bytes": 11850,
+      "sha256": "c7485e709f7376e5e4a82faf3ce4ae273fa03cde8c6e91e4efcfa3ba2d0a1643",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.q.webp",
+      "bytes": 5208,
+      "sha256": "44c4b67bbce4371e5900a4b3407b3b344649d9ad73f9b50cc72f5652ea1332bb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh",
+        "lol-thresh.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.r.webp",
+      "bytes": 10342,
+      "sha256": "841a323522624ccefdf274484899c7c59d465d30557c3783ee7e5f8c4edaf657",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh",
+        "lol-thresh.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-thresh.w.webp",
+      "bytes": 7904,
+      "sha256": "cd948cb6ee3a9ace6e805e952af8a2976303a232ac6222e2a8a2c11470c7ea27",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh",
+        "lol-thresh.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.e.webp",
+      "bytes": 7250,
+      "sha256": "ae59811ea1e54aa0485ce02f5d1dd7c92d3c1f6d888fa342def2debba4272dcc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz",
+        "lol-velkoz.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.ex.webp",
+      "bytes": 9640,
+      "sha256": "b0ee192d27c78dff1f2a4f1ab9cd1eaab07ae7e73946f1ea057225360394cfab",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.passive.webp",
+      "bytes": 9182,
+      "sha256": "176fb9cfc3a0cd27fab31acf39351ff0ba610242442790e5ec52ab7ad96ba52a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.q.webp",
+      "bytes": 8868,
+      "sha256": "9be6cc127658293dc61e24f5d436a33a68b23201d85363be271d116b5dc8c564",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz",
+        "lol-velkoz.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.r.webp",
+      "bytes": 8956,
+      "sha256": "f3995a6ca45427a2102560c48a74697235a80d9fb48f19cab06184346603bafe",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz",
+        "lol-velkoz.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/lol-velkoz.w.webp",
+      "bytes": 6570,
+      "sha256": "80d24421f44a8ec2e2addb25e63d9014e9bd630c3bdf220343f28aa0891c2e56",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz",
+        "lol-velkoz.w"
       ]
     },
     {
@@ -18771,6 +21361,292 @@
       "refs": [
         "bundle",
         "void-hunger"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-alice.webp",
+      "bytes": 9470,
+      "sha256": "892309011e95f4dad7416737a7d6ad8fd73ed736db4ef43d55747e4273c086fc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-alice",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-astralym.webp",
+      "bytes": 7952,
+      "sha256": "1b35c32cbfa233ca52b2b70f9ec72dfc4dcf75ce58e8b07d536a8c31a266be7d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-astralym",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-asuna.webp",
+      "bytes": 8704,
+      "sha256": "1083e2304b3e978b3eefcc8e0796656029c0d8bd17f8d15e57356d8f613e37d6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-asuna",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-beatrice.webp",
+      "bytes": 8294,
+      "sha256": "e01175fee636c1eaaa73b5cfa969559da05b0539929f28e76b5ad0cfcc653b9a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-beatrice",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-cattiva.webp",
+      "bytes": 5288,
+      "sha256": "04f0e6ee5ed51de4c8a670ec5a768f67e3a3759e7914d1d30cd11f63e56121d4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-cattiva",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-dio.webp",
+      "bytes": 6806,
+      "sha256": "408dbc4fafba0120c39f57c0069e343bbd7756c99bdea3b8b0b685ee143bc33b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-dio",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-emilia.webp",
+      "bytes": 7280,
+      "sha256": "aec020db75e71a2bec62898107ce4ff6aaf340542de1910b8cb29410d563500a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-emilia",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-inuyasha.webp",
+      "bytes": 6740,
+      "sha256": "008c3aea1942aaaf018df5aada3684d29112af54b15ca16baad1f8da56352475",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-inuyasha",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-jetragon.webp",
+      "bytes": 5798,
+      "sha256": "b4c03ec6267730fc7be8ef330ad6ca2b9d04f9571334c6c9264dde531c3d6821",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-jetragon",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-kita-kita.webp",
+      "bytes": 6740,
+      "sha256": "fda07ec090eba2684abfc7dbe1faa60e6bf7475f126bd1ec9762c7760b21fafd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kita-kita",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-kuroyukihime.webp",
+      "bytes": 5556,
+      "sha256": "d22d1ca84caccee3e664b0bb5f980bc71c262c70ca3da21d72b483527b09c29c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-kuroyukihime",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-leafa.webp",
+      "bytes": 7130,
+      "sha256": "6fc3e56159b1f1116179a7fde00ae95e5c7ec38f821fa26a45a4b891737627de",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-leafa",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-lord-nightmares.webp",
+      "bytes": 9026,
+      "sha256": "aade2a90f1e3eb8691d6c264b589a48810c97a07368f0b72b1211b1b01baa90a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-lord-nightmares",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-mario.webp",
+      "bytes": 7158,
+      "sha256": "6e4174b5021ccb520b069de6dcfca1c63659ce08a8f50238c13e78b7adaf45f2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mario",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-mewtwo.webp",
+      "bytes": 5702,
+      "sha256": "9df1d7fbb2c10ab5c6aa86346cf2b31ba4eeba432b046a97eac3e2456eff6ed4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-mewtwo",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-minecraft.webp",
+      "bytes": 5414,
+      "sha256": "e5c99fc8bd5c82733297b64047330a8d8a94e41229aed337d37e3b2f18f2dad4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-minecraft",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-morgiana.webp",
+      "bytes": 6626,
+      "sha256": "59eba725d3e8a9f39b606592a2e1d38e2c20280fa09f18c7b71721b47f917c2b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-morgiana",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-naruto.webp",
+      "bytes": 7070,
+      "sha256": "49b0d66c0870081d0c81e22e09deee4d00ea2d4163f17418bf93034a20a28208",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-naruto",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-pokemon-trainer.webp",
+      "bytes": 4264,
+      "sha256": "a0da4a55374324f189b13c7087bd4d07bae4529a3e28a8a8500ebb1685c2938f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-pokemon-trainer",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-ram.webp",
+      "bytes": 7822,
+      "sha256": "7e7e411f9b327f0af958b3e0bb216d2885da7ffa72eb2baae8045565e6f919ed",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ram",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-rim.webp",
+      "bytes": 5028,
+      "sha256": "b75297ac33abd36bc9e770834052d60da45b7239de8c051a1821d52929560b11",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-rim",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-ryu.webp",
+      "bytes": 7290,
+      "sha256": "82d33a6a9dafa713b40fefc495ee18d2dd28b23c1330f1062c6a24c9326e201d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-ryu",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-saya.webp",
+      "bytes": 7604,
+      "sha256": "c73c95c3169d2f68297a4427573dd73386af4cf086db3343d658b4c3b3b4e761",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-saya",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-wargreymon.webp",
+      "bytes": 7156,
+      "sha256": "ad8363acb97b25010d706e51f55b6e3876ca6dcfdbb47a36d2a1476cd348a0a5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-wargreymon",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-xiaodangjia.webp",
+      "bytes": 5656,
+      "sha256": "e95bf1f3cb70e8e9fb1d8925637641a49fe6571062b86887bbc2fd4d77eff912",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-xiaodangjia",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/acquired-zero.webp",
+      "bytes": 8214,
+      "sha256": "5adfe6a4b413587def6fb7218826f9017faa51ff6b455a6ae7d74549899943b9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "acquired-zero",
+        "bundle"
       ]
     },
     {
@@ -20358,6 +23234,72 @@
       ]
     },
     {
+      "path": "assets/icons/champions/lol-ahri.webp",
+      "bytes": 5966,
+      "sha256": "30b54a2eab292d63faf0cfe8a07e926f0b30df098b4adf6c9bf6314e6e188260",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ahri"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-ashe.webp",
+      "bytes": 7676,
+      "sha256": "3eaf6041d8fe5a694939e31bc72ecc5b3379c8331162c663a3fc97b4610abd49",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ashe"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-blitzcrank.webp",
+      "bytes": 6932,
+      "sha256": "1aafa989486d0c131d671b576ada3e047963013441c123da0be839458a0d2850",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-blitzcrank"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-chogath.webp",
+      "bytes": 6188,
+      "sha256": "0716fd663029b1f05e44211d19cb8921f7ee8bbc3864d004370cc5c8d6782a2b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-chogath"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-fiddlesticks.webp",
+      "bytes": 4810,
+      "sha256": "6d49d896da3c959c8f4e32d7625b13ae7cf648f562cb64ab9cd2b0f647b1a757",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-fiddlesticks"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-garen.webp",
+      "bytes": 8118,
+      "sha256": "0727f7ed500efe8a77e70a04642d3bbd968ec99e6043299cb933e84b8bcbae2d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-garen"
+      ]
+    },
+    {
       "path": "assets/icons/champions/lol-karthus.webp",
       "bytes": 5976,
       "sha256": "78dfc900f9277ab7c41ff44ef6d5254b4a4d2c5fc7f87e31fb7cd403f545cbab",
@@ -20391,6 +23333,17 @@
       ]
     },
     {
+      "path": "assets/icons/champions/lol-malphite.webp",
+      "bytes": 6120,
+      "sha256": "7c29ac6d603b94c5820fe045518f4660ff887169c548e35eb6659c820e86c670",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-malphite"
+      ]
+    },
+    {
       "path": "assets/icons/champions/lol-missfortune.webp",
       "bytes": 7990,
       "sha256": "dc13913f8340a43472544d09b11228ff47715e56a3ac7b0782787da9c8fa2f18",
@@ -20399,6 +23352,50 @@
       "refs": [
         "bundle",
         "lol-missfortune"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-ornn.webp",
+      "bytes": 6816,
+      "sha256": "862d2b687ad0ea47c683ae63c84cce600be45a80bf791aeea8f6269a567158d5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-ornn"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-sett.webp",
+      "bytes": 5968,
+      "sha256": "00ee754d15acb9edfcaf4defc566837b130b312f9e0f94d4c7e2df34b96742c8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-sett"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-thresh.webp",
+      "bytes": 7884,
+      "sha256": "b0e004ed2313231847238ddd2cd2f8c47048c3495c6950798c4dab70bdc5ade4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-thresh"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/lol-velkoz.webp",
+      "bytes": 3860,
+      "sha256": "69734a2485db5cc94e9e8fc6c7642c480eab5863bbf1e4cdc6f3dbaee4d69cf9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "lol-velkoz"
       ]
     },
     {

@@ -1,16 +1,16 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1355,
-    "tier0": 994,
+    "assets": 1356,
+    "tier0": 995,
     "reviewed": 0,
     "pending": 361,
     "voice": {
-      "champions": 132,
+      "champions": 133,
       "status": "measurement-stale",
       "grayPairs": 0,
-      "ladderRow": 8,
-      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／8646 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
+      "ladderRow": 6,
+      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=6／8778 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
     }
   },
   "items": [
@@ -971,28 +971,6 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.ice.pulse-sm",
-      "kind": "vfx",
-      "hash": "26093227e443ce6bc72e2fdde5d38ae1f64cb2ca",
-      "risk": 12,
-      "reasons": [
-        "10 支上架技能引用（R/EX ×2 加權後 risk 12）",
-        "未審"
-      ],
-      "refs": [
-        "b2-popp.w",
-        "community-review-11-20260907.e",
-        "community-review-11-20260907.ex",
-        "community-review-11-20260907.passive",
-        "community-review-11-20260907.w",
-        "community-review-35-20260907.e",
-        "community-review-35-20260907.ex",
-        "community-review-35-20260907.passive",
-        "community-review-35-20260907.w",
-        "lol-ashe.passive"
-      ]
-    },
-    {
       "id": "fx.w3x.particle.supershinythingy.p00",
       "kind": "vfx",
       "hash": "5bf0adcb64b7f051dc18bcf45bbeee6860e5a141",
@@ -1029,6 +1007,27 @@
         "godie-u00v.e",
         "godie-u01u.r",
         "godie-udre.r"
+      ]
+    },
+    {
+      "id": "fx.prim.ice.pulse-sm",
+      "kind": "vfx",
+      "hash": "26093227e443ce6bc72e2fdde5d38ae1f64cb2ca",
+      "risk": 11,
+      "reasons": [
+        "9 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-11-20260907.e",
+        "community-review-11-20260907.ex",
+        "community-review-11-20260907.passive",
+        "community-review-11-20260907.w",
+        "community-review-35-20260907.e",
+        "community-review-35-20260907.ex",
+        "community-review-35-20260907.passive",
+        "community-review-35-20260907.w",
+        "lol-ashe.passive"
       ]
     },
     {
@@ -1186,26 +1185,6 @@
         "godie-etyr.r",
         "godie-hpb1.r",
         "godie-o02p.r"
-      ]
-    },
-    {
-      "id": "fx.prim.ice.pulse-sm",
-      "kind": "vfx",
-      "hash": "26093227e443ce6bc72e2fdde5d38ae1f64cb2ca",
-      "risk": 10,
-      "reasons": [
-        "8 支上架技能引用（R/EX ×2 加權後 risk 10）",
-        "未審"
-      ],
-      "refs": [
-        "community-review-11-20260907.e",
-        "community-review-11-20260907.ex",
-        "community-review-11-20260907.passive",
-        "community-review-11-20260907.w",
-        "community-review-35-20260907.e",
-        "community-review-35-20260907.ex",
-        "community-review-35-20260907.passive",
-        "community-review-35-20260907.w"
       ]
     },
     {

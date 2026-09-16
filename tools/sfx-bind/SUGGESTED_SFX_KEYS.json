@@ -31,8 +31,8 @@
     "census": {
       "overlay": 0,
       "sfxKey": 72,
-      "element": 99,
-      "generic": 958
+      "element": 98,
+      "generic": 959
     },
     "suggested": 107,
     "applicable": 15,
@@ -42,8 +42,8 @@
     },
     "noSuggestion": 950,
     "byCause": {
-      "element-whoosh-already": 97,
-      "no-source-audio": 843,
+      "element-whoosh-already": 96,
+      "no-source-audio": 844,
       "source-map-silent": 2,
       "stock-label-only": 8
     }

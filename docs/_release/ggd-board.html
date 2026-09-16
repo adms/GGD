@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.45.2 · 資料截至 2026-09-17 00:14 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 00:14 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>479</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.45.2 · 資料截至 2026-09-17 00:14 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 00:14 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>482</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1787,6 +1787,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>21:50</td><td>PR #1267 的 S3 hygiene closure 已完成。 - 最新 head：9a0e850d4 - PR 已同步最新 main，無衝突、MERGEABLE、非 Draft - 314 檔已上傳到固定 S3 prefix - 完整 GET、解包、成員集合與 314 份逐檔 SHA-256 全部通過 - 33 份 preparation 材料已移出 Git，本機原件全部保留 - Git hygiene：107 檔／81.9 MiB，6 passed、1 skipped - VFX ratchet：基準線仍為 60；7 顆 Popp 原作特效只依 owner 固定核准收據辨識，8/8…</td><td>#1267</td></tr>
 <tr><td>21:51</td><td># 2026-09-11～2026-09-15 新增模型、動作、特效與語音清單</td><td>⏸ 未對票</td></tr>
 <tr><td>21:52</td><td>你也可以參考這個 交接：feat/owner-0915-models-voices（HEAD 410e024ee，已推上 origin，工作樹乾淨） 請合進 main 並依主線節奏上架。這條分支已經把 origin/main 93e8435af 併進來了（衝突只有追加式帳本與產生的戰情板：帳本取聯集、dedupe 後重生成板子，⛔ 沒有用 --ours／--theirs）。 相對 main 多的東西，全部是文件與工具，⛔ 沒有動 content/、lines/、COMBAT_ORIGINALS.json、status.json、任何出貨產物： 1. docs/_reports/1252_voi…</td><td>⏸ 未對票</td></tr>
+<tr><td>22:00</td><td>在語音資料表上宣告 37 名角色暫不做語音 ??? 到底是哪些角色沒有語音或缺什麼素材 請你列表給我</td><td>⏸ 未對票</td></tr>
+<tr><td>22:23</td><td>B</td><td>⏸ 未對票</td></tr>
+<tr><td>22:37</td><td>給我一鍵複製 交接給 main 的訊息 讓我可以關閉這個 session</td><td>⏸ 未對票</td></tr>
+<tr><td>22:38</td><td>頭像, 6 格技能圖示 你可以用之前本地端生成方式補上</td><td>⏸ 未對票</td></tr>
+<tr><td>23:54</td><td>Codex 已更正語音缺口盤點並推送 commit 2a5564255 至 PR #1267。 1. LoL 第二批 11 名本機均已有 Riot 官方 ja_JP 解碼 WAV，共 6,636 段；舊中央索引只登記 4 名，現已全部登記並綁定正確 hero ID。這批仍待逐段聽審與 runtime 戰鬥事件綁定。 2. Main 所列第一組實際是 14 名。DIO、鳴人、Mewtwo、Mario、Ryu 有原作／原生遊戲來源候選；摩爾迦娜、莉姆、沙耶、黑雪姬、莉法只有 300／MOD 候選，不能標成原作語音；三隻帕魯只有非語言叫聲；吉他吉他老伯目前沒有音訊。 3. Main 所列第三組實際是…</td><td>#1267 #1280 #1186 #1269 #1265 #1278</td></tr>
 </table></div>
 <p># 2026-09-17</p>
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
@@ -1795,6 +1800,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
 <tr><td>00:14</td><td>金色魔王 一樣用莉娜音效 碧翠絲、拉姆、犬夜叉、金色魔王、Steve／Alex、小當家、Zero 這些角色有上架嗎?</td><td>1205</td></tr>
+<tr><td>00:13</td><td>我要全部上線</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

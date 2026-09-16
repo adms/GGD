@@ -23,7 +23,7 @@ capability 指紋：`96994f3b`
 | gaps | 55 |
 | missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 39 |
+| zeroAdoption | 38 |
 
 ## 兩個編輯器的表單怎麼量的
 

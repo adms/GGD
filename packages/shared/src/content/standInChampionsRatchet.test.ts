@@ -107,6 +107,8 @@ describe("共用替身英雄（只准變少）", () => {
         "   w3x `heroes.E00R.model = units\\creeps\\SatyrTrickster\\SatyrTrickster.mdl`\n" +
         "   ⇒ 從 retail MPQ 抽出來轉成 `w3x.stock.satyrtrickster`（573 頂點 · 13 動畫）。",
     ).toBe(false);
-    expect(e00r!.modelKey).toBe("w3x.stock.satyrtrickster");
+    // ⭐ 2026-09-16（PR #1280）初號機再換成 ou99 論壇模型 —— owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對」
+    //   ⇒ ⛔ 不再釘 `w3x.stock.satyrtrickster` 這個值，改問那句話本身：不是 War3 內建模型。
+    expect(e00r!.modelKey.startsWith("w3x.stock."), "初號機又退回 War3 內建模型").toBe(false);
   });
 });

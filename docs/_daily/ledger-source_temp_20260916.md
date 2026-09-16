@@ -131,3 +131,72 @@ CI 綠後即可進行 Main 審查與合併。
 未做（留在計畫裡）：owner 審核通過的原作語音套用、哥布林殺手借聲、莉娜剪句、撤下中文與「不是小呆」的已上線原作。owner 說找時間再執行。
 工作資料（審核決定、whisper 判中文結果、對應表產生器）已打包上 S3 並比對過 SHA-256：
 s3://ggd-390630837668-ap-east-2-an/voice-review-0915/review0915-state-20260915.tgz
+
+## 22:00 · 2f87c98e
+
+在語音資料表上宣告 37 名角色暫不做語音 ??? 到底是哪些角色沒有語音或缺什麼素材 請你列表給我
+
+## 22:23 · 284d54a7
+
+B
+
+## 22:37 · 1e6b4555
+
+給我一鍵複製 交接給 main 的訊息 讓我可以關閉這個 session
+
+## 22:38 · 166aed0e
+
+頭像, 6 格技能圖示 你可以用之前本地端生成方式補上
+
+## 23:54 · c19071e1
+
+Codex 已更正語音缺口盤點並推送 commit 2a5564255 至 PR #1267。
+
+1. LoL 第二批 11 名本機均已有 Riot 官方 ja_JP 解碼 WAV，共 6,636 段；舊中央索引只登記 4 名，現已全部登記並綁定正確 hero ID。這批仍待逐段聽審與 runtime 戰鬥事件綁定。
+2. Main 所列第一組實際是 14 名。DIO、鳴人、Mewtwo、Mario、Ryu 有原作／原生遊戲來源候選；摩爾迦娜、莉姆、沙耶、黑雪姬、莉法只有 300／MOD 候選，不能標成原作語音；三隻帕魯只有非語言叫聲；吉他吉他老伯目前沒有音訊。
+3. Main 所列第三組實際是 12 名。愛麗絲、亞絲娜、愛蜜莉雅、寶可夢訓練家、戰鬥暴龍獸已有角色音訊候選；碧翠絲、拉姆、犬夜叉、金色魔王、Steve/Alex、小當家、洛克人 Zero 才是目前 exact none。
+4. 重建入口：
+   python3 tools/hero-model-library/sync_voice_gap_source_mappings.py --workspace ..
+5. 中央查詢：
+   python3 tools/hero-model-library/query_voice.py <heroId> --files --json
+6. 驗證：11 名 LoL 代表檔 SHA-256 全相符，missingOrSizeChanged=0。
+
+【ggd-bd 交接】初號機／拳四郎／熊貓換模收尾，請 main 決定合併
+
+■ 要合併的 PR
+1. PR #1280（分支 feat/1278-bind-three，最新 bfe6a9574）
+   - 拳四郎 godie-umal → ou99「北斗星拳健次郎」，21,733 → 7,967 面
+   - 初號機 godie-e00r → ou99 初號機，11,222 → 7,996 面
+   - 熊貓 godie-h02k → ou99 功夫熊貓（更正 d52cb7609：那一版其實沒切過去）
+   - 原本綁的模型都保留成「原上線模型」，後台下拉可一鍵切回
+   - 拳四郎白光刃（GH#1186）：原作只在出招時顯示的 6 片拳腳殘影。新工具 tools/w3x-import/restore_geoset_visibility.py 照原作逐動作顯示；初號機多一把刀同一問題一起修
+   - optimize.ts 新增 --lock-blend：減面時不削半透明特效薄片
+   - 驗收：9 個姿勢亮像素差 ≤0.60%（門檻 5%）；已實拍玩家實際載入的凍結檔；骨架與動畫軌不變
+   - 帳本：materials/model-decimation/decimation-ledger-20260916.json
+   - 原檔備份：s3://ggd-390630837668-ap-east-2-an/model-decimation/20260916/originals/
+2. PR #1269（分支 test/1265-ou99-model-preview-audit，最新 81af768dd）
+   - #1265 驗收台加 __auditPose（停在指定動作指定秒數拍照）
+   - owner 09-16 已驗收：「129 顆模型預覽驗收 => 全部都沒問題」（已記進 #1265）
+3. docs/1278-forum-model-connect-plan（8c172b909，計畫文件）：還沒開 PR
+
+■ 合併前要處理（本 session 沒做）
+- hero:intake:check、handoff:check 會紅：換模改變了英雄素材摘要與缺口清單
+  ⇒ 重跑 node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons
+  ⇒ 再重生 docs/素材缺口交接單.md（python3 tools/hero-intake/make-asset-handoff.py …）
+- board:check／msgledger:check／board:roll:check：隨時間變動的帳本，#1280 刻意沒提交
+- combat:build 要主工作區才有的 voice-reference-pipeline/approved/processed/*.wav，worktree 跑不了（與換模無關）
+- skills:check 其餘 72 項在 worktree 逐項跑過，全綠
+- 其他測試：shared 47 條、content-api 17 條、model-budget 5 條＋tsc、editor 1 條，全綠
+- bundle.json 衝突時：取 main 的來源後重跑 pnpm skills:sync
+
+■ 主工作區 /Users/Takuro/GGD 我動過、未提交的地方
+- .claude/launch.json：已移除我臨時加的 audit1278-* 兩筆（恢復原狀）
+- docs/_daily/2026-09-16.md：ruling.sh 寫入 owner 兩則原話（#1265、#1186）
+- docs/守則犯錯.md：新增 2 筆（熊貓沒實拍就說做完；push 用 | tail 讀錯離開碼）
+
+■ 票
+- #1278、#1186 已留進度；#1186 剩其餘帶 GEOA 的模型（票文量到 83 份）逐顆跑工具＋A/B
+- 名單上的英雄已沒有體素替身或 War3 內建模型：喪屍麥可是 owner 指定的體素設定；sela／thorne 是開機骨架佔位英雄，不在 w3x 英雄名單
+
+■ 可清掉
+- worktree /private/tmp/ggd-1265：合併後可移除。裡面剩驗收台暫存複本和重生成的當日帳本，都是未追蹤檔

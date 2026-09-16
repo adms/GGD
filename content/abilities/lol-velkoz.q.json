@@ -54,7 +54,7 @@
         "damageTier": "小"
       },
       "damageType": "magic",
-      "castTimeSec": 0.2,
+      "castTimeSec": 0.1,
       "status": {
         "statusId": "lol-velkoz.plasma",
         "duration": 1.5,

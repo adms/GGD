@@ -56,46 +56,46 @@
     }
   },
   "population": {
-    "glbFiles": 1119,
-    "animatedModels": 943,
+    "glbFiles": 1150,
+    "animatedModels": 974,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 824,
-      "pct": 87.4
+      "models": 837,
+      "pct": 85.9
     },
     "cast": {
-      "models": 551,
-      "pct": 58.4
+      "models": 555,
+      "pct": 57
     },
     "celebrate": {
       "models": 38,
       "pct": 3.9
     },
     "death": {
-      "models": 623,
-      "pct": 66.1
+      "models": 630,
+      "pct": 64.7
     },
     "dodge": {
-      "models": 530,
-      "pct": 56.2
+      "models": 536,
+      "pct": 55
     },
     "guard": {
       "models": 13,
       "pct": 1.3
     },
     "hurt": {
-      "models": 93,
-      "pct": 9.9
+      "models": 100,
+      "pct": 10.3
     },
     "idle": {
-      "models": 908,
-      "pct": 96.3
+      "models": 921,
+      "pct": 94.6
     },
     "run": {
-      "models": 856,
-      "pct": 90.8
+      "models": 871,
+      "pct": 89.4
     }
   },
   "degradesTo": "idle",

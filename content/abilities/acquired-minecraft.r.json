@@ -80,7 +80,7 @@
     "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
     "params": {
       "castType": "ground",
-      "castTimeSec": 0.2,
+      "castTimeSec": 0.1,
       "radius": 2.5,
       "side": "enemies",
       "effects": [

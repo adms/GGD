@@ -171,7 +171,7 @@ afterAll(() => {
 });
 
 describe("#224 替身普查 —— 數字", () => {
-  it("overlay 缺席：全名單 / 48 種身體 / 2 位共用 / 1 組", async () => {
+  it("overlay 缺席：全名單 / 49 種身體 / 0 位共用 / 0 組", async () => {
     cover("standin-census");
     // ⚠️ 2026-08-16 —— 這一整段的數字**跟著名單走**。owner 下架四位英雄
   //    （安云 · 藤井八雲 · 賈修貝爾 · 麻倉葉）之後全部往下移一階：
@@ -188,9 +188,11 @@ describe("#224 替身普查 —— 數字", () => {
   //    ⭐ 而那一天這一段會照樣紅並指名道姓（普查讀的是**目前套用**的那一具）。
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     expect(census.totals.champions).toBe(ROSTER.length);
-    expect(census.totals.distinctBodies).toBe(48);
-    expect(census.totals.sharing).toBe(2);
-    expect(census.totals.sharedGroups).toBe(1);
+    // ⭐ 2026-09-16（PR #1280）熊貓 h02k、拳四郎 umal 換上 ou99 論壇模型 ⇒ 撞臉的最後一組（blocky-barbarian）解散。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    expect(census.totals.distinctBodies).toBe(49);
+    expect(census.totals.sharing).toBe(0);
+    expect(census.totals.sharedGroups).toBe(0);
   });
 
   it("共用組的成員逐位釘住 —— 名單一動就指名道姓", async () => {
@@ -201,12 +203,9 @@ describe("#224 替身普查 —— 數字", () => {
       .sort((a, b) => b[1].length - a[1].length);
     // ⭐ 2026-09-15：三組 → 一組。blocky-mage 與 blocky-knight 兩組的成員全部換上了
     //    自己的模型（見上一條的 commit 清單）；blocky-barbarian 走掉巴恩（b1a939f7c）。
-    expect(groups.map(([body, ids]) => [body, ids])).toEqual([
-      [
-        "assets/models/champions/blocky-barbarian.glb",
-        ["godie-h02k", "godie-umal"],
-      ],
-    ]);
+    // ⭐ 2026-09-16（PR #1280）熊貓 h02k、拳四郎 umal 換上 ou99 論壇模型 ⇒ 撞臉的最後一組（blocky-barbarian）解散。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    expect(groups.map(([body, ids]) => [body, ids])).toEqual([]);
     // owner 點名的那一對（#224「角色可選名單重複太多」）：哆拉A夢 與 死之王 **不再**站在同一具身體上。
     // ⚠️ 以前這兩行斷言的是「他們共用」—— 那是缺陷的量測；缺陷修好了，方向跟著翻。
     // （`sharedWith` 對「沒有和任何人共用」回 null。）
@@ -219,11 +218,15 @@ describe("#224 替身普查 —— 數字", () => {
     // 掃 `doc.modelKey` 的實作在這兩種情境下都會回同一個數 —— 這一條是它過不了的。
     const off = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const on = censusChampionBodies(ROSTER, hooksFor(await overlayModels(true)));
-    expect(off.totals.distinctBodies).toBe(48);
+    expect(off.totals.distinctBodies).toBe(49);
     expect(on.totals.distinctBodies).toBe(ROSTER.length);
     // ⭐ 兩個答案**真的不一樣**才證得了「判定走的是解析路徑」—— 名單哪天全部畢業、
     //    兩邊一起等於 ROSTER.length，這一條就不再有鑑別力，⛔ 而它必須先紅。
-    expect(off.totals.distinctBodies).toBeLessThan(on.totals.distinctBodies);
+    // ⭐⭐ 2026-09-16（PR #1280）上面那段預告的那一天到了：撞臉的最後一組解散 ⇒ 兩邊一起等於 ROSTER.length，
+    //   這一條**失去鑑別力**（它照預告先紅了一次）。⛔ 不刪：哪天又有人共用身體，它會自己醒過來。
+    //   ⇒「判定走的是解析路徑」改由下面「53 位逐位對帳：census.glbPath === AssetManager.load 真的被呼叫的路徑」那條承重。
+    if (off.totals.sharing > 0) expect(off.totals.distinctBodies).toBeLessThan(on.totals.distinctBodies);
+    else expect(off.totals.distinctBodies).toBe(on.totals.distinctBodies);
     expect(on.totals.sharing).toBe(0);
     expect(on.totals.sharedGroups).toBe(0);
     // 而 modelKey 本身**沒有變** —— 證明差異來自解析路徑，不是輸入。
@@ -236,7 +239,13 @@ describe("#224 替身普查 —— 數字", () => {
     const rescuedByOverlay = [...off.bodies.values()]
       .filter((b) => b.isStandin && BLIZZARD_MODEL_CHAMPIONS.includes(b.championId))
       .map((b) => b.championId);
-    expect(rescuedByOverlay, "沒有任何一位靠 overlay 換身體 —— 下面的迴圈會空跑").not.toEqual([]);
+    // ⭐ 2026-09-16（PR #1280）：最後兩位靠 overlay 換身體的（h02k、umal）已經有自己的模型 ⇒ 這一份**合法地空了**。
+    //   ⛔ 空迴圈不算通過 ⇒ 空的時候改問「還穿通用身體的，真的都不在 overlay 收錄名單裡」（今天只剩喪標麥可）。
+    if (rescuedByOverlay.length === 0) {
+      const standinsNow = [...off.bodies.values()].filter((b) => b.isStandin).map((b) => b.championId);
+      expect(standinsNow, "有人穿通用身體 —— 應該列出來").not.toEqual([]);
+      expect(standinsNow.filter((id) => BLIZZARD_MODEL_CHAMPIONS.includes(id))).toEqual([]);
+    }
     for (const id of rescuedByOverlay) {
       const b = on.bodies.get(id)!;
       expect(b.source).toBe("wc3-overlay");
@@ -284,7 +293,7 @@ describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
     expect(dropped).toEqual([]);
   });
 
-  it("地圖的真模型指向是機器讀得到的：3 位穿通用身體的有 2 位帶著 umdl", async () => {
+  it("地圖的真模型指向是機器讀得到的：1 位穿通用身體（喪標麥可），沒有人帶著 umdl", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const standins = [...census.bodies.values()].filter((b) => b.isStandin);
@@ -296,15 +305,19 @@ describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
     //   ⇒ 不再穿通用身體。⭐ 這是棘輪的**正確方向**（少一位借身體的）。
     // ⭐ 2026-09-15 重量 13→3：09-10／09-11 那幾批再畢業 10 位（commit 見第一條）。
     //   剩下的是熊貓 h02k、umal（blocky-barbarian）與喪標麥可。
-    expect(standins.length).toBe(3);
-    expect(census.totals.onGenericBody).toBe(3);
-    expect(census.totals.sharing).toBe(2);
+    // ⭐ 2026-09-16（PR #1280）熊貓 h02k、拳四郎 umal 換上 ou99 論壇模型 ⇒ 撞臉的最後一組（blocky-barbarian）解散。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    //   ⇒ 3→1：剩喪標麥可（owner 指定的體素設定）。
+    expect(standins.length).toBe(1);
+    expect(census.totals.onGenericBody).toBe(1);
+    expect(census.totals.sharing).toBe(0);
     // 地圖沒有覆寫 umdl（繼承 base unit）的那幾位沒有這個欄位。
     // ⭐ 2026-09-02（GH#933）10→9：初號機（`godie-e00r`）搬去自己的
     //   `w3x.stock.satyrtrickster` ⇒ 它不在「穿通用身體」這個母體裡了，
     //   而它正是帶著 umdl 的那 10 位之一。
     // ⭐ 2026-09-15 9→2：同上那 10 位畢業的裡面有 7 位帶著 umdl；喪標麥可沒有 w3x 來源。
-    expect(standins.filter((b) => b.mapModel !== null).length).toBe(2);
+    // ⭐ 2026-09-16 2→0：帶 umdl 的那兩位（h02k、umal）畢業；喪標麥可沒有 w3x 來源。
+    expect(standins.filter((b) => b.mapModel !== null).length).toBe(0);
     // 小叮噹本來是一隻 0.6 倍的藍色熊貓，而且那件事現在寫在資料裡。
     const n00b = census.bodies.get("godie-n00b")!;
     expect(n00b.mapScale).toBe(0.6);
@@ -382,7 +395,7 @@ describe("#224 普查的判定 = 渲染器真的做了什麼", () => {
     // ⭐ 2026-09-15 13→3：與「3 位穿通用身體」同一次重量（上面 #77 那一組）。
     expect(
       [...observed.values()].filter((p) => p?.startsWith("assets/models/champions/blocky-")).length,
-    ).toBe(3);
+    ).toBe(1); // ⭐ 2026-09-16 3→1（PR #1280，同上）：只剩喪標麥可
     // 而且真的有人載到自己的模型（另一半的空對帳防線）。
     expect([...observed.values()].filter((p) => p?.startsWith("assets/models/imported/")).length)
       .toBeGreaterThan(20);
