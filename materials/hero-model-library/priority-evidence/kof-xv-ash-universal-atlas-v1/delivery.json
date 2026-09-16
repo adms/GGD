@@ -1,0 +1,68 @@
+{
+  "schema": "ggd.kof-xv-ash-universal-atlas-delivery@1",
+  "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+  "components": [
+    {
+      "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+        "bytes": 1486160,
+        "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2"
+      },
+      "metrics": {
+        "drawPrimitives": 5,
+        "triangles": 7869,
+        "materialCount": 4,
+        "imageCount": 12,
+        "skinCount": 1
+      },
+      "status": {
+        "converted": true,
+        "structurallyValidated": true,
+        "finalVisualAcceptance": false,
+        "completeHero": false,
+        "heroBound": false,
+        "runtimeSelectable": false,
+        "deployed": false
+      }
+    },
+    {
+      "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+        "bytes": 1486476,
+        "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647"
+      },
+      "metrics": {
+        "drawPrimitives": 5,
+        "triangles": 7868,
+        "materialCount": 4,
+        "imageCount": 12,
+        "skinCount": 1
+      },
+      "status": {
+        "converted": true,
+        "structurallyValidated": true,
+        "finalVisualAcceptance": false,
+        "completeHero": false,
+        "heroBound": false,
+        "runtimeSelectable": false,
+        "deployed": false
+      }
+    }
+  ],
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-universal-atlas-v1/7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5.files.json",
+    "archiveSha256": "7218d7c4422719535583f304219021dbac5f15a40363316c1fa920d0c44010a5",
+    "archiveBytes": 3407058,
+    "fileCount": 18,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "gaps": [
+    "Final fixed-camera rerender pending Blender 5.2.1 background crash.",
+    "No GGD hero binding or action set exists."
+  ]
+}

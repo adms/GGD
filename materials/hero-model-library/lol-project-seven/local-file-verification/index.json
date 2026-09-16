@@ -2,8 +2,8 @@
   "schema": "ggd-lol-seven-local-file-verification@1",
   "sourceIndex": {
     "path": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
-    "bytes": 19653,
-    "sha256": "ab42b1349341bd0f57e5a99ef12c4522e8c09bb7495870854a2b65b25d843eac"
+    "bytes": 20429,
+    "sha256": "59634ae593408206c7e6eb0c85e05566a5a9ad1c221e5e755a7ad17d9f070d0a"
   },
   "characters": [
     {
@@ -13,8 +13,8 @@
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-karthus-ja-jp-16-18-8159717.json.gz",
-      "receiptBytes": 20999,
-      "receiptSha256": "83a23ffe021e7478fe13aa04b5c41377160c5821ee02304756810fadc3114fbb",
+      "receiptBytes": 21001,
+      "receiptSha256": "a657ebe8fe27d279322942d714781199b05f5ee92b621242132fb2b0dbf4899a",
       "files": 225,
       "bytes": 311303080,
       "seconds": 1102.4895918367351,
@@ -30,6 +30,11 @@
         "unclassified": 90
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 52,
+      "listeningReviewApprovedFiles": 52,
+      "runtimeRegisteredFiles": 52,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -44,8 +49,8 @@
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-leesin-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-leesin-ja-jp-16-18-8159717.json.gz",
-      "receiptBytes": 87899,
-      "receiptSha256": "4f8a2c89385502ec7c78880291211bd27d85b0856bfdc472167e80c34592de81",
+      "receiptBytes": 87900,
+      "receiptSha256": "c31b69182522f900ccc214b0a36334aea7c14881b6d9e03b46474ca62b126097",
       "files": 1069,
       "bytes": 1603331104,
       "seconds": 4757.531111111111,
@@ -60,6 +65,11 @@
         "unclassified": 918
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 64,
+      "listeningReviewApprovedFiles": 64,
+      "runtimeRegisteredFiles": 64,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -74,8 +84,8 @@
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-lux-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-lux-ja-jp-16-18-8159717.json.gz",
-      "receiptBytes": 92953,
-      "receiptSha256": "a992c5a59633b781920817f830ab8f34a8bdc72a6dbe7ec115de63613a2dbaee",
+      "receiptBytes": 92956,
+      "receiptSha256": "5cb96d554fc41d9637a0cb1db99a11727ec5961a0df7cf8674846c53f5ccccb3",
       "files": 1142,
       "bytes": 954512456,
       "seconds": 3473.1046712018183,
@@ -89,6 +99,11 @@
         "unclassified": 1038
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 48,
+      "listeningReviewApprovedFiles": 48,
+      "runtimeRegisteredFiles": 48,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -104,7 +119,7 @@
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-missfortune-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-missfortune-ja-jp-16-18-8159717.json.gz",
       "receiptBytes": 57990,
-      "receiptSha256": "cfb58c5698d5d239ec72b951913462c254b85adb3ebaf42afb06024baff475c1",
+      "receiptSha256": "2303c672e2ddd39449ed9c2eb817cfde0fa8dee377b4f40c8708b9f38735858e",
       "files": 695,
       "bytes": 563086756,
       "seconds": 2130.2731972789097,
@@ -117,6 +132,11 @@
         "unclassified": 660
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 21,
+      "listeningReviewApprovedFiles": 21,
+      "runtimeRegisteredFiles": 21,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -131,8 +151,8 @@
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-warwick-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-warwick-ja-jp-16-18-8159717.json.gz",
-      "receiptBytes": 45539,
-      "receiptSha256": "69f5729321962a329c46d9f3cec9a205a9a4cea112b44d0d6723cbbab0af338d",
+      "receiptBytes": 45538,
+      "receiptSha256": "b92de288c916c7283d3769a668f471f7b0356857afb34bdc40f9b95571e1ec7f",
       "files": 531,
       "bytes": 648887568,
       "seconds": 1848.2423303571418,
@@ -148,6 +168,11 @@
         "unclassified": 372
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 59,
+      "listeningReviewApprovedFiles": 59,
+      "runtimeRegisteredFiles": 59,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -163,7 +188,7 @@
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-xerath-ja-jp-16-18-8159717.json.gz",
       "receiptBytes": 20938,
-      "receiptSha256": "a0c5bee420c9a2744a063a1afd2b23d02170d9e1cd231495ad070766fa662a71",
+      "receiptSha256": "bd470898ad831c266651a5d24ed7b54a2e4c67e13db50d617726cd3f078fc90d",
       "files": 223,
       "bytes": 261625636,
       "seconds": 1060.2127210884355,
@@ -178,6 +203,11 @@
         "unclassified": 144
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 26,
+      "listeningReviewApprovedFiles": 26,
+      "runtimeRegisteredFiles": 26,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -192,8 +222,8 @@
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "centralGroupId": "lol-project-seven-ja-jp-16.18.8159717:lol-yasuo-ja-jp-16-18-8159717",
       "receiptPath": "materials/hero-model-library/lol-project-seven/local-file-verification/lol-yasuo-ja-jp-16-18-8159717.json.gz",
-      "receiptBytes": 85393,
-      "receiptSha256": "493ae89eef7ca7561ea55ce3e5337788ec1f962cd3e4cc36c6b9d0f11efe315c",
+      "receiptBytes": 85396,
+      "receiptSha256": "45523a53a15a7a3051ff814689c31eea5d38caa95570f0028f30ffa5d0dd37b4",
       "files": 1042,
       "bytes": 1087126480,
       "seconds": 4239.575510204076,
@@ -207,6 +237,11 @@
         "unclassified": 951
       },
       "localSourceBytesVerified": true,
+      "battleReviewCandidateFiles": 41,
+      "listeningReviewApprovedFiles": 41,
+      "runtimeRegisteredFiles": 41,
+      "battleReviewComplete": true,
+      "runtimeSelectableBattleSubset": true,
       "languageVerified": false,
       "speakerVerified": false,
       "listeningReviewComplete": false,
@@ -236,7 +271,10 @@
       "recall": 10,
       "unclassified": 4173
     },
-    "characterCount": 7
+    "characterCount": 7,
+    "battleReviewCandidateFiles": 311,
+    "listeningReviewApprovedFiles": 311,
+    "runtimeRegisteredFiles": 311
   },
   "status": {
     "allLocalSourceBytesVerified": true,
@@ -246,11 +284,15 @@
     "listeningReviewComplete": false,
     "synthesisReady": false,
     "runtimeSelectable": false,
+    "runtimeSelectableBattleSubset": true,
+    "battleReviewComplete": true,
+    "battleReviewScopeOnly": true,
     "deployed": false
   },
   "boundaries": [
     "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath and Yasuo are included.",
     "Byte verification does not establish per-clip language, speaker, transcript, event semantics, synthesis readiness, runtime binding or deployment.",
-    "Audio remains in the local asset library and S3 legacy; Git stores paths, hashes and verification receipts only."
+    "Audio remains in the local asset library and S3 legacy; Git stores paths, hashes and verification receipts only.",
+    "The 311 approved runtime registrations are exactly the fixed battle-review subset; the remaining source WAVs are not approved by implication."
   ]
 }

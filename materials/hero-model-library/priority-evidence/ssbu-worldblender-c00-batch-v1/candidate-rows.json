@@ -1,0 +1,327 @@
+{
+  "schema": "ggd-worldblender-c00-candidate-rows@1",
+  "candidates": [
+    {
+      "id": "ssbu-mario-c00-static-skinned-v2",
+      "label": "瑪利歐 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-mario-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "瑪利歐",
+      "originalName": "Mario",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/mario/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
+      "bytes": 865396,
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-mario"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7189,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 98,
+      "textureCount": 6,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Mario c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.files.json",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/delivery.json",
+        "bytes": 3229,
+        "sha256": "a85b3008e21c99b2bf46df814243bded32d2590d8988e7dbd8915d4be175adde"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
+        "bytes": 28111,
+        "sha256": "81ad2daff3112b8dcc650ce616d8c0c53d8191ed0ee29b54cf2fe1ce50b10fd2"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/acceptance.json",
+        "bytes": 408,
+        "sha256": "6cfc16bac779207952b2ffdb98d2a76bff35b81fda1fe6765a42bc9f856210ea"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
+        "bytes": 691,
+        "sha256": "d81894e9157775955db17a5c4e08cdf4654383daac4a6331a071a5b986f520dc"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/webgl-proof.json",
+        "bytes": 7777,
+        "sha256": "f9b084a65b8aa53234b84e1259932ac62ec53f17deb70f93f840550285fe73be"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "ef2ecf541fed5d06daf39a17b10a0392ee16a75e39ed3323a5e45a623cb8a2a7"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/s3-backup-receipt.json",
+        "bytes": 1556,
+        "sha256": "017397679572131182969b9677144162bed47abc5e475e487823d40533703f50"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/alpha-audit.json",
+        "bytes": 4305,
+        "sha256": "53eed0cbbb72bd2017237fa8498ac52a9df23a86f90acff1d7d32cd93bae8858"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/material-bake-receipt.json",
+        "bytes": 11477,
+        "sha256": "e9af7058b7b0c8cb6f7be19b5d5ee1d3faae52f0c3b67c2f1cfecbfa2663eaad"
+      }
+    },
+    {
+      "id": "ssbu-link-c00-static-skinned-v1",
+      "label": "林克 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-link-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "林克",
+      "originalName": "Link",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/link/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
+      "bytes": 1035504,
+      "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-link"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7897,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 145,
+      "textureCount": 5,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "Link uses the source low LOD, a 7,900-triangle reduction target, and a two-atlas 256px layout measured at 0.40 atlas quality; the retained source and all conversion stages remain local for later A/B review."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-link-full-v2/b6529ff2855b5a141c4d62f6db8ddc9f7ae652148365f18820a3758c724538e6.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-link-full-v2/b6529ff2855b5a141c4d62f6db8ddc9f7ae652148365f18820a3758c724538e6.files.json",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/delivery.json",
+        "bytes": 3431,
+        "sha256": "4c7999ad8ea1d0a8e75404bff301265c61fc15ef8e454c7808cd4598265ea3a6"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/validation.json",
+        "bytes": 18616,
+        "sha256": "a0822aa62dadefcc86e62e272c99784e1baa1f2c3990120a24a9e12d9ebbc4e1"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/acceptance.json",
+        "bytes": 407,
+        "sha256": "d803adc0d99db627557e45d493bfbe5f7d5352e31da99934c03ea5b55d2a50e5"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/visual-review.json",
+        "bytes": 689,
+        "sha256": "4ad56fd7bb61071b7cf70e45c69c0180602350aaf7eb07a4ddfabed24f743475"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/webgl-proof.json",
+        "bytes": 7710,
+        "sha256": "7a8db1589f3b712b35c166215e9203e0a5818ea07f6bf6dddae833473b1543e5"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/source-rebuild.json",
+        "bytes": 1017,
+        "sha256": "d3a231cb431822027ce9654aaa85eb8da768a28b95e6b3d755de8866629e676c"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/s3-backup-receipt.json",
+        "bytes": 1551,
+        "sha256": "b1dfe8196d7f7147ab72ecefa887bd9a4006d23c4c4edd768d34d99c2129632c"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-audit.json",
+        "bytes": 4057,
+        "sha256": "3ff3336e2f242f016a62584bac4e444f80ffe9655c07bb6effdbe50331d4e7c1"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/material-bake-receipt.json",
+        "bytes": 14874,
+        "sha256": "a0f004da06d350625505b91413b5a2e30421be5e6df8443f8115ccfae7fb3be3"
+      },
+      "alphaAtlasFinalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-atlas-finalization.json",
+        "bytes": 649,
+        "sha256": "906f625085ea7467e76684f676692c7843780a3e1e0e80bae446df8eecbef091"
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v1",
+      "label": "索尼克 SSBU Ultimate c00 黑底修復版",
+      "conversionCandidateId": "ssbu-sonic-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "索尼克",
+      "originalName": "Sonic",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/sonic/model/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+      "bytes": 936116,
+      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-sonic"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 8980,
+      "drawPrimitives": 5,
+      "skinCount": 1,
+      "jointCount": 115,
+      "textureCount": 5,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Sonic c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
+      ],
+      "s3BackupStatus": "uploaded-and-readback-verified",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-sonic-full-v2/f497a9ab31a668d62a45ac011be758ccaa4b798bff5d9d65917a655e9141aac1.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-sonic-full-v2/f497a9ab31a668d62a45ac011be758ccaa4b798bff5d9d65917a655e9141aac1.files.json",
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/delivery.json",
+        "bytes": 3384,
+        "sha256": "19e2694acfcf0c158421e25bbc0a19b6725067ae02cb204fb9f82fd536321a58"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
+        "bytes": 23819,
+        "sha256": "6ed3bbcc86bd131777c1b699ebecd6f4e870db78df69568d517bf7beed3e22d2"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/acceptance.json",
+        "bytes": 408,
+        "sha256": "fc0a82b46d725d69fcd97c605fbcddfd45ebb9c1f43f880ea81fba63228de156"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
+        "bytes": 691,
+        "sha256": "e9adfa1a5ed0194a5a30f8d4b5a0c03626b77a20995d5280ff5ee7ab565ba265"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/webgl-proof.json",
+        "bytes": 6685,
+        "sha256": "12def7e1e3aa115481f9a0f04cfcf3b0c65e7adb5dececed8fc1a83b0e5041f1"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "43b544c11d2ac8adcefe7fbb159359de4a16e223f0bf13341c0ee2c6f2d476bd"
+      },
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/s3-backup-receipt.json",
+        "bytes": 1556,
+        "sha256": "3745651265a94b6703230c3d2246b816d8d6e648c9f3c29c31eebc4499e664a2"
+      },
+      "alphaAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/alpha-audit.json",
+        "bytes": 3691,
+        "sha256": "645249dad8d101ccce75ce89397f7ad2e411dc04253a45eaf12d7939e67790b9"
+      },
+      "materialBakeEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/material-bake-receipt.json",
+        "bytes": 14195,
+        "sha256": "956796b480cd2eb2068c99416e33fafc5e19a98630e390aa048e3f982f0a7773"
+      }
+    }
+  ]
+}

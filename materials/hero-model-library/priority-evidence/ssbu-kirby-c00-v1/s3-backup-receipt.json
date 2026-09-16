@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-kirby-c00-blender4513-v1/e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-kirby-c00-blender4513-v1/e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02.files.json",
+  "archiveSha256": "e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02",
+  "archiveBytes": 2748247,
+  "fileCount": 14,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-blender4513-v1/4727d00cdf3c379dbabbe5131c872305facd0a9dcc22037db230281eefb7b8bf/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-blender4513-v1/4727d00cdf3c379dbabbe5131c872305facd0a9dcc22037db230281eefb7b8bf/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-kirby-c00-blender4513-v1/4727d00cdf3c379dbabbe5131c872305facd0a9dcc22037db230281eefb7b8bf/manifest.json"
+}

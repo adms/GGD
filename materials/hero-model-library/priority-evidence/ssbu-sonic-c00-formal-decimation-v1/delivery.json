@@ -1,0 +1,74 @@
+{
+  "schema": "ggd-ssbu-sonic-formal-decimation-delivery@1",
+  "componentId": "ssbu-sonic-c00-static-skinned-v2",
+  "label": "索尼克 SSBU Ultimate c00 正式減面版",
+  "sourceId": "gitlab-ssbu-models",
+  "character": {
+    "nameZh": "索尼克",
+    "originalName": "Sonic",
+    "nativeId": "fighter/sonic/model/body/c00",
+    "variant": "c00"
+  },
+  "input": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+    "bytes": 936116,
+    "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+    "bytes": 916024,
+    "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate-rebuild.glb",
+    "bytes": 916024,
+    "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3"
+  },
+  "metrics": {
+    "trianglesBefore": 8980,
+    "trianglesAfter": 7900,
+    "drawPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 115,
+    "textureCount": 5,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "budgetErrors": 0,
+    "alphaBlockers": 0,
+    "byteIdenticalRebuild": true,
+    "reviewedViews": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "maximumChangedPixelPct": 1.405
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.files.json",
+    "archiveSha256": "3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b",
+    "archiveBytes": 10297995,
+    "fileCount": 28,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "limitations": [
+    "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+    "Runtime switching and production deployment were not performed.",
+    "Original-game shader parity remains limited to the source-connected Blender materials."
+  ]
+}

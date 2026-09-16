@@ -451,6 +451,26 @@
         "tier": "w3x"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.268aa54510b30fc8c1efb2ff7de4c2a99cca982c2e8593fe",
+      "label": "Medusa (Rider)｜FateUBW 社群模型＋來源動作",
+      "sourceModelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+      "modelSha256": "cecaf1139e7ba34a7279069854a32d1579e58c50d56b1f943bb19f8d0d115cc2",
+      "binarySha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "registeredAt": "2026-09-15T05:08:56.758Z",
+      "source": {
+        "kind": "exact",
+        "character": "Medusa (Rider)",
+        "work": "Fate/stay night",
+        "library": "Fate/Unlimited Block Works",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "manual"

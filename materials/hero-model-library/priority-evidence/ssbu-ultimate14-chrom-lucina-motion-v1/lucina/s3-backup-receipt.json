@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.files.json",
+  "archiveSha256": "26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f",
+  "archiveBytes": 32554365,
+  "fileCount": 93,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-lucina-ultimate14-motion-v1/c764505db274f03c76f2393b615f3eaf57206727d4ad5a78d4db4141a920d50b/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-lucina-ultimate14-motion-v1/c764505db274f03c76f2393b615f3eaf57206727d4ad5a78d4db4141a920d50b/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-lucina-ultimate14-motion-v1/c764505db274f03c76f2393b615f3eaf57206727d4ad5a78d4db4141a920d50b/manifest.json"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "magic_circle",
+    "run": "cast_1",
+    "attack": "rule_breaker",
+    "cast": "magic_circle",
+    "hurt": "cast_4",
+    "death": "cast_4"
+  },
+  "yawOffsetDeg": 0
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.files.json",
+  "archiveSha256": "42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e",
+  "archiveBytes": 10389580,
+  "fileCount": 51,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/5302f5f4ae545d8f2b7b28501fd46cd5320ea7b28b839fd8a037ba969011e682/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/5302f5f4ae545d8f2b7b28501fd46cd5320ea7b28b839fd8a037ba969011e682/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/5302f5f4ae545d8f2b7b28501fd46cd5320ea7b28b839fd8a037ba969011e682/manifest.json"
+}

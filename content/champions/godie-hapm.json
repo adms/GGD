@@ -570,6 +570,27 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-328403-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.23acd67134c8e186ed0ae7ea502f161a89765f7b065920fc",
+      "label": "Heracles (Berserker)｜FateUBW 社群模型＋來源動作",
+      "sourceModelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+      "modelSha256": "5ec552fa1178bb414aa26f5ee477e42e829c50d92ef0e56d8a7040d4bfc59b3b",
+      "binarySha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "registeredAt": "2026-09-15T05:08:54.740Z",
+      "source": {
+        "kind": "exact",
+        "character": "Heracles (Berserker)",
+        "work": "Fate/stay night",
+        "library": "Fate/Unlimited Block Works",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

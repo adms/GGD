@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 
-STAGES = ("assemble", "normalize", "runtime", "render", "catalog", "register", "indexes")
+STAGES = ("assemble", "backdrop", "normalize", "runtime", "render", "catalog", "register", "indexes")
 
 
 def sha(path: Path) -> str:
@@ -104,6 +104,7 @@ def main() -> int:
         for row in candidates:
             candidate = row["id"]
             assembly = expand(row["assemblyOutput"], roots)
+            backdrop = expand(row["backdropOutput"], roots) if "backdropOutput" in row else None
             normalized = expand(row["normalizedOutput"], roots)
             runtime = expand(row["runtimeOutput"], roots)
             review = expand(row["reviewOutput"], roots)
@@ -129,6 +130,19 @@ def main() -> int:
                     if name in row:
                         command.extend([flag, str(expand(row[name], roots))])
                 run(command, repo, args.plan)
+            elif stage == "backdrop":
+                if backdrop is None:
+                    print(json.dumps({"skip": stage, "candidate": candidate, "reason": "no-source-repair-configured"}))
+                    continue
+                receipt = backdrop / "receipt.json"
+                if validate_receipt_file(receipt, "output"):
+                    print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))
+                    continue
+                quarantine_incomplete(backdrop, stage, args.plan)
+                backdrop.parent.mkdir(parents=True, exist_ok=True)
+                run(["python3", str(script_root / "repair_texture_backdrops.py"), "repair", "--candidate", candidate,
+                     "--input", str(assembly / f"{candidate}.glb"), "--output", str(backdrop / f"{candidate}.glb"),
+                     "--receipt", str(receipt)], repo, args.plan)
             elif stage == "normalize":
                 receipt = normalized / "ggd-upload.json"
                 if validate_receipt_file(receipt, "output"):
@@ -136,7 +150,8 @@ def main() -> int:
                     continue
                 quarantine_incomplete(normalized, stage, args.plan)
                 normalized.parent.mkdir(parents=True, exist_ok=True)
-                run(["node", "--import", "tsx", str(script_root / "normalize_validate_candidate.mts"), str(repo), str(assembly / f"{candidate}.glb"), str(normalized)], repo, args.plan)
+                source = (backdrop / f"{candidate}.glb") if backdrop is not None else (assembly / f"{candidate}.glb")
+                run(["node", "--import", "tsx", str(script_root / "normalize_validate_candidate.mts"), str(repo), str(source), str(normalized)], repo, args.plan)
             elif stage == "runtime":
                 if validate_runtime(runtime):
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))

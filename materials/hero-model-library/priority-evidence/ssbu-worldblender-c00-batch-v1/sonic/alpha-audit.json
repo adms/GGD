@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-worldblender-material-alpha-audit@1",
+  "files": [
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "def_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "def_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "EyeL",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "EyeL.ggd-opaque-base-color.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "EyeR",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "EyeR.ggd-opaque-base-color.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "skin_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "skin_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": "metal_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "metal_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    },
+    {
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/rebuild/body.glb",
+      "materials": [
+        {
+          "materialIndex": 0,
+          "materialName": "def_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 0,
+          "imageIndex": 0,
+          "imageName": "def_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 1,
+          "materialName": "EyeL",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 1,
+          "imageIndex": 1,
+          "imageName": "EyeL.ggd-opaque-base-color.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 2,
+          "materialName": "EyeR",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 2,
+          "imageIndex": 2,
+          "imageName": "EyeR.ggd-opaque-base-color.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 3,
+          "materialName": "skin_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 3,
+          "imageIndex": 3,
+          "imageName": "skin_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        },
+        {
+          "materialIndex": 4,
+          "materialName": "metal_sonic_001",
+          "alphaMode": "OPAQUE",
+          "textureIndex": 4,
+          "imageIndex": 4,
+          "imageName": "metal_sonic_001_col.png.ggd-256",
+          "alphaMinimum": 255,
+          "alphaMaximum": 255
+        }
+      ],
+      "opaqueTransparentBlockers": [],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "opaqueTransparentBlockers": 0
+}

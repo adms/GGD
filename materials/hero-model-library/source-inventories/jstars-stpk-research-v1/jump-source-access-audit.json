@@ -1,0 +1,383 @@
+{
+  "schema": "ggd.jump-source-access-audit@1",
+  "checkedAt": "2026-09-14",
+  "scope": [
+    "JUMP FORCE",
+    "J-Stars Victory VS+"
+  ],
+  "liveMounts": [
+    {
+      "path": "/Volumes/common",
+      "exists": false
+    },
+    {
+      "path": "/Volumes/game",
+      "exists": false
+    }
+  ],
+  "windowsInventory": {
+    "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
+    "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486",
+    "jumpForce": {
+      "id": "steam:816020",
+      "sourceKind": "steam-install",
+      "title": "JUMP FORCE",
+      "installDirectory": "JUMP FORCE",
+      "appId": "816020",
+      "buildId": "8523149",
+      "platform": "Windows (Steam)",
+      "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\JUMP FORCE",
+      "manifestPath": "F:\\SteamLibrary\\steamapps\\appmanifest_816020.acf",
+      "manifestMatched": true,
+      "rawManifestTitle": null,
+      "lastWriteTimeUtc": "2026-09-11T06:11:02.8967799Z",
+      "priorityTags": [
+        "jump-force",
+        "jump-crossover"
+      ],
+      "inventoryStatus": "inventory-only",
+      "extractionStatus": "not-started",
+      "conversionStatus": "not-started",
+      "integrationStatus": "not-registered",
+      "containerInventoryStatus": "metadata-only-files-enumerated",
+      "containerInventory": {
+        "sourceKind": "steam-install",
+        "appId": "816020",
+        "buildId": "8523149",
+        "title": "JUMP FORCE",
+        "installDirectory": "JUMP FORCE",
+        "sourcePath": "/Volumes/common/JUMP FORCE",
+        "fileCount": 3466,
+        "logicalFileBytes": 23856777652,
+        "assetContainerCandidateCount": 240,
+        "engineHints": [
+          "Unreal Engine",
+          "CRIWARE"
+        ],
+        "topExtensions": [
+          {
+            "extension": ".res",
+            "count": 2680
+          },
+          {
+            "extension": ".png",
+            "count": 228
+          },
+          {
+            "extension": ".uasset",
+            "count": 191
+          },
+          {
+            "extension": ".mp4",
+            "count": 186
+          },
+          {
+            "extension": ".awb",
+            "count": 43
+          },
+          {
+            "extension": ".dll",
+            "count": 20
+          },
+          {
+            "extension": ".cfg",
+            "count": 18
+          },
+          {
+            "extension": ".archive",
+            "count": 15
+          },
+          {
+            "extension": ".locres",
+            "count": 15
+          },
+          {
+            "extension": ".ttf",
+            "count": 12
+          },
+          {
+            "extension": ".brk",
+            "count": 9
+          },
+          {
+            "extension": ".pak",
+            "count": 6
+          },
+          {
+            "extension": ".sig",
+            "count": 6
+          },
+          {
+            "extension": ".exe",
+            "count": 5
+          },
+          {
+            "extension": ".glsl",
+            "count": 4
+          },
+          {
+            "extension": ".nrm",
+            "count": 4
+          },
+          {
+            "extension": ".dict",
+            "count": 4
+          },
+          {
+            "extension": ".hlsl",
+            "count": 3
+          },
+          {
+            "extension": ".tps",
+            "count": 3
+          },
+          {
+            "extension": ".icu",
+            "count": 3
+          },
+          {
+            "extension": ".cnv",
+            "count": 2
+          },
+          {
+            "extension": ".csv",
+            "count": 1
+          },
+          {
+            "extension": ".locmeta",
+            "count": 1
+          },
+          {
+            "extension": ".manifest",
+            "count": 1
+          },
+          {
+            "extension": ".ini",
+            "count": 1
+          }
+        ],
+        "assetKindCounts": {
+          "criware-container-or-audio": 43,
+          "unreal-container-or-asset": 197
+        },
+        "candidateExtensionCounts": {
+          ".awb": 43,
+          ".pak": 6,
+          ".uasset": 191
+        },
+        "manifestMatched": true,
+        "inventoryStatus": "metadata-only-files-enumerated",
+        "contentInspected": false,
+        "payloadBytesRead": 0
+      }
+    },
+    "jstars": [
+      {
+        "id": "windows-rom-scan:0663",
+        "sourceKind": "rom-or-game-archive",
+        "title": "J-STARS Victory VS (PCSE00595) (NTSC)",
+        "fileName": "J-STARS Victory VS (PCSE00595) (NTSC).7z",
+        "extension": ".7z",
+        "platform": "Sony PS Vita",
+        "platformEvidence": [
+          "path:Sony PS Vita"
+        ],
+        "sizeBytes": 1755203440,
+        "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS (PCSE00595) (NTSC).7z",
+        "relativePath": "模擬器\\PSV\\J-STARS Victory VS (PCSE00595) (NTSC).7z",
+        "lastWriteTimeUtc": "2024-10-19T19:17:09.2900022Z",
+        "priorityTags": [
+          "jump-crossover"
+        ],
+        "classification": "rom-high-confidence",
+        "classificationNote": null,
+        "contentHash": null,
+        "contentInspected": false,
+        "inventoryStatus": "inventory-only",
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started",
+        "integrationStatus": "not-registered"
+      },
+      {
+        "id": "windows-rom-scan:0664",
+        "sourceKind": "rom-or-game-archive",
+        "title": "J-STARS Victory VS+ [PCSE00595] (v01.00) ",
+        "fileName": "J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
+        "extension": ".vpk",
+        "platform": "Sony PS Vita",
+        "platformEvidence": [
+          "extension:.vpk",
+          "path:Sony PS Vita"
+        ],
+        "sizeBytes": 1523427255,
+        "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
+        "relativePath": "模擬器\\PSV\\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
+        "lastWriteTimeUtc": "2022-12-29T07:20:56.0000000Z",
+        "priorityTags": [
+          "jump-crossover"
+        ],
+        "classification": "rom-high-confidence",
+        "classificationNote": null,
+        "contentHash": null,
+        "contentInspected": false,
+        "inventoryStatus": "inventory-only",
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started",
+        "integrationStatus": "not-registered"
+      }
+    ],
+    "limitation": "Windows inventory and SMB container listing are historical metadata. Missing mounts prevent current payload re-read or new hashes."
+  },
+  "jumpForcePakIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+    "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964",
+    "containerCount": 6,
+    "relationCount": 256619,
+    "uniquePathCount": 221877,
+    "sourceKindSelectedPathCounts": {
+      "animation-package": 1,
+      "audio-package": 65614,
+      "character-config-package": 2336,
+      "character-package": 13437,
+      "other": 81379,
+      "skill-config-package": 1240,
+      "vfx-package": 57870
+    },
+    "containers": [
+      {
+        "name": "pakchunk0-WindowsNoEditor.pak",
+        "bytes": 7279219593,
+        "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+        "entryCount": 140075
+      },
+      {
+        "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+        "bytes": 1543894441,
+        "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+        "entryCount": 12906
+      },
+      {
+        "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+        "bytes": 2532409095,
+        "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+        "entryCount": 30795
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor.pak",
+        "bytes": 7060715441,
+        "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+        "entryCount": 36537
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+        "bytes": 1552635741,
+        "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+        "entryCount": 23755
+      },
+      {
+        "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+        "bytes": 2410586601,
+        "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+        "entryCount": 12551
+      }
+    ],
+    "limitation": "The six raw Steam PAK files remain on the owner share and were not copied into this Git worktree. Existing hashes/index paths are evidence, not a fresh live-mount read."
+  },
+  "registeredSources": [
+    {
+      "id": "parallel-ps-jstars-sample",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "blocked-ch0-decode-pending-standardization",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jstars-sample",
+      "existsLocal": true
+    },
+    {
+      "id": "parallel-ps-jumpforce-audio",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "publicationStatus": "s3-legacy-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio",
+      "existsLocal": true
+    },
+    {
+      "id": "parallel-ps-jumpforce-local-10",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
+      "existsLocal": true
+    },
+    {
+      "id": "parallel-ps-jumpforce-local-final3",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
+      "existsLocal": true
+    },
+    {
+      "id": "parallel-ps-jumpforce-local-next32",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
+      "existsLocal": true
+    },
+    {
+      "id": "parallel-ps-jumpforce-local-second10",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining",
+      "existsLocal": true
+    },
+    {
+      "id": "steam-jump-force-priority-original-assets-build-8523149",
+      "acquisitionStatus": "priority-scope-extracted-verified",
+      "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+      "existsLocal": true
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-decoded-pending-listening-review",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "existsLocal": true
+    },
+    {
+      "id": "zenhax-jstars-pak-stpk-comparison-v1",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "native-stpk-split-pending-standardization",
+      "publicationStatus": "s3-readback-verified",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1",
+      "existsLocal": true
+    }
+  ],
+  "publicAudioCatalog": {
+    "id": "miner600-jumpforce-audio-full-catalog",
+    "acquisitionStatus": "downloaded-verified-in-five-batches",
+    "readiness": "complete-original-package-catalog-acquired-listening-review-pending",
+    "packageCount": 58,
+    "deliverySourceIds": [
+      "parallel-ps-jumpforce-audio",
+      "parallel-ps-jumpforce-local-10",
+      "parallel-ps-jumpforce-local-second10",
+      "parallel-ps-jumpforce-local-next32",
+      "parallel-ps-jumpforce-local-final3"
+    ],
+    "reconciliationEvidence": {
+      "gitPath": "materials/hero-model-library/source-inventories/jumpforce-public-audio-catalog-reconciliation.json",
+      "sha256": "aa3760bfef2d942ab1d2375083940ed75b186e63e796fc4831c80d407a48e92b"
+    }
+  },
+  "status": {
+    "jumpForceNewPayloadReadThisRun": false,
+    "jstarsPublicSampleAcquiredThisRun": true,
+    "jstarsStpkMembersSplitThisRun": true,
+    "newStandardizedModelsThisRun": 0
+  }
+}

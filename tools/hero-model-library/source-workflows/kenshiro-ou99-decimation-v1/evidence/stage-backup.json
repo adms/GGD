@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.files.json",
+  "archiveSha256": "52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339",
+  "archiveBytes": 19304079,
+  "fileCount": 575,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kenshiro-ou99-decimation-v1/materialized-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kenshiro-ou99-decimation-v1/verified/bcd6725a5a41e8f7441f51d8dec69a799d14b271d0909dc6674d851be5361464/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kenshiro-ou99-decimation-v1/verified/bcd6725a5a41e8f7441f51d8dec69a799d14b271d0909dc6674d851be5361464/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kenshiro-ou99-decimation-v1/verified/bcd6725a5a41e8f7441f51d8dec69a799d14b271d0909dc6674d851be5361464/manifest.json",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789465078"
+}

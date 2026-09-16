@@ -13,3 +13,5 @@ python3 analyze.py \
 ```
 
 驗收的唯一成功條件是每份 QuickBMS 輸出位元組數剛好等於其 `$CMP` 標頭的 `declaredDecodedBytes`。2026-09-11 的三份樣本均未通過：`i` 和 `v` 因 SIGBUS 中止；`m` 產生 405,220-byte `STPK`，但標頭宣告 671,808 bytes。`m` 的部分索引包含 `009_vegeta`、貼圖、表情、能力與 `jp_lps` 音訊容器名稱，因而可將原生 ID 009 暫記為貝吉達（Vegeta），但仍待完整解碼、模型／骨架／動作／音訊擷取與視覺驗收。
+
+2026-09-14 的 chunk-table 複核進一步確認三個 PAK 都含 `$CLH`，其 payload 以 `$CH0` 開頭；現有公開 `cmp_scz.bms` 只提供 CL0 類路徑，沒有完成 `$CH0` entropy stage。這能解釋部分輸出與崩潰，但不是解碼成果。可重現診斷由 `jstars-stpk-research-v1/diagnose_009.py` 產生。

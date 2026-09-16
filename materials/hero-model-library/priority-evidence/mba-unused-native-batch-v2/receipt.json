@@ -1,0 +1,800 @@
+{
+  "schema": "ggd.mba-unused-native-batch@1",
+  "batchId": "mba-unused-native-batch-v2",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "selectionClass": "mba",
+  "platform": "Windows PC",
+  "candidates": [
+    {
+      "id": "mba-unused-naga-native-six-state-v1",
+      "sourceCharacterId": "mba:Chara08",
+      "nameZh": "白蛇娜卡",
+      "originalName": "Naga the Serpent",
+      "workZh": "秀逗魔導士",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara08/Naga.glb",
+        "bytes": 7618544,
+        "sha256": "eeeaccdd0fdff24be7c27f09c04fdd3dc9f00030c4a3aeae15780b2a438a1d9d"
+      },
+      "sourceAssetId": "mba:b53a2760b06177f1921a3f24",
+      "selectedNativeClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "firstBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/naga/first/final/body.glb",
+        "bytes": 802848,
+        "sha256": "1daa151c418d42269a1df061a0ccdde2634d296f9df7498fad007aca9e0e5729"
+      },
+      "secondBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/naga/second/final/body.glb",
+        "bytes": 802848,
+        "sha256": "1daa151c418d42269a1df061a0ccdde2634d296f9df7498fad007aca9e0e5729"
+      },
+      "finalGlbByteIdenticalRebuild": true,
+      "validation": {
+        "schema": "ggd.mba-unused-native-six-state-validation@1",
+        "glb": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/naga/first/final/body.glb",
+          "bytes": 802848,
+          "sha256": "1daa151c418d42269a1df061a0ccdde2634d296f9df7498fad007aca9e0e5729"
+        },
+        "selectedNativeClips": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "validator": "gltf-validator@2.0.0-dev.3.10",
+        "khronosIssues": {
+          "numErrors": 0,
+          "numWarnings": 20,
+          "numInfos": 0,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/2/target/path"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/1"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+              "message": "Local transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/1"
+            }
+          ],
+          "truncated": false
+        },
+        "ggdInspection": {
+          "triangles": 3587,
+          "drawPrimitives": 1,
+          "skinnedPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 33,
+          "textureCount": 1,
+          "textures": [
+            {
+              "width": 256,
+              "height": 256,
+              "bytes": 33242,
+              "sha256": "568cfd7729a8bbec2f60b8628947cf2c133074c710b41a4e9b36937b0bc373b1"
+            }
+          ],
+          "clips": [
+            {
+              "index": 0,
+              "name": "wait",
+              "duration": 1.0666667222976685,
+              "channels": 108
+            },
+            {
+              "index": 1,
+              "name": "F-Move",
+              "duration": 0.5333333611488342,
+              "channels": 84
+            },
+            {
+              "index": 2,
+              "name": "attack_01",
+              "duration": 0.2666666805744171,
+              "channels": 108
+            },
+            {
+              "index": 3,
+              "name": "sp01_01",
+              "duration": 1.0666667222976685,
+              "channels": 108
+            },
+            {
+              "index": 4,
+              "name": "Damage-1",
+              "duration": 0.5333333611488342,
+              "channels": 84
+            },
+            {
+              "index": 5,
+              "name": "D-Down",
+              "duration": 0.800000011920929,
+              "channels": 84
+            }
+          ],
+          "budget": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "finiteFloatAccessors": {
+          "passed": true,
+          "accessorCount": 1157,
+          "valueCount": 43737
+        },
+        "structuralValidationPassed": true,
+        "visualAcceptance": "pending-owner-review",
+        "runtimeRegistrationPerformed": false,
+        "runtimeSelectable": false,
+        "productionDeploymentVerified": false
+      },
+      "pipelineStages": {
+        "acquisition": "acquired",
+        "extraction": "extracted-and-locally-present",
+        "conversion": "standardized-six-state-candidate-validated",
+        "ggdFinalAcceptance": "pending-visual-review-and-character-definition",
+        "runtimeRegistration": "not-registered-no-ggd-hero-id",
+        "runtimeSelectability": "not-selectable",
+        "productionDeployment": "not-verified"
+      },
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false,
+      "gaps": [
+        "No GGD hero definition or skill setting is present for this exact identity.",
+        "This machine validation does not replace an owner visual review of model and action playback.",
+        "No backend dropdown registration, default selection or production deployment was performed."
+      ]
+    },
+    {
+      "id": "mba-unused-hayate-native-six-state-v1",
+      "sourceCharacterId": "mba:Chara10",
+      "nameZh": "八神疾風",
+      "originalName": "Hayate Yagami",
+      "workZh": "魔法少女奈葉",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara10/Hayate.glb",
+        "bytes": 4688112,
+        "sha256": "3ccd6bf1a537c45c45433945a2e92aac4f77336869c8a6a9496e98e85db21abc"
+      },
+      "sourceAssetId": "mba:4306ce94e03d786d3973593a",
+      "selectedNativeClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "firstBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/hayate/first/final/body.glb",
+        "bytes": 664432,
+        "sha256": "ff6c6e3ed1c13cd39f1387057d6e1cbe61e4fe559d9ab5d2180492d69431af2c"
+      },
+      "secondBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/hayate/second/final/body.glb",
+        "bytes": 664432,
+        "sha256": "ff6c6e3ed1c13cd39f1387057d6e1cbe61e4fe559d9ab5d2180492d69431af2c"
+      },
+      "finalGlbByteIdenticalRebuild": true,
+      "validation": {
+        "schema": "ggd.mba-unused-native-six-state-validation@1",
+        "glb": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/hayate/first/final/body.glb",
+          "bytes": 664432,
+          "sha256": "ff6c6e3ed1c13cd39f1387057d6e1cbe61e4fe559d9ab5d2180492d69431af2c"
+        },
+        "selectedNativeClips": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "validator": "gltf-validator@2.0.0-dev.3.10",
+        "khronosIssues": {
+          "numErrors": 0,
+          "numWarnings": 19,
+          "numInfos": 0,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/2/target/path"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/1"
+            }
+          ],
+          "truncated": false
+        },
+        "ggdInspection": {
+          "triangles": 4282,
+          "drawPrimitives": 1,
+          "skinnedPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 27,
+          "textureCount": 1,
+          "textures": [
+            {
+              "width": 256,
+              "height": 256,
+              "bytes": 29930,
+              "sha256": "39f810012eba218dbb0cfef69e6cbaf492222842f23a68ab7ac6c05430f9a69e"
+            }
+          ],
+          "clips": [
+            {
+              "index": 0,
+              "name": "wait",
+              "duration": 0.800000011920929,
+              "channels": 84
+            },
+            {
+              "index": 1,
+              "name": "F-Move",
+              "duration": 0.5333333611488342,
+              "channels": 66
+            },
+            {
+              "index": 2,
+              "name": "attack_01",
+              "duration": 0.2666666805744171,
+              "channels": 84
+            },
+            {
+              "index": 3,
+              "name": "sp01_01",
+              "duration": 0.2666666805744171,
+              "channels": 66
+            },
+            {
+              "index": 4,
+              "name": "Damage-1",
+              "duration": 0.5333333611488342,
+              "channels": 66
+            },
+            {
+              "index": 5,
+              "name": "D-Down",
+              "duration": 0.800000011920929,
+              "channels": 66
+            }
+          ],
+          "budget": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "finiteFloatAccessors": {
+          "passed": true,
+          "accessorCount": 869,
+          "valueCount": 33999
+        },
+        "structuralValidationPassed": true,
+        "visualAcceptance": "pending-owner-review",
+        "runtimeRegistrationPerformed": false,
+        "runtimeSelectable": false,
+        "productionDeploymentVerified": false
+      },
+      "pipelineStages": {
+        "acquisition": "acquired",
+        "extraction": "extracted-and-locally-present",
+        "conversion": "standardized-six-state-candidate-validated",
+        "ggdFinalAcceptance": "pending-visual-review-and-character-definition",
+        "runtimeRegistration": "not-registered-no-ggd-hero-id",
+        "runtimeSelectability": "not-selectable",
+        "productionDeployment": "not-verified"
+      },
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false,
+      "gaps": [
+        "No GGD hero definition or skill setting is present for this exact identity.",
+        "This machine validation does not replace an owner visual review of model and action playback.",
+        "No backend dropdown registration, default selection or production deployment was performed."
+      ]
+    },
+    {
+      "id": "mba-unused-vita-native-six-state-v1",
+      "sourceCharacterId": "mba:Chara11",
+      "nameZh": "薇塔",
+      "originalName": "Vita",
+      "workZh": "魔法少女奈葉",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara11/Vita.glb",
+        "bytes": 6108960,
+        "sha256": "02814a9992181579ece78b5b993fe87edbc8dc1093fd3f10af4f259bd36c57de"
+      },
+      "sourceAssetId": "mba:240131ba7575726401e39f65",
+      "selectedNativeClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "firstBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/vita/first/final/body.glb",
+        "bytes": 710400,
+        "sha256": "938dc9e7fec8a7d7010fddb20e779d4d1e93c4d7d5a4c8360903571046f30d58"
+      },
+      "secondBuild": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/vita/second/final/body.glb",
+        "bytes": 710400,
+        "sha256": "938dc9e7fec8a7d7010fddb20e779d4d1e93c4d7d5a4c8360903571046f30d58"
+      },
+      "finalGlbByteIdenticalRebuild": true,
+      "validation": {
+        "schema": "ggd.mba-unused-native-six-state-validation@1",
+        "glb": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-native-batch-v2/vita/first/final/body.glb",
+          "bytes": 710400,
+          "sha256": "938dc9e7fec8a7d7010fddb20e779d4d1e93c4d7d5a4c8360903571046f30d58"
+        },
+        "selectedNativeClips": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "validator": "gltf-validator@2.0.0-dev.3.10",
+        "khronosIssues": {
+          "numErrors": 0,
+          "numWarnings": 19,
+          "numInfos": 0,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/0/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/1/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/2/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/3/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/4/channels/2/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/0/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/1/target/path"
+            },
+            {
+              "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+              "message": "Animated TRS properties will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/animations/5/channels/2/target/path"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/1"
+            }
+          ],
+          "truncated": false
+        },
+        "ggdInspection": {
+          "triangles": 4412,
+          "drawPrimitives": 1,
+          "skinnedPrimitives": 1,
+          "skinCount": 1,
+          "jointCount": 26,
+          "textureCount": 1,
+          "textures": [
+            {
+              "width": 256,
+              "height": 256,
+              "bytes": 32225,
+              "sha256": "7f2e7467c3c73d635deed5fd6d7fbfbd6047bc1f713234291af20b0645a80bda"
+            }
+          ],
+          "clips": [
+            {
+              "index": 0,
+              "name": "wait",
+              "duration": 1.0666667222976685,
+              "channels": 81
+            },
+            {
+              "index": 1,
+              "name": "F-Move",
+              "duration": 0.5333333611488342,
+              "channels": 60
+            },
+            {
+              "index": 2,
+              "name": "attack_01",
+              "duration": 0.2666666805744171,
+              "channels": 81
+            },
+            {
+              "index": 3,
+              "name": "sp01_01",
+              "duration": 0.4000000059604645,
+              "channels": 81
+            },
+            {
+              "index": 4,
+              "name": "Damage-1",
+              "duration": 0.5333333611488342,
+              "channels": 60
+            },
+            {
+              "index": 5,
+              "name": "D-Down",
+              "duration": 0.800000011920929,
+              "channels": 60
+            }
+          ],
+          "budget": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "finiteFloatAccessors": {
+          "passed": true,
+          "accessorCount": 851,
+          "valueCount": 37682
+        },
+        "structuralValidationPassed": true,
+        "visualAcceptance": "pending-owner-review",
+        "runtimeRegistrationPerformed": false,
+        "runtimeSelectable": false,
+        "productionDeploymentVerified": false
+      },
+      "pipelineStages": {
+        "acquisition": "acquired",
+        "extraction": "extracted-and-locally-present",
+        "conversion": "standardized-six-state-candidate-validated",
+        "ggdFinalAcceptance": "pending-visual-review-and-character-definition",
+        "runtimeRegistration": "not-registered-no-ggd-hero-id",
+        "runtimeSelectability": "not-selectable",
+        "productionDeployment": "not-verified"
+      },
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false,
+      "gaps": [
+        "No GGD hero definition or skill setting is present for this exact identity.",
+        "This machine validation does not replace an owner visual review of model and action playback.",
+        "No backend dropdown registration, default selection or production deployment was performed."
+      ]
+    }
+  ],
+  "summary": {
+    "candidates": 3,
+    "nativeMotionCandidates": 18,
+    "runtimeSelectable": 0,
+    "productionDeploymentVerified": 0
+  },
+  "boundaries": {
+    "newDownloads": false,
+    "paymentPerformed": false,
+    "runtimeRegistrationPerformed": false,
+    "productionDeploymentPerformed": false,
+    "ownerVisualAcceptancePerformed": false
+  }
+}

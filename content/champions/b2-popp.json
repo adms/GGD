@@ -106,11 +106,12 @@
         },
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
       },
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
       "vfxLayers": [
         {
-          "attachTo": "caster",
-          "vfxKey": "fx.prim.arcane.slash"
+          "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+          "attachTo": "point",
+          "delayMs": 0
         }
       ],
       "icon": "assets/icons/abilities/b2-popp.q.webp",
@@ -167,11 +168,27 @@
         },
         "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
       },
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.strash.popp.nps-merami-muzzle",
       "vfxLayers": [
         {
+          "vfxKey": "fx.strash.popp.nps-merami-muzzle",
           "attachTo": "caster",
-          "vfxKey": "fx.prim.arcane.bolt"
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-core",
+          "attachTo": "caster",
+          "delayMs": 100
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-firetrail-00",
+          "attachTo": "caster",
+          "delayMs": 180
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-merami-landing-2",
+          "attachTo": "point",
+          "delayMs": 1000
         }
       ],
       "icon": "assets/icons/abilities/b2-popp.r.webp",
@@ -264,11 +281,17 @@
         },
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
       },
-      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
       "vfxLayers": [
         {
-          "attachTo": "caster",
-          "vfxKey": "fx.prim.ice.pulse-sm"
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-core",
+          "attachTo": "point",
+          "delayMs": 0
+        },
+        {
+          "vfxKey": "fx.strash.popp.nps-hyadaruko-hit",
+          "attachTo": "point",
+          "delayMs": 1000
         }
       ],
       "radiusTier": "極小",

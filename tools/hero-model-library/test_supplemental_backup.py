@@ -112,6 +112,17 @@ class SupplementalBackup(unittest.TestCase):
         self.assertEqual(index['sources'][0]['id'], 'original-source')
         self.assertEqual(index['sources'][1]['acquiredAssetPayloadCount'], 0)
 
+    def test_catalog_only_candidate_without_local_path_does_not_block_source_backup(self):
+        downloads, _ = self.decoded()
+        downloads['publicSources'][0]['componentCandidates'].append(
+            dict(id='identity-pending', readiness='identity-pending', runtimeSelectable=False))
+        (self.base / 'download-sources.json').write_text(json.dumps(downloads))
+        self.run_record()
+        downloads, index = self.decoded()
+        catalog_only = downloads['publicSources'][0]['componentCandidates'][1]
+        self.assertNotIn('backupLocations', catalog_only)
+        self.assertEqual(index['sources'][-1]['id'], 'conversion-source')
+
     def test_scoped_uploader_receipt_is_verified_and_registered(self):
         scoped = self.scoped_snapshot('scoped', ['weapon.glb'])
         self.run_record(scoped)
@@ -132,6 +143,15 @@ class SupplementalBackup(unittest.TestCase):
         before = self.catalogs()
         self.run_record()
         self.assertEqual(self.catalogs(), before)
+
+    def test_unlinked_backup_can_be_attached_to_its_source_later(self):
+        self.run_record(linked=False)
+        self.run_record(linked=True)
+        downloads, index = self.decoded()
+        attached = [row for row in index['sources'] if row['id'] == 'conversion-source']
+        self.assertEqual(len(attached), 1)
+        self.assertEqual(attached[0]['sourceId'], 'original-source')
+        self.assertEqual(downloads['publicSources'][0]['supplementalDeliveries'][0]['sourceId'], 'original-source')
 
     def test_pending_then_verified_promotes_only_the_matching_snapshot(self):
         path = self.base / 'public-source-files.json'

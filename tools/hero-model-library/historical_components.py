@@ -52,9 +52,20 @@ def file_pin(path):
 
 
 def verify_pin(pin, repo):
-    path = (Path(repo) / pin['gitPath']).resolve()
-    require(path.is_relative_to(Path(repo).resolve()), 'Historical component escapes checkout')
-    require(path.is_file(), 'Missing historical component evidence: ' + str(path))
+    repo = Path(repo).resolve()
+    path = (repo / pin['gitPath']).resolve()
+    require(path.is_relative_to(repo), 'Historical component escapes checkout')
+    if not path.is_file():
+        split_path = repo / 'materials/asset-library/pr1152-s3-split.json'
+        require(split_path.is_file(), 'Missing historical component evidence: ' + str(path))
+        split = json.loads(split_path.read_text())
+        archived = next((row for row in split.get('files', [])
+                         if row.get('repoPath') == pin['gitPath']), None)
+        require(split.get('fullGetAndEveryFileVerified') is True and archived is not None,
+                'Missing historical component evidence: ' + str(path))
+        require((archived.get('bytes'), archived.get('sha256')) == (pin['bytes'], pin['sha256']),
+                'Changed historical S3 component pin: ' + str(path))
+        return path
     actual = file_pin(path)
     require((actual['bytes'], actual['sha256']) == (pin['bytes'], pin['sha256']), 'Changed historical component pin: ' + str(path))
     return path

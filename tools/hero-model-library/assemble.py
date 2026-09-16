@@ -83,6 +83,17 @@ for e in derivative_config:
  h['options'].insert(0,h['options'].pop())
  h['preferredDerivative']=key
  if e['id']=='takopi':h['pending']=[x for x in h['pending'] if x['source']!='pet:octopus']
+# Accepted repairs remain authoritative across a full source rebuild.  The
+# original outputs/ copy is still preserved, but the portable manifest points
+# at the independently accepted Git candidate.
+mai_acceptance_path=repo/'materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-acceptance.json'
+if mai_acceptance_path.exists():
+ accepted=read(mai_acceptance_path)['candidate'];source_doc_path=repo/accepted['sourceModelDocumentPath'];source_doc=read(source_doc_path);body=repo/'content'/source_doc['glbPath']
+ assert source_doc['id']==accepted['sourceModelKey'] and sha(body)==accepted['sha256'] and body.stat().st_size==accepted['bytes']
+ dest=out/source_doc['glbPath'];dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(body,dest);write(out/'models'/f"{source_doc['id']}.json",source_doc)
+ model=models['derivative:mai'];model.update(modelKey=source_doc['id'],glbPath=source_doc['glbPath'],sha256=accepted['sha256'],bytes=accepted['bytes'],documentSha256=sha(out/'models'/f"{source_doc['id']}.json"),gitPath='content/'+source_doc['glbPath'],sourceCharacter='不知火舞（獨立副本／真田幸村，7,994 面正式版）',clipMap=source_doc['clipMap'],validation='hard-policy-khronos-rig-and-static-webgl-ab-accepted',acceptanceEvidence=str(mai_acceptance_path.relative_to(repo)))
+ model['limitations']=[x for x in model.get('limitations',[]) if not x.startswith('舊 13,796 面改色副本保留')]+['舊 13,796 面改色副本保留；本模型是 7,994 面獨立完整副本，已通過現行正式採用規則、骨架保留與固定鏡頭三視圖 A/B。']
+ hero_row=heroes['community-review-03-20260907'];option_row=next(x for x in hero_row['options'] if x['sourceId']=='derivative:mai');option_row.update(sourceModelKey=source_doc['id'],label=model['sourceCharacter']);option_row['source']['character']=model['sourceCharacter']
 for r in read(ws/'outputs/hero-model-derivatives-20260910/lol-v1/summary.json'):
  h=hero(r['heroId'],r['sourceCharacter']);h['work']=r['sourceWork'];h['rosterGroup']='lol7';h['identityScope']='Existing recipe key, not a fabricated published champion ID'
  key=r['characterId']

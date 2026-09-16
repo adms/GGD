@@ -15,6 +15,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { readShippedModelDocs } from "../../testkit/shippedModelDocs";
 import {
   GENERATED_BODY_GLB_PREFIX,
   isStandinBodyGlb,
@@ -74,9 +75,11 @@ const ROSTER = champions(join(CONTENT, "champions"));
  * 在嗎」的問題都要問兩個目錄 —— 只問營運那一份,會把歸檔誤判成孤兒。
  */
 const ARCHIVED_IDS = new Set(champions(join(CONTENT, "_legacy/champions")).map((c) => c.id));
-const STANDIN_IDS = ROSTER.filter((c) => STAND_IN_MODEL_KEYS.includes(c.modelKey ?? "")).map(
-  (c) => c.id,
-);
+const SHIPPED_MODELS = readShippedModelDocs(CONTENT);
+const STANDIN_IDS = ROSTER.filter((c) => {
+  if (STAND_IN_MODEL_KEYS.includes(c.modelKey ?? "")) return true;
+  return isStandinBodyGlb(SHIPPED_MODELS.get(c.modelKey ?? "")?.glbPath);
+}).map((c) => c.id);
 
 /**
  * 出貨值刻意跟地圖不同的四位 —— owner 依角色設定手調的,note 裡各自寫著

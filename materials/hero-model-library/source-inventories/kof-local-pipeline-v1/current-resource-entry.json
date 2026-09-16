@@ -1,0 +1,28 @@
+{
+  "schema": "ggd.kof-local-pipeline-current-resource@1",
+  "pipelineId": "kof-local-pipeline-v1",
+  "scope": {
+    "sourceIds": [
+      "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "steam-kofxiv-terry-path-index-v1"
+    ],
+    "nativeCharacterIdsWithPayload": [
+      "MAI",
+      "IOR",
+      "KYO"
+    ],
+    "nativeCharacterIdsPathIndexedOnly": [
+      "TRY"
+    ],
+    "remoteLibraryReadAllowed": false
+  },
+  "status": "MAI/IOR/KYO local payload verified and candidates processed; proprietary model/motion/VFX conversion blocked; TRY path-indexed only",
+  "manifestGitPath": "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/pipeline.json",
+  "manifestSha256": "19bb753a3c3d59e2d362be7b1e68d5fddbd25e48a84997b94f3117d4679c409a",
+  "receiptGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json",
+  "documentGitPath": "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/README.md",
+  "runtimeSelectableModels": 0,
+  "runtimeMotionBindings": 0,
+  "runtimeVfxBindings": 0,
+  "productionDeploymentVerified": false
+}

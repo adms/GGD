@@ -1,0 +1,236 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "ruru",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara01_O",
+    "definition": "CharacterDefinitions/Chara01_O.chr",
+    "characterNative": "D-Down",
+    "nativeModel": "Model/Chara01_O/Ruru.x",
+    "convertedGlb": "models/Model/Chara01_O/Ruru.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
+    "bytes": 6179096,
+    "sha256": "c3aa6e901a46f8b2c974520790549747681e9f6cce7a9194492cc7b49f6df5e7"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 5,
+    "outputDrawPrimitives": 1,
+    "vertices": 2403,
+    "triangles": 2787,
+    "atlasEdge": 1024,
+    "sourceAtlasEdge": 1024,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 165,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "3": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "4": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 2,
+      "maxSumDelta": 2.0265579223632812e-06
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-pilot-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 81,
+    "originalNames": [
+      "eri_02",
+      "eri_01",
+      "kami_01",
+      "burst_02_03",
+      "burst_02_02",
+      "burst_02_01",
+      "burst_01_03",
+      "burst_01_02",
+      "burst_01_01",
+      "sp03_04",
+      "sp03_03",
+      "sp03_02",
+      "sp03_01",
+      "sp02_04",
+      "sp02_03",
+      "sp02_02",
+      "sp02_01",
+      "sp01_02",
+      "sp01_01",
+      "win",
+      "lose",
+      "wait",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "attack_07",
+      "attack_06",
+      "attack_05",
+      "attack_04",
+      "attack_03",
+      "attack_02",
+      "attack_01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "Charge_01",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 21
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 80
+      },
+      {
+        "name": "attack_01",
+        "originalIndex": 34
+      },
+      {
+        "name": "sp01_01",
+        "originalIndex": 18
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 67
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 52
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      1024,
+      1024
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "0340f3c63bb0fcb6a0eb165a376cf40281c8d341af2e47feb61a51d152c202ba",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-pilot-v1/prepared-e/ruru/body-prepared.glb",
+    "bytes": 5787784,
+    "sha256": "5a3c9f6c41d8396fef24d18db912b86d3ead9b61cd03ab7d20ae431c46e1f41c"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}

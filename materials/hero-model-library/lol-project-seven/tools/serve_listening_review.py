@@ -80,6 +80,8 @@ def make_handler(builder, asset_workspace: Path):
             parsed = urlparse(self.path)
             if parsed.path in {"/", "/listening-review.html"}:
                 return self.send_bytes(html_path.read_bytes(), "text/html; charset=utf-8")
+            if parsed.path == "/gap-listening-review.html":
+                return self.send_bytes((BASE / "gap-listening-review.html").read_bytes(), "text/html; charset=utf-8")
             if parsed.path == "/listening-review-queue.json":
                 return self.send_bytes(queue_path.read_bytes(), "application/json; charset=utf-8")
             if parsed.path == "/api/decisions":

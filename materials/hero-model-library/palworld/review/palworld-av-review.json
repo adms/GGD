@@ -1,16 +1,16 @@
 {
   "schema": "ggd.palworld-av-review@1",
-  "sourceFingerprint": "d13ea7a3f9b1b57a32f9d842ea3b3def0db023f5c963178daa3f3ec6dd2e851a",
+  "sourceFingerprint": "d5fc63ca034c36adfb2b72242c9efa8412a5e71c3026cd658e64810934162de3",
   "sourceInputs": [
     {
       "path": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-      "bytes": 193091,
-      "sha256": "2884ae7d345e0ef72d4aabe8da42f6f0e61cb1258263d274b3cb209a7d5f4077"
+      "bytes": 215564,
+      "sha256": "2a899f379554b12df5dfdc74d5f679420a1663f619212267ff89fa75c9a7fff9"
     },
     {
       "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "bytes": 18244,
-      "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef"
+      "bytes": 21165,
+      "sha256": "c68a02dbd7c86c18945b56671e295ec27b3c54321cf621ae15bebe6bbb7c70fb"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -263,7 +263,8 @@
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
             "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+            "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
           ],
           "defaultModelPolicyEligible": true,
           "registeredOptionPreserved": true,
@@ -472,13 +473,13 @@
         }
       ],
       "animatedSourceComponent": {
-        "id": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-v2-glb",
+        "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
         "file": {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
-          "bytes": 17242184,
-          "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+          "bytes": 17043436,
+          "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
         },
-        "gitPath": null,
+        "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
         "clipCount": 58,
         "runtimeSelectable": false,
         "sourceSkillMotionGroups": [
@@ -832,7 +833,8 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,
@@ -1050,7 +1052,8 @@
           "status": "eligible-default",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+            "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
           ],
           "defaultModelPolicyEligible": true,
           "registeredOptionPreserved": true,

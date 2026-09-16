@@ -149,5 +149,74 @@
     "godie-sonicbreathstream-p1",
     "godie-sonicbreathstream-p2"
   ],
-  "entries": {}
+  "entries": {
+    "fx.strash.popp.nps-hyadaruko-core.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-hyadaruko-core"
+    },
+    "fx.strash.popp.nps-hyadaruko-hit.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-hyadaruko-hit"
+    },
+    "fx.strash.popp.nps-io-bullet-00.candidate": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-io-bullet-00": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-io-explosive-00.candidate": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-io-explosive-00": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-ionazun-explosive-00.candidate": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-ionazun-explosive-00": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-iora-explosive-00.candidate": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-iora-explosive-00": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-mera-firetrail-00.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-mera-firetrail-00"
+    },
+    "fx.strash.popp.nps-merami-core.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-merami-core"
+    },
+    "fx.strash.popp.nps-merami-firetrail-00.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-merami-firetrail-00"
+    },
+    "fx.strash.popp.nps-merami-landing-2.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-merami-landing-2"
+    },
+    "fx.strash.popp.nps-merami-muzzle.candidate": {
+      "bucket": "superseded",
+      "supersededBy": "fx.strash.popp.nps-merami-muzzle"
+    },
+    "fx.strash.popp.nps-raidein-charge-core.candidate": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    },
+    "fx.strash.popp.nps-raidein-charge-core": {
+      "bucket": "awaiting-mechanism",
+      "blockedBy": "#838"
+    }
+  }
 }

@@ -1,0 +1,18 @@
+{
+  "schema": "ggd.jumpforce-explicit-audio-hero-bindings@1",
+  "scope": "character-family source relationship only; exact form, speaker, language, event, skill and runtime binding remain unapproved",
+  "bindings": [
+    {"nativeCharacterId": "chr0000", "characterName": "Goku", "sourceGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-goku", "heroIds": ["godie-ogrh", "godie-o00x"]},
+    {"nativeCharacterId": "chr0060", "characterName": "Luffy", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-luffy", "heroIds": ["godie-u00n", "godie-u00o"]},
+    {"nativeCharacterId": "chr0070", "characterName": "Zoro", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-zoro", "heroIds": ["godie-udre", "godie-u01u"]},
+    {"nativeCharacterId": "chr0130", "characterName": "Sasuke", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-sasuke", "heroIds": ["godie-edem"]},
+    {"nativeCharacterId": "chr0240", "characterName": "Ichigo", "sourceGroupId": "parallel-ps-jumpforce-local-10:jumpforce-ichigo", "heroIds": ["godie-h01n", "godie-h01o"]},
+    {"nativeCharacterId": "chr0300", "characterName": "Gon", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-gon", "heroIds": ["godie-ucrl"]},
+    {"nativeCharacterId": "chr0310", "characterName": "Killua", "sourceGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-killua", "heroIds": ["community-review-24-20260907"]},
+    {"nativeCharacterId": "chr0330", "characterName": "Hisoka", "sourceGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-hisoka", "heroIds": ["community-review-07-20260907"]},
+    {"nativeCharacterId": "chr0340", "characterName": "Jotaro", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-jotaro", "heroIds": ["community-review-04-20260907"]},
+    {"nativeCharacterId": "chr0400", "characterName": "Yugi", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-yugi", "heroIds": ["community-review-01-20260907"]},
+    {"nativeCharacterId": "chr1030", "characterName": "Majin Buu", "sourceGroupId": "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu", "heroIds": ["godie-huth"]},
+    {"nativeCharacterId": "chr1160", "characterName": "Hiei", "sourceGroupId": "parallel-ps-jumpforce-local-next32:jumpforce-hiei", "heroIds": ["godie-u010", "godie-uvng"]}
+  ]
+}

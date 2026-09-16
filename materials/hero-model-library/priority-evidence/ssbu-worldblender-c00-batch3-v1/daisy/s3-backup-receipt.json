@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.files.json",
+  "archiveSha256": "f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154",
+  "archiveBytes": 10452372,
+  "fileCount": 55,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/a59b06cde74d04a710f7bb22882d590ed822023f81b1b9086549e4a8665de24f/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/a59b06cde74d04a710f7bb22882d590ed822023f81b1b9086549e4a8665de24f/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/a59b06cde74d04a710f7bb22882d590ed822023f81b1b9086549e4a8665de24f/manifest.json"
+}

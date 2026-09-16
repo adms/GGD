@@ -1,10 +1,10 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1331,
-    "tier0": 977,
+    "assets": 1355,
+    "tier0": 994,
     "reviewed": 0,
-    "pending": 354,
+    "pending": 361,
     "voice": {
       "champions": 132,
       "status": "measurement-stale",
@@ -319,36 +319,6 @@
       ]
     },
     {
-      "id": "fx.prim.arcane.bolt",
-      "kind": "vfx",
-      "hash": "13ccd1635e8ddb9c55c62b6fb99b290862490f23",
-      "risk": 26,
-      "reasons": [
-        "16 支上架技能引用（R/EX ×2 加權後 risk 22）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "b2-aladdin.r",
-        "b2-guts.q",
-        "b2-kaede.w",
-        "b2-klaus.w",
-        "b2-ned.r",
-        "b2-orphen.q",
-        "b2-popp.r",
-        "b2-rem.q",
-        "b2-rin.w",
-        "b2-shadow.r",
-        "b2-sinbad.r",
-        "b2-uncle.ex",
-        "godie-e00s.q",
-        "godie-e010.q",
-        "godie-h01o.q",
-        "godie-u00o.e"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
       "id": "fx.prim.arcane.nova",
       "kind": "vfx",
       "hash": "96b667bde804641b42a2d3d8fe8138fdabdc1105",
@@ -376,6 +346,35 @@
         "godie-hgam.w",
         "godie-o02l.e"
       ]
+    },
+    {
+      "id": "fx.prim.arcane.bolt",
+      "kind": "vfx",
+      "hash": "13ccd1635e8ddb9c55c62b6fb99b290862490f23",
+      "risk": 24,
+      "reasons": [
+        "15 支上架技能引用（R/EX ×2 加權後 risk 20）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "b2-aladdin.r",
+        "b2-guts.q",
+        "b2-kaede.w",
+        "b2-klaus.w",
+        "b2-ned.r",
+        "b2-orphen.q",
+        "b2-rem.q",
+        "b2-rin.w",
+        "b2-shadow.r",
+        "b2-sinbad.r",
+        "b2-uncle.ex",
+        "godie-e00s.q",
+        "godie-e010.q",
+        "godie-h01o.q",
+        "godie-u00o.e"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
       "id": "fx.prim.void.pulse-lg",
@@ -599,33 +598,6 @@
       ]
     },
     {
-      "id": "fx.prim.arcane.slash",
-      "kind": "vfx",
-      "hash": "cf110fa189db3e160b97129522bacf0f35e5838d",
-      "risk": 16,
-      "reasons": [
-        "15 支上架技能引用（R/EX ×2 加權後 risk 16）",
-        "未審"
-      ],
-      "refs": [
-        "b2-albus.q",
-        "b2-bojji.w",
-        "b2-elma.r",
-        "b2-goblin.e",
-        "b2-luckyman.w",
-        "b2-matthias.w",
-        "b2-ned.w",
-        "b2-noor.w",
-        "b2-popp.q",
-        "b2-rem.w",
-        "b2-rin.e",
-        "b2-touka.e",
-        "b2-zenitsu.e",
-        "community-review-07-20260907.w",
-        "godie-h01o.w"
-      ]
-    },
-    {
       "id": "fx.prim.ki.beam-lg",
       "kind": "vfx",
       "hash": "3220adff717a822a29de5f5c0ffca582fdcf84a9",
@@ -717,6 +689,32 @@
         "godie-nbbc.e",
         "godie-o00x.r",
         "godie-ogrh.r"
+      ]
+    },
+    {
+      "id": "fx.prim.arcane.slash",
+      "kind": "vfx",
+      "hash": "cf110fa189db3e160b97129522bacf0f35e5838d",
+      "risk": 15,
+      "reasons": [
+        "14 支上架技能引用（R/EX ×2 加權後 risk 15）",
+        "未審"
+      ],
+      "refs": [
+        "b2-albus.q",
+        "b2-bojji.w",
+        "b2-elma.r",
+        "b2-goblin.e",
+        "b2-luckyman.w",
+        "b2-matthias.w",
+        "b2-ned.w",
+        "b2-noor.w",
+        "b2-rem.w",
+        "b2-rin.e",
+        "b2-touka.e",
+        "b2-zenitsu.e",
+        "community-review-07-20260907.w",
+        "godie-h01o.w"
       ]
     },
     {
@@ -1188,6 +1186,26 @@
         "godie-etyr.r",
         "godie-hpb1.r",
         "godie-o02p.r"
+      ]
+    },
+    {
+      "id": "fx.prim.ice.pulse-sm",
+      "kind": "vfx",
+      "hash": "26093227e443ce6bc72e2fdde5d38ae1f64cb2ca",
+      "risk": 10,
+      "reasons": [
+        "8 支上架技能引用（R/EX ×2 加權後 risk 10）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-11-20260907.e",
+        "community-review-11-20260907.ex",
+        "community-review-11-20260907.passive",
+        "community-review-11-20260907.w",
+        "community-review-35-20260907.e",
+        "community-review-35-20260907.ex",
+        "community-review-35-20260907.passive",
+        "community-review-35-20260907.w"
       ]
     },
     {
@@ -4397,6 +4415,58 @@
       ]
     },
     {
+      "id": "fx.strash.popp.nps-merami-core",
+      "kind": "vfx",
+      "hash": "782e506e566c571b431343a5310ea8647e93cb5c",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.r"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-firetrail-00",
+      "kind": "vfx",
+      "hash": "e1d95ef7bd831edb7a489a0c148fece9efc87ae9",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.r"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-landing-2",
+      "kind": "vfx",
+      "hash": "d5d5e77ff66e844622f8335ebf19e0331184416f",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.r"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-muzzle",
+      "kind": "vfx",
+      "hash": "a967e53045f5e6430eb47456cad97784803b704e",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.r"
+      ]
+    },
+    {
       "id": "fx.w3x.orb.minitypeflame.p00",
       "kind": "vfx",
       "hash": "3c3eb2123b1af543909fe51ca95495d4cc07b36b",
@@ -5130,6 +5200,45 @@
       ],
       "refs": [
         "sela.e"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-hyadaruko-core",
+      "kind": "vfx",
+      "hash": "0b4fbc79fc3a52bb4c8a10140479958633c8e965",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.w"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-hyadaruko-hit",
+      "kind": "vfx",
+      "hash": "ebfc106e8e45ab4d7abefde8409e272fe93250d5",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.w"
+      ]
+    },
+    {
+      "id": "fx.strash.popp.nps-mera-firetrail-00",
+      "kind": "vfx",
+      "hash": "7fe438a7c1970234f2fb45c8965d1626b0bd7fee",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.q"
       ]
     },
     {

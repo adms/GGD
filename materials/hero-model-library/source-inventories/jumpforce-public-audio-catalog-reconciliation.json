@@ -1,0 +1,371 @@
+{
+  "schema": "ggd.jumpforce-public-audio-catalog-reconciliation@1",
+  "checkedAt": "2026-09-14",
+  "catalogSourceId": "miner600-jumpforce-audio-full-catalog",
+  "batchSourceIds": [
+    "parallel-ps-jumpforce-audio",
+    "parallel-ps-jumpforce-local-10",
+    "parallel-ps-jumpforce-local-second10",
+    "parallel-ps-jumpforce-local-next32",
+    "parallel-ps-jumpforce-local-final3"
+  ],
+  "packageCount": 58,
+  "distinctPackageBasenames": 58,
+  "batches": [
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "packageCount": 3,
+      "packages": [
+        "original/JForce_Asta.7z",
+        "original/JForce_Dai.7z",
+        "original/JForce_Kenshiro.7z"
+      ],
+      "backupSha256": "e32b30ad5a9099f7d4654f93507d3823dcd6d797aafde463ee8a07c9959b5b15",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-audio/e32b30ad5a9099f7d4654f93507d3823dcd6d797aafde463ee8a07c9959b5b15.zip",
+      "verificationLevel": "legacy-archive-readback"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packageCount": 10,
+      "packages": [
+        "JForce_Aizen/original/JForce_Aizen.7z",
+        "JForce_Boruto/original/JForce_Boruto.7z",
+        "JForce_Cell/original/JForce_Cell.7z",
+        "JForce_Grimmjow/original/JForce_Grimmjow.7z",
+        "JForce_Hitsugaya/original/JForce_Hitsugaya.7z",
+        "JForce_Ichigo/original/JForce_Ichigo.7z",
+        "JForce_Renji/original/JForce_Renji.7z",
+        "JForce_Rukia/original/JForce_Rukia.7z",
+        "JForce_Ryo Saeba/original/JForce_Ryo Saeba.7z",
+        "JForce_Yoruichi/original/JForce_Yoruichi.7z"
+      ],
+      "backupSha256": "6d80c1c6f28f3cc1bdad3287d81a58a6442f61e0177e296f30600abec39820e6",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-10/6d80c1c6f28f3cc1bdad3287d81a58a6442f61e0177e296f30600abec39820e6.tar.gz",
+      "verificationLevel": "full-member-readback"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "packageCount": 10,
+      "packages": [
+        "JForce_Biscuit/original/JForce_Biscuit.7z",
+        "JForce_Frieza/original/JForce_Frieza.7z",
+        "JForce_Goku/original/JForce_Goku.7z",
+        "JForce_Hisoka/original/JForce_Hisoka.7z",
+        "JForce_Killua/original/JForce_Killua.7z",
+        "JForce_Kurapika/original/JForce_Kurapika.7z",
+        "JForce_Majin Buu/original/JForce_Majin Buu.7z",
+        "JForce_Piccolo/original/JForce_Piccolo.7z",
+        "JForce_Trunks/original/JForce_Trunks.7z",
+        "JForce_Vegeta/original/JForce_Vegeta.7z"
+      ],
+      "backupSha256": "ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-second10/ff8f951e90784dfc0dc8c697b9e9266eca70561b92f90ff3344f260addb51432.tar.gz",
+      "verificationLevel": "full-member-readback"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "packageCount": 32,
+      "packages": [
+        "JForce_All Might/original/JForce_All Might.7z",
+        "JForce_Bakugo/original/JForce_Bakugo.7z",
+        "JForce_Blackbeard/original/JForce_Blackbeard.7z",
+        "JForce_Deku/original/JForce_Deku.7z",
+        "JForce_Gaara/original/JForce_Gaara.7z",
+        "JForce_Galena/original/JForce_Galena.7z",
+        "JForce_Giorno/original/JForce_Giorno.7z",
+        "JForce_Gon/original/JForce_Gon.7z",
+        "JForce_Hancock/original/JForce_Hancock.7z",
+        "JForce_Hiei/original/JForce_Hiei.7z",
+        "JForce_Jotaro/original/JForce_Jotaro.7z",
+        "JForce_Kaguya/original/JForce_Kaguya.7z",
+        "JForce_Kaiba/original/JForce_Kaiba.7z",
+        "JForce_Kakashi/original/JForce_Kakashi.7z",
+        "JForce_Kenshin/original/JForce_Kenshin.7z",
+        "JForce_Law/original/JForce_Law.7z",
+        "JForce_Luffy/original/JForce_Luffy.7z",
+        "JForce_Madara/original/JForce_Madara.7z",
+        "JForce_Meruem/original/JForce_Meruem.7z",
+        "JForce_Naruto/original/JForce_Naruto.7z",
+        "JForce_Prometheus/original/JForce_Prometheus.7z",
+        "JForce_Sabo/original/JForce_Sabo.7z",
+        "JForce_Sanji/original/JForce_Sanji.7z",
+        "JForce_Sasuke/original/JForce_Sasuke.7z",
+        "JForce_Seiya/original/JForce_Seiya.7z",
+        "JForce_Shiryū/original/JForce_Shiryū.7z",
+        "JForce_Shishio/original/JForce_Shishio.7z",
+        "JForce_Todoroki/original/JForce_Todoroki.7z",
+        "JForce_Toguro/original/JForce_Toguro.7z",
+        "JForce_Yugi/original/JForce_Yugi.7z",
+        "JForce_Yusuke/original/JForce_Yusuke.7z",
+        "JForce_Zoro/original/JForce_Zoro.7z"
+      ],
+      "backupSha256": "085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-next32/085793d0aa512d4d14fca6ab284a1eee1ad8e5a57674cbcb81d6f88acd526fc3.tar.gz",
+      "verificationLevel": "full-member-readback"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "packageCount": 3,
+      "packages": [
+        "JForce_DIO/original/JForce_DIO.7z",
+        "JForce_Kane/original/JForce_Kane.7z",
+        "JForce__Common Sounds/original/JForce__Common Sounds.7z"
+      ],
+      "backupSha256": "0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f.tar.gz",
+      "verificationLevel": "full-member-readback"
+    }
+  ],
+  "acceptance": {
+    "allBackupsReadbackVerified": true,
+    "newerFourBatchesFullMemberReadbackVerified": true,
+    "originalPackageCatalogComplete": true,
+    "speakerLanguageEventReviewComplete": false
+  },
+  "doesNotMean": [
+    "every audio file was listened to",
+    "speaker or language verified",
+    "runtime event binding complete",
+    "deployed"
+  ],
+  "inputs": [
+    {
+      "gitPath": "materials/hero-model-library/public-source-files.json",
+      "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
+    }
+  ],
+  "packages": [
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "path": "original/JForce_Asta.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "path": "original/JForce_Dai.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-audio",
+      "path": "original/JForce_Kenshiro.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Aizen/original/JForce_Aizen.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Boruto/original/JForce_Boruto.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Cell/original/JForce_Cell.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Grimmjow/original/JForce_Grimmjow.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Hitsugaya/original/JForce_Hitsugaya.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Ichigo/original/JForce_Ichigo.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Renji/original/JForce_Renji.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Rukia/original/JForce_Rukia.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Ryo Saeba/original/JForce_Ryo Saeba.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "path": "JForce_Yoruichi/original/JForce_Yoruichi.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "path": "JForce_DIO/original/JForce_DIO.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "path": "JForce_Kane/original/JForce_Kane.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-final3",
+      "path": "JForce__Common Sounds/original/JForce__Common Sounds.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_All Might/original/JForce_All Might.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Bakugo/original/JForce_Bakugo.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Blackbeard/original/JForce_Blackbeard.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Deku/original/JForce_Deku.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Gaara/original/JForce_Gaara.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Galena/original/JForce_Galena.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Giorno/original/JForce_Giorno.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Gon/original/JForce_Gon.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Hancock/original/JForce_Hancock.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Hiei/original/JForce_Hiei.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Jotaro/original/JForce_Jotaro.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Kaguya/original/JForce_Kaguya.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Kaiba/original/JForce_Kaiba.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Kakashi/original/JForce_Kakashi.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Kenshin/original/JForce_Kenshin.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Law/original/JForce_Law.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Luffy/original/JForce_Luffy.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Madara/original/JForce_Madara.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Meruem/original/JForce_Meruem.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Naruto/original/JForce_Naruto.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Prometheus/original/JForce_Prometheus.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Sabo/original/JForce_Sabo.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Sanji/original/JForce_Sanji.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Sasuke/original/JForce_Sasuke.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Seiya/original/JForce_Seiya.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Shiryū/original/JForce_Shiryū.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Shishio/original/JForce_Shishio.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Todoroki/original/JForce_Todoroki.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Toguro/original/JForce_Toguro.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Yugi/original/JForce_Yugi.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Yusuke/original/JForce_Yusuke.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-next32",
+      "path": "JForce_Zoro/original/JForce_Zoro.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Biscuit/original/JForce_Biscuit.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Frieza/original/JForce_Frieza.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Goku/original/JForce_Goku.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Hisoka/original/JForce_Hisoka.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Killua/original/JForce_Killua.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Kurapika/original/JForce_Kurapika.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Majin Buu/original/JForce_Majin Buu.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Piccolo/original/JForce_Piccolo.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Trunks/original/JForce_Trunks.7z"
+    },
+    {
+      "sourceId": "parallel-ps-jumpforce-local-second10",
+      "path": "JForce_Vegeta/original/JForce_Vegeta.7z"
+    }
+  ]
+}

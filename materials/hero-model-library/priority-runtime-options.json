@@ -2,6 +2,140 @@
   "schema": "ggd-priority-runtime-options@1",
   "models": [
     {
+      "id": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+      "modelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+      "glbPath": "assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+      "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6",
+      "bytes": 1880364,
+      "documentSha256": "d31b69dc516c1b42210d44f79089bb425469921bc7ad41ec7b64084f0e4fce08",
+      "sourceCharacter": "小呆／達伊（PN010/02）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+        "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-02/final/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      }
+    },
+    {
+      "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+      "modelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+      "glbPath": "assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+      "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540",
+      "bytes": 2081176,
+      "documentSha256": "a4c2e9098e58cf23385a9a9a51454a92c7a4b41b6ff68f6b204af6914a9bb905",
+      "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+        "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+        "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-05-daino-tsurugi/final/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      }
+    },
+    {
+      "id": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+      "modelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+      "glbPath": "assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+      "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00",
+      "bytes": 2899468,
+      "documentSha256": "0fcdc24f250ce4b1b70af73d1529ab1a6c5f8d4e64e0d1ce47bc31111e6667b3",
+      "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special01",
+        "hurt": "GGD_native_death",
+        "death": "GGD_native_death"
+      },
+      "limitations": [
+        "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+        "GGD hurt/death 共用原生死亡序列。",
+        "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "vearn-en801-pre-transformation/final/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      }
+    },
+    {
       "id": "runtime:guts-community-procedural-ready-20260910",
       "modelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
       "glbPath": "assets/models/community/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
@@ -607,9 +741,239 @@
         "readbackVerified": true,
         "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/s3-conversion-receipt.json"
       }
+    },
+    {
+      "id": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+      "modelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+      "glbPath": "assets/models/community/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb",
+      "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "bytes": 245732,
+      "documentSha256": "763076bf54a4aabbf2b58c217779d00c05368c2d615b5aa053e8b2e2c6afe2bc",
+      "sourceCharacter": "Artoria Pendragon (Saber)",
+      "sourceWork": "Fate/stay night",
+      "sourceAssetId": "https://github.com/Flemmli97/FateUBW",
+      "clipMap": {
+        "idle": "summon",
+        "run": "one_hand_1",
+        "attack": "two_hand_1",
+        "cast": "excalibur",
+        "hurt": "invisible_burst_hit",
+        "death": "invisible_burst_hit"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber",
+      "nativeAnimationCount": 10,
+      "proceduralAnimationCount": 0,
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:fateubw-gilgamesh_archer-native-fallback-v1",
+      "modelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+      "glbPath": "assets/models/community/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb",
+      "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "bytes": 208968,
+      "documentSha256": "a33c22b6a37ca9d4f3683634da016a984b87335ef5c6086cf3abf8c98320f260",
+      "sourceCharacter": "Gilgamesh (Archer)",
+      "sourceWork": "Fate",
+      "sourceAssetId": "https://github.com/Flemmli97/FateUBW",
+      "clipMap": {
+        "idle": "summon",
+        "run": "one_hand_1",
+        "attack": "one_hand_2",
+        "cast": "ea",
+        "hurt": "guard",
+        "death": "guard"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer",
+      "nativeAnimationCount": 9,
+      "proceduralAnimationCount": 0,
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:fateubw-heracles_berserker-native-fallback-v1",
+      "modelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+      "glbPath": "assets/models/community/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb",
+      "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "bytes": 500056,
+      "documentSha256": "ba14da49f4a5ef20c684c99c68a30df317774cb6f876bc964f53ac0ba659b74a",
+      "sourceCharacter": "Heracles (Berserker)",
+      "sourceWork": "Fate/stay night",
+      "sourceAssetId": "https://github.com/Flemmli97/FateUBW",
+      "clipMap": {
+        "idle": "walk",
+        "run": "run",
+        "attack": "one_hand_heavy_1",
+        "cast": "leap_slash",
+        "hurt": "fake_death",
+        "death": "death"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker",
+      "nativeAnimationCount": 16,
+      "proceduralAnimationCount": 0,
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:fateubw-medusa_rider-native-fallback-v1",
+      "modelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+      "glbPath": "assets/models/community/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb",
+      "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "bytes": 227824,
+      "documentSha256": "415088754968fb07a2cd1be075238209c510a6aee353badef331744b679440a7",
+      "sourceCharacter": "Medusa (Rider)",
+      "sourceWork": "Fate/stay night",
+      "sourceAssetId": "https://github.com/Flemmli97/FateUBW",
+      "clipMap": {
+        "idle": "summon",
+        "run": "jump",
+        "attack": "dual_reverse_1",
+        "cast": "bellerophon",
+        "hurt": "land",
+        "death": "land"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider",
+      "nativeAnimationCount": 11,
+      "proceduralAnimationCount": 0,
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "fullCharacterPackage": false
     }
   ],
   "heroes": [
+    {
+      "id": "godie-nbbc",
+      "name": "小呆／達伊",
+      "options": [
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-02-native-v1",
+          "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/02）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+          "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/05，達伊之劍）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+            "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+            "sourcePlatform": "Windows (Steam)"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復＋7,917 面正式採用減面）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/02）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復＋7,918 面正式採用減面）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/05，達伊之劍）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+            "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+            "sourcePlatform": "Windows (Steam)"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-ubal",
+      "name": "巴恩大魔王",
+      "options": [
+        {
+          "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+          "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復＋7,998 面正式採用減面）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+          }
+        }
+      ],
+      "pending": []
+    },
     {
       "id": "b2-guts",
       "name": "凱茲",
@@ -793,64 +1157,6 @@
       "pending": []
     },
     {
-      "id": "godie-nbbc",
-      "name": "小呆／達伊",
-      "options": [
-        {
-          "sourceId": "runtime:infinity-strash-dai-pn010-02-native-v1",
-          "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
-          "source": {
-            "kind": "exact",
-            "tier": "original",
-            "selectionClass": "canonical-game",
-            "library": "Infinity Strash Steam 原作擷取",
-            "character": "小呆／達伊（PN010/02）",
-            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-            "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
-          }
-        },
-        {
-          "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
-          "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
-          "source": {
-            "kind": "exact",
-            "tier": "original",
-            "selectionClass": "canonical-game",
-            "library": "Infinity Strash Steam 原作擷取",
-            "character": "小呆／達伊（PN010/05，達伊之劍）",
-            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-            "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
-            "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
-            "sourcePlatform": "Windows (Steam)"
-          }
-        }
-      ],
-      "pending": []
-    },
-    {
-      "id": "godie-ubal",
-      "name": "巴恩大魔王",
-      "options": [
-        {
-          "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
-          "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
-          "source": {
-            "kind": "exact",
-            "tier": "original",
-            "selectionClass": "canonical-game",
-            "library": "Infinity Strash Steam 原作擷取",
-            "character": "巴恩大魔王（EN801，變身前／老巴恩）",
-            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
-          }
-        }
-      ],
-      "pending": []
-    },
-    {
       "id": "b2-popp",
       "name": "何布／波普",
       "options": [
@@ -901,6 +1207,126 @@
             "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
             "sourcePlatform": "Windows (Steam)"
           }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-e002",
+      "name": "Artoria Pendragon (Saber)",
+      "options": [
+        {
+          "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+          "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+          "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Fate/Unlimited Block Works",
+            "character": "Artoria Pendragon (Saber)",
+            "work": "Fate/stay night",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-e00l",
+      "name": "Artoria Pendragon (Saber)",
+      "options": [
+        {
+          "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+          "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+          "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Fate/Unlimited Block Works",
+            "character": "Artoria Pendragon (Saber)",
+            "work": "Fate/stay night",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-18-20260907",
+      "name": "Gilgamesh (Archer)",
+      "options": [
+        {
+          "sourceId": "runtime:fateubw-gilgamesh_archer-native-fallback-v1",
+          "sourceModelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+          "label": "Gilgamesh (Archer)｜FateUBW 社群模型＋來源動作",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Fate/Unlimited Block Works",
+            "character": "Gilgamesh (Archer)",
+            "work": "Fate",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-hapm",
+      "name": "Heracles (Berserker)",
+      "options": [
+        {
+          "sourceId": "runtime:fateubw-heracles_berserker-native-fallback-v1",
+          "sourceModelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+          "label": "Heracles (Berserker)｜FateUBW 社群模型＋來源動作",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Fate/Unlimited Block Works",
+            "character": "Heracles (Berserker)",
+            "work": "Fate/stay night",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "godie-hvsh",
+      "name": "Medusa (Rider)",
+      "options": [
+        {
+          "sourceId": "runtime:fateubw-medusa_rider-native-fallback-v1",
+          "sourceModelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+          "label": "Medusa (Rider)｜FateUBW 社群模型＋來源動作",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Fate/Unlimited Block Works",
+            "character": "Medusa (Rider)",
+            "work": "Fate/stay night",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
         }
       ],
       "pending": []

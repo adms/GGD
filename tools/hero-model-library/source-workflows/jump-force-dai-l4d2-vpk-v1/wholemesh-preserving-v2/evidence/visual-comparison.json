@@ -1,0 +1,40 @@
+{
+  "schema": "ggd.jump-force-dai-l4d2-wholemesh-visual-comparison@1",
+  "sourceRenderRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-material-rebuild-v3/visual-review-v1",
+  "candidateRenderRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-l4d2-topology-preserving-v2/run-a-wholemesh-preserve-boundaries/visual-review-v1",
+  "sourceTriangles": 89833,
+  "candidateTriangles": 7616,
+  "metricScope": "fixed Babylon WebGL front/back/isometric pixels; diagnostic only, not owner visual approval",
+  "views": [
+    {
+      "view": "front",
+      "sourceSha256": "cc14e2765e0cdc979d13a37efce95a72708676b4345b494480dfe0422ce4faeb",
+      "candidateSha256": "aee4e3b9720b592d7f28b3a608bbe80381de85b06ffa4daa3dace51d7394aee1",
+      "foregroundPixels": 108138,
+      "foregroundDeltaGt20Pixels": 24189,
+      "foregroundDeltaGt20Pct": 22.3686,
+      "meanForegroundRgbAbsDelta": 15.8975,
+      "maxForegroundRgbAbsDelta": 212.33333333333334
+    },
+    {
+      "view": "back",
+      "sourceSha256": "74c2bfcb43949c43ce90e6756ce7a744020eafea2753d0ac5f3e7fe848d88b91",
+      "candidateSha256": "42bb6936881779f39cca1a6dcbac03aa2f287fa06c4a64e271ab8a73419397d2",
+      "foregroundPixels": 108132,
+      "foregroundDeltaGt20Pixels": 20232,
+      "foregroundDeltaGt20Pct": 18.7105,
+      "meanForegroundRgbAbsDelta": 14.1321,
+      "maxForegroundRgbAbsDelta": 169.33333333333334
+    },
+    {
+      "view": "isometric",
+      "sourceSha256": "e5a4c3b2427f9dfd988bf53b4a8a75d12c69512b2657753cd99580addfdc969c",
+      "candidateSha256": "c76e1653624885e535659314bc2c89753257ee55565241dda9f33549e9bd8aa1",
+      "foregroundPixels": 98463,
+      "foregroundDeltaGt20Pixels": 25282,
+      "foregroundDeltaGt20Pct": 25.6767,
+      "meanForegroundRgbAbsDelta": 18.3165,
+      "maxForegroundRgbAbsDelta": 211.66666666666666
+    }
+  ]
+}

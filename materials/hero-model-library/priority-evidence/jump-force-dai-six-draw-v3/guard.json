@@ -1,0 +1,59 @@
+{
+  "tool": "model-budget/guard",
+  "role": "champion",
+  "results": [
+    {
+      "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-a/dai-chr0430-six-draw.glb",
+      "role": "champion",
+      "roleSource": "flag",
+      "worst": "warn",
+      "adoption": {
+        "status": "eligible",
+        "triggerTrianglesAbove": 10000,
+        "targetTrianglesMax": 8000,
+        "visualLitPixelDeltaPctMax": 5
+      },
+      "metrics": {
+        "triangles": 7930,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "vramBytes": 9437175
+      },
+      "axes": [
+        {
+          "key": "triangles",
+          "label": "每實例三角面",
+          "value": 7930,
+          "warn": 16000,
+          "limit": 28000,
+          "verdict": "ok"
+        },
+        {
+          "key": "drawCalls",
+          "label": "每模型 mesh / draw call",
+          "value": 6,
+          "warn": 3,
+          "limit": 6,
+          "verdict": "warn"
+        },
+        {
+          "key": "maxTextureEdge",
+          "label": "貼圖最長邊 (px)",
+          "value": 256,
+          "warn": 256,
+          "limit": 256,
+          "verdict": "ok"
+        },
+        {
+          "key": "animChannels",
+          "label": "每幀動畫通道",
+          "value": 0,
+          "warn": 300,
+          "limit": 500,
+          "verdict": "ok"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "ggd.palworld-vfx-sfx-intake-snapshot@1",
+  "observedAt": "2026-09-14T00:00:00+08:00",
+  "observationScope": "Current Mac workspace, currently mounted volumes, preserved GGD-Asset-Library, and the normalized Windows game inventory",
+  "windowsInventory": {
+    "steamAppId": "1623730",
+    "buildId": "25094871",
+    "sourcePath": "F:\\SteamLibrary\\steamapps\\common\\Palworld",
+    "inventoryStatus": "inventory-only",
+    "containerInventoryStatus": "not-scanned-inside-install"
+  },
+  "mountedShare": {
+    "expectedShare": "smb://lv99/common",
+    "availableDuringAudit": false,
+    "mountedVolumeNames": ["Blender", "Blender 1", "Macintosh HD", "R"],
+    "payloadBytesRead": 0
+  },
+  "preservedLibrarySearch": {
+    "palworldContainerFiles": 0,
+    "palworldExtractedUnrealAssets": 0,
+    "skillSpecificAudioFiles": 0,
+    "standaloneVfxFiles": 0,
+    "existingGenericCreatureCries": 18,
+    "existingSourceMotionClips": 120
+  },
+  "packageListing": {
+    "provided": false,
+    "path": null,
+    "sha256": null,
+    "entries": 0
+  },
+  "extractedAssetScan": {
+    "provided": false,
+    "path": null,
+    "sha256": null,
+    "matchedFiles": 0
+  },
+  "stage": {
+    "sourceInstalled": true,
+    "sourceMountedToMac": false,
+    "containersEnumerated": false,
+    "packagesListed": false,
+    "assetsExtracted": false,
+    "vfxConverted": false,
+    "sfxDecoded": false,
+    "ownerReviewed": false,
+    "runtimeBound": false,
+    "productionDeployed": false
+  }
+}

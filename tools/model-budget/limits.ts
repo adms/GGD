@@ -14,13 +14,12 @@ export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHA
  * `why`, and the page prints that string next to the number.
  *
  * WHAT THE MEASUREMENT SAID, AND WHY THE BUDGET IS NOT MOSTLY ABOUT TRIANGLES.
- * The whole repository is 182,610 triangles. The worst frame the game can build
- * is ~124k. That is small for any GPU made this decade, and the project's own
- * A/B (task #80) moved frame time by MESH COUNT, not by triangle count: 279 vs
- * 713 meshes on the same scene was p50 5.6 vs 9.2 ms. So triangles get a real
- * line (the user asked for one, and it catches a catastrophic import), but the
- * lines that actually bind are draw calls, texture VRAM and skinned-animation
- * CPU. Saying otherwise would be compliance dressed up as engineering.
+ * Repository totals are intentionally absent here: `emit_report.ts` measures
+ * the current tree and simultaneous scene rows. The project's own A/B (task
+ * #80) moved frame time by MESH COUNT, not triangle count: 279 vs 713 meshes on
+ * the same scene was p50 5.6 vs 9.2 ms. Triangles still get a content guard that
+ * catches a catastrophic import; draw calls, texture VRAM and skinned-animation
+ * CPU remain separately measured axes.
  *
  * THE TWO MEASURED COST CONSTANTS. Both come from this project, not a textbook:
  *   c_mesh = 0.0083 ms per resident mesh   (task #80 A/B, fit through the two
@@ -106,13 +105,12 @@ export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES;
 export { TEX_INFO_MB, TEX_LIMIT_MB, TEX_WARN_MB };
 
 /**
- * Triangles. Not time-bound at this project's magnitudes, so the line is set
- * where it can still catch the import that has not happened yet: 12 copies of
- * the single heaviest asset in the repository (menu/dragon2, 19,542 tris) on
- * top of the heaviest arena is ~289k, so 400k has real headroom over the worst
- * frame the CURRENT assets can build, and 250k trips before one bad import can
- * double a frame. Keep this content guard at the 30-fps target; the new animation
- * allowance is not a reason to increase geometry, draw count or texture memory.
+ * Triangles. This remains a content guard rather than a device benchmark:
+ * warning at 250k, hard cap at 400k, which is 12M submitted triangles/second at
+ * the 30-fps target. Current tree and same-screen measurements belong to the
+ * generated report, so this policy source does not duplicate a drifting asset
+ * snapshot. A larger animation allowance is not a reason to increase geometry,
+ * draw count or texture memory.
  */
 export const TRI_LIMIT = 400_000;
 export const TRI_WARN = 250_000;
@@ -135,7 +133,7 @@ export const LINES: Line[] = [
     unit: "tris",
     limit: TRI_LIMIT,
     warn: TRI_WARN,
-    why: "內容防呆線：目前資產能組出的最壞畫面約 289k（12 × dragon2 19,542 + 最重競技場），保留上限 400k；30 fps 對應 12M tris/s。這是資產額度，不是 GPU 實測保證。",
+    why: "內容防呆線：警戒 250k、硬上限 400k；在 30 fps 下對應 12M tris/s。現行資產與同畫面實測由 emit_report.ts 即時產生，不在政策常數重複快照。這是資產額度，不是 GPU 實測保證。",
   },
   {
     key: "vramBytes",

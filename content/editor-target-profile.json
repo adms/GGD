@@ -50,8 +50,8 @@
         "count": 1029
       },
       "vfx": {
-        "hash": "7df129081586",
-        "count": 702
+        "hash": "b8f430d12052",
+        "count": 726
       },
       "skins": {
         "hash": "5ea08c605fea",
@@ -7701,7 +7701,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 702,
+      "docCount": 726,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -7839,6 +7839,9 @@
         "fx.prim.wind.tornado-lg",
         "fx.root-snare",
         "fx.scorch-ring",
+        "fx.strash.popp.nps-hyadaruko-core",
+        "fx.strash.popp.nps-mera-firetrail-00",
+        "fx.strash.popp.nps-merami-muzzle",
         "fx.thorn-lash",
         "fx.w3x.locust.boomnl.p01",
         "fx.w3x.locust.frostnova.p01",

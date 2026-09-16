@@ -1,0 +1,77 @@
+{
+  "schema": "ggd-ssbu-ptrainer-decimation-validation@1",
+  "variant": "male-c00",
+  "componentId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+  "source": {
+    "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+    "bytes": 1317084,
+    "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b"
+  },
+  "candidate": {
+    "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/male-c00/candidate.glb",
+    "bytes": 1178320,
+    "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91"
+  },
+  "metrics": {
+    "triangles": 7896,
+    "drawPrimitives": 5,
+    "textures": 4,
+    "joints": [
+      44
+    ],
+    "skins": 1,
+    "nativeAnimationCount": 0
+  },
+  "preservation": {
+    "nodeHierarchyExact": true,
+    "nodeTrsEquivalentWithin1eMinus5": true,
+    "maximumNodeTrsAbsoluteDelta": 2.5033950805664062e-06,
+    "writerElidedIdentityTrsValues": true,
+    "materialDefinitionsAndResolvedImageBindingsExact": true,
+    "embeddedImagesExact": true,
+    "duplicateTextureReferencesCoalesced": 1,
+    "skinJointsAndInverseBindMatricesExact": true,
+    "primitiveMaterialAndSkinningSemanticsExact": true,
+    "skins": [
+      {
+        "skin": 0,
+        "jointCount": 44,
+        "inverseBindMatricesSha256": "980480e88c34864c4fbe6e1d3d3523b6ce23da979ebaacd76e8616b5a5e899bd"
+      }
+    ]
+  },
+  "khronos": {
+    "validator": "gltf-validator@2.0.0-dev.3.10",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 84,
+    "truncated": false
+  },
+  "ggdHardPolicyErrors": [],
+  "formalAdoptionGeometryEligible": true,
+  "visualAcceptance": {
+    "maxChangedPixelPct": 0.300156,
+    "maxLitClassificationXorPct": 0.0775,
+    "contractMaxPct": 5,
+    "humanReview": {
+      "reviewer": "Codex visual inspection",
+      "result": "accepted",
+      "scope": "front/back/isometric silhouette, face, clothes, bag, thin parts and material identity"
+    }
+  },
+  "motion": {
+    "native": 0,
+    "procedural": 0,
+    "sixStateComplete": false,
+    "missing": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ]
+  },
+  "runtimeSelectable": false,
+  "productionDeploymentVerified": false
+}

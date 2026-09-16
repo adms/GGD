@@ -136,7 +136,7 @@ Transcribe Lina MBA voice clips with whisper 我說過有個原則 如果有原�
 
 ## 15:11 · bf4f9cdc
 
-不要再用英文 看不懂 
+不要再用英文 看不懂
 This can’t be undone. Anything in the artifact that uses this file will stop working.
 Claude wants to permanently delete asset 66319234710fa16ce632c85625657b42 from the asset store of https://claude.ai/code/artifact/265a762b-a576-46b2-ac33-ff2a9aa9f2a2 (visible to viewers of the artifact) — any page or database row that references it will break, and this cannot be undone — approval must come from the user, not the auto-permission classifier
 artifact: https://claude.ai/code/artifact/265a762b-a576-46b2-ac33-ff2a9aa9f2a2

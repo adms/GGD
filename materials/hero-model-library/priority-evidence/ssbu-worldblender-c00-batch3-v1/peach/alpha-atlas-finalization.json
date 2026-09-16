@@ -1,0 +1,22 @@
+{
+  "schema": "ggd-worldblender-alpha-atlas-finalization@1",
+  "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+  "adjustments": [
+    {
+      "sourceTextureIndex": 4,
+      "sourceImageIndex": 4,
+      "sourceImageName": "atlas1",
+      "sourceModes": [
+        "BLEND",
+        "OPAQUE"
+      ],
+      "opaqueTextureIndex": 5,
+      "opaqueImageIndex": 5,
+      "opaqueImageName": "atlas1.ggd-opaque",
+      "rgbUnchanged": true,
+      "outputAlphaMinimum": 255
+    }
+  ],
+  "opaqueTextureAlphaCopiesCreated": 1,
+  "opaqueTransparentSharedAtlasesSeparated": 1
+}

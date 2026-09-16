@@ -1,0 +1,949 @@
+{
+  "schema": "ggd.ssbu-ultimate14-motion-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader; each animation sampled at start, middle and end with CPU-skinned finite world bounds",
+  "animationGroups": [
+    {
+      "name": "c04attacklw4",
+      "from": 0,
+      "to": 182.50000476837158,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "c04attacklw4charge",
+      "from": 0,
+      "to": 152.50000476837158,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "c05attackairf",
+      "from": 0,
+      "to": 139.99999523162842,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "c05attackairn",
+      "from": 0,
+      "to": 147.49999523162842,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "c05landingairf",
+      "from": 0,
+      "to": 77.49999761581421,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "d01specialshold",
+      "from": 0,
+      "to": 97.5,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "d01specialsstart",
+      "from": 0,
+      "to": 37.5,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "d02specialhisquat",
+      "from": 0,
+      "to": 37.5,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "d03speciallwhold",
+      "from": 0,
+      "to": 152.50000476837158,
+      "targetedAnimations": 345
+    },
+    {
+      "name": "d03speciallwstart",
+      "from": 0,
+      "to": 20.000000596046448,
+      "targetedAnimations": 345
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "model-armature",
+      "bones": 115
+    }
+  ],
+  "samples": [
+    {
+      "group": "c04attacklw4",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "c04attacklw4-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -1.0814367566600538,
+          -0.6417193358599613,
+          0.13964627803987922
+        ],
+        "max": [
+          0.47799591547224196,
+          0.40002046845526057,
+          1.3643681140184836
+        ],
+        "extent": [
+          1.5594326721322957,
+          1.041739804315222,
+          1.2247218359786043
+        ]
+      }
+    },
+    {
+      "group": "c04attacklw4",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 91.25000238418579,
+      "file": "c04attacklw4-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.767850069885128,
+          -0.5903782592225629,
+          0.24331155015973888
+        ],
+        "max": [
+          0.5161698278069764,
+          0.6177729881579133,
+          1.9034186533796726
+        ],
+        "extent": [
+          1.2840198976921045,
+          1.208151247380476,
+          1.6601071032199337
+        ]
+      }
+    },
+    {
+      "group": "c04attacklw4",
+      "label": "end",
+      "fraction": 1,
+      "frame": 182.50000476837158,
+      "file": "c04attacklw4-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.4722337369577474,
+          -0.5336213746735938,
+          0.16445931344516748
+        ],
+        "max": [
+          0.5051798370434639,
+          0.5790867096337295,
+          1.6935781667762104
+        ],
+        "extent": [
+          0.9774135740012113,
+          1.1127080843073234,
+          1.529118853331043
+        ]
+      }
+    },
+    {
+      "group": "c04attacklw4charge",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "c04attacklw4charge-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5712615604544311,
+          -0.5258325338271789,
+          0.019119634474132646
+        ],
+        "max": [
+          0.47895912884575154,
+          0.8276228482274444,
+          1.5089151271377692
+        ],
+        "extent": [
+          1.0502206893001826,
+          1.3534553820546233,
+          1.4897954926636365
+        ]
+      }
+    },
+    {
+      "group": "c04attacklw4charge",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 76.25000238418579,
+      "file": "c04attacklw4charge-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5715669842514046,
+          -0.5272184736282869,
+          0.02797567107302927
+        ],
+        "max": [
+          0.5115005549384009,
+          0.7680045422724784,
+          1.5005868337649646
+        ],
+        "extent": [
+          1.0830675391898055,
+          1.2952230159007652,
+          1.4726111626919354
+        ]
+      }
+    },
+    {
+      "group": "c04attacklw4charge",
+      "label": "end",
+      "fraction": 1,
+      "frame": 152.50000476837158,
+      "file": "c04attacklw4charge-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5742869612019561,
+          -0.5273574421592034,
+          -0.024283750465351195
+        ],
+        "max": [
+          0.5947428328455615,
+          0.7146178687670242,
+          1.4945299074922902
+        ],
+        "extent": [
+          1.1690297940475176,
+          1.2419753109262275,
+          1.5188136579576414
+        ]
+      }
+    },
+    {
+      "group": "c05attackairf",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "c05attackairf-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5155597324883914,
+          -0.2931248339122163,
+          0.16632475245310507
+        ],
+        "max": [
+          0.5607501672762254,
+          0.7696073718775218,
+          1.6958414120743022
+        ],
+        "extent": [
+          1.0763098997646168,
+          1.0627322057897381,
+          1.529516659621197
+        ]
+      }
+    },
+    {
+      "group": "c05attackairf",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 69.99999761581421,
+      "file": "c05attackairf-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5363962053134799,
+          -1.5301925644055296,
+          0.06188670047830231
+        ],
+        "max": [
+          0.6776434774349909,
+          0.5374156214743503,
+          1.6186626306874499
+        ],
+        "extent": [
+          1.2140396827484707,
+          2.06760818587988,
+          1.5567759302091475
+        ]
+      }
+    },
+    {
+      "group": "c05attackairf",
+      "label": "end",
+      "fraction": 1,
+      "frame": 139.99999523162842,
+      "file": "c05attackairf-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7660446090163191,
+          -0.6407765867459467,
+          0.23231518265073925
+        ],
+        "max": [
+          0.7540436103179644,
+          0.658675455379952,
+          1.7590818575727871
+        ],
+        "extent": [
+          1.5200882193342835,
+          1.2994520421258988,
+          1.5267666749220479
+        ]
+      }
+    },
+    {
+      "group": "c05attackairn",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "c05attackairn-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5360115919967328,
+          -0.3466947041380387,
+          0.4570576325065833
+        ],
+        "max": [
+          0.7619417493436416,
+          0.6060185177454398,
+          1.795309847784746
+        ],
+        "extent": [
+          1.2979533413403743,
+          0.9527132218834785,
+          1.3382522152781626
+        ]
+      }
+    },
+    {
+      "group": "c05attackairn",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 73.74999761581421,
+      "file": "c05attackairn-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5399793430143944,
+          -0.28715300195657345,
+          0.28045261637620056
+        ],
+        "max": [
+          0.5525929446158742,
+          0.4504792102620218,
+          1.5003882858065762
+        ],
+        "extent": [
+          1.0925722876302686,
+          0.7376322122185952,
+          1.2199356694303756
+        ]
+      }
+    },
+    {
+      "group": "c05attackairn",
+      "label": "end",
+      "fraction": 1,
+      "frame": 147.49999523162842,
+      "file": "c05attackairn-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7675030703364811,
+          -0.6406050679616431,
+          0.23240916690347294
+        ],
+        "max": [
+          0.7536616550408297,
+          0.6598760865124885,
+          1.7592188719152995
+        ],
+        "extent": [
+          1.5211647253773108,
+          1.3004811544741317,
+          1.5268097050118266
+        ]
+      }
+    },
+    {
+      "group": "c05landingairf",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "c05landingairf-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.6544931560514513,
+          -0.852893816650159,
+          0.06056967643188953
+        ],
+        "max": [
+          0.33876341230109475,
+          0.5604129150983238,
+          1.2266527471113322
+        ],
+        "extent": [
+          0.993256568352546,
+          1.4133067317484826,
+          1.1660830706794427
+        ]
+      }
+    },
+    {
+      "group": "c05landingairf",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 38.749998807907104,
+      "file": "c05landingairf-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7014587099351601,
+          -0.7959451057139385,
+          0.17076747727033798
+        ],
+        "max": [
+          0.5755423583260679,
+          0.5785895307110414,
+          1.32484594372504
+        ],
+        "extent": [
+          1.277001068261228,
+          1.37453463642498,
+          1.154078466454702
+        ]
+      }
+    },
+    {
+      "group": "c05landingairf",
+      "label": "end",
+      "fraction": 1,
+      "frame": 77.49999761581421,
+      "file": "c05landingairf-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.44519395134588535,
+          -0.4887170661448946,
+          0.16444670046229737
+        ],
+        "max": [
+          0.49382679819024844,
+          0.5807811356096227,
+          1.691595170171179
+        ],
+        "extent": [
+          0.9390207495361338,
+          1.0694982017545174,
+          1.5271484697088817
+        ]
+      }
+    },
+    {
+      "group": "d01specialshold",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialshold-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.4976287978698153,
+          -0.8742225340055859,
+          -0.02026829819471357
+        ],
+        "max": [
+          0.4368571856324692,
+          0.39010059373145606,
+          0.911234847650343
+        ],
+        "extent": [
+          0.9344859835022845,
+          1.264323127737042,
+          0.9315031458450566
+        ]
+      }
+    },
+    {
+      "group": "d01specialshold",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 48.75,
+      "file": "d01specialshold-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.17895642873759954,
+          -1.967628626173699,
+          0.22447362806868848
+        ],
+        "max": [
+          1.3049591313316427,
+          -0.9188974153333576,
+          0.9978709479349798
+        ],
+        "extent": [
+          1.4839155600692422,
+          1.0487312108403415,
+          0.7733973198662913
+        ]
+      }
+    },
+    {
+      "group": "d01specialshold",
+      "label": "end",
+      "fraction": 1,
+      "frame": 97.5,
+      "file": "d01specialshold-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          0.09363389004085132,
+          -0.35092110618989897,
+          0.05145701760924448
+        ],
+        "max": [
+          0.9806409857592797,
+          0.5168749186235586,
+          1.149276319850006
+        ],
+        "extent": [
+          0.8870070957184284,
+          0.8677960248134575,
+          1.0978193022407616
+        ]
+      }
+    },
+    {
+      "group": "d01specialsstart",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialsstart-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7734420837127374,
+          -0.8337059237634219,
+          0.1644571792272366
+        ],
+        "max": [
+          0.3701798356657129,
+          0.5521110730173274,
+          1.5225859871205605
+        ],
+        "extent": [
+          1.1436219193784503,
+          1.3858169967807492,
+          1.3581288078933238
+        ]
+      }
+    },
+    {
+      "group": "d01specialsstart",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 18.75,
+      "file": "d01specialsstart-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.48308079540247917,
+          -0.44879762654923167,
+          1.0568383973954116
+        ],
+        "max": [
+          0.4670333075319064,
+          0.7537638332359982,
+          2.2076919504520527
+        ],
+        "extent": [
+          0.9501141029343856,
+          1.2025614597852299,
+          1.150853553056641
+        ]
+      }
+    },
+    {
+      "group": "d01specialsstart",
+      "label": "end",
+      "fraction": 1,
+      "frame": 37.5,
+      "file": "d01specialsstart-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.6008734256806747,
+          -0.708259902788,
+          -0.008274296989672358
+        ],
+        "max": [
+          0.5649933012280712,
+          0.06656536042509904,
+          1.0974385667158044
+        ],
+        "extent": [
+          1.165866726908746,
+          0.7748252632130991,
+          1.1057128637054767
+        ]
+      }
+    },
+    {
+      "group": "d02specialhisquat",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d02specialhisquat-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.6706575976649702,
+          -0.399450016993225,
+          0.29492192064432465
+        ],
+        "max": [
+          0.9321982639747404,
+          0.7314457462064019,
+          1.6903836553094722
+        ],
+        "extent": [
+          1.6028558616397106,
+          1.1308957631996268,
+          1.3954617346651474
+        ]
+      }
+    },
+    {
+      "group": "d02specialhisquat",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 18.75,
+      "file": "d02specialhisquat-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.48575864493275844,
+          -0.7229764341022052,
+          0.3084688508596486
+        ],
+        "max": [
+          0.46014291658116946,
+          0.5816170393831878,
+          1.7547419758864287
+        ],
+        "extent": [
+          0.9459015615139279,
+          1.304593473485393,
+          1.4462731250267802
+        ]
+      }
+    },
+    {
+      "group": "d02specialhisquat",
+      "label": "end",
+      "fraction": 1,
+      "frame": 37.5,
+      "file": "d02specialhisquat-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5996654720560599,
+          -0.7084039885853064,
+          -0.008274246480525521
+        ],
+        "max": [
+          0.5664549722564445,
+          0.06657227508889474,
+          1.097437763660043
+        ],
+        "extent": [
+          1.1661204443125044,
+          0.7749762636742011,
+          1.1057120101405684
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwhold",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d03speciallwhold-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5511332295034421,
+          -0.49113815583045684,
+          -0.261376861055187
+        ],
+        "max": [
+          0.6011426399568904,
+          0.3123613931452928,
+          1.1955817197726524
+        ],
+        "extent": [
+          1.1522758694603326,
+          0.8034995489757497,
+          1.4569585808278394
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwhold",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 76.25000238418579,
+      "file": "d03speciallwhold-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5671294121943262,
+          -0.5526240659740026,
+          0.13931496188297118
+        ],
+        "max": [
+          0.6253624461467453,
+          0.526033941405841,
+          1.3097321872421392
+        ],
+        "extent": [
+          1.1924918583410715,
+          1.0786580073798437,
+          1.170417225359168
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwhold",
+      "label": "end",
+      "fraction": 1,
+      "frame": 152.50000476837158,
+      "file": "d03speciallwhold-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5807654061644598,
+          -0.5310702705871924,
+          -0.06134999043107811
+        ],
+        "max": [
+          0.617626798599261,
+          0.6578103462985866,
+          0.9594141751677289
+        ],
+        "extent": [
+          1.1983922047637208,
+          1.188880616885779,
+          1.020764165598807
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwstart",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d03speciallwstart-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5216302435979259,
+          -0.6977888231594646,
+          0.15435732019511605
+        ],
+        "max": [
+          0.553043407102642,
+          0.29577593858238804,
+          1.5699542789977676
+        ],
+        "extent": [
+          1.0746736507005679,
+          0.9935647617418526,
+          1.4155969588026516
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwstart",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 10.000000298023224,
+      "file": "d03speciallwstart-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5755736028294365,
+          -0.729768722146949,
+          0.21382879535750984
+        ],
+        "max": [
+          0.49888780591566473,
+          0.4251074580968662,
+          0.9846721308317335
+        ],
+        "extent": [
+          1.0744614087451012,
+          1.1548761802438152,
+          0.7708433354742237
+        ]
+      }
+    },
+    {
+      "group": "d03speciallwstart",
+      "label": "end",
+      "fraction": 1,
+      "frame": 20.000000596046448,
+      "file": "d03speciallwstart-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -1.445194492787877,
+          -0.9586969243104569,
+          -0.10384953524749713
+        ],
+        "max": [
+          0.913000999163458,
+          0.4998479705374141,
+          2.7404854269911
+        ],
+        "extent": [
+          2.358195491951335,
+          1.458544894847871,
+          2.844334962238597
+        ]
+      }
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "semanticActionMappingVerified": false,
+  "completeGameplayActionSet": false,
+  "gameplayAcceptance": false
+}

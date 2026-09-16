@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-post-form-local-audit-v2/4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-post-form-local-audit-v2/4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5.files.json",
+  "archiveSha256": "4ce21f4f4598f00edd1a6e360dec9a485a06f967a8e8826c971ff406eb3469c5",
+  "archiveBytes": 15547376,
+  "fileCount": 18,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-vearn-post-form-audit-v2-final",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-post-form-local-audit-v2/5adafbde2dbaeb64f17ed4c576cc19f437cde29f710e55d241b022aab5900506/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-post-form-local-audit-v2/5adafbde2dbaeb64f17ed4c576cc19f437cde29f710e55d241b022aab5900506/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-post-form-local-audit-v2/5adafbde2dbaeb64f17ed4c576cc19f437cde29f710e55d241b022aab5900506/manifest.json"
+}

@@ -1,0 +1,452 @@
+{
+  "schema": "ggd.jumpforce-audio-identity-bindings@1",
+  "asOfDate": "2026-09-15",
+  "sourceId": "jump-force-full-roster-v1",
+  "inputs": {
+    "characterMap": {
+      "gitPath": "tools/hero-model-library/source-workflows/jumpforce-steam-streaming-audio-v1/character-map.json",
+      "sha256": "acff5b85d24317f6d980a9a2390eb96bd8d0785c15804e0d962d906ce3f6a42c"
+    },
+    "bindingAuthority": {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/audio-hero-bindings.json",
+      "sha256": "14ad1ff5a6f75af3e989863f8cc3e81e3de4fd656e1062074ebb85f14e8a2e95"
+    },
+    "championDefinitions": [
+      {
+        "gitPath": "content/champions/community-review-01-20260907.json",
+        "sha256": "606183d80ff0d6f01f33607c72278e9c5411b7f01a2a228af5c93ee2601256c6"
+      },
+      {
+        "gitPath": "content/champions/community-review-04-20260907.json",
+        "sha256": "220b31f44e0ea256a08b1487eb811a0cbc0d598288871bad2042a5512c406aba"
+      },
+      {
+        "gitPath": "content/champions/community-review-07-20260907.json",
+        "sha256": "b02a806dfa87d311bcca41eb4a177d9c2e3cf1e053bf767765f11697337a33bc"
+      },
+      {
+        "gitPath": "content/champions/community-review-24-20260907.json",
+        "sha256": "cae6806e0f065b904eab938286015dd0cc99a755621b0bb8f0213fb0cccc2995"
+      },
+      {
+        "gitPath": "content/champions/godie-edem.json",
+        "sha256": "aa87f95d8a7e6dd4871f4b0641ea6bda687219a9146823afdccd0202a28c3c98"
+      },
+      {
+        "gitPath": "content/champions/godie-h01n.json",
+        "sha256": "6747aa3ec63c9344b0de90e09d547709225c8720fbbe4ca9008f9d8632176567"
+      },
+      {
+        "gitPath": "content/champions/godie-h01o.json",
+        "sha256": "4e0704fa5962088965f5e5f503bc57c1d3ff0dc449199f624e691c6d248bdff7"
+      },
+      {
+        "gitPath": "content/champions/godie-huth.json",
+        "sha256": "4ef180ed4ed66105ddd6a1aa47d2d44cd05ff5fb54bb1cef36b57da3131e7853"
+      },
+      {
+        "gitPath": "content/champions/godie-o00x.json",
+        "sha256": "85b3d859b32775861d7095a4be0104394ca04ae1104e95e4509e7362881e0c7a"
+      },
+      {
+        "gitPath": "content/champions/godie-ogrh.json",
+        "sha256": "42bc7fd1295791f2cc848815a4d2e9c6eb5979f59650e2f6e61c1307313fa3ef"
+      },
+      {
+        "gitPath": "content/champions/godie-u00n.json",
+        "sha256": "78ab21f274724a2fb89d48e72bb8075051b53668599007b046e2da0aae26c71c"
+      },
+      {
+        "gitPath": "content/champions/godie-u00o.json",
+        "sha256": "97cdfd5f877197881daf6278c3edd25a9890950e59d59f3d8abd1a76b7effd2b"
+      },
+      {
+        "gitPath": "content/champions/godie-u010.json",
+        "sha256": "a651098c5cd9ea30f000c44125347e8f7afbefae425668be8ee9369eb9e29a18"
+      },
+      {
+        "gitPath": "content/champions/godie-u01u.json",
+        "sha256": "001dd01b4f704f48c8b5898362d292b28663ad7f0f29c9b3c8f43f4905b912c8"
+      },
+      {
+        "gitPath": "content/champions/godie-ucrl.json",
+        "sha256": "68825ffe6da72049a53fdc5c0f6ffde05fc4059891b4e4765a4d6c46775c4450"
+      },
+      {
+        "gitPath": "content/champions/godie-udre.json",
+        "sha256": "98012164879f26d51b2498e641a966f734c76ae0538ec7fde3d642709aa5ca3e"
+      },
+      {
+        "gitPath": "content/champions/godie-uvng.json",
+        "sha256": "c08f43759d0b1535fc243074eecc2b7495535e6c8e97b545b2ed615dd93f07e5"
+      }
+    ]
+  },
+  "summary": {
+    "nativeCharacterGroupsBound": 12,
+    "distinctHeroIds": 17,
+    "publicPackageGroupsBound": 12,
+    "steamLooseGroupsBound": 8,
+    "sourceGroupRelationshipsUpdated": 20,
+    "publicPackageAudioFilesLinked": 2724,
+    "steamLooseAudioFilesLinked": 427,
+    "speakerApprovedClips": 0,
+    "eventBindingsCreated": 0,
+    "runtimeBindingsCreated": 0,
+    "backendOptionsAdded": 0,
+    "productionDeployments": 0
+  },
+  "bindings": [
+    {
+      "nativeCharacterId": "chr0000",
+      "characterName": "Goku",
+      "heroIds": [
+        "godie-ogrh",
+        "godie-o00x"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-ogrh",
+          "name": "賽亞人 - 悟空",
+          "gitPath": "content/champions/godie-ogrh.json",
+          "sha256": "42bc7fd1295791f2cc848815a4d2e9c6eb5979f59650e2f6e61c1307313fa3ef"
+        },
+        {
+          "heroId": "godie-o00x",
+          "name": "超級賽亞人 - 悟空",
+          "gitPath": "content/champions/godie-o00x.json",
+          "sha256": "85b3d859b32775861d7095a4be0104394ca04ae1104e95e4509e7362881e0c7a"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-second10:jumpforce-goku",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0000"
+      ],
+      "publicPackageFiles": 228,
+      "steamLooseFiles": 161,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0060",
+      "characterName": "Luffy",
+      "heroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-u00n",
+          "name": "草帽小子 - 蒙其.D.魯夫",
+          "gitPath": "content/champions/godie-u00n.json",
+          "sha256": "78ab21f274724a2fb89d48e72bb8075051b53668599007b046e2da0aae26c71c"
+        },
+        {
+          "heroId": "godie-u00o",
+          "name": "草帽小子 - 蒙其.D.魯夫",
+          "gitPath": "content/champions/godie-u00o.json",
+          "sha256": "97cdfd5f877197881daf6278c3edd25a9890950e59d59f3d8abd1a76b7effd2b"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0060"
+      ],
+      "publicPackageFiles": 227,
+      "steamLooseFiles": 144,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0070",
+      "characterName": "Zoro",
+      "heroIds": [
+        "godie-udre",
+        "godie-u01u"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-udre",
+          "name": "三刀流劍士 - 索隆",
+          "gitPath": "content/champions/godie-udre.json",
+          "sha256": "98012164879f26d51b2498e641a966f734c76ae0538ec7fde3d642709aa5ca3e"
+        },
+        {
+          "heroId": "godie-u01u",
+          "name": "三刀流劍士 - 索隆",
+          "gitPath": "content/champions/godie-u01u.json",
+          "sha256": "001dd01b4f704f48c8b5898362d292b28663ad7f0f29c9b3c8f43f4905b912c8"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-zoro",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0070"
+      ],
+      "publicPackageFiles": 216,
+      "steamLooseFiles": 15,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0130",
+      "characterName": "Sasuke",
+      "heroIds": [
+        "godie-edem"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-edem",
+          "name": "寫輪眼復仇者 - 宇智波佐助",
+          "gitPath": "content/champions/godie-edem.json",
+          "sha256": "aa87f95d8a7e6dd4871f4b0641ea6bda687219a9146823afdccd0202a28c3c98"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0130"
+      ],
+      "publicPackageFiles": 225,
+      "steamLooseFiles": 19,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0240",
+      "characterName": "Ichigo",
+      "heroIds": [
+        "godie-h01n",
+        "godie-h01o"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-h01n",
+          "name": "開外掛的死神 - 黑崎一護",
+          "gitPath": "content/champions/godie-h01n.json",
+          "sha256": "6747aa3ec63c9344b0de90e09d547709225c8720fbbe4ca9008f9d8632176567"
+        },
+        {
+          "heroId": "godie-h01o",
+          "name": "外掛開很大的死神 - 黑崎一護",
+          "gitPath": "content/champions/godie-h01o.json",
+          "sha256": "4e0704fa5962088965f5e5f503bc57c1d3ff0dc449199f624e691c6d248bdff7"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-10:jumpforce-ichigo",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0240"
+      ],
+      "publicPackageFiles": 222,
+      "steamLooseFiles": 28,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0300",
+      "characterName": "Gon",
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-ucrl",
+          "name": "職業獵人 - 傑 富力士",
+          "gitPath": "content/champions/godie-ucrl.json",
+          "sha256": "68825ffe6da72049a53fdc5c0f6ffde05fc4059891b4e4765a4d6c46775c4450"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0300"
+      ],
+      "publicPackageFiles": 225,
+      "steamLooseFiles": 25,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0310",
+      "characterName": "Killua",
+      "heroIds": [
+        "community-review-24-20260907"
+      ],
+      "heroes": [
+        {
+          "heroId": "community-review-24-20260907",
+          "name": "奇犽",
+          "gitPath": "content/champions/community-review-24-20260907.json",
+          "sha256": "cae6806e0f065b904eab938286015dd0cc99a755621b0bb8f0213fb0cccc2995"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-second10:jumpforce-killua",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0310"
+      ],
+      "publicPackageFiles": 226,
+      "steamLooseFiles": 18,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0330",
+      "characterName": "Hisoka",
+      "heroIds": [
+        "community-review-07-20260907"
+      ],
+      "heroes": [
+        {
+          "heroId": "community-review-07-20260907",
+          "name": "西索",
+          "gitPath": "content/champions/community-review-07-20260907.json",
+          "sha256": "b02a806dfa87d311bcca41eb4a177d9c2e3cf1e053bf767765f11697337a33bc"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+        "steam-jump-force-streaming-audio-816020-build-8523149:chr0330"
+      ],
+      "publicPackageFiles": 215,
+      "steamLooseFiles": 17,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0340",
+      "characterName": "Jotaro",
+      "heroIds": [
+        "community-review-04-20260907"
+      ],
+      "heroes": [
+        {
+          "heroId": "community-review-04-20260907",
+          "name": "空條承太郎",
+          "gitPath": "content/champions/community-review-04-20260907.json",
+          "sha256": "220b31f44e0ea256a08b1487eb811a0cbc0d598288871bad2042a5512c406aba"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-jotaro"
+      ],
+      "publicPackageFiles": 233,
+      "steamLooseFiles": 0,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr0400",
+      "characterName": "Yugi",
+      "heroIds": [
+        "community-review-01-20260907"
+      ],
+      "heroes": [
+        {
+          "heroId": "community-review-01-20260907",
+          "name": "武藤遊戲",
+          "gitPath": "content/champions/community-review-01-20260907.json",
+          "sha256": "606183d80ff0d6f01f33607c72278e9c5411b7f01a2a228af5c93ee2601256c6"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-yugi"
+      ],
+      "publicPackageFiles": 244,
+      "steamLooseFiles": 0,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr1030",
+      "characterName": "Majin Buu",
+      "heroIds": [
+        "godie-huth"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-huth",
+          "name": "超級普烏 - 魔人普烏",
+          "gitPath": "content/champions/godie-huth.json",
+          "sha256": "4ef180ed4ed66105ddd6a1aa47d2d44cd05ff5fb54bb1cef36b57da3131e7853"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-second10:jumpforce-majin-buu"
+      ],
+      "publicPackageFiles": 224,
+      "steamLooseFiles": 0,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    },
+    {
+      "nativeCharacterId": "chr1160",
+      "characterName": "Hiei",
+      "heroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "heroes": [
+        {
+          "heroId": "godie-u010",
+          "name": "邪眼師 - 飛影",
+          "gitPath": "content/champions/godie-u010.json",
+          "sha256": "a651098c5cd9ea30f000c44125347e8f7afbefae425668be8ee9369eb9e29a18"
+        },
+        {
+          "heroId": "godie-uvng",
+          "name": "邪眼師 - 飛影",
+          "gitPath": "content/champions/godie-uvng.json",
+          "sha256": "c08f43759d0b1535fc243074eecc2b7495535e6c8e97b545b2ed615dd93f07e5"
+        }
+      ],
+      "sourceGroups": [
+        "parallel-ps-jumpforce-local-next32:jumpforce-hiei"
+      ],
+      "publicPackageFiles": 239,
+      "steamLooseFiles": 0,
+      "relationship": "verified-character-family-source-association",
+      "clipSpeakerApproved": false,
+      "clipLanguageApproved": false,
+      "eventBindingApproved": false,
+      "runtimeBindingCreated": false
+    }
+  ],
+  "stageBoundary": {
+    "sourceCharacterFamilyAssociation": "completed-for-listed-bindings",
+    "clipListeningReview": "pending",
+    "speakerAndLanguageVerification": "pending",
+    "eventAndSkillBinding": "not-started",
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

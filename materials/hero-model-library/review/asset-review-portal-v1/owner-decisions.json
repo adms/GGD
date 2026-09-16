@@ -1,0 +1,2470 @@
+{
+  "schema": "ggd.asset-review-decisions@1",
+  "sourceFingerprint": "c3a210550afb10b506a83d3aeec79fa4533b47cb3a7f2e94b4d80f07b81460e0",
+  "reviewer": "owner",
+  "reviewedAt": "2026-09-15T01:41:50+08:00",
+  "runtimeMutationAllowed": false,
+  "decisions": [
+    {
+      "candidateId": "popp:popp-f06f9b82e629c1c6012f",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-9c850e95b505ee8cc5b2",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-29b51c11b1fa959615e4",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-c5d2ff7a566cbdb8b138",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-3b0a078b1d5ff8c324ac",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-39650cc4c765f2357731",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-36adaa26b62133345b12",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-76255e68aa42e48a29bd",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-5eda5cd42e69ac2c36eb",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-96a63b31206ab2d96ef8",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-e1ef7a8fbdcc0e940e9d",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-8657c163c1fdac6f0a1d",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-7aeb07c0c7627bd147f2",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-9c7dcfb04a1f509173f5",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-7a85adf13416af27f8b3",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-9535ef4a60ff2c9ed0fd",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-f6f318c4761e931b4460",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-9bec14e32356c2b20855",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-f8291c098176077330d4",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-45e9837c9bd7a7383cb4",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-765c67b012a46c77d699",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-3524b05b6fd6e7b0fc7a",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-b2bec339fe432028a48d",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-6910d2643d36115f9e23",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-123b37418446cfbffaa2",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-0e8e5f4a37128ca0b104",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-44a53a904012271e241a",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-37f8049ebd4f8f16db6e",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-e8119de6e475315f32b0",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-64ea6a3380c6fac1b6ff",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-6b9e73e83dbc49ea39f0",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-9288d586eb28f509f595",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-1f93fe06eba3d1c1af42",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-dc483e83b48576fa43f5",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-bed95cf7aa900c724dd4",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp:popp-5898b919a7896629ba08",
+      "decision": "approve",
+      "approvedBindings": [
+        "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-normal",
+      "decision": "approve",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-joy",
+      "decision": "approve",
+      "approvedBindings": [
+        "victory"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-anger",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-sorrow",
+      "decision": "approve",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-pain",
+      "decision": "approve",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-cry-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-normal",
+      "decision": "approve",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-joy",
+      "decision": "approve",
+      "approvedBindings": [
+        "victory"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-anger",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-sorrow",
+      "decision": "approve",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-pain",
+      "decision": "approve",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-cry-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-normal",
+      "decision": "approve",
+      "approvedBindings": [
+        "spawn-or-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-joy",
+      "decision": "approve",
+      "approvedBindings": [
+        "victory"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-anger",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-attack-or-cast"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-sorrow",
+      "decision": "approve",
+      "approvedBindings": [
+        "low-health-or-retreat"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-pain",
+      "decision": "approve",
+      "approvedBindings": [
+        "hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-cry-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-audio:JForce_Asta",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-audio:JForce_Dai",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-audio:JForce_Kenshiro",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-aizen",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-boruto",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-cell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-grimmjow",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-hitsugaya",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-ichigo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-renji",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-rukia",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-ryo-saeba",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-10:jumpforce-yoruichi",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-final3:jumpforce-dio",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-final3:jumpforce-kane",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-all-might",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-bakugo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-blackbeard",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-deku",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-gaara",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-galena",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-giorno",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-hancock",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-jotaro",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-kaguya",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-kaiba",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-kakashi",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-kenshin",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-law",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-luffy",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-madara",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-meruem",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-prometheus",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-sabo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-sanji",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-sasuke",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-seiya",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-shiryū",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-shishio",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-todoroki",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-toguro",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-yugi",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-yusuke",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-next32:jumpforce-zoro",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-biscuit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-frieza",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-goku",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-killua",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-kurapika",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-majin-buu",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-piccolo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-trunks",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:public:parallel-ps-jumpforce-local-second10:jumpforce-vegeta",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0000",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0010",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0020",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0030",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0040",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0050",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0060",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0070",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0080",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0090",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0100",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0110",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0120",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0130",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0140",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0150",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0160",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0170",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0240",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0260",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0270",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0300",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0310",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0320",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0330",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0360",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0370",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0410",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0420",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0450",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0460",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "jumpforce:steam:chr0470",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-idle",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-run",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-attack",
+      "decision": "approve",
+      "approvedBindings": [
+        "acquired-jetragon.q"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-cast",
+      "decision": "approve",
+      "approvedBindings": [
+        "acquired-jetragon.r"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-hurt",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-jetragon-motion-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-idle",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-run",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-attack",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-attack"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-cast",
+      "decision": "approve",
+      "approvedBindings": [
+        "acquired-astralym.q"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-hurt",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-astralym-motion-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-idle",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-idle"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-run",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-run"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-attack",
+      "decision": "approve",
+      "approvedBindings": [
+        "acquired-cattiva.q"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-cast",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-cast"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-hurt",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-hurt"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "palworld:palworld-cattiva-motion-death",
+      "decision": "approve",
+      "approvedBindings": [
+        "generic-death"
+      ],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:esk-screen-name-022mai",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:esk-screen-pic-022mai",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:esk-screen-pic-022mai-cn",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-afterimage1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-afterimage2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-blur1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-blur3",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-blur-col",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-distortion2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-fire-surface",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-hit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-kacyou-blur",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-kacyou-paper",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-light",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:mai:mai-shockwave-ring",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:esk-screen-name-012ior",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:esk-screen-pic-012ior",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-claw",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-core",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-explosion1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-explosion2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-fire1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-fire2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-fire-surface1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-fire-surface2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-glare",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-grain",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-lensflare1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-light1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-light2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-saika-hand",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-saika-impact",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-shockwave1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-shockwave2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-smoke2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:ior:ior-spark1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:esk-screen-name-000kyo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:esk-screen-pic-000kyo",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-aura",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-explosion1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-explosion2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-fire1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-fire2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-fire-surface1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-fire-surface2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-glare",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-grain",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-light1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-light2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-shockwave-ring",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-smoke",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-smoke-alpha",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-texture:kyo:kyo-spark1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0600-hit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0601-blur-5cf",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0602-blur-8c",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0603-blur-5cd",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0604-blur-8cd",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0700-ryuenbu1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0701-ryuenbu2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0710-kacyou-shell1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0711-kacyou-shell2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0712-kacyou-shell3",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0713-kacyou-impact",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0800-cyou",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0801-cyou-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0810-kagerou",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0811-kagerou-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0900-kunoichi-blur",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0901-kunoichi-screw",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0902-kunoichi-bound",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:mai-0999-shadow",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0710-yamibarai-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0711-yamibarai-impact",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0712-yamibarai-shell-ex",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0713-yamibarai-locus",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0714-yamibarai-locus-ex",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0720-oniyaki",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0721-oniyaki1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0722-oniyaki2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0730-kototsuki",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0740-tsumakushi1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0741-tsumakushi2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0800-yaotome",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0801-yaotome-max1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0802-yaotome-max2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0810-saika-hand1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0810-saika-hand2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0812-saika-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0820-yashihoori-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0821-yashihoori-impact",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0822-yashihoori-shell-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0823-yashihoori-impact-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0824-yashihoori-hand",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0900-yatagarasu-eye",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0901-yatagarasu-spark",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0902-yatagarasu-claw",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0903-yatagarasu-claw-hit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:ior-0999-shadow",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0600-fire-finger",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0601-fire-hand",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0602-start-fire",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0603-result-fire",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0700-fire-special",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0701-fire-locus",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0710-oniyaki",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0711-oniyaki1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0712-oniyaki2",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0713-oniyaki3",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0720-kototsuki",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0730-doku-ex",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0800-orochinagi-shell",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0801-orochinagi-locus",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0802-orochinagi-boot",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0803-orochinagi-boot-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0804-orochinagi-charge",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0810-182shiki-hit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0811-182shiki-hit-max",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0900-yaegaki-hit",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0901-yaegaki-sundisk",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0902-yaegaki-finish",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0903-yaegaki-hand",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0904-yaegaki-spark",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "kofxiv-eff:kyo-0999-shadow",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-3334415bf1cf",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b4a7e4c1252b",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-760908689aab",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-caa730676994",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-5e9552e7cdb1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-9f7867d7fa2a",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-278d1511f567",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-aa307baadef6",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-d3f0cfbb0fe1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b660aa73e684",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-c6d05cb7cfc8",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-71e658468dee",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-1d983aca2c50",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-79adb82807ab",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-723415b1eff0",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-b3c703088417",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-35027d881f17",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-texture:dai-vfx-texture-e3cf25c6edcd",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-1afaff4e7a06",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-1f03f74da354",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-2df98836a4fa",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-06d60c9dc509",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-b9c28ede0f0d",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-16ad660ce7bf",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-ae3e9d7e829c",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-mesh:dai-vfx-mesh-3315cee29bd1",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-01",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-02",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-03",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-04",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-05",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-06",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-07",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-08",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-09",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-10",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-11",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "popp-vfx:popp-vfx-candidate-12",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-5efcc26a6874",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-c040be6be782",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-2682386eefc4",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-811a70524aec",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-78c1869c7ed9",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    },
+    {
+      "candidateId": "dai-vfx-composite:dai-pn010-review-446d57b8bd17",
+      "decision": "approve",
+      "approvedBindings": [],
+      "note": "Owner 於 2026-09-15 核准所有審查中心資源；仍須通過技術 gate 才可切換，未證實正式站部署。",
+      "runtimeBindingAuthorized": false
+    }
+  ]
+}

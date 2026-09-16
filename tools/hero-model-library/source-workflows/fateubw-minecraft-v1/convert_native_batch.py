@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the 13 translation-rest FateUBW servants as native-motion reserves."""
+"""Build all 14 FateUBW servants as native-motion reserves."""
 import argparse
 import hashlib
 import json
@@ -18,6 +18,7 @@ CANDIDATES = [
     "fateubw-gilgamesh_archer",
     "fateubw-gilles_de_rais_caster",
     "fateubw-hassan-i-sabbah_assassin",
+    "fateubw-heracles_berserker",
     "fateubw-iskander_rider",
     "fateubw-lancelot_berserker",
     "fateubw-medea_caster",
@@ -76,11 +77,14 @@ def main():
         geometry = source_path(intake, candidate["sourceModel"])
         texture = source_path(intake, candidate["sourceTexture"]["path"])
         animation = source_path(intake, candidate["sourceAnimation"]["path"])
-        run([sys.executable, str(tools / "convert_bedrock_native_animation.py"),
+        command = [sys.executable, str(tools / "convert_bedrock_native_animation.py"),
              "--geometry", str(geometry), "--texture", str(texture), "--animation", str(animation),
              "--output", str(directory / "body.glb"), "--report", str(directory / "conversion-report.json"),
              "--source-id", SOURCE_ID, "--candidate-id", candidate_id,
-             "--rotation-fps", str(args.rotation_fps), "--skip-unsupported-clips"], repo)
+             "--rotation-fps", str(args.rotation_fps), "--skip-unsupported-clips"]
+        if candidate_id == "fateubw-heracles_berserker":
+            command.append("--allow-untargeted-leaf-rest-rotations")
+        run(command, repo)
         run([sys.executable, str(tools / "validate_bedrock_static_glb.py"),
              "--glb", str(directory / "body.glb"), "--source-texture", str(texture),
              "--output", str(directory / "native-structural-readback.json")], repo)
@@ -112,24 +116,21 @@ def main():
         "counts": {
             "sourceCharacters": 14,
             "convertedCharacters": len(records),
-            "pendingRestRotationCharacter": 1,
+            "pendingRestRotationCharacter": 0,
             "sourceClips": sum(row["sourceClipCount"] for row in records),
             "convertedNativeClips": sum(row["convertedNativeClipCount"] for row in records),
             "unconvertedClips": sum(row["unconvertedClipCount"] for row in records),
             "skippedNoDurationOrEmptyClips": sum(row["skippedNoDurationOrEmptyClipCount"] for row in records),
             "retainedUnsupportedClips": sum(row["retainedUnsupportedClipCount"] for row in records),
         },
-        "pendingCharacter": {
-            "candidateId": "fateubw-heracles_berserker",
-            "reason": "source rest skeleton contains nonzero bone rotations; separate bind-pose implementation and review required",
-        },
+        "pendingCharacter": None,
         "allKhronosErrorsZero": True,
         "allKhronosWarningsZero": all(row["khronosWarnings"] == 0 for row in records),
         "allGgdBudgetErrorsZero": True,
         "runtimeReady": False,
         "backendSelectionVerified": False,
         "rightsStatus": "ARR redistribution permission pending",
-        "scope": "Native numeric motion reserve conversion. Visual playback, source-engine parity, event mapping, rights, backend registration and deployment remain pending.",
+        "scope": "Native numeric and bounded formula-baked motion reserve conversion. Formula expressions and no-duration source poses remain explicitly classified. Visual playback, source-engine parity, event mapping, rights, backend registration and deployment remain pending.",
     }
     (output / "batch-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(manifest["counts"], ensure_ascii=False))

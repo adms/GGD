@@ -1,0 +1,1260 @@
+{
+  "schema": "ggd.infinity-strash-texture-backdrop-decimation-visual@1",
+  "records": [
+    {
+      "candidateId": "dai-pn010-02",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+        "bytes": 1986068,
+        "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "bytes": 1880364,
+        "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+      },
+      "sampling": {
+        "states": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death"
+        ],
+        "samplesPct": [
+          0,
+          50,
+          100
+        ],
+        "renderer": "Babylon WebGL; same clip map, camera, lights and sample times"
+      },
+      "metric": {
+        "contractMaxPct": 5,
+        "changedPixelDefinition": "any RGB channel delta >10 over complete 800x800 frame",
+        "litPixelDefinition": "exclusive-or of luma >=128 classification"
+      },
+      "rows": [
+        {
+          "state": "idle",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 1.99625,
+          "meanAbsoluteChannelDelta": 0.937405,
+          "litClassificationXorPctAtLuma128": 0.365313,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-idle-0.png",
+            "bytes": 181913,
+            "sha256": "c7f429d030d0b635f1687f5ecd36913b40b3ed29d173fe9ade558cd2b03c4c7d"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-idle-0.png",
+            "bytes": 180543,
+            "sha256": "bf5b0302816e5d1f891b169d4897baf019bf5efc80b5ed76fb2bf1ed72d89878"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 1.978125,
+          "meanAbsoluteChannelDelta": 0.933848,
+          "litClassificationXorPctAtLuma128": 0.356719,
+          "maxChannelDelta": 233,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-idle-50.png",
+            "bytes": 181737,
+            "sha256": "a9c220661f15cd9c71691c3fb7cf594dc338a61a5f99da861cad95e49518268d"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-idle-50.png",
+            "bytes": 179890,
+            "sha256": "60fbacfcaac6e41c39b3dca96124ee42b38bf6ed3fe2f824328e164b957fae3b"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 1.99625,
+          "meanAbsoluteChannelDelta": 0.937405,
+          "litClassificationXorPctAtLuma128": 0.365313,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-idle-100.png",
+            "bytes": 181913,
+            "sha256": "c7f429d030d0b635f1687f5ecd36913b40b3ed29d173fe9ade558cd2b03c4c7d"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-idle-100.png",
+            "bytes": 180543,
+            "sha256": "bf5b0302816e5d1f891b169d4897baf019bf5efc80b5ed76fb2bf1ed72d89878"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.458281,
+          "meanAbsoluteChannelDelta": 1.295337,
+          "litClassificationXorPctAtLuma128": 0.549063,
+          "maxChannelDelta": 235,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-run-0.png",
+            "bytes": 185631,
+            "sha256": "a078e9297a3e43e55a48bd85f5fab4397468a562ae556c628cafae44ac89c0c7"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-run-0.png",
+            "bytes": 183605,
+            "sha256": "0b297e98ccbb4bee663ee9a9bbfd453bae27c11f7257c4bc68ba79aefe756103"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 2.127969,
+          "meanAbsoluteChannelDelta": 1.122896,
+          "litClassificationXorPctAtLuma128": 0.450469,
+          "maxChannelDelta": 234,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-run-50.png",
+            "bytes": 184138,
+            "sha256": "1156d54d277b6ea60f93bdcf17d8d69689c898dd0d17e988c704f13bc9883791"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-run-50.png",
+            "bytes": 181637,
+            "sha256": "97d9501c9dbd5cc7182c0ab4364aadba80a9b37700e4056bc40b8db21f88ad1d"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.460156,
+          "meanAbsoluteChannelDelta": 1.296696,
+          "litClassificationXorPctAtLuma128": 0.550156,
+          "maxChannelDelta": 235,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-run-100.png",
+            "bytes": 185636,
+            "sha256": "7e2b831340142189de34c02db1ebb724e031add64c0dc88f0205862802d1f360"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-run-100.png",
+            "bytes": 183592,
+            "sha256": "6184963094bf688788449be460e5fd27facab0813d7a96ea6b3de865669f77c6"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.375625,
+          "meanAbsoluteChannelDelta": 1.33367,
+          "litClassificationXorPctAtLuma128": 0.593594,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-attack-0.png",
+            "bytes": 208171,
+            "sha256": "75af7ff5239ab571f60daa818a306eff220c41937f88d653095158f12f17007a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-attack-0.png",
+            "bytes": 206046,
+            "sha256": "ff0743fd11054ea14bc5b13bcc2cee311622fcc0ba877e6fdf00bcffa2ef4167"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 2.174062,
+          "meanAbsoluteChannelDelta": 1.243907,
+          "litClassificationXorPctAtLuma128": 0.578437,
+          "maxChannelDelta": 240,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-attack-50.png",
+            "bytes": 203115,
+            "sha256": "f674793a3ede7d36334b3616ab90b848316f43ed47c27f0e7104489d6f45bfd4"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-attack-50.png",
+            "bytes": 201323,
+            "sha256": "f012370d3d13c1b59cf456ef6470247dc9bd86e7773a0474174d50920d7df208"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.377344,
+          "meanAbsoluteChannelDelta": 1.334191,
+          "litClassificationXorPctAtLuma128": 0.59375,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-attack-100.png",
+            "bytes": 208170,
+            "sha256": "98567887ffacc1d8098bd2a3a25f2e9804677c9db5c6d32bfcb0fc8cde89fbe4"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-attack-100.png",
+            "bytes": 206069,
+            "sha256": "c4956d34e743edddfa51a456229bc6b3dc1b8661a5eb3a74958b7affb252528c"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.172656,
+          "meanAbsoluteChannelDelta": 1.086706,
+          "litClassificationXorPctAtLuma128": 0.451562,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-cast-0.png",
+            "bytes": 187690,
+            "sha256": "817eddd4056f3045d9a3f45a380fba48cc212eb68819de9fa85492a768dbe0ff"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-cast-0.png",
+            "bytes": 186415,
+            "sha256": "aaef26cb9f6cd3f637c9f91fba6e1dc4631dd553b5b9da18035ee093ddccfd1b"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 3.474688,
+          "meanAbsoluteChannelDelta": 2.068885,
+          "litClassificationXorPctAtLuma128": 1.057344,
+          "maxChannelDelta": 237,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-cast-50.png",
+            "bytes": 271357,
+            "sha256": "0c7cbe8900084aee2603edbaac07ca623cc489dfbbe3abf04fb814b5acc637da"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-cast-50.png",
+            "bytes": 267602,
+            "sha256": "7fba576773f332063ba6f4d25d60839c2d5340a5c5f15806fcc21130b17d7d2e"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.167344,
+          "meanAbsoluteChannelDelta": 1.085628,
+          "litClassificationXorPctAtLuma128": 0.449688,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-cast-100.png",
+            "bytes": 187758,
+            "sha256": "660cfbdf15b6adfd33f3b7c6fc791ac279cd9aae020ca0116c4e3cc0688882c7"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-cast-100.png",
+            "bytes": 186346,
+            "sha256": "4cf3e5680bd025baf17f2c0f6de6283afa1241dd13086fe52c36483391b80be6"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-hurt-0.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-hurt-0.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-hurt-50.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-hurt-50.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-hurt-100.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-hurt-100.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-death-0.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-death-0.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-death-50.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-death-50.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 0.724844,
+          "meanAbsoluteChannelDelta": 0.319998,
+          "litClassificationXorPctAtLuma128": 0.143281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-source/ggd-state-death-100.png",
+            "bytes": 87001,
+            "sha256": "ad0a5ccb14c99f5e53d4bd8b64852b2a32678a20e9c8d49edd2370a6869fba9f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/render-candidate/ggd-state-death-100.png",
+            "bytes": 85835,
+            "sha256": "b7e2bc47b619b0dcd14a6fadaadeb00fd291bb9478c77966ac3bb78ea9fd0aac"
+          }
+        }
+      ],
+      "maxChangedPixelPctAtChannelDeltaGt10": 3.474688,
+      "maxLitClassificationXorPctAtLuma128": 1.057344,
+      "metricGatePassed": true,
+      "conservativeChangedPixelDiagnosticUnder5": true,
+      "contactSheets": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/idle-contact-sheet.png",
+          "bytes": 203756,
+          "sha256": "3b01696c75716f020d2640ff7c92f41238fd91399bbe022d6f230c9e77a51936"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/run-contact-sheet.png",
+          "bytes": 214274,
+          "sha256": "f70fd5869b52dc8e4d9d4bb2c07610b420fedd73acec0027c500582b94b8682e"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/attack-contact-sheet.png",
+          "bytes": 238909,
+          "sha256": "d57e8f9727d34d3311f9a682ede1fecee03ac80d09d27696715d7d4c67b02417"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/cast-contact-sheet.png",
+          "bytes": 268956,
+          "sha256": "d737cea6a2d70e1a4f87ad6e5e6a7d4bdfacc61c3feb227c6a0325e3541aaea1"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/hurt-contact-sheet.png",
+          "bytes": 51331,
+          "sha256": "b82131e4491f5c047003b759c4a53f042c40dbf16deda5b32c8c2b9d2fed8a8f"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/death-contact-sheet.png",
+          "bytes": 51570,
+          "sha256": "f1ddbfedb6961e65d677727590f2be8e4293200cd2de2e31b2d211b1342b7724"
+        }
+      ],
+      "allStatesContactSheet": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/all-states-contact-sheet.png",
+        "bytes": 982680,
+        "sha256": "cd58934d1b3ef69a5c4e39165efc471b8100caa7031558058f887bdc46f9a1bf"
+      },
+      "worstDifferenceOverview": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/worst-difference-overview.png",
+        "bytes": 446319,
+        "sha256": "c4b5c5ea63040b706e2cbd10363f416d4ab33a43a8b4466832a4dad3497ac163",
+        "state": "cast",
+        "samplePct": 50
+      },
+      "rawRenderRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02",
+      "rawRendersRetainedLocally": true,
+      "pillowVersion": "12.3.0",
+      "humanReview": {
+        "reviewer": "Codex visual inspection",
+        "result": "accepted",
+        "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+      }
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+        "bytes": 2192280,
+        "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "bytes": 2081176,
+        "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+      },
+      "sampling": {
+        "states": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death"
+        ],
+        "samplesPct": [
+          0,
+          50,
+          100
+        ],
+        "renderer": "Babylon WebGL; same clip map, camera, lights and sample times"
+      },
+      "metric": {
+        "contractMaxPct": 5,
+        "changedPixelDefinition": "any RGB channel delta >10 over complete 800x800 frame",
+        "litPixelDefinition": "exclusive-or of luma >=128 classification"
+      },
+      "rows": [
+        {
+          "state": "idle",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.214063,
+          "meanAbsoluteChannelDelta": 1.010111,
+          "litClassificationXorPctAtLuma128": 0.754375,
+          "maxChannelDelta": 231,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-idle-0.png",
+            "bytes": 191789,
+            "sha256": "8535e0c08c99e9ff4f672c71d0d9e431f6607410d579db2b31b1271fa7a9984a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-idle-0.png",
+            "bytes": 190695,
+            "sha256": "1d17cd852d4796b29b4b5c7e8f7ffdae2364677433417d61c05bccf6d584d4f4"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 2.160469,
+          "meanAbsoluteChannelDelta": 1.013322,
+          "litClassificationXorPctAtLuma128": 0.810312,
+          "maxChannelDelta": 233,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-idle-50.png",
+            "bytes": 191905,
+            "sha256": "847bf56ccf2ac1f403e61743d476c8dc41addd33bf41f71502b1356965fcafdc"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-idle-50.png",
+            "bytes": 191004,
+            "sha256": "1c17687a296edbd6f4732bec5a074bbeb7e19227d7e80cae9a56277c797dd50c"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.214063,
+          "meanAbsoluteChannelDelta": 1.010111,
+          "litClassificationXorPctAtLuma128": 0.754375,
+          "maxChannelDelta": 231,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-idle-100.png",
+            "bytes": 191789,
+            "sha256": "8535e0c08c99e9ff4f672c71d0d9e431f6607410d579db2b31b1271fa7a9984a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-idle-100.png",
+            "bytes": 190695,
+            "sha256": "1d17cd852d4796b29b4b5c7e8f7ffdae2364677433417d61c05bccf6d584d4f4"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.407031,
+          "meanAbsoluteChannelDelta": 1.142768,
+          "litClassificationXorPctAtLuma128": 0.559531,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-run-0.png",
+            "bytes": 188046,
+            "sha256": "52789437f83b450169e1cec8c407c32f833ff4484635fbcd50d17e892464168e"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-run-0.png",
+            "bytes": 188337,
+            "sha256": "2ad3264ca85a701fe5f1bcc7eabf97e827d73e303e48df0b3dc20b9e602e9899"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 2.255625,
+          "meanAbsoluteChannelDelta": 1.147524,
+          "litClassificationXorPctAtLuma128": 0.585313,
+          "maxChannelDelta": 234,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-run-50.png",
+            "bytes": 194099,
+            "sha256": "8194482b8501d60c5ba8396f514f6ae6579bbd0287713b53d6f9890b671d219d"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-run-50.png",
+            "bytes": 192589,
+            "sha256": "0f2ef23cd633c13774578fb1b4848738c810588beb5ea2ae1957f4a3a7572496"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.407969,
+          "meanAbsoluteChannelDelta": 1.142868,
+          "litClassificationXorPctAtLuma128": 0.559844,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-run-100.png",
+            "bytes": 187996,
+            "sha256": "224918d90ec82cc3155063bf8725a55f6b9bcdf81087224c42005aee9259e2da"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-run-100.png",
+            "bytes": 188292,
+            "sha256": "c3cf55d7507f7756cdc8bdef723d799c38f768c1026111659c8cdca0c9330e69"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.341875,
+          "meanAbsoluteChannelDelta": 1.103157,
+          "litClassificationXorPctAtLuma128": 0.706875,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-attack-0.png",
+            "bytes": 211952,
+            "sha256": "92edbe85fb7351d745b5f8c3d45edefb268420be18cf2ad2a5343de814e58fb3"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-attack-0.png",
+            "bytes": 210108,
+            "sha256": "1dd9b7a77c2b184067c4968cf2642057980ef74081d3b65dbd2e1e7e7f9d1bf3"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 1.814531,
+          "meanAbsoluteChannelDelta": 0.996162,
+          "litClassificationXorPctAtLuma128": 0.621094,
+          "maxChannelDelta": 239,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-attack-50.png",
+            "bytes": 184638,
+            "sha256": "af20d7749cd393bd098942bff1c6b325373b5eb3feccb16f45a1633c38b9080e"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-attack-50.png",
+            "bytes": 182690,
+            "sha256": "f3d2fff776b28430d1c51ae22d4b799141ca9231e0fab7ea025f913d458f3a5c"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.34125,
+          "meanAbsoluteChannelDelta": 1.103011,
+          "litClassificationXorPctAtLuma128": 0.706562,
+          "maxChannelDelta": 232,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-attack-100.png",
+            "bytes": 212015,
+            "sha256": "826b2acbe69efc6737c4b678812702135a8af28764c5a43f8be8971502287d84"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-attack-100.png",
+            "bytes": 210110,
+            "sha256": "79f78a890809bc4cdb4d52538a8833155017a7401a888a7b51cf57d1f8116d59"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 2.419219,
+          "meanAbsoluteChannelDelta": 1.073569,
+          "litClassificationXorPctAtLuma128": 0.679375,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-cast-0.png",
+            "bytes": 200241,
+            "sha256": "2c19335f874be3b0d557e496af61b90970c67aef56aa0fa4a5643c8b2a8ffa89"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-cast-0.png",
+            "bytes": 198818,
+            "sha256": "bda2f2bc46318df73044f2d940abaa0b15f23b1c535b2ec79a394397e764b814"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 2.510937,
+          "meanAbsoluteChannelDelta": 1.343606,
+          "litClassificationXorPctAtLuma128": 0.884062,
+          "maxChannelDelta": 237,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-cast-50.png",
+            "bytes": 246771,
+            "sha256": "de952588e59870b0d69dffc05448751e20e32028301c49635c27742fc9d0b247"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-cast-50.png",
+            "bytes": 249364,
+            "sha256": "bc23e1629ba78998fed3b05c04c34c0fe21e450fa06c3858a96d7e1bc6974ebd"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 2.418125,
+          "meanAbsoluteChannelDelta": 1.072592,
+          "litClassificationXorPctAtLuma128": 0.678125,
+          "maxChannelDelta": 236,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-cast-100.png",
+            "bytes": 200361,
+            "sha256": "a89d5473b3c10071c78b19a733c1e02a687857b69d0725c472a27c5c8dab67ee"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-cast-100.png",
+            "bytes": 198725,
+            "sha256": "b72cf6d5925d24973e8a9d420275e5699cb1b4b22224d04521e0429ea384fb49"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-hurt-0.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-hurt-0.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-hurt-50.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-hurt-50.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-hurt-100.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-hurt-100.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-death-0.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-death-0.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-death-50.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-death-50.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 0.795,
+          "meanAbsoluteChannelDelta": 0.38998,
+          "litClassificationXorPctAtLuma128": 0.298281,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-source/ggd-state-death-100.png",
+            "bytes": 88574,
+            "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/render-candidate/ggd-state-death-100.png",
+            "bytes": 87850,
+            "sha256": "935af4634492582d7cdabaaa20bdd182fa7aa3e21d3f8ca1a419bcb93a8f4d98"
+          }
+        }
+      ],
+      "maxChangedPixelPctAtChannelDeltaGt10": 2.510937,
+      "maxLitClassificationXorPctAtLuma128": 0.884062,
+      "metricGatePassed": true,
+      "conservativeChangedPixelDiagnosticUnder5": true,
+      "contactSheets": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/idle-contact-sheet.png",
+          "bytes": 222044,
+          "sha256": "4809be76f8349ef366e69e7476a52fab4c89fb4fff1c0ff9e46a15c9a9c71e03"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/run-contact-sheet.png",
+          "bytes": 230725,
+          "sha256": "e9235f7f7250e34ceb4027b4a90755efb7da784d22964e71678884868e5f24da"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/attack-contact-sheet.png",
+          "bytes": 232931,
+          "sha256": "d1ae7d4bfba5baf931375811995a12a0fdd079eb77002fde1367302e33568898"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/cast-contact-sheet.png",
+          "bytes": 267596,
+          "sha256": "4664b642a0a324e9aa940be6317dc38078eda355257ad0f0380e1c64ab18017f"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/hurt-contact-sheet.png",
+          "bytes": 62449,
+          "sha256": "7da8341dbec860e9ece1c3eaa38d09ecf20fc8a6a4625f80d592d17d7349d987"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/death-contact-sheet.png",
+          "bytes": 62684,
+          "sha256": "349a99884b64b1bae998941f26f2521327d841798c81c6fbbe390439f2420272"
+        }
+      ],
+      "allStatesContactSheet": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/all-states-contact-sheet.png",
+        "bytes": 1021772,
+        "sha256": "1471fdb2fee763aaaeec7ef716da440989b29b5d8c52bd41ec784d275bb6b699"
+      },
+      "worstDifferenceOverview": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/worst-difference-overview.png",
+        "bytes": 418892,
+        "sha256": "b203d19dc54971d54d266b0795452d58919ad76e1f0b08fef41edff0014a68f1",
+        "state": "cast",
+        "samplePct": 50
+      },
+      "rawRenderRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi",
+      "rawRendersRetainedLocally": true,
+      "pillowVersion": "12.3.0",
+      "humanReview": {
+        "reviewer": "Codex visual inspection",
+        "result": "accepted",
+        "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+      }
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+        "bytes": 3004016,
+        "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882"
+      },
+      "candidate": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "bytes": 2899468,
+        "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+      },
+      "sampling": {
+        "states": [
+          "idle",
+          "run",
+          "attack",
+          "cast",
+          "hurt",
+          "death"
+        ],
+        "samplesPct": [
+          0,
+          50,
+          100
+        ],
+        "renderer": "Babylon WebGL; same clip map, camera, lights and sample times"
+      },
+      "metric": {
+        "contractMaxPct": 5,
+        "changedPixelDefinition": "any RGB channel delta >10 over complete 800x800 frame",
+        "litPixelDefinition": "exclusive-or of luma >=128 classification"
+      },
+      "rows": [
+        {
+          "state": "idle",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.112031,
+          "meanAbsoluteChannelDelta": 1.241473,
+          "litClassificationXorPctAtLuma128": 0.380156,
+          "maxChannelDelta": 223,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-idle-0.png",
+            "bytes": 253366,
+            "sha256": "9166cf4e1dffa2b2dacf6a7207e7294541976321604a116322d2162c631ce1a4"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-idle-0.png",
+            "bytes": 248755,
+            "sha256": "bab20fa83728096f92a644bdf539a77aa013207b97844f537648745a22d1aadc"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 5.071562,
+          "meanAbsoluteChannelDelta": 1.378036,
+          "litClassificationXorPctAtLuma128": 0.38,
+          "maxChannelDelta": 223,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-idle-50.png",
+            "bytes": 259937,
+            "sha256": "96f7a80f6e0e50081b6328ee34f3489d5da6a99d84fdd16e3433b3fd3377b712"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-idle-50.png",
+            "bytes": 252574,
+            "sha256": "595afa24d8fd7b189e31816a3c850510c3c671c1785274a6e11994c4a34456c3"
+          }
+        },
+        {
+          "state": "idle",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 4.112031,
+          "meanAbsoluteChannelDelta": 1.241473,
+          "litClassificationXorPctAtLuma128": 0.380156,
+          "maxChannelDelta": 223,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-idle-100.png",
+            "bytes": 253366,
+            "sha256": "9166cf4e1dffa2b2dacf6a7207e7294541976321604a116322d2162c631ce1a4"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-idle-100.png",
+            "bytes": 248755,
+            "sha256": "bab20fa83728096f92a644bdf539a77aa013207b97844f537648745a22d1aadc"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.159063,
+          "meanAbsoluteChannelDelta": 1.253529,
+          "litClassificationXorPctAtLuma128": 0.414219,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-run-0.png",
+            "bytes": 272340,
+            "sha256": "94d7604c6da90f2fc617e835ca0d493836569f60357312abb07c63e45592284c"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-run-0.png",
+            "bytes": 265803,
+            "sha256": "01862f0f9251e07567d4457e8ecbb2c1a587009e216c98dee878c350e67e1b00"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 3.651563,
+          "meanAbsoluteChannelDelta": 1.214074,
+          "litClassificationXorPctAtLuma128": 0.374844,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-run-50.png",
+            "bytes": 285412,
+            "sha256": "84665b90b21a72efdbb584392fd3db63de7423304b3b5be8a6e61b12857c82d5"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-run-50.png",
+            "bytes": 281797,
+            "sha256": "bb0c6f48e910c0f04e4ca8ed1c20e0bb053168e0226b313f68e3b4cdb93c1f06"
+          }
+        },
+        {
+          "state": "run",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 4.057344,
+          "meanAbsoluteChannelDelta": 1.226849,
+          "litClassificationXorPctAtLuma128": 0.414219,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-run-100.png",
+            "bytes": 272020,
+            "sha256": "7003eb8bfa709377c1c98d08cf8800a648663c0c8054d3396881c72ba4647066"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-run-100.png",
+            "bytes": 265814,
+            "sha256": "a490c56a2be85de8c51879cd99d153b301e21231f4dafe17476fae16dc1d35c5"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.078125,
+          "meanAbsoluteChannelDelta": 1.274101,
+          "litClassificationXorPctAtLuma128": 0.385469,
+          "maxChannelDelta": 223,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-attack-0.png",
+            "bytes": 255308,
+            "sha256": "56bca77f8551dd4f32242219070710a0084efba0998a96b3f6bb3a542dfcdba7"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-attack-0.png",
+            "bytes": 248215,
+            "sha256": "941c2a4a95073314dbb52b94b9ceb9964da44177e8ec0a15b6c9c6f8b56f204f"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 5.655,
+          "meanAbsoluteChannelDelta": 1.692204,
+          "litClassificationXorPctAtLuma128": 0.419063,
+          "maxChannelDelta": 222,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-attack-50.png",
+            "bytes": 285328,
+            "sha256": "f47418769d74ef8e3e90d67c15037adeb9dc0f2a91d1431b7c728f72dfc749ec"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-attack-50.png",
+            "bytes": 278191,
+            "sha256": "136a89145966d445b79a786434df082cf67580857722437f05ca9e7ac82140ad"
+          }
+        },
+        {
+          "state": "attack",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 4.078125,
+          "meanAbsoluteChannelDelta": 1.274101,
+          "litClassificationXorPctAtLuma128": 0.385469,
+          "maxChannelDelta": 223,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-attack-100.png",
+            "bytes": 255308,
+            "sha256": "56bca77f8551dd4f32242219070710a0084efba0998a96b3f6bb3a542dfcdba7"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-attack-100.png",
+            "bytes": 248215,
+            "sha256": "941c2a4a95073314dbb52b94b9ceb9964da44177e8ec0a15b6c9c6f8b56f204f"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.845,
+          "meanAbsoluteChannelDelta": 1.630662,
+          "litClassificationXorPctAtLuma128": 0.397187,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-cast-0.png",
+            "bytes": 280264,
+            "sha256": "7ade459a629b4ffb0cdeba08c87d87140658de760b59de35fa1f8111e3479ef5"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-cast-0.png",
+            "bytes": 275008,
+            "sha256": "479a018c8b4c20ab65dde325b1d22ba93f9497ca6565dc72fe9d918e24cfd6c7"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 4.194531,
+          "meanAbsoluteChannelDelta": 1.162577,
+          "litClassificationXorPctAtLuma128": 0.350781,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-cast-50.png",
+            "bytes": 248411,
+            "sha256": "cab1a28a919166b7293031f3db34146087d650262da950b8f1c8eb253351938c"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-cast-50.png",
+            "bytes": 246437,
+            "sha256": "95643fc7a4bf0f13121c2ed11fb449448240afeb13f1e7e0f7a1a9ed7156f42f"
+          }
+        },
+        {
+          "state": "cast",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 4.163125,
+          "meanAbsoluteChannelDelta": 1.509313,
+          "litClassificationXorPctAtLuma128": 0.4875,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-cast-100.png",
+            "bytes": 225991,
+            "sha256": "b6b5b573fbac32b300f6c7a33c68f6b1f7ae9ad7c81feeb23f8ba011ebb4155c"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-cast-100.png",
+            "bytes": 225096,
+            "sha256": "f3f57068f572ed087b1a48709740ab70db1eebf2cf68d3e042ea362c12dba195"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.504688,
+          "meanAbsoluteChannelDelta": 1.288979,
+          "litClassificationXorPctAtLuma128": 0.3725,
+          "maxChannelDelta": 222,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-hurt-0.png",
+            "bytes": 253608,
+            "sha256": "0a160ceaa56ac3cab098694711fc340e5d4d85ce6584f37b626168211c70c02e"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-hurt-0.png",
+            "bytes": 248460,
+            "sha256": "07e2fb6d4900ce49b51373dbfd44da887b120c707d6609bda618f1b00e2733da"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 4.042188,
+          "meanAbsoluteChannelDelta": 1.352644,
+          "litClassificationXorPctAtLuma128": 0.468906,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-hurt-50.png",
+            "bytes": 276195,
+            "sha256": "3c38fe038150914b037fc9138d23a01a2f85b32105980ec5ef58e5c93623d07f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-hurt-50.png",
+            "bytes": 274328,
+            "sha256": "1d71e9787dbe43509898f04fec8c511bdbdca8b73d999a702e2eb66e71feb7b1"
+          }
+        },
+        {
+          "state": "hurt",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 1.52375,
+          "meanAbsoluteChannelDelta": 0.477881,
+          "litClassificationXorPctAtLuma128": 0.1475,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-hurt-100.png",
+            "bytes": 163462,
+            "sha256": "9460491aa4481bdb913d448b0883860744f219abbc547c1570fa40bdb2a65e23"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-hurt-100.png",
+            "bytes": 163351,
+            "sha256": "8a1a224613b2f5a5e1a7f0214afa3024fd852c898bc100bf01bdc9d4a66ba297"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 0,
+          "changedPixelPctAtChannelDeltaGt10": 4.504688,
+          "meanAbsoluteChannelDelta": 1.288979,
+          "litClassificationXorPctAtLuma128": 0.3725,
+          "maxChannelDelta": 222,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-death-0.png",
+            "bytes": 253608,
+            "sha256": "0a160ceaa56ac3cab098694711fc340e5d4d85ce6584f37b626168211c70c02e"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-death-0.png",
+            "bytes": 248460,
+            "sha256": "07e2fb6d4900ce49b51373dbfd44da887b120c707d6609bda618f1b00e2733da"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 50,
+          "changedPixelPctAtChannelDeltaGt10": 4.042188,
+          "meanAbsoluteChannelDelta": 1.352644,
+          "litClassificationXorPctAtLuma128": 0.468906,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-death-50.png",
+            "bytes": 276195,
+            "sha256": "3c38fe038150914b037fc9138d23a01a2f85b32105980ec5ef58e5c93623d07f"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-death-50.png",
+            "bytes": 274328,
+            "sha256": "1d71e9787dbe43509898f04fec8c511bdbdca8b73d999a702e2eb66e71feb7b1"
+          }
+        },
+        {
+          "state": "death",
+          "samplePct": 100,
+          "changedPixelPctAtChannelDeltaGt10": 1.52375,
+          "meanAbsoluteChannelDelta": 0.477881,
+          "litClassificationXorPctAtLuma128": 0.1475,
+          "maxChannelDelta": 224,
+          "source": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-source/ggd-state-death-100.png",
+            "bytes": 163462,
+            "sha256": "9460491aa4481bdb913d448b0883860744f219abbc547c1570fa40bdb2a65e23"
+          },
+          "candidate": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/render-candidate/ggd-state-death-100.png",
+            "bytes": 163351,
+            "sha256": "8a1a224613b2f5a5e1a7f0214afa3024fd852c898bc100bf01bdc9d4a66ba297"
+          }
+        }
+      ],
+      "maxChangedPixelPctAtChannelDeltaGt10": 5.655,
+      "maxLitClassificationXorPctAtLuma128": 0.4875,
+      "metricGatePassed": true,
+      "conservativeChangedPixelDiagnosticUnder5": false,
+      "contactSheets": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/idle-contact-sheet.png",
+          "bytes": 277273,
+          "sha256": "bd5cbf8f56c0e8b6272b352e97432621d6cd656e419f2d0a66ec8f508774b1a2"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/run-contact-sheet.png",
+          "bytes": 301906,
+          "sha256": "e3036517b103bf7b02381f49af15c9465fda775b84fec07b585a51477d0e1ff0"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/attack-contact-sheet.png",
+          "bytes": 295721,
+          "sha256": "d7d8e330b3d9ccf6ed0d749c66da262fb420fae4ce4f905e539c9d1f05040c48"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/cast-contact-sheet.png",
+          "bytes": 405305,
+          "sha256": "285cb5cfae10f313876e626d43facb5b0016b83d4d59eda11a2d1b1e9528ef0e"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/hurt-contact-sheet.png",
+          "bytes": 369616,
+          "sha256": "5d30a46cdc56797afb89931672ea6f227d660c0886ae2822734ed0940c7e5956"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/death-contact-sheet.png",
+          "bytes": 369797,
+          "sha256": "c2d77bc30884cafb76799fef761d93df1c569f9860737cb27ee2ece45a3d69b0"
+        }
+      ],
+      "allStatesContactSheet": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/all-states-contact-sheet.png",
+        "bytes": 1676278,
+        "sha256": "f9682b1d32b3a2f3e64b01aad4a3dd4ccc2a3068467f3bde48172d01b36924a2"
+      },
+      "worstDifferenceOverview": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/worst-difference-overview.png",
+        "bytes": 411795,
+        "sha256": "cba3ffcf2950fd8ddb5ad06fab5c01cd10d9e51539fc5464069a892b28341f94",
+        "state": "attack",
+        "samplePct": 50
+      },
+      "rawRenderRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation",
+      "rawRendersRetainedLocally": true,
+      "pillowVersion": "12.3.0",
+      "humanReview": {
+        "reviewer": "Codex visual inspection",
+        "result": "accepted",
+        "scope": "six GGD states at 0/50/100 percent; source and candidate contact sheets plus worst-difference overview"
+      }
+    }
+  ],
+  "summary": {
+    "candidates": 3,
+    "allMetricGatesPassed": true,
+    "allHumanReviewed": true,
+    "maxChangedPixelPct": 5.655,
+    "maxLitClassificationXorPct": 1.057344
+  }
+}

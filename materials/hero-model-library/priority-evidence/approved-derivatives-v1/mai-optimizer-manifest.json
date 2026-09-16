@@ -1,0 +1,48 @@
+{
+  "tool": "model-budget/optimize@2",
+  "generatedAt": "2026-09-13T23:04:07.389Z",
+  "out": "../GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation",
+  "role": "champion",
+  "geometryDepsInstalled": true,
+  "totals": {
+    "scanned": 1,
+    "written": 1,
+    "skipped": 0,
+    "rejected": 0,
+    "vramBeforeBytes": 1398100,
+    "vramAfterBytes": 1398100,
+    "vramSavedBytes": 0
+  },
+  "models": [
+    {
+      "source": "assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "out": "../GGD-Asset-Library/conversions/approved-derivatives-v1/mai-decimation/assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
+      "role": "champion",
+      "wrote": true,
+      "vramBefore": 1398100,
+      "vramAfter": 1398100,
+      "rig": {
+        "ok": true,
+        "reasons": [],
+        "before": {
+          "skins": 1,
+          "joints": 141,
+          "clips": 5,
+          "channels": 585,
+          "tris": 13796,
+          "skinnedPrims": 4,
+          "withWeights": 4
+        },
+        "after": {
+          "skins": 1,
+          "joints": 141,
+          "clips": 5,
+          "channels": 585,
+          "tris": 7994,
+          "skinnedPrims": 4,
+          "withWeights": 4
+        }
+      }
+    }
+  ]
+}

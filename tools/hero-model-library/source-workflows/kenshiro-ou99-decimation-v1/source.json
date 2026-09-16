@@ -1,0 +1,18 @@
+{
+  "schema": "ggd.kenshiro-ou99-decimation-source@1",
+  "heroId": "godie-umal",
+  "sourceModelKey": "ou99.464696",
+  "candidateModelKey": "ou99.464696-standard-v1",
+  "character": "拳四郎",
+  "work": "北斗神拳",
+  "sourceId": "ou99:464696",
+  "sourceUrl": "https://www.ou99.com/thread-464696-1-1.html",
+  "sourcePlatform": "Windows / Warcraft III community model",
+  "sourceGlb": "content/assets/models/ou99/ou99_464696.glb",
+  "sourceModelDocument": "content/models/ou99.464696.json",
+  "candidateGlb": "content/assets/models/ou99/ou99_464696_standard_v1.glb",
+  "candidateModelDocument": "content/models/ou99.464696-standard-v1.json",
+  "policyAuthority": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+  "runtimeSelection": "registered-non-default",
+  "automaticEligible": false
+}

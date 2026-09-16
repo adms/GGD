@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-source-rebuild@1",
+  "componentId": "ssbu-link-c00-static-skinned-v1",
+  "sourceSha256": "1291da62c7075a847d48841d087f350cc5bc62119661acda9cd00099b85f1506",
+  "outputSha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
+    "bytes": 1035504,
+    "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/rebuild/body.glb",
+    "bytes": 1035504,
+    "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754"
+  },
+  "byteIdenticalRebuild": true,
+  "bothStructuralValidationsPassed": true,
+  "bothValidationsPassed": true
+}

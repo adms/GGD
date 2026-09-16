@@ -1,0 +1,61 @@
+{
+  "schema": "ggd.rezero-rem-formal-decimation-delivery@1",
+  "componentId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+  "candidateId": "rezero-rem-material-preserving-decimation-v1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "bytes": 1173224,
+    "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+    "triangles": 18328
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+    "bytes": 1041264,
+    "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/rebuild/rem-weighted-7990.glb",
+    "bytes": 1041264,
+    "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+  },
+  "byteIdenticalRebuild": true,
+  "metrics": {
+    "triangles": 7986,
+    "drawPrimitives": 1,
+    "skinCount": 1,
+    "jointCount": 151,
+    "textureCount": 1,
+    "nativeAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "finiteFloatValuesChecked": 184720,
+    "ggdBudgetErrors": 0,
+    "maxSilhouetteXorUnionPct": 4.748201438848921
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.tar.gz",
+    "s3ArchiveMember": "candidates/rem-weighted-7990.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-rem-material-preserving-decimation-v1/latest-receipt.json",
+    "backupReceiptSha256": "d9828ad62b5b1d901acac533579f7c8d9138dafebcfdc5cb176bb4c88a380295",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-rem-material-preserving-decimation-v1/b1973feff8d2099c436e799397267e23139ecb5afe7408563bad87b753497b88.files.json",
+    "fileCount": 24,
+    "fullReadbackVerified": true
+  },
+  "gaps": [
+    "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain missing.",
+    "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+    "Unity custom shader behavior remains reduced to portable base-color PBR material."
+  ]
+}

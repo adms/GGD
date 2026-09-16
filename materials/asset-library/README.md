@@ -18,7 +18,7 @@
 
 本次優先交付 **81 名（37＋37＋7）**：先讀 [81英雄優先合併清單](../hero-model-library/81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](../hero-model-library/priority-81-handoff.json)。逐角色列模型、動作、音訊檔案與尚缺項目；其他來源不阻擋此批審查。完整歷程保留於 [模型整合交付](../hero-model-library/priority-release.md)。
 
-本次優先交付：先讀 [全角色模型盤點](../hero-model-library/全角色模型盤點.md)、[後台版本登記](../hero-model-library/priority-registration.json)、[其他工作流模型](../hero-model-library/workflow-model-options.json) 與 [新轉換成品](../hero-model-library/priority-runtime-options.json)。成品實檔在 `content/assets/models/`，舊不可變 release 保留；不要只讀舊 release 而漏掉本次選項。七名 LOL 日文音訊直接讀 [七名索引](../hero-model-library/lol-project-seven/seven-voice-index.json) 與 [4,927 檔本機驗證](../hero-model-library/lol-project-seven/local-file-verification/README.md)；311 個已核准戰鬥片段的 runtime 路徑與 SHA 讀 [runtime-registration.json](../hero-model-library/lol-project-seven/runtime-registration.json)，其餘逐項狀態讀 [七名聽審佇列](../hero-model-library/lol-project-seven/listening-review-queue.md)，不再擴抓全人物。
+本次優先交付：先讀 [全角色模型盤點](../hero-model-library/全角色模型盤點.md)、[後台版本登記](../hero-model-library/priority-registration.json)、[其他工作流模型](../hero-model-library/workflow-model-options.json) 與 [新轉換成品](../hero-model-library/priority-runtime-options.json)。成品實檔在 `content/assets/models/`，舊不可變 release 保留；不要只讀舊 release 而漏掉本次選項。七名 LOL 日文音訊直接讀 [七名索引](../hero-model-library/lol-project-seven/seven-voice-index.json) 與 [4,927 檔本機驗證](../hero-model-library/lol-project-seven/local-file-verification/README.md)；311 個已核准戰鬥片段的 runtime 路徑與 SHA 讀 [runtime-registration.json](../hero-model-library/lol-project-seven/runtime-registration.json)，完整性讀 [runtime-audit.json](../hero-model-library/lol-project-seven/runtime-audit.json)，其餘逐項狀態讀 [七名聽審佇列](../hero-model-library/lol-project-seven/listening-review-queue.md)，不再擴抓全人物。
 
 
 **本機已驗證音訊可立即讀取，不等待 S3。** `query_voice.py <角色或來源群組> --files --json` 回傳逐檔 `absolutePath` 及 SHA-256；`voice-index.json.localWorkspace` 是本機工作區根目錄。S3 備份進度獨立追蹤，未上傳或未讀回不阻擋其他工作流聽審、轉錄及準備素材。
@@ -37,11 +37,20 @@
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 查模型、貼圖、mesh、動畫通道、VFX、粒子與音訊上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
+| 查英靈殿 b2 13 位＋community 24 位模型讀取鏈與正式站缺檔 | [37 位 E2E 稽核](../hero-model-library/priority-evidence/valhalla-37-model-options-v1/README.md)；程序讀 `audit.json`，離線重驗用 `python3 tools/hero-model-library/audit_valhalla_37.py` |
 | 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
-| 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測 25 個現有 GLB |
+| 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測，數量以 `totals.audited` 為準 |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
+| 查 Fate/unlimited codes PSP／PS2／平台未核 MOD 素材 | [FUC PSP 素材盤點](../hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/psp-asset-audit.md)；多顆硬碟唯讀定位用 `scan_local_payloads.py --root <掛載根目錄>`；找到原作 ZIP／ISO 後才用 `extract_disc_payload.py` 建獨立 intake |
+| 查帕魯三名原作技能 VFX／技能 SFX 缺口與重跑掃描 | [Palworld VFX／SFX 索引](../hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md)；Windows 唯讀容器 probe 與解包樹掃描器在 `tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/` |
+| 逐段聽審 KOF XV Ash 的 86 段本機 MP3 候選 | [Ash 聽審流程](../../tools/hero-model-library/source-workflows/kof-xv-ash-audio-review-v1/README.md)；程序讀 `priority-evidence/kof-xv-ash-audio-review-v1/receipt.json` 與 `files.jsonl.gz` 重建 SHA 鎖定佇列，所有語言、說話者、分類與事件目前仍為 `pending-confirmation` |
+| 逐段聽審 Fate/unlimited codes PS2 Archer／Shirou／Saber 的 653 段本機 WAV | [FUC PS2 聽審流程](../../tools/hero-model-library/source-workflows/fate-unlimited-codes-ps2-audio-review-v1/README.md)；程序讀中央 `voice-index.json`／`voice-files.jsonl.gz`，逐檔重算 WAV SHA-256、大小與 header 後重建 SHA 鎖定佇列。包名不是逐段身份；語言、說話者、分類與事件全部仍為 `pending-confirmation` |
+| 查 300英雄／MBA 未使用角色、道具、動作與特效 | [300／MBA 未使用素材索引](../hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md)；`python3 tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/query.py <角色／路徑>` |
+| 查 MOD、工作坊、魔獸地圖、論壇及作者公開分享的未使用模型／動作／特效／道具 | [社群未使用素材索引](../hero-model-library/source-inventories/community-unused-assets-v1/README.md)；`python3 tools/hero-model-library/source-workflows/community-unused-assets-v1/query.py --kind model --stage unused` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
 | 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；機器讀 `reconciliation.json → sourceStageCounts`；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
+| 查 N64／Melee／Brawl／Ultimate 跨世代可讀來源與轉換阻擋 | [跨世代來源就緒度](../hero-model-library/source-inventories/smash-cross-generation-readiness-v1/README.md)；以 `build_inventory.py --workspace <ABxVFX_EDIT>` 重建；其中 N64 與 NSandNS2 目前皆為 metadata-only，不可當作已擷取 |
+| 查 JUMP FORCE 全角色批次抽取／轉換計畫 | [63 個高信度原生 ID 計畫](../hero-model-library/source-inventories/jump-force-full-roster-v1/README.md)；只需一次鏡像六顆 `Content/Paks`，不重掃 LV99 Steam 目錄 |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |
@@ -59,28 +68,44 @@ python3 tools/hero-model-library/query.py 拳四郎 --downloads
 python3 tools/hero-model-library/query.py --downloads gitlab-ssbu-models
 python3 tools/hero-model-library/query_voice.py 莉娜
 python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json
+python3 tools/hero-model-library/query_voice.py lol-sett --files --json
 python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py Palworld
 python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py 'Fate-Unlimited' --json
 ```
 
+2026-09-16 語音缺口對應由 `voice-gap-source-mappings-20260916.json` 維護；基礎語音索引重建後，再執行 `python3 tools/hero-model-library/sync_voice_gap_source_mappings.py --workspace ..`。它會把 LoL 第二批 11 名的本機 `ja_JP` 解碼收據和已核對角色群組回寫中央 JSON/GZIP/Markdown；只登記來源關係，不會把未聽審片段自動升格為 runtime 戰鬥語音。
+
 Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。Git 的機器查詢入口是 `materials/hero-model-library/source-inventories/windows-game-library.json.gz`；它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整未壓縮 JSON 與原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/` 及 S3 `legacy/`，Git 只收壓縮正規化索引與重建／查詢程式。
 
-Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB、骨架與原生動作 GLB。132 段來源片段中已轉換 112 段，另保留 20 段公式驅動或缺少時長的未轉換缺口；Heracles 未被動作命中的末端休息旋轉已用獨立烘焙與完整逆綁定流程處理。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
+Fate／Unlimited Block Works 作者素材庫保留 14 名英靈：14 顆模型與 127 段已轉換來源動作已成為 Git 成品，5 筆無原生時長來源另作衍生儲備並標 `nativeDurationClaim=false`。已對 4 名現有英雄註冊 5 個 `automaticEligible=false` 後台候選；其餘 10 名進已取得模型待設計索引。上游權利仍按 ARR 記錄，正式站部署 0。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 與中央 `current-resources.json` 查詢。
 
 FateUBW 實檔驗證使用 `python3 tools/hero-model-library/verify_fateubw_reserve.py --workspace <ABxVFX_EDIT>`。它會逐檔重算來源模型、貼圖、動畫、靜態／原生動作 GLB 與驗收證據的 SHA-256，交叉核對 42 筆中央候選及 S3 讀回收據；省略 `--workspace` 時只驗證 Git 可攜的索引與收據關係。最新本機逐檔收據在 [reserve-integrity.json](../hero-model-library/priority-evidence/fateubw-community/reserve-integrity.json)，該收據仍不表示取得再散布權、後台可切換或已部署。
 
 言峰綺禮的 Sven／GoldSrc 社群 MOD 完整來源保留 349 個動作項；GGD 候選另固定挑出 `idle`、`run2`、`2handshoot`、`action_wave`、`gutshot`、`die_simple` 六段，並經正式 `prepareUploadedHeroModel`／`verifyUploadedHeroModel`、Khronos 與 Babylon WebGL 分段驗證。以下是該候選的量測證據，不是上架契約：4,812 三角面、4 個 draw primitive、4 張貼圖、17 個有權重 glTF joints，模型正面為 +X，文件朝向修正為 90 度。這六段是社群 MOD 動作且用途映射仍待遊戲內核准；完整來源中的其餘 343 項只從候選排除，仍保留在本機與 S3，不能把候選寫成 Fate 原生動作、已可切換或已部署。
 
-獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
+獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原的舊模型版本。元件本身仍以 `fullHeroModel=false` 防止被誤認成完整英雄；已核實現有 hero ID、通過當前契約並產生 `model@1` 後，用 `registrationEvidence` 另行記錄非預設下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 
 獨立元件的原始轉換／視覺驗收收據固定保存當時使用的工具版本，不會因今天的政策程式更新而改寫。`audit_current_component_policy.mts` 另以目前 `adoptionPolicy.json`、`budget.ts`、`limits.ts` 與 `glb.ts` 重新量測所有 `componentReady=true` GLB；`current-resources.json` 為每個元件附上該稽核的 SHA 與對應 record。`runtimeBudgetPass` 只表示仍在現行執行期容量內；`heroAdoptionEligible` 另套用正式採用規則。兩者都不會把獨立元件自動升級成英雄、後台選項或已部署內容。
 
-合併前的精確歷史位元組另由 `current-resources.json → historicalModelSourceArtifacts` 查詢。這些檔案保留原 Git 物件、SHA-256、正規化替換版與 S3 原始備份關係；`componentReady=false`，不能當成已驗收下拉選項。重建使用 `restore_historical_model_assets.py`，遇到同路徑但位元組不同時會停止，不覆蓋現有檔案。
+合併前的精確歷史位元組另由 `current-resources.json → historicalModelSourceArtifacts` 查詢。這些檔案保留原 Git 物件、SHA-256、正規化替換版與 S3 原始備份關係；原始檔的 `componentReady=false` 不能冒稱已驗收下拉選項，後續的減面或材質正規化候選可以獨立註冊。四顆 `7bc2fa3f8` 歷史模型以 `pnpm exec tsx tools/hero-model-library/audit_historical_model_lineage.mts --write` 重建當前位元組、結構、契約、轉換後裔及預設／非預設關係收據；省略 `--write` 會檢查收據漂移。低階位元組重建使用 `restore_historical_model_assets.py`，遇到同路徑但位元組不同時會停止，不覆蓋現有檔案。
 
 七名 LOL 音訊中央來源為 `lol-project-seven-ja-jp-16.18.8159717`。`voice-index.json.summary` 的 `sourceFileRelationshipRows` 是來源關係數，`uniqueLocalPaths` 是不同本機路徑數，`uniqueSha256Payloads` 是不同內容數；同路徑在不同來源的關係均保留，不能相加當成新取得音訊。依 `voice-files.jsonl.gz` 的 `path` 相對 `voice-index.json.localWorkspace` 取得絕對路徑，再核對每列 `sha256`。
 
 需要哪一個版本，就讓工作流使用同一 Git commit 的設定與 `release.json`。查詢輸出分開列出「素材庫預設」「本分支實際選擇」「正式機觀測快照」，避免把候選或 S3 上傳當成正式站已部署。
 
+<!-- generated:pr1152-s3-split:start -->
+
+### PR #1152 準備材料 S3 分流
+
+依 [#1252](https://github.com/adms/GGD/issues/1252) 的 Main 合併條件，40 顆未被 `content/models` 引用的 GLB 與 274 份截圖／音訊／過程證據已移至 S3 `legacy/`，合計 314 檔／140,909,684 bytes。Git 保留 [逐檔 SHA-256 與還原清單](pr1152-s3-split.json)；本機原件保留。
+
+S3 完整讀回與逐檔 SHA-256 已驗證：`s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz`。需重建這些來源索引或觀看證據時，先執行：
+
+```sh
+python3 tools/hero-model-library/prepare_pr1152_s3_split.py restore --manifest materials/asset-library/pr1152-s3-split.json
+```
+
+<!-- generated:pr1152-s3-split:end -->
 ## 模型怎麼拿
 
 ```sh

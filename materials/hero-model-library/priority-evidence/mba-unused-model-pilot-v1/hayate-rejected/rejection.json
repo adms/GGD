@@ -1,0 +1,39 @@
+{
+  "schema": "ggd-mba-unused-model-rejection@1",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceCharacterId": "mba:Chara10",
+  "nameZh": "八神疾風",
+  "originalName": "八神はやて",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara10/Hayate.glb",
+    "bytes": 4688112,
+    "sha256": "3ccd6bf1a537c45c45433945a2e92aac4f77336869c8a6a9496e98e85db21abc"
+  },
+  "status": "rejected-before-standardization",
+  "reason": "source WebGL views show severe opaque black rectangular strips across the character; material/UV repair requires a dedicated source fix",
+  "screenshots": {
+    "front": {
+      "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/front.png",
+      "bytes": 197265,
+      "sha256": "5782375917b7011323fd78aa3cd3c4b28da4ef8e5c25d61c3b0c3bfbadf28801"
+    },
+    "isometric": {
+      "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/isometric.png",
+      "bytes": 204196,
+      "sha256": "ace4b223d4458107508e2ca84ef826eff7185dc283c4e2dad776351ca1289617"
+    },
+    "back": {
+      "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/back.png",
+      "bytes": 138109,
+      "sha256": "7efda0474a251370172c8269bbeba8346a46309063af8b9fb8cbfac15fae7e2e"
+    }
+  },
+  "proof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/webgl-proof.json",
+    "bytes": 7661,
+    "sha256": "b70e47d7b2db9edf0641ec97d5c1fa473bc4e907ab3e3663048cab6ec5a59886"
+  },
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "sourcePreserved": true
+}

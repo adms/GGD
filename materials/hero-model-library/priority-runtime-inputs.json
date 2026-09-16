@@ -426,6 +426,156 @@
         "原作 Kagayaki Diffuse／Bundle Mask／Shadow 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Diffuse，原作 toon、遮罩及陰影 shader 仍待還原。",
         "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
       ]
+    },
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber-native-fallback-v1",
+      "name": "Artoria Pendragon (Saber)",
+      "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber",
+      "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "documentSha256": "763076bf54a4aabbf2b58c217779d00c05368c2d615b5aa053e8b2e2c6afe2bc",
+      "nativeAnimationCount": 10,
+      "proceduralAnimationCount": 0,
+      "automaticEligible": false,
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Fate/Unlimited Block Works",
+        "character": "Artoria Pendragon (Saber)",
+        "work": "Fate/stay night",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "heroId": "godie-e002"
+    },
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber-native-fallback-v1",
+      "name": "Artoria Pendragon (Saber)",
+      "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber",
+      "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "documentSha256": "763076bf54a4aabbf2b58c217779d00c05368c2d615b5aa053e8b2e2c6afe2bc",
+      "nativeAnimationCount": 10,
+      "proceduralAnimationCount": 0,
+      "automaticEligible": false,
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Fate/Unlimited Block Works",
+        "character": "Artoria Pendragon (Saber)",
+        "work": "Fate/stay night",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "heroId": "godie-e00l"
+    },
+    {
+      "candidateId": "fateubw-gilgamesh_archer-native-fallback-v1",
+      "name": "Gilgamesh (Archer)",
+      "label": "Gilgamesh (Archer)｜FateUBW 社群模型＋來源動作",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer",
+      "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "documentSha256": "a33c22b6a37ca9d4f3683634da016a984b87335ef5c6086cf3abf8c98320f260",
+      "nativeAnimationCount": 9,
+      "proceduralAnimationCount": 0,
+      "automaticEligible": false,
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Fate/Unlimited Block Works",
+        "character": "Gilgamesh (Archer)",
+        "work": "Fate",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "heroId": "community-review-18-20260907"
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker-native-fallback-v1",
+      "name": "Heracles (Berserker)",
+      "label": "Heracles (Berserker)｜FateUBW 社群模型＋來源動作",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker",
+      "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "documentSha256": "ba14da49f4a5ef20c684c99c68a30df317774cb6f876bc964f53ac0ba659b74a",
+      "nativeAnimationCount": 16,
+      "proceduralAnimationCount": 0,
+      "automaticEligible": false,
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Fate/Unlimited Block Works",
+        "character": "Heracles (Berserker)",
+        "work": "Fate/stay night",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "heroId": "godie-hapm"
+    },
+    {
+      "candidateId": "fateubw-medusa_rider-native-fallback-v1",
+      "name": "Medusa (Rider)",
+      "label": "Medusa (Rider)｜FateUBW 社群模型＋來源動作",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider",
+      "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "documentSha256": "415088754968fb07a2cd1be075238209c510a6aee353badef331744b679440a7",
+      "nativeAnimationCount": 11,
+      "proceduralAnimationCount": 0,
+      "automaticEligible": false,
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "library": "Fate/Unlimited Block Works",
+        "character": "Medusa (Rider)",
+        "work": "Fate/stay night",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "limitations": [
+        "Six runtime states map to existing same-source clips; semantic fallbacks are not native event labels.",
+        "Where death reuses hurt/impact, runtime may apply the owner-approved hurt plus fade presentation.",
+        "Project owner approved registration on 2026-09-15; upstream repository remains recorded as ARR.",
+        "Candidate-only registration preserves existing manual and automatic defaults."
+      ],
+      "validation": "14-of-14 current-hard-policy-pass; source-and-git-sha256-equal; clip-names-in-glb-inventory",
+      "heroId": "godie-hvsh"
     }
   ]
 }

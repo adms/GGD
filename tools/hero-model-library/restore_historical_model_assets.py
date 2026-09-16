@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_EVIDENCE = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json"
+DEFAULT_EVIDENCE = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
 DEFAULT_RECEIPT = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/restoration-receipt.json"
 
 
@@ -24,22 +24,33 @@ def restore(repo: Path, evidence_path: Path) -> dict:
     commit = evidence["historicalCommit"]
     records = []
     for row in evidence["records"]:
-        relative = row["gitPath"]
-        payload = subprocess.check_output(["git", "show", f"{commit}:{relative}"], cwd=repo)
-        if len(payload) != row["bytes"] or digest(payload) != row["sha256"]:
-            raise ValueError(f"Historical Git object does not match evidence: {relative}")
-        target = (repo / relative).resolve()
+        lineage = row.get("recoveredFrom")
+        if lineage:
+            source_relative = lineage["originalGitPath"]
+            retained_relative = lineage["retainedGitPath"]
+            expected_bytes = lineage["bytes"]
+            expected_sha256 = lineage["sha256"]
+        else:
+            source_relative = row["gitPath"]
+            retained_relative = row.get("recoveredGitPath", source_relative)
+            expected_bytes = row["bytes"]
+            expected_sha256 = row["sha256"]
+        payload = subprocess.check_output(["git", "show", f"{commit}:{source_relative}"], cwd=repo)
+        if len(payload) != expected_bytes or digest(payload) != expected_sha256:
+            raise ValueError(f"Historical Git object does not match evidence: {source_relative}")
+        target = (repo / retained_relative).resolve()
         if not target.is_relative_to(repo.resolve()):
-            raise ValueError(f"Historical path escapes checkout: {relative}")
+            raise ValueError(f"Historical path escapes checkout: {retained_relative}")
         if target.exists() and target.read_bytes() != payload:
-            raise ValueError(f"Refusing to overwrite changed file: {relative}")
+            raise ValueError(f"Refusing to overwrite changed file: {retained_relative}")
         target.parent.mkdir(parents=True, exist_ok=True)
         if not target.exists():
             target.write_bytes(payload)
         records.append({
             "id": row["id"],
-            "gitPath": relative,
-            "gitObject": f"{commit}:{relative}",
+            "sourceGitPath": source_relative,
+            "retainedGitPath": retained_relative,
+            "gitObject": f"{commit}:{source_relative}",
             "bytes": len(payload),
             "sha256": digest(payload),
             "presentByteIdenticalAfterRestore": True,
@@ -59,12 +70,14 @@ def main() -> None:
     parser.add_argument("--repo", type=Path, default=ROOT)
     parser.add_argument("--evidence", type=Path, default=DEFAULT_EVIDENCE)
     parser.add_argument("--receipt", type=Path, default=DEFAULT_RECEIPT)
+    parser.add_argument("--check", action="store_true", help="Verify all retained bytes without rewriting the receipt.")
     args = parser.parse_args()
     repo = args.repo.resolve()
     receipt = restore(repo, args.evidence.resolve())
-    args.receipt.parent.mkdir(parents=True, exist_ok=True)
-    args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"records": len(receipt["records"]), "receipt": str(args.receipt)}, ensure_ascii=False))
+    if not args.check:
+        args.receipt.parent.mkdir(parents=True, exist_ok=True)
+        args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"records": len(receipt["records"]), "receipt": str(args.receipt), "written": not args.check}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

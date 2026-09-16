@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-ssbu-ultimate14-motion-optimization@1",
+  "candidateId": "ssbu-chrom-c00-ultimate14-motion-v1",
+  "fighterId": "chrom",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 2187308,
+    "sha256": "67e0e4352ae411e2096432ebb356f88a01d8bad1a285fb5399ae1455f01cfc8a"
+  },
+  "inputConversion": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/converted-01/conversion.json",
+    "bytes": 11721,
+    "sha256": "c9cf34dea8639951591a5cf98a60e65a048dc798034348647c55633aa4d31618"
+  },
+  "parameters": {
+    "targetTriangles": 7900,
+    "errorBound": 0.02,
+    "maxDraws": 6,
+    "textureEdge": 256,
+    "harmonizeAttributes": true
+  },
+  "dependencyRuntime": {
+    "worker": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/decimate.mjs",
+      "bytes": 3340,
+      "sha256": "d92e1b84969c243574630959350664a7992742fe5b64ee5746434bed4e777bab"
+    },
+    "packageLock": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/package-lock.json",
+      "bytes": 25779,
+      "sha256": "5411b7fee57e6e7279c25e559c2eaf92f05782b4dd15f5e0161223c58cda61db"
+    },
+    "packageJson": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ggd-gltf-decimate-v1/package.json",
+      "bytes": 183,
+      "sha256": "0142aa4b54623afc7883acb56268b3acb28b20e3e7bef180b7df200da8465227"
+    }
+  },
+  "stages": {
+    "decimation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/decimation.json",
+      "bytes": 137,
+      "sha256": "60213a8a23dafd5aaffdf0c2463a21e62a45be899f2b5a6d26cdbfc2d5e94545"
+    },
+    "coalescing": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/coalescing.json",
+      "bytes": 1012,
+      "sha256": "220f426b564fd94be755cdc5e06ef56c81fb54b158b9e04d893b2d5fc0c0c46c"
+    },
+    "attributeHarmonization": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/attribute-harmonization.json",
+      "bytes": 1541,
+      "sha256": "b4d683dff22b1e5c7de24167471d6e5cfd867863f44e715cb8e79251ec64ef28"
+    },
+    "primitiveMerge": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/primitive-merge.json",
+      "bytes": 732,
+      "sha256": "cdff7465bc87e5ef7fc1b51de49798b8fc0dbaeedf9c262b1577fd75da4f6a5c"
+    },
+    "atlas": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/atlas.json",
+      "bytes": 3023,
+      "sha256": "91f305eb79e6c027d2334d12e422fa15dd5a3ab7e17b9a0a180cb1b95ca41704"
+    },
+    "alphaAtlasFinalization": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/alpha-atlas-finalization.json",
+      "bytes": 665,
+      "sha256": "054cce66ba8c9e345d03f5f3d92376463e267ed26485389952b96898501897a0"
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+    "bytes": 1942664,
+    "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e"
+  },
+  "runtimeSelectable": false,
+  "deployed": false
+}

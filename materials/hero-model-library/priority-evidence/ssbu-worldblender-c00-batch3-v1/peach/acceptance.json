@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-worldblender-c00-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-peach-c00-static-skinned-v1",
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "heroBound": false,
+      "runtimeSelectable": false,
+      "deploymentVerified": false
+    }
+  ]
+}

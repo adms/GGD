@@ -19,6 +19,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 INDEX = REPO / "materials/hero-model-library/download-sources.json"
 EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json"
+# Every entry is a source record whose *successor* is produced under a fresh
+# content digest.  Never add a GLB by filename alone: the central source record
+# is what preserves the predecessor relationship and lets the publication gate
+# distinguish an archive from a runtime candidate.
 TARGET_IDS = {
     "zero-lancer-p1-static-skinned-v1",
     "zero-lancer-p2-static-skinned-v1",
@@ -29,6 +33,9 @@ TARGET_IDS = {
     "ssbu-ryu-c00-static-skinned-v1",
     "ssbu-ptrainer-male-c00-static-skinned-v1",
     "ssbu-ptrainer-female-c01-static-skinned-v1",
+    "ssbu-ryu-c00-static-decimated-v1",
+    "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+    "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
 }
 
 
@@ -113,10 +120,11 @@ def build(index: dict, local_root: Path) -> tuple[dict, dict, list[tuple[Path, b
             "sourceArtifact": source,
             "materialNormalization": {
                 "schema": "ggd-transparent-component-material-normalization@1",
-                "revision": 1,
+                "revision": 2,
                 "changes": changes,
                 "binaryChunkByteIdentical": True,
                 "nonMaterialJsonByteSemanticIdentical": True,
+                "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
             },
         })
         rows.append({
@@ -126,6 +134,7 @@ def build(index: dict, local_root: Path) -> tuple[dict, dict, list[tuple[Path, b
             "changes": changes,
             "binaryChunkByteIdentical": True,
             "nonMaterialJsonByteSemanticIdentical": True,
+            "postNormalizationVisualReview": "required-before-any-new-runtime-or-default-claim",
             "sourcePreservation": {
                 "local": source["absolutePath"],
                 "gitArchivePath": source.get("gitArchivePath"),
@@ -135,7 +144,7 @@ def build(index: dict, local_root: Path) -> tuple[dict, dict, list[tuple[Path, b
         })
     assert found == TARGET_IDS, (found, TARGET_IDS)
     evidence = {
-        "schema": "ggd-transparent-component-material-normalization-batch@1",
+        "schema": "ggd-transparent-component-material-normalization-batch@2",
         "rule": "transparent atlas materials use BLEND",
         "records": sorted(rows, key=lambda row: row["candidateId"]),
         "sourceBytesPreserved": True,

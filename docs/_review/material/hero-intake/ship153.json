@@ -7,7 +7,7 @@
  "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
-  "modelComponents": 29,
+  "modelComponents": 65,
   "historicalModelSourceArtifacts": 4,
   "referencedComponents": 0
  },
@@ -26,9 +26,9 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "8f99ed0edbc2ffdc092e21d3a36379f34dc52c26fe416b47476669557f3b4579",
+ "digest": "e9a7c9f86357dc00cd818d6119757f1688ccccfe892ce4f5d8585c7c9aec91a0",
  "digestParts": {
-  "core": "241e4df942c312a2e192707547f5728d7bf04c367f4f9d84fc39e2bc73fbe0f8",
+  "core": "bf3b7136a7a7241845798022bc0123fc51a1d853106deb6e8ee739ae97af1a99",
   "voiceCandidates": "ef51412ed9f572c870f0eadee965e301fcd9e1cae6149b4ecedd44d8c880e4f9"
  },
  "heroes": [
@@ -2200,9 +2200,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
-    "glbPath": "assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
-    "bytes": 1431116,
+    "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+    "glbPath": "assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+    "bytes": 1149836,
     "clipMap": {
      "idle": "bat_idle",
      "run": "single_run",
@@ -6496,9 +6496,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
-    "glbPath": "assets/models/community/versions/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
-    "bytes": 2210132,
+    "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
+    "glbPath": "assets/models/community/versions/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+    "bytes": 2081176,
     "clipMap": {
      "idle": "GGD_native_idle",
      "run": "GGD_native_run",
@@ -7846,9 +7846,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
-    "glbPath": "assets/models/community/versions/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
-    "bytes": 3003920,
+    "modelKey": "version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442",
+    "glbPath": "assets/models/community/versions/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+    "bytes": 2899468,
     "clipMap": {
      "idle": "GGD_native_idle",
      "run": "GGD_native_run",
@@ -8128,8 +8128,8 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "champ.skin.barbarian",
-    "glbPath": "assets/models/champions/blocky-barbarian.glb",
+    "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+    "glbPath": "assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb",
     "bytes": 52124,
     "clipMap": {
      "idle": "idle",
@@ -8750,11 +8750,10 @@
     "ok": false,
     "pack": true,
     "sharedFrom": null,
-    "categories": 11,
+    "categories": 12,
     "required": 9,
-    "haveRequired": 7,
+    "haveRequired": 8,
     "missing": [
-     "skill-name.q",
      "skill-name.ex"
     ],
     "select": 1,
@@ -8796,12 +8795,12 @@
       "confidence": "candidate"
      }
     ],
-    "gap": "出貨門檻缺 2 格",
+    "gap": "出貨門檻缺 1 格",
     "severity": "warning"
    },
    "blockers": [],
    "warnings": [
-    "出貨門檻缺 2 格"
+    "出貨門檻缺 1 格"
    ],
    "ready": true
   },

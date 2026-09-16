@@ -2069,6 +2069,92 @@
         "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false
+    },
+    {
+      "id": "ou99:464696",
+      "modelKey": "ou99.464696",
+      "glbPath": "assets/models/ou99/ou99_464696.glb",
+      "sha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
+      "bytes": 5118592,
+      "documentSha256": "b4597ea2856c1805e42d4e22cb79cac738d7af6bbb27b2d9b4ff64ba2ee07532",
+      "sourceCharacter": "拳四郎",
+      "sourceWork": "北斗神拳",
+      "sourceAssetId": "https://www.ou99.com/thread-464696-1-1.html",
+      "sourcePlatform": "Windows / Warcraft III community model",
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_464696.glb",
+      "identityStatus": "character-labelled-ou99-community-model",
+      "fullCharacterPackage": false,
+      "validation": "retained-over-budget-source",
+      "limitations": [
+        "Warcraft III 社群模型，不是 JUMP FORCE 遊戲擷取版。",
+        "保留 62 段來源動作；正式部署尚未驗證。"
+      ],
+      "validationEvidence": {
+        "gitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/receipt.json",
+        "sha256": "d407d99ee921751fe5e4aa9ae2def3d20a97d13ae97ac7e6d98ce5a8882f7ef8"
+      },
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/ou99/ou99_464696.glb",
+      "sourceId": "ou99:464696",
+      "automaticEligible": false,
+      "preparationBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.files.json",
+        "receiptGitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/stage-backup.json",
+        "receiptSha256": "3765e07425a62e0345b419a2ce3fcff4d30855c4962cba1fe3815c900ebeed30",
+        "allMemberSha256Verified": true
+      }
+    },
+    {
+      "id": "ou99:464696:standard-v1",
+      "modelKey": "ou99.464696-standard-v1",
+      "glbPath": "assets/models/ou99/ou99_464696_standard_v1.glb",
+      "sha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42",
+      "bytes": 4042704,
+      "documentSha256": "9db5fc527cb5e91507506864a1e7aab069569cfb0438dd607b98313841c9b697",
+      "sourceCharacter": "拳四郎",
+      "sourceWork": "北斗神拳",
+      "sourceAssetId": "https://www.ou99.com/thread-464696-1-1.html",
+      "sourcePlatform": "Windows / Warcraft III community model",
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell - 1",
+        "hurt": "Stand Hit",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_464696_standard_v1.glb",
+      "identityStatus": "character-labelled-ou99-community-model",
+      "fullCharacterPackage": false,
+      "validation": "model-intake-and-visual-comparison-passed",
+      "limitations": [
+        "Warcraft III 社群模型，不是 JUMP FORCE 遊戲擷取版。",
+        "保留 62 段來源動作；正式部署尚未驗證。"
+      ],
+      "validationEvidence": {
+        "gitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/receipt.json",
+        "sha256": "d407d99ee921751fe5e4aa9ae2def3d20a97d13ae97ac7e6d98ce5a8882f7ef8"
+      },
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/ou99/ou99_464696_standard_v1.glb",
+      "sourceId": "ou99:464696",
+      "automaticEligible": false,
+      "preparationBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kenshiro-ou99-decimation-v1/52f202835ec80665acf3fefff3442846b2d2e9d9acd2d72f3382b6eefc3b8339.files.json",
+        "receiptGitPath": "tools/hero-model-library/source-workflows/kenshiro-ou99-decimation-v1/evidence/stage-backup.json",
+        "receiptSha256": "3765e07425a62e0345b419a2ce3fcff4d30855c4962cba1fe3815c900ebeed30",
+        "allMemberSha256Verified": true
+      }
     }
   ],
   "heroes": [
@@ -3177,6 +3263,30 @@
         }
       ],
       "pending": []
+    },
+    {
+      "id": "godie-umal",
+      "runtimeHeroId": "godie-umal",
+      "name": "拳四郎",
+      "options": [
+        {
+          "sourceId": "ou99:464696:standard-v1",
+          "sourceModelKey": "ou99.464696-standard-v1",
+          "label": "拳四郎 OU99 社群本尊／62 來源動作／減面版",
+          "source": {
+            "kind": "exact",
+            "character": "拳四郎",
+            "work": "北斗神拳",
+            "library": "ou99 偶久網",
+            "reference": "https://www.ou99.com/thread-464696-1-1.html",
+            "tier": "w3x",
+            "selectionClass": "community-mod",
+            "sourceGame": "Warcraft III community model",
+            "sourcePlatform": "Windows"
+          }
+        }
+      ],
+      "pending": []
     }
   ],
   "candidates": [
@@ -3689,6 +3799,16 @@
       "sourceReference": "content/champions/lol-yasuo.json",
       "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
       "sha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b"
+    },
+    {
+      "candidateId": "ou99:464696:standard-v1",
+      "heroId": "godie-umal",
+      "runtimeHeroId": "godie-umal",
+      "modelKey": "ou99.464696-standard-v1",
+      "identityStatus": "character-labelled-ou99-community-model",
+      "sourceReference": "https://www.ou99.com/thread-464696-1-1.html",
+      "gitPath": "content/assets/models/ou99/ou99_464696_standard_v1.glb",
+      "sha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42"
     }
   ],
   "scope": "Other workflow delivered models retained as independent candidates; original immutable S3 release unchanged. Backend readiness and current website are separate records."

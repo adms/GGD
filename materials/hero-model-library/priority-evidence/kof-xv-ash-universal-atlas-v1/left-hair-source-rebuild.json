@@ -1,0 +1,23 @@
+{
+  "schema": "ggd.kof-xv-ash-universal-atlas-source-rebuild@1",
+  "componentId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
+    "bytes": 1945824,
+    "sha256": "e54ee27ffca194fd9179481fed260349d93954fad4c48169b37a482d95fb53ee"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+    "bytes": 1486160,
+    "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2"
+  },
+  "secondBuild": {
+    "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+    "bytes": 1486160
+  },
+  "byteIdenticalRebuild": true,
+  "tool": "tools/hero-model-library/source-workflows/kof-xv-ash-universal-atlas-v1/build.py",
+  "limitations": [
+    "The deterministic output is static and does not establish gameplay animation readiness."
+  ]
+}

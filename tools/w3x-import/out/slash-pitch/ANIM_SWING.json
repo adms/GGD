@@ -57,18 +57,6 @@
    "pitchDeg": 82,
    "attackClipPitchDeg": 18
   },
-  "b2-popp.q": {
-   "champion": "b2-popp",
-   "championName": "何布",
-   "ability": "先幫你預熱",
-   "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
-   "clip": "GGD_native_special03",
-   "blade": "Weapon1_L←Root_M",
-   "sweptDeg": 100.6,
-   "planarity": 0.995,
-   "pitchDeg": 42,
-   "attackClipPitchDeg": 21
-  },
   "b2-shadow.ex": {
    "champion": "b2-shadow",
    "championName": "闇影",
@@ -313,13 +301,13 @@
    "champion": "godie-hapm",
    "championName": "海克力斯 - Berserker",
    "ability": "52-03 無銘斧劍",
-   "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
-   "clip": "Spell Slam",
-   "blade": "Weapon←R_hand",
-   "sweptDeg": 140.5,
-   "planarity": 0.991,
-   "pitchDeg": 25,
-   "attackClipPitchDeg": 76
+   "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+   "clip": "cast",
+   "blade": "weapon←handRight",
+   "sweptDeg": 74.9,
+   "planarity": 0.998,
+   "pitchDeg": 89,
+   "attackClipPitchDeg": 84
   },
   "godie-hart.q": {
    "champion": "godie-hart",
@@ -397,7 +385,7 @@
    "champion": "godie-nbbc",
    "championName": "傳說的龍騎士 - 勇者小呆",
    "ability": "08-04 阿邦快速劍X",
-   "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+   "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
    "clip": "GGD_native_special02",
    "blade": "Weapon1_L←Root_M",
    "sweptDeg": 68.6,
@@ -409,7 +397,7 @@
    "champion": "godie-nbbc",
    "championName": "傳說的龍騎士 - 勇者小呆",
    "ability": "08-02 萊丁快速劍",
-   "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+   "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
    "clip": "GGD_native_special02",
    "blade": "Weapon1_L←Root_M",
    "sweptDeg": 68.6,
@@ -674,7 +662,7 @@
   "community-review-03-20260907.e": {
    "champion": "community-review-03-20260907",
    "ability": "必殺忍蜂",
-   "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+   "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
    "reason": "no-blade",
    "detail": "找不到 武器/手 與一個非退化的近端關節",
    "castClip": null,
@@ -683,7 +671,7 @@
   "community-review-03-20260907.r": {
    "champion": "community-review-03-20260907",
    "ability": "超必殺忍蜂",
-   "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+   "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
    "reason": "no-blade",
    "detail": "找不到 武器/手 與一個非退化的近端關節",
    "castClip": null,

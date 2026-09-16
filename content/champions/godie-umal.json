@@ -351,6 +351,26 @@
         "selectionClass": "community-mod"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b",
+      "label": "ou99 拳四郎（本尊／62 段原生動作／減面版）",
+      "sourceModelKey": "ou99.464696-standard-v1",
+      "modelSha256": "36d8ad96baba76da04a0692a176795edd143f63a0a0bf0dd774fd3844059ab8a",
+      "binarySha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42",
+      "registeredAt": "2026-09-15T09:39:17.659Z",
+      "source": {
+        "kind": "exact",
+        "character": "拳四郎",
+        "work": "北斗神拳",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-464696-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

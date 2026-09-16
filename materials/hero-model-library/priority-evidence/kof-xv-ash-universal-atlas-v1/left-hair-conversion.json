@@ -1,0 +1,39 @@
+{
+  "schema": "ggd.kof-xv-ash-universal-atlas@1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
+    "bytes": 1945824,
+    "sha256": "e54ee27ffca194fd9179481fed260349d93954fad4c48169b37a482d95fb53ee"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+    "bytes": 1486160,
+    "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2"
+  },
+  "before": {
+    "drawPrimitives": 18,
+    "triangles": 7869,
+    "materialCount": 18,
+    "imageCount": 15,
+    "skinCount": 1
+  },
+  "after": {
+    "drawPrimitives": 5,
+    "triangles": 7869,
+    "materialCount": 4,
+    "imageCount": 12,
+    "skinCount": 1
+  },
+  "mergedPrimitives": 13,
+  "garbageCollection": {
+    "images": 12,
+    "materials": 4,
+    "draws": 5
+  },
+  "limits": {
+    "maxDrawPrimitives": 6,
+    "maxTextureDimension": 256,
+    "sourceTrianglePolicy": "preserve already-decimated 7868/7869 triangles"
+  },
+  "status": "candidate-only; requires Khronos, model guard, source-versus-output visual review and deterministic rebuild before registration"
+}

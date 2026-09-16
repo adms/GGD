@@ -1,0 +1,21 @@
+{
+  "schema": "ggd.aws-s3-identity-verification@1",
+  "verifiedAt": "2026-09-13T20:15:14.827496+00:00",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789330311",
+  "requiredArnSubstring": "assumed-role/vibe-coding-s3-role/",
+  "roleMatched": true,
+  "actions": [
+    "sts:GetCallerIdentity",
+    "s3:PutObject",
+    "s3:GetObject"
+  ],
+  "archiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+  "accessDenied": false,
+  "deleteUsed": false,
+  "credentialFilesAccessed": false,
+  "note": "Identity was checked before the authorized upload; the archive and manifest then completed full GET readback verification."
+}

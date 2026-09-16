@@ -69,6 +69,86 @@
    },
    "lastError": null
   },
+  "skill-name.q": {
+   "takes": [],
+   "text": "（原檔）Xerath/skin0/76986339",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.263356,
+    "lufs": null,
+    "hash": "674305a8d764cd423bf732093e28f65fc42f6c50605b1cb1b9ce88fe6c38c881",
+    "at": 1789466807912
+   },
+   "lastError": null
+  },
+  "skill-name.q.2": {
+   "takes": [],
+   "text": "（原檔）Xerath/skin0/820216149",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.493311,
+    "lufs": null,
+    "hash": "b715c072b575fa9ae63ae3b48535f41f6486493f2ae95a36372da85a2c555d98",
+    "at": 1789466807963
+   },
+   "lastError": null
+  },
+  "skill-name.q.3": {
+   "takes": [],
+   "text": "（原檔）Xerath/skin0/837144372",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.278844,
+    "lufs": null,
+    "hash": "f61550e1a8d6eb13155d80961166541623a25250c07418d9345fed5b9f5b0e7e",
+    "at": 1789466808016
+   },
+   "lastError": null
+  },
+  "skill-name.q.4": {
+   "takes": [],
+   "text": "（原檔）Xerath/skin0/2053253391",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.714558,
+    "lufs": null,
+    "hash": "eec79b87816a69fc9d009eb19e36c0a3f289eff141993ddbde7787715bf00b24",
+    "at": 1789466808067
+   },
+   "lastError": null
+  },
   "skill-name.w": {
    "takes": [],
    "text": "（原檔）Xerath/skin0/539387195",

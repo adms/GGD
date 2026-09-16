@@ -22,7 +22,7 @@ const BLOCKY = path.join(ROOT, "content/assets/models/champions/blocky-knight.gl
  * A model that STILL breaches the champion gate, so the failure path stays
  * covered now that no champion does. `guardian_skeleton.glb` reproduces the
  * retired knight.glb profile almost exactly: 1024² albedo (over the 512 warn),
- * 9 draw calls (over the limit of 5) and 123 animation channels (warning at 120).
+ * 9 draw calls (over the limit of 6) and 123 animation channels (below the current 300 warning).
  */
 const OVERSIZED = path.join(ROOT, "content/assets/models/props/guardian_skeleton.glb");
 

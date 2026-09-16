@@ -74,6 +74,35 @@ for id,work in {'godie-e00r':'新世紀福音戰士（由故事 EVANGELION 辨�
 for id,h in heroes.items():
  if h.get('work'):works[id]=h['work']
 assert set(heroes)<=set(works),set(heroes)-set(works)
+palworld_index_path=repo/'materials/hero-model-library/palworld/帕魯三角色素材索引.json'
+palworld_receipt_path=repo/'materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json'
+palworld_index=read(palworld_index_path);palworld_receipt=read(palworld_receipt_path)
+assert palworld_index['schema']=='ggd-palworld-three-resource-index@1'
+assert palworld_receipt['schema']=='ggd-palworld-hero-integration-receipt@1'
+assert palworld_receipt['completionBoundary']['ggdHeroAuthoringCompleteCount']==3
+assert palworld_receipt['completionBoundary']['localHeroForgeDropdownRegisteredCount']==3
+assert palworld_receipt['completionBoundary']['sourceFaithfulAudiovisualCompleteCount']==0
+assert palworld_receipt['completionBoundary']['productionDeploymentVerifiedCount']==0
+palworld_integrations=palworld_receipt['integrations']
+assert len(palworld_integrations)==3
+palworld_by_hero={row['heroId']:row for row in palworld_integrations}
+assert len(palworld_by_hero)==3
+palworld_source_hero_overrides={}
+palworld_candidate_overrides={}
+for character in palworld_index['characters']:
+ hero_id=character['heroId'];integration=palworld_by_hero[hero_id]
+ assert character['name']==integration['name']
+ assert character['backendDropdownRegistered'] is True and character['localHeroForgeModelSelectable'] is True
+ for candidate in character['modelCandidates']:
+  source_id=candidate.get('sourceId')
+  if source_id:
+   mapped=palworld_source_hero_overrides.setdefault(source_id,{'heroIds':[]})
+   if hero_id not in mapped['heroIds']:mapped['heroIds'].append(hero_id)
+  candidate_key=candidate.get('candidateId',candidate['id'])
+  override={'heroIds':[hero_id], 'readiness':candidate.get('readiness'), 'runtimeSelectable':candidate.get('runtimeSelectable') is True}
+  previous=palworld_candidate_overrides.setdefault(candidate_key,override)
+  assert previous==override, 'Conflicting Palworld candidate integration state: '+candidate_key
+assert set(palworld_by_hero)=={'acquired-jetragon','acquired-astralym','acquired-cattiva'}
 labels={'300heroes':'300英雄','mba':'魔法少女武鬥祭 MBA','original':'GGD 原版','w3x':'原 W3X 匯入／借用'}
 kinds={'exact':'本尊','alternate':'同角色其他形態','style-proxy':'相似外觀代理','previous':'原有模型（身分未再驗）'}
 known={'champ.sela':'Sela／方塊法師','champ.thorne':'Thorne／方塊騎士','champ.skin.barbarian':'方塊野蠻人','champ.godie-zombiex':'喪標麥可／方塊不死族','w3x.stock.satyrtrickster':'Satyr Trickster／薩特詭術師'}
@@ -111,7 +140,11 @@ for id,h in heroes.items():
   if key and key not in seen:options.append(old(key));seen.add(key)
  options.sort(key=lambda o:(selection_rank(policy,id,o['id'],o['key'],o),source_release_rank(o),['exact','alternate','style-proxy','previous'].index(o['kind']) if o['kind'] in ['exact','alternate','style-proxy','previous'] else 9))
  for o in options:
-  o['defaultEligible']=eligible(policy,id,o['id'],o['key'],o['kind'])
+  registered=[v for v in branches.get(id,{}).get('modelVersions',[]) if v['sourceModelKey']==o['key']]
+  # A registered candidate may be selectable without permission to become default.
+  source_eligible=by_key.get(o['key'],{}).get('automaticEligible') is not False
+  version_eligible=not registered or any(v.get('automaticEligible') is not False for v in registered)
+  o['defaultEligible']=source_eligible and version_eligible and eligible(policy,id,o['id'],o['key'],o['kind'])
   o['selectionClass']=selection_class(policy,id,o['id'],o['key'],o)
  automatic_default=next((o for o in options if o['defaultEligible']),None)
  default=automatic_default
@@ -144,6 +177,7 @@ for id,h in heroes.items():
 assert len(rows)==len(set(heroes))
 download_plan=plan_sources(read(repo/'materials/hero-model-library/download-sources.json'),{**manifest,'heroes':list(heroes.values())},policy)
 input_paths=[repo/'materials/hero-model-library'/name for name in ['manifest.json','release.json','inventory-context.json','pairing-inputs.json','download-sources.json','derivatives.json','default-policy.json']]
+input_paths += [palworld_index_path,palworld_receipt_path]
 input_paths += list((repo/'content/champions').glob('*.json')) + list((repo/'materials/community-hero-forge/recipes').glob('*.upload-recipe.json'))
 input_paths += [Path(__file__).resolve(),Path(__file__).resolve().with_name('source_links.py'),Path(__file__).resolve().with_name('default_policy.py')]
 input_paths += [repo/'materials/hero-model-library'/name for name in ['workflow-model-options.json','priority-runtime-options.json','current-production.json'] if (repo/'materials/hero-model-library'/name).exists()]
@@ -171,7 +205,21 @@ for r in no_default:
  state='已取得來源；依下方逐來源證據完成形態確認、轉換與驗收' if sources else '既有候選轉換失敗；見下方失敗原因' if r['pending'] else '只有未核准相似候選；本尊來源仍待補／配對'
  progress.append(f"| {text(r['name'])} `{r['id']}` | {source_names} | {state} |")
 placeholder_message=(f"**另有 {len(placeholders)} 名新增角色仍使用原有佔位：** "+'、'.join(text(r['name']) for r in placeholders)+'。其中已取得本尊來源者見下方來源表，不能把取得等同切換完成。') if placeholders else '**目前無新增角色使用原有佔位。** 原生動作、特效與語音缺口仍依各自證據記錄。'
-progress+=['',placeholder_message,'',
+palworld_progress=['## 帕魯三名 Hero Forge 整合狀態', '',
+'以下三名不是靜態 `content/champions` 英雄文件，而是已驗證的 Hero Forge 六技能槽套件；因此不混入上方靜態英雄筆數。每一項模型選項都在本機 Hero Forge 下拉式選單註冊，原始來源候選仍個別保留其轉換狀態。**這是本機選項與套件驗證，不是 Main 合併或正式部署證據。**', '',
+'| 角色 | Hero Forge 狀態 | 已註冊模型選項 | 原生影音與部署缺口 |', '|---|---|---|---|']
+for integration in palworld_integrations:
+ options='<br>'.join(f"`{option['modelKey']}`：{option['triangles']:,} 面，{'現行幾何政策合格' if option['currentPolicyEligible'] else '超過 10,000 面，保留既有選項但不可作現行政策新增採用'}" for option in integration['modelOptionEvidence'])
+ fidelity=integration['sourceFidelity']
+ gaps=[]
+ if not fidelity['originalSkillVfxComplete']:gaps.append('原始招式 VFX 未完成')
+ if not fidelity['originalSkillSfxComplete']:gaps.append('原始技能音效未完成')
+ if not fidelity['creatureCryListeningApproved']:gaps.append('叫聲未聽審綁定')
+ if not fidelity['motionSemanticListeningApproved']:gaps.append('動作語意未聽審')
+ assert integration['productionDeploymentVerified'] is False
+ palworld_progress.append(f"| {text(integration['name'])} `{integration['heroId']}` | 六技能槽套件已驗證；本機下拉已註冊 | {options} | {'；'.join(gaps)}；正式部署未驗證 |")
+palworld_progress+=['',f"驗收收據：`{palworld_receipt_path.relative_to(repo)}`。3/3 套件完成、3/3 至少一個現行幾何政策合格的選項；原始視聽完整度 0/3、正式部署 0/3。",'']
+progress+=['',placeholder_message,'',*palworld_progress,
 f'「尚未通過轉換」的 {len(pending_rows)} 筆只統計既有轉換失敗，不是全部待補角色。既有 W3X 若只證實檔名，仍須確認本尊／形態；已取得整庫但未配對者不能說成不存在。','']
 if quality_review.get('affectedSources'):
  progress+=['**全庫發布檢查仍未通過。** 幾何普查標出 '+ '、'.join(next((r['name'] for r in rows if r['id']==x['heroId']),x['heroId']) for x in quality_review['affectedSources'])+' 的原件／副本部件，保留全部原件並待確認；不以登記成功代替完整視覺驗收。精確來源與狀態見 `post-registration-review.json`，其他未解發布檢查見 `priority-release.md`。','']
@@ -179,7 +227,7 @@ lines=['# 全角色模型盤點', '',f'更新時間：{now}（Asia/Taipei）。�
 '**Main 優先合併 81 名新英雄：** [81英雄優先合併清單.md](81英雄優先合併清單.md) 對應逐角色模型、動作、音訊成品與缺口；程序讀 `priority-81-handoff.json`。全表其餘角色與未轉換來源繼續保留。','',
 '如月列車音訊補件：關門廣播作「嘲諷」、JR 發車旋律作「勝利」，原有九類保留。[成品、來源與 SHA 收據](priority-evidence/kisaragi-train-audio/conversion.json)；[角色語音索引](角色語音索引.md)。目前為分支交付，合併／部署狀態依最新交付清單。','',
 *progress,
-*render_sources(download_plan,policy),
+*render_sources(download_plan,policy,palworld_source_hero_overrides,palworld_candidate_overrides),
 '## 盤點基準','',
 f'- 全表 **{len(rows)} 個角色／形態 ID**：既有 71、第一批 37、第二批 37、LOL 追加 7、歷史對應 4、主線追加形態。LOL `example:*` 是規格 ID，`runtimeHeroId` 是出貨 `lol-*`；不重複計數。',
 f'- 正式站白名單 **{len(white)}** 名；角色文件 **{len(prod["champions"])}** 筆。快照 `{observation["observedAt"]}`，內容版本 `{observation["contentVersion"]}`。',
@@ -265,7 +313,7 @@ for r in rows:
    option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'localRuntimeRoot':m.get('localRuntimeRoot'),'s3Uri':s3.get('s3Uri') or (release['release_uri']+location if location else None),'s3ManifestUri':s3.get('manifestUri'),'s3ReadbackVerified':s3.get('readbackVerified'),'gitPath':m.get('gitPath') or 'materials/asset-library/releases/'+release['release']+'/'+location,'limitations':m['limitations']}
   else:option['asset']={'modelKey':option['key'],'location':'existing-project-model','s3Uri':None}
 path=repo/'materials/hero-model-library/全角色模型盤點.md'
-inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'downloadPlan':download_plan}
+inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'heroForgeIntegrations':{'source':'priority-evidence/palworld-hero-integration/receipt.json','scope':'locally verified Hero Forge packages; not static champion documents or production deployment','integrations':palworld_integrations},'downloadPlan':download_plan}
 validation={'time':now,'inputs_sha256':input_digest,'rows':len(rows),'missing_works':[],'source_options':len(models),'s3_release':release['release'],'live_selectable':len(white),'pending':len(pending_rows),'productionContentVersion':observation['contentVersion'],'sha256':hashlib.sha256(report.encode()).hexdigest()}
 artifacts={path:report,validation_path:json.dumps(validation,ensure_ascii=False,indent=2)+'\n',path.with_name('inventory.json'):json.dumps(inventory,ensure_ascii=False,indent=2)+'\n'}
 if args.check:

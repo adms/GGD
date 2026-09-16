@@ -1,0 +1,10 @@
+{
+  "name": "ggd-ssbu-ryu-procedural-decimation-v1",
+  "private": true,
+  "dependencies": {
+    "@gltf-transform/core": "4.2.1",
+    "@gltf-transform/extensions": "4.2.1",
+    "@gltf-transform/functions": "4.2.1",
+    "meshoptimizer": "1.0.1"
+  }
+}

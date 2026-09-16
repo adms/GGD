@@ -5009,10 +5009,10 @@
       "ability": "b2-popp.w",
       "name": "冷氣帳單換定身",
       "champion": "b2-popp",
-      "todayPlays": "magicIce",
-      "cause": "element-whoosh-already",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
       "evidence": {
-        "elementCue": "magicIce"
+        "base": null
       }
     },
     {

@@ -102,10 +102,8 @@ def build_receipt(decision: dict, contract: dict, champion_before: dict, selecte
         "featureBranchSelectable": True,
         "productionDeploymentVerified": False,
         "remainingOpenIntegrationGapIds": [
-            "source-toon-and-hair-colour-parity",
-            "original-vfx-conversion",
-            "animation-events-and-sfx-binding",
-            "skill-timing-and-full-combat-binding",
+            row["id"] for row in contract["fiveOpenIntegrationGaps"]
+            if row.get("remaining", row["status"] != "owner-approved-existing-runtime-bound")
         ],
     }
 
@@ -130,6 +128,12 @@ def assert_applied(decision: dict, contract: dict, champion: dict, receipt: dict
         raise ValueError("Popp owner-selected weapon model is not active")
     if champion.get("modelSelectionMode") != "manual":
         raise ValueError("Popp owner-selected weapon must remain a manual selection")
+    expected_remaining = [
+        row["id"] for row in contract["fiveOpenIntegrationGaps"]
+        if row.get("remaining", row["status"] != "owner-approved-existing-runtime-bound")
+    ]
+    if receipt.get("remainingOpenIntegrationGapIds") != expected_remaining:
+        raise ValueError("Popp decision receipt remaining-gap list is stale")
     for item in receipt["deathPresentation"]["runtimeEvidence"]:
         path = ROOT / item["gitPath"]
         if evidence(path) != item:

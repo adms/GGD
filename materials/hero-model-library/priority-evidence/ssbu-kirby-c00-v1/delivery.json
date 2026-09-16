@@ -1,0 +1,71 @@
+{
+  "schema": "ggd.ssbu-kirby-component-delivery@1",
+  "componentId": "ssbu-kirby-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "nameZh": "卡比",
+    "originalName": "Kirby",
+    "nativeId": "fighter/kirby/model/body/c00",
+    "variant": "c00"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/kirby/model/body/c00/kirby-c00.blend",
+    "bytes": 9042756,
+    "sha256": "8674bd9eea87d351662cf4c3090f1b18ab2a10128c96d42656b4216f2e75829b"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+    "bytes": 496028,
+    "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/ssbu-kirby-c00-rebuild-v1/body.glb",
+    "bytes": 496028,
+    "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114"
+  },
+  "metrics": {
+    "triangles": 5500,
+    "drawPrimitives": 2,
+    "skinCount": 1,
+    "jointCount": 51,
+    "textureCount": 2,
+    "nativeAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "budgetErrors": 0,
+    "finiteFloatValuesChecked": 74172,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-kirby-c00-blender4513-v1/e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/ssbu-kirby-c00-blender4513-v1/e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02.files.json",
+    "archiveSha256": "e1d1e4b36b0d1536b77155aa30fe5511bde1a18ed5e8e3997902fa64fa04ca02",
+    "archiveBytes": 2748247,
+    "fileCount": 14,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "gaps": [
+    "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+    "The Ultimate14 native motion payload has not been retargeted to this 51-joint body or playback accepted.",
+    "This independent component is not bound to the existing Kirby hero, not registered in the backend dropdown and not deployed.",
+    "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported."
+  ]
+}

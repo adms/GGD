@@ -93,6 +93,11 @@ def merge(path: str) -> str:
             j["bufferViews"].append({"buffer": 0, "byteOffset": off, "byteLength": len(blob), "target": 34962})
             acc = {"bufferView": len(j["bufferViews"]) - 1, "componentType": a0["componentType"],
                    "count": sum(len(r) for r in rows), "type": a0["type"]}
+            # Normalized integer vertex attributes (especially COLOR_0/1) must
+            # remain normalized after concatenation. Dropping this flag makes
+            # an otherwise unchanged attribute invalid under the glTF schema.
+            if a0.get("normalized"):
+                acc["normalized"] = True
             if name == "POSITION":
                 flat = [v for r in rows for v in r]
                 acc["min"] = [min(v[c] for v in flat) for c in range(3)]

@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-visual-review@1",
+  "componentId": "ssbu-chrom-c00-static-skinned-v1",
+  "modelSha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Chrom identity, body silhouette, costume and sheathed sword are visible in all three WebGL views.",
+    "The alpha-corrected material bake removes the prior black-background artifact; no black frame or missing base-colour material was observed."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

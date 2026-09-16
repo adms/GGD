@@ -1,7 +1,7 @@
 {
  "id": "combat-originals",
  "schema": "voice.combat-originals@1",
- "note": "⭐ owner 2026-09-10「如果剛好有語音檔就直接用 沒有才合成」「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」：每一格列出用哪一段原作遊戲語音（來源＝角色語音索引 groupId／檔名），<cat>.2／<cat>.3 是同一格的第 2、3 段（隨機播放）。mp3 已轉成包裡的規格（loudnorm I=-16 TP=-1.5、128k/44.1k/mono）放在 lines/<id>/<cat>[.N].mp3；build-combat-lines.mjs 把它們記成 textSource=original，原檔 > owner 台詞 > 合成。⚠️ assignedBy=duration 的是**編號檔**（Jump Force／LOL zh_TW／Fate PS2／KOF）——類別是用時長猜的，⛔ 語意未聽審。要換一格：改 src 再跑 import_originals2；要改成合成：刪掉那一格。 ⭐ 2026-09-10 remap.py：技能格由聽寫內容對 GGD 讀音（不用字母），只收日文包，joke→quote、death→defeat、kill→kill-1（不再混用）。 ⭐ 2026-09-10 remap.py：技能格由聽寫內容對 GGD 讀音（不用字母），只收日文包，joke→quote、death→defeat、kill→kill-1（不再混用）。 ⭐ 20260911-0303 owner 在聽審頁逐格決定（1,090 採用原檔／33 不採用）後套用；舊檔歸檔在 s3://ggd-390630837668-ap-east-2-an/voice-archive/20260911-0303/。 ⭐ 2026-09-14 LoL 七角色戰鬥候選逐項聽審：311 檔依原生事件固定映射註冊；這一批依決策保留來源增益，只轉為 128k/44.1k/mono MP3，未套 loudnorm。",
+ "note": "⭐ owner 2026-09-10「如果剛好有語音檔就直接用 沒有才合成」「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」：每一格列出用哪一段原作遊戲語音（來源＝角色語音索引 groupId／檔名），<cat>.2／<cat>.3 是同一格的第 2、3 段（隨機播放）。mp3 已轉成包裡的規格（loudnorm I=-16 TP=-1.5、128k/44.1k/mono）放在 lines/<id>/<cat>[.N].mp3；build-combat-lines.mjs 把它們記成 textSource=original，原檔 > owner 台詞 > 合成。⚠️ assignedBy=duration 的是**編號檔**（Jump Force／LOL zh_TW／Fate PS2／KOF）——類別是用時長猜的，⛔ 語意未聽審。要換一格：改 src 再跑 import_originals2；要改成合成：刪掉那一格。 ⭐ 2026-09-10 remap.py：技能格由聽寫內容對 GGD 讀音（不用字母），只收日文包，joke→quote、death→defeat、kill→kill-1（不再混用）。 ⭐ 2026-09-10 remap.py：技能格由聽寫內容對 GGD 讀音（不用字母），只收日文包，joke→quote、death→defeat、kill→kill-1（不再混用）。 ⭐ 20260911-0303 owner 在聽審頁逐格決定（1,090 採用原檔／33 不採用）後套用；舊檔歸檔在 s3://ggd-390630837668-ap-east-2-an/voice-archive/20260911-0303/。 ⭐ 2026-09-14 LoL 七角色戰鬥候選逐項聽審：311 檔依原生事件固定映射註冊；這一批依決策保留來源增益，只轉為 128k/44.1k/mono MP3，未套 loudnorm。 ⭐ 2026-09-14～15 LoL 七角色戰鬥候選逐項聽審：315 檔依原生事件與 owner 缺格裁決固定映射註冊；這一批依決策保留來源增益，只轉為 128k/44.1k/mono MP3，未套 loudnorm。",
  "champions": {
   "b2-goblin": {
    "hurt": {
@@ -12172,6 +12172,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:7588378",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12194,6 +12195,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:37158980",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12216,6 +12218,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:53835911",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12238,6 +12241,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:69540979",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12260,6 +12264,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:232877718",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12282,6 +12287,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:245081313",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12322,6 +12328,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:490216102",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12344,6 +12351,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:547094060",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12366,6 +12374,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:589054289",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12388,6 +12397,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:747369372",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12410,6 +12420,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:795972548",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12450,6 +12461,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:896251736",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12472,6 +12484,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:936447463",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12494,6 +12507,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1192902300",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12516,6 +12530,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1202429617",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12538,6 +12553,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1215865335",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12560,6 +12576,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1345697710",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12582,6 +12599,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1604427546",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12604,6 +12622,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:1979552009",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12644,6 +12663,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Karthus:skin0:2017292951",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12684,6 +12704,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:68491262",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12706,6 +12727,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:486027448",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12728,6 +12750,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:550966778",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12750,6 +12773,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:983759516",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12772,6 +12796,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:1370805138",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12794,6 +12819,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:1530322693",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12816,6 +12842,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:1961588277",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12838,6 +12865,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:2029459995",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12860,6 +12888,7 @@
     "why": "approved native event target death",
     "reviewKey": "Karthus:skin0:2116495908",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12882,6 +12911,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:88861438",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12904,6 +12934,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:759212078",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12926,6 +12957,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:763068959",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12948,6 +12980,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:1153685384",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12970,6 +13003,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:1363037426",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -12992,6 +13026,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:1369814102",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13014,6 +13049,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Karthus:skin0:1565210146",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13036,6 +13072,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:38110785",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13064,6 +13101,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:148537959",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13092,6 +13130,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:310197368",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13120,6 +13159,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:543887434",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13148,6 +13188,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:720440282",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13176,6 +13217,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:1291955195",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13204,6 +13246,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:1317130603",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13232,6 +13275,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:1370953311",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13260,6 +13304,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Karthus:skin0:1536835850",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13288,6 +13333,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:561635869",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13310,6 +13356,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:910151417",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13332,6 +13379,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:1536898112",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13354,6 +13402,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:1645583294",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13376,6 +13425,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:1802460570",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13398,6 +13448,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:1820362580",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13420,6 +13471,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Karthus:skin0:1991053761",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13609,6 +13661,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:32871490",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13637,6 +13690,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:54948080",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13665,6 +13719,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:68533687",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13687,6 +13742,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:103737360",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13715,6 +13771,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:105993742",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13737,6 +13794,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:136707392",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13771,6 +13829,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:153982195",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13805,6 +13864,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:212344162",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13827,6 +13887,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:214395469",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13849,6 +13910,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:255140973",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13871,6 +13933,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:346095088",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13893,6 +13956,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:428756658",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13915,6 +13979,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:466767961",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13937,6 +14002,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:471683697",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13959,6 +14025,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:473027330",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -13981,6 +14048,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:491441587",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14003,6 +14071,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:502612064",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14031,6 +14100,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:523650012",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14053,6 +14123,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:550157499",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14087,6 +14158,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:677639840",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14109,6 +14181,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:727382574",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14131,6 +14204,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:755532037",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14153,6 +14227,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:845571000",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14175,6 +14250,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:845801217",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14197,6 +14273,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:847783623",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14231,6 +14308,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:936330637",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14253,6 +14331,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:992290401",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14275,6 +14354,7 @@
     "why": "approved native event target attack",
     "reviewKey": "LeeSin:skin0:1057546586",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14297,6 +14377,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:138241699",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14319,6 +14400,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:311595805",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14341,6 +14423,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:342456260",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14363,6 +14446,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:462150459",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14385,6 +14469,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:539260033",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14407,6 +14492,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:772449199",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14429,6 +14515,7 @@
     "why": "approved native event target death",
     "reviewKey": "LeeSin:skin0:1068697659",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14451,6 +14538,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:165396203",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14473,6 +14561,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:395662221",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14495,6 +14584,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:446387320",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14517,6 +14607,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:800681343",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14539,6 +14630,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:847916926",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14561,6 +14653,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:883864969",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14583,6 +14676,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:1053591096",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14605,6 +14699,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "LeeSin:skin0:1071923687",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14627,6 +14722,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:51360808",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14649,6 +14745,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:379042097",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14671,6 +14768,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:560605608",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14693,6 +14791,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:583250273",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14715,6 +14814,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:675324776",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14737,6 +14837,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:921680856",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14759,6 +14860,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:945327853",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14781,6 +14883,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "LeeSin:skin0:961301638",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14803,6 +14906,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "LeeSin:skin0:31900369",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14825,6 +14929,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "LeeSin:skin0:644376663",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14847,6 +14952,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "LeeSin:skin0:695157879",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14869,6 +14975,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "LeeSin:skin0:707492366",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14891,6 +14998,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "LeeSin:skin0:892334529",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14913,6 +15021,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:16515715",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14941,6 +15050,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:126694437",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14963,6 +15073,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:252997298",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -14985,6 +15096,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:337315964",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15007,6 +15119,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:407662588",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15035,6 +15148,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:540760718",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15057,6 +15171,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:703607887",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15085,6 +15200,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "LeeSin:skin0:799977658",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15340,6 +15456,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:76154985",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15362,6 +15479,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:108044880",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15384,6 +15502,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:149890988",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15406,6 +15525,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:163795795",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15428,6 +15548,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:535395823",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15450,6 +15571,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:698836818",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15472,6 +15594,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1074826333",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15494,6 +15617,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1181182979",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15528,6 +15652,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1227133041",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15562,6 +15687,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1305891199",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15596,6 +15722,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1349461345",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15618,6 +15745,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1427958369",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15640,6 +15768,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1686932694",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15662,6 +15791,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1720466094",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15684,6 +15814,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1728531226",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15706,6 +15837,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1819168938",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15728,6 +15860,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:1924849187",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15750,6 +15883,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:2016038063",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15772,6 +15906,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Lux:skin0:2036090139",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15806,6 +15941,7 @@
     "why": "approved native event target death",
     "reviewKey": "Lux:skin0:43864394",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15828,6 +15964,7 @@
     "why": "approved native event target death",
     "reviewKey": "Lux:skin0:754192429",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15850,6 +15987,7 @@
     "why": "approved native event target death",
     "reviewKey": "Lux:skin0:1124644677",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15872,6 +16010,7 @@
     "why": "approved native event target death",
     "reviewKey": "Lux:skin0:1272794498",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15894,6 +16033,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:633884159",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15916,6 +16056,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:977487074",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15938,6 +16079,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:1090343791",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15960,6 +16102,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:1393076836",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -15982,6 +16125,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:1487072341",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16004,6 +16148,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Lux:skin0:1973730884",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16026,6 +16171,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:75190727",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16048,6 +16194,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:443239334",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16070,6 +16217,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:1028131711",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16092,6 +16240,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:1109040047",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16114,6 +16263,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:1116918019",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16136,6 +16286,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:1228123012",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16158,6 +16309,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Lux:skin0:1661866825",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16180,6 +16332,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:155414615",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16202,6 +16355,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:193322636",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16224,6 +16378,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:501384332",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16246,6 +16401,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:528990325",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16268,6 +16424,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:801292437",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16290,6 +16447,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Lux:skin0:1009715459",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16312,6 +16470,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:388339829",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16334,6 +16493,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:539136446",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16356,6 +16516,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:738030717",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16378,6 +16539,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:823681601",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16400,6 +16562,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:1730176760",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16422,6 +16585,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Lux:skin0:1765929320",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16671,6 +16835,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1000916152",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16693,6 +16858,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1206520494",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16715,6 +16881,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1243901643",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16737,6 +16904,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1459585756",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16759,6 +16927,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1648963726",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16781,6 +16950,7 @@
     "why": "approved native event target attack",
     "reviewKey": "MissFortune:skin0:1976086305",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16803,6 +16973,7 @@
     "why": "approved native event target death",
     "reviewKey": "MissFortune:skin0:727305837",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16825,6 +16996,7 @@
     "why": "approved native event target death",
     "reviewKey": "MissFortune:skin0:815276809",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16847,6 +17019,7 @@
     "why": "approved native event target death",
     "reviewKey": "MissFortune:skin0:871873680",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16869,6 +17042,7 @@
     "why": "approved native event target death",
     "reviewKey": "MissFortune:skin0:1278310727",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16891,6 +17065,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "MissFortune:skin0:741050593",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16913,6 +17088,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "MissFortune:skin0:783168764",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16935,6 +17111,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "MissFortune:skin0:1116640417",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16957,6 +17134,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "MissFortune:skin0:1681369677",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -16979,6 +17157,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "MissFortune:skin0:674096248",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17001,6 +17180,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "MissFortune:skin0:1595191486",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17023,6 +17203,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "MissFortune:skin0:1806137756",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17045,6 +17226,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "MissFortune:skin0:556523230",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17067,6 +17249,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "MissFortune:skin0:1262970100",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17089,6 +17272,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "MissFortune:skin0:1984231938",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17111,6 +17295,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "MissFortune:skin0:2024985095",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17270,6 +17455,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:66035089",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17292,6 +17478,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:117718064",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17314,6 +17501,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:139672685",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17336,6 +17524,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:205990665",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17358,6 +17547,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:215085725",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17380,6 +17570,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:286299297",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17402,6 +17593,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:349301273",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17424,6 +17616,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:364723964",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17446,6 +17639,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:365556199",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17468,6 +17662,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:406272914",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17490,6 +17685,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:426706316",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17512,6 +17708,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:600844610",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17534,6 +17731,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:719291806",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17556,6 +17754,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:721145784",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17578,6 +17777,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:748203910",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17600,6 +17800,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:753708895",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17622,6 +17823,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:785830042",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17644,6 +17846,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:813107904",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17666,6 +17869,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:815839978",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17688,6 +17892,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:857901120",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17710,6 +17915,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:905037593",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17732,6 +17938,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:907540056",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17754,6 +17961,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:932334396",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17776,6 +17984,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:975336759",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17798,6 +18007,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:1362027543",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17820,6 +18030,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:1567358002",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17842,6 +18053,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:1680902863",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17864,6 +18076,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:1747861030",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17886,6 +18099,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:1902769864",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17908,6 +18122,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:2072183311",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17930,6 +18145,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Warwick:skin0:2147091372",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17952,6 +18168,7 @@
     "why": "approved native event target death",
     "reviewKey": "Warwick:skin0:496509420",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17974,6 +18191,7 @@
     "why": "approved native event target death",
     "reviewKey": "Warwick:skin0:594379327",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -17996,6 +18214,7 @@
     "why": "approved native event target death",
     "reviewKey": "Warwick:skin0:2086168704",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18018,6 +18237,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Warwick:skin0:6289847",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18040,6 +18260,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Warwick:skin0:397472650",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18062,6 +18283,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Warwick:skin0:706282948",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18084,6 +18306,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Warwick:skin0:1442689105",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18106,6 +18329,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Warwick:skin0:48306622",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18128,6 +18352,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Warwick:skin0:1187643332",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18150,6 +18375,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Warwick:skin0:1770304197",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18172,6 +18398,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:18811405",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18200,6 +18427,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:74851633",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18228,6 +18456,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:741151286",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18256,6 +18485,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:780836792",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18284,6 +18514,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1047184661",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18306,6 +18537,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1134219275",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18328,6 +18560,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1144994982",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18350,6 +18583,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1166521589",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18372,6 +18606,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1208055973",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18394,6 +18629,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:1631281956",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18416,6 +18652,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Warwick:skin0:2033759481",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18438,6 +18675,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:202555551",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18466,6 +18704,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:329653675",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18494,6 +18733,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:387524154",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18516,6 +18756,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:694601137",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18544,6 +18785,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:1183654600",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18572,6 +18814,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:1466613816",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18594,6 +18837,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Warwick:skin0:1929791825",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18768,6 +19012,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:119434794",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18790,6 +19035,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:198866827",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18812,6 +19058,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:579697071",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18834,6 +19081,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:1509649316",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18856,6 +19104,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:1820967603",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18878,6 +19127,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:1855553040",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18900,6 +19150,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:2050763396",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18922,6 +19173,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:2060333772",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18944,6 +19196,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:2065392894",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18966,6 +19219,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Xerath:skin0:2120481747",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -18988,6 +19242,7 @@
     "why": "approved native event target death",
     "reviewKey": "Xerath:skin0:103636348",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19010,6 +19265,7 @@
     "why": "approved native event target death",
     "reviewKey": "Xerath:skin0:111600246",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19032,6 +19288,7 @@
     "why": "approved native event target death",
     "reviewKey": "Xerath:skin0:1779825579",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19054,6 +19311,7 @@
     "why": "approved native event target death",
     "reviewKey": "Xerath:skin0:1924307479",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19076,6 +19334,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Xerath:skin0:47053402",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19098,6 +19357,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Xerath:skin0:367058298",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19120,6 +19380,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Xerath:skin0:369309902",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19142,6 +19403,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Xerath:skin0:2115010494",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19149,6 +19411,170 @@
       "eventId": 286317321,
       "category": "ability-cast",
       "abilitySlotCandidate": "E"
+     }
+    ]
+   },
+   "skill-name.q": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+    "name": "Xerath/skin0/76986339",
+    "group": "lol-project-seven-ja-jp-16.18.8159717",
+    "sha256": "b540d36424cc530eae247d010d7c63ed5c126d6fbd76c81d0318b3740f918a83",
+    "seconds": 1.2633560090702949,
+    "lang": "ja",
+    "speaker": "Xerath",
+    "assignedBy": "owner-listening-review",
+    "why": "approved native event target ability-Q",
+    "reviewKey": "Xerath:skin0:76986339",
+    "reviewedAt": "2026-09-15T10:01:54.928Z",
+    "approvalAuthority": "gap-listening-decisions.json",
+    "gainDecision": "keep-source-gain",
+    "nativeEventBindings": [
+     {
+      "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+      "eventId": 366586445,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q"
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+      "eventId": 999386420,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+      "eventId": 2302795652,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+      "eventId": 4067101772,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     }
+    ]
+   },
+   "skill-name.q.2": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+    "name": "Xerath/skin0/820216149",
+    "group": "lol-project-seven-ja-jp-16.18.8159717",
+    "sha256": "b86c544513fedb0cbd54cad712abcdc499ad7b07c744aace55ddff9ba7ebc960",
+    "seconds": 1.493310657596372,
+    "lang": "ja",
+    "speaker": "Xerath",
+    "assignedBy": "owner-listening-review",
+    "why": "approved native event target ability-Q",
+    "reviewKey": "Xerath:skin0:820216149",
+    "reviewedAt": "2026-09-15T10:01:54.928Z",
+    "approvalAuthority": "gap-listening-decisions.json",
+    "gainDecision": "keep-source-gain",
+    "nativeEventBindings": [
+     {
+      "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+      "eventId": 366586445,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q"
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+      "eventId": 999386420,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+      "eventId": 2302795652,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+      "eventId": 4067101772,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     }
+    ]
+   },
+   "skill-name.q.3": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+    "name": "Xerath/skin0/837144372",
+    "group": "lol-project-seven-ja-jp-16.18.8159717",
+    "sha256": "e36a23c01fec1b9652a3e69f4e8930df3491a3caa9a049cd9a928b27d6169c8d",
+    "seconds": 1.278843537414966,
+    "lang": "ja",
+    "speaker": "Xerath",
+    "assignedBy": "owner-listening-review",
+    "why": "approved native event target ability-Q",
+    "reviewKey": "Xerath:skin0:837144372",
+    "reviewedAt": "2026-09-15T10:01:54.928Z",
+    "approvalAuthority": "gap-listening-decisions.json",
+    "gainDecision": "keep-source-gain",
+    "nativeEventBindings": [
+     {
+      "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+      "eventId": 366586445,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q"
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+      "eventId": 999386420,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+      "eventId": 2302795652,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+      "eventId": 4067101772,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     }
+    ]
+   },
+   "skill-name.q.4": {
+    "src": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+    "name": "Xerath/skin0/2053253391",
+    "group": "lol-project-seven-ja-jp-16.18.8159717",
+    "sha256": "b11038c64e36d27bf44475d856522d994d73b113d50839e56948cf438adac3b8",
+    "seconds": 1.7145578231292518,
+    "lang": "ja",
+    "speaker": "Xerath",
+    "assignedBy": "owner-listening-review",
+    "why": "approved native event target ability-Q",
+    "reviewKey": "Xerath:skin0:2053253391",
+    "reviewedAt": "2026-09-15T10:01:54.928Z",
+    "approvalAuthority": "gap-listening-decisions.json",
+    "gainDecision": "keep-source-gain",
+    "nativeEventBindings": [
+     {
+      "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+      "eventId": 366586445,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q"
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+      "eventId": 999386420,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+      "eventId": 2302795652,
+      "category": "attack",
+      "abilitySlotCandidate": null
+     },
+     {
+      "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+      "eventId": 4067101772,
+      "category": "attack",
+      "abilitySlotCandidate": null
      }
     ]
    },
@@ -19164,6 +19590,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Xerath:skin0:853420469",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19186,6 +19613,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Xerath:skin0:1084550769",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19208,6 +19636,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Xerath:skin0:1332381173",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19230,6 +19659,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Xerath:skin0:1405944977",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19252,6 +19682,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Xerath:skin0:539387195",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19274,6 +19705,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Xerath:skin0:695531228",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19296,6 +19728,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Xerath:skin0:1084230652",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19318,6 +19751,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Xerath:skin0:1328804472",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19507,6 +19941,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:112798496",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19529,6 +19964,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:163337437",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19551,6 +19987,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:218453784",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19573,6 +20010,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:335488881",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19655,6 +20093,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:773052528",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19737,6 +20176,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:803242691",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19759,6 +20199,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:963190043",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19781,6 +20222,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:982661255",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19803,6 +20245,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1057660263",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19825,6 +20268,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1131054268",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19907,6 +20351,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1158354424",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19929,6 +20374,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1210656346",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19951,6 +20397,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1345306878",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19973,6 +20420,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1569316363",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -19995,6 +20443,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1576495121",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20017,6 +20466,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1789186003",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20039,6 +20489,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1852030730",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20061,6 +20512,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:1896335251",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20143,6 +20595,7 @@
     "why": "approved native event target attack",
     "reviewKey": "Yasuo:skin0:2023099016",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20165,6 +20618,7 @@
     "why": "approved native event target death",
     "reviewKey": "Yasuo:skin0:436405048",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20187,6 +20641,7 @@
     "why": "approved native event target death",
     "reviewKey": "Yasuo:skin0:665635476",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20209,6 +20664,7 @@
     "why": "approved native event target death",
     "reviewKey": "Yasuo:skin0:1736174721",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20231,6 +20687,7 @@
     "why": "approved native event target death",
     "reviewKey": "Yasuo:skin0:1762105292",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20253,6 +20710,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Yasuo:skin0:1033832330",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20275,6 +20733,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Yasuo:skin0:1299116574",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20297,6 +20756,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Yasuo:skin0:2038431254",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20319,6 +20779,7 @@
     "why": "approved native event target ability-E",
     "reviewKey": "Yasuo:skin0:2069020404",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20341,6 +20802,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:89106516",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20363,6 +20825,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:188840705",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20385,6 +20848,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:453920534",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20407,6 +20871,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:539941851",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20429,6 +20894,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:904503149",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20451,6 +20917,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:1659211407",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20473,6 +20940,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:1986183632",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20495,6 +20963,7 @@
     "why": "approved native event target ability-Q",
     "reviewKey": "Yasuo:skin0:2080380069",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20517,6 +20986,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Yasuo:skin0:111444817",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20539,6 +21009,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Yasuo:skin0:185297318",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20561,6 +21032,7 @@
     "why": "approved native event target ability-R",
     "reviewKey": "Yasuo:skin0:807652697",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20583,6 +21055,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Yasuo:skin0:176441622",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20605,6 +21078,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Yasuo:skin0:1071158760",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {
@@ -20627,6 +21101,7 @@
     "why": "approved native event target ability-W",
     "reviewKey": "Yasuo:skin0:1442125570",
     "reviewedAt": "2026-09-14",
+    "approvalAuthority": "listening-review-decisions.json",
     "gainDecision": "keep-source-gain",
     "nativeEventBindings": [
      {

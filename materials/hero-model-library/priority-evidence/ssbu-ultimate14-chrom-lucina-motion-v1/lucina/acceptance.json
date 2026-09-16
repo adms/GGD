@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-animated-component-acceptance@1",
+  "components": [
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "accepted": true,
+      "scope": "independent-skinned-model-motion-component",
+      "completeGameplayActionSet": false,
+      "note": "Accepted as a structurally valid, WebGL-sampled independent component only; no semantic action binding, dropdown or deployment."
+    }
+  ]
+}

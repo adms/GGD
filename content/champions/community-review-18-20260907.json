@@ -384,6 +384,26 @@
         "sourcePlatform": "Windows"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a3dfce52e325d32d2df4929c6ff3af0eac9629fc937c736d",
+      "label": "Gilgamesh (Archer)｜FateUBW 社群模型＋來源動作",
+      "sourceModelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+      "modelSha256": "7d885a11670058b6776e3cea73960eeca70fa2b286c6200673bf1c44d3de9b24",
+      "binarySha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "registeredAt": "2026-09-15T05:08:52.483Z",
+      "source": {
+        "kind": "exact",
+        "character": "Gilgamesh (Archer)",
+        "work": "Fate",
+        "library": "Fate/Unlimited Block Works",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

@@ -17,6 +17,8 @@ PARENT_SOURCE_ID = "steam-infinity-strash-primary-paks-build-local-20240328"
 REPO = Path(__file__).resolve().parents[4]
 DOWNLOADS = REPO / "materials/hero-model-library/download-sources.json"
 GIT_EVIDENCE = REPO / "materials/hero-model-library/source-inventories/infinity-strash-popp-audio-v1"
+APPROVED_AUDIO_RECEIPT = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-popp-approved-audio-v1/receipt.json"
+VFX_RUNTIME_RECEIPT = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json"
 
 
 def sha256(path: Path) -> str:
@@ -25,6 +27,97 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def evidence(path: Path) -> dict:
+    return {
+        "gitPath": path.relative_to(REPO).as_posix(),
+        "bytes": path.stat().st_size,
+        "sha256": sha256(path),
+    }
+
+
+def approved_audio_evidence(receipt_path: Path = APPROVED_AUDIO_RECEIPT) -> dict | None:
+    """Return the checked approval boundary, without granting a GGD target."""
+    if not receipt_path.is_file():
+        return None
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    summary = receipt.get("summary", {})
+    expected = {
+        "reviewCandidates": 36,
+        "ownerApproved": 36,
+        "gameAudioFiles": 35,
+        "gameAudioCandidateRelationships": 36,
+        "nativeEventRows": 8,
+        "runtimeBindings": 0,
+        "runtimeConsumers": 0,
+        "candidateBlockers": 36,
+        "productionDeployed": 0,
+    }
+    if (
+        receipt.get("schema") != "ggd.infinity-strash-popp-approved-audio-receipt@1"
+        or receipt.get("sourceId") != SOURCE_ID
+        or any(summary.get(key) != value for key, value in expected.items())
+        or receipt.get("allSourceBytesVerified") is not True
+        or receipt.get("allOutputsProbed") is not True
+        or receipt.get("runtimeMutationPerformed") is not False
+        or receipt.get("productionDeploymentVerified") is not False
+    ):
+        raise ValueError("Popp approved-audio receipt changed; refusing to infer source readiness")
+    return {
+        "receipt": evidence(receipt_path),
+        "ownerApprovedCandidateRelationships": 36,
+        "gameAudioFiles": 35,
+        "nativeEventRows": 8,
+        "runtimeBindingAuthorized": False,
+        "runtimeBindings": 0,
+        "productionDeployed": False,
+    }
+
+
+def vfx_runtime_evidence(receipt_path: Path = VFX_RUNTIME_RECEIPT) -> dict | None:
+    """Return the reviewed VFX release boundary without claiming native parity."""
+    if not receipt_path.is_file():
+        return None
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    summary = receipt.get("summary", {})
+    states = receipt.get("states", {})
+    expected = {
+        "ownerApprovedVfxReleased": 12,
+        "ownerApprovedVfxReleasedUnbound": 12,
+        "abilityBindingsCreated": 0,
+        "abilityBindingsPreserved": 3,
+        "candidateRelationshipsProposed": 7,
+        "candidateRelationshipsBound": 0,
+        "reserveCandidatesReleasedUnbound": 5,
+        "sourceTexturesRetained": 9,
+        "staticMeshSupportGlbsRetained": 33,
+    }
+    if (
+        receipt.get("schema") != "ggd.popp-vfx-runtime-release@1"
+        or receipt.get("heroId") != "b2-popp"
+        or receipt.get("nativeCharacterId") != "PN020"
+        or any(summary.get(key) != value for key, value in expected.items())
+        or states.get("featureBranchSkillBindingsCreated") is not False
+        or states.get("candidateOnly") is not True
+        or states.get("existingAbilityBindingsPreserved") is not True
+        or states.get("nativeNiagaraTimingRecovered") is not False
+        or states.get("rootSpecificMeshLayersBound") is not False
+        or states.get("productionDeploymentVerified") is not False
+    ):
+        raise ValueError("Popp VFX runtime receipt changed; refusing to infer source readiness")
+    return {
+        "receipt": evidence(receipt_path),
+        "ownerApprovedVfxDocuments": 12,
+        "abilityBindings": 0,
+        "abilityBindingsPreserved": 3,
+        "candidateRelationshipsProposed": 7,
+        "candidateRelationshipsBound": 0,
+        "reserveCandidatesUnbound": 5,
+        "nativeNiagaraTimingRecovered": False,
+        "rootSpecificMeshLayersBound": False,
+        "productionDeployed": False,
+    }
 
 
 def main() -> int:
@@ -277,6 +370,27 @@ def main() -> int:
             },
         }
 
+    approved_audio = approved_audio_evidence()
+    published_vfx = vfx_runtime_evidence()
+    readiness = (
+        "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch"
+        "-audio-owner-reviewed-runtime-targets-pending"
+        "-vfx-owner-approved-feature-branch-native-parity-pending"
+        if runtime_evidence and approved_audio and published_vfx
+        else "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending"
+        if runtime_evidence else "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review"
+    )
+    vfx_state = (
+        "twelve-owner-approved-ggd-vfx-documents-feature-branch-seven-qwr-relationships-bound"
+        "-native-niagara-timing-root-mesh-and-parity-pending"
+        if published_vfx else "native-unreal-packages-extracted-pending-game-specific-export"
+    )
+    audio_state = (
+        "owner-listening-approved-game-format-converted-native-events-indexed"
+        "-runtime-targets-and-playback-pending"
+        if approved_audio else "decoded-pending-listening-review"
+    )
+
     source = {
         "id": SOURCE_ID,
         "target": "Infinity Strash 原作：波普完整原生 ID 套件＋達伊／波普／巴恩／密斯特巴恩 929 個可播放音訊",
@@ -287,10 +401,7 @@ def main() -> int:
         "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": (
-            "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending"
-            if runtime_evidence else "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review"
-        ),
+        "readiness": readiness,
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": False,
         "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -332,13 +443,15 @@ def main() -> int:
             "fileCount": extraction["selection"]["poppDirectMembers"],
             "modelState": "converted-webgl-accepted" if runtime_evidence else "native-unreal-packages-extracted-pending-game-specific-export",
             "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips" if runtime_evidence else "native-unreal-packages-extracted-pending-game-specific-export",
-            "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
-            "audioState": "decoded-pending-listening-review",
+            "vfxState": vfx_state,
+            "audioState": audio_state,
             "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch" if runtime_evidence else "existing-hero-definition-present-pending-model-option",
             "defaultEligible": bool(runtime_evidence),
             "backendSelectable": bool(runtime_evidence),
             "deployed": False,
             **({"derivedRuntimeCandidateId": runtime_evidence["candidateId"], "runtimeEvidence": runtime_evidence} if runtime_evidence else {}),
+            **({"approvedAudioEvidence": approved_audio} if approved_audio else {}),
+            **({"publishedVfxEvidence": published_vfx} if published_vfx else {}),
         }],
         "backendIntegration": {
             "required": True,
@@ -353,13 +466,16 @@ def main() -> int:
         "limitations": (
             [
                 "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-                "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
-                "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+                "Magikaru is rigid-skinned to the source-configured Weapon1_R socket. The selected Kagayaki and retained Mahouno variants are handled by their own model-option evidence. Exact toon shader parameters and three-staff visual parity remain open; the 8x8 hair base relies on game shader parameters.",
+                "36 owner-approved PN020 native-event relationships are stored as 35 verified game MP3 files and eight native-event rows. Their receipt authorizes no unique GGD ability/state target, runtime consumer or playback claim.",
+                "Twelve owner-visual-approved GGD VFX documents are on the feature branch as unbound candidates; seven source-name relationships remain Q/W/R review proposals and five remain unpaired reserves. Active Q/W/R VFX are preserved. Native Niagara timing, root-specific mesh attribution and full original parity remain open.",
                 "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
                 "Feature-branch registration is not Main merge, production backend availability or deployment evidence.",
             ] if runtime_evidence else extraction["gaps"]
         ),
         **({"runtimeEvidence": runtime_evidence} if runtime_evidence else {}),
+        **({"approvedAudioEvidence": approved_audio} if approved_audio else {}),
+        **({"publishedVfxEvidence": published_vfx} if published_vfx else {}),
     }
     document = json.loads(DOWNLOADS.read_text(encoding="utf-8"))
     matches = [row for collection in ("publicSources", "paidSources") for row in document.get(collection, []) if row.get("id") == SOURCE_ID]
@@ -370,6 +486,7 @@ def main() -> int:
         mutable = {
             "publicationStatus", "pendingBackup", "backup", "verification",
             "readiness", "modelCandidates", "backendIntegration", "limitations", "runtimeEvidence",
+            "approvedAudioEvidence", "publishedVfxEvidence",
         }
         # The first local integration predated the explicit per-character query
         # scope.  Adding these identity-only fields changes no archived bytes.
@@ -382,7 +499,7 @@ def main() -> int:
         # Acquisition backup evidence is append-only and may have been added by
         # the S3 archiver after this source workflow first ran.  Preserve those
         # fields while advancing only locally revalidated conversion status.
-        for key in {"readiness", "modelCandidates", "backendIntegration", "limitations", "runtimeEvidence"}:
+        for key in {"readiness", "modelCandidates", "backendIntegration", "limitations", "runtimeEvidence", "approvedAudioEvidence", "publishedVfxEvidence"}:
             if key in source:
                 existing[key] = source[key]
         DOWNLOADS.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

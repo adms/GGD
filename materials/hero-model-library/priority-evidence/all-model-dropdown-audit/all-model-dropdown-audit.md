@@ -4,13 +4,13 @@
 
 ## 結果
 
-- `content/models` 有 1014 份 `model@1`。
-- 正式 champion 的主模型與 `modelVersions` 合計 517 個不同可選 model key；`modelVersions` 有 575 列。
-- Hero Forge 有 34 名英雄、42 個不同模型選項。
-- 中央索引有 156 筆來源；143 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，4 筆只證明 Git 來源存在，後台導入驗收仍未通過。
+- `content/models` 有 1058 份 `model@1`。
+- 正式 champion 的主模型與 `modelVersions` 合計 535 個不同可選 model key；`modelVersions` 有 597 列。
+- Hero Forge 有 34 名英雄、46 個不同模型選項。
+- 中央索引有 165 筆來源；150 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，6 筆只證明 Git 來源存在，後台導入驗收仍未通過。
 - 中央登記旗標與實際參照不一致：0 筆。
-- `componentReady` 但尚未註冊：角色／動作元件 23 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
-- 找到 67 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
+- `componentReady` 但尚未註冊：角色／動作元件 51 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
+- 找到 68 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
 - 明確 `prop.*` 且無內容參照的道具文件 4 筆。
 
 ## 中央已驗證但未進下拉
@@ -31,35 +31,65 @@
 
 | 來源 | 角色／版本 | model key | 現有證據 | 精確阻塞 |
 |---|---|---|---|---|
+| ou99:464696 | 拳四郎 | `ou99.464696` | retained-over-budget-source | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:465205 | 韩当武侠猛男 | `ou99.465205` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:472035 | WOW兽人祭祀法师 | `ou99.472035` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:487191 | SSR鬼神吕布鬼脸将军 | `ou99.487191` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
+| ou99:496905 | 搞怪哆啦A梦猫 | `ou99.496905` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 | ou99:497131 | 龙珠超孙悟空 | `ou99.497131` | published-main-source; backend import assessed separately | central-index-declares-runtimeDropdownRegistered-false; no-champion-modelVersion-or-hero-forge-option-reference; target-hero-definition-or-approved-character-mapping-missing; validation-does-not-claim-backend-prepare-or-runtime-motion-passed |
 
 ## 合格獨立元件，尚不可當英雄模型
 
 | 元件 | 角色 | 類型 | 動作 | 精確阻塞 |
 |---|---|---|---:|---|
+| `fateubw-cu_chulainn_lancer-runtime-component-v1` | Cu Chulainn (Lancer) | character-body | 7 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-diarmuid_ua_duibhne_lancer-runtime-component-v1` | Diarmuid Ua Duibhne (Lancer) | character-body | 7 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-emiya_archer-runtime-component-v1` | Emiya (Archer) | character-body | 11 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-gilles_de_rais_caster-runtime-component-v1` | Gilles de Rais (Caster) | character-body | 4 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-hassan-i-sabbah_assassin-runtime-component-v1` | Hassan-i-Sabbah (Assassin) | character-body | 8 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-iskander_rider-runtime-component-v1` | Iskander (Rider) | character-body | 9 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-lancelot_berserker-runtime-component-v1` | Lancelot (Berserker) | character-body | 13 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-medea_caster-runtime-component-v1` | Medea (Caster) | character-body | 6 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-nero_claudius_saber-runtime-component-v1` | Nero Claudius (Saber) | character-body | 6 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
+| `fateubw-sasaki_kojiro_assassin-runtime-component-v1` | Sasaki Kojiro (Assassin) | character-body | 10 | no-ggd-hero-id-or-target-binding; component-is-not-runtime-selectable |
 | `historical-astralym-7bc2fa3f8` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `historical-astralym-decimated-f77cf1ee` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `infinity-strash-mystvearn-en653-01-static-skinned-v1` | 密斯特巴恩 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `kof-xv-ash-crimson-left-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `kof-xv-ash-crimson-right-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `opgg-palworld-astralym-2026081102.idle-walk-256` | 枯星龍 | character-body | 2 | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
-| `opgg-palworld-jetragon.material-bound-256-v1` | 空渦龍 / Jetragon | character-body | 29 | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
-| `palworld-cattiva-opgg-materials-256-v1` | 搗蛋貓 | character-body | 33 | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-beatrice-thunderstore-0.1.1-static-skinned-v1` | 碧翠絲 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-emilia-thunderstore-0.1.1-static-skinned-v1` | 愛蜜莉雅 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-felix-thunderstore-0.1.1-static-skinned-v1` | 菲利克斯／菲莉絲 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-ram-thunderstore-0.1.1-static-skinned-v1` | 拉姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `rezero-rem-thunderstore-0.1.1-formal-decimated-v1` | 蕾姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-rem-thunderstore-0.1.1-static-skinned-v1` | 蕾姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-subaru-thunderstore-0.1.1-static-skinned-v1` | 菜月昴 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-chrom-c00-static-skinned-v1` | 庫洛姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-chrom-c00-ultimate14-motion-v1` | 庫洛姆 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-daisy-c00-static-skinned-v1` | 黛西 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-ganondorf-c00-static-skinned-v1` | 加儂多夫 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-kirby-c00-static-skinned-v1` | 卡比 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-link-c00-static-skinned-v1` | 林克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-lucina-c00-static-skinned-v1` | 露琪娜 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-lucina-c00-ultimate14-motion-v1` | 露琪娜 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mario-c00-static-skinned-v1` | Mario／瑪利歐 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-mario-c00-static-skinned-v2` | 瑪利歐 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mario-c00-ultimate14-motion-v1` | Mario／瑪利歐 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mewtwo-c00-static-skinned-v1` | 超夢／Mewtwo | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-peach-c00-static-skinned-v1` | 碧姬公主 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-pickel-alex-c01-static-skinned-v1` | 艾莉克斯／Alex | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-pickel-steve-c00-static-skinned-v1` | 史蒂夫／Steve | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-ptrainer-female-c01-formal-decimated-v1` | 寶可夢訓練家（女） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ptrainer-female-c01-static-skinned-v1` | 寶可夢訓練家（女） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-ptrainer-male-c00-formal-decimated-v1` | 寶可夢訓練家（男） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ptrainer-male-c00-static-skinned-v1` | 寶可夢訓練家（男） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
-| `ssbu-ryu-c00-procedural-six-state-v1` | 隆／Ryu | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-ryu-c00-static-decimated-v1` | 隆／Ryu | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ryu-c00-static-skinned-v1` | 隆／Ryu | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-sonic-c00-static-skinned-v1` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-sonic-c00-static-skinned-v2` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-sonic-c00-ultimate14-motion-v1` | Sonic／索尼克 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-toonlink-c00-static-skinned-v1` | 卡通林克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-zero-c00-static-skinned-v1` | Zero／傑洛 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `zero-lancer-p1-static-skinned-v1` | Zero Lancer／迪爾姆德 P1 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `zero-lancer-p2-static-skinned-v1` | Zero Lancer／迪爾姆德 P2 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
@@ -78,14 +108,14 @@
 ## 不能直接註冊的保留資料
 
 - 精確歷史來源 artifact：4 筆；`componentReady=false`，僅供還原與比對。
-- orphan frozen version：67 筆；文件沒有 hero ID，不能安全推回任何英雄。完整逐筆清單在 JSON。
-- 其他未被中央驗證索引或英雄下拉解釋的 `model@1`：184 筆。部分已有技能／VFX 等非英雄參照，其他缺權威角色欄位；完整逐筆清單在 JSON。
+- orphan frozen version：68 筆；文件沒有 hero ID，不能安全推回任何英雄。完整逐筆清單在 JSON。
+- 其他未被中央驗證索引或英雄下拉解釋的 `model@1`：195 筆。部分已有技能／VFX 等非英雄參照，其他缺權威角色欄位；完整逐筆清單在 JSON。
 
 ## 特效與道具未使用清單的索引缺口
 
 current-resources.json has no VFX component collection and all model@1 documents lack resourceRole. Exact semantic references can prove that a model is used by VFX/ability content, but absence of such a reference cannot prove that an unreferenced model is VFX rather than a character, prop, reserved source, or orphan. Only the explicit prop.* prefix is reported separately.
 
-目前 1014 / 1014 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
+目前 1058 / 1058 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
 
 ## 重建
 

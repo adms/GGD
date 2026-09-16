@@ -1,0 +1,80 @@
+{
+  "schema": "ggd.jump-force-dai-decimation@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "input": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2619896,
+    "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-b/dai-chr0430-review-v4.glb",
+    "bytes": 2619896,
+    "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23"
+  },
+  "byteIdenticalRebuild": true,
+  "parameters": {
+    "role": "champion",
+    "geometry": true,
+    "targetTriangles": 7500,
+    "formalMaximumTriangles": 8000,
+    "meshoptimizerErrorBound": 0.02,
+    "textureEdge": 256,
+    "atlas": false
+  },
+  "tools": {
+    "optimizer": {
+      "gitPath": "tools/model-budget/optimize.ts",
+      "bytes": 29039,
+      "sha256": "2ea3bc2fc5b45466c2ed499d6c021c68496630f0c44ebab9cf4912665048edbf"
+    },
+    "geometryWorker": {
+      "gitPath": "tools/model-budget/optimize/decimate.mjs",
+      "bytes": 3340,
+      "sha256": "d92e1b84969c243574630959350664a7992742fe5b64ee5746434bed4e777bab"
+    },
+    "bootstrap": {
+      "gitPath": "tools/model-budget/optimize/bootstrap-geometry.sh",
+      "bytes": 2122,
+      "sha256": "e32ee890bf9cc1d3dc1af2bade12d99c7ea12b78a7979b24d1b21dd956d4431b"
+    },
+    "vendorPackage": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/dependencies/package.json",
+      "bytes": 299,
+      "sha256": "7da1a2c6245eb100b4073909a4767510d0ff708230ae4c0ed81fca07fabcffe6"
+    },
+    "vendorLock": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/dependencies/package-lock.json",
+      "bytes": 26268,
+      "sha256": "fad8733b9f0602a37733820aa35dd1feff7fdb1d86ef8d41a311565227f3e244"
+    },
+    "node": "v25.9.0",
+    "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "observed": {
+    "vramBytes": 8388600,
+    "fileBytes": 2619896,
+    "triangles": 7947,
+    "drawCalls": 20
+  },
+  "states": {
+    "geometryTargetPassed": true,
+    "textureEdgePassed": true,
+    "drawCallLimitPassed": false,
+    "sixStateMotionComplete": false,
+    "ggdHardPolicyPassed": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "s3BackupStatus": "pending-separate-conversion-stage-backup"
+}
