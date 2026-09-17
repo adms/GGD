@@ -744,3 +744,44 @@ docs/全英雄列表.md
 ## 19:21 · f9bcfbbb
 
 好 照這樣做 部署完接著收尾
+
+## 23:42 · ff1d7200
+
+我們先討論一個基本的事情，變身是否真的必要佔一個角色，還是只是一個技能狀態/標籤 就足夠，因為連模型不一樣、縮放、變色 這些其實都不需要獨立一個角色
+
+## 23:52 · b00ffd31
+
+已合併了，檢查一下主線的 README
+
+## 23:56 · 3325afdf
+
+好 改掉戳記 推到分支給我一鍵複製
+
+## 23:57 · d2d7e68a
+
+沒關係 算了停下來吧
+
+## 23:58 · 01124064
+
+收尾停下來吧 讓主線合併
+
+## 23:58 · 6d8a0a7d
+
+readme 那條支線怎麼還沒合併掉?
+
+【給主線】README PR #1232 收尾，請主線合併：https://github.com/adms/GGD/pull/1232
+head 3aae77f98（= 遠端分支），包含：
+- 90f7ecdcf：併入 PR #1284 到 bdd19be75（README 產生器衝突已解，兩個呼叫都留）
+- 3aae77f98：README §7 新增「已取得素材庫」一節（804 個來源身分，跟 #1284 產物逐項對過）
+先前 881e1d35c 以前的內容已由 1f7c1243d2 併進 main。
+
+合併注意：
+1. 建議先合 #1284，再合 #1232。只合 #1232 也會連同 #1284 到 bdd19be75 一起進 main。
+2. #1232 併進目前 main（27499d34f）會在 11 個「產生出來的檔」衝突，⛔ 不要手合，合完重新產生（同一時間只能一條工作流跑 skills:sync）：
+   README.md（只衝突在產生區段；手寫段取 #1232 的版本）
+   content/bundle.json、content/manifest.json、content/editor-target-profile.json
+   docs/reference/abilities.md、grail-wishes.md、items.md、mechanics.md、roster.md
+   docs/全英雄列表.md、docs/技能編輯器引擎須知 20260811.md
+   重新產生：pnpm skills:sync，再跑 pnpm skills:check
+3. 3aae77f98 用了 GGD_GENINPUT_OFF=1：README 也是 skillforge:audit 的輸入，那份報告沒在 README 分支重產。若 skillforge:audit:check 紅，交給 skillforge 工作流。
+4. 沒做完（可選）：README 手寫段有 4 處過期戳記，開頭快照、快速開始、§7 內容表寫著 cv_c146a194de5f，開頭快照還寫著 v0.46.0。數字本身都正確，可以改成「以產生區塊結尾的戳記為準」。
