@@ -159,3 +159,24 @@ owner 2026-09-15 說過「不使用300英雄裡的中文語音」與「whisper �
 | 傑富力士 `godie-ucrl` | 「JUMP大亂鬥系列應該有」 | ⭐ 找到了：JUMP FORCE 的 Gon 共 250 段（本機 `GGD-Asset-Library`，含 25 段劇情語音）。頁面放了最長的 18 段給 owner 挑名言；整包對應要再派一輪 lane |
 
 ⛔ 這一節只是把裁決寫下來，⛔ 還沒有套用到任何語音檔。
+
+### 傑富力士（`godie-ucrl`）：整包引入 JUMP FORCE 的 Gon
+
+> owner 2026-09-17：「傑富力士：JUMP FORCE => 你是不是忘了也要引入模型 動作 音效 全語音」
+
+2026-09-17 本機盤點（明細：`docs/_reports/1252_gon-assets-audit_20260917.json`）：
+
+| 要的 | 本機現況 |
+|---|---|
+| **語音** | ⭐ **有 250 段**：225 段 `chr0300_ActVoice`（ogg 48kHz）＋ 25 段 `130300_chr0300_EvnVoice`（劇情 wav），路徑都驗過讀得到 |
+| **模型** | ⛔ 沒有。他現在綁的 `imported.herobiggon` 是 **Warcraft 3 匯入**的，⛔ 不是 JUMP FORCE |
+| **動作** | ⛔ 沒有。那顆 WC3 模型內含 12 段動畫，JUMP FORCE 的沒有 |
+| **音效** | ⛔ 沒有 Gon 專屬的（只有全域共用音庫） |
+| **來源** | ⭐ **不必再連 LV99**：JUMP FORCE Steam 完整鏡像已在本機（3,466 檔／23.86 GB，6 個 pak／22.38 GB，SHA-256 全驗過、實測讀得到），解包工具 `repak`、`UEViewer` 也在 |
+
+前例 chr0430（小呆）：1,942 個 native package → 11 個 gltf，**動畫數 0** ⇒ JUMP FORCE 的角色包只有 mesh＋skeleton＋AnimBP，
+**AnimSequence 不在** `Content/Character/chrXXXX` 底下；角色音效在 `Content/Sound/Character/<id>_*`（小呆 528 檔）。
+
+下一步（尚未做）：① 對 pak 索引 chr0300 ② 抽 mesh → `python3 tools/w3x-import/model_intake.py`（第一·四之零守則）
+③ 定位 AnimSequence 路徑 ④ 抽 `Content/Sound/Character/0300_*` 音效 ⑤ 250 段語音派一輪 lane 對到語音格。
+⚠️ 順帶發現：`GGD-Asset-Library/hero-model-options.json` 記 `godie-ucrl` 是 `champ.thorne`，與實際 `imported.herobiggon` 對不上（該檔已過期）。
