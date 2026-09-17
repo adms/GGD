@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 3187,
-    "totalBytes": 1180954220
+    "entries": 3191,
+    "totalBytes": 1183552788
   },
   "entries": [
     {
@@ -25280,6 +25280,17 @@
       ]
     },
     {
+      "path": "assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "bytes": 832496,
+      "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c"
+      ]
+    },
+    {
       "path": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
       "bytes": 2518200,
       "sha256": "17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e",
@@ -26524,6 +26535,17 @@
       ]
     },
     {
+      "path": "assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+      "bytes": 466788,
+      "sha256": "acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee"
+      ]
+    },
+    {
       "path": "assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
       "bytes": 2626964,
       "sha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
@@ -27566,6 +27588,17 @@
         "bundle",
         "version.body.4e9e98d88d13f8bdb149f5d4c67befa786f11eacdfbd1b3a",
         "version.body.8e3b862f912c0039c21df494b5d93e2ed0576928d083497d"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "bytes": 832496,
+      "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673"
       ]
     },
     {
@@ -29253,6 +29286,17 @@
         "bundle",
         "version.body.8c74009a34302d2b681b0ec3a97d7d1084a178fe24da6a57",
         "version.body.bd1c798db5d38234790653550b4a035af6ec5e13a5e784d6"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+      "bytes": 466788,
+      "sha256": "acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
       ]
     },
     {

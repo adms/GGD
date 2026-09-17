@@ -25,6 +25,9 @@ import { GATES } from "./limits";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
 const OUT = path.join(ROOT, "materials/asset-library/模型動作特效上架限制.md");
+const FOUR_DAY_REPORT = path.join(ROOT, "materials/hero-model-library/近四日新增模型動作特效清單.md");
+const REPORT_START = "<!-- generated:model-policy-summary:start -->";
+const REPORT_END = "<!-- generated:model-policy-summary:end -->";
 const SOURCES = [
   "packages/shared/src/content/modelUpload/adoptionPolicy.json",
   "packages/shared/src/content/modelUpload/budget.ts",
@@ -221,11 +224,42 @@ ${SOURCES.map((source) => `- \`${source}\``).join("\n")}
 `;
 }
 
+function renderReportBlock(): string {
+  const vfx = GATES.find((gate) => gate.role === "vfx-model");
+  if (!vfx) throw new Error("missing vfx-model gate");
+  return `${REPORT_START}
+
+上架限制文件由正式程式常數與設定檔生成：\`materials/asset-library/模型動作特效上架限制.md\`。現行英雄正式採用規則是來源超過 ${n(HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove)} 面時，另產生不超過 ${n(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax)} 面的候選並重做骨架與視覺 A/B；${n(HERO_MODEL_BUDGET.tris.warn)}／${n(HERO_MODEL_BUDGET.tris.limit)} 是 runtime 容量警戒／硬上限，不能代替正式採用規則。英雄另有 ${n(HERO_MODEL_BUDGET.meshes.warn)}／${n(HERO_MODEL_BUDGET.meshes.limit)} draw calls、${n(HERO_MODEL_BUDGET.texEdge.warn)}／${n(HERO_MODEL_BUDGET.texEdge.limit)}px 貼圖最長邊、${n(HERO_MODEL_BUDGET.channels.warn)}／${n(HERO_MODEL_BUDGET.channels.limit)} 單段動畫通道；VFX 模型為 ${n(vfx.tris.warn)}／${n(vfx.tris.limit)} 面、${n(vfx.meshes.warn)}／${n(vfx.meshes.limit)} draw calls、${n(vfx.texEdge.limit)}px、${n(vfx.channels.warn)}／${n(vfx.channels.limit)} 通道。
+
+${REPORT_END}`;
+}
+
+function expectedFourDayReport(): string {
+  const actual = fs.readFileSync(FOUR_DAY_REPORT, "utf8");
+  const block = renderReportBlock();
+  if (actual.includes(REPORT_START) || actual.includes(REPORT_END)) {
+    if ((actual.match(new RegExp(REPORT_START, "g")) ?? []).length !== 1 || (actual.match(new RegExp(REPORT_END, "g")) ?? []).length !== 1) {
+      throw new Error("model policy report markers are ambiguous");
+    }
+    const begin = actual.indexOf(REPORT_START);
+    const finish = actual.indexOf(REPORT_END, begin) + REPORT_END.length;
+    return actual.slice(0, begin) + block + actual.slice(finish);
+  }
+  const header = "## 八、限制與自動化工具\n\n";
+  const boundary = "\n\n可重現入口：";
+  const begin = actual.indexOf(header);
+  const finish = actual.indexOf(boundary, begin + header.length);
+  if (begin < 0 || finish < 0) throw new Error("model policy report insertion boundaries are missing");
+  return actual.slice(0, begin + header.length) + block + actual.slice(finish);
+}
+
 function main(): void {
   const expected = render();
+  const expectedReport = expectedFourDayReport();
   if (process.argv.includes("--check")) {
     const actual = fs.existsSync(OUT) ? fs.readFileSync(OUT, "utf8") : "";
-    if (actual !== expected) {
+    const actualReport = fs.readFileSync(FOUR_DAY_REPORT, "utf8");
+    if (actual !== expected || actualReport !== expectedReport) {
       process.stderr.write(`model policy document is stale: ${path.relative(ROOT, OUT)}\nrun: pnpm modelpolicy:build\n`);
       process.exit(1);
     }
@@ -234,7 +268,8 @@ function main(): void {
   }
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, expected);
-  process.stdout.write(`wrote ${path.relative(ROOT, OUT)}\n`);
+  fs.writeFileSync(FOUR_DAY_REPORT, expectedReport);
+  process.stdout.write(`wrote ${path.relative(ROOT, OUT)} and ${path.relative(ROOT, FOUR_DAY_REPORT)}\n`);
 }
 
 main();

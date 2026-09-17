@@ -38,6 +38,26 @@ for p in (repo/'content/champions').glob('*.json'):
  if not p.name.startswith('_'):
   hid=logical.get(p.stem,p.stem);branches[hid]=read(p)
   heroes.setdefault(hid,dict(id=hid,name=branches[hid]['name'],options=[],pending=[]))
+for hero in branches.values():
+ for version in hero.get('modelVersions',[]):
+  key=version['sourceModelKey']
+  if key in by_key:continue
+  document_path=repo/'content/models'/(key+'.json')
+  if not document_path.is_file():continue
+  document=read(document_path);glb_path=repo/'content'/document.get('glbPath','')
+  if document.get('id')!=key or not glb_path.is_file():continue
+  digest=hashlib.sha256(glb_path.read_bytes()).hexdigest()
+  if version.get('binarySha256')!=digest:continue
+  source_meta=version.get('source',{})
+  model=dict(id='registered:'+key,modelKey=key,glbPath=document['glbPath'],sha256=digest,
+      bytes=glb_path.stat().st_size,documentSha256=hashlib.sha256(document_path.read_bytes()).hexdigest(),
+      sourceCharacter=source_meta.get('character',key),sourceWork=source_meta.get('work','來源作品待核'),
+      sourceAssetId=source_meta.get('reference','content modelVersion registration'),
+      clipMap=document.get('clipMap',{}),storage='git',gitPath='content/'+document['glbPath'],
+      validation='registered-content-version-current-bytes',fullCharacterPackage=False,
+      limitations=['已登記為後台獨立模型選項；正式站部署需另行驗證。'],
+      automaticEligible=version.get('automaticEligible') is not False)
+  models[model['id']]=model;by_key[key]=model
 pairing_inputs=read(repo/'materials/hero-model-library/pairing-inputs.json')
 pairs={x['id']:x for x in pairing_inputs['batch2']}
 recipes={}
@@ -65,6 +85,11 @@ for id,p in pairs.items():works[id]=p['work'];work_sources[id]='第二批角色�
 for id,r in recipes.items():
  match=re.search(r'(?:作品(?:識別)?|來源)[：:]\s*([^\n]+)',r['identity']);assert match,id
  works[id]=match.group(1).strip().strip('《》');work_sources[id]='第一批 Owner 角色規格'
+for id,c in branches.items():
+ if id in works:continue
+ source_works={str(v.get('source',{}).get('work','')).strip() for v in c.get('modelVersions',[])}-{''}
+ if len(source_works)==1:
+  works[id]=next(iter(source_works));work_sources[id]='已登記模型版本來源'
 for e in upgrades:
  for b in e['old_bindings']:
   if b['id'] not in works:
@@ -73,7 +98,9 @@ for id,work in {'godie-e00r':'新世紀福音戰士（由故事 EVANGELION 辨�
  works.setdefault(id,work);work_sources.setdefault(id,'既有角色故事／模型設定')
 for id,h in heroes.items():
  if h.get('work'):works[id]=h['work']
-assert set(heroes)<=set(works),set(heroes)-set(works)
+missing_works=sorted(set(heroes)-set(works))
+for id in missing_works:
+ works[id]='作品待確認（英雄定義未標示出處）';work_sources[id]='明確缺項；不推測作品'
 palworld_index_path=repo/'materials/hero-model-library/palworld/帕魯三角色素材索引.json'
 palworld_receipt_path=repo/'materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json'
 palworld_index=read(palworld_index_path);palworld_receipt=read(palworld_receipt_path)
@@ -314,7 +341,7 @@ for r in rows:
   else:option['asset']={'modelKey':option['key'],'location':'existing-project-model','s3Uri':None}
 path=repo/'materials/hero-model-library/全角色模型盤點.md'
 inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'heroForgeIntegrations':{'source':'priority-evidence/palworld-hero-integration/receipt.json','scope':'locally verified Hero Forge packages; not static champion documents or production deployment','integrations':palworld_integrations},'downloadPlan':download_plan}
-validation={'time':now,'inputs_sha256':input_digest,'rows':len(rows),'missing_works':[],'source_options':len(models),'s3_release':release['release'],'live_selectable':len(white),'pending':len(pending_rows),'productionContentVersion':observation['contentVersion'],'sha256':hashlib.sha256(report.encode()).hexdigest()}
+validation={'time':now,'inputs_sha256':input_digest,'rows':len(rows),'missing_works':missing_works,'source_options':len(models),'s3_release':release['release'],'live_selectable':len(white),'pending':len(pending_rows),'productionContentVersion':observation['contentVersion'],'sha256':hashlib.sha256(report.encode()).hexdigest()}
 artifacts={path:report,validation_path:json.dumps(validation,ensure_ascii=False,indent=2)+'\n',path.with_name('inventory.json'):json.dumps(inventory,ensure_ascii=False,indent=2)+'\n'}
 if args.check:
  stale=[str(p.relative_to(repo)) for p,value in artifacts.items() if not p.is_file() or p.read_text()!=value]

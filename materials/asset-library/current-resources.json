@@ -17,7 +17,7 @@
       "sha256": "ee6b537894f33346c4e0ea814331d8cef315a6851763ec3c75e37b0a7cf1f741"
     }
   ],
-  "modelSourceCount": 165,
+  "modelSourceCount": 205,
   "models": [
     {
       "id": "300heroes:20",
@@ -5546,8 +5546,8 @@
       "id": "ou99:464696",
       "modelKey": "ou99.464696",
       "glbPath": "assets/models/ou99/ou99_464696.glb",
-      "sha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
-      "bytes": 5118592,
+      "sha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
+      "bytes": 4119592,
       "documentSha256": "b4597ea2856c1805e42d4e22cb79cac738d7af6bbb27b2d9b4ff64ba2ee07532",
       "sourceCharacter": "拳四郎",
       "sourceWork": "北斗神拳",
@@ -5584,9 +5584,12 @@
         "receiptSha256": "3765e07425a62e0345b419a2ce3fcff4d30855c4962cba1fe3815c900ebeed30",
         "allMemberSha256Verified": true
       },
-      "registeredFor": [],
-      "runtimeDropdownRegistered": false,
-      "modelDocumentGitPath": "content/models/ou99.464696.json"
+      "registeredFor": [
+        "godie-umal"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/ou99.464696.json",
+      "manifestDriftReconciledByRegisteredVersion": true
     },
     {
       "id": "ou99:464696:standard-v1",
@@ -6615,6 +6618,1699 @@
       ],
       "runtimeDropdownRegistered": true,
       "modelDocumentGitPath": "content/models/community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd.json"
+    },
+    {
+      "id": "registered:champ.sela",
+      "modelKey": "champ.sela",
+      "glbPath": "assets/models/champions/blocky-mage.glb",
+      "sha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "bytes": 52120,
+      "documentSha256": "e437dff9cb11cbde8d887347bb769ac3c9bd4c647468e6d25706576812c62134",
+      "sourceCharacter": "美白大法師 - 黑人牙膏",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/champ.sela.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/champions/blocky-mage.glb",
+      "modelDocumentGitPath": "content/models/champ.sela.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-kaede",
+        "b2-makoto",
+        "b2-matthias",
+        "b2-orphen",
+        "b2-uncle",
+        "godie-e00s",
+        "godie-e010",
+        "godie-efur",
+        "godie-ogld",
+        "godie-u00k"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69"
+        ]
+      }
+    },
+    {
+      "id": "registered:champ.skin.barbarian",
+      "modelKey": "champ.skin.barbarian",
+      "glbPath": "assets/models/champions/blocky-barbarian.glb",
+      "sha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+      "bytes": 52124,
+      "documentSha256": "f17ea5232b568c36c26d7156ea13319de522683304fe389017c913e13621007b",
+      "sourceCharacter": "魔界霸主 - 巴恩大魔王",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/champ.skin.barbarian.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/champions/blocky-barbarian.glb",
+      "modelDocumentGitPath": "content/models/champ.skin.barbarian.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-h02k",
+        "godie-ubal",
+        "godie-umal"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.0314a5256adb62a38113091f6302fd37cf637bc05f99bce7",
+          "version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399",
+          "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4"
+        ]
+      }
+    },
+    {
+      "id": "registered:champ.thorne",
+      "modelKey": "champ.thorne",
+      "glbPath": "assets/models/champions/blocky-knight.glb",
+      "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "bytes": 52088,
+      "documentSha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836",
+      "sourceCharacter": "幸運超人",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/champ.thorne.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/champions/blocky-knight.glb",
+      "modelDocumentGitPath": "content/models/champ.thorne.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-elma",
+        "b2-fushi",
+        "b2-guts",
+        "b2-haga",
+        "b2-kaiji",
+        "b2-klaus",
+        "b2-luckyman",
+        "b2-maomao",
+        "b2-naofumi",
+        "b2-ned",
+        "b2-noor",
+        "b2-nube",
+        "b2-shadow",
+        "b2-shinchan",
+        "b2-sinbad",
+        "b2-touka",
+        "community-review-02-20260907",
+        "community-review-05-20260907",
+        "community-review-07-20260907",
+        "community-review-22-20260907",
+        "community-review-34-20260907",
+        "community-review-36-20260907",
+        "community-review-37-20260907",
+        "godie-hapm",
+        "godie-udea"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "bytes": 1736188,
+      "documentSha256": "3efeb4dc4c0a6bf25fd8bab60cc54b4da9607cd950aaea7a5186d2d1ea78382a",
+      "sourceCharacter": "不知火舞",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+      "modelDocumentGitPath": "content/models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "community-review-03-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.fb11308ea2781d7b07e6d9da520863007e29d892d8b71293"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "bytes": 78876,
+      "documentSha256": "b77c61d90930191a6c246fc9be54860d0ba21dc382d6c00310237d33270320fc",
+      "sourceCharacter": "如月電車",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "modelDocumentGitPath": "content/models/community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-kisaragi"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.8ccd5ce36ba95dcfbe12a95f88e973cc09b630b883632578"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+      "modelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+      "glbPath": "assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28",
+      "bytes": 832496,
+      "documentSha256": "24b0d0a89bfcb52966af5ccefbb5fb6978432780df34ab29d4b9eec953922626",
+      "sourceCharacter": "波吉（王冠版／獨立完整副本）",
+      "sourceWork": "國王排名；來源替身為 300英雄小桐人寵物",
+      "sourceAssetId": "derivative:bojji-crown-v1",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_idle",
+        "death": "bat_dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "modelDocumentGitPath": "content/models/community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-bojji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "bytes": 2361292,
+      "documentSha256": "9cdd717b3f778bf2851819528f12950712c7bb3703b7e19197e9008fe82eed09",
+      "sourceCharacter": "哥布林殺手",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "modelDocumentGitPath": "content/models/community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-goblin"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.1dc6560a88034ab3b2826b003dd21a2165c51b880f44aa9f"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "modelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "glbPath": "assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+      "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+      "bytes": 2226392,
+      "documentSha256": "b87d712da5f3c11ed9a382986df6fcb102cb866934426f71af339ec2f08a9b2d",
+      "sourceCharacter": "何布／波普（PN020/00）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+      "sourcePlatform": "unknown (source record does not specify platform)",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+      "modelDocumentGitPath": "content/models/community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-popp"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+          "version.body.945c767c7f6997f9436f13dbc013a20a99ad22b5a0c5de4e"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "modelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "glbPath": "assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+      "sha256": "acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a",
+      "bytes": 466788,
+      "documentSha256": "e7c05ae9b001c166a57b04872326a79390a541f5f3042fb2bddccbe089863b22",
+      "sourceCharacter": "阿薩謝爾（獨立副本／喜羊羊，小型蝙蝠翼）",
+      "sourceWork": "喜羊羊與灰太狼",
+      "sourceAssetId": "derivative:azazel",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+      "modelDocumentGitPath": "content/models/community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "community-review-32-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.doraemon-cat",
+      "modelKey": "imported.doraemon-cat",
+      "glbPath": "assets/models/imported/doraemon-cat.glb",
+      "sha256": "b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b",
+      "bytes": 3495736,
+      "documentSha256": "4eb26777b72e0a0b056854e6c295c67cbea67fec4b449564546bf7fbd7460c5e",
+      "sourceCharacter": "小叮噹 - 哆拉A夢",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.doraemon-cat.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/doraemon-cat.glb",
+      "modelDocumentGitPath": "content/models/imported.doraemon-cat.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-n00b"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d"
+        ]
+      },
+      "pendingGeometryReview": {
+        "heroId": "godie-n00b",
+        "modelKeys": [
+          "ou99.496905",
+          "imported.doraemon-cat"
+        ],
+        "primitive": [
+          5,
+          7,
+          14,
+          15,
+          16
+        ],
+        "signal": "offset-floor, second-skeleton and airborne clone",
+        "state": "existing-model-pending-review"
+      }
+    },
+    {
+      "id": "registered:imported.herobuu",
+      "modelKey": "imported.herobuu",
+      "glbPath": "assets/models/imported/herobuu.glb",
+      "sha256": "6d1911e02127d385eeb87620fd79ddea42e918b95e870220ff6cda21b2aba41e",
+      "bytes": 188804,
+      "documentSha256": "6a04dc967c232945e5d82edf119815e42de3b01dcabd2d6d23adff571405683a",
+      "sourceCharacter": "超級普烏 - 魔人普烏",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.herobuu.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack -1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/herobuu.glb",
+      "modelDocumentGitPath": "content/models/imported.herobuu.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-huth"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.heroichigo",
+      "modelKey": "imported.heroichigo",
+      "glbPath": "assets/models/imported/heroichigo.glb",
+      "sha256": "fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2",
+      "bytes": 481884,
+      "documentSha256": "6b8fe835887596827b04e4e9e6d3f87ca82d321d8289f2062ce179878d8f3ca2",
+      "sourceCharacter": "開外掛的死神 - 黑崎一護",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.heroichigo.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Attack - 1",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/heroichigo.glb",
+      "modelDocumentGitPath": "content/models/imported.heroichigo.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-h01n"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.0a0d16b904a2effafb841128d8dfc9630fc1001515087362"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.heroichigo-bankai",
+      "modelKey": "imported.heroichigo-bankai",
+      "glbPath": "assets/models/imported/heroichigo.glb",
+      "sha256": "fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2",
+      "bytes": 481884,
+      "documentSha256": "9b0cc55a216a253a858bb612a70803fca533adedcad722587ae1dfe432eca502",
+      "sourceCharacter": "外掛開很大的死神 - 黑崎一護",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.heroichigo-bankai.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Attack - 1",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/heroichigo.glb",
+      "modelDocumentGitPath": "content/models/imported.heroichigo-bankai.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-h01o"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.herosaber",
+      "modelKey": "imported.herosaber",
+      "glbPath": "assets/models/imported/herosaber.glb",
+      "sha256": "fdfc941cde9432c19a8046d45b3f4aa0abf0351649ff0f11a267c0ac4a1231eb",
+      "bytes": 252312,
+      "documentSha256": "faa6a7708129435a8330ea1afdcc10f066ee211ca22d65051ef09f89fcd3a5fa",
+      "sourceCharacter": "亞瑟王 - Saber",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.herosaber.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/herosaber.glb",
+      "modelDocumentGitPath": "content/models/imported.herosaber.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-e002",
+        "godie-e00l"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.herosasuke",
+      "modelKey": "imported.herosasuke",
+      "glbPath": "assets/models/imported/herosasuke.glb",
+      "sha256": "865a87dbf0a8d90d31ec20dfebeb846b932f10688948221b8c36d13a73148041",
+      "bytes": 287640,
+      "documentSha256": "0f60f46f0995683ac1e7b68de42609ad0e184b10f1f048be2efed9400c6dafa3",
+      "sourceCharacter": "寫輪眼復仇者 - 宇智波佐助",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.herosasuke.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/herosasuke.glb",
+      "modelDocumentGitPath": "content/models/imported.herosasuke.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-edem"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.heroshana",
+      "modelKey": "imported.heroshana",
+      "glbPath": "assets/models/imported/heroshana.glb",
+      "sha256": "22d5cd7a2c83ff1e5dae2b0f5432b6ef2c1044f40b21ae60c409fad776e05d44",
+      "bytes": 243120,
+      "documentSha256": "9231c66e8b442246ba3f256791d60d505f1db5f102d492ba41a6b4c38b4920f5",
+      "sourceCharacter": "火霧戰士 - 夏娜",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.heroshana.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/heroshana.glb",
+      "modelDocumentGitPath": "content/models/imported.heroshana.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-e008"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.linainvers",
+      "modelKey": "imported.linainvers",
+      "glbPath": "assets/models/imported/linainvers.glb",
+      "sha256": "8791a3e65c3ef4063cb4b93dbe519008d44f4bcf2c4f61e575814d70460413df",
+      "bytes": 230448,
+      "documentSha256": "41eb2c6f4c92dc814027c21602f6d1f41a9f8f577a7b28a24e4db202ed28e675",
+      "sourceCharacter": "黑魔導士 - 莉娜因巴斯",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.linainvers.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "walk",
+        "attack": "Attack - 1",
+        "cast": "Attack - 1",
+        "hurt": "Stand - 1",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/linainvers.glb",
+      "modelDocumentGitPath": "content/models/imported.linainvers.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-h020",
+        "godie-hjai"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.lubu",
+      "modelKey": "imported.lubu",
+      "glbPath": "assets/models/imported/lubu.glb",
+      "sha256": "14c5c520c697e2356353e893e3002621b9f633dc8c30c988f27b7b95f4d83c67",
+      "bytes": 579920,
+      "documentSha256": "366ba546b3984001f016a4583dada7e46fb030eebaf0294564bbb124145ff240",
+      "sourceCharacter": "亂世癿王者 - 呂布奉先",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.lubu.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/lubu.glb",
+      "modelDocumentGitPath": "content/models/imported.lubu.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-h01u"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.15b9251641e4e58615f86a092f00f34d17f6dcbd015ff28c"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.sd2",
+      "modelKey": "imported.sd2",
+      "glbPath": "assets/models/imported/sd2.glb",
+      "sha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+      "bytes": 264736,
+      "documentSha256": "9f36ba66be6d91997bd33ae1270febb39ffd291f018fd73edeecf929e9722530",
+      "sourceCharacter": "傳說的龍騎士 - 勇者小呆",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.sd2.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell",
+        "hurt": "Stand - 1",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/sd2.glb",
+      "modelDocumentGitPath": "content/models/imported.sd2.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-nbbc"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603"
+        ]
+      }
+    },
+    {
+      "id": "registered:imported.sesshomaru",
+      "modelKey": "imported.sesshomaru",
+      "glbPath": "assets/models/imported/sesshomaru.glb",
+      "sha256": "5239e1d214e9a2e9829c646274d50392d1e52e0ef70abef1ceb568269cc848d3",
+      "bytes": 335208,
+      "documentSha256": "daf919c78110aeebbf717dcb08188a2ef3ae9fb04f1321e12039cda7043cd0f6",
+      "sourceCharacter": "犬妖 - 殺生丸",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/imported.sesshomaru.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Attack",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/sesshomaru.glb",
+      "modelDocumentGitPath": "content/models/imported.sesshomaru.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-osam"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.287871",
+      "modelKey": "ou99.287871",
+      "glbPath": "assets/models/ou99/ou99_287871.glb",
+      "sha256": "0eda0dfbeea623f4ddde82588d804dcb18acad3df71b6b61ef34100199c011d5",
+      "bytes": 417960,
+      "documentSha256": "c1d12875a9d405bad664cef7e0de7165cbb727e9708843537c488dff0822bfad",
+      "sourceCharacter": "洛克人 X",
+      "sourceWork": "洛克人 X 系列",
+      "sourceAssetId": "https://www.ou99.com/thread-287871-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack -1",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_287871.glb",
+      "modelDocumentGitPath": "content/models/ou99.287871.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "community-review-05-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.29236b04b74aab09f6a72a3b70e82d3a49f4b308fddae01a"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.328403",
+      "modelKey": "ou99.328403",
+      "glbPath": "assets/models/ou99/ou99_328403.glb",
+      "sha256": "a92a451d7f8d542acb998150eb65b906b63a91191c399c866d112c2e1bb796b5",
+      "bytes": 406644,
+      "documentSha256": "3ad713f7cb2af5f3b7e883fad1f5f03c17367a4d06b2407e05310b12153f61e0",
+      "sourceCharacter": "海克力斯",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-328403-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell Slam",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_328403.glb",
+      "modelDocumentGitPath": "content/models/ou99.328403.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-hapm"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.457123",
+      "modelKey": "ou99.457123",
+      "glbPath": "assets/models/ou99/ou99_457123.glb",
+      "sha256": "440b5ba95293efaa165033116ce308bc12f284f1ea297af3722d5108652e3ff7",
+      "bytes": 992608,
+      "documentSha256": "3a0dd964439acf5e04ddc2f4f96c2c864eb76a1b53bb12034b3d5bd385325133",
+      "sourceCharacter": "比利海靈頓",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/ou99.457123.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "stand 1",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell",
+        "death": "death",
+        "hurt": "stand ready"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_457123.glb",
+      "modelDocumentGitPath": "content/models/ou99.457123.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "community-review-15-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.1014b88114b4a3aad2dcab3a7554583dac7499d569b63ead",
+          "version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.457710",
+      "modelKey": "ou99.457710",
+      "glbPath": "assets/models/ou99/ou99_457710.glb",
+      "sha256": "0ffce2b9f25b79753a9128d548a978de691985db46d4077d1466f880deececd3",
+      "bytes": 521420,
+      "documentSha256": "f9a67d3b882c9b81f213a3e6325b482ec91d50789371590b343c83b5f3b8ec6c",
+      "sourceCharacter": "伊藤開司",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-457710-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 2",
+        "cast": "attack 2",
+        "hurt": "stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_457710.glb",
+      "modelDocumentGitPath": "content/models/ou99.457710.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-kaiji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.457874",
+      "modelKey": "ou99.457874",
+      "glbPath": "assets/models/ou99/ou99_457874.glb",
+      "sha256": "a725f7fc1c46ee63f359f864b3f5c65472fa65d1d0d1d2e67371dd5a1995192f",
+      "bytes": 624412,
+      "documentSha256": "3a3b5f5964d2c5a340c089cde32a403a2dde850bbdda510a107ac70721a28dc2",
+      "sourceCharacter": "野原新之助",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-457874-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "walk",
+        "attack": "attack",
+        "cast": "attack",
+        "hurt": "Stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_457874.glb",
+      "modelDocumentGitPath": "content/models/ou99.457874.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-shinchan"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.458777",
+      "modelKey": "ou99.458777",
+      "glbPath": "assets/models/ou99/ou99_458777.glb",
+      "sha256": "29b47dab36b37ac7759f1c352f8f7ecd1cecae91a7dfdf7d9b265dd4641abefa",
+      "bytes": 2029280,
+      "documentSha256": "14847ee62cf76eefe782ea213a2dbe17545c827b4596617d3c65808b69ca89ad",
+      "sourceCharacter": "凱亞爾",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/ou99.458777.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_458777.glb",
+      "modelDocumentGitPath": "content/models/ou99.458777.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-keyaru"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.d7f1075b4233ade0f0eebae0b05ec169a7c15be38a9bd2ac"
+        ]
+      },
+      "pendingGeometryReview": {
+        "heroId": "b2-keyaru",
+        "modelKeys": [
+          "ou99.458777",
+          "ou99.458777-standard-v3"
+        ],
+        "primitive": 0,
+        "signal": "suspect second-skeleton",
+        "state": "reviewed-held-accessory-false-positive-preserve",
+        "component": "handheld spiral lantern/tool; native prop bones, no GEOA visibility removal"
+      }
+    },
+    {
+      "id": "registered:ou99.459087",
+      "modelKey": "ou99.459087",
+      "glbPath": "assets/models/ou99/ou99_459087.glb",
+      "sha256": "e8b57b8054ce2589fe74e90273dbd39b4ae42d5490e119ee83015eff192ed4c7",
+      "bytes": 5512212,
+      "documentSha256": "94b46621956a5c5dcd3a54c0a4a7f05cae557f8d68ecaadba50acffcc1a2c49a",
+      "sourceCharacter": "死之王",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-459087-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "cast": "spell 1",
+        "hurt": "Stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_459087.glb",
+      "modelDocumentGitPath": "content/models/ou99.459087.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-u00k"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.460977",
+      "modelKey": "ou99.460977",
+      "glbPath": "assets/models/ou99/ou99_460977.glb",
+      "sha256": "ea28614b3ec763bd20c205cb8b7e8600d7a7781a7ec12baebd5ad55e86ed2a6d",
+      "bytes": 2516412,
+      "documentSha256": "2cc7d8df285ada0c0c32e7de9cf8ac298bd26cada323bb52d38c5137a9f70d9f",
+      "sourceCharacter": "凱茲",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-460977-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_460977.glb",
+      "modelDocumentGitPath": "content/models/ou99.460977.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-guts"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.463344",
+      "modelKey": "ou99.463344",
+      "glbPath": "assets/models/ou99/ou99_463344.glb",
+      "sha256": "d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958",
+      "bytes": 1330152,
+      "documentSha256": "fb2f12da89adb946c573e3f5bb378ad40ac018610c9ef1f64dc73bbc31eaacf0",
+      "sourceCharacter": "熊貓",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-463344-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_463344.glb",
+      "modelDocumentGitPath": "content/models/ou99.463344.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "godie-h02k"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.467165",
+      "modelKey": "ou99.467165",
+      "glbPath": "assets/models/ou99/ou99_467165.glb",
+      "sha256": "95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d",
+      "bytes": 2266088,
+      "documentSha256": "f7a7f82e3edca11311415a4c4c8cdfb6c248c68cce71379812dc9d4fd420cb22",
+      "sourceCharacter": "貓貓",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-467165-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_467165.glb",
+      "modelDocumentGitPath": "content/models/ou99.467165.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-maomao"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.469191",
+      "modelKey": "ou99.469191",
+      "glbPath": "assets/models/ou99/ou99_469191.glb",
+      "sha256": "3719a18cd861533c7acc56d1b1a7ff30ba7ee13cd90ec9caef28f4cec15e8879",
+      "bytes": 7799644,
+      "documentSha256": "6b8f5711eed3b6fc92997aa61f4bd615032306255429d9ff9cd554baaac35ade",
+      "sourceCharacter": "飛鼠先生",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-469191-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell 1",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_469191.glb",
+      "modelDocumentGitPath": "content/models/ou99.469191.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-udea"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.470225",
+      "modelKey": "ou99.470225",
+      "glbPath": "assets/models/ou99/ou99_470225.glb",
+      "sha256": "33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb",
+      "bytes": 1004800,
+      "documentSha256": "03d38ce64e962117e6454e954dca86bee10a906c8058495b81d4fc6beda55732",
+      "sourceCharacter": "白木卡迪那",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-470225-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 2",
+        "cast": "Spell Ten",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_470225.glb",
+      "modelDocumentGitPath": "content/models/ou99.470225.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-e00s",
+        "godie-e010"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.470782",
+      "modelKey": "ou99.470782",
+      "glbPath": "assets/models/ou99/ou99_470782.glb",
+      "sha256": "250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160",
+      "bytes": 764000,
+      "documentSha256": "4b5af9361c5064e4f13a2acc20ce9e2ad68f934972f17581eff2dc0940046812",
+      "sourceCharacter": "岩谷尚文",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-470782-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "cast": "Spell",
+        "hurt": "Stand - 1",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_470782.glb",
+      "modelDocumentGitPath": "content/models/ou99.470782.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-naofumi"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.472410",
+      "modelKey": "ou99.472410",
+      "glbPath": "assets/models/ou99/ou99_472410.glb",
+      "sha256": "dc848d012c84362c811f570a9a58b3cb2371264bb5bb8b2ccc66ec4ab6f36e74",
+      "bytes": 1881624,
+      "documentSha256": "acfe30778aea3a43f1b7f47ebf41e9be132561e6fa7c2fae503df8315a4c87e0",
+      "sourceCharacter": "揍敵客桀諾",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-472410-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_472410.glb",
+      "modelDocumentGitPath": "content/models/ou99.472410.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-efur"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.473324",
+      "modelKey": "ou99.473324",
+      "glbPath": "assets/models/ou99/ou99_473324.glb",
+      "sha256": "a1c1362aa0838dd8a54cffd96d6b76568b3b23b656f7c37eeccc57fda797da80",
+      "bytes": 1441512,
+      "documentSha256": "455fc96dd553be206166eb2403eeb3943002a208b0aef8fbd80b41d72075a8f4",
+      "sourceCharacter": "阿拉丁",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/ou99.473324.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Spell one",
+        "death": "Death",
+        "hurt": "Stand"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_473324.glb",
+      "modelDocumentGitPath": "content/models/ou99.473324.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-aladdin"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.99ea4295362547e0f706080ebccbe495bb4edf5cc867eedf"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.487487-7yzc0mtk",
+      "modelKey": "ou99.487487-7yzc0mtk",
+      "glbPath": "assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+      "sha256": "4366a2eb1889e23caaadf474158a967c256fbbc706c9487cee9c01d58005de3f",
+      "bytes": 909800,
+      "documentSha256": "b7cef0ef09825ceed72e74b16eb3acef1b4b8cf4802eb6aef0cd720fac610073",
+      "sourceCharacter": "覺醒了自動機能的十五年無成冒險者 克勞斯",
+      "sourceWork": "银发动漫正装男",
+      "sourceAssetId": "https://www.ou99.com/thread-487487-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "stand",
+        "run": "walk",
+        "attack": "attack 1",
+        "death": "death",
+        "hurt": "stand",
+        "cast": "spell channel"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_487487-7yzc0mtk.glb",
+      "modelDocumentGitPath": "content/models/ou99.487487-7yzc0mtk.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-klaus"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.495015",
+      "modelKey": "ou99.495015",
+      "glbPath": "assets/models/ou99/ou99_495015.glb",
+      "sha256": "cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724",
+      "bytes": 651180,
+      "documentSha256": "d04acaed9ea4e32a8c235dfc469153d42dab4243e0c58b17933e8817772d7a52",
+      "sourceCharacter": "這個世界漏洞百出 羽賀",
+      "sourceWork": "海星动画人",
+      "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "death": "Death",
+        "hurt": "Stand Ready"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_495015.glb",
+      "modelDocumentGitPath": "content/models/ou99.495015.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "b2-haga"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b"
+        ]
+      },
+      "pendingGeometryReview": {
+        "heroId": "b2-haga",
+        "modelKeys": [
+          "ou99.495015",
+          "ou99.495015-standard"
+        ],
+        "primitive": 2,
+        "signal": "gore-joint and floor-slab",
+        "state": "original-visibility-loss-preserved-new-corrected-version-registered",
+        "component": "49 vertices, 22 triangles, gutz00, Textures/gutz.blp; native alpha 0 for six GGD states, 1 only in Decay Flesh/Bone",
+        "nextOwner": "conversion-integration-workflow",
+        "correctedVersion": {
+          "sourceModelKey": "ou99.495015-native-visibility-v1",
+          "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+          "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+          "nativeAnimationCount": 13,
+          "visualSamples": 82,
+          "nonTargetVertexMaxError": 0,
+          "visibleTargetVertexMaxError": 0,
+          "hiddenTargetAreaMax": 0,
+          "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
+          "productionDeployed": false
+        }
+      }
+    },
+    {
+      "id": "registered:ou99.495978",
+      "modelKey": "ou99.495978",
+      "glbPath": "assets/models/ou99/ou99_495978.glb",
+      "sha256": "9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727",
+      "bytes": 1306916,
+      "documentSha256": "8e63ab0e240b874c8c0051521075fcfde200ca786497b64068e5514be3c04808",
+      "sourceCharacter": "黑人牙膏",
+      "sourceWork": "ou99 偶久網下載",
+      "sourceAssetId": "https://www.ou99.com/thread-495978-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell One",
+        "hurt": "Stand",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_495978.glb",
+      "modelDocumentGitPath": "content/models/ou99.495978.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-ogld"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24"
+        ]
+      }
+    },
+    {
+      "id": "registered:ou99.498341",
+      "modelKey": "ou99.498341",
+      "glbPath": "assets/models/ou99/ou99_498341.glb",
+      "sha256": "ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd",
+      "bytes": 716744,
+      "documentSha256": "68b994c336a1c5127ae6f401e97bb2dd7cfedc0ff0f117b207bedcd79335ae70",
+      "sourceCharacter": "初號機",
+      "sourceWork": "新世紀福音戰士",
+      "sourceAssetId": "https://www.ou99.com/thread-498341-1-1.html",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack 1",
+        "cast": "Attack 1",
+        "hurt": "Stand",
+        "death": "death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/ou99/ou99_498341.glb",
+      "modelDocumentGitPath": "content/models/ou99.498341.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-e00r"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.6762543e2beb02d969c86576c4f12079362e820376133999"
+        ]
+      }
+    },
+    {
+      "id": "registered:w3x.stock.satyrtrickster",
+      "modelKey": "w3x.stock.satyrtrickster",
+      "glbPath": "assets/models/imported/satyrtrickster.glb",
+      "sha256": "dea0c0e38be2cf832a0b3da80ea25c52f61b2bec9233bd389cc7b8b401854a6b",
+      "bytes": 760652,
+      "documentSha256": "bb2b7da79bb07cb63c5a8bdc26bf4a27dd38d944b991c2b7aa11c3c62dc78ac6",
+      "sourceCharacter": "最終泛用人型決戰兵器 - 初號機",
+      "sourceWork": "原上線內容",
+      "sourceAssetId": "models/w3x.stock.satyrtrickster.json",
+      "sourcePlatform": null,
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Stand Ready",
+        "hurt": "Stand - 2",
+        "death": "Death"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/imported/satyrtrickster.glb",
+      "modelDocumentGitPath": "content/models/w3x.stock.satyrtrickster.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": true,
+      "registeredFor": [
+        "godie-e00r"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.55be69fe0b0a5d52e642fed79d2beee8059bd86b0726b85e"
+        ]
+      }
     }
   ],
   "voiceIndex": "materials/hero-model-library/voice-index.json",
@@ -6625,20 +8321,20 @@
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "valhalla37ModelOptionAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
-    "sha256": "b9be39434a38a2a6e55e86f8ed5b0701f5039b581d661a85d01cd509186ea6fd",
+    "sha256": "d7486a33062ba9b9e38d5f9274e3669ce5dbac9bdd368c18c1bafabbac59ff48",
     "status": "feature-branch-registered-and-bundle-resolvable; production-glbs-http-404; visual-e2e-unverified",
     "summary": {
       "championDocumentsGitTracked": 37,
       "activeModelDocumentsValid": 37,
       "activeGlbsValidAndGitTracked": 37,
       "activeSixStateClipMapsValid": 37,
-      "acquiredModelVersionOptions": 140,
-      "dropdownContractAcceptedModelVersionOptions": 140,
-      "registeredModelVersions": 140,
-      "localSelectableModelVersions": 140,
-      "uniqueAcquiredSourceModelKeys": 55,
-      "qualifiedCentralTargetRows": 55,
-      "qualifiedCentralTargetRowsRepresented": 55,
+      "acquiredModelVersionOptions": 143,
+      "dropdownContractAcceptedModelVersionOptions": 143,
+      "registeredModelVersions": 143,
+      "localSelectableModelVersions": 143,
+      "uniqueAcquiredSourceModelKeys": 58,
+      "qualifiedCentralTargetRows": 56,
+      "qualifiedCentralTargetRowsRepresented": 56,
       "qualifiedCentralTargetRowsMissingRegistration": 0,
       "approvedDerivativeReceipts": 11,
       "approvedDerivativeAuthorizationExpansion": 0,
@@ -6653,12 +8349,7 @@
       "branchActiveGlbsHttp200OnProductionOrigin": 0,
       "productionVisualE2eVerified": 0
     },
-    "restorePath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
-    "gitTracked": false,
-    "storageClass": "s3-legacy-preparation",
-    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
-    "s3ArchiveMember": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
-    "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json"
+    "s3PreparationSplitStatus": "superseded-by-newer-git-bytes"
   },
   "windowsGameSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
@@ -8862,11 +10553,11 @@
     "schema": "ggd.palworld-approved-runtime-integration-receipt@1",
     "status": "three-local-hero-forge-dropdowns; 18-motion-states-and-18-approved-cries-runtime-bound",
     "manifestGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
-    "manifestSha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f",
+    "manifestSha256": "7bef3d00ef9742a53012b0bf91445425b14166427d77dba2675654777369ae79",
     "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/receipt.json",
-    "receiptSha256": "3358f89a343664d3ded9b9ae869a4691c1eed5593ae2f150dc6485cf00593ba6",
+    "receiptSha256": "93a9a662aef71ea1863e9748acdf7f4ae7a20dff82c1484ada6bc7e684a55119",
     "runtimeBindingsGitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
-    "runtimeBindingsSha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b",
+    "runtimeBindingsSha256": "d8e9dd16b6ffdbe9cd18f48a8f8a50ebb755a5635472a2e8e0fdde08e0b429fe",
     "summary": {
       "characters": 3,
       "ownerApprovedCandidates": 36,
@@ -9173,40 +10864,40 @@
         "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.wav",
-        "bytes": 103576,
-        "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.mp3",
+        "bytes": 10493,
+        "sha256": "092754d7394d37f76dde668583d440a55d4ba5f255a3366337b07fce7904e82e",
+        "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.wav",
-        "bytes": 131896,
-        "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.mp3",
+        "bytes": 13000,
+        "sha256": "c8c816c4256d0d80b880615d34f743d00c7acaed7071e19c2548064e400d3d5d",
+        "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
-        "bytes": 147040,
-        "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
+        "bytes": 14254,
+        "sha256": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22",
+        "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.wav",
-        "bytes": 223052,
-        "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.mp3",
+        "bytes": 21359,
+        "sha256": "dc081a8ad9258a9f720a0fcb1eecc9274b728e4af9bcb0624b8c8d708e284ef4",
+        "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
-        "bytes": 107200,
-        "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.mp3",
+        "bytes": 10911,
+        "sha256": "058255819417f9b563b1b93aad299d9b1bbd45f13b87f6364cebac53506ecebe",
+        "container": "mp3"
       },
       {
-        "gitPath": "content/assets/audio/voices/palworld/cattiva/death-cfb643854222.wav",
-        "bytes": 165196,
-        "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
-        "container": "wav"
+        "gitPath": "content/assets/audio/voices/palworld/cattiva/death-cfb643854222.mp3",
+        "bytes": 15926,
+        "sha256": "a1706a89b9c8f91ba9dd2e51221f4e300b90d73e976269e4acd8b10e5dbbd98a",
+        "container": "mp3"
       }
     ],
     "localHeroForgeMotionSelectable": true,
@@ -11732,7 +13423,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "dai-shinteo-v2-sword-handheld-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11828,7 +13519,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "dai-shinteo-v2-sword-back-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11978,7 +13669,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12107,7 +13798,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12241,7 +13932,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12373,7 +14064,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12506,7 +14197,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12638,7 +14329,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12769,7 +14460,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-zero-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12925,7 +14616,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-mario-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13071,7 +14762,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-mewtwo-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -13217,7 +14908,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ryu-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13400,7 +15091,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-pickel-steve-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -13582,7 +15273,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-pickel-alex-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -13792,7 +15483,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14002,7 +15693,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14128,7 +15819,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "zero-lancer-p1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14254,7 +15945,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "zero-lancer-p2-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14397,7 +16088,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14525,7 +16216,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-mario-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14620,7 +16311,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14744,7 +16435,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-astralym-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14904,7 +16595,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-astralym-decimated-f77cf1ee",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15057,7 +16748,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-jetragon-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15213,7 +16904,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-kita-kita-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15369,7 +17060,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-lord-nightmares-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15543,7 +17234,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "historical-astralym-decimated-c45f111d",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15667,7 +17358,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15787,7 +17478,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-kirby-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15972,7 +17663,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-mario-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16161,7 +17852,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-link-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16282,7 +17973,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-sonic-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16490,7 +18181,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-chrom-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16698,7 +18389,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ganondorf-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16907,7 +18598,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-lucina-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17116,7 +18807,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-daisy-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17329,7 +19020,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-peach-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17544,7 +19235,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-toonlink-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17717,7 +19408,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-sonic-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17909,7 +19600,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18100,7 +19791,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18247,7 +19938,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-ryu-c00-static-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18402,7 +20093,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18558,7 +20249,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18687,7 +20378,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-sonic-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18817,7 +20508,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-chrom-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18951,7 +20642,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043",
+        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
         "recordId": "ssbu-lucina-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19197,7 +20888,7 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "64f6839b25c41ca934b50c77c3612a86cafe751f966ea98474ff0534102379ef"
+    "sha256": "f0d6667e0d6f118f1dba5a7e1d027285de1ff35aae985060b3d021fcb3fc5809"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -19212,11 +20903,11 @@
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "5aaf01d855e12a6851421434f09cae5efd9e517f75ded039aa051471794a1f7a"
+    "sha256": "026542ce37c66abadd75a25ca2935c8d4a47f413c7731023ed0a7d4aa5fa86b5"
   },
   "approvedDerivativeAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/audit.json",
-    "sha256": "f5cc50bfce0accf2978d3a02a395c6de3fc604688647055c6faf23f48614a21c",
+    "sha256": "2317c816ae27134b61b3e0c02078de5ea065801ee14107472b24ff43aa5dce93",
     "approvedCount": 11,
     "hardPolicyPass": 11,
     "registeredAndSelectable": 11,

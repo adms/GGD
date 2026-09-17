@@ -28,6 +28,10 @@ class PalworldApprovedRuntimeIntegrationTest(unittest.TestCase):
         self.assertEqual(18, runtime["summary"]["approvedCrySourceBindings"])
         self.assertEqual(42, runtime["summary"]["runtimeVoiceCategoryRoutes"])
         self.assertEqual(4, runtime["summary"]["approvedSkillMotionOverlays"])
+        cattiva = [row for row in manifest["cries"] if row["characterId"] == "cattiva"]
+        self.assertEqual(6, len(cattiva))
+        self.assertTrue(all(row["gitProduct"]["container"] == "wav" for row in cattiva))
+        self.assertTrue(all(row["runtimeProduct"]["container"] == "mp3" for row in cattiva))
         self.assertIn("acquired-jetragon.q", motion_ts)
         self.assertTrue(receipt["states"]["approvedCryRuntimeBindingCreated"])
         self.assertTrue(receipt["states"]["approvedPerSkillMotionOverlayCreated"])
@@ -36,8 +40,8 @@ class PalworldApprovedRuntimeIntegrationTest(unittest.TestCase):
 
     def test_generated_products_are_current(self):
         manifest, receipt, runtime, copies, motion_ts = MODULE.expected_products()
-        for source, target in copies:
-            self.assertEqual(source.read_bytes(), target.read_bytes())
+        for target, payload in copies:
+            self.assertTrue(MODULE.product_is_current(target, payload), target)
         self.assertEqual(MODULE.encoded(manifest), MODULE.MANIFEST.read_text(encoding="utf-8"))
         self.assertEqual(MODULE.encoded(receipt), MODULE.RECEIPT.read_text(encoding="utf-8"))
         self.assertEqual(MODULE.encoded(runtime), MODULE.RUNTIME_BINDINGS.read_text(encoding="utf-8"))

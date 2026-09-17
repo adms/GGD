@@ -3,7 +3,7 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "5aaf01d855e12a6851421434f09cae5efd9e517f75ded039aa051471794a1f7a"
+      "sha256": "026542ce37c66abadd75a25ca2935c8d4a47f413c7731023ed0a7d4aa5fa86b5"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -23,11 +23,11 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
-      "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+      "sha256": "7bef3d00ef9742a53012b0bf91445425b14166427d77dba2675654777369ae79"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
-      "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
+      "sha256": "d8e9dd16b6ffdbe9cd18f48a8f8a50ebb755a5635472a2e8e0fdde08e0b429fe"
     }
   ],
   "characterCount": 3,
