@@ -59,6 +59,8 @@ import {
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 const LINES_DIR = join(REPO, "content/assets/audio/voices/lines");
+const QUOTE_ALIAS = JSON.parse(existsSync(join(LINES_DIR, "QUOTE_ALIAS.json")) ? readFileSync(join(LINES_DIR, "QUOTE_ALIAS.json"), "utf8") : '{"champions":{}}').champions ?? {};
+const aliased = [];
 const OUT_PATH = join(REPO, "content/assets/audio/voices/champions/MANIFEST.json");
 /**
  * 2026-09-10 — heroes the DAEMON does not own (the 74 b2-* / community-review-*)
@@ -253,6 +255,14 @@ function main() {
         arr.push({ clip: `${CLIP_BASE}/${id}/${key}.mp3`, text: typeof entry.text === "string" ? entry.text : "", lang: typeof entry.lang === "string" ? entry.lang : "ja", durationSec: typeof entry.current.seconds === "number" ? entry.current.seconds : 0, speakerSim: null, hash: typeof entry.current.hash === "string" ? entry.current.hash : null });
       }
       if (arr.length) lines[cat] = arr;
+    }
+    // ⭐ 名言別名（`QUOTE_ALIAS.json`，owner 2026-09-17「若沒有第二順位是勝利 第三順位是嘲諷」）：
+    // 這位沒有名言時，讓名言那一格**指向他自己另一段**（勝利／嘲諷）—— 與變身共用同一個哲學：
+    // ⛔ 不複製任何檔（複製出來的那一份沒有人認領、也沒有鏈會重生成它，GH#771），只是多指一次。
+    const alias = QUOTE_ALIAS[id];
+    if (alias?.from && alias?.to && !lines[alias.to] && lines[alias.from]) {
+      lines[alias.to] = lines[alias.from].map((e) => ({ ...e, aliasOf: alias.from }));
+      aliased.push(`${id}: ${alias.to} ← ${alias.from}`);
     }
 
     champions[id] = {

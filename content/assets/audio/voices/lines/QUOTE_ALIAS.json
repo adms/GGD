@@ -1,0 +1,61 @@
+{
+  "id": "combat-quote-alias",
+  "schema": "audio.combat-quote-alias@1",
+  "note": "沒有名言的英雄，用他自己的哪一格當名言 —— ⭐ 這是資料（owner 逐位裁決），⛔ 不是寫死在產生器裡。讀它的是 tools/voice-gen/src/build-combat-lines.mjs：來源那一段會被複製成 quote.mp3，textSource=alias。",
+  "champions": {
+    "b2-aladdin": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "君に手をのばすんだ。何度でも"
+    },
+    "b2-elma": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "見せてやる これがクラス重騎士の真の力だ！"
+    },
+    "b2-fushi": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "自分の生き方は自分で勝ち取るんだ"
+    },
+    "b2-kaede": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "これでは緑犬ではなく赤犬だな。"
+    },
+    "b2-luckyman": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "ラッキー、クッキー、ラッキーマン！"
+    },
+    "b2-ned": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "ど〇でもドア"
+    },
+    "b2-orphen": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "我は放つ光の白刃！"
+    },
+    "b2-makoto": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "巴さん！やっちゃいなさい！"
+    },
+    "community-review-30-20260907": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
+      "text": "ニャーはなんにも悪いことしてないのに…"
+    }
+  }
+}
