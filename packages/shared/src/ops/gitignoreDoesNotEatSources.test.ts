@@ -27,6 +27,7 @@ const SOURCE = /\.(ts|tsx|mts|cts|js|mjs|cjs|go|py)$/;
 const EXEMPT: { where: RegExp; why: string }[] = [
   { where: /(^|\/)node_modules\//, why: "第三方相依 —— lockfile 重建得出來，⛔ 不是我們的原始碼" },
   { where: /(^|\/)dist\//, why: "Vite／tsc 產物（apps/*/dist 的 .js chunk）—— 這個 repo 沒有手寫原始碼住在 dist/ 底下" },
+  { where: /^apps\/editor\/dist-player\//, why: "GH#1270 編輯器玩家版 bundle（`vite build --mode player` 的 outDir，vite.config.ts 指定）—— 與 dist/ 同為 Vite 產物，沒有手寫原始碼住在這裡" },
   { where: /^(build|(apps|packages|tools)\/[^/]+\/build)\//, why: "產物住的深度（與 .gitignore 四條錨定規則同一組）—— ⚠️ src/ 底下的 build 刻意不在這裡" },
   { where: /(^|\/)\.venv\//, why: "python venv（tools/**/.venv · voice-reference-pipeline/.venv）—— requirements 重建得出來" },
   { where: /(^|\/)__pycache__\//, why: "python 位元組碼 —— 純產物" },
