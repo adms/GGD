@@ -111,13 +111,14 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
  * gap disappear. That is an owner call, not a test-author call.
  */
 const VOICE_GAP: readonly string[] = [
-  "godie-e00s",
+  // ⭐ 2026-09-17：godie-e00s 與 godie-ucrl **離開**這張表 —— 兩位都拿到整包語音了。
+  //   · godie-ucrl（傑富力士）：owner「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ JUMP FORCE Gon 的原檔 19 格＋用他自己的聲音合成其餘。
+  //   · godie-e00s（白木卡迪那）：owner「可以借用 Berserker」⇒ 用 Berserker 的參考音合成他自己的整包。
   // ⚠️ 2026-09-11: godie-ucrl STAYS. The owner adopted Jump Force Gon clips for it on the review page,
   //   but this hero owns no pack — it borrows its counterpart's (godie-u034) through the form share, and
   //   a pack of its own would END that borrowing (a champion that owns a pack is never lent one) and
   //   silence every category the originals do not cover. Its clips are parked in S3 until a partial pack
   //   can borrow the rest from its counterpart; the same holds for the other seven form-share halves.
-  "godie-ucrl",
   // ── 2026-09-10: the 74 new heroes (b2-* / community-review-*) landed their combat
   // packs (tools/voice-gen/src/build-combat-lines.mjs — Japanese-only synthesis over
   // the hero's own reference, original game clips where the owner's index has them,
@@ -134,6 +135,10 @@ const VOICE_GAP: readonly string[] = [
   // ⭐ 2026-09-14（PR #1152 合併準備）: b2-kisaragi LEFT this list — the train's ORIGINAL clips
   // landed (3c85197b8: 「ドアが閉まります」 announcement as select/taunt, JR departure melody as
   // victory), which is the "or an original clip" exit the note above named. It is audible now.
+  // ⭐ 2026-09-17: b2-bojji JOINED this list ON PURPOSE —— owner 逐字「波吉 不會講話 應該全部都沒語音才對」。
+  // 《國王排名》的波吉是聾啞，全劇靠比手畫腳與卡克代言 ⇒ 他的 12 段合成語音整包下架（留底
+  // docs/legacy/_overwrites/bojji-voice-removed_temp_20260917/），COMBAT_CASTING.json 也把他移進 excluded。
+  // ⛔ 這不是回歸：它是裁決。要復原就是把那個資料夾放回去並從這裡刪掉這一行。
   // ⭐ 2026-09-17（GH#1281）：第四批 37 名「先上架、語音待補」的宣告住在
   //   `@ggd/shared/content/voiceGapBatch4`（⛔ 不是四條語音守衛各抄一份；棘輪只能變短）。
   //   ⚠️ 順序跟著量到的順序走（出貨名單的順序），⛔ 不是我排的。

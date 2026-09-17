@@ -660,3 +660,27 @@
 2026-09-10T12:25:58+00:00,inspect,community-review-12-20260907,2,community-review-12-20260907.2.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
 2026-09-10T12:25:58+00:00,extract,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,trim,ok,2.82-15.30s score=0.911
 2026-09-10T12:25:58+00:00,normalize,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,loudnorm2pass,ok,
+2026-09-10T13:42:12+00:00,inspect,community-review-01-20260907,1,community-review-01-20260907.wav,,inspect,accepted,
+2026-09-10T13:42:13+00:00,inspect,community-review-01-20260907,2,community-review-01-20260907.2.wav,,inspect,needs_review,low_snr
+2026-09-10T13:42:13+00:00,extract,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,copy_whole,ok,0.00-12.25s score=1.000
+2026-09-10T13:42:13+00:00,extract,community-review-01-20260907,2,community-review-01-20260907.2.wav,community-review-01-20260907.2.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T13:42:13+00:00,normalize,community-review-01-20260907,2,community-review-01-20260907.2.wav,community-review-01-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T13:42:14+00:00,normalize,community-review-01-20260907,1,community-review-01-20260907.wav,community-review-01-20260907.wav,loudnorm2pass,ok,
+2026-09-10T13:42:14+00:00,inspect,community-review-03-20260907,1,community-review-03-20260907.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T13:42:14+00:00,inspect,community-review-03-20260907,2,community-review-03-20260907.2.wav,,inspect,needs_review,low_snr
+2026-09-10T13:42:15+00:00,extract,community-review-03-20260907,2,community-review-03-20260907.2.wav,community-review-03-20260907.2.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T13:42:15+00:00,normalize,community-review-03-20260907,2,community-review-03-20260907.2.wav,community-review-03-20260907.2.wav,loudnorm2pass,ok,
+2026-09-10T13:42:15+00:00,normalize,community-review-03-20260907,1,community-review-03-20260907.wav,community-review-03-20260907.wav,loudnorm2pass,ok,
+2026-09-10T13:42:16+00:00,inspect,community-review-07-20260907,1,community-review-07-20260907.wav,,inspect,accepted,
+2026-09-10T13:42:16+00:00,inspect,community-review-07-20260907,2,community-review-07-20260907.2.wav,,inspect,rejected,background_music(heuristic)
+2026-09-10T13:42:16+00:00,extract,community-review-07-20260907,1,community-review-07-20260907.wav,community-review-07-20260907.wav,copy_whole,ok,0.00-12.36s score=1.000
+2026-09-10T13:42:16+00:00,normalize,community-review-07-20260907,1,community-review-07-20260907.wav,community-review-07-20260907.wav,loudnorm2pass,ok,
+2026-09-10T13:42:17+00:00,inspect,community-review-12-20260907,1,community-review-12-20260907.wav,,inspect,accepted,
+2026-09-10T13:42:17+00:00,inspect,community-review-12-20260907,2,community-review-12-20260907.2.mp3,,inspect,rejected,duration<3.0s;background_music(heuristic)
+2026-09-10T13:42:17+00:00,extract,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,trim,ok,0.00-11.73s score=1.165
+2026-09-10T13:42:18+00:00,normalize,community-review-12-20260907,1,community-review-12-20260907.wav,community-review-12-20260907.wav,loudnorm2pass,ok,
+2026-09-10T13:42:18+00:00,inspect,b2-goblin,1,b2-goblin.wav,,inspect,rejected,silence>60%;low_snr;little_vocal_content
+2026-09-10T13:42:18+00:00,inspect,b2-goblin,2,b2-goblin.2.wav,,inspect,accepted,
+2026-09-10T13:42:18+00:00,extract,b2-goblin,2,b2-goblin.2.wav,b2-goblin.2.wav,copy_whole,ok,0.00-10.00s score=1.000
+2026-09-10T13:42:19+00:00,normalize,b2-goblin,2,b2-goblin.2.wav,b2-goblin.2.wav,loudnorm2pass,ok,
+2026-09-10T13:42:19+00:00,normalize,b2-goblin,1,b2-goblin.wav,b2-goblin.wav,loudnorm2pass,ok,

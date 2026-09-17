@@ -21,8 +21,26 @@ function normalizedPath(pathname: string): string {
  * deliberately fall back to the normal collection browser instead of trying
  * to infer a document id from arbitrary path segments.
  */
+/**
+ * ⭐⭐ GH#1270 —— **玩家版**只有兩個畫面：創作英雄與我的作品。
+ *
+ * ⚠️ 這不是「把按鈕藏起來」：`VITE_GGD_PLAYER_EDITOR=1` 的那一份 bundle 連
+ * 路由都不認得內部流程（集合瀏覽／鑄技工坊／特效工坊／匯出中心）——
+ * ⛔ 直接打 `/editor/forge` 也只會回到英雄工坊，⭐ 而那幾支頁面在這一份 build 裡
+ * **連位元組都沒有**（`App.tsx` 的 `PLAYER_ONLY ? null : lazy(...)` ⇒ rollup 不產那些 chunk）。
+ * ⛔ 它**不是**授權機制：正式站的寫入仍然只走需要登入的 `/api/v1/hero-*`。
+ */
+export const PLAYER_ONLY: boolean = import.meta.env.VITE_GGD_PLAYER_EDITOR === "1";
+
+/** 玩家版的預設畫面 ＝ 創作英雄（⛔ 不是集合瀏覽器，那一頁在這份 build 裡不存在）。 */
+const PLAYER_DEFAULT_MODE: AppMode = { kind: "hero" };
+
 export function appModeFromPathname(pathname: string): AppMode {
   const path = normalizedPath(pathname);
+  if (PLAYER_ONLY) {
+    if (path.endsWith("/works")) return { kind: "works" };
+    return PLAYER_DEFAULT_MODE;
+  }
   if (path.endsWith("/works")) return { kind: "works" };
   if (path.endsWith("/hero-forge")) return { kind: "hero" };
   if (path.endsWith("/vfx-forge")) return { kind: "vfx-forge" };

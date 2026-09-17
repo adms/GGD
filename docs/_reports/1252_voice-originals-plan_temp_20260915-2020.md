@@ -139,3 +139,44 @@ owner 2026-09-15 說過「不使用300英雄裡的中文語音」與「whisper �
 - 還需要 owner 同意安裝兩個開源工具：`vgmstream`（遊戲音訊轉檔）、必要時 `PyCriCodecs`（拆 CRI 封包）。
 - PS3 樣本的語音 cue 名是 `cv_<三碼角色ID><三碼編號>_jp` ⇒ 高機率可以照檔名分出銀時。同一款遊戲裡另有 12 位 GGD 英雄的原作語音（奇犽也在）。
 - 明細：工作資料 `jstars/findings.json`。
+
+---
+
+## 五、名言缺口：owner 2026-09-17 的逐位裁決（待執行）
+
+審查頁：https://claude.ai/code/artifact/2366abb7-9a96-494a-92d4-8b6ab8f90301 （決定寫 db `quotegap/choices/heroes/<id>`，送出寫 `quotegap/export/all`）
+
+實況（照**執行期**解析，`resolveVoicePackId`）：出貨 130 位 · 有名言 116 · 有語音沒名言 12 · 完全沒聲音 2 · 靠變身共用本尊 10。
+
+| 英雄 | owner 的裁決（逐字） | 要做什麼 |
+|---|---|---|
+| 全體變身型態 | 「變身都用本尊的就好」 | ⭐ 已經是現況（執行期借本尊的包），⛔ 不用動 |
+| 其餘缺名言的 | 「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」 | 把該位的 `victory` 複製成 `quote`（沒有 victory 才用 `taunt`），跑 `combat:build` |
+| 波吉 `b2-bojji` | 「波吉 不會講話 應該全部都沒語音才對」 | ⛔ **整包語音下架**：刪 `lines/b2-bojji/*.mp3` 與 status.json、`COMBAT_CASTING.json` 移進 `excluded` 並寫這句理由，重跑 `voice:index` |
+| 如月電車 `b2-kisaragi` | 「勝利 跟 名言都是 https://www.youtube.com/shorts/Ih9ZTaDsznM」 | ⚠️ 本機沒有 yt-dlp ⇒ 要 owner 同意安裝，或由 owner 給音檔；抓到後 victory 與 quote 都用它 |
+| 米瑟利 `b2-misery` | 「米瑟利 是性感大姊姊聲音 你生成錯了」 | 重配音：`COMBAT_CASTING.json` 換 voiceClass／參考音（要一段大姊姊聲的參考），整包重合成 |
+| 白木卡迪那 `godie-e00s` | 「可以借用 Berserker」 | 借 `godie-hapm` 的包。⚠️ 現行借用機制**只認變身對**（`voiceFormSharing`）⇒ 要加一張「指定借用」表（owner 指定，⛔ 不是名字猜的），或替它登記一對 |
+| 傑富力士 `godie-ucrl` | 「JUMP大亂鬥系列應該有」 | ⭐ 找到了：JUMP FORCE 的 Gon 共 250 段（本機 `GGD-Asset-Library`，含 25 段劇情語音）。頁面放了最長的 18 段給 owner 挑名言；整包對應要再派一輪 lane |
+
+⛔ 這一節只是把裁決寫下來，⛔ 還沒有套用到任何語音檔。
+
+### 傑富力士（`godie-ucrl`）：整包引入 JUMP FORCE 的 Gon
+
+> owner 2026-09-17：「傑富力士：JUMP FORCE => 你是不是忘了也要引入模型 動作 音效 全語音」
+
+2026-09-17 本機盤點（明細：`docs/_reports/1252_gon-assets-audit_20260917.json`）：
+
+| 要的 | 本機現況 |
+|---|---|
+| **語音** | ⭐ **有 250 段**：225 段 `chr0300_ActVoice`（ogg 48kHz）＋ 25 段 `130300_chr0300_EvnVoice`（劇情 wav），路徑都驗過讀得到 |
+| **模型** | ⛔ 沒有。他現在綁的 `imported.herobiggon` 是 **Warcraft 3 匯入**的，⛔ 不是 JUMP FORCE |
+| **動作** | ⛔ 沒有。那顆 WC3 模型內含 12 段動畫，JUMP FORCE 的沒有 |
+| **音效** | ⛔ 沒有 Gon 專屬的（只有全域共用音庫） |
+| **來源** | ⭐ **不必再連 LV99**：JUMP FORCE Steam 完整鏡像已在本機（3,466 檔／23.86 GB，6 個 pak／22.38 GB，SHA-256 全驗過、實測讀得到），解包工具 `repak`、`UEViewer` 也在 |
+
+前例 chr0430（小呆）：1,942 個 native package → 11 個 gltf，**動畫數 0** ⇒ JUMP FORCE 的角色包只有 mesh＋skeleton＋AnimBP，
+**AnimSequence 不在** `Content/Character/chrXXXX` 底下；角色音效在 `Content/Sound/Character/<id>_*`（小呆 528 檔）。
+
+下一步（尚未做）：① 對 pak 索引 chr0300 ② 抽 mesh → `python3 tools/w3x-import/model_intake.py`（第一·四之零守則）
+③ 定位 AnimSequence 路徑 ④ 抽 `Content/Sound/Character/0300_*` 音效 ⑤ 250 段語音派一輪 lane 對到語音格。
+⚠️ 順帶發現：`GGD-Asset-Library/hero-model-options.json` 記 `godie-ucrl` 是 `champ.thorne`，與實際 `imported.herobiggon` 對不上（該檔已過期）。

@@ -61,7 +61,10 @@ for slot, m in spec["map"].items():
         problems.append(f"{slot}: 原檔不存在 {src}"); continue
     existing = rows.get(slot)
     if existing and existing.get("sha256") != sha(src):
-        problems.append(f"{slot}: 已經是原作（{existing.get('group')}:{existing.get('name')}）⛔ 原作不互相取代"); continue
+        # ⭐ 取代既有原作只有一種情況合法：owner 明講要換 ⇒ `replaceOriginal` 必須帶著他的原話
+        if not (m.get("replaceOriginal") and "owner" in str(m.get("why", ""))):
+            problems.append(f"{slot}: 已經是原作（{existing.get('group')}:{existing.get('name')}）⛔ 原作不互相取代"
+                            f"（真要換：在該格加 replaceOriginal 並在 why 裡寫 owner 的原話）"); continue
     plan.append((slot, m, src))
 if problems:
     print("\n".join("⛔ " + p for p in problems)); sys.exit(2)
@@ -82,7 +85,9 @@ for slot, m, src in plan:
         print(f"⛔ {slot}: 轉出來不合格（{'；'.join(why for _code, why in bad)}；ffprobe {secs:.2f}s, 峰值 {peak} dB）"); sys.exit(3)
     dst = LINES / hero / f"{slot}.mp3"
     head = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"HEAD:{dst.relative_to(ROOT)}"], capture_output=True).returncode == 0
-    report.append({"slot": slot, "file": m.get("file") or src.name, "seconds": round(secs, 2), "replaces": "git HEAD 合成檔" if head else "（新格）", "why": m["why"]})
+    was = rows.get(slot)
+    report.append({"slot": slot, "file": m.get("file") or src.name, "seconds": round(secs, 2),
+                   "replaces": (f"原作 {was.get('group')}:{was.get('name')}" if was else ("git HEAD 合成檔" if head else "（新格）")), "why": m["why"]})
     if not WRITE:
         continue
     if head and ARCHIVE:
@@ -102,10 +107,15 @@ if WRITE:
     os.replace(tmpj, orig_path)
     if ARCHIVE:
         n = sum(1 for p in (ARCHIVE / "voice-archive" / stamp).rglob("*.mp3"))
-        s = subprocess.run(["aws", "s3", "sync", str(ARCHIVE / "voice-archive" / stamp), f"s3://{BUCKET}/voice-archive/{stamp}", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
-        if s.returncode != 0:
+        # ⭐ 這一批全是新格、沒有取代任何東西 ⇒ 沒有要歸檔的檔，⛔ 不是錯誤
+        if n == 0:
+            print("S3 歸檔：這一批沒有被取代的檔（全是新格）⇒ 跳過")
+            n = None
+        s = None if n is None else subprocess.run(["aws", "s3", "sync", str(ARCHIVE / "voice-archive" / stamp), f"s3://{BUCKET}/voice-archive/{stamp}", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
+        if s is not None and s.returncode != 0:
             print(f"⛔ S3 歸檔失敗（{n} 檔）：action=s3:PutObject resource=s3://{BUCKET}/voice-archive/{stamp}\n{s.stderr[-400:]}"); sys.exit(4)
         # ⭐ 「sync 離開碼 0」⛔ 不是上去了的證據（fd90b7a3d 記過）⇒ 整批抓回來逐檔比 SHA-256
+        if n is None: raise SystemExit(0)
         back = pathlib.Path(tempfile.mkdtemp(prefix="orig-direct-back-"))
         g = subprocess.run(["aws", "s3", "cp", f"s3://{BUCKET}/voice-archive/{stamp}/", str(back), "--recursive", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
         local = {p.relative_to(ARCHIVE / "voice-archive" / stamp): sha(p) for p in (ARCHIVE / "voice-archive" / stamp).rglob("*.mp3")}

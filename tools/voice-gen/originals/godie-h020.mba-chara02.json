@@ -1,0 +1,27 @@
+{
+  "schema": "ggd-original-voice-direct-map@1",
+  "hero": "godie-h020",
+  "note": "莉娜（godie-h020；變身態 godie-hjai 借這一包）。owner 2026-09-15「原作語音優先預設取代掉之前合成語音，但沒有原作語音還是可以用合成比什麼都沒有好」「如果有原板語音就直接對應使用 不需要轉錄生成」⇒ 照檔名（sp 系列照招式）直接對應；只蓋掉目前是合成的格，已經是原作的格（300英雄 attack／death／dazhao_2）不動。",
+  "group": "mba:Chara02",
+  "sourceRoot": "outputs/game-asset-library-20260907/magical-battle-arena/raw/Sound/Chara02",
+  "map": {
+    "skill-name.q": { "file": "Vo_lina_sp1_2.wav", "why": "sp1 = 火球術（ファイアー・ボール）喊招" },
+    "skill-name.e": { "file": "Vo_lina_sp4_2.wav", "why": "sp4 = 龍破斬（ドラグ・スレイブ）喊招" },
+    "skill-name.ex": { "file": "Vo_lina_sp5_2.wav", "why": "sp5 = 神滅斬詠唱，首句「悪夢の王の一片よ」＝ 惡夢魔王的碎片" },
+    "skill-name.r.2": { "file": "Vo_lina_sp5_3.wav", "why": "sp5 = 神滅斬（ラグナ・ブレード）喊招；R 第一句已是 300英雄原作，這是第二句" },
+    "victory": { "file": "Vo_lina_win.wav", "why": "檔名 win" },
+    "hurt": { "file": "Vo_lina_damage_s3.wav", "why": "檔名 damage_s（小受擊）" },
+    "hurt.2": { "file": "Vo_lina_damage_s1.wav", "why": "檔名 damage_s（小受擊）" },
+    "hurt.3": { "file": "Vo_lina_damage_s4.wav", "why": "檔名 damage_s（小受擊）" },
+    "hurt-heavy": { "file": "Vo_lina_damage_l.wav", "why": "檔名 damage_l（大受擊）" },
+    "block": { "file": "Vo_lina_guard.wav", "why": "檔名 guard" },
+    "dodge": { "file": "Vo_lina_flashmove.wav", "why": "檔名 flashmove（閃身）" },
+    "unstoppable": { "file": "Vo_lina_magicburst.wav", "why": "檔名 magicburst（魔力爆發強化）" },
+    "knockdown": { "file": "Vo_lina_standup.wav", "why": "檔名 standup（倒地起身）" },
+    "crit": { "file": "Vo_lina_attack_3.wav", "why": "檔名 attack" },
+    "crit.2": { "file": "Vo_lina_smash.wav", "why": "檔名 smash（重擊）" },
+    "respond.ok": { "file": "Vo_lina_next.wav", "why": "檔名 next" },
+    "free-move": { "file": "Vo_lina_start_1.wav", "why": "檔名 start（出擊）" },
+    "quote": { "file": "Vo_lina_start_2.wav", "why": "檔名 start（開場長台詞）" }
+  }
+}

@@ -1,0 +1,3708 @@
+{
+ "schema": "ggd.champion-quote-inventory@1",
+ "generator": "tools/quote-inventory/gen.mjs",
+ "roster": 167,
+ "battleMissing": 0,
+ "selectMissing": 96,
+ "noVoicePack": 0,
+ "noVoicePackWithTwin": 0,
+ "rows": [
+  {
+   "id": "godie-e001",
+   "name": "蟬在叫人壞掉 - 龍宮禮奈",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e001",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "かな？かな？……嘘だッ！！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "嘘だ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e002",
+   "name": "亞瑟王 - Saber",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e002",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）VOICE_1935"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 2,
+   "select": {
+    "text": "問おう、あなたが私のマスターか",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e008",
+   "name": "火霧戰士 - 夏娜",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e008",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "うるさいうるさいうるさい！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "うるさいうるさいうるさい！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00r",
+   "name": "最終泛用人型決戰兵器 - 初號機",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e00r",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "ウオオオオオオオッ！！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "逃げちゃダメだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00s",
+   "name": "白木老樹精 - 白木卡迪那",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e00s",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": {
+    "text": "森（もり）の古木（こぼく）、その根で縛（しば）り上（あ）げてやろう。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-e00w",
+   "name": "神鳴流劍士 - 櫻綻剎那",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-e00w",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "お嬢様は、この刹那が必ずお守りします！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "お嬢様は、私が守る",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-edem",
+   "name": "寫輪眼復仇者 - 宇智波佐助",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-edem",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 5,
+   "select": {
+    "text": "お前を、殺す",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-efur",
+   "name": "揍敵客大家長 - 揍敵客桀諾",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-efur",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "殺しは仕事…感情でやるほど、耄碌しとらんよ。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "もし殺（ころ）したい奴（やつ）がいたら連絡（れんらく）くれ。3割引（さんわりび）きで請（う）け負（お）うぞ？",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-emfr",
+   "name": "魔法老師 - 涅吉。史普林。菲爾德",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-emfr",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "ラステル・マ・スキル・マギステル！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "ラス・テル・マ・スキル・マギステル！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-emns",
+   "name": "奇樂 - 夜神月",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-emns",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "僕は…新世界の神となる。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "計画通り",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-etyr",
+   "name": "治癒系公主 - 木乃香",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-etyr",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "せっちゃん、だーい好きやで〜！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "うちが、みんな元気にしたげる♪",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ewar",
+   "name": "龍之子 - 天地志狼",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-e007",
+   "twin": {
+    "id": "godie-e007",
+    "name": "龍之子 - 天地志狼"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-e007",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "この乱世、俺が終わらせる！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h00l",
+   "name": "時空勇者 - 林克",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-h00l",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "ハイヤーッ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "ハイヤッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h01n",
+   "name": "開外掛的死神 - 黑崎一護",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-h01n",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 4,
+   "select": {
+    "text": "月牙天衝！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h01u",
+   "name": "亂世癿王者 - 呂布奉先",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-h01u",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "天下無双の我が武、とくと見るがいい！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "我が名は呂布、天下無双！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h02k",
+   "name": "國寶級的畜生 - 熊貓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-h02k",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "昼寝と笹はオラの命。邪魔するヤツは頭突きだゾ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "笹をよこせ…でなきゃ、噛むぞ",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-h02v",
+   "name": "看似憂鬱的神獸 - 草泥馬",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-h02u",
+   "twin": {
+    "id": "godie-h02u",
+    "name": "看似憂鬱的神獸 - 草泥馬"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-h02u",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "この草原は、俺のものだ…メェッ！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hapm",
+   "name": "海克力斯 - Berserker",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-hapm",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "グオオオオッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hart",
+   "name": "最終幻想 - 克勞德",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-hart",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "興味ないね"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "興味ないね",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hgam",
+   "name": "種子神奇寶貝 - 妙蛙種子",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-h02r",
+   "twin": {
+    "id": "godie-h02r",
+    "name": "種子神奇寶貝 - 妙蛙花"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-h02r",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "フシギダネ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hjai",
+   "name": "黑魔導士 - 莉娜因巴斯",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-h020",
+   "twin": {
+    "id": "godie-h020",
+    "name": "黑魔導士 - 莉娜因巴斯"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-h020",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "ドラグ・スレイブ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:46",
+     "name": "莉娜·因巴斯",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "mba:Chara02",
+     "name": "莉娜·因巴斯",
+     "library": "MBA Complete Form 1.60",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "parallel-community-lina-ssbu-ceruleancast:lina-fighter-voice",
+     "name": "Lina fighter voice banks — unreviewed mobile crossover clips",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-hpb1",
+   "name": "獸矛傳承使 - 蒼月潮",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-hpb1",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "食えるもんなら、食ってみやがれ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "とらァッ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-huth",
+   "name": "超級普烏 - 魔人普烏",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-huth",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）chr1030_ActVoice#202"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 3,
+   "select": {
+    "text": "お菓子にしてやる！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hvsh",
+   "name": "梅杜莎 - Rider",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-hvsh",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 3,
+   "select": {
+    "text": "騎英の手綱（ベルレフォーン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-hvwd",
+   "name": "除魔巫女 - 桔梗",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-hvwd",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 2,
+   "select": {
+    "text": "一緒に地獄へ、犬夜叉",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-n003",
+   "name": "黑暗福音 - 依文潔琳",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-n003",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "くくく…私こそ闇の福音、真祖の吸血鬼よ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "凍てつけ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-n00b",
+   "name": "小叮噹 - 哆拉A夢",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-n00b",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "ぼく、ドラえもん!"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "タケコプター！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-nbbc",
+   "name": "傳說的龍騎士 - 勇者小呆",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-n01c",
+   "twin": {
+    "id": "godie-n01c",
+    "name": "傳說的龍騎士 - 勇者小呆"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-n01c",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "アバンストラッシュ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-audio:JForce_Dai",
+     "name": "小呆／達伊 / Dai",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-english_us-voice",
+     "name": "小呆／達伊／英文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+     "name": "小呆／達伊／何布／波普／英文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-japanese-voice",
+     "name": "小呆／達伊／日文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+     "name": "小呆／達伊／何布／波普／日文標籤／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-unclassified",
+     "name": "小呆／達伊／語系待核／unclassified",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-voice",
+     "name": "小呆／達伊／語系待核／voice",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-nonlocalized-sound-effect",
+     "name": "小呆／達伊／非語系音效／sound-effect",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-nonlocalized-sound-effect",
+     "name": "小呆／達伊／何布／波普／非語系音效／sound-effect",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-nsjs",
+   "name": "妖狐藏馬 - 南野秀一",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-n00p",
+   "twin": {
+    "id": "godie-n00p",
+    "name": "妖狐藏馬 - 南野秀一"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-n00p",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "薔薇棘鞭殺（ローズウィップ）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o00k",
+   "name": "傲嬌電氣老鼠 - 皮卡娘",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-o00k",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）pikachu16.dsp"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 3,
+   "select": {
+    "text": "ピカ…ピカチュウ♡",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o00l",
+   "name": "獸神官 - 傑洛士",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-o00l",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "それは、秘密です♪"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "それは秘密です♪",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-o02p",
+   "name": "夢幻之星 - 初音",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-o02p",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）miku4"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "みくみくにしてあげる♪",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ofar",
+   "name": "神奇寶貝兒 - 皮卡丘",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-ofar",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）pikachu16.dsp"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 3,
+   "select": {
+    "text": "ピカチュウ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ogld",
+   "name": "美白大法師 - 黑人牙膏",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-ogld",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "汚れは残さない。…あなたも、です。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "その歯、真っ白にしてやろう！",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ogrh",
+   "name": "賽亞人 - 悟空",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-o00x",
+   "twin": {
+    "id": "godie-o00x",
+    "name": "超級賽亞人 - 悟空"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-o00x",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "オッス！オラ悟空！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:112",
+     "name": "小悟空",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "thunderstore-goku",
+     "name": "孫悟空（一般形態；其他原生形態保留待核）",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-orkn",
+   "name": "電車癡漢 - 臭作",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-orkn",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "ヒッヒッヒ…ええ子じゃのう。先生に任せなさい。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "むっふっふ…いいお嬢さんだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-osam",
+   "name": "犬妖 - 殺生丸",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-osam",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "この殺生丸に、斬れぬものなど無い。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "邪魔だ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00h",
+   "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-u00h",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "オレの鬼眼を見たな…なら、死んでもらうぜ。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "俺の名は、鬼眼の狂",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00j",
+   "name": "神性的流失 - 賽菲洛斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-u00j",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "私は…思い出には、ならないさ。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "僕はまた思い出になんかならない",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00k",
+   "name": "邪惡意念集合體 - 死之王",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-u00k",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "生は過ち、死こそが救いである。"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "死こそが、救いだ…",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00n",
+   "name": "草帽小子 - 蒙其.D.魯夫",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-u00n",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 5,
+   "select": {
+    "text": "海賊王に、俺はなる！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-u00v",
+   "name": "黑手黨老大 - 基廉列克",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-u00v",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "……フンッ。……ヴォアアアッ!!"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "逆らう奴は、ぶっ潰す",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ubal",
+   "name": "魔界霸主 - 巴恩大魔王",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-ubal",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "知らなかったのか…?大魔王からは、逃げられない…!"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "今のはメラゾーマではない…メラだ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-ucrl",
+   "name": "職業獵人 - 傑 富力士",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-ucrl",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 23,
+   "takes": 0,
+   "select": {
+    "text": "キルアじゃなきゃダメなんだ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-udea",
+   "name": "至尊學長 - 飛鼠先生",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-udea",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "上、上、下、下、左、右、左、右、B、A…チートコード入力完了ぉ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "えっ、ちょっと待って、チートのテストコードってどれだっけ？",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-udre",
+   "name": "三刀流劍士 - 索隆",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-u01u",
+   "twin": {
+    "id": "godie-u01u",
+    "name": "三刀流劍士 - 索隆"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-u01u",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "背中の傷は、剣士の恥だ",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "300heroes:85",
+     "name": "佐罗",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-umal",
+   "name": "北斗神拳掌門人 - 拳四郎",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-u00l",
+   "twin": {
+    "id": "godie-u00l",
+    "name": "北斗之鼠 - 拳四郎"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-u00l",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "お前はもう死んでいる",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-audio:JForce_Kenshiro",
+     "name": "Kenshiro / 拳四郎",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "godie-uvng",
+   "name": "邪眼師 - 飛影",
+   "hasVoicePack": true,
+   "viaForm": true,
+   "packId": "godie-u010",
+   "twin": {
+    "id": "godie-u010",
+    "name": "邪眼師 - 飛影"
+   },
+   "ownerExcluded": null,
+   "battle": {
+    "source": "變身共用 godie-u010",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 0,
+   "select": {
+    "text": "邪王炎殺黒龍波！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "godie-zombiex",
+   "name": "聖杯黑泥醬 - 喪標麥可",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "godie-zombiex",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "合成",
+    "text": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 47,
+   "takes": 1,
+   "select": {
+    "text": "カレーも、お前も、全部飲み込んでやる。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-01-20260907",
+   "name": "武藤遊戲",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-01-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ずっと俺のターン！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 4,
+   "select": {
+    "text": "オシリスの天空竜！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-02-20260907",
+   "name": "八神庵",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-02-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）1003448717"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 3,
+   "select": {
+    "text": "禁千弐百十一式・八稚女！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-03-20260907",
+   "name": "不知火舞",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-03-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ごめんあそばせ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 6,
+   "select": {
+    "text": "超必殺忍蜂！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-04-20260907",
+   "name": "空條承太郎",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-04-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "オラオラオラオラ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 6,
+   "select": {
+    "text": "スタープラチナ・ザ・ワールド！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-05-20260907",
+   "name": "洛克人",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-05-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ティウンティウン"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "ロックバスター！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-06-20260907",
+   "name": "卡比",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-06-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice/kirby20.dsp"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 17,
+   "takes": 3,
+   "select": {
+    "text": "ウルトラソード！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-07-20260907",
+   "name": "西索",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-07-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "今すぐキミを壊したい…♥"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-08-20260907",
+   "name": "米卡莎",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-08-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "マフラーを巻いてくれてありがとう"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "雷槍！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-09-20260907",
+   "name": "赫蘿",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-09-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ぬしと旅がしたい"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-10-20260907",
+   "name": "魯路修",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-10-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ルルーシュ・ヴィ・ブリタニアが命じる。貴様たちは死ね！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 2,
+   "select": {
+    "text": "絶対遵守のギアス！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-11-20260907",
+   "name": "利姆路",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-11-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）505624353"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-12-20260907",
+   "name": "衛宮士郎",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-12-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "体は剣で出来ている"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 3,
+   "select": {
+    "text": "無限の剣製（アンリミテッドブレイドワークス）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-13-20260907",
+   "name": "朝田詩乃",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-13-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）voice_joke_1"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-14-20260907",
+   "name": "殺老師",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-14-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "第二の刃持たざる者に暗殺者の資格なし！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-15-20260907",
+   "name": "比利海靈頓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-15-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "仕方ないね"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-16-20260907",
+   "name": "魔法少女☆伊莉雅",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-16-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "このバカステッキ～！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-17-20260907",
+   "name": "安茲·烏爾·恭",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-17-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "我が名を知るが良い。我こそがアインズ・ウール・ゴウン"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 2,
+   "select": {
+    "text": "落ちよ、天（フォールン・ダウン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-18-20260907",
+   "name": "吉爾伽美什",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-18-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "君臨するとはこういう事よ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "天地乖離す開闢の星（エヌマ・エリシュ）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-19-20260907",
+   "name": "桐谷和人",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-19-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ビーター、いい呼び名だ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "スターバースト・ストリーム！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-20-20260907",
+   "name": "御坂美琴",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-20-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "超電磁砲！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "超電磁砲（レールガン）！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-21-20260907",
+   "name": "鹿目圓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-21-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "全ての魔女を生まれる前に消し去りたい"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 17,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-22-20260907",
+   "name": "菜月昴",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-22-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺はエミリアたんの一の騎士！ナツキ・スバルだ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "死に戻り。",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-23-20260907",
+   "name": "坂田銀時",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-23-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "天然パーマに悪い奴はいない"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-24-20260907",
+   "name": "奇犽",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-24-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ゴン、お前は光だ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 19,
+   "takes": 6,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-25-20260907",
+   "name": "一拳超人",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-25-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "20文字以内で簡潔にまとめて出直してこい！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 17,
+   "takes": 1,
+   "select": {
+    "text": "マジシリーズ・マジ殴り！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-26-20260907",
+   "name": "名偵探柯南",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-26-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "バーロー"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 2,
+   "select": {
+    "text": "真実はいつも一つ！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-27-20260907",
+   "name": "庫洛魔法使",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-27-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "はにゃ～ん"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 16,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-28-20260907",
+   "name": "艾莉絲·伯雷亞斯·格雷拉特",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-28-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "生意気よ、私を誰だと思ってるの？"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "光の太刀！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-29-20260907",
+   "name": "芙莉蓮",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-29-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "暗いよー！怖いよー！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 3,
+   "select": {
+    "text": "ゾルトラーク！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-30-20260907",
+   "name": "尼古貓貓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-30-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-31-20260907",
+   "name": "SUN樂",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-31-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "こっちはもっと理不尽なクソゲーをクリアし続けてるんだ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project 的 `brief.moveNames` 未加〔〕的那一格是**描述性的**（⛔ 不是原作的專有招式／寶具／能力名）⇒ 把它當名言等於我自己翻一句話,⛔ 那是編造。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-32-20260907",
+   "name": "阿薩謝爾",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-32-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "わしにはプライベートすら無いんかい！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "ジ・エンド・オブ・ソン！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-33-20260907",
+   "name": "近衛刀太",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-33-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "だから進むぜ、その先に！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-34-20260907",
+   "name": "高速婆婆",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-34-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "てめえはホントにグッバイ野郎だぜ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "community-review-35-20260907",
+   "name": "炭治郎",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-35-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "心はどこまでも強くなれる！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 3,
+   "select": {
+    "text": "ヒノカミ神楽・円舞！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-36-20260907",
+   "name": "鬼畜王蘭斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-36-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "世の中には優先順位というものがあるのだ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "ランスアタック！",
+    "real": true
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "community-review-37-20260907",
+   "name": "吉伊卡哇",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "community-review-37-20260907",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "イヤ！イヤッ、ヤダーッ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "b2-aladdin",
+   "name": "阿拉丁",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-aladdin",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-albus",
+   "name": "阿爾巴斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-albus",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "魔王討伐の旅を繰り返している"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-bojji",
+   "name": "波吉",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-bojji",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-boxxo",
+   "name": "阿箱＋拉蜜絲",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-boxxo",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ざんねん"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-elma",
+   "name": "艾爾瑪",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-elma",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-fushi",
+   "name": "不死",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-fushi",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-goblin",
+   "name": "哥布林殺手",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-goblin",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺は世界を救わない。ゴブリンを殺すだけだ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-guts",
+   "name": "凱茲",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-guts",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "神に会えたら言っとけ！放っとけってな！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-haga",
+   "name": "羽賀",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-haga",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "僕の仕事はゲーム内のバグをチェックするデバッガーなんです"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kaede",
+   "name": "楓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-kaede",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kaiji",
+   "name": "伊藤開司",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-kaiji",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ありがてえっ…！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-keyaru",
+   "name": "凱亞爾",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-keyaru",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "この世界そのものを回復する"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kisaragi",
+   "name": "如月電車",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-kisaragi",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）kisaragi.b"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": {
+    "text": "次は…どこにも、着きません。",
+    "real": false
+   },
+   "unsourcedWhy": "",
+   "candidates": []
+  },
+  {
+   "id": "b2-klaus",
+   "name": "克勞斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-klaus",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "自動資源採取"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-kumoko",
+   "name": "蜘蛛子",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-kumoko",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "生まれてすぐ死亡とかシャレにならん"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-luckyman",
+   "name": "幸運超人",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-luckyman",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-makoto",
+   "name": "深澄真",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-makoto",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-maomao",
+   "name": "貓貓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-maomao",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "好んで毒を食らうのは私ぐらいか"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-maple",
+   "name": "梅普露",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-maple",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "痛いのは嫌だから攻撃とか受けたくないし…"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-matthias",
+   "name": "馬提亞斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-matthias",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "連携プレイが得意なやつらには連携プレイだ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-misery",
+   "name": "米瑟利",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-misery",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-naofumi",
+   "name": "岩谷尚文",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-naofumi",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "アイアンメイデン！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-ned",
+   "name": "青蛙劍士 Ned",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-ned",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-noor",
+   "name": "諾爾",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-noor",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺には、才能がなかった…"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-nube",
+   "name": "鵺野鳴介",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-nube",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "宇宙天地 與我力量 降伏群魔 迎来曙光"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-orphen",
+   "name": "歐菲",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-orphen",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-popp",
+   "name": "何布",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-popp",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "一瞬…だけど…閃光のように！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-rem",
+   "name": "蕾姆",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-rem",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "レムはスバル君を信じています"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 17,
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-rin",
+   "name": "遠坂凜",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-rin",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "うっかり遠坂"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 19,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-shadow",
+   "name": "闇影",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-shadow",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）fencer_select_01"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 23,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-shinchan",
+   "name": "野原新之助",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-shinchan",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "ねぇねぇお姉さん！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-sinbad",
+   "name": "辛巴達",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-sinbad",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺は、人間だよ！人だからこそ夢を追う！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-takopi",
+   "name": "章魚嗶",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-takopi",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "今日もがんばるっピ！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-touka",
+   "name": "托卡・史考特",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-touka",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "理想的なふとももの形をした大根があったらニーソを履かせてやるのが男ってもんだろ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-uncle",
+   "name": "異世界舅舅",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-uncle",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "異世界グランバハマルに17年いたが、ようやく帰ってきたぞ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-yogiri",
+   "name": "高遠夜霧",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-yogiri",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "俺の能力が一つとは言ってないだろ"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 1,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "b2-zenitsu",
+   "name": "我妻善逸",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "b2-zenitsu",
+   "twin": null,
+   "ownerExcluded": null,
+   "battle": {
+    "source": "owner 名單",
+    "text": "雷の呼吸 壱ノ型 霹靂一閃！"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 18,
+   "takes": 2,
+   "select": null,
+   "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
+   "candidates": []
+  },
+  {
+   "id": "lol-karthus",
+   "name": "卡爾瑟斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-karthus",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-10：「LOL7個角色應該有自己語音檔 可以排除」——⚠️ 那份檔在哪裡尚未確認（名言 lane 查證 Data Dragon 不出語音行）",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）bd0bbe/00078-1154709670"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 9,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-leesin",
+   "name": "李星",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-leesin",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）f046bc/00195-1875226779"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 11,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-lux",
+   "name": "拉克絲",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-lux",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）a08e1d/00287-708962889"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 14,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-missfortune",
+   "name": "好運姐",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-missfortune",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）dfe023/00243-1755056024"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-warwick",
+   "name": "沃維克",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-warwick",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）b49dee/00144-1947782139"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 11,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-xerath",
+   "name": "齊勒斯",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-xerath",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）51d146/00013-375078456"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 12,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "lol-yasuo",
+   "name": "犽宿",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "lol-yasuo",
+   "twin": null,
+   "ownerExcluded": "同上",
+   "battle": {
+    "source": "原作語音",
+    "text": "（原檔）63fc90/00018-152596570"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 12,
+   "takes": 3,
+   "select": null,
+   "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-alice",
+   "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:249",
+     "name": "爱丽丝",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-astralym",
+   "name": "枯星龍",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-astralym",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamevault-palworld-astralym-audio:astralym-cries",
+     "name": "枯星龍 Astralym 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-asuna",
+   "name": "亞絲娜／結城明日奈",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:76",
+     "name": "狂暴补师",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "hive-anime-team-survival:asuna2",
+     "name": "地圖音訊檔名／asuna2",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-beatrice",
+   "name": "碧翠絲",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-cattiva",
+   "name": "搗蛋貓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-cattiva",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "palworld-cattiva-gamevault:cattiva-cries",
+     "name": "搗蛋貓 Cattiva 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-dio",
+   "name": "DIO",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-local-final3:jumpforce-dio",
+     "name": "DIO",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-emilia",
+   "name": "愛蜜莉雅",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:238",
+     "name": "爱蜜莉雅",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-inuyasha",
+   "name": "犬夜叉",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-jetragon",
+   "name": "空渦龍",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-jetragon",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamevault-palworld-jetragon-cries:jetragon-cries",
+     "name": "空渦龍 Jetragon 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-kita-kita",
+   "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-kuroyukihime",
+   "name": "黑雪姬",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:164",
+     "name": "黑雪姬",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-leafa",
+   "name": "莉法",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:260",
+     "name": "莉法",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-lord-nightmares",
+   "name": "金色魔王／惡夢之王",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-lord-nightmares",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "attack-heavy",
+   "packSlots": 4,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-mario",
+   "name": "Mario",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Dr_Mario",
+     "name": "SSBM / Characters_Dr_Mario",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Mario",
+     "name": "SSBM / Characters_Mario",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-mewtwo",
+   "name": "Mewtwo",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_mewtwo",
+     "name": "NS 原生音訊／vc_mewtwo",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Mewtwo",
+     "name": "SSBM / Characters_Mewtwo",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-minecraft",
+   "name": "Steve／Alex",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-morgiana",
+   "name": "摩尔迦娜",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:62",
+     "name": "摩尔迦娜",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-naruto",
+   "name": "漩渦鳴人",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+     "name": "Naruto",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120",
+     "name": "Naruto",
+     "library": "本機遊戲",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-pokemon-trainer",
+   "name": "Pokémon Trainer",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_ptrainer",
+     "name": "NS 原生音訊／vc_ptrainer",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-ram",
+   "name": "拉姆",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-rim",
+   "name": "莉姆（Rim；粉紅魔龍）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:289",
+     "name": "莉姆",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-ryu",
+   "name": "Ryu",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_ryu",
+     "name": "NS 原生音訊／vc_ryu",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-saya",
+   "name": "沙耶",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:162",
+     "name": "美树沙耶加",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "300heroes:29",
+     "name": "沙耶",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-wargreymon",
+   "name": "戰鬥暴龍獸",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:159",
+     "name": "龙教练",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-xiaodangjia",
+   "name": "小當家",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-zero",
+   "name": "Zero",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamebanana-zero-lancer-493444:zero-lancer-voice",
+     "name": "Diarmuid Ua Duibhne / Zero Lancer",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": false
+    }
+   ]
+  },
+  {
+   "id": "lol-ahri",
+   "name": "阿璃",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ahri-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ahri / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-ashe",
+   "name": "艾希",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ashe-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ashe / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-blitzcrank",
+   "name": "布里姿",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-blitzcrank-ja-jp-16-18-8159717",
+     "name": "League of Legends / Blitzcrank / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-chogath",
+   "name": "科加斯",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-chogath-ja-jp-16-18-8159717",
+     "name": "League of Legends / Chogath / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-fiddlesticks",
+   "name": "稻草人",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-fiddlesticks-ja-jp-16-18-8159717",
+     "name": "League of Legends / FiddleSticks / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-garen",
+   "name": "蓋倫",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-garen-ja-jp-16-18-8159717",
+     "name": "League of Legends / Garen / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-malphite",
+   "name": "墨菲特",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-malphite-ja-jp-16-18-8159717",
+     "name": "League of Legends / Malphite / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-ornn",
+   "name": "鄂爾",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ornn-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ornn / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-sett",
+   "name": "賽特",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-sett-ja-jp-16-18-8159717",
+     "name": "League of Legends / Sett / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-thresh",
+   "name": "瑟雷西",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-thresh-ja-jp-16-18-8159717",
+     "name": "League of Legends / Thresh / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-velkoz",
+   "name": "威寇茲",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-velkoz-ja-jp-16-18-8159717",
+     "name": "League of Legends / Velkoz / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  }
+ ]
+}

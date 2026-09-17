@@ -21,52 +21,28 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 2.2,
-     "at": 1789037070916,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.36,
-     "at": 1789040356410,
-     "error": null
-    },
-    {
-     "take": 3,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.92,
-     "at": 1789042382280,
-     "error": null
-    },
-    {
-     "take": 4,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.24,
-     "at": 1789054874871,
+     "seconds": 0.44,
+     "at": 1789625888496,
      "error": null
     }
    ],
-   "text": "王子縮成迷你問號！",
+   "text": "んっ！",
    "lang": "ja",
-   "kana": "オウジ シュク セイ メイ ゴウ",
+   "kana": "ンッ",
    "textSource": "derived",
-   "origin": "ability-name:b2-bojji.q",
+   "origin": "grunt:child-boy",
    "state": "generated",
    "current": {
-    "take": 4,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "23a9ecfa9949f1a1d4a6c87cc3e84a541f5638687d3d09e754d970ef5c05b796",
-    "maxDb": -3.3,
-    "at": 1789054874872
+    "hash": "870c887f1ddfa754158656617711d6a3a572e480f176937f39c8c3abf2e0e4d2",
+    "maxDb": -3.5,
+    "at": 1789625888497
    },
    "lastError": null
   },
@@ -76,52 +52,28 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 4.04,
-     "at": 1789037071037,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 4.04,
-     "at": 1789040356518,
-     "error": null
-    },
-    {
-     "take": 3,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.44,
-     "at": 1789042382411,
-     "error": null
-    },
-    {
-     "take": 4,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.64,
-     "at": 1789054875057,
+     "seconds": 0.32,
+     "at": 1789625888681,
      "error": null
     }
    ],
-   "text": "王室搔癢暫停握刀！",
+   "text": "はっ！",
    "lang": "ja",
-   "kana": "オウシツ ザン テイ アクトウ",
+   "kana": "ハッ",
    "textSource": "derived",
-   "origin": "ability-name:b2-bojji.w",
+   "origin": "grunt:child-boy",
    "state": "generated",
    "current": {
-    "take": 4,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 27211,
-    "seconds": 1.64,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "36b330b4205c94a73b1bb294f0c56f97db20c71086456bf40f9b2dc1199a5b7b",
-    "maxDb": -2,
-    "at": 1789054875058
+    "hash": "c6e09801a2c48f05fa76b9e6734ad5939aa0f1c6f47569d87f6106fd51a94685",
+    "maxDb": -1.9,
+    "at": 1789625888681
    },
    "lastError": null
   },
@@ -131,52 +83,28 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 2.92,
-     "at": 1789037071156,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.4,
-     "at": 1789040356627,
-     "error": null
-    },
-    {
-     "take": 3,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 3.6,
-     "at": 1789042382546,
-     "error": null
-    },
-    {
-     "take": 4,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.76,
-     "at": 1789054875245,
+     "seconds": 0.56,
+     "at": 1789625888853,
      "error": null
     }
    ],
-   "text": "太高了我先繞過去！",
+   "text": "ぬんっ！",
    "lang": "ja",
-   "kana": "タ タカ リョウ ワレサキ ジョウ カコ",
+   "kana": "ヌンッ",
    "textSource": "derived",
-   "origin": "ability-name:b2-bojji.e",
+   "origin": "grunt:child-boy",
    "state": "generated",
    "current": {
-    "take": 4,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.76,
+    "bytes": 10075,
+    "seconds": 0.56,
     "lufs": null,
-    "hash": "6ba4cc3c29ae1798825d274f88ec4f3892c5088b022521f46f7d9fc07760fa1b",
-    "maxDb": -2,
-    "at": 1789054875245
+    "hash": "f74e5c017c70584e51a1e5aa0891cdd0cbedcf973eecd4549afa9e297026a552",
+    "maxDb": -4,
+    "at": 1789625888853
    },
    "lastError": null
   },
@@ -186,52 +114,28 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 2.36,
-     "at": 1789037071276,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.64,
-     "at": 1789040356732,
-     "error": null
-    },
-    {
-     "take": 3,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.32,
-     "at": 1789042382670,
-     "error": null
-    },
-    {
-     "take": 4,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 2.2,
-     "at": 1789054875433,
+     "seconds": 0.64,
+     "at": 1789625889019,
      "error": null
     }
    ],
-   "text": "笑穴變成原地罰站！",
+   "text": "んあああっ！",
    "lang": "ja",
-   "kana": "ワライ アナ ヘンセイ ゲンチ バツ タン",
+   "kana": "ンアアアッ",
    "textSource": "derived",
-   "origin": "ability-name:b2-bojji.r",
+   "origin": "grunt:child-boy",
    "state": "generated",
    "current": {
-    "take": 4,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36406,
-    "seconds": 2.2,
+    "bytes": 11328,
+    "seconds": 0.64,
     "lufs": null,
-    "hash": "5e090b712749e8ca3468694d65876cc9a3f1ce61fa7b9b979cfb294ff9b823a8",
+    "hash": "15b0069838ac4f3f4c218f50c03716dc3b3d6e8bce10aa5aa345ce61c28bb091",
     "maxDb": -2,
-    "at": 1789054875433
+    "at": 1789625889019
    },
    "lastError": null
   },
@@ -241,52 +145,28 @@
      "take": 1,
      "engine": "cosyvoice3",
      "stub": false,
-     "seconds": 2.08,
-     "at": 1789037071395,
-     "error": null
-    },
-    {
-     "take": 2,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.56,
-     "at": 1789040356836,
-     "error": null
-    },
-    {
-     "take": 3,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.52,
-     "at": 1789042382786,
-     "error": null
-    },
-    {
-     "take": 4,
-     "engine": "cosyvoice3",
-     "stub": false,
-     "seconds": 1.48,
-     "at": 1789054875624,
+     "seconds": 0.64,
+     "at": 1789625889180,
      "error": null
     }
    ],
-   "text": "勇氣不是肌肉量！",
+   "text": "うあーっ！",
    "lang": "ja",
-   "kana": "ユウキ フ コレ ハダ ニクリョウ",
+   "kana": "ウアーッ",
    "textSource": "derived",
-   "origin": "ability-name:b2-bojji.ex",
+   "origin": "grunt:child-boy",
    "state": "generated",
    "current": {
-    "take": 4,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24703,
-    "seconds": 1.48,
+    "bytes": 11328,
+    "seconds": 0.64,
     "lufs": null,
-    "hash": "202917c69f373f94f4f4058f7f128d5f264279c193ced74b2ed330c913e7efb6",
-    "maxDb": -4.5,
-    "at": 1789054875625
+    "hash": "2fba7b6704a64b9c94c75fc2a5eabc8c0cd09c87fc04b007ed610f354c8aee7d",
+    "maxDb": -3.8,
+    "at": 1789625889180
    },
    "lastError": null
   },

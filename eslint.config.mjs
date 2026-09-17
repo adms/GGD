@@ -118,6 +118,16 @@ const IGNORES = [
   // ⭐ 2026-09-15（v0.45.2 整合）：GH#1257 新增 apps/editor/vitest.config.ts 之後，vitest 也會寫同形的暫存 bundle；
   //   ship:check 並行段 lint 掃到它、vitest 收工刪掉 ⇒ ESLint ENOENT 崩潰（exit 2）。與上一列同一個理由。
   "**/vitest.config.*.timestamp-*.mjs",
+  // ⭐⭐ 2026-09-17（GH#1270）—— **建置產物不進 lint**。
+  // ⛔ 抓到的：flat config 預設只忽略 node_modules ⇒ 只要有人**在本機建過一次**
+  //   （`apps/*/dist`、`apps/editor/dist-player`），下一次 lint 就去讀那幾 MB 的壓縮 bundle
+  //   ⇒ 實測 **413 個 error**（`importScripts` 未定義、`new Array()`⋯全部是打包器的輸出）。
+  // ⚠️ 它平常不叫，只在「剛好建過」的機器上叫 —— ⭐ 一個會隨環境開關的閘。
+  "**/dist/**",
+  "**/dist-player/**",
+  "**/dist-out/**",
+  "**/dist-electron/**",
+  "**/.vite/**",
 ];
 
 export default tseslint.config(

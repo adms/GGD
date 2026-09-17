@@ -61,15 +61,26 @@ func TestNginxEdgeRouting(t *testing.T) {
 		assert.Equal(t, 200, status)
 		assert.Contains(t, body, "GGD client stub")
 
-		// #241: /editor/ is NOT a production route any more. It must NOT serve
-		// the editor tree even when that tree is present on disk (it is, in this
-		// container — mounted below — precisely so this assertion proves the
-		// LOCATION is gone rather than the files merely being absent).
+		// ⭐⭐ GH#1270: /editor/ IS a production route now — and it must serve the
+		// PLAYER bundle. Two failure modes are asserted at once:
+		//   · the #1270 defect — falling through to the game SPA (HTTP 200 + login page)
+		//   · the #241 defect — serving the content-authoring console publicly
+		// The authoring tree is mounted in this container precisely so the second
+		// assertion proves the ROUTE points elsewhere, not that the files are absent.
 		status, _, body = c.get(t, "/editor/")
-		assert.Equal(t, 200, status, "unknown paths fall through to the SPA")
+		assert.Equal(t, 200, status)
+		assert.Contains(t, body, "GGD hero-forge stub",
+			"/editor/ must serve the player bundle in the prod layout (GH#1270)")
+		assert.NotContains(t, body, "GGD client stub",
+			"/editor/ must NOT fall through to the game SPA — that was the #1270 defect")
 		assert.NotContains(t, body, "GGD editor stub",
-			"/editor/ must not be routed in the prod layout — see nginx/dev/editor.conf")
-		assert.Contains(t, body, "GGD client stub")
+			"/editor/ must NOT serve the authoring console — that was the #241 defect")
+
+		// ⭐ 深連結：`/editor/hero-forge` 是玩家真的會打開的那一個（票 #1270 的 AC）。
+		status, _, body = c.get(t, "/editor/hero-forge")
+		assert.Equal(t, 200, status)
+		assert.Contains(t, body, "GGD hero-forge stub", "SPA 深連結要回玩家版 index.html")
+		assert.NotContains(t, body, "GGD client stub")
 
 		status, hdr, body := c.get(t, "/content/champions/sela.json")
 		assert.Equal(t, 200, status)
@@ -133,11 +144,14 @@ func TestNginxEdgeDevLayout(t *testing.T) {
 	status, _, _ := c.get(t, "/content-api/champions")
 	assert.Equal(t, 502, status, "/content-api/ must proxy in the dev layout (dead upstream → 502)")
 
-	// #241: the editor rides the same dev-only include. Mounting nginx/dev/ is
-	// what turns it on — and it is the only thing that does.
+	// ⭐ GH#1270：路由只有**一個住處**（nginx/nginx.conf），dev 與 prod 的差別是
+	//   `/usr/share/nginx/html/hero-forge/` 裡的**位元組**（dev 映像放完整編輯器）。
+	//   ⇒ 這個容器掛的是玩家版 stub，所以 dev layout 這裡看到的也是它；
+	//   ⛔ 而「dev 才有」那一半今天由 `docker/edge.Dockerfile` 的 GGD_INCLUDE_EDITOR 決定
+	//   （`editor_exposure_test.go` 逐行守著）。
 	status, _, body := c.get(t, "/editor/")
 	assert.Equal(t, 200, status)
-	assert.Contains(t, body, "GGD editor stub", "/editor/ must be served in the dev layout")
+	assert.Contains(t, body, "GGD hero-forge stub", "/editor/ 服務的是 hero-forge 那棵樹")
 
 	// WebSocket upgrade headers are configured for the game routes; a plain
 	// HTTP request still proxies (Colyseus speaks HTTP on the same port).

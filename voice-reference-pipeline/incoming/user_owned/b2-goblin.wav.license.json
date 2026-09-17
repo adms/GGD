@@ -1,0 +1,50 @@
+{
+  "hero_id": "b2-goblin",
+  "source_name": "owner game-voice library (角色語音索引 parallel-community-goblin-slayer-ssbu)",
+  "source_url": "voice-index:parallel-community-goblin-slayer-ssbu",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0001-vc_link_attack01.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0002-vc_link_attack02.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0003-vc_link_attack03.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0004-vc_link_attack04.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0005-vc_link_attack05.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0006-vc_link_attack06.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0007-vc_link_attack07.wav",
+      "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+      "seconds": 1.49
+    }
+  ],
+  "source_sha256": "896af232d28482b1fe110604d909d27de0f6be67650b00be2384a8703ddc0b5d",
+  "downloaded_at": "2026-09-10T13:42:12.393547+00:00"
+}

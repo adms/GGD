@@ -242,7 +242,11 @@ w("")
 
 # ── B 語音 ──────────────────────────────────────────────────
 # ⛔ 下面兩列是**逐支查過的分析**（候選來源、信心），⛔ 不是量出來的 —— 所以要跟量到的名單對得上，對不上就停
-_B_MATERIAL_IDS = {"godie-e00s", "godie-e010", "godie-u034", "godie-ucrl"}
+# ⭐ 2026-09-17：這一格清空 —— 語音分支 `feat/owner-0915-models-voices`（#1252，併入 main f96c4eea8）替兩個角色做了整包語音：
+#   · 白木卡迪那 `godie-e00s`：owner「可以借用 Berserker」⇒ 借 Berserker 參考音合成他自己的整包（48fdec5f7）
+#   · 傑富力士 `godie-ucrl`：owner「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ JUMP FORCE Gon 原檔 19 格＋自己聲音合成其餘（48fdec5f7）
+#   `godie-e010`／`godie-u034` 是他們的變身對，跟著借用 ⇒ 四個 id 都不在量到的缺口裡了（combatVoiceCoverage 的 VOICE_GAP 同一天移除）。
+_B_MATERIAL_IDS: set = set()
 _B_WIRING_IDS = {"b2-maple-alt-9769eb88b85b"}
 # ⭐ 第四批（GH#1185／#1205）owner 2026-09-17「我要全部上線」⇒ 先上架、語音待補。分組**逐字取自 Codex 2026-09-16 的語音缺口盤點**
 #   （PR #1267 commit 2a5564255；重建入口 `tools/hero-model-library/sync_voice_gap_source_mappings.py`），⛔ 不是我分的。
@@ -259,14 +263,16 @@ _measured_voice_gap = {x["id"] for x in voice_gap}
 if not _measured_voice_gap <= (_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS) or not _B_MATERIAL_IDS <= _measured_voice_gap:
     print(f"⛔ B 節的手寫分析過期了：量到 {sorted(_measured_voice_gap)}，手寫 {sorted(_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS)} —— 重查再改這支產生器")
     raise SystemExit(2)
-w("## B. 🎙 語音 —— ⭐ 真正要找素材的只有 **2 個角色**")
+w("## B. 🎙 語音 —— ⭐ 舊角色的素材缺口已清空，剩第四批 33 名待補")
 w("")
-w(f"⚠️ 量到 {len(_measured_voice_gap)} 個 id 沒有語音，逐支查完之後**只有 2 個角色是素材缺口**：")
+w(f"⚠️ 量到 {len(_measured_voice_gap)} 個 id 沒有語音，全部是下面「第四批」先上架的英雄。")
 w("")
-w("| 角色 | 佔幾個 id | 狀態 | 索引裡的候選 |")
-w("|---|---|---|---|")
-w("| 白木老樹精・白木卡迪那 | `godie-e00s` ＋ `godie-e010` | ⛔ 兩個 id 都沒有包 | `300heroes:215`「白」400 檔 —— ⚠️ **只有一個字命中，信心低**，要聽過才算 |")
-w("| 職業獵人・傑 富力士 | `godie-u034` ＋ `godie-ucrl` | ⛔ 兩個 id 都沒有包 | ⛔ **沒有可用候選**（撈到的 `vc_kirby_copy_*` 索引自己標著「非對象本人」）|")
+w("✅ **2026-09-17 已解決**（語音分支 #1252 併入 main）：先前唯二的素材缺口都做好了整包語音 ——")
+w("")
+w("| 角色 | 佔幾個 id | 怎麼解決的 |")
+w("|---|---|---|")
+w("| 白木老樹精・白木卡迪那 | `godie-e00s` ＋ `godie-e010` | owner「可以借用 Berserker」⇒ 借 Berserker 參考音合成他自己的整包 |")
+w("| 職業獵人・傑 富力士 | `godie-ucrl` ＋ `godie-u034` | owner「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ JUMP FORCE Gon 原檔 19 格＋自己的聲音合成其餘 |")
 w("")
 w("⭐ **這幾支⛔ 不要去找素材**：")
 w("")
@@ -287,7 +293,7 @@ for _label, _ids in _B_BATCH4.items():
 w("")
 w("⭐ 金色魔王 `acquired-lord-nightmares`：owner 2026-09-17「金色魔王 一樣用莉娜音效」⇒ 已借用莉娜（`godie-h020`）的原作語音，⛔ 不在缺口裡。")
 w("")
-w("**要找的**：那 2 個角色的**原作日文語音**（⭐ 只收日文；⛔ 中文配音檔要排除，300英雄的 `voice_ch_*` 就是）。")
+w("**要找的**：第四批英雄的**原作日文語音**（⭐ 只收日文；⛔ 中文配音檔要排除，300英雄的 `voice_ch_*` 就是）。")
 w("**交回來**：來源群組 id ＋ 檔案清單 ＋ **你聽過的證據**（哪幾段是本人、哪幾段是旁白/其他角色）。")
 w("⛔ **不要自己合成**：合成走既有的 `tools/voice-gen/`，而它要的是**參考音**，不是成品。")
 w("")

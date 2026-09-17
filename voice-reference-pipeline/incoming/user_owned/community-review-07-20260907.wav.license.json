@@ -1,0 +1,25 @@
+{
+  "hero_id": "community-review-07-20260907",
+  "source_name": "owner game-voice library (角色語音索引 parallel-ps-jumpforce-local-second10:jumpforce-hisoka)",
+  "source_url": "voice-index:parallel-ps-jumpforce-local-second10:jumpforce-hisoka",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#14.ogg",
+      "sha256": "4cb5feff677c1027455e2ba1ebb0bfcf27fd32bef20065ef4552fc4ba753d820",
+      "seconds": 5.93
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hisoka/extracted/JForce_Hisoka/chr0330_ActVoice/chr0330_ActVoice#19.ogg",
+      "sha256": "a46892f8bb16e4531273f7c7e86cce1f38340d000081a80665364dc11623545d",
+      "seconds": 5.93
+    }
+  ],
+  "source_sha256": "f93b6765cd6429c5ac581cc6d5cb7bd840729d8daf4a012775ad8bb6acf1028a",
+  "downloaded_at": "2026-09-10T13:42:11.171561+00:00"
+}

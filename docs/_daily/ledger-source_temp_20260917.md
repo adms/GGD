@@ -383,3 +383,364 @@ go on
 ## 13:38 · 766bd693
 
 what now?
+
+## 13:46 · ae5210e9
+
+你把你開票、修票、關票的進度給我一覽表，如果你忘記開票要記得補開
+
+## 13:56 · 5806258e
+
+傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧
+
+## 14:02 · 1c57ca28
+
+米瑟利要重配成大姊姊聲 => JUMP Force or 任天堂大亂鬥 or KOF 中是否有類似性感大姊姊的角色可以對應使用
+
+## 14:05 · 4620067c
+
+小呆你在頁面上選的是「勝利」當名言，但他本來就有名言，要不要換？ => 我沒有選阿 剛剛那一頁甚至沒有小呆 是舊的吧
+
+解封包那條停下來了，我把原因照實轉給你。 => 我已經拿到授權
+
+## 14:07 · fc413e62
+
+理論上你也不需要解包 我已經都轉換完了才對
+
+## 14:07 · eede9eeb
+
+你怎麼突然又再做重複的事情
+
+## 14:10 · 1357d44a
+
+帕露蒂娜 ok
+
+## 14:11 · c040af0a
+
+波吉 語音應該都是小孩 嗯嗯阿阿 的聲音 你可以合成
+
+## 14:12 · e763ffc9
+
+傑富力士的 250 段語音	⏳ 對應中（背景工作在聽寫分類，完成後做成審核頁給你勾） => 你應該是本地端做吧? 我不想 token 爆炸
+
+## 14:36 · 394d0800
+
+把這兩個最低成本方式補完
+
+## 15:49 · f343f211
+
+commit + push , 給我一鍵複製給 main 來合併處理
+
+## 15:59 · ac75d8d4
+
+我不小心執行了 /clear 如何救會來？
+
+## 16:01 · 3ad8f697
+
+你這個 session 全部 commit + push 並且被 main 合併交接完了嗎 我要關閉了
+
+## 16:02 · a6188412
+
+沒關係 請你把之前舊的對話記錄備份 並且整理 對話開票 並整合到 戰情版{timestamp}.md
+
+## 16:08 · a67fbd3e
+
+也請你把做到一半的部分記錄在票裡面，避免重複做
+
+## 16:15 · 396826f0
+
+為何會出現
+
+## 16:39 · 3b8730ef
+
+先commit
+
+4. 我犯的錯
+一開始我在 `/Users/Takuro/GGD` 上建帳本。那棵樹停在舊分支，落後 main 789 個 commit，結果重建了一份跟 main 重複的帳本，還產生了一份舊的 `戰情版-20260917.md`。
+
+* 這些檔都沒進版控，但受產物保護，我刪不掉。
+* 現在那棵樹根目錄的 `GGD戰情版.md` 指向那份舊的，不要看那份，也不要 commit 它們。
+* 以 /private/tmp/ggd-integ-nc/GGD戰情版.md 為準。
+* 要清掉那幾份的話，需要你在啟動環境設 `GGD_GENGUARD_OFF=1`，或讓我帶你清。
+* 這個教訓我已經記進記憶：跑帳本、戰情版、檢查之前，先確認哪棵樹是 main。
+
+
+=> 請你詳細解釋
+
+## 16:44 · 733a410e
+
+我大概知道了 請你給我建議 可以保全住所有資料 又可以回歸到 main 來繼續工作 把錯誤的分支 archive 不再使用 一切安全不要掉資料為準
+
+## 16:53 · d295ba4f
+
+你講的我完全不懂怎麼做 也不知道怎麼確認
+
+## 16:55 · 368c62b8
+
+我先給你其他 session 交接內容如下
+
+
+
+Codex 交接更新：
+
+1. PR #1228 已同步最新 main、解決衝突並改成 Ready。
+最新 head：7d4669f53
+本機 hero-intake 153 位檢查、git diff --check、skills:check、editor:accept:release、coord:check 與 community release receipts 已通過。
+新 CI 正在執行：
+https://github.com/adms/GGD/pull/1228
+2. 舊 Draft PR #1144 已由乾淨的 S3 還原契約 PR #1279 取代。
+最新 head：8d11690a2
+僅保留 8 個必要的 manifest、restore、verify 與測試檔；hero-intake 153 位檢查及 git diff --check 已通過。
+新 CI 正在執行：
+https://github.com/adms/GGD/pull/1279
+3. PR #1267 最新 head：3e1ad1379
+已用官方產生器修復 docs:readme:check，pnpm docs:readme:check 與 git diff --check 通過，新 CI 已觸發：
+https://github.com/adms/GGD/pull/1267
+4. Owner 已明確允許 Main 對固定 S3 收據進行唯讀下載、還原、解包與 SHA-256 驗證；授權範圍與 AWS 限制已記在：
+https://github.com/adms/GGD/pull/1267#issuecomment-5679839513
+5. #1135、#1153、#1144 已確認被後續 main 實作或 #1279 取代並關閉，不需要再同步舊架構。
+6. #1267 尚有兩個獨立事項：
+- 何布 7 個已核准原作特效使 VFX subtype ratchet 由 60 增至 67；現行共用 VFX 契約沒有 texture 參數，請 Main 決定增加正式自訂貼圖機制或接受有證據的 ratchet 更新。
+- 新增 20 份 Git hygiene 材料已整理進 314 檔 consolidated staging，但尚未取得 S3 寫入授權，因此未上傳、未解除 Git 追蹤。
+
+請等待 #1228、#1279、#1267 新 CI 完成後重新審查；合併仍由 Main 決定。
+
+
+PR #1267 的 S3 hygiene closure 已完成。
+
+- 最新 head：9a0e850d4
+- PR 已同步最新 main，無衝突、MERGEABLE、非 Draft
+- 314 檔已上傳到固定 S3 prefix
+- 完整 GET、解包、成員集合與 314 份逐檔 SHA-256 全部通過
+- 33 份 preparation 材料已移出 Git，本機原件全部保留
+- Git hygiene：107 檔／81.9 MiB，6 passed、1 skipped
+- VFX ratchet：基準線仍為 60；7 顆 Popp 原作特效只依 owner 固定核准收據辨識，8/8 passed
+- 專項合計：14 passed、1 skipped
+- 最新 CI：https://github.com/adms/GGD/actions/runs/35067619060
+- 完整收據：https://github.com/adms/GGD/pull/1267#issuecomment-5693539745
+
+CI 綠後即可進行 Main 審查與合併。
+
+交接：feat/owner-0915-models-voices（HEAD 28b657076，已推 origin，工作樹乾淨）
+請合進 main 並依主線節奏上架。分支已含 origin/main 93e8435af（帳本衝突取聯集、戰情板重生成，⛔ 沒用 --ours／--theirs）。
+
+一、這批做了什麼（owner 2026-09-17 逐位裁決，逐字理由都寫在檔案與 commit 裡）
+1. 名言別名機制 QUOTE_ALIAS.json ＋ index-lines：沒有名言的英雄用自己的勝利宣言（沒有就嘲諷），
+⛔ 不複製檔案，只在清單裡多指一次並標 aliasOf。一位可多筆。
+2. 9 位 batch2 英雄的名言＝自己的勝利宣言（owner「其他都可以用勝利宣言」）。
+3. 如月電車：名言＋勝利改用 owner 指定的 YouTube 短片切段（4.5–9.5 秒／13.5–19 秒）；
+被取代的 JR 發車旋律已上 S3 並讀回比對 SHA-256。
+4. 波吉：不會說話 ⇒ casting 加 nonVerbal，喊招也改成擬聲（COMBAT_GRUNTS 的 child-boy 補 skill-name.*），
+本機 CosyVoice3 重合成 5 段；他先前那 5 段喊招是**中文句子**（違反「合成只講日文」）。
+5. 米瑟利：先前參考音借的是黑崎一護的**男聲**（voiceClass unknown）⇒ owner 聽過 6 位候選後選帕露蒂娜；
+參考音重做、整包 11 段重合成。
+6. 傑富力士：JUMP FORCE 的 Gon 250 段原檔（本機既有轉檔）以聽寫內容＋時長對上 19 格，其餘用他自己的聲音合成；
+補 SKILL_READINGS 兩筆讀音。⛔ 沒有解任何 pak。
+7. 白木卡迪那：借 Berserker 的參考音合成整包；他沒有台詞來源（⛔ 不編台詞）⇒ 嘲諷／勝利／名言用自己的擊殺呻吟。
+8. 角色名言總表 docs/角色名言總表.md ＋ 產生器 ＋ 缺口棘輪；語音／音效入庫檢查 tools/audio-intake；
+出貨音訊格式（128k／44.1kHz／單聲道）收成唯一住處 audioAssetPolicy.ts；.gitignore 擋掉後台上傳的參考音資料夾。
+
+二、量到的結果
+出貨 130 位：戰鬥名言缺口 24 → **0**；VOICE_GAP（完全沒聲音的名單）清空。
+選角畫面那套名言仍缺 59 位（那是另一套 TTS 系統，名單寫死在 build-champ-quotes.mjs，未處理）。
+
+三、驗證
+combatVoiceCoverage 9/9、quoteAlias 2/2、championQuoteInventory 2/2、audioIntake 2/2、audioPolicySingleHome 3/3 全綠。
+突變驗過三條（aliasOf 拿掉、engine.py 塞回 44100、總表改一列 id）。
+⚠️ pnpm typecheck 在該工作副本回非零，11 個全是 TS2688「找不到 node 型別定義」＝ node_modules 連結不全，⛔ 與本批改動無關，請在主線自己跑一次。
+⚠️ 合成共 20 段用本機 CosyVoice3 跑；build-combat-lines 有幾次用 GGD_QUARANTINE_OFF=1 單獨跑（先寫出待合成狀態再叫合成），最後一次都是完整的 pnpm combat:build ＋ pnpm assets:manifest。
+
+四、未做／待 owner
+- 傑富力士的**模型、動作、音效**：語音已整包上架，但這三類本機只找到他的舊 Warcraft 模型（herobiggon）。owner 說已轉換完成，等他給路徑。
+- 09-15 那批原作語音套用（哥布林借聲、莉娜剪句、撤下中文與「不是小呆」的已上線原作）仍在計畫裡：
+docs/_reports/1252_voice-originals-plan_temp_20260915-2020.md
+- 選角名言 59 位的缺口。
+- 工作資料（審核決定、聽寫結果、對應產生器）在 S3：
+s3://ggd-390630837668-ap-east-2-an/voice-review-0915/review0915-state-20260915.tgz
+s3://ggd-390630837668-ap-east-2-an/voice-review-0915/quotegap-state-20260917.tgz
+
+還是看不到 docs/_reports/全角色上線名單與資源檢核表_20260917.md
+
+## 17:25 · bcd6a776
+
+#1270 那一批：在 GGD 上重跑出貨檢查，通過後才把那 7 個版本推上 GitHub。
+你轉貼的交接：#1228、#1279、#1267 在等 GitHub 上的自動測試跑完；語音分支 feat/owner-0915-models-voices 等著合進 main。
+舊版本裡 main 沒有的內容：有 67 個檔，最大的是自動留底紀錄表多出的 3,037 行。需要的話，我出一份對照表讓你挑要不要撿回 main。
+
+=> 全做
+
+## 17:43 · 4ca46852
+
+這個 session 可以關閉了嗎
+
+## 17:44 · d66010c0
+
+你現在是更新最新的英雄、技能、道具清單到 readme 了嗎
+
+## 17:46 · 275bda70
+
+請你檢查最新的內容 完成更新後 更新到分支讓 main 合併 給我一鍵複製的內容
+
+## 17:48 · 9e9a3a26
+
+我要如何將 github GGD 專案改成私密? 需要付費嗎?
+
+## 18:02 · 3c05a016
+
+照建議撿回
+
+## 18:15 · 9ee15cc4
+
+合併 PR #1232
+
+## 18:17 · 1c01f924
+
+好 繼續
+另外 這個圖片的分支 #1152 怎麼處理
+
+## 18:25 · 069cf628
+
+你確定 #1152 的東西都有驗收及備份?
+
+## 18:27 · b0ced308
+
+你盤點一下 還有哪些分支你還沒合併進來 或是還沒被妥善標注、關閉
+
+完整的逐檔清單和壓縮包在S3上，需下載才能實際驗證 => 你 checksum 就好 不要真的下載浪費流量及 token
+
+## 18:31 · 3f686f44
+
+那我先改到穩定版本再來改 private?
+
+## 18:33 · a9a529a7
+
+你先看看 mac mini M4 適合自架 runner 嗎? 還會不會有額外費用？
+
+## 18:34 · 45ba500e
+
+我有連上 vpn
+
+## 18:39 · 593693ba
+
+contactsd 那是啥
+
+## 18:47 · fbb273e0
+
+先做 1
+
+## 18:47 · 2945d3cf
+
+照建議處理，本機 64 個分支也逐檔核對
+
+## 18:48 · aa57b170
+
+我提醒你 如果有大量上下載的動作盡量避免，目前網路不是很快
+
+## 18:49 · 4c85471e
+
+已完成並推送。`已取得模型待設計英雄.md` 現在會由產生器持續納入下列素材庫，包括尚未轉換、待設定、待確認身分及已註冊候選：
+
+* 300英雄：276 個來源 ID，整理為 265 個身分列。
+* KOF XIV／XV／Maximum Impact：目前已取得不知火舞、八神庵、阿修等模型、動作及音訊候選，未取得項目仍明列。
+* 任天堂明星大亂鬥：NS Ultimate Worldblender 整庫、社群 MOD、日語音包、GameCube Melee、Wii Brawl、N64 線索分開登記。
+* 無限神速斬：達伊 4 個、何布 5 個、老年巴恩 2 個，共 11 個已登記模型版本；年輕巴恩、MystVearn、巴蘭分開記錄。
+* JUMP FORCE：模型、音訊包、達伊部件、大傑 PAK、劍心模型等依實際完成階段記錄。
+* J‑STARS Victory VS+：7 個 CPK、19,471 筆檔案、56 個角色／模型 token；六名優先角已確認身分，目前仍是待解碼與待轉換，沒有誤列為上架。
+
+同步更新：
+
+* [已取得模型待設計英雄.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/已取得模型待設計英雄.md)
+* [已取得模型待設計英雄.json](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/已取得模型待設計英雄.json)
+* [全英雄列表.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/docs/全英雄列表.md)
+* [近四日新增模型動作特效清單.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/近四日新增模型動作特效清單.md)
+* [J‑STARS 原包解取收據](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json)
+
+同批也完成波吉皇冠與阿薩謝爾翅膀模型選項的 Git 註冊：
+
+* [波吉皇冠 A/B 圖](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png)
+* [阿薩謝爾翅膀 A/B 圖](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg)
+
+交付資訊：
+
+* Commit：`b9009cb1d`
+* 分支：`codex/hero-model-library-options-clean`
+* PR：[PR #1284](https://github.com/adms/GGD/pull/1284)
+* PR 交付留言：[本批完整說明](https://github.com/adms/GGD/pull/1284#issuecomment-5713011842)
+* CI：目前 GitHub `setup` 還在排隊執行。
+
+本機檢查已通過：804 個來源身分、194 名唯一英雄、205 個模型來源、65 個元件；資產 manifest、文件生成、4000 份內容驗證、模型預算報告與 J‑STARS 16 項解包測試均通過。帕魯的 18 份本機／S3 準備音訊仍留在本機，沒有混入 Git。
+
+## 18:56 · ae9aebbb
+
+是你要參考他的內容更新你的 readme
+
+## 18:57 · a9e4609e
+
+你先暫停
+
+## 19:00 · 079a0c4f
+
+你可以做快點嗎
+
+## 19:02 · f5512c7b
+
+那你不要去跑別人的項目 專注你自己的 readme 就好 我可以幫你一鍵複製給負責的工作流
+
+## 19:08 · 71018fca
+
+【給主線】README PR #1232 已更新，可合併：https://github.com/adms/GGD/pull/1232
+head 3aae77f98，已包含 origin/main 全部內容，沒有衝突。
+
+這一版已併入 PR #1284（codex/hero-model-library-options-clean，到 bdd19be75），README 衝突已在 #1232 解掉：
+- README 清單對齊 v0.46.0：190 英雄／1129 技能、開放名單 167、待上架 8
+- §7 新增「已取得素材庫」：804 個來源身分（尚未建立英雄 397、待補 17、身分待確認 297、已對應 93）
+
+合併順序：先合 #1284，再合 #1232；或只合 #1232，會連同 #1284 到 bdd19be75 一起進 main。
+#1284 在 bdd19be75 之後的 78ab89dc7 只動素材收據，不影響 README。
+
+注意：
+1. main 自己的 CI unit 在 72dc6ef7c 就是紅的，#1232 的 unit 可能會繼承。
+2. #1232 最後一個 commit 用了 GGD_GENINPUT_OFF=1：README 也是 skillforge:audit 的輸入，那份報告沒有在 README 分支重產。若 skillforge:audit:check 變紅，交給 skillforge 工作流。
+3. 合併後、跑 docs:readme 或 skills:sync 之前，先把本機白名單同步成正式站的，否則開放名單會被改回 130：
+   cp data/curation/whitelist.json data/curation/whitelist.before-20260917.json
+   curl -sS https://ggd.adms.ai/api/v1/curation/whitelist -o data/curation/whitelist.json
+
+## 19:08 · 2856e730
+
+幫我開一張票 處理變身態問題 之前有說過要消滅所有變身態 請你追蹤整體規劃及進度為何
+
+## 19:11 · 21743632
+
+也可以參考
+docs/全英雄列表.md
+
+## 19:12 · caa1bc87
+
+那 11 條照你建議先保留，繼續出貨 BMPNDD
+
+## 19:13 · 493cbe24
+
+＃1152 別忘了要繼續處理完後關閉
+
+## 19:15 · 1a992c02
+
+「盡可能下架」除非你跟我解釋必要性 我答應進白名單
+
+## 19:15 · e21f9587
+
+你應該另外開一個分支來處理不要影響到 main
+
+## 19:16 · 487de89e
+
+變身態 session 已經暫停了
+
+## 19:18 · 67fffc49
+
+所以你這次會合併完所有分支 或是至少標注怎麼完成? 或是驗收關閉?
+
+## 19:20 · a6fae624
+
+你先照開票守則開票
+
+## 19:21 · f9bcfbbb
+
+好 照這樣做 部署完接著收尾

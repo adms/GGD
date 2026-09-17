@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-original-voice-direct-map@1",
+  "hero": "godie-ucrl",
+  "note": "owner 2026-09-17 在審查頁上挑的名言（JUMP FORCE Gon 劇情語音 #0009）。⛔ 這份**還不能單獨套用**：godie-ucrl 只要自己擁有語音包，跟他配對的變身型態就借不到他的包，而這份只有名言一格 ⇒ 那一位的勝利等格會變啞（combatVoiceCoverage.test.ts 立刻紅，2026-09-17 實測）。⇒ 要跟 JUMP FORCE Gon 的**整包**（模型／動作／音效／全語音）一起上。",
+  "map": {
+    "quote": {
+      "src": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130300_chr0300_EvnVoice/130300_chr0300_EvnVoice#0009.wav",
+      "file": "130300_chr0300_EvnVoice#0009.wav",
+      "group": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+      "why": "owner 2026-09-17 在審查頁上挑的：JUMP FORCE Gon 劇情語音 #0009（2.55 秒）"
+    }
+  }
+}

@@ -1,26 +1,30 @@
 {
   "hero_id": "community-review-12-20260907",
-  "source_name": "game-voice: Fate/Grand Order 千子村正 (CV 杉山紀彰 ＝ 衛宮士郎的聲優) 台詞數段拼接",
-  "source_url": "https://api.atlasacademy.io/nice/JP/servant/302?lore=true",
+  "source_name": "owner game-voice library (角色語音索引 spritedatabase-fate-ps2-shirou:shirou-character-audio)",
+  "source_url": "voice-index:spritedatabase-fate-ps2-shirou:shirou-character-audio",
   "direct_url": "",
   "license_url": "",
-  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
   "human_review": "pending",
-  "identity_basis": "FGO servant 302 CV=杉山紀彰 (same VA as 衛宮士郎 UBW); ⚠️ 300heroes:156 卫宫 was Archer (諏訪部) — retired 2026-09-10",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
   "source_files": [
     {
-      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H090.mp3",
-      "seconds": 3.21
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1991.wav",
+      "sha256": "4e1163adcf5584903b8377ef3e545b0602a4e0023fc83a587813d9712adf4aee",
+      "seconds": 5.74
     },
     {
-      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H092.mp3",
-      "seconds": 5.97
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1971.wav",
+      "sha256": "687f5164d6e8ecdc23064b3fe4f36a30a2fd0a8f14911c0c7be00e96ee9aef2a",
+      "seconds": 5.71
     },
     {
-      "url": "https://static.atlasacademy.io/JP/Audio/ChrVoice_104900/0_H093.mp3",
-      "seconds": 5.64
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1992.wav",
+      "sha256": "cdd2ef53ee9f30e3eea1d75aff029c4596f8358f907957475aa6037d78b99d68",
+      "seconds": 5.67
     }
   ],
-  "source_sha256": "25b5d2330e40433ae66e752b7714935aaf0220add555e873f1fc81e7155c2f87",
-  "downloaded_at": "2026-09-10T12:25:54.669635+00:00"
+  "source_sha256": "4b7a8fbd3d7b9692caae564799195e68f03fe8063d19443c7c2d1d3264756c5f",
+  "downloaded_at": "2026-09-10T13:42:11.778870+00:00"
 }

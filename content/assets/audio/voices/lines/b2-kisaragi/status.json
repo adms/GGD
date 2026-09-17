@@ -15,6 +15,26 @@
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
+  "quote": {
+   "takes": [],
+   "text": "（原檔）kisaragi.b",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:youtube:Ih9ZTaDsznM/GGD-Asset-Library/intake/owner-supplied-20260917/b2-kisaragi/kisaragi.b.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "youtube:Ih9ZTaDsznM",
+    "stub": false,
+    "bytes": 81128,
+    "seconds": 5,
+    "lufs": null,
+    "hash": "7339ab0b2835c9348ac03badf7d475f1dec9cc9934b3a7537635cb39d4854213",
+    "at": 1789624061625
+   },
+   "lastError": null
+  },
   "skill-name.q": {
    "takes": [
     {
@@ -252,21 +272,21 @@
   },
   "victory": {
    "takes": [],
-   "text": "（原檔）JR_Melody",
+   "text": "（原檔）kisaragi.d",
    "lang": "und",
    "textSource": "original",
-   "origin": "original:public-railway:yamanote-app/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+   "origin": "original:youtube:Ih9ZTaDsznM/GGD-Asset-Library/intake/owner-supplied-20260917/b2-kisaragi/kisaragi.d.mp3",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
-    "engineVersion": "public-railway:yamanote-app",
+    "engineVersion": "youtube:Ih9ZTaDsznM",
     "stub": false,
-    "bytes": 161376,
-    "seconds": 10.03102,
+    "bytes": 88651,
+    "seconds": 5.47,
     "lufs": null,
-    "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
-    "at": 1789127989980
+    "hash": "070154c0bc6538cbd80e67774cbe58d4e3e299b6eab2c5d312a18e0e8e940afa",
+    "at": 1789624061680
    },
    "lastError": null
   },

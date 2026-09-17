@@ -176,12 +176,14 @@
   "b2-bojji": {
    "name": "波吉",
    "voiceClass": "child-boy",
-   "voiceClassBasis": "description-pronoun",
+   "voiceClassBasis": "owner-ruling",
    "reference": "donor",
    "donor": "godie-hblm",
    "donorName": "慈悲的王者－賈修貝爾",
    "donorProfile": "child_boy_heroic",
-   "lang": "auto"
+   "lang": "ja",
+   "nonVerbal": true,
+   "nonVerbalWhy": "owner 2026-09-17：「波吉 語音應該都是小孩 嗯嗯阿阿 的聲音 你可以合成」—— 《國王排名》的波吉不會說話，只發得出氣音 ⇒ 喊招格也改成呻吟，⛔ 不合成任何句子（他先前那 5 段喊招是**中文**句子，而合成的規矩是只講日文）。"
   },
   "b2-boxxo": {
    "name": "阿箱＋拉蜜絲",
@@ -355,13 +357,11 @@
   },
   "b2-misery": {
    "name": "米瑟利",
-   "voiceClass": "unknown",
-   "voiceClassBasis": "unknown→round-robin",
-   "reference": "donor",
-   "donor": "godie-h01n",
-   "donorName": "黑崎一護",
-   "donorProfile": "male_youth_rough",
-   "lang": "auto"
+   "voiceClass": "female",
+   "voiceClassBasis": "owner-ruling",
+   "reference": "repo",
+   "lang": "ja",
+   "voiceNote": "owner 2026-09-17：「米瑟利 是性感大姊姊聲音 你生成錯了」⇒ 參考音改用任天堂大亂鬥的帕露蒂娜（owner 聽過六位候選後逐字回「帕露蒂娜 ok」）。⛔ 先前借的是黑崎一護的男聲。"
   },
   "b2-naofumi": {
    "name": "岩谷尚文",
@@ -892,6 +892,25 @@
    "donorName": "慈悲的王者－賈修貝爾",
    "donorProfile": "child_boy_heroic",
    "lang": "auto"
+  },
+  "godie-e00s": {
+   "name": "白木老樹精 - 白木卡迪那",
+   "voiceClass": "male-low",
+   "voiceClassBasis": "owner-ruling",
+   "reference": "donor",
+   "donor": "godie-hapm",
+   "donorName": "海克力斯 - Berserker",
+   "donorProfile": "male_low_brute",
+   "lang": "ja",
+   "voiceNote": "owner 2026-09-17：「白木老樹精 - 白木卡迪那 可以借用 Berserker」⇒ 用 Berserker 的聲線合成他自己的整包（素材庫沒有這位的原作語音）。"
+  },
+  "godie-ucrl": {
+   "name": "職業獵人 - 傑 富力士",
+   "voiceClass": "child-boy",
+   "voiceClassBasis": "owner-ruling",
+   "reference": "repo",
+   "lang": "ja",
+   "voiceNote": "owner 2026-09-17「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ 19 格用 JUMP FORCE Gon 的原檔，其餘用他自己的聲音合成。"
   }
  }
 }

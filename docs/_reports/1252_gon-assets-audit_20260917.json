@@ -1,0 +1,38 @@
+{
+ "schema": "ggd.gon-local-asset-audit@1",
+ "auditedAt": "2026-09-17",
+ "mode": "read-only",
+ "champion": { "id": "godie-ucrl", "name": "職業獵人 - 傑 富力士", "work": "HUNTER×HUNTER / JUMP FORCE", "nativeId": "chr0300", "modelKey": "imported.herobiggon" },
+ "model": {
+  "jumpForceModelPresentLocally": false,
+  "currentlyBound": { "glb": "content/assets/models/imported/herobiggon.glb", "bytes": 219240, "generator": "ggd-w3x-import", "origin": "Warcraft 3 匯入，⛔ 不是 JUMP FORCE", "meshes": 1, "nodes": 32, "skins": 1, "lod": ["herobiggon-mid.glb 156628", "herobiggon-small.glb 77720"] },
+  "evidence": ["extracted 底下 chr0300 只有 .awb/.wav/.log，無 .uasset/.gltf/.fbx", "catalog.json grep chr0300|godie-ucrl|富力士 = 0", "intake public-models-20260910..14 無 Gon/HxH 模型目錄"]
+ },
+ "animation": { "standalonePresentLocally": false, "embeddedInModel": 12, "clips": ["Walk","Stand - 1","Attack - 1","Attack - 2","Stand Ready","Spell","Death","Dissipate","Portrait","Portrait Talk"], "note": "全是 WC3 動畫；JUMP FORCE chr0300 的動作本機沒有" },
+ "sfx": { "gonSpecificPresentLocally": false, "note": "串流音庫只解出 chr0060／chr0370 兩支 ActSE；910000_ResidentSE／910001_BattleResSE／910003_EventSE 是全域共用" },
+ "voice": {
+  "totalFiles": 250, "verifiedOnDisk": true,
+  "groups": [
+   { "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-gon", "category": "ActVoice（戰鬥／動作）", "files": 225, "format": "ogg 48kHz mono", "bytes": 6765994, "seconds": 371.2,
+     "dir": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice",
+     "pattern": "chr0300_ActVoice#<N>.ogg", "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/", "speakerVerified": false },
+   { "groupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300", "category": "EvnVoice（劇情）", "files": 25, "format": "wav", "bytes": 6579860, "seconds": 68.53,
+     "dir": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130300_chr0300_EvnVoice",
+     "originalBank": "…/original/130300_chr0300_EvnVoice.awb", "originalBankSha256": "9fd05c293d6f4c06bcdd8bb3d85862f1fd99ad43a3fe0e178d42da080c7674f8", "speakerVerified": false }
+  ],
+  "workingCopy": { "dir": "scratchpad/quotegap/gon", "files": 18, "note": "本 session 為審查頁轉的 mp3 工作副本，⛔ 不是素材庫正本" }
+ },
+ "extractionSource": {
+  "available": true, "note": "⭐ 來源已在本機，不必再連 LV99",
+  "root": "GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149",
+  "mirror": { "source": "smb://lv99/common/JUMP FORCE", "files": 3466, "bytes": 23856777652, "complete": true },
+  "pakDir": "…/raw-game/JUMP_FORCE/Content/Paks", "pakCount": 6, "pakBytes": 22379460912, "pakSha256Verified": true, "pakReadTested": true,
+  "engine": "UE4（.uasset/.uexp/.pak）⛔ 不是 CriPak／.xfbin",
+  "tools": { "repak": "GGD-Asset-Library/tools/repak-v0.1.8-x86_64-apple-darwin", "umodel": "GGD-Asset-Library/tools/UEViewer" },
+  "precedent": { "characterId": "chr0430", "name": "Dai", "root": "GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1", "nativePackages": 1942, "modelGltf": 11, "totalAnimationCount": 0, "soundCharacterPackages": 528,
+    "lesson": "Content/Character/chrXXXX 只有 mesh+skeleton+AnimBP，⛔ 沒有 AnimSequence；角色音效在 Content/Sound/Character/<id>_*" },
+  "missing": ["還沒對 pak 做 chr0300 的內容索引", "AnimSequence 的實際路徑未定位（Dai 前例 gltf 動畫數 0）", "chr0300 的 Content/Sound/Character/0300_* 還沒解出"]
+ },
+ "inconsistency": { "file": "GGD-Asset-Library/hero-model-options.json", "entry": "godie-ucrl", "recorded": "existingModelKey champ.thorne，options/pending 皆空", "actual": "content/champions/godie-ucrl.json 的 modelKey 是 imported.herobiggon", "note": "options 檔 9/10 02:18 早於 glb 9/10 21:41 ⇒ 過期" },
+ "related": "同一批 soundrip 還有 40+ 位 JForce_* 角色（奇犽、酷拉皮卡、西索、梅路艾姆、碧斯吉…），全部只有 ActVoice 音訊、無模型"
+}

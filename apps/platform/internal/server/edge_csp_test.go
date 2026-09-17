@@ -24,10 +24,22 @@ func TestEdgeConfigCSPAndRealIP(t *testing.T) {
 	require.NoError(t, err, "nginx/nginx.conf moved — re-point this guard")
 	src := string(body)
 
+	// ⭐ 2026-09-17 (GH#1270) — a THIRD enforced site landed: `location /editor/`
+	// (the player Hero Forge bundle). Pinning the COUNT would make every new static
+	// location a red test for the wrong reason, so what is pinned is the RELATION:
+	// every site carries the enforced directives (below) and every site is
+	// byte-identical to the others — nginx's add_header does not merge across
+	// levels, so a location that drifts silently loses the parent's policy.
 	enforced := regexp.MustCompile(`add_header Content-Security-Policy "([^"]*)"`).FindAllStringSubmatch(src, -1)
-	require.Len(t, enforced, 2, "both CSP sites (server level + /admin/) must be present")
+	require.GreaterOrEqual(t, len(enforced), 2,
+		"at least the server level and /admin/ must carry an enforced CSP")
+	for _, m := range enforced[1:] {
+		require.Equal(t, enforced[0][1], m[1],
+			"every enforced CSP site must be byte-identical — add_header does NOT inherit, "+
+				"so a drifting location ships a different policy than the page next to it")
+	}
 	report := regexp.MustCompile(`add_header Content-Security-Policy-Report-Only "([^"]*)"`).FindAllStringSubmatch(src, -1)
-	require.Len(t, report, 2, "each CSP site must also ship the Report-Only policy — "+
+	require.GreaterOrEqual(t, len(report), 2, "each CSP site must also ship the Report-Only policy — "+
 		"it is the instrument that tells us when the full policy can be enforced")
 
 	for _, m := range enforced {

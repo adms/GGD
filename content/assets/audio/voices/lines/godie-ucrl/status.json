@@ -1,0 +1,461 @@
+{
+ "championId": "godie-ucrl",
+ "reference": {
+  "sha256": "e45a2751cb8fa4e02e4cd07a0488a95454d3f3506d7b3d0ec85866545595fcc2",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-ucrl.wav",
+  "sourceKind": "repo",
+  "donor": null,
+  "licence": "",
+  "licenceUrl": "",
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789627244349,
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/merge-codex/voice-reference-pipeline/approved/processed/godie-ucrl.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1789627404516,
+     "error": null
+    }
+   ],
+   "text": "山形修煉-放！",
+   "lang": "ja",
+   "kana": "ヤマガタ シュウレン ホウシュツ",
+   "textSource": "derived",
+   "origin": "ability-name:godie-ucrl.q",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "83e027b67c440def2b5249da43ea663018609830f6cddc19e0710bde30adcfc6",
+    "maxDb": -2,
+    "at": 1789627404516
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#100",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#100.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.494331,
+    "lufs": null,
+    "hash": "9302d382bdcc3e71ad538452a29bbf245300509a406deac5ddae371acfc176ac",
+    "at": 1789627243294
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1789627404621,
+     "error": null
+    }
+   ],
+   "text": "山形修煉-強！",
+   "lang": "ja",
+   "kana": "ヤマガタ シュウレン キョウカ",
+   "textSource": "derived",
+   "origin": "ability-name:godie-ucrl.e",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 30973,
+    "seconds": 1.88,
+    "lufs": null,
+    "hash": "d75422429033213d4f62834e8c08748325af70e2a5e5a5ae04f3e922e92e0b42",
+    "maxDb": -2,
+    "at": 1789627404621
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#17",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#17.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 42675,
+    "seconds": 2.589025,
+    "lufs": null,
+    "hash": "cc9ef001d70c85645284b94e38780746ccce8e7fb9cc7953700311b4d7db142f",
+    "at": 1789627243348
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#115",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#115.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 27629,
+    "seconds": 1.65619,
+    "lufs": null,
+    "hash": "01d83d81193988cd304db7f441899dcedc81198d229be680cda3fff37a27843b",
+    "at": 1789627243401
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#15",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#15.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.515737,
+    "lufs": null,
+    "hash": "df3f4bc0022722c783c3b121b8c9f6212fd34fb4d73e0b29e06bbd2a4e91991b",
+    "at": 1789627243454
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#93",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#93.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 40168,
+    "seconds": 2.454422,
+    "lufs": null,
+    "hash": "a1ef6fd79a96d61f8321334f0c7af60dd3e96b9c94ad809fd2d2797f30aaeaca",
+    "at": 1789627243508
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#79",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#79.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.661066,
+    "lufs": null,
+    "hash": "fafb666304a0c54d5fa143bb0a557777ca7efb31378c6e82a09557a4ec70f34c",
+    "at": 1789627243565
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#111",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#111.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.498753,
+    "lufs": null,
+    "hash": "8fd4380e7de8b32f162d891f4b1fe38f887b2cd6719c170f28593f0edb08f216",
+    "at": 1789627243626
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#182",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#182.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 26375,
+    "seconds": 1.573379,
+    "lufs": null,
+    "hash": "57565c1e72a100b6cb5b57b24cf305ad17fe4fea7b990d4fcd8dac82453904d4",
+    "at": 1789627243684
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#55",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#55.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 19270,
+    "seconds": 1.129433,
+    "lufs": null,
+    "hash": "79bf8cac99a21bc3327801c5d39c41b5bcb6ed0bc561fb59535026079f237e27",
+    "at": 1789627243742
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#63",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#63.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.663855,
+    "lufs": null,
+    "hash": "f20744b67e2d96c91fdbf52d926dd826cd3b92825b42f874a7513e58bf09fb8c",
+    "at": 1789627243799
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#71",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#71.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": 1.08449,
+    "lufs": null,
+    "hash": "6c483f10af424de32872ddbccec9eb92d2e063c40607f3a849a6c4e795f9a9fe",
+    "at": 1789627243858
+   },
+   "lastError": null
+  },
+  "crit": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#174",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#174.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.040023,
+    "lufs": null,
+    "hash": "031c26ad9c7ff19007e974032254b6e7edf8d9f8019eb90319f84c35e6f24937",
+    "at": 1789627243917
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#137",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#137.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 13000,
+    "seconds": 0.750227,
+    "lufs": null,
+    "hash": "1308baf432925a97d3ade50848169e6518748f1962093ae81f25bf3446716935",
+    "at": 1789627243975
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "takes": [],
+   "text": "（原檔）130300_chr0300_EvnVoice#0025",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:steam-jump-force-streaming-audio-816020-build-8523149:chr0300/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130300_chr0300_EvnVoice/130300_chr0300_EvnVoice#0025.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.500045,
+    "lufs": null,
+    "hash": "0ed2ef497c2513cdc367484d5b975649ece8e391c2c00119a615c1642423bdb1",
+    "at": 1789627244039
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#4",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#4.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 41004,
+    "seconds": 2.498821,
+    "lufs": null,
+    "hash": "0e83d4280a862c5de445998d6bbd155f31af20377932eca7dd85c48421003337",
+    "at": 1789627244099
+   },
+   "lastError": null
+  },
+  "love": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#8",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#8.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 30137,
+    "seconds": 1.817211,
+    "lufs": null,
+    "hash": "c45a1e3510823973c493ef730fd3affb8f0c699a30b2dd1a6dc1762c15b723a2",
+    "at": 1789627244155
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#81",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#81.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 14254,
+    "seconds": 0.827279,
+    "lufs": null,
+    "hash": "716ea3e6102706d07ed1e518ebd1219426eb3bbfcdab19ec84961dd22f9b2b3e",
+    "at": 1789627244212
+   },
+   "lastError": null
+  },
+  "charge": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#14",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#14.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 28047,
+    "seconds": 1.689683,
+    "lufs": null,
+    "hash": "264e007b229032eb2a4013a7dfba9c3c7e42e670f3430316a72206adb1bf57a9",
+    "at": 1789627244286
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [],
+   "text": "（原檔）chr0300_ActVoice#200",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-gon/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#200.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1.001701,
+    "lufs": null,
+    "hash": "2da1f7049fa65e58912f4f5e4b8f577780dff4e0e83d9ec623e062ab01dd4e8b",
+    "at": 1789627244349
+   },
+   "lastError": null
+  }
+ }
+}

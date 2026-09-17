@@ -53,7 +53,6 @@ Stdlib only, deterministic, idempotent: two runs produce byte-identical output.
 There is no timestamp — the contentVersion is the freshness stamp.
 """
 
-import glob
 import json
 import os
 import re
@@ -318,30 +317,34 @@ PENDING_JSON = "docs/_data/pending-heroes.json"
 ACQUIRED_MODEL_BACKLOG_JSON = "materials/hero-model-library/已取得模型待設計英雄.json"
 
 
-def pending_heroes():
-    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**。
+def pending_heroes(ctx):
+    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**，再扣掉**已經進來的**。
 
     ⛔ 不直接讀來源 repo：它不保證在這台機器上（CLAUDE.md「換機時：有文件不等於有素材」），
     而這份文件必須在每一台機器上算出同樣的位元組。
     唯一的寫入端是 `tools/reference/sync_pending_heroes.py`。
     ⚠️ 快照不在 ⇒ 回 `None`，⭐ 而下面會**印一行說它不在**（⛔ 不是安靜地少印 45 名）。
+
+    ⭐⭐ 算繪當下扣掉「卡已經在 `content/champions/`」的列（2026-09-17）。
+    ⛔ 在此之前這裡原樣印快照 ⇒ 快照日之後才上架的英雄**同時**出現在全英雄列表與「還沒進」表：
+      量到快照 45 名裡 37 名的卡早就進來了，而標題仍寫「⛔ 還沒進 `content/champions/`」。
+    ⭐ 快照本身不動（它是來源 repo 狀態頁的原樣副本）；「進來了沒」只問這個 repo 自己的
+      `content/`，⛔ 不問來源 repo —— 兩邊的快照日不同，答得準的只有這棵樹。
     """
     path = os.path.join(G.REPO, PENDING_JSON)
     if not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as f:
         doc = json.load(f)
-    # The external snapshot is retained, but heroes integrated since that
-    # snapshot must no longer be printed as missing from this checkout.
-    current_ids = {
-        json.load(open(path, encoding="utf-8")).get("id")
-        for path in glob.glob(os.path.join(G.CONTENT, "champions", "*.json"))
-        if not os.path.basename(path).startswith("_")
-    }
-    groups = [{**group, "rows": [row for row in group["rows"] if row["id"] not in current_ids]}
-              for group in doc["groups"]]
-    groups = [group for group in groups if group["rows"]]
-    return {**doc, "groups": groups, "counts": {**doc["counts"], "pending": sum(len(group["rows"]) for group in groups)}}
+    have = {c["id"] for c in ctx["champions"]}
+    groups, landed = [], []
+    for g in doc["groups"]:
+        landed += [r["id"] for r in g["rows"] if r["id"] in have]
+        groups.append({**g, "listed": len(g["rows"]),
+                       "rows": [r for r in g["rows"] if r["id"] not in have]})
+    return {**doc, "groups": groups, "landed": landed,
+            "counts": {**doc["counts"], "listed": sum(g["listed"] for g in groups),
+                       "pending": sum(len(g["rows"]) for g in groups)}}
 
 
 def _pending_block(doc, heading_level):
@@ -355,6 +358,9 @@ def _pending_block(doc, heading_level):
         f"狀態的權威來源是 `{doc['source']['repo']}` 的 `{doc['source']['path']}`"
         f"（快照日 {doc['source']['snapshotDate']}）。",
         "",
+        *([f"⭐ 快照列了 {doc['counts']['listed']} 名，其中 **{len(doc['landed'])} 名的卡已經進 "
+           "`content/champions/`**（上面的全英雄列表印得到它們）⇒ 這裡不再重印。"
+           "扣除是產生器算繪當下做的，⛔ 快照本身沒改。", ""] if doc["landed"] else []),
         f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
         "",
         "`追蹤鍵` 原樣保存來源快照的值；英雄卡尚未進 `content/champions/` 時，"
@@ -363,7 +369,12 @@ def _pending_block(doc, heading_level):
         "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
     ])
     for g in doc["groups"]:
-        out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
+        if not g["rows"]:
+            out += [f"**{g['batch']}**（快照 {g['listed']} 名 · {g['ticket']}）—— ✅ 全部已進 `content/champions/`", ""]
+            continue
+        size = (f"{len(g['rows'])} 名" if len(g["rows"]) == g["listed"]
+                else f"尚未進來 {len(g['rows'])} 名／快照 {g['listed']} 名")
+        out += [f"**{g['batch']}**（{size} · {g['ticket']}）", "",
                 "| # | 追蹤鍵 | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
         for i, r in enumerate(g["rows"], 1):
             out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
@@ -374,8 +385,8 @@ def _pending_block(doc, heading_level):
 def acquired_model_candidates():
     """已取得實檔、但仍待英雄設計或轉換的候選。
 
-    這裡直接讀素材庫的固定 JSON 入口；Markdown 與這份英雄清單都是產物，
-    因此不再手寫第二份角色清單。只列身份已確認的角色來源；身份待核、
+    直接讀素材庫的固定 JSON 入口；Markdown 與這份英雄清單都是產物，
+    不再手寫第二份角色清單。只列身份已確認的角色來源；身份待核、
     道具與配件仍保留在素材庫索引，不冒稱為候選英雄。
     """
     path = os.path.join(G.REPO, ACQUIRED_MODEL_BACKLOG_JSON)
@@ -388,17 +399,16 @@ def acquired_model_candidates():
         if row.get("designStatus") not in {"not-defined", "definitions-incomplete"}:
             continue
         candidates = [
-            c for c in row.get("modelCandidates", [])
-            if c.get("existsLocal") is True and c.get("localSizeMatches", True) is True
+            candidate for candidate in row.get("modelCandidates", [])
+            if candidate.get("existsLocal") is True and candidate.get("localSizeMatches", True) is True
         ]
-        if not candidates:
-            continue
-        rows.append({**row, "localCandidates": candidates})
+        if candidates:
+            rows.append({**row, "localCandidates": candidates})
     return {"source": doc, "rows": rows}
 
 
 def _candidate_conversion_stage(candidates):
-    states = {str(c.get("readiness", "unknown")) for c in candidates}
+    states = {str(candidate.get("readiness", "unknown")) for candidate in candidates}
     if any("backend-standardized-option" in state for state in states):
         return "已標準化為後台候選"
     if any(
@@ -428,10 +438,10 @@ def _acquired_candidate_block(doc, heading_level):
     ])
     out += ["| 來源 ID | 角色 | 作品 | 本機候選 | 目前階段 | 英雄設計 |",
             "| --- | --- | --- | ---: | --- | --- |"]
-    for row in sorted(rows, key=lambda r: (
-        str(r.get("displayWork") or r.get("work") or ""),
-        str(r.get("displayName") or r.get("name") or ""),
-        str(r.get("id") or ""),
+    for row in sorted(rows, key=lambda item: (
+        str(item.get("displayWork") or item.get("work") or ""),
+        str(item.get("displayName") or item.get("name") or ""),
+        str(item.get("id") or ""),
     )):
         design = ("已有定義，待補查／實作"
                   if row.get("designStatus") == "definitions-incomplete"
@@ -454,6 +464,8 @@ HERO_GROUPS = (
     ("b2-", "第二批社群英雄"),
     ("community-review", "第一批社群英雄"),
     ("lol-", "英雄聯盟"),
+    # ⭐ 2026-09-17：GH#1205 那 26 名在此之前落進「其他」，與骨架替身 sela／thorne 擠在同一組。
+    ("acquired-", "已取得模型英雄"),
 )
 
 
@@ -601,7 +613,7 @@ def gen_all_heroes(ctx):
     ])
     out += _all_heroes_table(rows, flags)
     out += [""]
-    pend = pending_heroes()
+    pend = pending_heroes(ctx)
     out += _pending_block(pend, "#####")
     candidates = acquired_model_candidates()
     if candidates is not None:
@@ -659,7 +671,7 @@ def gen_all_heroes_doc(ctx):
     rest = [r for r in rows if r["group"] == "其他"]
     if rest:
         out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
-    out += _pending_block(pending_heroes(), "##")
+    out += _pending_block(pending_heroes(ctx), "##")
     out += _acquired_candidate_block(acquired_model_candidates(), "##")
     return "\n".join(out) + "\n"
 

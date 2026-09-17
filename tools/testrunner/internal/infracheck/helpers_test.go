@@ -182,6 +182,8 @@ func startNginx(t *testing.T, dev bool) *nginxContainer {
 	}
 	mkfile("client/index.html", "<html>GGD client stub</html>")
 	mkfile("editor/index.html", "<html>GGD editor stub</html>")
+	// ⭐ GH#1270：玩家版 bundle 的落點（`/editor/` alias 到這裡）。
+	mkfile("hero-forge/index.html", "<html>GGD hero-forge stub</html>")
 	mkfile("content/manifest.json", `{"contentVersion":"cv_stub"}`)
 	mkfile("content/champions/_index.json", `[{"id":"sela"}]`)
 	mkfile("content/champions/sela.json", `{"id":"sela","schema":"champion@1"}`)
@@ -199,6 +201,7 @@ func startNginx(t *testing.T, dev bool) *nginxContainer {
 		"-v", filepath.Join(root, "nginx", "nginx.conf") + ":/etc/nginx/nginx.conf:ro",
 		"-v", filepath.Join(stage, "client") + ":/usr/share/nginx/html/client:ro",
 		"-v", filepath.Join(stage, "editor") + ":/usr/share/nginx/html/editor:ro",
+		"-v", filepath.Join(stage, "hero-forge") + ":/usr/share/nginx/html/hero-forge:ro",
 		"-v", filepath.Join(stage, "content") + ":/srv/content:ro",
 	}
 	if dev {

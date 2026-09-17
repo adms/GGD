@@ -163,7 +163,10 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     //   升到「有語音包」那一階。剩下的 8 位沒有語音包，⛔ 也沒有 map quip。
     // ⭐ 2026-09-14（PR #1152）：`generated` 132 → **133**、`name` 8 → **7** —— b2-kisaragi 的原作
     //   列車廣播（「ドアが閉まります」）進了 select 池（3c85197b8），它從呼名那一階升上來。
-    expect(byTier).toEqual({ authored: 13, generated: 133, name: 7 });
+    // ⭐ 2026-09-17（語音分支 #1252 併入 main，f96c4eea8）：`generated` 133 → **137**、`name` 7 → **3** ——
+    //   白木卡迪那 `godie-e00s`（owner「可以借用 Berserker」）與傑富力士 `godie-ucrl`（owner「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」）
+    //   有了自己的整包語音，他們的變身對 `godie-e010`／`godie-u034` 跟著借用 ⇒ 四位從呼名那一階升上來。
+    expect(byTier).toEqual({ authored: 13, generated: 137, name: 3 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -251,7 +254,9 @@ describe("the generated voice pack, as shipped today", () => {
     // + the LOL 7's original-clip packs (2026-09-11, Riot ja_JP WADs).
     // ⭐ 2026-09-17（GH#1281）：132 → **136** —— 合併的語音分支帶進 4 個包（帕魯三隻的原作語音
     //   ＋ 金色魔王借用莉娜的原檔，owner 2026-09-17「金色魔王 一樣用莉娜音效」）。
-    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(136);
+    // ⭐ 2026-09-17（語音分支 #1252 併入 main，f96c4eea8）：136 → **138** —— 合併前後 MANIFEST 逐 key 比對，
+    //   多的正是 `godie-e00s`（白木卡迪那）與 `godie-ucrl`（傑富力士）兩包，少了 0 包。
+    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(138);
     // ⭐ 2026-09-10: one combat-core pack has NO select pool yet, and it is pinned both
     // ways: b2-kisaragi's only lines are Chinese and synthesis speaks Japanese only
     // (owner「我們合成不講中文 只講日文」), so its click falls to the name rung until the
@@ -303,6 +308,6 @@ describe("the generated voice pack, as shipped today", () => {
     expect(generated.sort()).toEqual(packedNonAuthored.sort());
     // 57 → 52 for the same reason as the tier table above: the 48 retired
     // champions left the measured roster on 2026-08-27, not the pack.
-    expect(generated.length).toBe(133) // 2026-09-10: 52 + 73 new heroes whose select pool landed; + LOL 7（2026-09-11 原作日文包）; + b2-kisaragi（2026-09-14 原作列車廣播）
+    expect(generated.length).toBe(137) // 2026-09-10: 52 + 73 new heroes whose select pool landed; + LOL 7（2026-09-11 原作日文包）; + b2-kisaragi（2026-09-14 原作列車廣播）; + godie-e00s／e010／ucrl／u034（2026-09-17 語音分支 #1252：白木卡迪那、傑富力士整包語音，變身對跟著借用）
   });
 });
