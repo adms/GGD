@@ -34,7 +34,8 @@
                 "onExisting": "keepLarger"
               }
             ],
-            "internalCooldown": 9
+            "internalCooldown": 9,
+            "target": "self"
           }
         ]
       }
@@ -47,6 +48,7 @@
       "hooks": [
         {
           "on": "onDamageTaken",
+          "target": "self",
           "effects": [
             {
               "kind": "shield",

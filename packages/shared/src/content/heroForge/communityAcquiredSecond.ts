@@ -10,7 +10,8 @@ const heal = (flat: number, applyTo = "self"): P => ({ kind: "heal", amount: { f
 const shield = (key: string, flat = 120): P => ({ kind: "shield", amount: { flat, ratios: [] }, duration: 3, absorbs: "all", stackKey: `$hero.${key}`, onExisting: "keepLarger" });
 const haste = { stat: "as", op: "pctAdd", value: 0.2 };
 const speed = { stat: "ms", op: "pctAdd", msBonusTier: "極小" };
-const passive = (name: string, purpose: string, on: string, effects: P[], internalCooldown: number, condition?: P) => m(name, purpose, "tpl-event-passive", { hooks: [{ on, effects, internalCooldown, ...(condition ? { condition } : {}) }] });
+// ⚠️ GH#1282：hook 沒寫 `target` 時效果落在**觸發對象**身上（`onDamageTaken` ＝ 攻擊者）⇒ 「受到傷害時獲得護盾」要帶 "self"，否則盾給了打你的人。
+const passive = (name: string, purpose: string, on: string, effects: P[], internalCooldown: number, condition?: P, target?: "self") => m(name, purpose, "tpl-event-passive", { hooks: [{ on, ...(target ? { target } : {}), effects, internalCooldown, ...(condition ? { condition } : {}) }] });
 const strike = (name: string, purpose: string, damageType = "physical", extra: P[] = [], options: Partial<Move> = {}) => m(name, purpose, "tpl-single-strike", { damage: d(), damageType, castTimeSec: 0.1 }, { effects: extra, ...options });
 const buff = (name: string, purpose: string, modifiers: P[], effects: P[] = []) => m(name, purpose, "tpl-buff-self", { duration: 3, modifiers }, { effects });
 const selfShield = (name: string, purpose: string, flat: number) => m(name, purpose, "tpl-ally-shield", { target: "self", amount: { flat, ratios: [] }, duration: 3, absorbs: "all" });
@@ -28,7 +29,7 @@ const make = (id: string, name: string, sourceWork: string, origin: CommunityHer
 /** Author recipes only. Models/audio are attached from the verified asset selection. */
 export const COMMUNITY_ACQUIRED_SECOND: readonly CommunityHeroExample[] = [
   make("acquired-kita-kita", "吉他吉他老伯（阿德巴古·艾魯多魯）", "咕嚕咕嚕魔法陣", "軟輔", "舞蹈不是傷害，但敵人很想閉眼：舞台致盲保護隊友，連跳把觀眾困在舞步裡。", ["舞蹈複用致盲、鎖足與護盾；不強制玩家鏡頭觀看。", "Q→R限制走位；W護隊友、EX給單人回血，敵人可離開舞台或先控制老伯。"], {
-    PASSIVE: passive("越挨打越想跳", "受到傷害時獲得90護盾，持續3秒，內置冷卻8秒。", "onDamageTaken", [shield("dance", 90)], 8),
+    PASSIVE: passive("越挨打越想跳", "受到傷害時獲得90護盾，持續3秒，內置冷卻8秒。", "onDamageTaken", [shield("dance", 90)], 8, undefined, "self"),
     Q: cc("別看下半身", "指定區域敵人失手率50%，持續1.2秒。", { missChance: 0.5 }),
     W: allyShield("觀眾席安全距離", "給落點附近友軍與自己130護盾，持續3秒。"),
     E: leap("舞步巡迴", "跳向落點造成極小級物理傷害，換位擋在隊友前方。"),
@@ -36,7 +37,7 @@ export const COMMUNITY_ACQUIRED_SECOND: readonly CommunityHeroExample[] = [
     EX: m("跳累了先喝水", "回復指定隊友120生命；不是對敵傷害。", "tpl-heal", { target: "ally", amount: { flat: 120, ratios: [] } }),
   }),
   make("acquired-wargreymon", "戰鬥暴龍獸", "數碼寶貝大冒險", "鬥士", "背盾像鍋蓋、蓋亞能量像外送：先貼身拆包，再把火球送到收件地。", ["龍獸剋星不新增物種判斷；以近戰爪擊和短效護盾表現。", "E貼身→Q減速→R落點爆破；對手可拉開距離避開R。"], {
-    PASSIVE: passive("鍋蓋還沒掀", "受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。", "onDamageTaken", [shield("brave")], 9),
+    PASSIVE: passive("鍋蓋還沒掀", "受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。", "onDamageTaken", [shield("brave")], 9, undefined, "self"),
     Q: strike("龍獸拆箱爪", "爪擊造成小級物理傷害並減速30%，持續1.5秒。", "physical", [status("$hero.claw", 1.5, { moveSpeedMult: 0.7 })], { range: "極小" }),
     W: selfShield("勇氣鍋蓋", "獲得3秒140護盾，準備承受貼身反擊。", 140),
     E: leap("勇者快遞", "跳至落點造成極小級物理傷害，接近收件人。"),
@@ -100,7 +101,7 @@ export const COMMUNITY_ACQUIRED_SECOND: readonly CommunityHeroExample[] = [
     EX: m("晚餐預約成功", "自行回復110生命，作為貼身戰後補給。", "tpl-heal", { target: "self", amount: { flat: 110, ratios: [] } }),
   }),
   make("acquired-alice", "愛麗絲·滋貝魯庫（Alice Zuberg）", "刀劍神域 Sword Art Online", "坦克", "金木樨花瓣像罰單：先把人留下，再讓花瓣包圍；隊友的安全由騎士簽收。", ["武裝完全支配用既有區域射線，沒有持續追蹤的實體花瓣AI。", "Q鎖足→R射線；W護隊友，E換位。敵人可走出陣列或先打斷接近。"], {
-    PASSIVE: passive("整合騎士查票", "受到傷害時獲得110護盾3秒，內置冷卻10秒。", "onDamageTaken", [shield("integrity", 110)], 10),
+    PASSIVE: passive("整合騎士查票", "受到傷害時獲得110護盾3秒，內置冷卻10秒。", "onDamageTaken", [shield("integrity", 110)], 10, undefined, "self"),
     Q: cc("金木樨停車單", "落點敵人鎖足1.2秒，為花瓣陣列留下目標。", { root: true }),
     W: allyShield("騎士擔保", "為指定隊友提供130護盾，持續3秒。", "ally"),
     E: leap("騎士查勤", "跳至指定落點造成極小級物理傷害。"),
