@@ -66,9 +66,14 @@ function isBoilerplateOnly(section: string): boolean {
   return meat.length === 0;
 }
 
-/** 從 note 裡切出玩家段落（到下一個 `## ` 為止）。 */
-function playerSection(body: string): string | null {
-  const m = /^##+\s*[^\n]*玩家[^\n]*$/m.exec(body);
+/**
+ * 從 note 裡切出玩家段落（到下一個 `## ` 為止）。
+ * ⚠️ 2026-09-17：⛔ 跳過**版本標題**那一行（`## v0.46.1 —— 玩家版英雄鑄造器入口…`）——
+ *   標題剛好含「玩家」就被當成段落，而它下一行就是 `## 這一版做了什麼` ⇒ 切出空字串 ⇒ 判成罐頭（假紅）。
+ */
+export function playerSection(body: string): string | null {
+  // ⚠️ 前瞻要自己吃掉空白：寫成 `\s*(?!v…)` 時 `\s*` 會回溯成吃 0 個，前瞻看到的是空白 ⇒ 擋不住標題。
+  const m = /^##+[ \t]*(?![ \t]*v\d+\.\d+\.\d+)[^\n]*玩家[^\n]*$/m.exec(body);
   if (!m) return null;
   const rest = body.slice(m.index + m[0].length);
   const next = /^##\s/m.exec(rest);
@@ -156,6 +161,13 @@ describe("🎮 玩家段落要誠實（GH owner 2026-09-09）", () => {
         "⛔ 沒有第三種 —— ⭐ 罐頭句子**本身合法**（owner：沒差別也要發系統優化更新），" +
         "⛔ 它不合法的唯一情況就是這裡抓到的：**這一版真的有差別**。",
     ).toBe("");
+  });
+
+  it("⭐ sentinel：版本標題含「玩家」⛔ 不算玩家段落（v0.46.1 那一份的形狀）", () => {
+    const body = "## v0.46.1 —— 玩家版英雄鑄造器入口\n\n## 這一版做了什麼\n\n### 🎮 玩家看得到的\n- **英雄鑄造器有正式入口了**\n\n## 驗證\n- ok\n";
+    const sec = playerSection(body);
+    expect(sec, "⛔ 切到的是標題底下的空白，而不是 🎮 那一段").toContain("英雄鑄造器有正式入口了");
+    expect(isBoilerplateOnly(sec!)).toBe(false);
   });
 
   it("⭐ sentinel：罐頭判定器認得出罐頭，也⛔不把真內容誤判成罐頭", () => {
