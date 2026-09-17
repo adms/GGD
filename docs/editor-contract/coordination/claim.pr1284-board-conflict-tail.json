@@ -1,0 +1,28 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.pr1284-board-conflict-tail",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "72dc6ef7c3b832dc95febc4b2d8708c5a67a8c26",
+  "contractFingerprint": "79109da8fdb79101",
+  "title": "戰情表換日重建完整統計區，避免延續歷史 merge 尾段",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "09/17 歷史戰情表的一週窗總量後殘留另一分支的 260 則／60 票／2 未對票統計與 merge 尾標記。board-roll.sh 舊正則只替換第一段逐日分佈，09/18 因此同時留下新舊統計。修正僅延伸 canonical stats 正則以涵蓋紧接的同型孤立統計尾段，保留後續說明及歷史檔。既有留底測試加入真實形狀，驗證新日檔無標記、後文保留、改寫前完整原件仍留底、重跑無新增副本。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/ops/boardRollKeepsCopies.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "e66cba6d060504bd49ebd07d817d4e1a9cf11573",
+      "evidence": [
+        "scripts/board-roll.sh",
+        "packages/shared/src/ops/boardRollKeepsCopies.test.ts"
+      ]
+    }
+  ],
+  "asks": [
+    "Main 審查戰情表產生器統計區匹配修正；歷史戰情表及原始副本保留，本批只重建現行日檔。"
+  ]
+}
