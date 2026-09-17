@@ -1,0 +1,57 @@
+{
+  "schema": "ggd.jstars-priority-three-source-reference@1",
+  "workflowId": "jstars-priority-gintoki-gon-killua-v1",
+  "sourceGame": "J-Stars Victory VS+",
+  "ownerArchiveFileName": "J-Stars Victory Vs+.7z",
+  "characters": [
+    {
+      "slug": "gintoki",
+      "nameZhTW": "坂田銀時",
+      "nameEnglish": "Gintoki Sakata",
+      "heroId": "community-review-23-20260907",
+      "jstarsNativeId": null
+    },
+    {
+      "slug": "gon",
+      "nameZhTW": "小傑·富力士",
+      "nameEnglish": "Gon Freecss",
+      "heroId": "godie-ucrl",
+      "jstarsNativeId": null,
+      "jumpForceNativeId": "chr0300"
+    },
+    {
+      "slug": "killua",
+      "nameZhTW": "奇犽·揍敵客",
+      "nameEnglish": "Killua Zoldyck",
+      "heroId": "community-review-24-20260907",
+      "jstarsNativeId": "018",
+      "jumpForceNativeId": "chr0310"
+    }
+  ],
+  "policies": {
+    "identity": "A J-Stars identity requires an observed internal member/container name or owner visual confirmation; roster order is not an identity proof.",
+    "model": "Models above 10000 triangles require decimation to below 8000 triangles before current-policy adoption.",
+    "audio": "Numbered SFX and voice files remain listening-review candidates until the owner approves the speaker and event.",
+    "stages": [
+      "source-observed",
+      "extracted",
+      "converted",
+      "validated",
+      "registered",
+      "deployed"
+    ]
+  },
+  "knownInputs": {
+    "jstarsPublicResearchSourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+    "jumpForceAudioSourceIds": [
+      "parallel-ps-jumpforce-local-second10",
+      "parallel-ps-jumpforce-local-next32",
+      "steam-jump-force-streaming-audio-816020-build-8523149"
+    ],
+    "fallbackSources": {
+      "gintoki": "300heroes:137",
+      "gon": "thunderstore-gon",
+      "killua": "300heroes:37e03796cc2c9c2829f7e345"
+    }
+  }
+}

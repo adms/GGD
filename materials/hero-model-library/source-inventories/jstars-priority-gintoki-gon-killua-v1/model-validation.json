@@ -1,0 +1,162 @@
+{
+  "schema": "ggd.jstars-priority-three-model-validation@1",
+  "workflowId": "jstars-priority-gintoki-gon-killua-v1",
+  "note": "These are reusable existing candidates. None is evidence of a converted J-Stars model.",
+  "models": [
+    {
+      "id": "gintoki-current-300-exact",
+      "character": "坂田銀時",
+      "sourceGame": "300英雄",
+      "sourceClass": "300heroes",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/versions/02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d.glb",
+      "bytes": 840524,
+      "sha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "metrics": {
+        "triangles": 4358,
+        "drawPrimitives": 2,
+        "textureCount": 2,
+        "clipCount": 5,
+        "clipNames": [
+          "single_idle",
+          "single_run",
+          "single_attack_attcom_1",
+          "single_skill_05",
+          "dead"
+        ],
+        "skinCount": 1,
+        "joints": [
+          75
+        ]
+      },
+      "khronos": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "currentBudget": {
+        "errors": [],
+        "warnings": []
+      },
+      "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a.json",
+      "stateMap": {
+        "idle": "single_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_05",
+        "hurt": "single_idle",
+        "death": "dead"
+      },
+      "registeredAsExistingOption": true,
+      "isJStarsAsset": false
+    },
+    {
+      "id": "gon-thunderstore-static",
+      "character": "小傑·富力士",
+      "sourceGame": "community mod",
+      "sourceClass": "community-mod",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jumpforce-gon-thunderstore-v1/optimized-256/body.glb",
+      "bytes": 466424,
+      "sha256": "1f6677d6695fe1ecda694b3728d004d2c80e9587beb04ced7d154a54dc106b74",
+      "metrics": {
+        "triangles": 2245,
+        "drawPrimitives": 5,
+        "textureCount": 5,
+        "clipCount": 0,
+        "clipNames": [],
+        "skinCount": 1,
+        "joints": [
+          56
+        ]
+      },
+      "khronos": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/2"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/3"
+          }
+        ],
+        "truncated": false
+      },
+      "currentBudget": {
+        "errors": [],
+        "warnings": [
+          "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "modelDocument": null,
+      "stateMap": null,
+      "registeredAsExistingOption": false,
+      "isJStarsAsset": false
+    },
+    {
+      "id": "killua-current-300-exact",
+      "character": "奇犽·揍敵客",
+      "sourceGame": "300英雄",
+      "sourceClass": "300heroes",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/versions/0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2.glb",
+      "bytes": 557816,
+      "sha256": "0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2",
+      "metrics": {
+        "triangles": 5293,
+        "drawPrimitives": 2,
+        "textureCount": 1,
+        "clipCount": 5,
+        "clipNames": [
+          "bat_idle",
+          "single_run",
+          "single_attack_attcom_1",
+          "single_skill_01",
+          "dead"
+        ],
+        "skinCount": 1,
+        "joints": [
+          40
+        ]
+      },
+      "khronos": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "currentBudget": {
+        "errors": [],
+        "warnings": []
+      },
+      "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f.json",
+      "stateMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "registeredAsExistingOption": true,
+      "isJStarsAsset": false
+    }
+  ],
+  "summary": {
+    "checked": 3,
+    "khronosZeroError": 3,
+    "registeredExistingOptions": 2,
+    "jstarsConverted": 0
+  }
+}

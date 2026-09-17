@@ -1,0 +1,304 @@
+{
+  "characters": [
+    {
+      "alternateSources": [],
+      "backendOptionRegistered": false,
+      "blocker": "J-Stars owner archive is not visible locally; no character-specific native container is proven",
+      "defaultApplied": false,
+      "deployed": false,
+      "ggdHeroIds": [
+        "b2-nube"
+      ],
+      "identityStatus": "blocked-owner-archive-not-local-native-id-unproven",
+      "modules": {
+        "model": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "model",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "motion": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "motion",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "sfx": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "sfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "skeleton": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "skeleton",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "vfx": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "vfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "voice": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "voice",
+          "registration": "not-started",
+          "validation": "not-started"
+        }
+      },
+      "nameEnglish": "Meisuke Nueno",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": null,
+      "runtimeReady": false,
+      "slug": "nube",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceStatus": "blocked-archive-not-found",
+      "workZhTW": "靈異教師神眉"
+    },
+    {
+      "alternateSources": [],
+      "backendOptionRegistered": false,
+      "blocker": "J-Stars owner archive is not visible locally; no character-specific native container is proven",
+      "defaultApplied": false,
+      "deployed": false,
+      "ggdHeroIds": [
+        "b2-luckyman"
+      ],
+      "identityStatus": "blocked-owner-archive-not-local-native-id-unproven",
+      "modules": {
+        "model": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "model",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "motion": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "motion",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "sfx": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "sfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "skeleton": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "skeleton",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "vfx": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "vfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "voice": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "voice",
+          "registration": "not-started",
+          "validation": "not-started"
+        }
+      },
+      "nameEnglish": "Luckyman",
+      "nameZhTW": "幸運超人",
+      "nativeId": null,
+      "runtimeReady": false,
+      "slug": "luckyman",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceStatus": "blocked-archive-not-found",
+      "workZhTW": "幸運超人"
+    },
+    {
+      "alternateSources": [
+        {
+          "archive": {
+            "bytes": 6249302,
+            "existsLocal": true,
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/original/JForce_Hiei.7z",
+            "sha256": "49acb22c8278fafa68e0d44af58bd21ae83c854d8248c3eeacebeb61e8836cbb"
+          },
+          "audioFileCount": 239,
+          "decodeErrorCount": 0,
+          "durationSeconds": 393.7414375,
+          "relationship": "alternate-source-reserve-not-jstars",
+          "reviewState": "pending-per-clip-speaker-language-and-event-review",
+          "runtimeBound": false,
+          "sourceCategoryCounts": {
+            "sfx": 19,
+            "voice": 220
+          },
+          "sourceGame": "JUMP FORCE",
+          "sourceId": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+          "validationExists": true,
+          "validationPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Hiei/validation.json"
+        }
+      ],
+      "backendOptionRegistered": false,
+      "blocker": "J-Stars owner archive is not visible locally; no character-specific native container is proven",
+      "defaultApplied": false,
+      "deployed": false,
+      "ggdHeroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityStatus": "blocked-owner-archive-not-local-native-id-unproven",
+      "modules": {
+        "model": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "model",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "motion": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "motion",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "sfx": {
+          "acquisition": "not-observed",
+          "alternateSourceId": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+          "alternateSourceObserved": true,
+          "alternateSourceStatus": "decoded-reserve-pending-owner-listening-review",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "sfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "skeleton": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "skeleton",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "vfx": {
+          "acquisition": "not-observed",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "vfx",
+          "registration": "not-started",
+          "validation": "not-started"
+        },
+        "voice": {
+          "acquisition": "not-observed",
+          "alternateSourceId": "parallel-ps-jumpforce-local-next32:jumpforce-hiei",
+          "alternateSourceObserved": true,
+          "alternateSourceStatus": "decoded-reserve-pending-owner-listening-review",
+          "conversion": "not-started",
+          "deployment": "not-started",
+          "evidence": [],
+          "extraction": "not-started",
+          "kind": "voice",
+          "registration": "not-started",
+          "validation": "not-started"
+        }
+      },
+      "nameEnglish": "Hiei",
+      "nameZhTW": "飛影",
+      "nativeId": null,
+      "runtimeReady": false,
+      "slug": "hiei",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceStatus": "blocked-archive-not-found",
+      "workZhTW": "幽遊白書"
+    }
+  ],
+  "ownerArchive": {
+    "candidates": [],
+    "expectedFilename": "J-Stars Victory Vs+.7z",
+    "found": false,
+    "upstreamReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+    "upstreamReceiptStatus": "blocked-archive-not-found"
+  },
+  "rerun": "python3 tools/hero-model-library/source-workflows/jstars-priority-nube-luckyman-hiei-v1/build_inventory.py",
+  "schema": "ggd.jstars-priority-nube-luckyman-hiei-inventory@1",
+  "scope": [
+    "nube",
+    "luckyman",
+    "hiei"
+  ],
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "summary": {
+    "alternateDecodedAudioFiles": 239,
+    "characters": 3,
+    "convertedModels": 0,
+    "convertedMotions": 0,
+    "convertedVfx": 0,
+    "deployments": 0,
+    "jstarsNativeIdsProven": 0,
+    "jstarsSourceContainersProven": 0,
+    "ownerArchivesFound": 0,
+    "runtimeRegistrations": 0
+  }
+}

@@ -106,7 +106,7 @@ describe.skipIf(!hasFfmpeg)("the optimiser texture stage", () => {
       targetTris: HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax,
       ratio: HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax / 10_001,
     });
-    expect(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax).toBe(8_000);
+    expect(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax).toBe(7_999);
   });
 
   it("dry run 把超標貼圖規劃縮到出貨上限,而且什麼都不寫", () => {

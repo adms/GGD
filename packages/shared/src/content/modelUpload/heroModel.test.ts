@@ -90,7 +90,7 @@ it("enforces the tablet budget on the selected runtime body", async () => {
 it("applies the formal adoption decimation policy only above 10,000 triangles", async () => {
   expect(HERO_MODEL_ADOPTION_POLICY).toMatchObject({
     decimateWhenTrianglesAbove: 10_000,
-    decimatedTargetTrianglesMax: 8_000,
+    decimatedTargetTrianglesMax: 7_999,
   });
   const source = modelUploadFixture();
   const inspected = await inspectModelUpload(source.bytes);
@@ -99,7 +99,7 @@ it("applies the formal adoption decimation policy only above 10,000 triangles", 
 
   expect(adoptionErrors(10_000)).toEqual([]);
   expect(adoptionErrors(10_001)).toEqual([
-    expect.stringMatching(/三角面 10001 .*門檻 10000.*不超過 8000 面/),
+    expect.stringMatching(/三角面 10001 .*門檻 10000.*不超過 7999 面/),
   ]);
 });
 

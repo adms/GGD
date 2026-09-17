@@ -180,4 +180,4 @@ console.log(JSON.stringify({
   emissiveMatteSanitization,
   records,
 }));
-if (trianglesAfter > 8000) process.exit(1);
+if (trianglesAfter > 7999) process.exit(1);

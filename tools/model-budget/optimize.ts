@@ -239,7 +239,7 @@ function planFile(file: string, args: Args): Plan {
   }
 
   // geometry target: only when asked. Hero adoption has its own owner-set
-  // trigger (>10k) and target (<=8k), independent of the wider runtime budget.
+  // trigger (>10k) and target (<8k, represented as <=7,999), independent of the wider runtime budget.
   let geo: GeoAction | null = null;
   if (args.geometry) {
     const heroAdoption = role === "champion" && args.trisTarget === null;

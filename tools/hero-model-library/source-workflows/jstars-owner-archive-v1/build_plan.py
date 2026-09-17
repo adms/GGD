@@ -329,6 +329,32 @@ def build() -> dict:
             "animations": 0,
             "status": "標準化靜態模型候選；不可標成 J-Stars 原作，動作與正式選項尚未註冊",
         }
+    priority_inventory_root = repo / "materials/hero-model-library/source-inventories"
+    priority_paths = {
+        "contract": priority_inventory_root / "jstars-priority-contract-v1/inventory.json",
+        "gintokiGonKillua": priority_inventory_root / "jstars-priority-gintoki-gon-killua-v1/inventory.json",
+        "nubeLuckymanHiei": priority_inventory_root / "jstars-priority-nube-luckyman-hiei-v1/inventory.json",
+    }
+    priority_execution = None
+    if all(path.is_file() for path in priority_paths.values()):
+        receipts = {key: json.loads(path.read_text()) for key, path in priority_paths.items()}
+        priority_execution = {
+            "receiptPaths": {key: path.relative_to(repo).as_posix() for key, path in priority_paths.items()},
+            "contractSummary": receipts["contract"]["summary"],
+            "firstLaneSummary": receipts["gintokiGonKillua"]["summary"],
+            "secondLaneSummary": receipts["nubeLuckymanHiei"]["summary"],
+            "nativeIdEvidence": {"Killua Zoldyck": "018"},
+            "fallbackEvidence": {
+                "validatedModels": receipts["gintokiGonKillua"]["summary"]["validatedFallbackModels"],
+                "jumpForceAudioFiles": receipts["gintokiGonKillua"]["summary"]["jumpForceAudioFiles"],
+                "hieiAlternateDecodedAudioFiles": receipts["nubeLuckymanHiei"]["summary"]["alternateDecodedAudioFiles"],
+            },
+            "jstarsConverted": 0,
+            "jstarsRegistered": 0,
+            "jstarsDeployed": 0,
+            "blockingConverter": "PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated",
+            "ownerArchiveStatus": "blocked-archive-not-found",
+        }
     return {
         "schema": "ggd.jstars-owner-archive-plan@1",
         "sourceId": SOURCE_ID,
@@ -348,6 +374,7 @@ def build() -> dict:
             "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄",
         },
         "gonCommunityFallback": gon_candidate,
+        "priorityExecution": priority_execution,
         "characters": rows,
     }
 
@@ -385,6 +412,18 @@ def markdown(plan: dict) -> str:
             f"{'true' if state['converted'] else 'false'} | {'true' if state['registered'] else 'false'} | "
             f"{'true' if state['default'] else 'false'} | {state['blocker']} |"
         )
+    if plan.get("priorityExecution"):
+        execution = plan["priorityExecution"]
+        fallback = execution["fallbackEvidence"]
+        lines += [
+            "",
+            "### 本輪平行執行收據",
+            "",
+            f"- J-Stars 六名：已轉換 {execution['jstarsConverted']}、已註冊 {execution['jstarsRegistered']}、已部署 {execution['jstarsDeployed']}。",
+            f"- 實檔證據只確認奇犎 native `018`；owner archive 狀態 `{execution['ownerArchiveStatus']}`。",
+            f"- 可先保留的替代資源：{fallback['validatedModels']} 個既有／靜態模型通過 Khronos；小傑／奇犎 JUMP FORCE 音訊 {fallback['jumpForceAudioFiles']} 檔；飛影 JUMP FORCE 解碼音訊 {fallback['hieiAlternateDecodedAudioFiles']} 檔。這些都不冒稱 J-Stars 原作轉換。",
+            f"- 實質阻擋：{execution['blockingConverter']}。",
+        ]
     lines += [
         "",
         "## 第一批：現有 GGD 英雄，直接增加 J-Stars 獨立選項",
@@ -434,6 +473,7 @@ def master_section(plan: dict) -> str:
     known_ids = [r for r in plan["characters"] if r["nativeId"]]
     priorities = sorted((r for r in plan["characters"] if r["newHeroPriority"]), key=lambda r: r["newHeroPriority"])
     gon = plan["gonCommunityFallback"]
+    execution = plan.get("priorityExecution")
     lines = [
         "<!-- generated:jstars-owner-archive-v1:start -->",
         "### J-Stars Victory VS+ owner archive 與新英雄候選",
@@ -454,6 +494,14 @@ def master_section(plan: dict) -> str:
     if gon:
         lines += [
             f"小傑另有一顆**社群來源**一般形態靜態候選：{gon['triangles']:,} 面、{gon['drawCalls']} draw、{gon['joints']} joints、{gon['textures']} 張 {gon['maxTextureDimension']}px 貼圖，SHA-256 `{gon['sha256']}`。它沒有原生動作，會保留為非 J-Stars／非 JUMP 的候選，不能取代等待中的原作擷取。",
+            "",
+        ]
+    if execution:
+        fallback = execution["fallbackEvidence"]
+        lines += [
+            "本輪已將六名分成三條腳本工作流實際執行。J-Stars 原生成果仍是 **已轉換 0／已註冊 0／已部署 0**；奇犎 `018` 已有 14 個 SRD／SRDI／SRDV 相關成員的逐檔收據，但 `$CH0` 與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。銀時、小傑、神眉、幸運超人、飛影沒有可驗證的 J-Stars 原生容器，沒有猜 ID。",
+            "",
+            f"現有替代資源另行保留：銀時 300 本尊與奇犎 300 本尊已註冊，小傑社群靜態候選未註冊；三個模型 Khronos {fallback['validatedModels']}/{fallback['validatedModels']} 零錯誤。小傑／奇犎 JUMP FORCE 解碼音訊共 {fallback['jumpForceAudioFiles']} 檔，飛影替代 JUMP FORCE 音訊 {fallback['hieiAlternateDecodedAudioFiles']} 檔，全部仍待 owner 逐檔聽審與事件綁定，不寫成 J-Stars 已上架。",
             "",
         ]
     lines += [

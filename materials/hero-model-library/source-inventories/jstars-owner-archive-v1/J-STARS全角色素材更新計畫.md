@@ -19,6 +19,13 @@
 | 5 | 幸運超人 | 幸運超人 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
 | 6 | 幽遊白書 | 飛影 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
 
+### 本輪平行執行收據
+
+- J-Stars 六名：已轉換 0、已註冊 0、已部署 0。
+- 實檔證據只確認奇犎 native `018`；owner archive 狀態 `blocked-archive-not-found`。
+- 可先保留的替代資源：3 個既有／靜態模型通過 Khronos；小傑／奇犎 JUMP FORCE 音訊 494 檔；飛影 JUMP FORCE 解碼音訊 239 檔。這些都不冒稱 J-Stars 原作轉換。
+- 實質阻擋：PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated。
+
 ## 第一批：現有 GGD 英雄，直接增加 J-Stars 獨立選項
 
 | 作品 | 角色 | 原文／英文名稱 | GGD ID | 原生 ID | 現況 |

@@ -49,6 +49,56 @@
     "animations": 0,
     "status": "標準化靜態模型候選；不可標成 J-Stars 原作，動作與正式選項尚未註冊"
   },
+  "priorityExecution": {
+    "receiptPaths": {
+      "contract": "materials/hero-model-library/source-inventories/jstars-priority-contract-v1/inventory.json",
+      "gintokiGonKillua": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+      "nubeLuckymanHiei": "materials/hero-model-library/source-inventories/jstars-priority-nube-luckyman-hiei-v1/inventory.json"
+    },
+    "contractSummary": {
+      "characters": 6,
+      "charactersConverted": 0,
+      "charactersDeployed": 0,
+      "charactersRegistered": 0,
+      "nativeIdsKnown": 1,
+      "nativeIdsVerified": 1
+    },
+    "firstLaneSummary": {
+      "existingRegisteredFallbacks": 2,
+      "jstarsConverted": 0,
+      "jstarsDefaultsApplied": 0,
+      "jstarsRuntimeRegistered": 0,
+      "jumpForceAudioFiles": 494,
+      "priorityCharacters": 3,
+      "productionDeploymentsVerified": 0,
+      "validatedFallbackModels": 3
+    },
+    "secondLaneSummary": {
+      "alternateDecodedAudioFiles": 239,
+      "characters": 3,
+      "convertedModels": 0,
+      "convertedMotions": 0,
+      "convertedVfx": 0,
+      "deployments": 0,
+      "jstarsNativeIdsProven": 0,
+      "jstarsSourceContainersProven": 0,
+      "ownerArchivesFound": 0,
+      "runtimeRegistrations": 0
+    },
+    "nativeIdEvidence": {
+      "Killua Zoldyck": "018"
+    },
+    "fallbackEvidence": {
+      "validatedModels": 3,
+      "jumpForceAudioFiles": 494,
+      "hieiAlternateDecodedAudioFiles": 239
+    },
+    "jstarsConverted": 0,
+    "jstarsRegistered": 0,
+    "jstarsDeployed": 0,
+    "blockingConverter": "PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated",
+    "ownerArchiveStatus": "blocked-archive-not-found"
+  },
   "characters": [
     {
       "rosterOrder": 1,
