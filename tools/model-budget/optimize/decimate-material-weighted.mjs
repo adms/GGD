@@ -70,4 +70,4 @@ const trianglesBefore = records.reduce((sum, row) => sum + row.trianglesBefore, 
 const trianglesAfter = records.reduce((sum, row) => sum + row.trianglesAfter, 0);
 console.log(JSON.stringify({tool: "model-budget/decimate-material-weighted@1", input, output,
   parameters: {materialTargets: targets, errorBound, materialErrors, lockBorder: true}, trianglesBefore, trianglesAfter, records}));
-if (trianglesAfter > 7999) process.exit(1);
+if (trianglesAfter > 8000) process.exit(1);

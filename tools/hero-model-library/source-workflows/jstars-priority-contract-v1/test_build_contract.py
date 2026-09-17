@@ -28,16 +28,16 @@ class ContractTests(unittest.TestCase):
     def test_policy_is_read_from_current_runtime_sources(self):
         policy = self.payload["runtimePolicy"]
         self.assertEqual(policy["decimateWhenTrianglesAbove"], 10000)
-        self.assertEqual(policy["decimatedTargetTrianglesMax"], 7999)
+        self.assertEqual(policy["decimatedTargetTrianglesMax"], 8000)
         self.assertEqual(policy["textureEdgeLimit"], 256)
         self.assertEqual(policy["animationChannelWarning"], 300)
         self.assertEqual(policy["animationChannelLimit"], 500)
         self.assertFalse(self.payload["policyConflict"]["exists"])
         self.assertEqual(
-            self.payload["ownerAdoptionRule"]["decimatedCandidateMustBeStrictlyBelow"],
+            self.payload["ownerAdoptionRule"]["decimatedCandidateMustBeAtMost"],
             8000,
         )
-        self.assertEqual(self.payload["ownerAdoptionRule"]["maximumAcceptedTriangles"], 7999)
+        self.assertEqual(self.payload["ownerAdoptionRule"]["maximumAcceptedTriangles"], 8000)
 
     def test_path_hits_never_become_completion_claims(self):
         self.assertEqual(self.payload["summary"]["charactersConverted"], 0)

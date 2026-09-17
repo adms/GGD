@@ -9,7 +9,7 @@ owner archive lane 的 `blocked-archive-not-found`／`blocked-archive-listing-fa
 `pipeline.py` 依序處理 extraction、model、texture、skeleton、motion、VFX、SFX、voice、model-registration：
 
 - `runtimeGlb` 必須是上游轉換器產生的綁骨架、有動作 GLB。只有原生模型容器或拆出的 member 時，模型階段保持 blocked，不把「已擷取」寫成「已轉換」。
-- `prepare_runtime_candidate.mts` 從正式常數讀有效政策：來源超過 10,000 面才調用 `tools/model-budget/optimize.ts` 的 skin-aware geometry 路徑，候選必須低於 8,000 面（現行程式上限 7,999）；貼圖經正式 upload normalization 限到 256px。數字不在本 lane 另存一份。
+- `prepare_runtime_candidate.mts` 從正式常數讀有效政策：來源超過 10,000 面才調用 `tools/model-budget/optimize.ts` 的 skin-aware geometry 路徑，候選必須不超過 8,000 面；貼圖經正式 upload normalization 限到 256px。數字不在本 lane 另存一份。
 - 動作必須明列 idle/run/attack/cast/hurt/death 六態。死亡可由上游依 owner 政策明列 hurt fallback，但這條 lane 不自行猜索引。
 - `prepareUploadedHeroModel`、`verifyUploadedHeroModel` 驗證可見網格、骨架、所有 primitive 蒙皮、六態 clip map、貼圖、通道與正式預算。
 - VFX 只固定與列出已驗證來源／候選；沒有逐事件 checked binder 時不寫 runtime 綁定。

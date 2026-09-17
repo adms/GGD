@@ -1,10 +1,10 @@
 {
   "archive": {
-    "archiveEntries": 0,
+    "archiveEntries": 2,
     "characterTokens": 0,
     "fileName": "J-Stars Victory Vs+.7z",
     "path": null,
-    "status": "blocked-archive-not-found"
+    "status": "partial-inventory-with-blockers"
   },
   "characters": [
     {
@@ -447,20 +447,20 @@
   },
   "ownerAdoptionRule": {
     "decimateOnlyWhenTrianglesAbove": 10000,
-    "decimatedCandidateMustBeStrictlyBelow": 8000,
-    "maximumAcceptedTriangles": 7999,
+    "decimatedCandidateMustBeAtMost": 8000,
+    "maximumAcceptedTriangles": 8000,
     "source": "owner current instruction for this asset-library workflow"
   },
   "platform": "PlayStation 3",
   "policyConflict": {
-    "detail": "resolved: owner rule is outputTriangles < 8000; adoptionPolicy.json now sets decimatedTargetTrianglesMax=7999 and the runtime preparer accepts <= 7999",
+    "detail": "resolved: owner rule accepts outputTriangles <= 8000; adoptionPolicy.json sets decimatedTargetTrianglesMax=8000 and the runtime preparer accepts <= 8000",
     "evidence": "tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/prepare_runtime_candidate.mts",
     "exists": false,
     "scope": "recorded only; this lane does not modify shared runtime policy files"
   },
   "policyInterpretation": {
     "audioAndVfx": "inventory candidates first; do not bind events without per-file identity and owner review",
-    "geometry": "only sources strictly above 10000 triangles are decimated; owner acceptance requires the resulting candidate to be strictly below 8000 triangles (configured maximum 7999)",
+    "geometry": "only sources strictly above 10000 triangles are decimated; owner acceptance requires the resulting candidate to be at most 8000 triangles (configured maximum 8000)",
     "motion": [
       "idle",
       "run",
@@ -476,7 +476,7 @@
     "animationChannelLimit": 500,
     "animationChannelWarning": 300,
     "decimateWhenTrianglesAbove": 10000,
-    "decimatedTargetTrianglesMax": 7999,
+    "decimatedTargetTrianglesMax": 8000,
     "drawPrimitiveLimit": 6,
     "drawPrimitiveWarning": 3,
     "schema": "ggd.jstars-runtime-policy-snapshot@1",

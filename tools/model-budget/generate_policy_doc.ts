@@ -229,7 +229,7 @@ function renderReportBlock(): string {
   if (!vfx) throw new Error("missing vfx-model gate");
   return `${REPORT_START}
 
-上架限制文件由正式程式常數與設定檔生成：\`materials/asset-library/模型動作特效上架限制.md\`。現行英雄正式採用規則是來源超過 ${n(HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove)} 面時，另產生低於 8,000 面的候選（程式上限 ${n(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax)}）並重做骨架與視覺 A/B；${n(HERO_MODEL_BUDGET.tris.warn)}／${n(HERO_MODEL_BUDGET.tris.limit)} 是 runtime 容量警戒／硬上限，不能代替正式採用規則。英雄另有 ${n(HERO_MODEL_BUDGET.meshes.warn)}／${n(HERO_MODEL_BUDGET.meshes.limit)} draw calls、${n(HERO_MODEL_BUDGET.texEdge.warn)}／${n(HERO_MODEL_BUDGET.texEdge.limit)}px 貼圖最長邊、${n(HERO_MODEL_BUDGET.channels.warn)}／${n(HERO_MODEL_BUDGET.channels.limit)} 單段動畫通道；VFX 模型為 ${n(vfx.tris.warn)}／${n(vfx.tris.limit)} 面、${n(vfx.meshes.warn)}／${n(vfx.meshes.limit)} draw calls、${n(vfx.texEdge.limit)}px、${n(vfx.channels.warn)}／${n(vfx.channels.limit)} 通道。
+上架限制文件由正式程式常數與設定檔生成：\`materials/asset-library/模型動作特效上架限制.md\`。現行英雄正式採用規則是來源超過 ${n(HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove)} 面時，另產生不超過 ${n(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax)} 面的候選並重做骨架與視覺 A/B；${n(HERO_MODEL_BUDGET.tris.warn)}／${n(HERO_MODEL_BUDGET.tris.limit)} 是 runtime 容量警戒／硬上限，不能代替正式採用規則。英雄另有 ${n(HERO_MODEL_BUDGET.meshes.warn)}／${n(HERO_MODEL_BUDGET.meshes.limit)} draw calls、${n(HERO_MODEL_BUDGET.texEdge.warn)}／${n(HERO_MODEL_BUDGET.texEdge.limit)}px 貼圖最長邊、${n(HERO_MODEL_BUDGET.channels.warn)}／${n(HERO_MODEL_BUDGET.channels.limit)} 單段動畫通道；VFX 模型為 ${n(vfx.tris.warn)}／${n(vfx.tris.limit)} 面、${n(vfx.meshes.warn)}／${n(vfx.meshes.limit)} draw calls、${n(vfx.texEdge.limit)}px、${n(vfx.channels.warn)}／${n(vfx.channels.limit)} 通道。
 
 ${REPORT_END}`;
 }

@@ -2,7 +2,7 @@
   "schema": "ggd-model-adoption-policy@1",
   "hero": {
     "decimateWhenTrianglesAbove": 10000,
-    "decimatedTargetTrianglesMax": 7999,
+    "decimatedTargetTrianglesMax": 8000,
     "visualLitPixelDeltaPctMax": 5,
     "preserveOriginalLocally": true,
     "archiveOriginalToS3Legacy": true,

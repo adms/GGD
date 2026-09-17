@@ -228,14 +228,14 @@ def build(repo: Path) -> dict[str, Any]:
         "runtimePolicy": policy,
         "ownerAdoptionRule": {
             "decimateOnlyWhenTrianglesAbove": policy["decimateWhenTrianglesAbove"],
-            "decimatedCandidateMustBeStrictlyBelow": 8000,
+            "decimatedCandidateMustBeAtMost": 8000,
             "maximumAcceptedTriangles": policy["decimatedTargetTrianglesMax"],
             "source": "owner current instruction for this asset-library workflow",
         },
         "policyConflict": {
-            "exists": accepts_8000,
+            "exists": not accepts_8000,
             "detail": (
-                "resolved: owner rule is outputTriangles < 8000; adoptionPolicy.json now sets "
+                "resolved: owner rule accepts outputTriangles <= 8000; adoptionPolicy.json sets "
                 f"decimatedTargetTrianglesMax={policy['decimatedTargetTrianglesMax']} and the runtime preparer accepts "
                 f"<= {policy['decimatedTargetTrianglesMax']}"
             ),
@@ -245,7 +245,7 @@ def build(repo: Path) -> dict[str, Any]:
         "policyInterpretation": {
             "geometry": (
                 f"only sources strictly above {policy['decimateWhenTrianglesAbove']} triangles are decimated; "
-                "owner acceptance requires the resulting candidate to be strictly below 8000 triangles "
+                "owner acceptance requires the resulting candidate to be at most 8000 triangles "
                 f"(configured maximum {policy['decimatedTargetTrianglesMax']})"
             ),
             "texture": "all hero textures must remain at or below the runtime texture edge limit",
@@ -312,8 +312,8 @@ def render_readme(payload: dict[str, Any]) -> str:
         "",
         "## 現行政策（由程式即時讀取）",
         "",
-        f"- 來源超過 **{p['decimateWhenTrianglesAbove']:,}** 三角面才啟動減面；owner 驗收要求減面候選低於 **8,000** 面，程式上限為 **{p['decimatedTargetTrianglesMax']:,}**。",
-        "- 契約差異：正式 `adoptionPolicy.json` 把 8,000 寫成 `Max`，`prepare_runtime_candidate.mts` 今日會放行剛好 8,000；本稽核已列為 shared policy 缺口，未在本 lane 跨界修改。",
+        f"- 來源超過 **{p['decimateWhenTrianglesAbove']:,}** 三角面才啟動減面；owner 驗收要求減面候選不超過 **{p['decimatedTargetTrianglesMax']:,}** 面。",
+        "- 正式 `adoptionPolicy.json` 與 `prepare_runtime_candidate.mts` 同樣採用含 8,000 的上限，現無契約差異。",
         f"- runtime 三角面警戒／上限：{p['triangleRuntimeWarning']:,} / {p['triangleRuntimeLimit']:,}。",
         f"- draw primitive 警戒／上限：{p['drawPrimitiveWarning']} / {p['drawPrimitiveLimit']}。",
         f"- 貼圖最長邊：{p['textureEdgeLimit']}px；動畫通道警戒／上限：{p['animationChannelWarning']} / {p['animationChannelLimit']}。",

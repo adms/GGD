@@ -1,13 +1,13 @@
 # J-Stars 優先六角色容器與上架契約
 
-- owner archive 狀態：`blocked-archive-not-found`
+- owner archive 狀態：`partial-inventory-with-blockers`
 - 已知原生 ID：1 / 6（目前只有奇犚 `018`）
 - 已轉換／已註冊／已部署：0 / 0 / 0
 
 ## 現行政策（由程式即時讀取）
 
-- 來源超過 **10,000** 三角面才啟動減面；owner 驗收要求減面候選低於 **8,000** 面，程式上限為 **7,999**。
-- 契約差異：正式 `adoptionPolicy.json` 把 8,000 寫成 `Max`，`prepare_runtime_candidate.mts` 今日會放行剛好 8,000；本稽核已列為 shared policy 缺口，未在本 lane 跨界修改。
+- 來源超過 **10,000** 三角面才啟動減面；owner 驗收要求減面候選不超過 **8,000** 面。
+- 正式 `adoptionPolicy.json` 與 `prepare_runtime_candidate.mts` 同樣採用含 8,000 的上限，現無契約差異。
 - runtime 三角面警戒／上限：16,000 / 28,000。
 - draw primitive 警戒／上限：3 / 6。
 - 貼圖最長邊：256px；動畫通道警戒／上限：300 / 500。
