@@ -1,16 +1,16 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1356,
-    "tier0": 995,
+    "assets": 1358,
+    "tier0": 997,
     "reviewed": 0,
     "pending": 361,
     "voice": {
-      "champions": 133,
+      "champions": 135,
       "status": "measurement-stale",
       "grayPairs": 0,
       "ladderRow": 6,
-      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=6／8778 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
+      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=6／9045 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
     }
   },
   "items": [
