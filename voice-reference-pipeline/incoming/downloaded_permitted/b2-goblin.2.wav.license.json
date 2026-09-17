@@ -1,0 +1,30 @@
+{
+  "hero_id": "b2-goblin",
+  "source_name": "youtube: TVアニメ『ゴブリンスレイヤー』放送開始カウントダウンコメント（ゴブリンスレイヤー C.V.梅原裕一郎）",
+  "source_url": "https://www.youtube.com/watch?v=g-l4PyCSZQQ",
+  "direct_url": "https://www.youtube.com/watch?v=g-l4PyCSZQQ",
+  "license_url": "",
+  "timestamp": "unverified",
+  "attestation": "owner 2026-09-10: 「自己去擷取語音片段」「如果能是遊戲原始乾淨語音檔是最好的來源」; license.mode=private_research (owner 2026-07-24)",
+  "human_review": "pending",
+  "identity_basis": "researcher_named_source",
+  "official_voice_actor": "梅原裕一郎",
+  "source_sha256": "27019b4fca7342c23a4bc81f65c9507683481847e7824d4055e6f04d6d5214c0",
+  "downloaded_at": "2026-09-10T10:54:41.497529Z",
+  "notes": "キャラクター名義のカウントダウンコメント動画。単独発話でBGMが薄い可能性が高く、参照クリップ候補として最有力。タイムスタンプ未確認。",
+  "precut": {
+    "window_start_s": 12.0,
+    "window_s": 10.0,
+    "score": 0.825,
+    "metrics": {
+      "multiple_speaker_probability": 0.268,
+      "music_probability": 0.491,
+      "speech_or_vocal_ratio": 0.434,
+      "silence_ratio": 0.566,
+      "clipping_ratio": 0.0,
+      "estimated_snr": 125.1
+    },
+    "original": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/precut-originals/b2-goblin.wav",
+    "note": "best-of-window by pipeline metrics; human review pending"
+  }
+}

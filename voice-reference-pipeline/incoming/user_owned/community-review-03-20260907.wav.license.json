@@ -1,0 +1,30 @@
+{
+  "hero_id": "community-review-03-20260907",
+  "source_name": "owner game-voice library (角色語音索引 kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed)",
+  "source_url": "voice-index:kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+  "direct_url": "",
+  "license_url": "",
+  "attestation": "owner 2026-09-10: 「如果能是遊戲原始乾淨語音檔是最好的來源」＋「自己去擷取語音片段」; index says speaker/language NOT yet reviewed (speakerVerified=false) — filename evidence voice_* only",
+  "human_review": "pending",
+  "identity_basis": "index_group_match+filename_voice_prefix",
+  "skin": 0,
+  "source_files": [
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_002.wav",
+      "sha256": "5de982b8f4fb015b80a47d9361c8dc0c02ed7fcb90e81e200ca320cc557cc0a0",
+      "seconds": 6.0
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_005.wav",
+      "sha256": "0d18f78d218c9f16f1fcaca7ced88ac1dbc1b29b13cbd22a9e664f57d8e64cf0",
+      "seconds": 5.46
+    },
+    {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/v_022_mai_v_003.wav",
+      "sha256": "f0bdcedb98ef51224b7921f20112900a06033ba490c7a1a8fb2aaa8cd6be77d4",
+      "seconds": 5.42
+    }
+  ],
+  "source_sha256": "627b16b583e676485ea6b3238adcecdea945a3feeb9eb31caafcb299d16d7d2a",
+  "downloaded_at": "2026-09-10T13:42:10.572730+00:00"
+}
