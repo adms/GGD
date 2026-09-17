@@ -28,10 +28,10 @@
       "defeat"
     ]
   },
-  "generatedCount": 131,
-  "partialCount": 80,
+  "generatedCount": 132,
+  "partialCount": 81,
   "sharedCount": 20,
-  "championCount": 151,
+  "championCount": 152,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
     {
@@ -500,6 +500,181 @@
             "durationSec": 2.36,
             "speakerSim": null,
             "hash": "ddaa3bf05d019e6c1a17f2680b2900f89b7b0cbec336c20187aea5104b94cda5"
+          }
+        ]
+      }
+    },
+    "b2-bojji": {
+      "engine": "cosyvoice3",
+      "variant": "cv3-0.5b",
+      "tier": "combat-core",
+      "missingCategories": [
+        "quote",
+        "stun",
+        "poison",
+        "slow",
+        "blind",
+        "bind",
+        "knockdown",
+        "healed",
+        "confused",
+        "paralyzed",
+        "thanks",
+        "curse",
+        "hum",
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "block",
+        "dodge",
+        "sprint",
+        "jump",
+        "respond.ok",
+        "respond.no",
+        "puzzled",
+        "love",
+        "thumbs-up",
+        "retreat",
+        "charge",
+        "watch",
+        "free-move",
+        "first-blood",
+        "kill-2",
+        "kill-3",
+        "kill-4",
+        "kill-5",
+        "unstoppable"
+      ],
+      "lines": {
+        "select": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/taunt.mp3",
+            "text": "あう！",
+            "lang": "ja",
+            "durationSec": 0.32,
+            "speakerSim": null,
+            "hash": "30f877ba9551181ec2c7ef118e8e65ef91ef02672926cb27e2a48b2907c82648"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/defeat.mp3",
+            "text": "ぐ……っ……",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "b7e9395a4f02f1844c3cabf482e78d1e9291c41486dfb3e8f6dec4e761c67ff2"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/hurt.mp3",
+            "text": "うっ！",
+            "lang": "ja",
+            "durationSec": 0.36,
+            "speakerSim": null,
+            "hash": "c9a535686d43d0ec3ce175336a75c36927655e7c56c5b5590ecbbd002712deaa"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/hurt-heavy.mp3",
+            "text": "ぐああっ……！",
+            "lang": "ja",
+            "durationSec": 0.680249,
+            "speakerSim": null,
+            "hash": "3bd2bc33a137a986f3a2e239bb8b13325b7e25283ed8de59a412c29184603a18"
+          }
+        ],
+        "kill-1": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.48,
+            "speakerSim": null,
+            "hash": "e663162cf9cc2a4de4f090b08f4aa87c734e126bfc92cf03d9d55c2ed734a452"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/skill-name.e.mp3",
+            "text": "ぬんっ！",
+            "lang": "ja",
+            "durationSec": 0.56,
+            "speakerSim": null,
+            "hash": "f74e5c017c70584e51a1e5aa0891cdd0cbedcf973eecd4549afa9e297026a552"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/skill-name.ex.mp3",
+            "text": "うあーっ！",
+            "lang": "ja",
+            "durationSec": 0.64,
+            "speakerSim": null,
+            "hash": "2fba7b6704a64b9c94c75fc2a5eabc8c0cd09c87fc04b007ed610f354c8aee7d"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/skill-name.q.mp3",
+            "text": "んっ！",
+            "lang": "ja",
+            "durationSec": 0.44,
+            "speakerSim": null,
+            "hash": "870c887f1ddfa754158656617711d6a3a572e480f176937f39c8c3abf2e0e4d2"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/skill-name.r.mp3",
+            "text": "んあああっ！",
+            "lang": "ja",
+            "durationSec": 0.64,
+            "speakerSim": null,
+            "hash": "15b0069838ac4f3f4c218f50c03716dc3b3d6e8bce10aa5aa345ce61c28bb091"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/skill-name.w.mp3",
+            "text": "はっ！",
+            "lang": "ja",
+            "durationSec": 0.32,
+            "speakerSim": null,
+            "hash": "c6e09801a2c48f05fa76b9e6734ad5939aa0f1c6f47569d87f6106fd51a94685"
+          }
+        ],
+        "taunt": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/taunt.mp3",
+            "text": "あう！",
+            "lang": "ja",
+            "durationSec": 0.32,
+            "speakerSim": null,
+            "hash": "30f877ba9551181ec2c7ef118e8e65ef91ef02672926cb27e2a48b2907c82648"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/victory.mp3",
+            "text": "あうあう！",
+            "lang": "ja",
+            "durationSec": 0.64,
+            "speakerSim": null,
+            "hash": "00fedd3e39c81274c2277d52cfcda2324e02d7391e00856dfb65c23fe263a9ac"
+          }
+        ],
+        "quote": [
+          {
+            "clip": "assets/audio/voices/lines/b2-bojji/victory.mp3",
+            "text": "あうあう！",
+            "lang": "ja",
+            "durationSec": 0.64,
+            "speakerSim": null,
+            "hash": "00fedd3e39c81274c2277d52cfcda2324e02d7391e00856dfb65c23fe263a9ac",
+            "aliasOf": "victory"
           }
         ]
       }
@@ -3587,9 +3762,9 @@
             "clip": "assets/audio/voices/lines/b2-misery/taunt.mp3",
             "text": "こんにちは皆さん。私はミザリィ",
             "lang": "ja",
-            "durationSec": 2.4,
+            "durationSec": 2.16,
             "speakerSim": null,
-            "hash": "9565069552b3002177dd40869d4cc462bb4af142d9a8e6f8769a12f8ef23a496"
+            "hash": "8d017c947727d352278274c47224930ec9bedc2a180ac29ced14456634bd4c7f"
           }
         ],
         "defeat": [
@@ -3597,29 +3772,29 @@
             "clip": "assets/audio/voices/lines/b2-misery/defeat.mp3",
             "text": "ぐ……っ……",
             "lang": "ja",
-            "durationSec": 0.36,
+            "durationSec": 0.48,
             "speakerSim": null,
-            "hash": "c0970b8d7b051e4b8d40f51df14dc87055eaf2f5b2cbaf2c75d28ee870088989"
+            "hash": "37fbd41c346b2b027965ee6f06e7ad1a6cd47cbe9e36b1921c485b2911ad7215"
           }
         ],
         "hurt": [
           {
             "clip": "assets/audio/voices/lines/b2-misery/hurt.mp3",
-            "text": "うっ！",
+            "text": "きゃっ！",
             "lang": "ja",
             "durationSec": 0.32,
             "speakerSim": null,
-            "hash": "7cfa8ae27d2e419832bd9855f79db17ef6d5cecf0a286259b6517a6fd3b40cb9"
+            "hash": "f88df9f66c874b432cae68ac7118da0bd88b1dbd7644a474257521bfcc9e8415"
           }
         ],
         "hurt-heavy": [
           {
             "clip": "assets/audio/voices/lines/b2-misery/hurt-heavy.mp3",
-            "text": "ぐああっ……！",
+            "text": "ああっ……！",
             "lang": "ja",
             "durationSec": 0.6,
             "speakerSim": null,
-            "hash": "898272d96fefb412e2614b1602141f826b42823219aab131d5a9f57b8cf1b8da"
+            "hash": "931ea9e3be2a4cac02c91d35574640ccfafee3f246e76b337f27e3d40904722b"
           }
         ],
         "kill-1": [
@@ -3627,9 +3802,9 @@
             "clip": "assets/audio/voices/lines/b2-misery/kill-1.mp3",
             "text": "はぁっ！",
             "lang": "ja",
-            "durationSec": 0.6,
+            "durationSec": 0.44,
             "speakerSim": null,
-            "hash": "80148ff077922ec6f4b9b7fb4784fef423fb1f223d655583afe917ee19e686bd"
+            "hash": "f6b8dfee1ebe92e45521de821c55a832d04e2c7ba1017fd6622e672522ae9b3b"
           }
         ],
         "skill-name.e": [
@@ -3639,7 +3814,7 @@
             "lang": "ja",
             "durationSec": 1.6,
             "speakerSim": null,
-            "hash": "d2397cc416c11e02d88bda49dc1fa03466f6525c106402920932841f0dad134e"
+            "hash": "66cc8ac73794f64592e87a91b21ba73efd003e21ff86e4ebe207e37b05816eca"
           }
         ],
         "skill-name.ex": [
@@ -3649,7 +3824,7 @@
             "lang": "ja",
             "durationSec": 3.56,
             "speakerSim": null,
-            "hash": "be4974fd268be88ba58223e5517fd0c1b82fdbfc283d01e39270477446d1ddd7"
+            "hash": "c0e1ec6bbf611020a767e5908ed4ce7fea0aa329fffad9f046ae142e4607265a"
           }
         ],
         "skill-name.q": [
@@ -3659,7 +3834,7 @@
             "lang": "ja",
             "durationSec": 1.04,
             "speakerSim": null,
-            "hash": "c0cb106747cc04f5ebc95788b5a59597ec91a2ba613e57746ef192053215cf83"
+            "hash": "a197a41770b1b89d74198031680d50643d6d6ac033236046b2c1d579bc3dae68"
           }
         ],
         "skill-name.r": [
@@ -3667,9 +3842,9 @@
             "clip": "assets/audio/voices/lines/b2-misery/skill-name.r.mp3",
             "text": "櫃檯保固不是無敵！",
             "lang": "ja",
-            "durationSec": 1.36,
+            "durationSec": 1.44,
             "speakerSim": null,
-            "hash": "cf7e2b1387378c1c1e01772523a8c07836b09dcbe4dc0df406bd04310d7e7b5d"
+            "hash": "9e941979dde0bb6d6842616875d98ffc5302175afdb6de8cb0024d97c3c2f224"
           }
         ],
         "skill-name.w": [
@@ -3679,7 +3854,7 @@
             "lang": "ja",
             "durationSec": 2.96,
             "speakerSim": null,
-            "hash": "469de87e90f58aabb6dc0676a7b8fb856ab95e488002390a90afc0967dcdd658"
+            "hash": "168cdf3f3ee245e92203f29f9849cdddf31d2f4d0f9c3e3b4e320ae6c6533e8e"
           }
         ],
         "taunt": [
@@ -3687,9 +3862,9 @@
             "clip": "assets/audio/voices/lines/b2-misery/taunt.mp3",
             "text": "こんにちは皆さん。私はミザリィ",
             "lang": "ja",
-            "durationSec": 2.4,
+            "durationSec": 2.16,
             "speakerSim": null,
-            "hash": "9565069552b3002177dd40869d4cc462bb4af142d9a8e6f8769a12f8ef23a496"
+            "hash": "8d017c947727d352278274c47224930ec9bedc2a180ac29ced14456634bd4c7f"
           }
         ],
         "victory": [
@@ -3697,9 +3872,20 @@
             "clip": "assets/audio/voices/lines/b2-misery/victory.mp3",
             "text": "アウターゾーンの案内人です",
             "lang": "ja",
-            "durationSec": 1.76,
+            "durationSec": 1.8,
             "speakerSim": null,
-            "hash": "9e07dca1837010fa265a4a244a4fbadecbbf315d0a0bd794ede5c8ecc8c32414"
+            "hash": "9b1f1d5f195ad1d74169c7728c1d2341e5a57b5d04fb6f9cc1d3c4aac2367720"
+          }
+        ],
+        "quote": [
+          {
+            "clip": "assets/audio/voices/lines/b2-misery/victory.mp3",
+            "text": "アウターゾーンの案内人です",
+            "lang": "ja",
+            "durationSec": 1.8,
+            "speakerSim": null,
+            "hash": "9b1f1d5f195ad1d74169c7728c1d2341e5a57b5d04fb6f9cc1d3c4aac2367720",
+            "aliasOf": "victory"
           }
         ]
       }

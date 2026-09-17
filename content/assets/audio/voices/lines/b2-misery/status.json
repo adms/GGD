@@ -1,17 +1,17 @@
 {
  "championId": "b2-misery",
  "reference": {
-  "sha256": "c5627653970cc01ad72b95ca8079d3f37b3742b9dd12a11e899c27a09238de55",
+  "sha256": "520239dc0fe3425d12f7bafdffcf9f12fd3dabd4a185b3c9936f06129d51547a",
   "seconds": 0,
   "sampleRate": 24000,
-  "source": "voice-reference-pipeline/approved/processed/godie-h01n.wav",
-  "sourceKind": "donor",
-  "donor": "godie-h01n",
+  "source": "voice-reference-pipeline/approved/processed/b2-misery.wav",
+  "sourceKind": "repo",
+  "donor": null,
   "licence": "",
   "licenceUrl": "",
-  "note": "donor casting (COMBAT_CASTING.json, voiceClass=unknown) — drop b2-misery.wav into approved/processed/ to switch to the hero's own take",
-  "addedAt": 1789035549552,
-  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/godie-h01n.wav"
+  "note": "hero's own reference (approved/processed)",
+  "addedAt": 1789626132613,
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/merge-codex/voice-reference-pipeline/approved/processed/b2-misery.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,6 +40,14 @@
      "seconds": 1.04,
      "at": 1789054914289,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789626739925,
+     "error": null
     }
    ],
    "text": "免費跑鞋條款另計！",
@@ -49,16 +57,16 @@
    "origin": "ability-name:b2-misery.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 17598,
     "seconds": 1.04,
     "lufs": null,
-    "hash": "c0cb106747cc04f5ebc95788b5a59597ec91a2ba613e57746ef192053215cf83",
-    "maxDb": -2,
-    "at": 1789054914289
+    "hash": "a197a41770b1b89d74198031680d50643d6d6ac033236046b2c1d579bc3dae68",
+    "maxDb": -3.1,
+    "at": 1789626739926
    },
    "lastError": null
   },
@@ -87,6 +95,14 @@
      "seconds": 2.96,
      "at": 1789054914497,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.96,
+     "at": 1789626820170,
+     "error": null
     }
    ],
    "text": "七天鑑賞期不含眼睛！",
@@ -96,16 +112,16 @@
    "origin": "ability-name:b2-misery.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 48527,
     "seconds": 2.96,
     "lufs": null,
-    "hash": "469de87e90f58aabb6dc0676a7b8fb856ab95e488002390a90afc0967dcdd658",
-    "maxDb": -2,
-    "at": 1789054914498
+    "hash": "168cdf3f3ee245e92203f29f9849cdddf31d2f4d0f9c3e3b4e320ae6c6533e8e",
+    "maxDb": -2.6,
+    "at": 1789626820171
    },
    "lastError": null
   },
@@ -134,6 +150,14 @@
      "seconds": 1.6,
      "at": 1789054914713,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.6,
+     "at": 1789626820284,
+     "error": null
     }
    ],
    "text": "店長先移去門後！",
@@ -143,16 +167,16 @@
    "origin": "ability-name:b2-misery.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 26793,
     "seconds": 1.6,
     "lufs": null,
-    "hash": "d2397cc416c11e02d88bda49dc1fa03466f6525c106402920932841f0dad134e",
-    "maxDb": -1.9,
-    "at": 1789054914714
+    "hash": "66cc8ac73794f64592e87a91b21ba73efd003e21ff86e4ebe207e37b05816eca",
+    "maxDb": -3.6,
+    "at": 1789626820284
    },
    "lastError": null
   },
@@ -181,6 +205,14 @@
      "seconds": 1.36,
      "at": 1789054914920,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1789626740043,
+     "error": null
     }
    ],
    "text": "櫃檯保固不是無敵！",
@@ -190,16 +222,16 @@
    "origin": "ability-name:b2-misery.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 23031,
-    "seconds": 1.36,
+    "bytes": 24285,
+    "seconds": 1.44,
     "lufs": null,
-    "hash": "cf7e2b1387378c1c1e01772523a8c07836b09dcbe4dc0df406bd04310d7e7b5d",
-    "maxDb": -2,
-    "at": 1789054914920
+    "hash": "9e941979dde0bb6d6842616875d98ffc5302175afdb6de8cb0024d97c3c2f224",
+    "maxDb": -3.1,
+    "at": 1789626740043
    },
    "lastError": null
   },
@@ -228,6 +260,14 @@
      "seconds": 3.56,
      "at": 1789054915135,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.56,
+     "at": 1789626740161,
+     "error": null
     }
    ],
    "text": "小字條款稍後生效！",
@@ -237,16 +277,16 @@
    "origin": "ability-name:b2-misery.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 58140,
     "seconds": 3.56,
     "lufs": null,
-    "hash": "be4974fd268be88ba58223e5517fd0c1b82fdbfc283d01e39270477446d1ddd7",
-    "maxDb": -1.9,
-    "at": 1789054915135
+    "hash": "c0e1ec6bbf611020a767e5908ed4ce7fea0aa329fffad9f046ae142e4607265a",
+    "maxDb": -3.1,
+    "at": 1789626740161
    },
    "lastError": null
   },
@@ -267,6 +307,14 @@
      "seconds": 1.76,
      "at": 1789054915351,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1789626740276,
+     "error": null
     }
    ],
    "text": "アウターゾーンの案内人です",
@@ -276,16 +324,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.76,
+    "bytes": 29719,
+    "seconds": 1.8,
     "lufs": null,
-    "hash": "9e07dca1837010fa265a4a244a4fbadecbbf315d0a0bd794ede5c8ecc8c32414",
-    "maxDb": -2,
-    "at": 1789054915351
+    "hash": "9b1f1d5f195ad1d74169c7728c1d2341e5a57b5d04fb6f9cc1d3c4aac2367720",
+    "maxDb": -3.5,
+    "at": 1789626740276
    },
    "lastError": null
   },
@@ -306,6 +354,14 @@
      "seconds": 0.36,
      "at": 1789054915575,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1789626740388,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -315,16 +371,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6731,
-    "seconds": 0.36,
+    "bytes": 8821,
+    "seconds": 0.48,
     "lufs": null,
-    "hash": "c0970b8d7b051e4b8d40f51df14dc87055eaf2f5b2cbaf2c75d28ee870088989",
-    "maxDb": -2,
-    "at": 1789054915575
+    "hash": "37fbd41c346b2b027965ee6f06e7ad1a6cd47cbe9e36b1921c485b2911ad7215",
+    "maxDb": -2.7,
+    "at": 1789626740388
    },
    "lastError": null
   },
@@ -345,25 +401,33 @@
      "seconds": 0.32,
      "at": 1789054915794,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789626740503,
+     "error": null
     }
    ],
-   "text": "うっ！",
+   "text": "きゃっ！",
    "lang": "ja",
-   "kana": "ウッ",
+   "kana": "キャッ",
    "textSource": "derived",
-   "origin": "grunt:default",
+   "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6313,
     "seconds": 0.32,
     "lufs": null,
-    "hash": "7cfa8ae27d2e419832bd9855f79db17ef6d5cecf0a286259b6517a6fd3b40cb9",
-    "maxDb": -1.9,
-    "at": 1789054915794
+    "hash": "f88df9f66c874b432cae68ac7118da0bd88b1dbd7644a474257521bfcc9e8415",
+    "maxDb": -2,
+    "at": 1789626740503
    },
    "lastError": null
   },
@@ -384,25 +448,33 @@
      "seconds": 0.6,
      "at": 1789054916004,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1789626740623,
+     "error": null
     }
    ],
-   "text": "ぐああっ……！",
+   "text": "ああっ……！",
    "lang": "ja",
-   "kana": "グアアッ",
+   "kana": "アアッ",
    "textSource": "derived",
-   "origin": "grunt:default",
+   "origin": "grunt:female",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 10493,
     "seconds": 0.6,
     "lufs": null,
-    "hash": "898272d96fefb412e2614b1602141f826b42823219aab131d5a9f57b8cf1b8da",
-    "maxDb": -3.8,
-    "at": 1789054916005
+    "hash": "931ea9e3be2a4cac02c91d35574640ccfafee3f246e76b337f27e3d40904722b",
+    "maxDb": -6,
+    "at": 1789626740623
    },
    "lastError": null
   },
@@ -423,6 +495,14 @@
      "seconds": 2.4,
      "at": 1789054916221,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789626740741,
+     "error": null
     }
    ],
    "text": "こんにちは皆さん。私はミザリィ",
@@ -432,16 +512,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 39332,
-    "seconds": 2.4,
+    "bytes": 35570,
+    "seconds": 2.16,
     "lufs": null,
-    "hash": "9565069552b3002177dd40869d4cc462bb4af142d9a8e6f8769a12f8ef23a496",
-    "maxDb": -2,
-    "at": 1789054916222
+    "hash": "8d017c947727d352278274c47224930ec9bedc2a180ac29ced14456634bd4c7f",
+    "maxDb": -4,
+    "at": 1789626740741
    },
    "lastError": null
   },
@@ -462,6 +542,14 @@
      "seconds": 0.6,
      "at": 1789054916472,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789626740856,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -471,16 +559,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 10493,
-    "seconds": 0.6,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "80148ff077922ec6f4b9b7fb4784fef423fb1f223d655583afe917ee19e686bd",
-    "maxDb": -2.3,
-    "at": 1789054916472
+    "hash": "f6b8dfee1ebe92e45521de821c55a832d04e2c7ba1017fd6622e672522ae9b3b",
+    "maxDb": -2,
+    "at": 1789626740856
    },
    "lastError": null
   }

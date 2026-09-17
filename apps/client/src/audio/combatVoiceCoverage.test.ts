@@ -137,7 +137,7 @@ const VOICE_GAP: readonly string[] = [
   // 《國王排名》的波吉是聾啞，全劇靠比手畫腳與卡克代言 ⇒ 他的 12 段合成語音整包下架（留底
   // docs/legacy/_overwrites/bojji-voice-removed_temp_20260917/），COMBAT_CASTING.json 也把他移進 excluded。
   // ⛔ 這不是回歸：它是裁決。要復原就是把那個資料夾放回去並從這裡刪掉這一行。
-  "b2-bojji",
+
 ];
 
 /**

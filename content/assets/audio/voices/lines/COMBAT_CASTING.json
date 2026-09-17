@@ -3,7 +3,6 @@
   "schema": "voice.combat-casting@1",
   "note": "⭐ 74 名新英雄（b2-* ＋ community-review-*）的戰鬥語音**暫定卡司**。這 74 名今天一個自己的參考音都沒有（approved/processed/<id>.wav 不存在），所以每一位借一位既有英雄的參考音當 CosyVoice3 的 prompt_wav（`donor`）。⭐ 這是一格開關：① 把 <id>.wav 放進 voice-reference-pipeline/approved/processed/ ⇒ 產生器自動改用本人的（reference 變成 own，⛔ 不必改這裡）；② 改 `donor` 或 `voiceClass` ⇒ 重跑 `pnpm combat:build` 與 run-combat-gen。voiceClass 只用來挑 donor 池與擬聲變體；voiceClassBasis 記錄它從哪裡來（world-knowledge＝角色在原作裡眾所周知的性別／年齡層，⛔ 不是台詞；description-pronoun＝我們自己的 description 寫了「他」；unknown＝不主張，輪流配）。同一池內用 id 排序輪流配，讓 donor 使用次數平均。",
   "excluded": {
-    "b2-bojji": "owner 2026-09-17：「波吉 不會講話 應該全部都沒語音才對」—— 原作《國王排名》的波吉是聾啞，靠比手畫腳與卡克代言 ⇒ ⛔ 不合成、⛔ 不借聲，整包語音下架。",
     "lol-karthus": "owner 2026-09-10：「LOL7個角色應該有自己語音檔 可以排除」——⚠️ 那份檔在哪裡尚未確認（名言 lane 查證 Data Dragon 不出語音行）",
     "lol-leesin": "同上",
     "lol-lux": "同上",
@@ -136,6 +135,18 @@
       "donorName": "天地志狼",
       "donorProfile": "male_youth_heroic",
       "lang": "auto"
+    },
+    "b2-bojji": {
+      "name": "波吉",
+      "voiceClass": "child-boy",
+      "voiceClassBasis": "owner-ruling",
+      "reference": "donor",
+      "donor": "godie-hblm",
+      "donorName": "慈悲的王者－賈修貝爾",
+      "donorProfile": "child_boy_heroic",
+      "lang": "ja",
+      "nonVerbal": true,
+      "nonVerbalWhy": "owner 2026-09-17：「波吉 語音應該都是小孩 嗯嗯阿阿 的聲音 你可以合成」—— 《國王排名》的波吉不會說話，只發得出氣音 ⇒ 喊招格也改成呻吟，⛔ 不合成任何句子（他先前那 5 段喊招是**中文**句子，而合成的規矩是只講日文）。"
     },
     "b2-boxxo": {
       "name": "阿箱＋拉蜜絲",
@@ -309,13 +320,11 @@
     },
     "b2-misery": {
       "name": "米瑟利",
-      "voiceClass": "unknown",
-      "voiceClassBasis": "unknown→round-robin",
-      "reference": "donor",
-      "donor": "godie-h01n",
-      "donorName": "黑崎一護",
-      "donorProfile": "male_youth_rough",
-      "lang": "auto"
+      "voiceClass": "female",
+      "voiceClassBasis": "owner-ruling",
+      "reference": "repo",
+      "lang": "ja",
+      "voiceNote": "owner 2026-09-17：「米瑟利 是性感大姊姊聲音 你生成錯了」⇒ 參考音改用任天堂大亂鬥的帕露蒂娜（owner 聽過六位候選後逐字回「帕露蒂娜 ok」）。⛔ 先前借的是黑崎一護的男聲。"
     },
     "b2-naofumi": {
       "name": "岩谷尚文",
