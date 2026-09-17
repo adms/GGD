@@ -702,8 +702,13 @@ describe("反射之盾 godie-i03m —— 出貨的那份文件", () => {
   it("★ 真的裝上去、真的被普攻打到,攻擊者真的掉血", () => {
     expect(ready).toBe(true);
     const w = makeWorld();
+    // ⭐⭐ GH#1281（2026-09-17）—— 夾具在此之前是 `ids[0]`（字母序第一位），
+    //   ⇒ 它**跟著名冊排序漂**：第四批上架之後第一位換成 `acquired-alice`（出身「坦克」），
+    //   而坦克身體自己帶減傷 ⇒ 反彈回去的那一發被多扣一層，量到 79.6 而公式算 189.6。
+    //   ⚠️ 那不是道具壞了，是**這條測試量的東西被換掉了**：它要驗的是「反射之盾把
+    //   200% 打回去」，⛔ 不是「某一具身體吃多少減傷」。⇒ 釘一具**沒有額外減傷**的身體。
     const ids = Champions.ids().slice().sort();
-    const championId = ids[0]!;
+    const championId = (ids.includes("b2-aladdin" as ChampionId) ? "b2-aladdin" : ids[0]!) as ChampionId;
     const spawn = (seat: number, team: number): EntityId =>
       spawnChampion(w, {
         championId,
@@ -750,8 +755,9 @@ describe("反射之盾 godie-i03m —— 出貨的那份文件", () => {
     for (const k of [0.4, 1, 2.5]) {
       const w = new SimWorld(SKELETON_ARENA, 1);
       w.combatEnv = normalizeCombatEnv({ damageDealt: k });
+      // ⭐ GH#1281：同上 —— 釘一具沒有額外減傷的身體，⛔ 不用「字母序第一位」。
       const ids = Champions.ids().slice().sort();
-      const championId = ids[0]!;
+      const championId = (ids.includes("b2-aladdin" as ChampionId) ? "b2-aladdin" : ids[0]!) as ChampionId;
       const mk = (seat: number, team: number): EntityId =>
         spawnChampion(w, {
           championId,
@@ -783,8 +789,13 @@ describe("反射之盾 godie-i03m —— 出貨的那份文件", () => {
   it("★ 技能打他不會被反彈(出貨文件上的 `basic` 過濾真的生效)", () => {
     expect(ready).toBe(true);
     const w = makeWorld();
+    // ⭐⭐ GH#1281（2026-09-17）—— 夾具在此之前是 `ids[0]`（字母序第一位），
+    //   ⇒ 它**跟著名冊排序漂**：第四批上架之後第一位換成 `acquired-alice`（出身「坦克」），
+    //   而坦克身體自己帶減傷 ⇒ 反彈回去的那一發被多扣一層，量到 79.6 而公式算 189.6。
+    //   ⚠️ 那不是道具壞了，是**這條測試量的東西被換掉了**：它要驗的是「反射之盾把
+    //   200% 打回去」，⛔ 不是「某一具身體吃多少減傷」。⇒ 釘一具**沒有額外減傷**的身體。
     const ids = Champions.ids().slice().sort();
-    const championId = ids[0]!;
+    const championId = (ids.includes("b2-aladdin" as ChampionId) ? "b2-aladdin" : ids[0]!) as ChampionId;
     const mk = (seat: number, team: number): EntityId =>
       spawnChampion(w, {
         championId,

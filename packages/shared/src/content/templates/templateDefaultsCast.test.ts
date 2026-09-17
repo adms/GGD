@@ -143,9 +143,10 @@ function targetFor(def: AbilityDef, foe: EntityId, ally: EntityId, at: { x: numb
   return { type: "point", point: { x: at.x, z: at.z } };
 }
 
-interface Row { id: string; verdict: string; channel?: string; reason?: string }
+interface Row { id: string; family?: string; verdict: string; channel?: string; reason?: string }
 
 function probe(t: TemplateDoc): Row {
+  // ⭐ GH#1281：把 family 帶出來 —— 前置條件的理由是**家族**的性質，⛔ 不是某一個 id 的。
   const world = new SimWorld(SKELETON_ARENA, 4242);
   world.ultGateOverride = true;
   const caster = spawn(world, champOf(t), 0, 0);
@@ -213,7 +214,7 @@ function probe(t: TemplateDoc): Row {
       ? { id: t.id, verdict: "MODEL_FX", channel: `modelFxSpawn×${modelFxInstances}` }
       : { id: t.id, verdict: "FAIL", reason: "純演出模板連一具模型都沒生（modelFxSpawn 零實例）" };
   }
-  return { id: t.id, ...out };
+  return { id: t.id, family: t.family, ...out };
 }
 
 /**
@@ -238,7 +239,14 @@ describe("每一份 enabled 模板的預設展開，在真的 SimWorld 裡施放
     // 報告用：`GGD_1078_ROWS=1 npx vitest run …` 印出每一份量到的頻道（⛔ 平時不吵）。
     if (process.env["GGD_1078_ROWS"]) console.log(rows.map((r) => `${r.id}\t${r.verdict}\t${r.channel ?? ""}\t${r.reason ?? ""}`).join("\n"));
     const bad = rows.filter(
-      (r) => !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict) && !PRECONDITION_BY_DESIGN[r.id],
+      // ⭐⭐ GH#1281（2026-09-17）—— 豁免要**認家族**，⛔ 不是認一個 id。
+      //   `tpl-spend-resource` 的理由（「這一族的定義就是要有 N 層資源才放得出來」）
+      //   對**每一份**同家族的模板都成立，而編譯出來的英雄模板叫 `hero-template.<雜湊>`
+      //   ⇒ 只認 id 的話，第四批帶進來的那一份（金色魔王 EX／艾希 Q 用的）就被判成 no-op。
+      (r) =>
+        !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict) &&
+        !PRECONDITION_BY_DESIGN[r.id] &&
+        !(r.family !== undefined && PRECONDITION_BY_DESIGN[`tpl-${r.family}`]),
     );
     expect(bad.map((r) => `${r.id}: ${r.verdict}（${r.reason ?? ""}）`), "預設展開在 sim 裡什麼都不做的模板").toEqual([]);
     // sentinel：分母要是全部 enabled 模板，而且三種形狀各自至少量到一個 —— 迴圈沒跑到也是全綠。

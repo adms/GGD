@@ -103,11 +103,17 @@ function nearestEnemy(world: MatchController["world"], me: EntityId, from: Vec2)
 }
 
 function seats(champ: ChampionId): SeatSpec[] {
+  // ⭐⭐ GH#1281（2026-09-17）—— **機器人也要釘**，⛔ 不是讓它們從名冊挑。
+  //   在此之前只釘了人類那一格（Saber），11 個機器人的英雄由選角流程從**出貨名冊**挑
+  //   ⇒ 第四批 37 名上架之後，敵人換成另一批身體（移速／體型／攻擊距離都不同）
+  //   ⇒ 「揮了一刀有沒有打中」跟著變 —— 這一條的自證（`hits > 0`）因此紅，
+  //   而它要驗的是**移動中不會取消自動攻擊**，⛔ 不是「今天名冊上有誰」。
+  //   ⇒ 全部座位用同一具身體：這條測試量的是**輸入與索敵**，⛔ 不是英雄差異。
   return Array.from({ length: 12 }, (_, i) => ({
     seatId: i,
     teamId: Math.floor(i / 3),
     isBot: i !== 0,
-    championId: i === 0 ? champ : undefined,
+    championId: champ,
   }));
 }
 
