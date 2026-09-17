@@ -2,11 +2,11 @@
 
 3v3v3v3 網頁 3D 體素競技場 MOBA。私人專案。
 
-> 📍 **現況快照（2026-09-11 · `content/manifest.json` = `cv_6fbc4aae62ba` · git tag `v0.44.1`）**
-> 英雄 **153** 名（白名單開放 130）· 技能 **907** · 道具 **142**（另 112 件退場在 `_legacy/`）· 競技場 **13** 張 · 模型文件 416 · 特效 702。
+> 📍 **現況快照（2026-09-17 · `content/manifest.json` = `cv_c146a194de5f` · git tag `v0.46.0`）**
+> 英雄 **190** 名（正式站白名單開放 167）· 技能 **1129** · 道具 **142**（另 112 件退場在 `_legacy/`）· 競技場 **13** 張 · 模型文件 1,063 · 特效 726。
 > 賽制打到**第 10 回合四隊同場大亂鬥**決冠軍；**第 11 回合・生存模式**（500 隻殭屍上限、總分加倍）於 2026-09-10 開啟。
-> 待上架：LoL 第二批 **11** 名（GH#1185）＋ 已取得模型／重上架舊角 **34** 名（GH#1205）—— 兩批都還**不在** `content/` 裡（§7 有名單）。
-> ⚠️ 這一格是全篇唯一一段刻意抄了數字的散文 —— 它一定會過期；每一節底下的**產生區塊**才是可信的。
+> LoL 第二批 11 名（GH#1185）與已取得模型 26 名（GH#1205）已隨 **v0.46.0** 上架（正式站白名單 130→167）；還沒進 `content/` 的只剩 **8** 名 JASS 舊角重上架（§7 有名單）。
+> ⚠️ 這一格與 §7 的內容表是刻意抄了數字的散文 —— 它們一定會過期；每一節底下的**產生區塊**才是可信的。
 
 - [1. 這是什麼 / What this is](#1-這是什麼--what-this-is)
 - [2. 快速開始 / Quick start](#2-快速開始--quick-start)
@@ -51,7 +51,7 @@ pnpm dev
 - client 的 vite port 是寫死的 `39527` + `strictPort`（`apps/client/vite.config.ts` 的 `server.port` / `server.strictPort`），`pnpm dev` 不用加任何參數。
 - client 走同源 `/colyseus` proxy 打到 `localhost:2567`（同檔 `server.proxy["/colyseus"]`，`ws: true`）。
 - game-server 抓不到 platform 時，白名單**fail-safe 成 allow-all**（`apps/game-server/src/curation/whitelist.ts:14-21`），所以不跑 platform 也有完整英雄可選。
-- `content/manifest.json` 與各 `_index.json` **都在 git 裡**（153 英雄 / 907 技能 / 142 道具，`cv_824afa79978e`），fresh clone **不需要**先跑 `content:build`。
+- `content/manifest.json` 與各 `_index.json` **都在 git 裡**（190 英雄 / 1129 技能 / 142 道具，`cv_c146a194de5f`），fresh clone **不需要**先跑 `content:build`。
 - `@ggd/shared` **沒有 build 步驟** —— `package.json` 的 `main`/`types`/`exports` 全部直接指向 `./src/*.ts`，由 vite / tsx 就地編譯。所以 `pnpm install` 之後不用先 `pnpm build` 也不用先 build shared。
 
 > 前兩條刻意只寫欄位名不寫行號 —— `apps/client/vite.config.ts` 是常被改的檔案，這兩處在寫這份 README 的期間就漂過兩次（504 → 505 → 514）。要找就 grep `39527` 與 `"/colyseus"`。
@@ -146,9 +146,9 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 | `ADMIN_BOOTSTRAP_USERNAME` | | 空（不 bootstrap） |
 | `GGD_DEPLOY_TIER` | | 未設 ＝ **public**（版權閘的 fail-safe 方向） |
 | `GGD_REQUIRE_APPROVAL` / `GGD_REGISTER_RATE_LIMIT` | | off / `0`（`internal/server/server.go` 的 `New()`：`envEnabled("GGD_REQUIRE_APPROVAL")` / `envInt("GGD_REGISTER_RATE_LIMIT", 0)`） |
-| 其餘 `GGD_*`：`GGD_REQUIRE_INVITE` · `GGD_MAX_PENDING` · `GGD_PENDING_TTL` · `GGD_TRUSTED_PROXY_CIDRS` · `GGD_PUBLIC_URL` · `GGD_AUTH_REFRESH_COOKIE` · `GGD_NEW_ACCOUNT_CRYSTALS` · `GGD_BACKFILL_WELCOME_CRYSTALS` · `GGD_SLACK_NOTIFY_ENABLED` · `GGD_SLACK_WEBHOOK_URL` · `GGD_HERO_IMPORT_SECRET` · `GGD_CONTENT_API_URL` · `GGD_OWNER_BOOTSTRAP_TOKEN` · `GGD_LOBBY_MAX_CONNS_PER_ACCOUNT` · `GGD_PLATFORM_VERSION` | | 2026-08 之後陸續加的（邀請碼 #174、審核制 #126、前門 proxy、新帳號水晶、Slack 通知、社群英雄匯入）。⚠️ 名字是 `grep Getenv` 量出來的，**語意與預設值沒有逐一讀** —— 看 `config.go` / `server.go` |
+| 其餘 `GGD_*`：`GGD_REQUIRE_INVITE` · `GGD_MAX_PENDING` · `GGD_PENDING_TTL` · `GGD_TRUSTED_PROXY_CIDRS` · `GGD_PUBLIC_URL` · `GGD_AUTH_REFRESH_COOKIE` · `GGD_NEW_ACCOUNT_CRYSTALS` · `GGD_BACKFILL_WELCOME_CRYSTALS` · `GGD_SLACK_NOTIFY_ENABLED` · `GGD_SLACK_WEBHOOK_URL` · `GGD_HERO_IMPORT_SECRET` · `GGD_CONTENT_API_URL` · `GGD_OWNER_BOOTSTRAP_TOKEN` · `GGD_LOBBY_MAX_CONNS_PER_ACCOUNT` · `GGD_PLATFORM_VERSION` · `GGD_MODEL_RELEASE_CONTENT` | | 2026-08 之後陸續加的（邀請碼 #174、審核制 #126、前門 proxy、新帳號水晶、Slack 通知、社群英雄匯入）。⚠️ 名字是 `grep Getenv` 量出來的，**語意與預設值沒有逐一讀** —— 看 `config.go` / `server.go` |
 
-**game-server**（`apps/game-server/src/index.ts`、`src/config/*.ts`）：`GAME_PORT`=2567、`CONTENT_DIR`=repo `content/`、`PLATFORM_GAME_SHARED_SECRET`=空（production 才強制）、`GAME_PUBLIC_ENDPOINT`=`ws://localhost:<PORT>`、`GGD_PLATFORM_URL`=`http://localhost:8080`、`GGD_WHITELIST_BYPASS` / `GGD_WHITELIST_FILE`、`GGD_COMBAT_ENV_BYPASS`、`GGD_DEV_CHEATS`（設 `"0"` 才關）、`GGD_MAX_ROOMS`=50（出貨預設；平台後台「系統運維」可覆寫，1～500）、`GGD_SNAPSHOT_HZ`=30（同上，`src/config/snapshotRate.ts`）、`GGD_SERVER_OPS_BYPASS`（設 `1` 跳過平台讀取）。之後加的：`GGD_REPLAY_ENABLED` / `GGD_REPLAY_DIR` / `GGD_REPLAY_REQUIRED` / `GGD_REPLAY_UNHEALTHY_AFTER`（對戰錄影與 `/healthz` 的 `replay` 區塊）、`GGD_MATCH_STATS` / `GGD_MATCH_STATS_DIR`（賽後統計落地）、`GGD_MATCH_HEARTBEAT_BYPASS`、`GGD_PRIVATE_EVENT_FANOUT`、`GGD_HERO_IMPORT_SECRET` / `GGD_CONTENT_API_URL`（社群英雄匯入的內部呼叫）、`GGD_DEPLOY_TIER`、`APP_ENV`、`GGD_BUILD_STAMP`（版本戳，Makefile 算好塞進 build arg）。完整清單就是 `grep -rho 'process\.env\.[A-Z_]*' apps/game-server/src | sort -u` 的輸出，⛔ 不要相信這一段抄的。
+**game-server**（`apps/game-server/src/index.ts`、`src/config/*.ts`）：`GAME_PORT`=2567、`CONTENT_DIR`=repo `content/`、`PLATFORM_GAME_SHARED_SECRET`=空（production 才強制）、`GAME_PUBLIC_ENDPOINT`=`ws://localhost:<PORT>`、`GGD_PLATFORM_URL`=`http://localhost:8080`、`GGD_WHITELIST_BYPASS` / `GGD_WHITELIST_FILE`、`GGD_COMBAT_ENV_BYPASS`、`GGD_DEV_CHEATS`（設 `"0"` 才關）、`GGD_MAX_ROOMS`=50（出貨預設；平台後台「系統運維」可覆寫，1～500）、`GGD_SNAPSHOT_HZ`=30（同上，`src/config/snapshotRate.ts`）、`GGD_SERVER_OPS_BYPASS`（設 `1` 跳過平台讀取）。之後加的：`GGD_REPLAY_ENABLED` / `GGD_REPLAY_DIR` / `GGD_REPLAY_REQUIRED` / `GGD_REPLAY_UNHEALTHY_AFTER` / `GGD_REPLAY_HEALTHZ_STATUS`（對戰錄影與 `/healthz` 的 `replay` 區塊）、`GGD_MATCH_STATS` / `GGD_MATCH_STATS_DIR`（賽後統計落地）、`GGD_MATCH_HEARTBEAT_BYPASS`、`GGD_PRIVATE_EVENT_FANOUT`、`GGD_HERO_IMPORT_SECRET` / `GGD_CONTENT_API_URL`（社群英雄匯入的內部呼叫）、`GGD_DEPLOY_TIER`、`APP_ENV`、`GGD_BUILD_STAMP` / `GGD_BUILD_STAMP_HEALTHZ`（版本戳，Makefile 算好塞進 build arg）。完整清單就是 `grep -rho 'process\.env\.[A-Z_]*' apps/game-server/src | sort -u` 的輸出，⛔ 不要相信這一段抄的。
 
 **content-api**：`PORT`=8787、`HOST`=127.0.0.1（**非 loopback 直接 exit**）、`GGD_CONTENT_DIR`、`GGD_CONTENT_BACKUP_DIR`=`data/content-backups`；`NODE_ENV=production` 一律拒絕啟動。
 
@@ -161,13 +161,13 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 - `docker/compose.yaml` 是基底：`redis` · `platform` · `game` · `edge`（nginx，`nginx/nginx.conf`）· `content-api`（dev-only）· `review`（HITL 批核頁的後端，:8790，`GGD_REVIEW_MODE=live`）。`compose.family.yaml` / `compose.lan.yaml` / `compose.tunnel.yaml` / `compose.community.yaml` 是疊上去的 overlay（family = 邀請碼＋審核；community 多一個 `hero-import` 服務 :8788）。
 - TLS 前門是 **Caddy**（`docker/Caddyfile`，`reverse_proxy edge:8080`）。⚠️ 那個檔在 2026-08-28 之前**從來沒進過 git**，而它是 ggd.adms.ai 的前門 —— 檔頭把那次事故寫得很清楚；主機名由 `GGD_SITE_HOSTS` 決定，⛔ 不要在 DNS 還沒指過來的機器上掛正式名字（Let's Encrypt 有速率限制）。
 - `make secrets` 用 `openssl rand -hex 32` 產 `deploy/helm/secrets.local.yaml`（gitignored）。
-- compose 的 env key **曾經有兩個是壞的**，現在剩一個：
+- compose 的 env key **曾經有三個是錯名**，現在全部處理了：
 
   | compose 設的 | 程式實際讀的 | 現況 |
   | --- | --- | --- |
   | `HTTP_ADDR: ":8080"` | `PLATFORM_ADDR`（預設 `:8080`） | 無害；檔內已註明「legacy alias, read by nothing」 |
   | `GAME_INTERNAL_URL: "http://game:2567"` | `GAME_SERVER_ADDR` | **已修**：`compose.yaml` 現在直接設 `GAME_SERVER_ADDR`，舊名留著當註解 |
-  | `CONTENT_DIR: /srv/content`（content-api） | `GGD_CONTENT_DIR`（`apps/content-api/src/index.ts:25`） | **仍然壞**：那個 bind mount 對 content-api 等於沒作用。正式站不跑 content-api，所以沒人踩到 |
+  | `CONTENT_DIR: /srv/content`（content-api） | `GGD_CONTENT_DIR`（`apps/content-api/src/index.ts:25`） | **已修**（GH#1235）：`compose.yaml` 現在設 `GGD_CONTENT_DIR`，舊名留在註解裡 |
 
 ---
 
@@ -185,7 +185,7 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 | **內容圖鑑 #codex** | `http://localhost:39527/#codex` | client（大廳右上「📖 圖鑑」按鈕） |
 | **資產主控台 #assets** | `http://localhost:39527/#assets` | client。**沒有任何按鈕連過去，只能手打 hash** |
 | **版權聲明 #credits** | `http://localhost:39527/#credits` | client（登入頁 footer） |
-| **試聽／確認台**（`apps/client/public/*.html`，共 22 頁） | `http://localhost:39527/<檔名>.html` | client。**19 頁只在 `vite dev` 下能用**（直接 import `/src/**`）；純靜態的只有 `bgm-audition.html`（音樂・音效試聽）、`voice-audition.html`（角色語音試聽）、`ou99-model-shots.html`（模型實拍台）。其餘：`model-budget`（#99）· `champion-model-audition`（#267 真鏡頭選角預覽）· `firework-audition`（#93）· `ground-audition`（#80）· `intermission-audition`（#103）· `beam-audition` / `chain-lightning-audition` / `cast-pillar-audition` / `frame-data` / `presentation-audition`（技能演出的像素證據台）· `tint-audition` / `fxtint-audition` / `w3x-emitter-audition` / `w3x-family-audition`（w3x 特效重建）· `vfx-script-studio`（GH#838 特效工坊）· `voice-spatial-audition`（#259）· `feature-proof-audition` |
+| **試聽／確認台**（`apps/client/public/*.html`，共 34 頁） | `http://localhost:39527/<檔名>.html` | client。**21 頁只在 `vite dev` 下能用**（直接 import `/src/**`）；13 頁是純靜態＋fetch（例：`bgm-audition.html` 音樂・音效試聽、`voice-audition.html` 角色語音試聽、`ou99-model-shots.html` 模型實拍台，以及之後陸續加的一批動作／特效／音訊比對審查頁）。常用的：`model-budget`（#99）· `champion-model-audition`（#267 真鏡頭選角預覽）· `beam-audition` / `chain-lightning-audition` / `frame-data`（技能演出的像素證據台）· `w3x-family-audition`（w3x 特效重建）· `vfx-script-studio`（GH#838 特效工坊）。⛔ 這裡不逐頁列 —— 每一頁的用途寫在它自己的 `<title>` |
 | **素材批次審查（HITL）** | `http://localhost:39527/asset-review.html` | client dev；verdict 經 vite middleware 寫回 `docs/_review/approvals.json`（#664） |
 | **功能批次批核（一頁式連續圖片）** | `http://localhost:39527/feature-review.html`；正式站在後台「營運 › 批次驗收」 | client dev / admin（#669；owner 定義：先上線、後台一鍵否決） |
 | **後台管理主控台** | `http://127.0.0.1:60721/admin/` | admin；玩家維運頁另需 platform |
@@ -195,7 +195,7 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 
 遊戲 client **沒有 URL router** —— 四個畫面（boot / auth / lobby / match）都在同一個網址下，由 Zustand 狀態機切換。選角、中場商店、三選一、結算全部是 match 畫面的 phase，都沒有自己的 URL。唯一可深連結的是那三個 hash overlay，而且可以疊在對戰進行中打開。
 
-那 19 個 audition 頁直接 import client 的 `/src/**/*.ts`，所以只在 `vite dev` 下能用（它們自己的錯誤框就這麼寫）；⚠️ 正式 build **根本不載入**它們（同一件事在 GH#794 量過：`/__review` 與 `/__live` 在本機活著、線上沒有）。三個純靜態頁理論上 build 完也能跑，但**未實測**。
+那 21 個 dev-only 頁直接 import client 的 `/src/**/*.ts`，所以只在 `vite dev` 下能用（它們自己的錯誤框就這麼寫）；⚠️ 正式 build **根本不載入**它們（同一件事在 GH#794 量過：`/__review` 與 `/__live` 在本機活著、線上沒有）。13 個純靜態頁理論上 build 完也能跑，但**未實測**。
 
 > **⚠ 後台 Console Hub 上有兩張壞卡**：
 > - 「測試台」寫的是 `localhost:5199`（`apps/admin/src/config.ts:28`），但那是 `client-mobile` 的 port。測試台真正在 **5173**。
@@ -203,14 +203,14 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 
 ### 後台的每一頁
 
-側邊欄已經不是一張 12 列的表。`apps/admin/src/ui/App.tsx` 的 `HAND_NAV` 手寫 **118 頁**，再加上從每份 config 的 Zod 根節點 `@nav` **推導**出來的列（GH#992 —— 手寫的贏位置，推導只補「spec 有 `@nav` 而這裡沒有」的那種，所以「忘了接線」這種病不再存在），分成 **11 組**（順序寫死在 `SECTION_ORDER`），dev build 再多一組「技能對照·視覺化」（GH#775 的 13 頁，正式 build 不載入）。2026-09-11 量到的每組手寫頁數：
+側邊欄已經不是一張 12 列的表。`apps/admin/src/ui/App.tsx` 的 `HAND_NAV` 手寫 **120 頁**，再加上從每份 config 的 Zod 根節點 `@nav` **推導**出來的列（GH#992 —— 手寫的贏位置，推導只補「spec 有 `@nav` 而這裡沒有」的那種，所以「忘了接線」這種病不再存在），分成 **11 組**（順序寫死在 `SECTION_ORDER`），dev build 再多一組「技能對照·視覺化」（GH#775 的 13 頁，正式 build 不載入）。2026-09-17 量到的每組手寫頁數：
 
 | 組 | 頁 | 在做什麼 |
 | --- | ---: | --- |
-| 營運 | 19 | 帳號審核（有人在等的那一頁，帶 pending 徽章）· Quick Approval · Players · Matches · 排名獎勵 · 對戰回放 · 傷害排行榜 · Announcements · M幣發放 · 邀請碼 · Audit log · 內容載入政策 · 編輯器創作規則／icon 上傳 · 玩家自製內容 · 新英雄檢查警示 · **批次驗收（連續圖片）** · **投稿批核（AI／玩家）** |
+| 營運 | 20 | 帳號審核（有人在等的那一頁，帶 pending 徽章）· Quick Approval · Players · Matches · 排名獎勵 · 對戰回放 · 傷害排行榜 · Announcements · M幣發放 · 邀請碼 · Audit log · 內容載入政策 · 編輯器創作規則／icon 上傳 · 玩家自製內容 · 新英雄檢查警示 · **批次驗收（連續圖片）** · **投稿批核（AI／玩家）** |
 | 內容·素材管理 | 3 | **內容白名單**（內容能不能被玩到只由這頁決定）· 英雄上下架 · 內容覆蓋層 |
 | 資產產線 | 11 | AI 生成設定 · 素材加速（S3/CDN）· 素材簽署網址 · 模型預算 · ICON 生成追蹤 · 體素外觀對照表／鑄造廠／條碼／身體 … |
-| 戰鬥規則 | 16 | 戰鬥系統（全域倍率）· 冷卻／吟唱／減傷規則 · 對戰設定（一場的時鐘）· 競技場規則 · 場地輪替 · 戰鬥手感 · 走過去放技能 · 體型與射程 · 戰鬥鏡頭 · 小地圖規格 … |
+| 戰鬥規則 | 17 | 戰鬥系統（全域倍率）· 冷卻／吟唱／減傷規則 · 對戰設定（一場的時鐘）· 競技場規則 · 場地輪替 · 戰鬥手感 · 走過去放技能 · 體型與射程 · 戰鬥鏡頭 · 小地圖規格 … |
 | 五級距·數值 | 20 | 傷害／耗魔／冷卻／施法距離／AoE／吟唱／速度成長／移速加成／位移的五級距 · AP 係數公式 · 屬性上限 · 英雄屬性正規化 · 五級距總覽 · ⚠️ 不吃五級距的傷害節點 … |
 | 狀態規則 | 13 | 一種狀態一頁 |
 | 武器道具 | 3 | 商店經濟 · 傳說武器三選一 … |
@@ -348,7 +348,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 價目表的推導（`itemTiers.ts`：`SIMPLE` 300 / `POWERFUL` 1200 剛好 4 倍，所以升級的理由是**格子**不是金幣效率；傳說 52 AEP 的預算）還在，但今天玩家在貨架上看到的是**服務 ＋ 寶具**，不是武器。bot 買武器打 5 折（`botShop.priceMult` 0.5）。
 
-> ⚠ **「不可重複」不是全域規則**。`buyItem` 只在道具標了 `unique` 時才回 `unique-owned`（`shop.ts`），而**出貨的 142 份道具文件裡一份都沒有標 `unique: true`**（2026-09-11 重新實測；唯一標過的那一份早已隨退場批次搬進 [`content/_legacy/items/`](content/_legacy/items/)，逐筆索引見 [`docs/legacy-index.md`](docs/legacy-index.md)）。也就是說在目前資料下每一件買得到的道具都買得到第二個。是否有其他策展層另外過濾 —— **未驗證**。
+> ⚠ **「不可重複」不是全域規則**。`buyItem` 只在道具標了 `unique` 時才回 `unique-owned`（`shop.ts`），而**出貨的 142 份道具文件裡一份都沒有標 `unique: true`**（2026-09-17 重新實測；唯一標過的那一份早已隨退場批次搬進 [`content/_legacy/items/`](content/_legacy/items/)，逐筆索引見 [`docs/legacy-index.md`](docs/legacy-index.md)）。也就是說在目前資料下每一件買得到的道具都買得到第二個。是否有其他策展層另外過濾 —— **未驗證**。
 
 ### 屬性路線與畢業裝
 
@@ -365,7 +365,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 ### 回合間的三選一
 
-抽 3 張（`offerCount`）、加權、不重複、已擁有的不會再出現。整張回合表住 `content/config/arena-rules.json` 的 `rounds`，後台「競技場規則」頁可調；`apps/game-server/src/match/arenaRules.test.ts` 逐格對著它斷言。⛔ 下面這張表是 2026-09-11 從那份檔抄的，**改了設定就以檔案為準**：
+抽 3 張（`offerCount`）、加權、不重複、已擁有的不會再出現。整張回合表住 `content/config/arena-rules.json` 的 `rounds`，後台「競技場規則」頁可調；`apps/game-server/src/match/arenaRules.test.ts` 逐格對著它斷言。⛔ 下面這張表是 2026-09-17 對過那份檔的，**改了設定就以檔案為準**：
 
 | 回合 | 發等級 | 發金幣 | 強化卡 | 武器卡 |
 | ---: | ---: | ---: | --- | --- |
@@ -613,30 +613,30 @@ make lan-probe
 
 **開放（whitelisted）的英雄、技能與商店清單就直接印在下面、預設展開、不用點任何摺疊**。完整的全表搬到 `docs/reference/roster.md`、`abilities.md`、`items.md`（各區塊都有連結），這樣 README 才不會又肥又被 GitHub 折疊。所有數字都從 repo 量出來，權威計數在 `content/manifest.json`（由 `pnpm content:build` 產生）。
 
-下表是 `cv_6fbc4aae62ba`（2026-09-11，origin/main）的實測值 —— 16 個 collection、**2,754** 份文件（不含各目錄的 `_index.json`）。
+下表是 `cv_c146a194de5f`（2026-09-17，origin/main）的實測值 —— 16 個 collection、**3,996** 份文件（不含各目錄的 `_index.json`）。
 
 | collection | docs | 說明 |
 | --- | ---: | --- |
-| `content/champions/` | **153** | 全部英雄文件：69 名 w3x 原作（`godie-*`）＋ 2026-09 上架的 **81 名新英雄**（第二批 `b2-*` 38、社群 `community-*` 37、LoL `lol-*` 7）＋ 骨架備援 `sela` / `thorne` |
-| `content/abilities/` | **907** | 每英雄每 slot 一份，**一名英雄六個 slot**：天生技 `PASSIVE`、Q/W/E/R、EX（150 名有 EX 與天生技） |
+| `content/champions/` | **190** | 全部英雄文件：69 名 w3x 原作（`godie-*`）＋ 2026-09 上架的 **119 名新英雄**（第二批 `b2-*` 38、社群 `community-*` 37、LoL `lol-*` 18、已取得模型 `acquired-*` 26）＋ 骨架備援 `sela` / `thorne`。其中 21 份是變身態（某位英雄的第二具身體，不可獨立選取） |
+| `content/abilities/` | **1129** | 每英雄每 slot 一份，**一名英雄六個 slot**：天生技 `PASSIVE`、Q/W/E/R、EX（187 名有 EX 與天生技） |
 | `content/items/` | **142** | 依 `craftRole` 標記：`final` 42（38 件有效果會進獎池）· `component` 16 · `quest` 6 · `service` 2 · `none` 76。另 **112 件退場**在 `_legacy/items/` |
-| `content/vfx/` · `vfx-scripts/` · `vfx-subtypes/` | 702 · 45 · 4 | 特效文件、GH#838 特效工坊的演出腳本、子類型 |
-| `content/models/` | **416** | `ou99.*` 129（論壇購入的模型，2026-09-10 全部上架後台下拉選單）· `imported.*` 117（w3x 匯入）· `community.body.*` 75（社群英雄的身體；2026-09-11 那次合併 +27，七名 LoL 英雄拿回本尊模型）· `version.body.*` 59（**凍結的模型版本** —— 英雄卡指的是這一種，所以換模型可以一鍵切回）· `w3x.*` 23 · `champ.*` 9 · `prop.*` 4 |
-| `content/config/` | **103** | 後台可調的每一組旋鈕各一份。⚠️ 其中 7 份是 `skills:sync` 的**產物**（`damage-tiers` / `stat-caps` / `vfx-families` / `ability-vfx-bindings` / `ap-damage-scaling` / `combo-strikes` / `_index`），⛔ 不要手改 |
+| `content/vfx/` · `vfx-scripts/` · `vfx-subtypes/` | 726 · 230 · 4 | 特效文件、GH#838 特效工坊的演出腳本、子類型 |
+| `content/models/` | **1,063** | `version.body.*` 576（**凍結的模型版本** —— 英雄卡指的是這一種，所以換模型可以一鍵切回）· `community.body.*` 170（社群／LoL／已取得模型英雄的身體）· `ou99.*` 164（ou99.com 論壇的第三方模型，出處見 `CREDITS.md` 的 GH#1234 一節）· `imported.*` 117（w3x 匯入）· `w3x.*` 23 · `champ.*` 9 · `prop.*` 4 |
+| `content/config/` | **105** | 後台可調的每一組旋鈕各一份。⚠️ 其中有幾份是 `skills:sync` 的**產物**（例：`damage-tiers` / `stat-caps` / `vfx-families` / `ability-vfx-bindings`），⛔ 不要手改 —— 哪一份是產物問 `bash scripts/genguard.sh <path>`，⛔ 不要記名單 |
 | `content/arenas/` · `maps/` | 13 · 7 | 七張動漫競技場（GH#324）＋ 既有場地；`arena.royale` 是第 11 回合的生存場 |
-| `content/ability-templates/` | 82 | 技能模板家族（第〇·五守則：技能 = JSON 模板組合） |
+| `content/ability-templates/` | 89 | 技能模板家族（第〇·五守則：技能 = JSON 模板組合） |
 | `content/augments/` | 91 | 60 張聖杯願望 ＋ 31 張其他增益 |
-| `content/status-effects/` · `projectiles/` · `skins/` · `loot-tables/` | 51 · 21 · 14 · 3 | 狀態、飛行物、造型、三張武器獎池（`legendary-weapons` 30 件 / `ex-release-weapons` 39 / `ex-origin-weapons` 15） |
-| **合計** | **2,727** | 這是**此刻**的磁碟實測；權威計數永遠是 `content/manifest.json` |
+| `content/status-effects/` · `projectiles/` · `skins/` · `loot-tables/` | 167 · 23 · 14 · 3 | 狀態、飛行物、造型、三張武器獎池（`legendary-weapons` 30 件 / `ex-release-weapons` 39 / `ex-origin-weapons` 15） |
+| **合計** | **3,996** | 這是**此刻**的磁碟實測；權威計數永遠是 `content/manifest.json` |
 
-> ⚠️ **這張表被更正過三次，三次都是同一個形狀（第三守則）。** 2026-08-16 從 113/662 改成 78/461（41 隻搬進 `_legacy/`）；2026-08-18 改 items 219→239、augments 31→91；2026-09-11 再改成 153/907/142 —— 81 名新英雄上架、97 件道具退場、模型從 124 長到 416（同一天之內就從 389 變成 416）。每一次都是「手寫的統計沒有守衛」的症狀。⛔ 與其留一個看起來精確的舊數字，不如只留量得到的那一格；要即時的看 `manifest.json`。
+> ⚠️ **這張表被更正過四次，四次都是同一個形狀（第三守則）。** 2026-08-16 從 113/662 改成 78/461（41 隻搬進 `_legacy/`）；2026-08-18 改 items 219→239、augments 31→91；2026-09-11 改成 153/907/142（81 名新英雄上架、97 件道具退場）；2026-09-17 再改成 190/1129/142 —— 又上架 37 名，模型從 124 長到 1,063。每一次都是「手寫的統計沒有守衛」的症狀。⛔ 與其留一個看起來精確的舊數字，不如只留量得到的那一格；要即時的看 `manifest.json`。
 
 `manifest.json` 裡的 `contentVersion` 是整棵 `content/` 的純函數，**改內容就會變**。不要相信任何抄在文件裡的雜湊 —— 包含這份 README 的散文部分。下面三個產生區塊會自己印出產生當下的 `contentVersion`，那個才是可信的。
 
 
-### 🚧 待上架的兩批（⛔ 尚未進 `content/`）
+### 🚧 待上架（⛔ 尚未進 `content/`）
 
-上面那張表數的是**已經在 repo 裡**的東西。另有 **45 名**在上架流程中 —— LoL 第二批 11 名（[GH#1185](https://github.com/adms/GGD/issues/1185)，保留原版 QWER）＋ 已取得模型／重上架舊角 34 名（[GH#1205](https://github.com/adms/GGD/issues/1205)：新增 26 ＋ JASS 舊角重上架 8）。⭐ **逐名的 ID／角色／狀態表在下面的產生區塊**（「全英雄列表」那一段末尾的「待上架」小節），⛔ 這裡不再手抄一份：它的唯一來源是 `docs/_data/pending-heroes.json`，由 `python3 tools/reference/sync_pending_heroes.py` 從另一個 repo（`GGD-community-acquired-heroes` 的 `社群英雄126名上架狀態.md`）重抽 —— 那個 repo 不保證在每一台機器上，所以走快照（與 `_curation-snapshot.json` 同一個模式），`--check` 在來源缺席時會**明說跳過**。⚠️ 2026-09-11 實測 origin/main：`content/champions/` 裡**零份** `acquired-*`、`lol-*` 只有第一批 7 名；8 名舊角有 7 名躺在 `_legacy/champions/`、`godie-eevi` 兩邊都沒有。上架的三道閘（roster 同步、內容各軸缺 0、白名單）與 81 名那一批相同（`tools/ship-81/`、`roster:check`）。**以兩張票與那份快照為準。**
+上面那張表數的是**已經在 repo 裡**的東西。9/11 那份待上架快照列了 45 名 —— LoL 第二批 11 名（[GH#1185](https://github.com/adms/GGD/issues/1185)）＋ 已取得模型／重上架舊角 34 名（[GH#1205](https://github.com/adms/GGD/issues/1205)：新增 26 ＋ JASS 舊角重上架 8）。其中 **37 名已隨 v0.46.0 上架**（卡進了 `content/champions/`、正式站白名單 130→167），**還沒進來的只剩 8 名 JASS 舊角**：7 名的卡躺在 `_legacy/champions/`，`godie-eevi` 兩邊都沒有（2026-09-17 實測 origin/main）。⭐ **逐名表在下面的產生區塊**（「全英雄列表」那一段末尾的「待上架」小節），⛔ 這裡不再手抄一份：來源是 `docs/_data/pending-heroes.json`（`python3 tools/reference/sync_pending_heroes.py` 從 `GGD-community-acquired-heroes` 的 `社群英雄126名上架狀態.md` 重抽的快照），而產生器在算繪當下會**扣掉卡已經進 `content/champions/` 的列** —— 來源狀態頁停在 9/11，不扣的話已上架的 37 名會被印成「還沒進」（守衛 `ops/readmePendingHeroesNotLanded.test.ts`）。**以兩張票與那份快照為準。**
 
 ### ⭐ 英雄定位與屬性級距 —— 機制參考表
 
@@ -735,7 +735,7 @@ pnpm docs:readme:check
 
 第二條只檢查不寫入，README 過期就 exit 1（適合掛 pre-commit / CI）。產生是確定性的、**無時間戳**；區塊結尾印的 `contentVersion` 就是新鮮度戳記。標記之外的每一個手寫字元都會逐位保留；標記若成對缺失，區塊會被**附加在檔尾**（不會靜默覆寫任何東西）。標記重複或落單，產生器會直接中止並說明。
 
-`pnpm docs:readme` **一次寫兩個目標**：README 裡的**開放**清單（與全英雄列表），以及 `docs/reference/roster.md` / `abilities.md` / `items.md` / `grail-wishes.md` / `mechanics.md` 與 `docs/全英雄列表.md`（GH#1226，153 名 × 六槽技能名）裡的**完整**全表（全 153 / 907 / 142）。兩者讀同一棵 `content/`、同一個 `build_context()`，所以永遠不會互相矛盾。（`pnpm docs:reference` 只重寫 docs 那三個檔，是 CI 用的子集。）
+`pnpm docs:readme` **一次寫兩個目標**：README 裡的**開放**清單（與全英雄列表），以及 `docs/reference/roster.md` / `abilities.md` / `items.md` / `grail-wishes.md` / `mechanics.md` 與 `docs/全英雄列表.md`（GH#1226，190 名 × 六槽技能名）裡的**完整**全表（全 190 / 1129 / 142）。兩者讀同一棵 `content/`、同一個 `build_context()`，所以永遠不會互相矛盾。（`pnpm docs:reference` 只重寫 docs 那三個檔，是 CI 用的子集。）
 
 > ℹ️ **fresh clone 就能跑這兩條指令**：產生器（`tools/reference/`）、`docs:readme` / `docs:reference` 兩個 script 與 `docs/reference/*.md` 都已進版控（複驗：`git ls-files tools/reference docs/reference` 列得出檔、HEAD 的 `package.json` 兩個 script 都在），只需要 python3。⚠️ 這一段在 2026-08-25 之前寫著「產生器尚未 commit、fresh clone 跑不了」—— 那是它們還躺在工作區時量到的舊事實，早已過期（誤導源稽核 GH#771 抓到）。fresh clone 唯一缺的是 gitignored 的 `data/curation/whitelist.json`：它不在時**開放**清單是空的，產生器會大聲說明而不是印一張安靜的空表。
 
@@ -747,32 +747,32 @@ client 的一個 hash route，不用登入、不用開對戰，大廳右上「�
 
 下面的表格是**離線快照式的清單**（要 Ctrl-F、要離線看、要 diff 用），圖鑑是**互動版**（要查關聯、要編輯用）。兩者讀的是同一棵 `content/`。
 
-> **README 印開放的、預設展開；完整的搬到 docs。** 下面三段（`roster` / `abilities` / `items` 標記之間）只放**開放名單**的英雄、技能與商店貨架，且**不包在 `<details>` 裡**——GitHub 對 `<details>` 預設折疊，之前就是這個原因讓人以為清單不見了。全 153 名 / 907 技能 / 142 道具的逐欄表在 `docs/reference/*.md`（各區塊有連結）。**描述類欄位為了可讀性被截斷**：英雄「一句話說明」40 字、技能效果 34 字、道具 modifiers 52 字、被動 28 字（`gen_readme_lists.py` 頂端的 `LIMIT_*`）；**結尾的 `…` 是產生器加的**。要完整逐字請開 `#codex` 或讀 `content/<collection>/<id>.json`。
+> **README 印開放的、預設展開；完整的搬到 docs。** 下面三段（`roster` / `abilities` / `items` 標記之間）只放**開放名單**的英雄、技能與商店貨架，且**不包在 `<details>` 裡**——GitHub 對 `<details>` 預設折疊，之前就是這個原因讓人以為清單不見了。全 190 名 / 1129 技能 / 142 道具的逐欄表在 `docs/reference/*.md`（各區塊有連結）。**描述類欄位為了可讀性被截斷**：英雄「一句話說明」40 字、技能效果 34 字、道具 modifiers 52 字、被動 28 字（`gen_readme_lists.py` 頂端的 `LIMIT_*`）；**結尾的 `…` 是產生器加的**。要完整逐字請開 `#codex` 或讀 `content/<collection>/<id>.json`。
 
 ### 怎麼讀這三張表
 
-**開放名單 vs 全部 153 名。** 能不能被選到，是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在**建房當下**執行（5 秒行程快取，並據以過濾可選英雄／RANDOM 池／商店／draft，拒絕非白名單的 `SELECT_CHAMPION`）。所以：
+**開放名單 vs 全部 190 名。** 能不能被選到，是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在**建房當下**執行（5 秒行程快取，並據以過濾可選英雄／RANDOM 池／商店／draft，拒絕非白名單的 `SELECT_CHAMPION`）。所以：
 
 - `content/champions/` 裡的卡是**這個 repo 有的東西**；退休卡在 `content/_legacy/champions/`，**不進出貨 bundle**，每一張的狀態（已下架／待重上架／從未開放）與張數由產生器寫在 [`docs/legacy-index.md`](docs/legacy-index.md) —— ⛔ 這裡刻意不抄數字（這一行以前寫「78 份／另有 41 份」，兩個都過期了）。
 - 表格裡「開放名單」那幾名是**這台機器此刻啟用的東西** —— 實際數字看下面產生區塊自己印的那一行，⛔ 不要相信這段散文抄的數字。
 - `/data/**` 是 gitignored（`.gitignore:21`），**fresh clone 的白名單是空的** —— 開放數會是 0，復原步驟見 §4。
-- platform 沒跑時 game-server **fail-safe 成 allow-all**，所以離線 bot 模式永遠是完整 153 名可選，不受白名單影響。
+- platform 沒跑時 game-server **fail-safe 成 allow-all**，所以離線 bot 模式永遠是完整名冊可選（變身態與骨架替身除外），不受白名單影響。
 
-**一名英雄是六個 slot：天生技（`PASSIVE`）＋ Q/W/E/R/EX。** 天生技就是 w3x 作者的 `NN-00`，**等級 1 就擁有**、不用點技能點；在原始地圖裡它掛在英雄單位的 `abilities`（innate、非 learnable），而 `NN-01..04` 才是 `hero_abilities` 裡學得到的那四個。**最初的匯入把這個 slot 整個漏掉了**，所以舊版 README 寫「只有五種、全樹沒有任何 `xx-00` 文件」—— 那句話對當時的**磁碟內容**是真的，但對**模型**是錯的。現在 **150** 份天生技住在 `content/abilities/<championId>.passive.json`（69 名 w3x 英雄的是從原始地圖還原的，81 名新英雄的是設計時就有的），由 champion doc 的 `passiveAbility` 指過來（`exAbility` 的同款寫法）。
+**一名英雄是六個 slot：天生技（`PASSIVE`）＋ Q/W/E/R/EX。** 天生技就是 w3x 作者的 `NN-00`，**等級 1 就擁有**、不用點技能點；在原始地圖裡它掛在英雄單位的 `abilities`（innate、非 learnable），而 `NN-01..04` 才是 `hero_abilities` 裡學得到的那四個。**最初的匯入把這個 slot 整個漏掉了**，所以舊版 README 寫「只有五種、全樹沒有任何 `xx-00` 文件」—— 那句話對當時的**磁碟內容**是真的，但對**模型**是錯的。現在 **187** 份天生技住在 `content/abilities/<championId>.passive.json`（w3x 原作英雄的是從原始地圖還原的，新英雄的是設計時就有的），由 champion doc 的 `passiveAbility` 指過來（`exAbility` 的同款寫法）。
 
-- 150 份中 **116 份 `innateKind: "passive"`**（光環／閃避／命中觸發／回復／每殺成長，沒有冷卻、標 `[被動]` 或 `[靈氣]`），**34 份 `innateKind: "active"`**（真的有冷卻，原本在 D 鍵的招式）。兩者都是同一個等級 1 的 slot，只是建模方式不同。
-- **153 名裡有 150 名帶 `passiveAbility`，3 名沒有**，而且每一個「沒有」都有可查的原因：`sela` / `thorne` 不是 w3x 原創英雄（本來就沒有 `NN` 編號）；`godie-ogld` 有 `72-01..04` + `72-002`，但整張地圖裡不存在 `72-00`。**沒有 `passiveAbility` 是還原出來的事實，不是待辦。**
+- 187 份中 **153 份 `innateKind: "passive"`**（光環／閃避／命中觸發／回復／每殺成長，沒有冷卻、標 `[被動]` 或 `[靈氣]`），**34 份 `innateKind: "active"`**（真的有冷卻，原本在 D 鍵的招式）。兩者都是同一個等級 1 的 slot，只是建模方式不同。
+- **190 名裡有 187 名帶 `passiveAbility`，3 名沒有**，而且每一個「沒有」都有可查的原因：`sela` / `thorne` 不是 w3x 原創英雄（本來就沒有 `NN` 編號）；`godie-ogld` 有 `72-01..04` + `72-002`，但整張地圖裡不存在 `72-00`。**沒有 `passiveAbility` 是還原出來的事實，不是待辦。**
 - **別跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在某個 QWER 技能上的被動型效果（`docs/reference/abilities.md` 的 `型態` 欄標「被動」的那些，7 份 champion doc 有），跟天生技 slot 是兩回事。
 - 📘 **逐支天生技的完整清單**（編號 · 擁有者 · 被動/主動 · 從 JSON 推導的效果摘要）在
   [`docs/固有能力及寶具總覽.md`](docs/固有能力及寶具總覽.md)，⛔ 那份是 `pnpm overview:build` 產生的，不要手改。
 
-README 的開放名冊把每名英雄的六個 slot 直接列成六條「技能名稱＋一行效果」（天生技那條會標 `天生·被動` 或 `天生·主動`）；全 907 技能的逐欄表在 `docs/reference/abilities.md`。
+README 的開放名冊把每名英雄的六個 slot 直接列成六條「技能名稱＋一行效果」（天生技那條會標 `天生·被動` 或 `天生·主動`）；全 1129 技能的逐欄表在 `docs/reference/abilities.md`。
 
 **上架看 `craftRole`，不是看價格（task #70）。** 只有 `craftRole === "final"` **且**真有效果（有 `modifiers` 或 `passive`）的最終合成武器才進得了貨架或獎池（`packages/shared/src/sim/economy/shop.ts`、`shopShelf.ts`、`apps/client/src/ui/panels/champSelectFilter.ts`）—— 142 件裡 `final` 有 **42 件**，其中 **38 件**真有 payload，加 2 項服務（`stat-attunement` / `legendary-orb`）。元件（16）、任務道具（6）、`none`（76）一律拒賣，即使有效果、被白名單放行。剩下 **4 件 `final` 沒有 payload**（主動效果 schema 還裝不下，#56）留在 final 分類但不上架。⚠️ 但**普通武器貨架今天是關的**（`weaponShelfOpen: false`，#261，見 §5）—— 所以「進得了貨架」目前只對寶具貨架成立，普通武器只從三選一與傳說寶玉進到玩家手上。`quest-rewards` / `round-reward` 兩張表已退場（`arena-rules.json` 的 `retiredLootTables`）。價格只有簡易 **300g**、強力 **1200g**（`itemTiers.ts`，⛔ 道具文件上沒有 `price` 欄）。表上的 `tier` 欄（1..5）是 **w3x 匯入的遺留欄位，與 craftRole 無關**。
 
 **⭐ 寶具（傳說武器）是另一條路，⛔ 不走 `craftRole`。** 判準是「它在不在 `legendary-weapons` 那張獎池裡」（`sim/economy/itemTiers.ts` 的 `LEGENDARY_POOL_TABLE`），⛔ 不是道具上的 `tags`／`tier`。回合間的三選一與傳說寶玉都抽這張表；`config.arena-rules@1.weaponTiers` 再往上疊**更高階的獎池**，出貨階級是 **EX ＜ [EX解放] ＜ [EX∅ 根源]**。⚠️ 「只能抽、買不到」這句話**在 2026-08-17 之後只對一半** —— 後台 `legendaryShelf.open` 出貨是**開的**，`legendary-weapons` 那 30 件會用統一價上架（＝傳說寶玉價 2400 × `priceMultiplier`，出貨 **3 倍 = 7,200g**）；`ex-release-weapons`（39 件）與 `ex-origin-weapons`（15 件）是 `randomOnlyTables`，仍然**只能抽**。逐件清單（階級 · 取得獎池 · 效果摘要 · 用到哪些機制）在 [`docs/固有能力及寶具總覽.md`](docs/固有能力及寶具總覽.md)。
 
-**數值是 `content/` 的原始值，未套用 combat-env 倍率。** 遊戲內顯示的一律是乘算後的最終值（出貨 `cooldown` ×0.3、`maxHealth` ×4、`abilityRange` ×0.8，其餘 18 項 1.0 —— 見 §5 的產生表，⛔ 這裡抄的會過期），所以畫面上的冷卻／傷害／生命跟表格**不會相同** —— 那是預期行為，不是 bug。
+**數值是 `content/` 的原始值，未套用 combat-env 倍率。** 遊戲內顯示的一律是乘算後的最終值（每一格倍率看 §5「全域倍率表」那個產生區塊 —— ⛔ 這裡不抄數字），所以畫面上的冷卻／傷害／生命跟表格**不會相同** —— 那是預期行為，不是 bug。
 
 **`critChance` / `critDamage` / `lifesteal` 的 flat 值是分數**（`+0.17` 就是 17%）；標了 `%` 的欄位才是 `pctAdd`。
 
@@ -782,22 +782,22 @@ schema 在 `packages/shared/src/content/schema/champion.ts`（`champion@1`，str
 
 | 你要找的 | 實際欄位 |
 | --- | --- |
-| 稱號 + 全名 | **都在 `name` 裡**，格式 `稱號 - 全名`。**沒有**獨立的 title 欄位。⚠️ 只有 w3x 那 69 名這樣寫（153 名裡 69 名有 ` - `）；81 名新英雄的 `name` 就是本名（`阿拉丁`、`凱茲`、`卡爾瑟斯`…），`sela` / `thorne` 也沒有稱號（表上顯示 `—`） |
-| 描述 | `description`（選填，153 份裡有 145 份） |
-| **名言** | **champion doc 裡沒有**。住在 `content/assets/audio/voices/quotes/quotes.json`（138 句；它的 `coverage` 欄自己記著：出貨 153 名裡 93 名有名言、60 名還沒有出處），選角確認時當第三段語音播出來；所以下面的名冊表也沒有這一欄。`docs/champions.csv`（113 列）仍是 `_legacy` 搬走**之前**的母體，⛔ 不要拿它當清單 |
-| 職業／攻擊類型 | `role`、`attackType`（`melee` \| `ranged`；153 名裡 102 近戰 / 51 遠程） |
-| 出身／定位 | `origin`（十選一，決定十一項屬性落在哪一格級距，見上面的機制參考表；153 名裡 131 名有填，20 名 w3x 舊英雄與 `sela` / `thorne` 沒填）、`archetype`（fighter / mage / tank / marksman，82 名有填）、`msGrowthTier`、`tags`、`skillOrder`（升級自動點技能的順序） |
+| 稱號 + 全名 | **都在 `name` 裡**，格式 `稱號 - 全名`。**沒有**獨立的 title 欄位。⚠️ 只有 w3x 那 69 名這樣寫（190 名裡 69 名有 ` - `）；119 名新英雄的 `name` 就是本名（`阿拉丁`、`凱茲`、`卡爾瑟斯`…），`sela` / `thorne` 也沒有稱號（表上顯示 `—`） |
+| 描述 | `description`（選填，190 份裡有 182 份） |
+| **名言** | **champion doc 裡沒有**。住在 `content/assets/audio/voices/quotes/quotes.json`（138 句；它的 `coverage` 欄自己記著：出貨 190 名裡 93 名有名言、97 名還沒有出處），選角確認時當第三段語音播出來；所以下面的名冊表也沒有這一欄。`docs/champions.csv`（113 列）仍是 `_legacy` 搬走**之前**的母體，⛔ 不要拿它當清單 |
+| 職業／攻擊類型 | `role`、`attackType`（`melee` \| `ranged`；190 名裡 126 近戰 / 64 遠程） |
+| 出身／定位 | `origin`（十選一，決定十一項屬性落在哪一格級距，見上面的機制參考表；190 名裡 168 名有填，20 名 w3x 舊英雄與 `sela` / `thorne` 沒填）、`archetype`（fighter / mage / tank / marksman，119 名有填）、`msGrowthTier`、`tags`、`skillOrder`（升級自動點技能的順序） |
 | 數值 | `baseStats` + `growth` |
 | 技能 | `abilities.{Q,W,E,R}` **內嵌整份 ability def**；`exAbility` 是 ref |
 | 模型 | `modelKey`，另有 `tint` / `alpha` / `icon` |
 
-`docs/champions.csv`（7 欄、113 列、UTF-8 with BOM）是 2026-08 之前手工維護的母體，**沒有任何程式會更新它** —— 113 列對不上今天的 153 名（41 隻搬進 `_legacy/` 時沒人動它，81 名新英雄也沒進去）。批次改英雄卡現在走 `pnpm champions:csv:export` / `champions:csv:import`（`tools/champion-csv/champion_csv.py`，匯出到工作目錄的 `champions.csv`，⛔ 不是 docs 那一份）。改內容 JSON 不會同步 docs 那份 CSV —— 這正是下面三張表要用產生器而不是手打的原因。
+`docs/champions.csv`（7 欄、113 列、UTF-8 with BOM）是 2026-08 之前手工維護的母體，**沒有任何程式會更新它** —— 113 列對不上今天的 190 名（41 隻搬進 `_legacy/` 時沒人動它，119 名新英雄也沒進去）。批次改英雄卡現在走 `pnpm champions:csv:export` / `champions:csv:import`（`tools/champion-csv/champion_csv.py`，匯出到工作目錄的 `champions.csv`，⛔ 不是 docs 那一份）。改內容 JSON 不會同步 docs 那份 CSV —— 這正是下面三張表要用產生器而不是手打的原因。
 
 ### 技能編號慣例
 
 w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用 `NN-00`**、EX 用三位數 `NN-00X`。唯一的解析器是一條 regex —— `HERO_NUMBER_RE = /^(\d{2,3})-(\d{2,3})(?!\d)/`（`packages/shared/src/content/championIdentity.ts`）。它**刻意不要求前綴後面有分隔符**，就是為了 `61-01惡魔球` 這種少空格的名字（同檔的 NOTE 寫明）。⚠️ 英雄編號那一段是 `\d{2,3}` 而不是 `\d{2}`：`100-00 黑泥吞噬` 這種三位數的英雄編號**已經存在**，只收兩位數會把它整個漏掉。
 
-⚠️ **編號只存在於 w3x 原作那 69 名英雄（`godie-*`）的 413 支技能上。** 81 名新英雄（`b2-*` / `community-*` / `lol-*`）與 `sela` / `thorne` 共 494 支技能的名字**沒有 `NN-0X` 前綴** —— 那是設計，不是缺陷：編號是 JASS 對照的 join key，沒有原作可對照的英雄本來就沒有。所以下面的統計只數 `godie-*`（907 份裡的 413 份，2026-09-11 實測），兩種切法都列出來（前者是「編號寫了什麼」，後者是「編號跟 slot 對不對得上」）：
+⚠️ **編號只存在於 w3x 原作那 69 名英雄（`godie-*`）的 413 支技能上。** 119 名新英雄（`b2-*` / `community-*` / `lol-*` / `acquired-*`）與 `sela` / `thorne` 共 716 支技能的名字**沒有 `NN-0X` 前綴** —— 那是設計，不是缺陷：編號是 JASS 對照的 join key，沒有原作可對照的英雄本來就沒有。所以下面的統計只數 `godie-*`（1129 份裡的 413 份，2026-09-17 實測），兩種切法都列出來（前者是「編號寫了什麼」，後者是「編號跟 slot 對不對得上」）：
 
 | | `00` | `01` | `02` | `03` | `04` | `002` | `001` | 無法解析 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -808,7 +808,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 編號同時是**英雄身分的唯一判準** —— 同模型 ≠ 同角色（`championIdentity.ts` 開頭的黑化Saber 案例值得讀一次）。
 
-> ⚠️ 程式裡有幾則**過期註解**，不要抄：`apps/client/src/ui/codex/` 的 `CodexPage.tsx`、`codexSearch.ts`、`codexData.ts` 都還寫著 879 entries、`codexData.ts` 還寫著「109 of 113 champions」—— 實際是 153 + 907 + 142 = **1,202**（2026-09-11）。以 `manifest.json` 為準。（`codexLive.test.ts` 有一條守衛禁止把 113/212/554/879 寫進 codex 的**原始碼**，但它管不到註解；`apps/admin/src/content.ts` 那一句 "113 champions / 212 items / 554 abilities" 已經不在了。）
+> ⚠️ 程式裡有幾則**過期註解**，不要抄：`apps/client/src/ui/codex/` 的 `CodexPage.tsx`、`codexSearch.ts`、`codexData.ts` 都還寫著 879 entries、`codexData.ts` 還寫著「109 of 113 champions」—— 實際是 190 + 1129 + 142 = **1,461**（2026-09-17）。以 `manifest.json` 為準。（`codexLive.test.ts` 有一條守衛禁止把 113/212/554/879 寫進 codex 的**原始碼**，但它管不到註解；`apps/admin/src/content.ts` 那一句 "113 champions / 212 items / 554 abilities" 已經不在了。）
 
 ### ⭐ 技能五級距
 
@@ -883,7 +883,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 ### 開放清單（以下預設展開，不用點）
 
-以下幾段是機器產生的：**開放名單**（開放英雄＋六槽技能）、**全英雄列表**（153 名 × 六槽技能名，GH#1226）、技能統計、商店貨架＋抽卡池。全 153／907／142 的完整表在各段結尾連到 `docs/reference/*.md` 與 `docs/全英雄列表.md`。
+以下幾段是機器產生的：**開放名單**（開放英雄＋六槽技能）、**全英雄列表**（190 名 × 六槽技能名，GH#1226）、技能統計、商店貨架＋抽卡池。全 190／1129／142 的完整表在各段結尾連到 `docs/reference/*.md` 與 `docs/全英雄列表.md`。
 
 <!-- BEGIN GENERATED:roster -->
 #### 開放名單 OPEN roster（167 名）— 角色 + 六個技能 slot
@@ -3087,7 +3087,7 @@ pnpm workspace 三個 glob：`packages/*`、`apps/*`、`tools/*`。
 | `docs/runbooks/` | 維運復原手冊 |
 | `docs/_release/` | 每日輪替的**戰情版**（`戰情版-YYYYMMDD.md`，`board:roll`）與 `玩家版本重點.md` |
 | `docs/_daily/` · `docs/守則犯錯.md` | owner 每日訊息帳本（`msgledger:build`）與守則犯錯統計（`scripts/rule-slip.sh`）—— 兩者都是產物 |
-| `tools/` | 105 個目錄；只有 12 個有 `package.json`（pnpm workspace 成員），其餘是 python / go / 純 script（§9） |
+| `tools/` | 113 個目錄；只有 12 個有 `package.json`（pnpm workspace 成員），其餘是 python / go / 純 script（§9） |
 | `deploy/`、`docker/`、`nginx/` | Helm chart、kind、Dockerfile、edge 設定 |
 
 ### 服務拓撲
@@ -3133,7 +3133,7 @@ flowchart LR
 伺服器決定一切遊戲狀態，客戶端只負責「畫」。
 
 - `SimWorld` 是 `(seed, 有序 intents)` 的**純函數**：無牆鐘、無 `Math.random`、迭代順序穩定。這條規則由 `packages/shared/src/sim/purity.test.ts` 把關 —— 掃描 `src/sim/` 每個非測試檔，出現 `Math.random` / `Date.now` / `setTimeout` / 三角函數就 fail。
-- `SimWorld.step()` 的系統順序是**固定**的（2026-09-11 讀 `step()` 本文：championForm → auraCarrier → aura → statusGatedPassive → statRecompute → buffExpiry → attrGrantExpiry → flight → stealth → statusExpiry → mindControlExpiry → recoveryDecay → castResolve → command → order → leap → obstacle → movement → carry → dashOnEnd → basicAttack → toggleUpkeep → projectile → threshold → hitstopDecay → dotTick → intervalHook → delayed → chainLightning → randomArea → combatResolve → ccHook → reflectHook → fireRing → death → flower → revive → deathWard → guardian → objective → mob → summon → coin → worldHook → regen → resourceStat → 晚期 statRecompute …；每一支旁邊的註解寫著它為什麼**必須**排在那裡）；客戶端預測重播的就是這一串。
+- `SimWorld.step()` 的系統順序是**固定**的（2026-09-17 讀 `step()` 本文：championForm → auraCarrier → aura → statusGatedPassive → statRecompute → buffExpiry → attrGrantExpiry → flight → stealth → statusExpiry → mindControlExpiry → recoveryDecay → castResolve → command → order → leap → interactable → obstacle → movement → carry → dashOnEnd → basicAttack → toggleUpkeep → projectile → threshold → hitstopDecay → dotTick → intervalHook → delayed → chainLightning → randomArea → combatResolve → ccHook → reflectHook → fireRing → death → flower → revive → deathWard → guardian → objective → mob → summon → coin → worldHook → regen → resourceStat → 晚期 statRecompute …；每一支旁邊的註解寫著它為什麼**必須**排在那裡）；客戶端預測重播的就是這一串。
 - `digest()` 把每個實體的位置/朝向/HP/MP、hitstop/knockdown/hitstun、整份記分板、復活圈、守衛結構與 buff、rng state 與 tick 混成一個 32-bit 值，浮點量化到 1/4096。同種子同輸入 → digest 相同且座標逐位相同（`SimWorld.test.ts:61`）。這是 byte-identical 重播的檢查點，也是 desync 的偵測面。
 - 對戰迴圈的節拍做了 catch-up clamp（`MAX_CATCHUP_TICKS = 5`）並丟棄整 tick 的積欠 —— 這只影響「什麼時候跑」，不影響「跑什麼」。
 
@@ -3227,7 +3227,7 @@ content/manifest.json               # {contentVersion: "cv_<12hex>", collections
 - hash 是 `sha256(safeStableStringify(doc))` 取前 12 hex，與排版、key 順序無關；collection hash 與 `contentVersion` 都是內容的純函數。`manifest.json` 走 no-cache，`?h=<hash>` 走 immutable。
 - **硬引用**斷掉 = error（`spawnProjectile.projectileId`、`buildPriority`/loot-table → items、`champion.modelKey` → models、`champion.abilities[slot].id` → abilities、`skin.championId`/`modelKey`）；**軟引用**斷掉 = warn（`vfxKey`、`applyStatus.statusId`）。
 - 開發期由 `apps/content-api` 做寫入（驗證 + 增量 reindex + SSE）。它硬拒 `NODE_ENV=production`，也硬拒綁在非 loopback 的 HOST。正式環境沒有任何服務會寫這棵樹。
-- ⚠️ **`content/` 不是「我編的目錄」，它是混的**：數百份文件是 `pnpm skills:sync`（69 步的產生器鏈）的產物 —— 91 份重製技能與 16 張英雄卡是 `skillremake:json` 寫的、`content/config/` 有 7 份是產物、卡面文案由 `prose:build` 從級距解析 —— 平時 `chmod 444` 隔離（`scripts/product-quarantine.sh`），直寫會吃 `EACCES`。改之前先 `bash scripts/genguard.sh <path>`；閘紅了就 `pnpm skills:sync` 再 `git add`，⛔ 不要改產物。
+- ⚠️ **`content/` 不是「我編的目錄」，它是混的**：數百份文件是 `pnpm skills:sync`（70 步的產生器鏈）的產物 —— 91 份重製技能與 16 張英雄卡是 `skillremake:json` 寫的、`content/config/` 裡也有幾份是產物、卡面文案由 `prose:build` 從級距解析 —— 平時 `chmod 444` 隔離（`scripts/product-quarantine.sh`），直寫會吃 `EACCES`。改之前先 `bash scripts/genguard.sh <path>`；閘紅了就 `pnpm skills:sync` 再 `git add`，⛔ 不要改產物。
 - game-server 載入內容失敗時會退回 `registerSkeletonContent()`（2 個英雄、legacy 規則）而不是拒絕啟動 —— 所以「只有兩個英雄」通常代表內容載入炸了。
 
 ---
@@ -3253,7 +3253,7 @@ make test        # 全套 orchestrator：固定類別順序、regression 最後�
 - 啟用中的 suite（18）：`shared-unit`、`todo-check-unit`、`game-server-unit`、`content-api-unit`、`editor-unit`、`content-validate`、`dashboard-unit`、`client-unit`、`admin-unit`、`w3x-import-unit`、`role-classify-unit`、`icon-gen-unit`、`offsite-backup-unit`、`status-page-ledger-gate`、`todo-static-gate`、`testrunner-go-unit`、`platform-go`、`infra-checks`。停用的佔位（5）：`playwright-e2e`、`vuln-govulncheck`、`vuln-gosec`、`vuln-pnpm-audit`、`regression-golden`。
 - `platform-go` 用 miniredis，**不需要外部服務**。`w3x-import-unit` 需要 python3 + mpyq + Pillow，缺了會乾淨跳過。
 - 背景 agent／無頭截圖請用 `VITE_GGD_SILENT`（或 `globalThis.__GGD_SILENT__`、`?silent=`）靜音。
-- 根目錄的 `pnpm lint` 現在是真的 eslint（`eslint.config.mjs`；`NODE_OPTIONS=--max-old-space-size=8192 eslint apps packages tools`）—— 這一行在 2026-08 版寫著「確定的 no-op、這個 repo 沒有 linter」，已過期。⚠️ 它不在 `pnpm test` 裡，要自己跑。
+- 根目錄的 `pnpm lint` 現在是真的 eslint（`eslint.config.mjs`；`NODE_OPTIONS=--max-old-space-size=8192 eslint apps packages tools scripts`）—— 這一行在 2026-08 版寫著「確定的 no-op、這個 repo 沒有 linter」，已過期。⚠️ 它不在 `pnpm test` 裡，要自己跑。
 
 ### TODO ↔ 測試閘
 
@@ -3309,11 +3309,11 @@ pnpm docs:reference     # 只重寫 docs/reference/*.md 那三個完整檔（doc
 **一條指令管全部產生器**（第〇·五守則：改了技能，每一份衍生資料都要跟著動）：
 
 ```bash
-pnpm skills:sync     # 69 步：重跑每一支會因為技能／內容改動而過期的產生器（會寫 bundle.json，⛔ 同一時間只能有一條工作流跑它）
+pnpm skills:sync     # 70 步：重跑每一支會因為技能／內容改動而過期的產生器（會寫 bundle.json，⛔ 同一時間只能有一條工作流跑它）
 ```
 
 ```bash
-pnpm skills:check    # 72 支 --check，唯讀；紅了就跑上面那行然後 git add
+pnpm skills:check    # 79 支 --check，唯讀；紅了就跑上面那行然後 git add
 ```
 
 ```bash
@@ -3382,7 +3382,7 @@ pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
 之後與其餘 63 位一樣直接編 `content/abilities/*.json`。
 ⇒ 「大量改技能」從此**完全無鎖**，這是分片的終局。
 
-⚠️ 2026-09-11 現況：`skillremake:json` **仍在** `skills:sync` 鏈裡，`batch1.py` 還沒退場 —— 那 91 支技能（含 16 張英雄卡）的每一個欄位仍是產物，⛔ 手改 `content/abilities/godie-*.json` 那幾份會被 genguard 擋下。
+⚠️ 2026-09-17 現況：`skillremake:json` **仍在** `skills:sync` 鏈裡，`batch1.py` 還沒退場 —— 那 91 支技能（含 16 張英雄卡）的每一個欄位仍是產物，⛔ 手改 `content/abilities/godie-*.json` 那幾份會被 genguard 擋下。
 
 ### tools/
 
@@ -3390,7 +3390,7 @@ pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
 | --- | --- |
 | `skill-remake` | 90 支重製技能的**產生器**（第〇·五守則：技能是 JSON，不是程式）。`batch1.py` = 註冊表 + 收尾、`common.py` = 模板與閘、`heroes/<id>.py` = 一位英雄一檔。`--check` 只驗不寫；`refresh_docs.py` 重新產出兩份文件。⛔ **不帶參數跑它會寫 90 份 JSON 並接著跑 `content:build`** |
 | `skill-forge` / `vfx-forge` | 鑄技工坊與特效工坊的稽核、視覺審查包、Codex 交接（`skillforge:*` / `vfxforge:*` 那幾支 `:build` / `:check`） |
-| `community-hero-forge` | 社群英雄投稿包 → 英雄卡的鑄造流水線（素材配對、身體採用、交接單）；37 名社群英雄與 7 名 LoL 英雄走這條路 |
+| `community-hero-forge` | 社群英雄投稿包 → 英雄卡的鑄造流水線（素材配對、身體採用、交接單）；社群英雄、LoL 英雄與已取得模型英雄走這條路 |
 | `ship-81` | 2026-09 上架 81 名新英雄的一次性工具（內嵌圖示搬遷、模型對照、roster 同步基準） |
 | `w3x-import` | 解 MPQ（含保護圖的 name-mining，不需 `(listfile)`）、MDX → glTF、物件資料 → 內容草稿。用法：`python3 tools/w3x-import/import_w3x.py <map>.w3x`，收尾一定是 `content:build && content:validate`。⭐ `model_intake.py` 是**每一顆匯入模型都要跑一次**的入庫檢查（後台與編輯器的上傳路徑會自動帶它） |
 | `model-budget` / `model-census` / `lod-gen` / `audio-optimize` | 資產預算量測與離線優化（減面、貼圖圖集、256 貼圖上限）、gore geoset 普查、LOD 降階、音訊壓縮 |
@@ -3406,7 +3406,7 @@ pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
 | `economy` / `ttk-sim` / `role-classify` / `status` | 經濟模擬、TTK 模擬、職業分類、狀態報告 |
 
 > ⚠️ `.w3x` 與 `.mpq` 都在 `.gitignore` 裡（`.gitignore:46-47`）且**未被 git 追蹤**。fresh clone **沒有**原始地圖，要重跑 importer 得自己把地圖放回 repo 根目錄。
-> `tools/` 底下 **105 個目錄裡只有 12 個有 `package.json`**（`anime-arena-map`、`capability-export`、`icon-gen`、`model-budget`、`role-classify`、`todo-check`、`ttk-sim`、`tts-gen`、`uptime-probe`、`vfx-visual-review`、`voxel-gen`、`w3x-import`），其餘 93 個是 python / go / 純 script，不是 pnpm workspace 成員。這有實際後果 —— `pnpm docs:reference` 其實是直接 `python3 tools/reference/gen_reference.py`，`make test` 是直接 `go run`，兩者都**繞過 pnpm**，所以 `pnpm -r` 系列指令碰不到它們；反過來說，`skills:sync` 鏈裡的 69 步幾乎全是這種 script，它們的**唯一入口**就是 root `package.json` 的那一行 npm script（`ops/skillsSyncCoversGenerators.test.ts` 只看得到有 npm script 的產生器）。
+> `tools/` 底下 **113 個目錄裡只有 12 個有 `package.json`**（`anime-arena-map`、`capability-export`、`icon-gen`、`model-budget`、`role-classify`、`todo-check`、`ttk-sim`、`tts-gen`、`uptime-probe`、`vfx-visual-review`、`voxel-gen`、`w3x-import`），其餘 101 個是 python / go / 純 script，不是 pnpm workspace 成員。這有實際後果 —— `pnpm docs:reference` 其實是直接 `python3 tools/reference/gen_reference.py`，`make test` 是直接 `go run`，兩者都**繞過 pnpm**，所以 `pnpm -r` 系列指令碰不到它們；反過來說，`skills:sync` 鏈裡的 70 步幾乎全是這種 script，它們的**唯一入口**就是 root `package.json` 的那一行 npm script（`ops/skillsSyncCoversGenerators.test.ts` 只看得到有 npm script 的產生器）。
 
 ### 任務帳本在哪
 
@@ -3417,11 +3417,11 @@ pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
 | `docs/todo/_index.md` + `docs/todo/*.md` | 每功能一份 TODO，每項對應一個測試函式（`todo:check` 守著） |
 | `docs/_requirements-audit-gaps.md` | **需求 ↔ 實作的落差記錄**。每條需求一發現就要立刻登記在這裡 |
 | `docs/requirements-status.md` | 需求逐項狀態 |
-| `docs/runbooks/` | 維運復原手冊（`content-whitelist.md` · `offsite-backup.md` · `platform-migration.md`） |
+| `docs/runbooks/` | 維運復原手冊（`content-whitelist.md` · `offsite-backup.md` · `platform-migration.md` · `uptime-alerting.md`） |
 | `docs/_release/戰情版-YYYYMMDD.md` | **每日輪替的戰情版**（`bash scripts/board-roll.sh`；跨日先把整份備份成 `戰情版_temp_*.md`）：線上版本、逐版時間軸、近一週對話開票、票務總帳。`docs/_release/玩家版本重點.md` 是給玩家看的一句話版 |
 | `docs/_daily/YYYY-MM-DD.md` | owner 每日訊息帳本（`msgledger:build` 的產物；裁決用 `scripts/ruling.sh` 追加） |
 | `docs/守則犯錯.md` | 守則犯錯統計（`bash scripts/rule-slip.sh`）—— 犯了哪一條、為什麼、頻率 |
-| `docs/全英雄列表.md` · `docs/英雄定位與屬性總表.md` | **產生的**：153 名 × 六槽技能名（`docs:readme`）；可選英雄的出身／射程／定位對照（`archetypes:build`） |
+| `docs/全英雄列表.md` · `docs/英雄定位與屬性總表.md` | **產生的**：190 名 × 六槽技能名（`docs:readme`）；可選英雄的出身／射程／定位對照（`archetypes:build`） |
 | `docs/editor-contract/` · `docs/技能編輯器引擎須知 20260811.md` | 給外部編輯器（Codex）的契約：runtime capabilities（`caps:export`）、數字契約、交接紀錄 —— 全部是產生的，⛔ 不要手改 |
 | `docs/_session-handover.md` | ⚠️ 停在 2026-08-08 的交接快照，檔頭自己標了「已過期」；現況看戰情版與 `docs/_execution-batches.md` 尾節 |
 | `docs/asset-debt.md` | WC3 overlay 的**替代素材債**（還欠幾支模型／幾段語音／幾顆圖示）。⛔ 它**不是**一道版權閘 —— 閘已於 #239 退役，overlay 自 #177 起就刻意上線（bytes 不進 git、不進映像，走 runtime mount） |
@@ -3445,12 +3445,12 @@ pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
 **All Rights Reserved.** 私人專案，非開源，未授予任何人任何授權。完整條文見 [`LICENSE`](LICENSE)。
 
 - 作者自有：所有原始碼、被移植的 WC3 自製地圖（設計／系統／trigger／平衡）與由它衍生的內容、為該地圖製作的模型與貼圖、21 段中文語音、**12 個場景曲目 × 2 種編曲 = 24 首**由 `tools/bgm-gen` 從零合成的 BGM（沒有任何輸入音檔）、程序生成的地面貼圖與游標。
-  > ⚠️ `LICENSE` **仍寫 "eleven"** 首 BGM 與 "40 clips" 効果音ラボ —— 兩個數字都過期了：實測 `tools/bgm-gen/scores/` 與 `content/assets/audio/bgm/` 各 **37** 支（24 首自製場景曲 + 13 首逐場地戰鬥曲），効果音ラボ是 54 段（見下）。`content/assets/CREDITS.md` 已改對，`LICENSE` 該補；這裡以檔案為準。
+  > `LICENSE` 已在 GH#1233 改對：24 首場景曲是零輸入的自製品、13 首逐場地戰鬥曲不是（見下一條），共 37 支；効果音ラボ 54 段。
   > ⚠️ **13 首逐場地戰鬥曲（`bgm/map.*.mp3`，GH#531）不在「從零合成」之列**：作曲編曲是自己的，但音色來自 `MuseScore_General.sf3`（**MIT**，S. Christian Collins 改編、FluidR3 原作 Frank Wen），場景環境音來自 **Warcraft III 原作** `Sound\Ambient\` 26 支（權利人 Blizzard Entertainment；owner 2026-08-19 裁決直接上架但註記來源）。全部烘進 mp3，執行期不抓任何東西。
 - CC0 素材：KayKit（Kay Lousberg）、Quaternius、Kenney Vleugels、mastjie。公有領域，**不需要**標註，出於禮貌記在 [`content/assets/CREDITS.md`](content/assets/CREDITS.md)。
 - 効果音ラボ（<https://soundeffect-lab.info/>）**54 段錄音 = 46 段音效 + 8 段日語人聲**（`CREDITS.md` 的「効果音ラボ / Sound Effect Lab pack」一節；46 段裡 43 段有綁進 `audio-map.json`）：可免費使用、標註選擇性、著作權由 効果音ラボ 保留、**禁止當 AI 訓練資料**。**不是 CC0。** 另有 29 段曾用在 BGM 裡，2026-08-22 起停用但仍列在授權頁上。owner 授權下載的條件是「每一段都要列在授權頁」—— 那是對 owner 的承諾，不是授權條款。
-- **合成語音**（不是第三方素材、也不是真人錄音）：13 句三語播報與英雄呼名（`audio/announcer/`、`audio/voices/names/` 1,028 個檔）用 macOS 內建 `say` + ffmpeg；角色台詞（`audio/voices/lines/` 3,963 個檔）用 **CosyVoice 3**（程式 Apache-2.0；`Fun-CosyVoice3-0.5B` 權重的授權**公開發布前要再確認**，`tools/voice-gen/README.md`）zero-shot 複製，參考音來源走 private-research 模式、逐段留有出處（`voice-reference-pipeline/provenance/`），台詞是自己寫的惡搞，不宣稱由任何真人聲優演出。
-- **Warcraft III 原作資產**（`content/models/w3x.*`、`content/assets/audio/wc3/`、上面那 26 支環境音）：權利人 Blizzard Entertainment。owner 2026-08-19 取消了 blizzard-local 規則、改成「直接上架但註記來源」（第一·四守則：有就用，沒有才 CC0/CC-BY，再沒有才自己生成），所以它們**確實在線上服務**，來源記在 `CREDITS.md`。⚠️ 論壇購入的 `ou99.*` 模型（129 顆）的授權紀錄**不在 `CREDITS.md`**（2026-09-11 grep 零命中）—— 這是一筆待補的帳。
+- **合成語音**（不是第三方素材、也不是真人錄音）：13 句三語播報與英雄呼名（`audio/announcer/`、`audio/voices/names/` 1,028 個檔）用 macOS 內建 `say` + ffmpeg；角色台詞（`audio/voices/lines/` 4,316 個檔）用 **CosyVoice 3**（程式 Apache-2.0；`Fun-CosyVoice3-0.5B` 權重的授權**公開發布前要再確認**，`tools/voice-gen/README.md`）zero-shot 複製，參考音來源走 private-research 模式、逐段留有出處（`voice-reference-pipeline/provenance/`），台詞是自己寫的惡搞，不宣稱由任何真人聲優演出。
+- **Warcraft III 原作資產**（`content/models/w3x.*`、`content/assets/audio/wc3/`、上面那 26 支環境音）：權利人 Blizzard Entertainment。owner 2026-08-19 取消了 blizzard-local 規則、改成「直接上架但註記來源」（第一·四守則：有就用，沒有才 CC0/CC-BY，再沒有才自己生成），所以它們**確實在線上服務**，來源記在 `CREDITS.md`。ou99.com 論壇的第三方模型（`ou99.*`）已在 GH#1234 補進 `CREDITS.md` 的「Third-party character models」一節（逐帖出處在 `docs/ou99模組metadata.md`）；⚠️ 但**使用條款那一格還是空的** —— 那要 owner 拍板，所以那張票仍開著。
 - 角色名稱、稱號與形象屬於各自的權利人。
 
 ### 唯一一項強制標註 / The one mandatory attribution
