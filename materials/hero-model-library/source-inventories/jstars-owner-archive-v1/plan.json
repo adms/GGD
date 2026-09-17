@@ -30,7 +30,8 @@
     "support": 13
   },
   "policy": {
-    "modelOrder": "同角色且皆合格時，較新的 JUMP FORCE 原作模型預選；J-Stars 保留為獨立原作選項",
+    "modelOrder": "同角色且皆合格時，一般候選以較新的 JUMP FORCE 原作模型預選；六名 owner 指定優先角例外，驗收與註冊完成後改以 J-Stars 為預設來源",
+    "defaultActivation": "intendedDefaultSource 是上架意圖，不是現況；只有 converted、registered 與逐模組驗收均有收據後，才可將 default 改為 true",
     "triangleRule": "超過 10000 面啟動減面，成品目標低於 8000 面",
     "audioReview": "未核實編號音效與語音不得直接綁技能；先產生逐項播放審查清單",
     "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄"
@@ -333,6 +334,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 1,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
       }
     },
     {
@@ -356,6 +374,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 2,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
       }
     },
     {
@@ -379,6 +414,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 3,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
       }
     },
     {
@@ -402,6 +454,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 4,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -787,6 +856,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 5,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
       }
     },
     {
@@ -874,6 +960,23 @@
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
         "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
         "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      },
+      "priorityRank": 6,
+      "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+      "intendedDefaultModules": [
+        "model",
+        "motion",
+        "sfx",
+        "voice",
+        "vfx"
+      ],
+      "pipelineStatus": {
+        "planned": true,
+        "blocked": true,
+        "converted": false,
+        "registered": false,
+        "default": false,
+        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
       }
     },
     {

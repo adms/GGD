@@ -24,8 +24,8 @@
     },
     {
       "path": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
-      "bytes": 162012,
-      "sha256": "acee4c665d23b5288bdf0e756aa5f477a46f8315d0761264fc795dd82366a41a",
+      "bytes": 166529,
+      "sha256": "1b138f56fa2a081740f01026507190d773663b43b9f70d5b2d0892bced23bd24",
       "sourceGroups": 5,
       "candidates": 62
     }
@@ -33,6 +33,7 @@
   "counts": {
     "sourceGroups": 13,
     "candidates": 537,
+    "priorityCandidates": 6,
     "registeredCandidates": 0,
     "deployedCandidates": 0
   },
@@ -323,12 +324,14 @@
       "version": null,
       "status": "blocked-upstream-extraction",
       "candidateCount": 52,
-      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。擷取角色、準備模型、註冊模型、音訊綁定與正式部署均為 0。",
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 1 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
       "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
       "evidencePaths": [
         "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
         "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
       ]
     }
   ]

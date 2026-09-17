@@ -1,0 +1,516 @@
+{
+  "archiveSearch": {
+    "candidateCount": 1,
+    "candidates": [
+      {
+        "bytes": 19468471,
+        "kind": "public-model-sample",
+        "observedUnder": [
+          "standard-intake"
+        ],
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/original/j-stars_samples.7z",
+        "sha256": "dbbd40c26bce9b5fc0500d877a918bca1654c52d1ebca8c88b9977bc5b2b331c"
+      }
+    ],
+    "ownerArchiveCandidateCount": 0,
+    "ownerArchiveExactNameCount": 0,
+    "ownerArchiveFound": false,
+    "roots": [
+      {
+        "exists": true,
+        "id": "standard-intake",
+        "matchCount": 1,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "downloads",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Downloads",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "desktop",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Desktop",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "abxvfx-edit",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT",
+        "recursive": false
+      }
+    ]
+  },
+  "blockers": [
+    {
+      "applies": true,
+      "id": "owner-archive-not-found",
+      "reason": "J-Stars Victory Vs+.7z was not found under standard intake, Downloads, Desktop, or ABxVFX_EDIT",
+      "unblocks": "full character-ID and model/motion/VFX/SFX/voice container inventory"
+    },
+    {
+      "applies": true,
+      "id": "public-model-sample-ch0-and-converter",
+      "reason": "the Killua public sample still requires the unsupported $CH0 stage and a validated PS3 SRD converter",
+      "unblocks": "standardized model candidate and visual validation"
+    },
+    {
+      "applies": true,
+      "id": "motion-audio-event-containers-not-observed",
+      "reason": "the public sample has character_model i/m/v groups only and proves no motion, SFX, or voice payload",
+      "unblocks": "six-state motion mapping and per-event audio review"
+    }
+  ],
+  "characters": [
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "community-review-23-20260907"
+      ],
+      "identityEvidence": [],
+      "identityStatus": "blocked-native-id-unproven",
+      "modules": {
+        "model": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        }
+      },
+      "nameEnglish": "Gintoki Sakata",
+      "nameZhTW": "坂田銀時",
+      "nativeId": null,
+      "priority": 1,
+      "slug": "gintoki"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "b2-nube"
+      ],
+      "identityEvidence": [],
+      "identityStatus": "blocked-native-id-unproven",
+      "modules": {
+        "model": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        }
+      },
+      "nameEnglish": "Meisuke Nueno",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": null,
+      "priority": 2,
+      "slug": "nube"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "godie-ucrl"
+      ],
+      "identityEvidence": [],
+      "identityStatus": "blocked-native-id-unproven",
+      "modules": {
+        "model": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        }
+      },
+      "nameEnglish": "Gon Freecss",
+      "nameZhTW": "小傑·富力士",
+      "nativeId": null,
+      "priority": 3,
+      "slug": "gon"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "identityEvidence": [
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.stpk",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.stpk",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.stpk"
+      ],
+      "identityStatus": "confirmed-by-public-sample-directory-and-internal-member-names-not-visual",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "evidence": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_eye.sa",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_mouth.",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_shader.srd",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_stream_jp_lps_PS3.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/battle_character_performance_par",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_culling_PS3",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_face_light_",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_facial_pres",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_near_clip_P",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_silhouette_",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/color_effect_018_killua_m.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv"
+          ],
+          "pairKinds": [
+            "i",
+            "m",
+            "v"
+          ],
+          "reason": "i/m/v PAK+STPK model groups and split SRD-family members are preserved; $CH0 decoding, PS3 geometry/texture conversion and visual validation remain blocked",
+          "requiresUnsupportedCh0Stage": true,
+          "runtimeReady": false,
+          "status": "native-model-containers-present-split-not-converted"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "the public sample contains character_model i/m/v groups only; no native motion container was observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "the public sample contains character_model i/m/v groups only; no native SFX container was observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "evidence": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/color_effect_018_killua_m.pak"
+          ],
+          "reason": "color_effect_018_killua_m.pak is a split member of the model sample; its payload and runtime event mapping have not been decoded or verified",
+          "runtimeReady": false,
+          "status": "embedded-color-effect-member-observed-unverified"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_stream_jp_lps_PS3.pak"
+          ],
+          "reason": "018_killua_stream_jp_lps_PS3.pak is preserved, but the public receipt does not establish that it contains decodable voice audio",
+          "relatedMemberObserved": true,
+          "runtimeReady": false,
+          "status": "lip-sync-or-reference-member-observed-not-voice-confirmed"
+        }
+      },
+      "nameEnglish": "Killua Zoldyck",
+      "nameZhTW": "奇犽·揍敵客",
+      "nativeId": "018",
+      "priority": 4,
+      "slug": "killua"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "b2-luckyman"
+      ],
+      "identityEvidence": [],
+      "identityStatus": "blocked-native-id-unproven",
+      "modules": {
+        "model": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        }
+      },
+      "nameEnglish": "Luckyman",
+      "nameZhTW": "幸運超人",
+      "nativeId": null,
+      "priority": 5,
+      "slug": "luckyman"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityEvidence": [],
+      "identityStatus": "blocked-native-id-unproven",
+      "modules": {
+        "model": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "motion": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "sfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "vfx": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        },
+        "voice": {
+          "candidateContainerFound": false,
+          "evidence": [],
+          "reason": "owner archive not found; no character container observed",
+          "runtimeReady": false,
+          "status": "blocked-source-container-not-observed"
+        }
+      },
+      "nameEnglish": "Hiei",
+      "nameZhTW": "飛影",
+      "nativeId": null,
+      "priority": 6,
+      "slug": "hiei"
+    }
+  ],
+  "inventoryDate": "2026-09-17",
+  "mode": "read-only-source-audit-and-extraction-preparation",
+  "priorOwnerArchiveReceipt": {
+    "attemptedLocations": [
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/J-Stars Victory Vs+.7z",
+      "/Users/Takuro/Downloads/J-Stars Victory Vs+.7z",
+      "/Users/Takuro/Desktop/J-Stars Victory Vs+.7z"
+    ],
+    "exists": true,
+    "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+    "status": "blocked-archive-not-found"
+  },
+  "publicSample": {
+    "analysisExists": true,
+    "analysisPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+    "conversionS3Backup": {
+      "archiveBytes": 12142110,
+      "archiveSha256": "1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38",
+      "fileCount": 66,
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/source.tar.gz",
+      "localArchiveExists": true,
+      "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/manifest.json",
+      "manifestExists": true,
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.files.json",
+      "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/readback.tar.gz",
+      "readbackExists": true,
+      "receiptClaimsVerified": true,
+      "receiptExists": true,
+      "receiptPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/conversion-s3-backup-receipt.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.tar.gz",
+      "schema": "ggd-intake-backup-receipt@1",
+      "status": "receipt-and-local-readback-present"
+    },
+    "scopeFinding": "four-character character_model i/m/v sample only; not a full-game archive",
+    "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+    "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1",
+    "sourceS3Backup": {
+      "archiveBytes": 46346796,
+      "archiveSha256": "4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453",
+      "fileCount": 28,
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/source.tar.gz",
+      "localArchiveExists": true,
+      "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/manifest.json",
+      "manifestExists": true,
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.files.json",
+      "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/readback.tar.gz",
+      "readbackExists": true,
+      "receiptClaimsVerified": true,
+      "receiptExists": true,
+      "receiptPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/source-s3-backup-receipt.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.tar.gz",
+      "schema": "ggd-intake-backup-receipt@1",
+      "status": "receipt-and-local-readback-present"
+    },
+    "summary": {
+      "blockedCmpPairs": 12,
+      "decodedAudio": 0,
+      "nativeAnimations": 0,
+      "nativeCharacters": 4,
+      "pakStpkPairs": 12,
+      "standardizedModels": 0,
+      "stpkContainersSplit": 12,
+      "vfx": 0
+    }
+  },
+  "rerun": {
+    "ownerArchiveInventory": "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+    "sourceAudit": "python3 tools/hero-model-library/source-workflows/jstars-priority-six-v1/source_inventory.py",
+    "sourceAuditCheck": "python3 tools/hero-model-library/source-workflows/jstars-priority-six-v1/source_inventory.py --check"
+  },
+  "safety": {
+    "archiveExtracted": false,
+    "permissionBypassAttempted": false,
+    "s3ReadPerformed": false,
+    "sourceModified": false
+  },
+  "schema": "ggd.jstars-priority-six-source-receipt@1",
+  "scope": {
+    "characters": 6,
+    "defaultUseApproved": false,
+    "game": "J-Stars Victory VS+",
+    "modules": [
+      "model",
+      "motion",
+      "vfx",
+      "sfx",
+      "voice"
+    ],
+    "requestedDefaultUse": true
+  },
+  "status": "blocked-owner-archive-not-found",
+  "summary": {
+    "characters": 6,
+    "defaultUseEligibleCharacters": 0,
+    "moduleCandidateContainersObserved": 2,
+    "nativeIdsConfirmed": 1,
+    "nativeIdsUnproven": 5,
+    "runtimeReadyModules": 0
+  }
+}

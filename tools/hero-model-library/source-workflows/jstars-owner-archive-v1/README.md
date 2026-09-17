@@ -2,6 +2,8 @@
 
 此工作流把 `J-Stars Victory VS+` 的 39 名可操作角色與 13 名支援角色，和現有 GGD 英雄、已驗證的原生 ID 樣本及素材策略合併成單一計畫。它只在有本機證據時填入原生角色 ID，不以網路名單推測檔案對應。
 
+現有 GGD 英雄的第一批預設來源轉換順序為：坂田銀時、鵺野鳴介／神眉、小傑、奇犽、幸運超人、飛影。`plan.json` 對這六名寫入 `priorityRank=1..6`、`intendedDefaultSource`、目標模組與 `planned/blocked/converted/registered/default` 狀態。`intendedDefaultSource` 只表示上架後的預設意圖；目前沒有轉換、註冊或正式預設收據，不得將 `converted`、`registered` 或 `default` 標為 `true`。
+
 ```bash
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-v1/build_plan.py
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-v1/build_plan.py --check

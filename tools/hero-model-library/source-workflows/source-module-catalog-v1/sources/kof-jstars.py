@@ -41,6 +41,12 @@ JSTARS_EXTRACT = Path(
 JSTARS_PIPELINE = Path(
     "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
 )
+JSTARS_PRIORITY_SOURCE = Path(
+    "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json"
+)
+JSTARS_PRIORITY_PIPELINE = Path(
+    "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+)
 
 
 def load(repo: Path, path: Path) -> dict[str, Any]:
@@ -345,6 +351,9 @@ def jstars_group(repo: Path) -> dict[str, Any]:
     plan = load(repo, JSTARS_PLAN)
     extract = load(repo, JSTARS_EXTRACT)
     pipeline = load(repo, JSTARS_PIPELINE)
+    priority_source = load(repo, JSTARS_PRIORITY_SOURCE)
+    priority_pipeline = load(repo, JSTARS_PRIORITY_PIPELINE)
+    priority_by_rank = {row["priority"]: row for row in priority_source["characters"]}
     candidates = []
     for row in plan["characters"]:
         has_sample = row["nativeId"] is not None
@@ -355,8 +364,7 @@ def jstars_group(repo: Path) -> dict[str, Any]:
             else "owner archive 尚未在本機可見；沒有可驗證的角色模組數。"
         )
         role = "可操作" if row["role"] == "playable" else "支援"
-        candidates.append(
-            {
+        candidate = {
                 "character": row["nameZhTW"],
                 "id": row["nativeId"],
                 "work": row["workZhTW"],
@@ -371,18 +379,53 @@ def jstars_group(repo: Path) -> dict[str, Any]:
                 "deployment": module("not-deployed", 0, "production deployment 未驗證。"),
                 "evidence": [str(JSTARS_PLAN), str(JSTARS_EXTRACT), str(JSTARS_PIPELINE)],
             }
-        )
+        priority_rank = row.get("priorityRank")
+        if priority_rank is not None:
+            candidate.update({
+                "ggdHeroIds": row.get("ggdHeroIds", []),
+                "priorityRank": priority_rank,
+                "intendedDefaultSource": row.get("intendedDefaultSource"),
+                "intendedDefaultModules": row.get("intendedDefaultModules", []),
+                "pipelineStatus": row.get("pipelineStatus"),
+            })
+            source_row = priority_by_rank[priority_rank]
+            for kind in ("model", "motion", "vfx", "sfx", "voice"):
+                source_module = source_row["modules"][kind]
+                candidate[kind] = module(
+                    source_module["status"],
+                    1 if source_module.get("candidateContainerFound") else 0,
+                    source_module["reason"],
+                )
+            candidate["registration"] = module(
+                "not-registered",
+                0,
+                "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。",
+            )
+            candidate["deployment"] = module(
+                "not-deployed",
+                0,
+                "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。",
+            )
+            candidate["evidence"].extend([str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE)])
+        candidates.append(candidate)
     return {
         "sourceId": plan["sourceId"],
         "title": plan["sourceGame"],
         "platform": plan["platformRequested"],
         "version": None,
         "status": pipeline["status"],
-        "evidencePaths": [str(JSTARS_PLAN), str(JSTARS_EXTRACT), str(JSTARS_PIPELINE)],
+        "evidencePaths": [
+            str(JSTARS_PLAN), str(JSTARS_EXTRACT), str(JSTARS_PIPELINE),
+            str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE),
+        ],
         "summary": (
             f"名單含 {plan['rosterCounts']['playable']} 名可操作角色與 "
             f"{plan['rosterCounts']['support']} 名支援角色；owner archive 狀態為 {extract['status']}。"
-            "擷取角色、準備模型、註冊模型、音訊綁定與正式部署均為 0。"
+            "owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；"
+            f"第一優先來源查核確認原生 ID {priority_source['summary']['nativeIdsConfirmed']} 名、"
+            f"runtime-ready 模組 {priority_source['summary']['runtimeReadyModules']}；"
+            f"獨立選項註冊 {priority_pipeline['counts']['registeredOptions']}、"
+            f"已套用預設 {priority_pipeline['counts']['automaticDefaultsApplied']}、正式部署 0。"
         ),
         "candidates": candidates,
     }

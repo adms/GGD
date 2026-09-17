@@ -612,9 +612,11 @@
       "evidencePaths": [
         "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
         "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
       ],
-      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。擷取角色、準備模型、註冊模型、音訊綁定與正式部署均為 0。",
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 1 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
       "candidates": [
         {
           "character": "殺老師",
@@ -1281,9 +1283,9 @@
           "id": null,
           "work": "銀魂",
           "model": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "texture": {
             "stage": "planned-source-missing",
@@ -1296,49 +1298,71 @@
             "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "vfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "sfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "voice": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "community-review-23-20260907"
+          ],
+          "priorityRank": 1,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+          }
         },
         {
           "character": "鵺野鳴介",
           "id": null,
           "work": "靈異教師神眉",
           "model": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "texture": {
             "stage": "planned-source-missing",
@@ -1351,49 +1375,71 @@
             "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "vfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "sfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "voice": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "b2-nube"
+          ],
+          "priorityRank": 2,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+          }
         },
         {
           "character": "小傑·富力士",
           "id": null,
           "work": "HUNTER×HUNTER",
           "model": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "texture": {
             "stage": "planned-source-missing",
@@ -1406,49 +1452,71 @@
             "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "vfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "sfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "voice": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "godie-ucrl"
+          ],
+          "priorityRank": 3,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+          }
         },
         {
           "character": "奇犽·揍敵客",
           "id": "018",
           "work": "HUNTER×HUNTER",
           "model": {
-            "stage": "native-container-sample-indexed",
-            "count": null,
-            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "native-model-containers-present-split-not-converted",
+            "count": 1,
+            "note": "i/m/v PAK+STPK model groups and split SRD-family members are preserved; $CH0 decoding, PS3 geometry/texture conversion and visual validation remain blocked"
           },
           "texture": {
             "stage": "native-container-sample-indexed",
@@ -1461,40 +1529,62 @@
             "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "native-container-sample-indexed",
-            "count": null,
-            "note": "可操作角色候選；另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "the public sample contains character_model i/m/v groups only; no native motion container was observed"
           },
           "vfx": {
-            "stage": "native-container-sample-indexed",
-            "count": null,
-            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已審核技能事件綁定。"
+            "stage": "embedded-color-effect-member-observed-unverified",
+            "count": 1,
+            "note": "color_effect_018_killua_m.pak is a split member of the model sample; its payload and runtime event mapping have not been decoded or verified"
           },
           "sfx": {
-            "stage": "native-container-sample-indexed",
-            "count": null,
-            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "the public sample contains character_model i/m/v groups only; no native SFX container was observed"
           },
           "voice": {
-            "stage": "native-container-sample-indexed",
-            "count": null,
-            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段說話者、語言與事件審核。"
+            "stage": "lip-sync-or-reference-member-observed-not-voice-confirmed",
+            "count": 0,
+            "note": "018_killua_stream_jp_lps_PS3.pak is preserved, but the public receipt does not establish that it contains decodable voice audio"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "community-review-24-20260907"
+          ],
+          "priorityRank": 4,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
+          }
         },
         {
           "character": "喬納森·喬斯達",
@@ -2436,9 +2526,9 @@
           "id": null,
           "work": "幸運超人",
           "model": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "texture": {
             "stage": "planned-source-missing",
@@ -2451,40 +2541,62 @@
             "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "vfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "sfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "voice": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "b2-luckyman"
+          ],
+          "priorityRank": 5,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+          }
         },
         {
           "character": "阿虜",
@@ -2656,9 +2768,9 @@
           "id": null,
           "work": "幽遊白書",
           "model": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "texture": {
             "stage": "planned-source-missing",
@@ -2671,40 +2783,63 @@
             "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "vfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "sfx": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "voice": {
-            "stage": "planned-source-missing",
-            "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "stage": "blocked-source-container-not-observed",
+            "count": 0,
+            "note": "owner archive not found; no character container observed"
           },
           "registration": {
             "stage": "not-registered",
             "count": 0,
-            "note": "此 owner-archive pipeline registered models 為 0。"
+            "note": "第一優先六名 pipeline receipt 的 registeredOptions 為 0；獨立後台選項尚未建立。"
           },
           "deployment": {
             "stage": "not-deployed",
             "count": 0,
-            "note": "production deployment 未驗證。"
+            "note": "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。"
           },
           "evidence": [
             "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
-          ]
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+          ],
+          "ggdHeroIds": [
+            "godie-u010",
+            "godie-uvng"
+          ],
+          "priorityRank": 6,
+          "intendedDefaultSource": "owner-jstars-victory-vs-plus-20260917",
+          "intendedDefaultModules": [
+            "model",
+            "motion",
+            "sfx",
+            "voice",
+            "vfx"
+          ],
+          "pipelineStatus": {
+            "planned": true,
+            "blocked": true,
+            "converted": false,
+            "registered": false,
+            "default": false,
+            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+          }
         },
         {
           "character": "戶愚呂弟",

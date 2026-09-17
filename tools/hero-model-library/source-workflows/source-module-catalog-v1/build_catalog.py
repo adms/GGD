@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Combine source fragments and rebuild the five-day module-candidate catalog."""
+"""Combine source fragments and rebuild the dated module-candidate catalog."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ FRAGMENTS = ("300-mba.json", "ssbu.json", "kof-jstars.json")
 MODULES = ("model", "texture", "skeleton", "motion", "vfx", "sfx", "voice")
 START = "<!-- generated:source-module-catalog-v1:start -->"
 END = "<!-- generated:source-module-catalog-v1:end -->"
+REPORT_TITLE = "# 2026-09-11～2026-09-17 新增模型、動作、特效與語音清單"
 
 
 def repo_root() -> Path:
@@ -81,6 +82,7 @@ def build_catalog(repo: Path) -> dict:
         "counts": {
             "sourceGroups": len(groups),
             "candidates": sum(len(group["candidates"]) for group in groups),
+            "priorityCandidates": sum(1 for group in groups for row in group["candidates"] if row.get("priorityRank") is not None),
             "registeredCandidates": sum(1 for group in groups for row in group["candidates"] if (row["registration"].get("count") or 0) > 0),
             "deployedCandidates": sum(1 for group in groups for row in group["candidates"] if (row["deployment"].get("count") or 0) > 0),
         },
@@ -129,6 +131,10 @@ STAGE_LABELS = {
     "source-not-found": "尚未找到來源",
     "planned-source-missing": "規劃中／來源未到",
     "missing-native-gameplay-motion": "缺原生動作",
+    "blocked-source-container-not-observed": "來源容器未找到",
+    "native-model-containers-present-split-not-converted": "原生模型容器已保存／未轉換",
+    "embedded-color-effect-member-observed-unverified": "內嵌特效成員已保存／未驗證",
+    "lip-sync-or-reference-member-observed-not-voice-confirmed": "語音相關成員待確認／未確認語音",
 }
 
 
@@ -189,6 +195,15 @@ def summary_text(summary: object) -> str:
 
 
 def markdown(catalog: dict) -> str:
+    priority_rows = sorted(
+        (
+            (group, row)
+            for group in catalog["sourceGroups"]
+            for row in group["candidates"]
+            if row.get("priorityRank") is not None
+        ),
+        key=lambda item: item[1]["priorityRank"],
+    )
     lines = [
         START,
         "### 300英雄／MBA／任天堂大亂鬥／KOF／J-Stars 全模組候選總表",
@@ -205,6 +220,29 @@ def markdown(catalog: dict) -> str:
     for group in catalog["sourceGroups"]:
         platform = f"{group['platform']}／{group['version']}"
         lines.append(f"| {group['title']}<br><small>`{group['sourceId']}`</small> | {platform} | {len(group['candidates']):,} | {summary_text(group['summary'])} |")
+    if priority_rows:
+        lines += [
+            "",
+            "#### J-Stars 第一優先六名與預設來源意圖",
+            "",
+            "以下六名由 owner 指定優先處理。`預設意圖` 只有在來源身分、模型／貼圖／骨架、六態動作、特效事件、逐檔聽審音效／語音、獨立後台選項與驗收收據全部通過後才可套用；目前不代表已轉換、已註冊、可切換或已部署。",
+            "",
+            "| 順位 | 角色／GGD hero ID | 作品／原生 ID | 預設意圖 | 現況 | 阻塞 |",
+            "|---:|---|---|---|---|---|",
+        ]
+        for group, row in priority_rows:
+            hero_ids = "<br>".join(f"`{hero_id}`" for hero_id in row.get("ggdHeroIds", [])) or "待建立"
+            native_id = f"`{row['id']}`" if row.get("id") else "待原檔確認"
+            modules = ", ".join(f"`{module}`" for module in row.get("intendedDefaultModules", []))
+            state = row.get("pipelineStatus") or {}
+            state_text = "／".join(
+                f"{key}={'true' if state.get(key) else 'false'}"
+                for key in ("planned", "blocked", "converted", "registered", "default")
+            )
+            lines.append(
+                f"| {row['priorityRank']} | {row['character']}<br>{hero_ids} | {row['work']}<br>{native_id} | "
+                f"`{row.get('intendedDefaultSource')}`<br>{modules} | {state_text} | {str(state.get('blocker') or '').replace('|', '／')} |"
+            )
     lines += [
         "",
         "#### 全部角色／容器候選的模組狀態",
@@ -239,6 +277,15 @@ def replace_section(text: str, section: str) -> str:
     return text.rstrip() + "\n\n" + section + "\n"
 
 
+def replace_title(text: str) -> str:
+    """Keep the report's visible date range under generator control."""
+    lines = text.splitlines()
+    if not lines or not lines[0].startswith("# "):
+        raise ValueError("report must start with a Markdown H1 title")
+    lines[0] = REPORT_TITLE
+    return "\n".join(lines) + ("\n" if text.endswith("\n") else "")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -248,7 +295,8 @@ def main() -> int:
     catalog = build_catalog(repo)
     catalog_text = json.dumps(catalog_index(catalog), ensure_ascii=False, indent=2) + "\n"
     report_path = repo / "materials/hero-model-library/近四日新增模型動作特效清單.md"
-    updated_report = replace_section(report_path.read_text(encoding="utf-8"), markdown(catalog))
+    report_text = replace_title(report_path.read_text(encoding="utf-8"))
+    updated_report = replace_section(report_text, markdown(catalog))
     generated = {
         output_dir / "catalog.json": catalog_text,
         report_path: updated_report,

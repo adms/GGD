@@ -145,6 +145,25 @@ NEW_HERO_PRIORITY = {
     )
 }
 
+# Owner-selected replacement batch. These ranks describe conversion order for
+# existing GGD heroes and are independent from NEW_HERO_PRIORITY, which remains
+# the proposed order for creating entirely new heroes.
+DEFAULT_SOURCE_PRIORITY = {
+    name: rank
+    for rank, name in enumerate(
+        [
+            "Gintoki Sakata",
+            "Meisuke Nueno",
+            "Gon Freecss",
+            "Killua Zoldyck",
+            "Luckyman",
+            "Hiei",
+        ],
+        start=1,
+    )
+}
+DEFAULT_SOURCE_MODULES = ["model", "motion", "sfx", "voice", "vfx"]
+
 
 def validate_authority(repo: Path) -> None:
     playable = [row for row in ROSTER if row[3] == "playable"]
@@ -162,10 +181,12 @@ def validate_authority(repo: Path) -> None:
     unknown_matches = sorted(set(GGD_MATCHES) - known_names)
     unknown_native_ids = sorted(set(KNOWN_NATIVE_IDS) - known_names)
     unknown_priorities = sorted(set(NEW_HERO_PRIORITY) - known_names)
-    if unknown_matches or unknown_native_ids or unknown_priorities:
+    unknown_default_priorities = sorted(set(DEFAULT_SOURCE_PRIORITY) - known_names)
+    if unknown_matches or unknown_native_ids or unknown_priorities or unknown_default_priorities:
         raise ValueError(
             "authority tables reference names outside the roster: "
-            f"matches={unknown_matches}, nativeIds={unknown_native_ids}, priorities={unknown_priorities}"
+            f"matches={unknown_matches}, nativeIds={unknown_native_ids}, priorities={unknown_priorities}, "
+            f"defaultSourcePriorities={unknown_default_priorities}"
         )
     non_playable_priorities = sorted(
         name for name in NEW_HERO_PRIORITY
@@ -173,6 +194,17 @@ def validate_authority(repo: Path) -> None:
     )
     if non_playable_priorities:
         raise ValueError(f"new hero priority contains support-only entries: {non_playable_priorities}")
+    if sorted(DEFAULT_SOURCE_PRIORITY.values()) != list(range(1, 7)):
+        raise ValueError("default-source priority ranks must be exactly 1 through 6")
+    invalid_default_priorities = sorted(
+        name for name in DEFAULT_SOURCE_PRIORITY
+        if next(row[3] for row in ROSTER if row[2] == name) != "playable" or name not in GGD_MATCHES
+    )
+    if invalid_default_priorities:
+        raise ValueError(
+            "default-source priority must contain existing playable GGD heroes only: "
+            f"{invalid_default_priorities}"
+        )
     missing_hero_files = sorted(
         hero_id
         for hero_ids in GGD_MATCHES.values()
@@ -235,13 +267,35 @@ def build() -> dict:
     for roster_order, (work, zh, en, role) in enumerate(ROSTER, start=1):
         hero_ids = list(GGD_MATCHES.get(en, []))
         native_id = KNOWN_NATIVE_IDS.get(en)
+        priority_rank = DEFAULT_SOURCE_PRIORITY.get(en)
         if native_id:
             status = "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換"
         elif found_archive:
             status = "完整 owner archive 已到位，等待逐檔 inventory 與原生 ID 對照"
         else:
             status = "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據"
-        rows.append({
+        priority_fields = {}
+        if priority_rank:
+            if native_id:
+                blocker = "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
+            elif found_archive:
+                blocker = "owner archive 已到位，但尚未完成逐檔 inventory、角色對照、轉換與逐模組驗收"
+            else:
+                blocker = "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            priority_fields = {
+                "priorityRank": priority_rank,
+                "intendedDefaultSource": SOURCE_ID,
+                "intendedDefaultModules": list(DEFAULT_SOURCE_MODULES),
+                "pipelineStatus": {
+                    "planned": True,
+                    "blocked": True,
+                    "converted": False,
+                    "registered": False,
+                    "default": False,
+                    "blocker": blocker,
+                },
+            }
+        record = {
             "rosterOrder": roster_order,
             "workZhTW": work,
             "nameZhTW": zh,
@@ -256,7 +310,9 @@ def build() -> dict:
             "newHeroPriority": NEW_HERO_PRIORITY.get(en),
             "status": status,
             "recommendation": asset_recommendation(role),
-        })
+        }
+        record.update(priority_fields)
+        rows.append(record)
     gon_community = workspace / "GGD-Asset-Library/conversions/jumpforce-gon-thunderstore-v1/optimized-256/body.glb"
     gon_candidate = None
     if gon_community.is_file():
@@ -285,7 +341,8 @@ def build() -> dict:
         "sourceReferences": SOURCE_REFERENCES,
         "rosterCounts": {"total": len(rows), "playable": sum(r["role"] == "playable" for r in rows), "support": sum(r["role"] == "support" for r in rows)},
         "policy": {
-            "modelOrder": "同角色且皆合格時，較新的 JUMP FORCE 原作模型預選；J-Stars 保留為獨立原作選項",
+            "modelOrder": "同角色且皆合格時，一般候選以較新的 JUMP FORCE 原作模型預選；六名 owner 指定優先角例外，驗收與註冊完成後改以 J-Stars 為預設來源",
+            "defaultActivation": "intendedDefaultSource 是上架意圖，不是現況；只有 converted、registered 與逐模組驗收均有收據後，才可將 default 改為 true",
             "triangleRule": "超過 10000 面啟動減面，成品目標低於 8000 面",
             "audioReview": "未核實編號音效與語音不得直接綁技能；先產生逐項播放審查清單",
             "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄",
@@ -311,6 +368,24 @@ def markdown(plan: dict) -> str:
         f"- 建議放置：`{plan['preferredIntakePath']}`",
         "- 名單核對：[VIZ 39 playable＋13 support](https://www.viz.com/blog/posts/j-stars-victory-vs)；[PlayStation 發售／平台資訊](https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today)；[52 名完整角色表](https://en.wikipedia.org/wiki/J-Stars_Victory_VS)。",
         "- 本文件由 `build_plan.py` 產生；角色 ID、來源狀態與政策不要只手改本 MD。",
+        "- 狀態語意：`planned` 表示已排入工作；`blocked` 表示目前有阻塞；`converted`、`registered`、`default` 只能依實際收據變更。`intendedDefaultSource` 只是上架後預設來源的意圖，不代表已轉換、註冊或上架。",
+        "",
+        "## 最優先轉換與預設來源計畫",
+        "",
+        "| 順位 | 作品 | 角色 | 目標模組 | intended default source | planned | blocked | converted | registered | default | 阻塞 |",
+        "|---:|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    for r in sorted((x for x in plan["characters"] if x.get("priorityRank")), key=lambda x: x["priorityRank"]):
+        state = r["pipelineStatus"]
+        modules = ", ".join(f"`{module}`" for module in r["intendedDefaultModules"])
+        lines.append(
+            f"| {r['priorityRank']} | {r['workZhTW']} | {r['nameZhTW']} | {modules} | "
+            f"`{r['intendedDefaultSource']}` | "
+            f"{'true' if state['planned'] else 'false'} | {'true' if state['blocked'] else 'false'} | "
+            f"{'true' if state['converted'] else 'false'} | {'true' if state['registered'] else 'false'} | "
+            f"{'true' if state['default'] else 'false'} | {state['blocker']} |"
+        )
+    lines += [
         "",
         "## 第一批：現有 GGD 英雄，直接增加 J-Stars 獨立選項",
         "",

@@ -1,0 +1,36 @@
+{
+  "schema": "ggd.jstars-priority-six-pipeline-contract@1",
+  "pipelineId": "jstars-priority-six-v1",
+  "priority": [
+    { "key": "gintoki", "name": "坂田銀時", "heroIds": ["community-review-23-20260907"] },
+    { "key": "nube", "name": "鵺野鳴介／神眉", "heroIds": ["b2-nube"] },
+    { "key": "gon", "name": "小傑", "heroIds": ["godie-ucrl"] },
+    { "key": "killua", "name": "奇犽", "heroIds": ["community-review-24-20260907"] },
+    { "key": "luckyman", "name": "幸運超人", "heroIds": ["b2-luckyman"] },
+    { "key": "hiei", "name": "飛影", "heroIds": ["godie-u010", "godie-uvng"] }
+  ],
+  "modules": ["model", "texture", "skeleton", "motion", "vfx", "sfx", "voice"],
+  "policy": {
+    "decimateOnlyWhenTrianglesAbove": 10000,
+    "decimatedTargetTrianglesBelow": 8000,
+    "textureMaxEdge": 256,
+    "requiredMotionStates": ["idle", "run", "attack", "cast", "hurt", "death"],
+    "audioRequiresPerFileOwnerApproval": true,
+    "registerIndependentOptionBeforeDefault": true,
+    "automaticDefaultRequiresEveryModuleGate": true,
+    "manualSelectionMustBePreserved": true,
+    "productionDeploymentIsSeparate": true
+  },
+  "failClosed": {
+    "missingSourceReceipt": true,
+    "upstreamArchiveBlocked": true,
+    "unverifiedIdentity": true,
+    "missingModuleArtifact": true,
+    "missingCheckedBinderReceipt": true,
+    "unreviewedAudio": true,
+    "incompleteSixStateMap": true,
+    "unregisteredIndependentOption": true,
+    "manualSelectionOverwrite": true,
+    "productionDeploymentClaim": true
+  }
+}

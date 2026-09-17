@@ -6,6 +6,18 @@
 - 建議放置：`/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/J-Stars Victory Vs+.7z`
 - 名單核對：[VIZ 39 playable＋13 support](https://www.viz.com/blog/posts/j-stars-victory-vs)；[PlayStation 發售／平台資訊](https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today)；[52 名完整角色表](https://en.wikipedia.org/wiki/J-Stars_Victory_VS)。
 - 本文件由 `build_plan.py` 產生；角色 ID、來源狀態與政策不要只手改本 MD。
+- 狀態語意：`planned` 表示已排入工作；`blocked` 表示目前有阻塞；`converted`、`registered`、`default` 只能依實際收據變更。`intendedDefaultSource` 只是上架後預設來源的意圖，不代表已轉換、註冊或上架。
+
+## 最優先轉換與預設來源計畫
+
+| 順位 | 作品 | 角色 | 目標模組 | intended default source | planned | blocked | converted | registered | default | 阻塞 |
+|---:|---|---|---|---|---|---|---|---|---|---|
+| 1 | 銀魂 | 坂田銀時 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
+| 2 | 靈異教師神眉 | 鵺野鳴介 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
+| 3 | HUNTER×HUNTER | 小傑·富力士 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
+| 4 | HUNTER×HUNTER | 奇犽·揍敵客 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | 原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收 |
+| 5 | 幸運超人 | 幸運超人 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
+| 6 | 幽遊白書 | 飛影 | `model`, `motion`, `sfx`, `voice`, `vfx` | `owner-jstars-victory-vs-plus-20260917` | true | true | false | false | false | owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換 |
 
 ## 第一批：現有 GGD 英雄，直接增加 J-Stars 獨立選項
 
