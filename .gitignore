@@ -18,6 +18,8 @@ tools/voice-gen/refs/
 
 # build output
 dist/
+# GH#1270 —— 編輯器玩家版 bundle（`vite build --mode player` 的 outDir，edge 映像複製它）；⛔ 不進 git。
+apps/editor/dist-player/
 # ⚠️ `build/` 曾經不帶錨 ⇒ 任何深度都吃，連原始碼目錄 `apps/client/src/build/` 一起 ——
 #   task #66 的守衛 `buildStamp.test.ts` 六週沒進過 git（本機綠、CI 紅，GH#1038）。
 #   與 #1013 的 `**/coverage` 同形：一條為產物寫的規則吃掉同名的原始碼。
