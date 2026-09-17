@@ -439,7 +439,8 @@ def summarize_priority(rows: list[dict[str, Any]], identities: dict[str, dict[st
                 **character,
                 "nativeId": None,
                 "identityStatus": "blocked-native-id-unproven",
-                "members": [],
+                "memberCount": 0,
+                "memberEvidence": None,
                 "moduleCounts": {},
                 "blockers": ["owner archive filenames expose numeric native IDs but no verified name mapping for this character"],
             })
@@ -454,7 +455,17 @@ def summarize_priority(rows: list[dict[str, Any]], identities: dict[str, dict[st
                 "identity-probe.json unique internal STPK member-name match "
                 f"{character['slug']} -> {native_id}"
             ),
-            "members": matches,
+            "memberCount": len(matches),
+            "memberEvidence": {
+                "bytes": sum(int(row["bytes"]) for row in matches),
+                "sha256": hashlib.sha256(
+                    "".join(
+                        json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+                        for row in matches
+                    ).encode("utf-8")
+                ).hexdigest(),
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+            },
             "moduleCounts": dict(sorted(counts.items())),
             "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
             "runtimeReady": False,
@@ -521,6 +532,16 @@ def build(container_root: Path, manifest: Path, split_root: Path, identity_probe
         "schema": SCHEMA,
         "sourceId": SOURCE_ID,
         "status": "native-containers-inventoried-conversion-blocked",
+        "fullAudit": {
+            "status": "local-preserved-s3-readback-pending",
+            "bytes": 339170,
+            "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3",
+            "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+            "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+            "archiveMember": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+            "archiveStatus": "pending-manifest-publication-and-readback",
+            "restoreRequiredForInventoryBuild": False,
+        },
         "containerRoot": str(container_root.resolve()),
         "containers": containers,
         "fullMemberManifest": manifest_record,

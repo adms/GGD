@@ -71,12 +71,23 @@ def build(workspace: Path) -> dict:
     for spec in ia["files"]:
         path = download_root / spec["name"]
         current = path.stat().st_size if path.exists() else 0
+        hashes = {}
+        if current == spec['bytes']:
+            calculators = {name: hashlib.new(name) for name in ('sha256', 'sha1', 'md5')}
+            with path.open('rb') as handle:
+                for block in iter(lambda: handle.read(8 * 1024 * 1024), b''):
+                    for calculator in calculators.values(): calculator.update(block)
+            hashes = {name: calculator.hexdigest() for name, calculator in calculators.items()}
+            if any(hashes[name] != spec[name] for name in ('sha1', 'md5')):
+                raise ValueError('Downloaded archive does not match published hashes: ' + spec['name'])
         transfers.append({
             **spec,
             "absolutePath": str(path),
             "downloadedBytesAtGeneration": current,
             "complete": current == spec["bytes"],
-            "sha256": digest(path) if current == spec["bytes"] else None
+            "sha256": hashes.get('sha256'),
+            "publishedHashesVerified": bool(hashes),
+            "actualHashes": hashes
         })
     return {
         "schema": "ggd.vearn-related-3d-inventory@1",
@@ -101,8 +112,10 @@ def build(workspace: Path) -> dict:
         "herosBonds": {
             "sourceId": ia["id"],
             "url": ia["url"],
-            "status": "downloaded-unverified" if all(x["complete"] for x in transfers) else "downloading",
+            "status": "downloaded-hash-verified-awaiting-asset-identification" if all(x["publishedHashesVerified"] for x in transfers) else "downloading",
             "files": transfers,
+            "preservation": (json.loads((OUT / 'bonds-cache-preservation.json').read_text())
+                             if (OUT / 'bonds-cache-preservation.json').exists() else None),
             "kiganKingPayloadIdentified": False,
             "modelConverted": False
         },
@@ -128,6 +141,7 @@ def markdown(data: dict) -> str:
 - owner 已確認這五件是看過的年老／變身前巴恩、影版與附件，不是年輕真身或鬼眼王；不再重複送審。
 - 目前限制：原生動作 0，後台註冊 0，正式部署 0。
 - 燃魂羈絆完整快取：`{h['status']}`，生成索引時已下載 {downloaded:,}/{total:,} bytes；尚未驗證鬼眼王 payload。
+- 完整解包與逐檔 SHA-256：{(h.get('preservation') or {}).get('fileCount', 0):,} 檔；大型逐檔表留本機，入口 `bonds-cache-preservation.json`。S3 備份待完成。
 - 其他原作 3D 線索：{leads}；目前都是已確認作品線索，payload 尚未取得。
 - 舊審查證據頁：`{b['reviewPage']}`（只作追溯，不再請 owner 重審）
 """
@@ -143,7 +157,7 @@ def report_block(data: dict) -> str:
 
 鯖缶359 BowlRoll ver0.87 原包早已在 2026-09-13 取得，原始 ZIP、18 個解包檔與 S3 完整讀回收據均保留。本輪將包內 **{b['candidateCount']} 個 PMX** 全部轉成獨立靜態貼圖 GLB，Khronos **{b['khronosZeroErrorCount']}/{b['candidateCount']} 零錯誤**，完成 **{b['webglScreenshotCount']} 張** Babylon WebGL 三視圖。owner 已確認這五件是看過的年老／變身前巴恩、影版與附件，**不是年輕真身或鬼眼王**，不再重複送審。這批原生動作 0、後台註冊 0、可切換 0、部署 0，不得寫成已上架。
 
-《燃魂羈絆》1.17.0.121 最終快取兩檔合計 **{total:,} bytes**，本索引生成時已下載 **{downloaded:,} bytes**，狀態是 `{h['status']}`。完整下載、公開雜湊驗證及 Unity 物件關聯解析完成前，鬼眼王模型仍記為「待辨識」。Dragon Quest Tact、DQM Joker 3 Professional v1.2 與星之勇者鬥惡龍已列原作 3D 後續來源，但 payload 尚未取得。
+《燃魂羈絆》1.17.0.121 最終快取兩檔合計 **{total:,} bytes**，本索引生成時已下載 **{downloaded:,} bytes**，狀態是 `{h['status']}`。完整快取已解包並保存逐檔雜湊 **{(h.get('preservation') or {}).get('fileCount', 0):,} 檔**，S3 備份待完成；鬼眼王模型仍須物件關聯解析及視覺辨識。Dragon Quest Tact、DQM Joker 3 Professional v1.2 與星之勇者鬥惡龍已列原作 3D 後續來源，但 payload 尚未取得。
 
 {END}"""
 
@@ -173,6 +187,7 @@ def update_download_sources(data: dict, workspace: Path) -> None:
         if row["id"] == "bowlroll-sabakan359-vearn-mmd-v087":
             continue
         downloading = row["id"] == data["herosBonds"]["sourceId"]
+        verified = downloading and all(item.get('publishedHashesVerified') for item in data['herosBonds']['files'])
         record = {
             "id": row["id"],
             "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
@@ -181,12 +196,14 @@ def update_download_sources(data: dict, workspace: Path) -> None:
             "sourceGame": row["name"],
             "sourceWork": "勇者鬥惡龍 達伊的大冒險",
             "sourceKind": row["kind"],
+            "uploader": "Internet Archive 保存者（原作者待確認）" if downloading else "來源頁所列作者",
+            "format": "Android XAPK + complete game cache ZIP" if downloading else "source page only",
             "platform": "Android archived cache" if downloading else "game-native-source-lead",
-            "accessStatus": "public-archive-download-in-progress" if downloading else "official-source-confirmed-payload-not-acquired",
-            "acquisitionStatus": "downloading-not-yet-byte-verified" if downloading else "not-acquired",
-            "readiness": "download-in-progress" if downloading else "source-lead-only",
-            "resourceRole": "young-or-kigan-vearn-model-source-lead",
-            "assetKinds": [],
+            "accessStatus": "public-archive-downloaded" if verified else "public-archive-download-in-progress" if downloading else "official-source-confirmed-payload-not-acquired",
+            "acquisitionStatus": "downloaded-verified" if verified else "downloading-not-yet-byte-verified" if downloading else "not-acquired",
+            "readiness": "archived-awaiting-asset-identification" if verified else "download-in-progress" if downloading else "source-lead-only",
+            "resourceRole": "game-resource-archive" if verified else "young-or-kigan-vearn-model-source-lead",
+            "assetKinds": ["game-container", "audio-container"] if verified else [],
             "modelCount": 0,
             "modelCandidates": [],
             "defaultEligible": False,
@@ -194,8 +211,10 @@ def update_download_sources(data: dict, workspace: Path) -> None:
                 "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original"
                 if downloading else None
             ),
-            "files": row.get("files", []),
+            "files": data['herosBonds']['files'] if verified else row.get("files", []),
             "verification": (
+                "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified."
+                if verified else
                 "Archive metadata and expected file hashes recorded; transfer is incomplete and Kigan King payload identity is unverified."
                 if downloading else
                 "Official source establishes a Kigan King 3D appearance; no model payload has been acquired or converted."
@@ -207,8 +226,8 @@ def update_download_sources(data: dict, workspace: Path) -> None:
                 "visualIdentityReviewByOwner": True
             },
             "backendIntegration": {
-                "required": False,
-                "state": "pending-download-and-identity-analysis" if downloading else "not-acquired",
+                "required": verified,
+                "state": "pending-asset-identification" if verified else "pending-download-and-identity-analysis" if downloading else "not-acquired",
                 "selectionVerified": False,
                 "registered": False,
                 "productionDeployed": False
@@ -217,11 +236,16 @@ def update_download_sources(data: dict, workspace: Path) -> None:
         }
         if row.get("note"):
             record["note"] = row["note"]
+        if verified:
+            record['preservationEvidence'] = 'materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json'
+            record['archival'] = {'state': 'local-originals-and-extracted-files-preserved-s3-pending', 's3Uri': None, 'readbackVerified': False}
         records.append(record)
-    existing = document["publicSourceLeads"]
     ids = {row["id"] for row in records}
-    existing[:] = [row for row in existing if row.get("id") not in ids]
-    existing.extend(records)
+    for name in ('publicSourceLeads', 'publicSources'):
+        document[name] = [row for row in document[name] if row.get('id') not in ids]
+    for record in records:
+        acquired = record['acquisitionStatus'] == 'downloaded-verified'
+        document['publicSources' if acquired else 'publicSourceLeads'].append(record)
     path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n")
 
 

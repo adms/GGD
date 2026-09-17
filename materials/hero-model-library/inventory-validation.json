@@ -1,6 +1,6 @@
 {
-  "time": "2026-09-17T18:32:44+08:00",
-  "inputs_sha256": "ed1db2f7bc9862c85fdf119480d7f89140459ccf67ce5ce348fb26e0038835a6",
+  "time": "2026-09-17T19:44:24+08:00",
+  "inputs_sha256": "ccf21560e2e4a7f29587cc1b882f288e85569536def06ccbb2c8a91c9f6b12b4",
   "rows": 194,
   "missing_works": [
     "acquired-alice",
@@ -41,10 +41,12 @@
     "lol-thresh",
     "lol-velkoz"
   ],
-  "source_options": 205,
+  "source_options": 210,
   "s3_release": "7b6ec0c8c5bd75fc173c5f2d",
-  "live_selectable": 130,
+  "currentProjectDefinitions": 190,
+  "currentProjectSelectable": 167,
+  "historicalSnapshotSelectable": 130,
   "pending": 2,
   "productionContentVersion": "cv_a5039179a7ff",
-  "sha256": "a24ba444bf4778c97f38ebff5c3a8ee4a1b100f4925fcce9182075a24e3ab5e7"
+  "sha256": "58a18b479184374ecdb9b3713a90a44ba756011bf28dd6dff84941d10e0300a7"
 }

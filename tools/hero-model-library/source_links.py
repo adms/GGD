@@ -11,7 +11,7 @@ def is_model_source(source):
     """Supplemental components must not satisfy a missing character model."""
     return source.get('resourceRole') not in {
         'audio-supplement', 'animation-supplement', 'vfx-supplement', 'component-supplement', 'texture-supplement',
-        'validation-evidence', 'research-evidence'}
+        'validation-evidence', 'research-evidence', 'game-resource-archive'}
 
 
 def plan_sources(data, manifest, policy):

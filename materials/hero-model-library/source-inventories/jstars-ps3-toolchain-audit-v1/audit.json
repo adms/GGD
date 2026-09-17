@@ -1,0 +1,657 @@
+{
+  "noesisPluginSearch": {
+    "publicImplementationFound": false,
+    "status": "referenced by model porters, but no author GitHub or publicly downloadable source/binary was located in the bounded search; not available for reproducible testing"
+  },
+  "researchReferences": [
+    {
+      "finding": "archived J-STARS thread reports cmp_scz partial decode and RPCS3 RAM-dump workaround; retained exact PAK/STPK pairs originate from this research set",
+      "url": "https://zenhax.com/viewtopic.php%40t%3D13160.html"
+    },
+    {
+      "finding": "public model port credits JosouKitsune for extracted J-STARS files and a Noesis plugin",
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2518047198"
+    },
+    {
+      "finding": "author publishes rigged J-STARS model pages with download metadata",
+      "url": "https://www.deviantart.com/josoukitsune"
+    }
+  ],
+  "result": {
+    "blockers": [
+      "$CH0 entropy stage has no verified implementation in audited public decoders",
+      "J-STARS PS3 mesh type 0x0702 vertex attributes and skin weights are not mapped",
+      "PS3 SRDV swizzle/texture formats and SKL bone transforms are not validated"
+    ],
+    "completeNativeDecodes": 0,
+    "nextExecutableStep": "implement mesh type 0x0702 vertex layout from the exact Killua SRD/SRDI pair, then verify skeleton weights and render before GLB emission",
+    "standardizedModels": 0,
+    "status": "structural-probe-complete-conversion-blocked"
+  },
+  "samples": {
+    "killuaCompressed": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_character_ps3.cpk/character/model/character_model_018_m.pak",
+      "bytes": 224048,
+      "declaredDecodedBytes": 534592,
+      "sha256": "d74ee55d8bef76d7f689948c16397cea0d3651dfbcd09c9da0479b5caf15ce5c"
+    },
+    "killuaExactRamDump": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.stpk",
+      "bytes": 532896,
+      "declaredSizeDelta": 1696,
+      "sha256": "31fd380b28ce6bea15a4543f0701455be0a165b066436c42771ed69eb4239d2f"
+    },
+    "killuaSrd": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+      "allResourceRangesInBounds": true,
+      "blockTypes": {
+        "$CFH": 1,
+        "$CT0": 1,
+        "$MAT": 12,
+        "$MSH": 22,
+        "$RSF": 1,
+        "$SCN": 1,
+        "$SKL": 1,
+        "$TRE": 1,
+        "$TXI": 20,
+        "$TXR": 19,
+        "$VTX": 22
+      },
+      "bytes": 67024,
+      "sha256": "7e27a19ff389d81ef0bbb8bd89473bae88455b78ae73598a68f9349f43edc5ce",
+      "srdi": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+        "bytes": 1342172,
+        "sha256": "47f2970809edd99e5faf964d30e01b02fee8ccf5f498ada064871820e474a805"
+      },
+      "topLevelBlocks": 101,
+      "vtx": [
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 5088,
+          "resourceInfo": {
+            "name": "A_faceShape:FACE_HAND",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 95680,
+                "inResourceBounds": true,
+                "start": 0
+              },
+              {
+                "bytes": 5562,
+                "inResourceBounds": true,
+                "start": 95680
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 920,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 6112,
+          "resourceInfo": {
+            "name": "C_eye_LShape:EYE_L",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 4992,
+                "inResourceBounds": true,
+                "start": 101248
+              },
+              {
+                "bytes": 236,
+                "inResourceBounds": true,
+                "start": 106240
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 48,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 6480,
+          "resourceInfo": {
+            "name": "B_eye_RShape:EYE_R",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 4992,
+                "inResourceBounds": true,
+                "start": 106480
+              },
+              {
+                "bytes": 244,
+                "inResourceBounds": true,
+                "start": 111472
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 48,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 6880,
+          "resourceInfo": {
+            "name": "G_insideShape:T_TEETH",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 15912,
+                "inResourceBounds": true,
+                "start": 111728
+              },
+              {
+                "bytes": 822,
+                "inResourceBounds": true,
+                "start": 127648
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 153,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 7552,
+          "resourceInfo": {
+            "name": "E_tooth_upShape:T_TEETH",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 17888,
+                "inResourceBounds": true,
+                "start": 128480
+              },
+              {
+                "bytes": 894,
+                "inResourceBounds": true,
+                "start": 146368
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 172,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 7936,
+          "resourceInfo": {
+            "name": "F_tooth_downShape:T_TEETH",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 23504,
+                "inResourceBounds": true,
+                "start": 147264
+              },
+              {
+                "bytes": 1150,
+                "inResourceBounds": true,
+                "start": 170768
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 226,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 112,
+          "meshType": "0x0802",
+          "offset": 8304,
+          "resourceInfo": {
+            "name": "wrinkle_noseShape:S_WRINKLE",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 8512,
+                "inResourceBounds": true,
+                "start": 171920
+              },
+              {
+                "bytes": 388,
+                "inResourceBounds": true,
+                "start": 180432
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 76,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 8912,
+          "resourceInfo": {
+            "name": "handShape:FACE_HAND",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 201448,
+                "inResourceBounds": true,
+                "start": 180832
+              },
+              {
+                "bytes": 10082,
+                "inResourceBounds": true,
+                "start": 382288
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 1937,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 9840,
+          "resourceInfo": {
+            "name": "armShape:INNER",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 28184,
+                "inResourceBounds": true,
+                "start": 392384
+              },
+              {
+                "bytes": 1318,
+                "inResourceBounds": true,
+                "start": 420576
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 271,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 10208,
+          "resourceInfo": {
+            "name": "hinekShape:INNER",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 18616,
+                "inResourceBounds": true,
+                "start": 421904
+              },
+              {
+                "bytes": 998,
+                "inResourceBounds": true,
+                "start": 440528
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 179,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 10560,
+          "resourceInfo": {
+            "name": "legShape:FACE_HAND",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 36400,
+                "inResourceBounds": true,
+                "start": 441536
+              },
+              {
+                "bytes": 1926,
+                "inResourceBounds": true,
+                "start": 477936
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 350,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 10944,
+          "resourceInfo": {
+            "name": "topsShape:TOP",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 65624,
+                "inResourceBounds": true,
+                "start": 479872
+              },
+              {
+                "bytes": 3316,
+                "inResourceBounds": true,
+                "start": 545504
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 631,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 11360,
+          "resourceInfo": {
+            "name": "bootuShape:A_LETHER",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 80288,
+                "inResourceBounds": true,
+                "start": 548832
+              },
+              {
+                "bytes": 3528,
+                "inResourceBounds": true,
+                "start": 629120
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 772,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 11728,
+          "resourceInfo": {
+            "name": "hairShape3:HAIR2",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 294216,
+                "inResourceBounds": true,
+                "start": 632656
+              },
+              {
+                "bytes": 14034,
+                "inResourceBounds": true,
+                "start": 926880
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 2829,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 12048,
+          "resourceInfo": {
+            "name": "hair1Shape:HAIR",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 254176,
+                "inResourceBounds": true,
+                "start": 940928
+              },
+              {
+                "bytes": 11398,
+                "inResourceBounds": true,
+                "start": 1195104
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 2444,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 12352,
+          "resourceInfo": {
+            "name": "polySurfaceShape11:TOP",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 1040,
+                "inResourceBounds": true,
+                "start": 1206512
+              },
+              {
+                "bytes": 32,
+                "inResourceBounds": true,
+                "start": 1207552
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 10,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 12672,
+          "resourceInfo": {
+            "name": "polySurfaceShape16:A_YOYO",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 27456,
+                "inResourceBounds": true,
+                "start": 1207584
+              },
+              {
+                "bytes": 986,
+                "inResourceBounds": true,
+                "start": 1235040
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 264,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 12992,
+          "resourceInfo": {
+            "name": "polySurfaceShape10:A_YOYO",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 16120,
+                "inResourceBounds": true,
+                "start": 1236032
+              },
+              {
+                "bytes": 728,
+                "inResourceBounds": true,
+                "start": 1252160
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 155,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 13536,
+          "resourceInfo": {
+            "name": "polySurfaceShape8:TOP",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 1040,
+                "inResourceBounds": true,
+                "start": 1252896
+              },
+              {
+                "bytes": 30,
+                "inResourceBounds": true,
+                "start": 1253936
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 10,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 13856,
+          "resourceInfo": {
+            "name": "polySurfaceShape17:A_YOYO",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 27456,
+                "inResourceBounds": true,
+                "start": 1253968
+              },
+              {
+                "bytes": 986,
+                "inResourceBounds": true,
+                "start": 1281424
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 264,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 14176,
+          "resourceInfo": {
+            "name": "polySurfaceShape18:A_YOYO",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 16120,
+                "inResourceBounds": true,
+                "start": 1282416
+              },
+              {
+                "bytes": 706,
+                "inResourceBounds": true,
+                "start": 1298544
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 155,
+          "vertexSectionInfoCount": 3
+        },
+        {
+          "derivedVertexStride": 104,
+          "meshType": "0x0702",
+          "offset": 14720,
+          "resourceInfo": {
+            "name": "pants1Shape:PANTS",
+            "resourceRangeCount": 2,
+            "resourceRanges": [
+              {
+                "bytes": 40664,
+                "inResourceBounds": true,
+                "start": 1299264
+              },
+              {
+                "bytes": 2236,
+                "inResourceBounds": true,
+                "start": 1339936
+              }
+            ]
+          },
+          "vectorCount": 10,
+          "vertexCount": 391,
+          "vertexSectionInfoCount": 3
+        }
+      ]
+    },
+    "minimalUnsupported": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/minimal-unsupported-clh-ch0.bin",
+      "bytes": 131,
+      "nestedMagic": "$CH0",
+      "outerMagic": "$CLH",
+      "requiresUnimplementedCh0": true,
+      "sha256": "989d8a7e349750cf029f0f89066044824cd8e4ef50724fcf850b40b3dd226803"
+    },
+    "quickBmsPartial": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/quickbms-partial/character_model_018_m.stp",
+      "bytes": 322198,
+      "completeNativeDecode": false,
+      "sha256": "deea9b8a0035e60b8a89304b76359b7972bdcace46c59895c1b669a30478b13c"
+    }
+  },
+  "schema": "ggd.jstars-ps3-toolchain-audit@1",
+  "upstreams": [
+    {
+      "commit": "5315ffe664b88dc09ae783ad17d9dfd252b1c927",
+      "evidence": "src/unz.c drv3_srd_dec handles $CLN/$CL1/$CL2 LZ modes; observed nested $CH0 has no matching implementation",
+      "keySource": "src/unz.c",
+      "keySourceSha256": "0b58c1b0a88f910878d8beafc72d2505e47cd52693e926fb90e523e7fc8f099f",
+      "license": "GPL-2.0",
+      "licenseSha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "name": "QuickBMS",
+      "url": "https://github.com/LittleBigBug/QuickBMS"
+    },
+    {
+      "commit": "59d32532224a93251f11489b54c5b8b04b645f0a",
+      "evidence": "drv3/drv3_dec.py is the same LZ-only SRD path; srd_ex.py does not parse VTX/MSH/SKL geometry",
+      "keySource": "drv3/drv3_dec.py",
+      "keySourceSha256": "d5b2efa4de75424c79244ddddb21fefbecb39a5b25bf8e8e2889e133c7229d29",
+      "license": "WTFNMFPL-1.0",
+      "licenseSha256": "014fae580d594a302bf595afc1e822cfe076eb286a5f4f9b8eca68ba7ee1892c",
+      "name": "Danganronpa-Tools",
+      "url": "https://github.com/yukinogatari/Danganronpa-Tools"
+    },
+    {
+      "commit": "3155b11f225e2223dcdd4cc8555f0e051808e931",
+      "evidence": "SRD BlockSerializer uses little-endian BinaryReader payload fields and DRV3 layouts; J-STARS sample is big-endian meshType 0x0702",
+      "keySource": "DRV3-Sharp-Library/Formats/Data/SRD/Blocks/BlockSerializer.cs",
+      "keySourceSha256": "4ea9e5b2e73a36c4213ebe53cc522386067f19ed3cd971e24cdad96b3cbd7147",
+      "license": "GPL-3.0",
+      "licenseSha256": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+      "name": "DRV3-Sharp",
+      "url": "https://github.com/CaptainSwag101/DRV3-Sharp"
+    },
+    {
+      "commit": "f43cfdc845deabaecfc1183a16f77370faf8ec60",
+      "evidence": "VTXEntry and SRDIModel read little-endian payloads and recognize DRV3 mesh types 515-518, not PS3 0x0702",
+      "keySource": "formats/src/main/kotlin/info/spiralframework/formats/models/SRDIModel.kt",
+      "keySourceSha256": "217db175160459ea011c418b4c22a803299f330e920692fe62be3a8cef40543a",
+      "license": "GPL-3.0",
+      "licenseSha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "name": "Spiral",
+      "url": "https://github.com/SpiralFramework/Spiral"
+    }
+  ]
+}

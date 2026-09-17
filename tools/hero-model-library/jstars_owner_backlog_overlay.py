@@ -22,6 +22,8 @@ INVENTORY = "materials/hero-model-library/source-inventories/jstars-owner-archiv
 IDENTITY = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json"
 PRIORITY = "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json"
 AUDIO = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
+TOOLCHAIN = "materials/hero-model-library/source-inventories/jstars-ps3-toolchain-audit-v1/audit.json"
+PUBLIC_RIGGED = "materials/hero-model-library/source-inventories/jstars-ps3-toolchain-audit-v1/public-rigged-acquisition.json"
 PRIORITY_WORKS = {
     "028": "銀魂", "041": "靈異教師神眉", "017": "HUNTER×HUNTER",
     "018": "HUNTER×HUNTER", "037": "幸運超人", "012": "幽遊白書",
@@ -93,7 +95,7 @@ def _row(group: dict, container: dict, identity: dict, priority: dict | None,
                 "availability": "英雄已存在；J-Stars 原生容器已取得，尚未轉換成模型選項",
             })
         design_status = "definitions-incomplete"
-        reason = "角色身分與既有英雄已確認；J-Stars 模型／動作／特效／音訊仍受 $CH0 與 PS3 SRD 轉換阻擋。"
+        reason = "角色身分與既有英雄已確認；模型／動作／特效仍受 $CH0 與 PS3 SRD 轉換阻擋；CV/PV 語音已另行解碼，待逐段聽審。"
     else:
         name = f"J-STARS {internal_label}（token {token}，內部名待對照）"
         original_name = internal_label
@@ -112,8 +114,9 @@ def _row(group: dict, container: dict, identity: dict, priority: dict | None,
         "sha256": container["sha256"],
         "format": "CRI CPK containing $CMP PAK members",
         "readiness": "native-container-indexed-payloads-not-materialized",
-        "existsLocal": True,
-        "localSizeMatches": True,
+        "existsLocal": None,
+        "localSizeMatches": None,
+        "ownerMachineFileVerified": True,
         "localPresenceBasis": "tracked owner-machine inventory receipt; portable rebuild does not reread the CPK",
         "resourceRole": "shared-source-container",
         "isStandaloneModelCandidate": False,
@@ -297,4 +300,16 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
             ["六名日文音訊解碼收據", AUDIO],
         ],
     })
+    if (repo / TOOLCHAIN).is_file() and (repo / PUBLIC_RIGGED).is_file():
+        audit, acquisition = _read(repo / TOOLCHAIN), _read(repo / PUBLIC_RIGGED)
+        compressed = audit['samples']['killuaCompressed']
+        source_families[-1]['model'] += (
+            f" 已查核 {len(audit['upstreams'])} 組公開工具鏈，完整原生解碼 {audit['result']['completeNativeDecodes']}；"
+            f"奇犽封包宣告 {compressed['declaredDecodedBytes']:,} bytes，現成工具仍只產出 partial。"
+            f"作者公開模型包 {acquisition['summary']['downloaded']} 份取得、{acquisition['summary']['blocked']} 份下載受阻。"
+        )
+        source_families[-1]['links'].extend([['PS3 解碼器實測與精確缺口', TOOLCHAIN], ['作者公開模型包取得記錄', PUBLIC_RIGGED]])
+        for rel in (TOOLCHAIN, PUBLIC_RIGGED):
+            result['inputs'][:] = [item for item in result['inputs'] if item['path'] != rel]
+            result['inputs'].append({'path': rel, 'sha256': _sha(repo / rel)})
     return result

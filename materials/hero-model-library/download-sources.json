@@ -2773,61 +2773,6 @@
       "verification": "本輪未取得素材。列印商品需點數／購買，且頁面標示僅限個人使用、禁止數位再散布與改作；沒有取得檔案、沒有下載、沒有登入。"
     },
     {
-      "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
-      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
-      "heroIds": [
-        "godie-ubal"
-      ],
-      "url": "https://archive.org/details/gacha-archive",
-      "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
-      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
-      "sourceKind": "archived-game-cache",
-      "platform": "Android archived cache",
-      "accessStatus": "public-archive-download-in-progress",
-      "acquisitionStatus": "downloading-not-yet-byte-verified",
-      "readiness": "download-in-progress",
-      "resourceRole": "young-or-kigan-vearn-model-source-lead",
-      "assetKinds": [],
-      "modelCount": 0,
-      "modelCandidates": [],
-      "defaultEligible": false,
-      "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
-      "files": [
-        {
-          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
-          "bytes": 1733218012,
-          "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
-          "md5": "59efae4d0b83d086a86f3d7618d05097"
-        },
-        {
-          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
-          "bytes": 365045618,
-          "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
-          "md5": "fc563f21e92b4de2f2292413005836b7"
-        }
-      ],
-      "verification": "Archive metadata and expected file hashes recorded; transfer is incomplete and Kigan King payload identity is unverified.",
-      "ownerDecision": {
-        "date": "2026-09-17",
-        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
-        "acquisitionAuthorized": true,
-        "visualIdentityReviewByOwner": true
-      },
-      "backendIntegration": {
-        "required": false,
-        "state": "pending-download-and-identity-analysis",
-        "selectionVerified": false,
-        "registered": false,
-        "productionDeployed": false
-      },
-      "notAliases": [
-        "Baran",
-        "巴蘭",
-        "バラン"
-      ],
-      "note": "Archive timestamp is after the final Kigan King chapter launch, but the actual identity and asset kinds remain unverified until the complete files are read and hashed."
-    },
-    {
       "id": "dqtact-kigan-king-vearn",
       "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
       "heroIds": [
@@ -2837,6 +2782,8 @@
       "sourceGame": "Dragon Quest Tact 鬼眼王バーン",
       "sourceWork": "勇者鬥惡龍 達伊的大冒險",
       "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
       "platform": "game-native-source-lead",
       "accessStatus": "official-source-confirmed-payload-not-acquired",
       "acquisitionStatus": "not-acquired",
@@ -2878,6 +2825,8 @@
       "sourceGame": "Dragon Quest Monsters Joker 3 Professional 鬼眼王バーン",
       "sourceWork": "勇者鬥惡龍 達伊的大冒險",
       "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
       "platform": "game-native-source-lead",
       "accessStatus": "official-source-confirmed-payload-not-acquired",
       "acquisitionStatus": "not-acquired",
@@ -2920,6 +2869,8 @@
       "sourceGame": "星のドラゴンクエスト 鬼眼王バーン",
       "sourceWork": "勇者鬥惡龍 達伊的大冒險",
       "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
       "platform": "game-native-source-lead",
       "accessStatus": "official-source-confirmed-payload-not-acquired",
       "acquisitionStatus": "not-acquired",
@@ -67894,6 +67845,92 @@
         "readbackVerified": true,
         "fullGetVerified": true,
         "allMemberSha256Verified": true
+      }
+    },
+    {
+      "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://archive.org/details/gacha-archive",
+      "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+      "sourceKind": "archived-game-cache",
+      "uploader": "Internet Archive 保存者（原作者待確認）",
+      "format": "Android XAPK + complete game cache ZIP",
+      "platform": "Android archived cache",
+      "accessStatus": "public-archive-downloaded",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "archived-awaiting-asset-identification",
+      "resourceRole": "game-resource-archive",
+      "assetKinds": [
+        "game-container",
+        "audio-container"
+      ],
+      "modelCount": 0,
+      "modelCandidates": [],
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
+      "files": [
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+          "bytes": 1733218012,
+          "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+          "md5": "59efae4d0b83d086a86f3d7618d05097",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+          "downloadedBytesAtGeneration": 1733218012,
+          "complete": true,
+          "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+          "publishedHashesVerified": true,
+          "actualHashes": {
+            "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+            "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+            "md5": "59efae4d0b83d086a86f3d7618d05097"
+          }
+        },
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+          "bytes": 365045618,
+          "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+          "md5": "fc563f21e92b4de2f2292413005836b7",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+          "downloadedBytesAtGeneration": 365045618,
+          "complete": true,
+          "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+          "publishedHashesVerified": true,
+          "actualHashes": {
+            "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+            "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+            "md5": "fc563f21e92b4de2f2292413005836b7"
+          }
+        }
+      ],
+      "verification": "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified.",
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "visualIdentityReviewByOwner": true
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-asset-identification",
+        "selectionVerified": false,
+        "registered": false,
+        "productionDeployed": false
+      },
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ],
+      "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity.",
+      "preservationEvidence": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json",
+      "archival": {
+        "state": "local-originals-and-extracted-files-preserved-s3-pending",
+        "s3Uri": null,
+        "readbackVerified": false
       }
     }
   ],

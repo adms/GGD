@@ -168,3 +168,14 @@ tools/secret-scan/hosts.local.tsv
 /materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json
 /materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json
 /materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz
+
+# PR #1284 review binaries archived through the fixed S3 preparation manifest.
+# Keep restored local copies available without re-adding them to Git.
+/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg
+/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v2/azazel-face-v1-v2-ab.jpg
+/materials/hero-model-library/priority-evidence/approved-derivatives-v1/approved11-contact-sheet.jpg
+/materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-ab.jpg
+/materials/hero-model-library/priority-evidence/jump-force-gon-audio-v1/files.jsonl.gz
+/materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png
+/materials/hero-model-library/source-inventories/bojji-crown-v2/bojji-crown-v2-ab.png
+/materials/hero-model-library/source-inventories/bojji-crown-v2/owner-reference.png

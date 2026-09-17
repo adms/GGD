@@ -64,6 +64,18 @@ def list_files(root: Path, suffixes: tuple[str, ...] | None = None) -> list[dict
     return files
 
 
+def file_index(files: list[dict[str, Any]]) -> dict[str, Any]:
+    encoded = "".join(
+        json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+        for row in files
+    ).encode("utf-8")
+    return {
+        "files": len(files),
+        "bytes": sum(int(row["bytes"]) for row in files),
+        "sha256": hashlib.sha256(encoded).hexdigest(),
+    }
+
+
 def exact_archive_candidates(reference: dict[str, Any]) -> list[dict[str, Any]]:
     name = reference["ownerArchiveFileName"]
     candidates = [
@@ -95,8 +107,8 @@ def jstars_killua_source() -> dict[str, Any]:
         "fileTypeCounts": dict(sorted(by_suffix.items())),
         "ownerDiscCpkEvidence": {
             "receipt": str(CPK_INVENTORY.relative_to(REPO)),
-            "members": owner_row["members"],
-            "memberCount": len(owner_row["members"]),
+            "memberCount": owner_row["memberCount"],
+            "memberEvidence": owner_row.get("memberEvidence"),
             "moduleCounts": owner_row["moduleCounts"],
             "fullMemberManifest": owner_cpk["fullMemberManifest"],
         },
@@ -122,9 +134,9 @@ def owner_disc_priority_sources(slugs: set[str]) -> dict[str, Any]:
         str(row["slug"]): {
             "nativeId": row["nativeId"],
             "identityStatus": row["identityStatus"],
-            "memberCount": len(row["members"]),
+            "memberCount": row["memberCount"],
             "moduleCounts": row["moduleCounts"],
-            "members": row["members"],
+            "memberEvidence": row.get("memberEvidence"),
             "runtimeReady": False,
             "conversionStatus": row["conversionStatus"],
         }
@@ -147,8 +159,8 @@ def jump_audio(slug: str, native_id: str) -> dict[str, Any]:
         "nativeCharacterId": native_id,
         "packageRoot": str(package_root.resolve()),
         "decodedEventVoiceRoot": str(decoded_root.resolve()),
-        "packageFiles": package_files,
-        "decodedEventVoiceFiles": decoded_files,
+        "packageFileIndex": file_index(package_files),
+        "decodedEventVoiceFileIndex": file_index(decoded_files),
         "counts": {"packageOgg": len(package_files), "decodedEventVoiceWav": len(decoded_files), **kinds},
         "stage": "decoded-and-hashed-pending-per-file-listening-review",
         "runtimeBound": False,
@@ -277,6 +289,16 @@ def build() -> dict[str, Any]:
     return {
         "schema": "ggd.jstars-priority-three-inventory@1",
         "workflowId": reference["workflowId"],
+        "fullAudit": {
+            "status": "local-preserved-s3-readback-pending",
+            "bytes": 599291,
+            "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a",
+            "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+            "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+            "archiveMember": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+            "archiveStatus": "pending-manifest-publication-and-readback",
+            "restoreRequiredForInventoryBuild": False,
+        },
         "source": {
             "sourceGame": reference["sourceGame"],
             "ownerArchiveStatus": owner_status,

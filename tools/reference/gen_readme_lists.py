@@ -53,6 +53,7 @@ Stdlib only, deterministic, idempotent: two runs produce byte-identical output.
 There is no timestamp — the contentVersion is the freshness stamp.
 """
 
+import glob
 import json
 import os
 import re
@@ -329,7 +330,18 @@ def pending_heroes():
     if not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        doc = json.load(f)
+    # The external snapshot is retained, but heroes integrated since that
+    # snapshot must no longer be printed as missing from this checkout.
+    current_ids = {
+        json.load(open(path, encoding="utf-8")).get("id")
+        for path in glob.glob(os.path.join(G.CONTENT, "champions", "*.json"))
+        if not os.path.basename(path).startswith("_")
+    }
+    groups = [{**group, "rows": [row for row in group["rows"] if row["id"] not in current_ids]}
+              for group in doc["groups"]]
+    groups = [group for group in groups if group["rows"]]
+    return {**doc, "groups": groups, "counts": {**doc["counts"], "pending": sum(len(group["rows"]) for group in groups)}}
 
 
 def _pending_block(doc, heading_level):
@@ -593,6 +605,13 @@ def gen_all_heroes(ctx):
     out += _pending_block(pend, "#####")
     candidates = acquired_model_candidates()
     if candidates is not None:
+        source = candidates["source"]
+        counts = source["counts"]
+        out += ["##### 已取得素材庫", "",
+                f"中央索引共有 **{source['sourceIdentityCount']} 個來源身份**："
+                f"尚未建立英雄 **{counts['not-defined']}**、待補 **{counts['definitions-incomplete']}**、"
+                f"身份待確認 **{counts['identity-review']}**、已對應 **{counts['designed']}**。"
+                "跨遊戲同角色與形態分別保留，來源身份數不是可上架英雄數。", ""]
         out += note([
             f"另有 **{len(candidates['rows'])} 筆已取得素材／待轉換的已確認來源身份**，"
             f"完整候選表見 `{ALL_HEROES_DOC}`。"

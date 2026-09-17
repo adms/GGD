@@ -12,8 +12,12 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from fragment_compaction import compact_fragment, expanded_json_bytes
 
 
 SCHEMA = "ggd.source-module-catalog-fragment@1"
@@ -660,7 +664,15 @@ def main() -> int:
     output = args.output or (
         repo_root / "materials/hero-model-library/source-module-catalog-v1/ssbu.json"
     )
-    payload = json.dumps(build_fragment(repo_root, asset_root), ensure_ascii=False, indent=2) + "\n"
+    fragment = build_fragment(repo_root, asset_root)
+    expanded = expanded_json_bytes(fragment)
+    repo_relative_path = "materials/hero-model-library/source-module-catalog-v1/ssbu.json"
+    compact = compact_fragment(
+        fragment,
+        repo_relative_path=repo_relative_path,
+        expanded_bytes=expanded,
+    )
+    payload = json.dumps(compact, ensure_ascii=False, indent=2) + "\n"
 
     if args.check:
         if not output.exists() or output.read_text(encoding="utf-8") != payload:

@@ -415,6 +415,46 @@
         "sourcePlatform": "Windows"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.effe98edd329922f74c1ed84541cdc743b08fcc0090555e8",
+      "label": "阿薩謝爾（獨立副本／參考圖閉眼橘髮與蝙蝠翼 v2／已由 v2.1 取代／非自動）",
+      "sourceModelKey": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+      "modelSha256": "092927777c0f7a20fcbd6160c1465840b7760215e2aa5d51526d4e1a86158157",
+      "binarySha256": "1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36",
+      "registeredAt": "2026-09-17T11:19:28.301Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "derivative:azazel",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.cf9aaba74092778b728b1514679805407f52350d24f2845d",
+      "label": "阿薩謝爾（獨立副本／參考圖閉眼一致橘髮與蝙蝠翼 v2.1／待外觀核准）",
+      "sourceModelKey": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+      "modelSha256": "f946f2158f116e9ec7c6559b4c24ae4e69a4968574dd5620e40a2068176b2f9d",
+      "binarySha256": "8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672",
+      "registeredAt": "2026-09-17T11:40:02.764Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "derivative:azazel",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

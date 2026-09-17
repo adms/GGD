@@ -6,7 +6,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fragment_compaction import expand_fragment
 
 
 FRAGMENTS = ("300-mba.json", "ssbu.json", "kof-jstars.json")
@@ -62,7 +66,8 @@ def build_catalog(repo: Path) -> dict:
     inputs = []
     for name in FRAGMENTS:
         path = root / name
-        value = load_json(path)
+        stored_value = load_json(path)
+        value = expand_fragment(stored_value)
         validate_fragment(path, value)
         inputs.append({
             "path": str(path.relative_to(repo)),

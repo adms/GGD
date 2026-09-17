@@ -2,8 +2,8 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_87cffda55d55`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**142**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_24b299192e58`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**142**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-17T06:56:17.345668599Z`；英雄 167 · 道具 98 · 技能 885）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
 
@@ -200,22 +200,22 @@
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i002` | 武聖手鐲 | 組件 component | 300g | T1 | — | ✅ | 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
-| `godie-i003` | 聖光石 | 組件 component | 1450g | T2 | — | ✅ | — | — |
-| `godie-i00m` | 米索莉護板 | 組件 component | 300g | T1 | — | ✅ | 護甲 +17 | — |
-| `godie-i010` | 熱戀魔杖 | 組件 component | 300g | T1 | — | ✅ | 法強 +21.1 · 魔力 +63 | — |
-| `godie-i02x` | 斬岩刃 | 組件 component | — | T3 | — | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damageArea |
-| `godie-i04b` | 冰晶虎魄 | 組件 component | 1200g | T2 | — | ✅ | 法強 +27.7 · 魔力 +83 · 攻擊力 +5.5 · 生命 +122 | onBasicAttack→applyStatus |
-| `godie-i05r` | 吸血石 | 組件 component | 300g | T1 | — | ✅ | 吸血 +0.27 | — |
-| `godie-i05t` | 定情戒指 | 組件 component | 300g | T1 | — | ✅ | 回血 +3.28 | — |
-| `godie-i05u` | 熱舞之靴 | 組件 component | 300g | T1 | — | ✅ | 移速 +0.83 | — |
-| `godie-i05v` | 破壞王手套 | 組件 component | 300g | T1 | — | ✅ | 攻速 +15.4% | — |
-| `godie-i05x` | 辣妹護腕 | 組件 component | 300g | T1 | — | ✅ | 魔抗 +37.8 | — |
-| `godie-i068` | 瑪那寶石 | 組件 component | 300g | T1 | — | ✅ | 魔力 +190 | — |
-| `godie-i06c` | 恐龍之斧 | 組件 component | 1200g | T2 | — | ✅ | 攻擊力 +8.2 · 生命 +181 | — |
-| `godie-i06h` | 求生護腕 | 組件 component | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i06k` | 奧理哈魯根劍身 | 組件 component | 1200g | T2 | — | ✅ | 攻擊力 +26 | — |
-| `godie-i06s` | 龍騎士之劍 | 組件 component | — | T3 | — | ✅ | 護甲 +3.4 · 攻速 +23% · 攻擊力 +34.5 · 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
+| `godie-i002` | 武聖手鐲 | 組件 component | 300g | T1 | — | — | 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
+| `godie-i003` | 聖光石 | 組件 component | 1450g | T2 | — | — | — | — |
+| `godie-i00m` | 米索莉護板 | 組件 component | 300g | T1 | — | — | 護甲 +17 | — |
+| `godie-i010` | 熱戀魔杖 | 組件 component | 300g | T1 | — | — | 法強 +21.1 · 魔力 +63 | — |
+| `godie-i02x` | 斬岩刃 | 組件 component | — | T3 | — | — | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damageArea |
+| `godie-i04b` | 冰晶虎魄 | 組件 component | 1200g | T2 | — | — | 法強 +27.7 · 魔力 +83 · 攻擊力 +5.5 · 生命 +122 | onBasicAttack→applyStatus |
+| `godie-i05r` | 吸血石 | 組件 component | 300g | T1 | — | — | 吸血 +0.27 | — |
+| `godie-i05t` | 定情戒指 | 組件 component | 300g | T1 | — | — | 回血 +3.28 | — |
+| `godie-i05u` | 熱舞之靴 | 組件 component | 300g | T1 | — | — | 移速 +0.83 | — |
+| `godie-i05v` | 破壞王手套 | 組件 component | 300g | T1 | — | — | 攻速 +15.4% | — |
+| `godie-i05x` | 辣妹護腕 | 組件 component | 300g | T1 | — | — | 魔抗 +37.8 | — |
+| `godie-i068` | 瑪那寶石 | 組件 component | 300g | T1 | — | — | 魔力 +190 | — |
+| `godie-i06c` | 恐龍之斧 | 組件 component | 1200g | T2 | — | — | 攻擊力 +8.2 · 生命 +181 | — |
+| `godie-i06h` | 求生護腕 | 組件 component | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
+| `godie-i06k` | 奧理哈魯根劍身 | 組件 component | 1200g | T2 | — | — | 攻擊力 +26 | — |
+| `godie-i06s` | 龍騎士之劍 | 組件 component | — | T3 | — | — | 護甲 +3.4 · 攻速 +23% · 攻擊力 +34.5 · 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
 
 ## 7. 代幣 token（0）
 
@@ -238,11 +238,11 @@
 | `godie-i01a` | 好像有毒的生肉 | 無角色 none | — | T1 | — | — | — | — |
 | `godie-i02g` | 奇美拉之翼(電腦) | 無角色 none | 1200g | T2 | — | — | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
 | `godie-i033` | 初心者護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +1.7 · 生命 +35 · 攻擊力 +1.7 · 魔力 +21 | — |
-| `godie-i03j` | 黃昏公主的血脈 | 無角色 none | 450g | T1 | — | ✅ | — | — |
+| `godie-i03j` | 黃昏公主的血脈 | 無角色 none | 450g | T1 | — | — | — | — |
 | `godie-i03l` | 我愛一條柴 | 無角色 none | 200g | T1 | — | — | — | — |
 | `godie-i03n` | 餅乾 | 無角色 none | 150g | T1 | — | — | — | — |
 | `godie-i04j` | 金幣(寶箱) | 無角色 none | — | T1 | — | — | — | — |
-| `godie-i04v` | 正義之杖 | 無角色 none | — | T3 | — | ✅ | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
+| `godie-i04v` | 正義之杖 | 無角色 none | — | T3 | — | — | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
 | `godie-i05k` | 打我阿笨蛋卷軸 | 無角色 none | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i05l` | 力量護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +0.8 · 攻擊力 +2 · 生命 +43 | — |
 | `godie-i05m` | 敏捷護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +4.2 · 攻速 +11.6% | — |

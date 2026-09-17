@@ -11,7 +11,11 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from fragment_compaction import compact_fragment, expanded_json_bytes
 
 
 REPO = Path(__file__).resolve().parents[5]
@@ -338,7 +342,14 @@ def main():
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    rendered = json.dumps(build_fragment(), ensure_ascii=False, indent=2) + "\n"
+    fragment = build_fragment()
+    expanded = expanded_json_bytes(fragment)
+    compact = compact_fragment(
+        fragment,
+        repo_relative_path=DEFAULT_OUTPUT.relative_to(REPO).as_posix(),
+        expanded_bytes=expanded,
+    )
+    rendered = json.dumps(compact, ensure_ascii=False, indent=2) + "\n"
     if args.check:
         if not args.output.exists() or args.output.read_text(encoding="utf-8") != rendered:
             raise SystemExit(f"stale: {args.output}")

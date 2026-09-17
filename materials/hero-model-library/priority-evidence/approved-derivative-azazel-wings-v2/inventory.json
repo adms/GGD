@@ -1,0 +1,211 @@
+{
+  "schema": "ggd.approved-azazel-wings-v2-evidence@1",
+  "workflowId": "approved-derivative-azazel-wings-v2",
+  "heroId": "community-review-32-20260907",
+  "reference": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/references/approved-derivative-azazel-wings-v1/owner-appearance-reference.png",
+    "bytes": 443264,
+    "sha256": "0a93f42dfcb8317a60b1c532bc4f4fdfdf39f49618ff23ee38d1ca38322733ae",
+    "role": "owner appearance reference"
+  },
+  "candidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/azazel-wings-v2.glb",
+    "bytes": 642928,
+    "sha256": "8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672",
+    "sourceModelKey": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+    "versionModelKey": "version.body.cf9aaba74092778b728b1514679805407f52350d24f2845d",
+    "metrics": {
+      "triangles": 5691,
+      "drawPrimitives": 4,
+      "skinnedPrimitives": 4,
+      "skins": 1,
+      "joints": 42,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 84916,
+          "sha256": "80471906832b1b35341a80fdc419520b7ed5491462d2d94994f26a3c9beba508"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 63004,
+          "sha256": "fd25b688e0a8a3e2fdca1f20a1a224da0a0343c0a1223c9ea50f090f3a06b4c2"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 48228,
+          "sha256": "cf2cc324d5213bd0f4f30c992dcf804d19138cf7aa5f9d5a0cf5beb264cf434d"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 6397,
+          "sha256": "f76fad97b1d5762ea486516c10849b542ffd480f61899ced86c120cf518f0135"
+        }
+      ],
+      "maxTextureEdge": 256,
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 42
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.28125,
+          "channels": 42
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 1.0625,
+          "channels": 42
+        }
+      ],
+      "maxChannelsPerClip": 42
+    }
+  },
+  "atlasProcess": {
+    "sourceSha256": "256e971b9bf38f19f70ea87c1ffd805a78d45dc5090e28aaaa8f0b83b6c36da2",
+    "sourceSize": [
+      512,
+      512
+    ],
+    "bodyOutputSha256": "80471906832b1b35341a80fdc419520b7ed5491462d2d94994f26a3c9beba508",
+    "headOutputSha256": "fd25b688e0a8a3e2fdca1f20a1a224da0a0343c0a1223c9ea50f090f3a06b4c2",
+    "pantsOutputSha256": "cf2cc324d5213bd0f4f30c992dcf804d19138cf7aa5f9d5a0cf5beb264cf434d",
+    "outputSize": [
+      256,
+      256
+    ],
+    "reference": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/references/approved-derivative-azazel-wings-v1/owner-appearance-reference.png",
+      "sha256": "0a93f42dfcb8317a60b1c532bc4f4fdfdf39f49618ff23ee38d1ca38322733ae",
+      "size": [
+        550,
+        825
+      ]
+    },
+    "operations": [
+      "head-joint UV mask brown-to-orange recolour with source shading retained",
+      "spine-joint UV mask brown-to-skin recolour with source shading retained",
+      "owner-reference closed-eye/brow crops colour-matched, scaled and feather-composited onto two eye UV islands",
+      "Pillow Lanczos 512-to-256 resize"
+    ],
+    "cropBoxes": {
+      "referenceLeft": [
+        188,
+        232,
+        235,
+        273
+      ],
+      "atlasLeft": [
+        433,
+        70,
+        509,
+        146
+      ],
+      "referenceRight": [
+        261,
+        235,
+        309,
+        278
+      ],
+      "atlasRight": [
+        296,
+        211,
+        376,
+        296
+      ]
+    }
+  },
+  "trianglePartition": {
+    "sourceIndexAccessor": 0,
+    "sourceTriangles": 5681,
+    "bodyTriangles": 2403,
+    "headTriangles": 3101,
+    "pantsTriangles": 177,
+    "unionPreserved": true
+  },
+  "preservation": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/azazel-wings-v2.preservation.json",
+    "bytes": 30926,
+    "sha256": "a4a1c5dd586f3b2bd5fbe19b070077efd7b2e468d0454ee71d4a08eebef6d5ef",
+    "sourceTriangleUnionUnchanged": true,
+    "skeletonAnimationsUnchanged": true
+  },
+  "visualEvidence": {
+    "views": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/render-v13/front.png",
+        "bytes": 243248,
+        "sha256": "e28e42ef13330ab355a76024c3d2abb55b25f4ccf3d384f105b3b476316d3e0c",
+        "view": "front"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/render-v13/isometric.png",
+        "bytes": 182732,
+        "sha256": "e715372932b8f70448e09b8a2eb8c9a07912e3147b35db212ee9d001e1a54eb6",
+        "view": "isometric"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/render-v13/back.png",
+        "bytes": 144719,
+        "sha256": "d2a93a77aa803e22e682773eb6fdca64523531cb9e79db3379e211e19237cda6",
+        "view": "back"
+      }
+    ],
+    "proof": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/render-v13/proof.json",
+      "bytes": 5789,
+      "sha256": "95eb32072f7821f2208d21c3cdbeb6a736e44cd5db1319e8a0b062d654bf1792"
+    },
+    "abSheet": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v2/azazel-face-v1-v2-ab.jpg",
+      "bytes": 203069,
+      "sha256": "f19752a65ed8f4802e91f5d1a5c9590413e1b01da38af71ecd54c51281e5a1c2",
+      "gitPath": "materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v2/azazel-face-v1-v2-ab.jpg"
+    }
+  },
+  "registration": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v2/azazel-wings-v2.registration.json",
+    "bytes": 3522,
+    "sha256": "09a468f9aac750fd0c7954e7742759298a8f29dfbfe9f9aa32e4ffe52400b32e",
+    "mode": "independent selectable option; automaticEligible=false; current active v1 retained",
+    "activeModelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+  },
+  "status": {
+    "converted": true,
+    "policyValidated": true,
+    "khronosValidated": true,
+    "threeViewRendered": true,
+    "registered": true,
+    "selectable": true,
+    "automaticSelected": false,
+    "ownerAppearanceAcceptance": "pending",
+    "productionDeployed": false
+  },
+  "limitations": [
+    "Closed-eye/brow pixels are deterministic crops from the owner reference, colour-matched and pasted to the source face UV islands.",
+    "Orange hair, skin torso and deep-brown pants use a head/body/pelvis material split over the unchanged source triangle union.",
+    "The two source hair shells use a deterministic orange-texel UV pin because their original atlas overlaps the face/eye island and produced a brown crown patch.",
+    "The model remains a modified 300英雄 proxy with borrowed source animations; it is not an original-game Azazel model or native motion."
+  ]
+}

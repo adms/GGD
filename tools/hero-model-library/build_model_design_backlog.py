@@ -10,6 +10,7 @@ from design_backlog_resources import resource_view, resource_cell, source_overvi
 from fateubw_backlog_overlay import apply_fateubw_overlay
 from mba_pilot_backlog_overlay import apply_mba_pilot_overlay
 from jstars_owner_backlog_overlay import apply_jstars_owner_overlay
+from current_roster import read_current_roster, roster_input_paths
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'materials/hero-model-library'
@@ -247,6 +248,14 @@ def build(*, refresh_local_audits=False):
     result=apply_infinity_strash_current_overlay(apply_jstars_owner_overlay(
         apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT), ROOT)
     )
+    # Portable source audits may be historical; current project counts never are.
+    result['currentProjectRoster']=read_current_roster(ROOT)
+    result['heroesInProject']=result['currentProjectRoster']['definitionCount']
+    pins={entry['path']:entry for entry in result.get('inputs',[])}
+    for path in [*roster_input_paths(ROOT), *sorted((ROOT/'content/champions').glob('*.json'))]:
+        rel=path.relative_to(ROOT).as_posix()
+        pins[rel]={'path':rel,'sha256':sha(path)}
+    result['inputs']=[pins[key] for key in sorted(pins)]
     family_names=[str(row.get('nameZh','')) for row in result.get('resourceCoverage',{}).get('sourceFamilies',[])]
     required={
         '300英雄':lambda value:'300英雄' in value,
@@ -281,9 +290,9 @@ def render(data):
         '固定共編入口：`materials/hero-model-library/'+TITLE+'.md`。完整候選、來源及判定證據見同名 JSON；完整模型盤點見 [全角色模型盤點.md](全角色模型盤點.md)。','',
         '**用途：列出已取得模型、尚待建立英雄設計或實作的候選。人物與作品名稱以中文優先，括號保留原文供查找。** 模型是否已轉換、英雄是否有技能、是否上架分開記錄；不把已有英雄重新標成未設計。未知身份與缺少本機檔案另列，不混入確定待設計。','',
         f"本次逐庫來源身份記錄：尚未建立英雄 **{n['not-defined']}** 筆；已有定義但需補查／實作 **{n['definitions-incomplete']}** 筆；身份待確認 **{n['identity-review']}** 筆。另有 {n['designed']} 筆已對應有機制資料的英雄、{n['source-unavailable']} 筆無可核對本機模型，不列入可用待辦。跨庫同角色及形態未經核准合併前，這些數字不是去重後的新英雄總數。",'',
-        f"目前專案有 {data['heroesInProject']} 份靜態英雄定義，另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入本索引的設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；上架狀態只採盤點內既有快照，並非即時正式站檢查。",'',
+        f"目前專案有 **{data['heroesInProject']} 份靜態英雄定義、{data['currentProjectRoster']['selectableCount']} 名對戰可選英雄**；每次產生時從 `content/champions` 與專案 `balancePopulationIds` 即時計算。另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；下表營運上架狀態仍來自既有歷史快照，並非即時正式站檢查。",'',
         '## 維護方式','',
-        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. Git 追蹤收據的一般重建執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`。只有在三個本機大型快取都已更新與核對時，才以 `--refresh-local-audits` 刷新非 Fate 基底。Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
+        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. Git 追蹤收據的一般重建執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`。只有在三個本機大型快取都已更新與核對時，才以 `--refresh-local-audits` 刷新非 Fate 基底。Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 原始、半成品、轉換檔及轉換程式須另做 S3 備份；是否完成以各來源上傳及讀回收據為準，待備份者不可宣稱完成。Git 保留成品、程式與索引的共編版本，本機全保留。','']
     lines+=source_overview(data['resourceCoverage'])
     labels=[('not-defined','尚未建立對應英雄'),('definitions-incomplete','已有定義，需補查或實作'),('identity-review','來源身份／英雄對應待確認'),('designed','已有英雄設計：全部來源版本仍保留')]
     for status,label in labels:

@@ -407,28 +407,22 @@ def build_character_receipt(
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
             str(cpk_character.get("identityEvidence") or ""),
         ])
-        members = cpk_character.get("members", [])
         for module_name in MODULES:
-            evidence = [
-                {
-                    "container": row.get("container"),
-                    "path": row.get("path"),
-                    "bytes": row.get("bytes"),
-                    "sha256": row.get("sha256"),
-                }
-                for row in members
-                if module_name in row.get("moduleHints", [])
-            ]
-            if evidence:
+            candidate_count = int(cpk_character.get("moduleCounts", {}).get(module_name, 0))
+            if candidate_count:
                 modules[module_name] = {
                     "candidateContainerFound": True,
+                    "candidateMemberCount": candidate_count,
                     "runtimeReady": False,
                     "status": "native-containers-present-hashed-conversion-blocked",
                     "reason": (
                         "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, "
                         "runtime conversion, visual validation and event binding remain incomplete"
                     ),
-                    "evidence": evidence,
+                    "evidence": [{
+                        "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+                        "characterMemberEvidence": cpk_character.get("memberEvidence"),
+                    }],
                 }
 
     if audio_character and str(audio_character.get("nativeId")) == native_id:
@@ -541,6 +535,16 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
         "inventoryDate": "2026-09-17",
         "mode": "read-only-source-audit-and-extraction-preparation",
         "status": overall_status,
+        "fullAudit": {
+            "status": "local-preserved-s3-readback-pending",
+            "bytes": 324863,
+            "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e",
+            "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+            "archiveMember": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+            "archiveStatus": "pending-manifest-publication-and-readback",
+            "restoreRequiredForSourceAudit": False,
+        },
         "scope": {
             "game": "J-Stars Victory VS+",
             "characters": len(characters),

@@ -6456,7 +6456,7 @@
       "failed": [],
       "before": {
         "championId": "community-review-32-20260907",
-        "expectedHash": "sha256:e9014f45309c2186ddc39f97435727a5debadb2ec6f34a9d0ea2c5c8e99658db",
+        "expectedHash": "sha256:c3ff33467bbd59e83d4a379752b971727209bf59efc6425188b623b5e7c6825d",
         "activeModelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
         "versions": [
           {
@@ -6570,6 +6570,26 @@
               "sourcePlatform": "Windows"
             },
             "automaticEligible": true
+          },
+          {
+            "modelKey": "version.body.effe98edd329922f74c1ed84541cdc743b08fcc0090555e8",
+            "label": "阿薩謝爾（獨立副本／參考圖閉眼橘髮與蝙蝠翼 v2／待外觀核准）",
+            "sourceModelKey": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+            "modelSha256": "092927777c0f7a20fcbd6160c1465840b7760215e2aa5d51526d4e1a86158157",
+            "binarySha256": "1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36",
+            "registeredAt": "2026-09-17T11:19:28.301Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+              "work": "喜羊羊與灰太狼",
+              "library": "300heroes",
+              "reference": "derivative:azazel",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
           }
         ],
         "selectionMode": "automatic",
@@ -6577,7 +6597,7 @@
       },
       "after": {
         "championId": "community-review-32-20260907",
-        "expectedHash": "sha256:e9014f45309c2186ddc39f97435727a5debadb2ec6f34a9d0ea2c5c8e99658db",
+        "expectedHash": "sha256:e7a7a96037f5944a50942effadfb4df266e9efb46dfc5484d78cbe7fc9282b77",
         "activeModelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
         "versions": [
           {
@@ -6691,6 +6711,46 @@
               "sourcePlatform": "Windows"
             },
             "automaticEligible": true
+          },
+          {
+            "modelKey": "version.body.effe98edd329922f74c1ed84541cdc743b08fcc0090555e8",
+            "label": "阿薩謝爾（獨立副本／參考圖閉眼橘髮與蝙蝠翼 v2／已由 v2.1 取代／非自動）",
+            "sourceModelKey": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+            "modelSha256": "092927777c0f7a20fcbd6160c1465840b7760215e2aa5d51526d4e1a86158157",
+            "binarySha256": "1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36",
+            "registeredAt": "2026-09-17T11:19:28.301Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+              "work": "喜羊羊與灰太狼",
+              "library": "300heroes",
+              "reference": "derivative:azazel",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.cf9aaba74092778b728b1514679805407f52350d24f2845d",
+            "label": "阿薩謝爾（獨立副本／參考圖閉眼一致橘髮與蝙蝠翼 v2.1／待外觀核准）",
+            "sourceModelKey": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+            "modelSha256": "f946f2158f116e9ec7c6559b4c24ae4e69a4968574dd5620e40a2068176b2f9d",
+            "binarySha256": "8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672",
+            "registeredAt": "2026-09-17T11:40:02.764Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+              "work": "喜羊羊與灰太狼",
+              "library": "300heroes",
+              "reference": "derivative:azazel",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
           }
         ],
         "selectionMode": "automatic",
@@ -10160,7 +10220,7 @@
       "failed": [],
       "before": {
         "championId": "b2-bojji",
-        "expectedHash": "sha256:dec58733b40752b29a99cf6a5aefa10dcbda29ee832053bc17de3e40749333dc",
+        "expectedHash": "sha256:15704b5f2c1c1bf5adbce093647ca3a76b6f34ad15bc4032a69985926c8530f2",
         "activeModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
         "versions": [
           {
@@ -10274,6 +10334,66 @@
               "sourcePlatform": "Windows"
             },
             "automaticEligible": true
+          },
+          {
+            "modelKey": "version.body.e7ebe443cc4f7eaa8662702817d93a88cd33e6564575ea73",
+            "label": "波吉（王冠繪本純色 v2／獨立完整副本）",
+            "sourceModelKey": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+            "modelSha256": "a34a27837cacade0ff17c45687b97ec35196d017852e6111f99213897d878872",
+            "binarySha256": "0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9",
+            "registeredAt": "2026-09-17T11:20:29.036Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.6d14c4f923bb7f4327f74f842862b1fbc5295011dc5869e5",
+            "label": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+            "sourceModelKey": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+            "modelSha256": "3973ca7cc80f86dfc0f017b3dba2d2ded0b3b0ea975223416756a74be78f495e",
+            "binarySha256": "9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39",
+            "registeredAt": "2026-09-17T11:30:05.662Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2-texture-corrected",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e",
+            "label": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+            "sourceModelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+            "modelSha256": "145b808b547f84b852e558f019002ec960fce9b35208df778034fad3045ad9e9",
+            "binarySha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03",
+            "registeredAt": "2026-09-17T11:36:28.925Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2-head-material-split",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
           }
         ],
         "selectionMode": "automatic",
@@ -10281,7 +10401,7 @@
       },
       "after": {
         "championId": "b2-bojji",
-        "expectedHash": "sha256:dec58733b40752b29a99cf6a5aefa10dcbda29ee832053bc17de3e40749333dc",
+        "expectedHash": "sha256:15704b5f2c1c1bf5adbce093647ca3a76b6f34ad15bc4032a69985926c8530f2",
         "activeModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
         "versions": [
           {
@@ -10395,6 +10515,66 @@
               "sourcePlatform": "Windows"
             },
             "automaticEligible": true
+          },
+          {
+            "modelKey": "version.body.e7ebe443cc4f7eaa8662702817d93a88cd33e6564575ea73",
+            "label": "波吉（王冠繪本純色 v2／獨立完整副本）",
+            "sourceModelKey": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+            "modelSha256": "a34a27837cacade0ff17c45687b97ec35196d017852e6111f99213897d878872",
+            "binarySha256": "0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9",
+            "registeredAt": "2026-09-17T11:20:29.036Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.6d14c4f923bb7f4327f74f842862b1fbc5295011dc5869e5",
+            "label": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+            "sourceModelKey": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+            "modelSha256": "3973ca7cc80f86dfc0f017b3dba2d2ded0b3b0ea975223416756a74be78f495e",
+            "binarySha256": "9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39",
+            "registeredAt": "2026-09-17T11:30:05.662Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2-texture-corrected",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
+          },
+          {
+            "modelKey": "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e",
+            "label": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+            "sourceModelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+            "modelSha256": "145b808b547f84b852e558f019002ec960fce9b35208df778034fad3045ad9e9",
+            "binarySha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03",
+            "registeredAt": "2026-09-17T11:36:28.925Z",
+            "source": {
+              "kind": "style-proxy",
+              "character": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+              "work": "國王排名；來源替身為 300英雄小桐人寵物",
+              "library": "300heroes",
+              "reference": "derivative:bojji-crown-v2-head-material-split",
+              "tier": "300heroes",
+              "selectionClass": "manual",
+              "sourceGame": "300英雄",
+              "sourcePlatform": "Windows"
+            },
+            "automaticEligible": false
           }
         ],
         "selectionMode": "automatic",

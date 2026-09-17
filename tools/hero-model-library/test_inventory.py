@@ -13,7 +13,7 @@ DATA = REPO / 'materials/hero-model-library'
 class InventoryHandoff(unittest.TestCase):
     def test_audio_reserve_cannot_close_a_model_gap_even_when_paid(self):
         from source_links import plan_sources
-        for role in ['audio-supplement','animation-supplement','vfx-supplement','component-supplement','texture-supplement','validation-evidence','research-evidence']:
+        for role in ['audio-supplement','animation-supplement','vfx-supplement','component-supplement','texture-supplement','validation-evidence','research-evidence','game-resource-archive']:
             with self.subTest(role=role):
                 source={'id':'supplement-only','heroIds':['hero'],'resourceRole':role,'acquisitionStatus':'downloaded-verified','purchaseDecision':'hold-purchase-review-acquired-source'}
                 data={'entries':[{'id':'owner-one','heroIds':['hero']}], 'publicSources':[], 'paidSources':[source]}
@@ -217,14 +217,22 @@ class InventoryHandoff(unittest.TestCase):
     def test_clean_checkout_needs_no_library_and_detects_stale_inputs(self):
         with tempfile.TemporaryDirectory(prefix='ggd-handoff-') as folder:
             target = Path(folder) / 'GGD'
-            for rel in ['materials/hero-model-library','materials/community-hero-forge/recipes','content/champions','content/config']:
+            for rel in ['materials/hero-model-library','materials/community-hero-forge/recipes','content/champions','content/config','content/models']:
                 shutil.copytree(REPO/rel, target/rel)
-            for name in ['inventory.py','source_links.py','default_policy.py','query.py']:
+            for name in ['inventory.py','source_links.py','default_policy.py','query.py','current_roster.py','current_roster.mts']:
                 dest=target/'tools/hero-model-library'/name
                 dest.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(REPO/'tools/hero-model-library'/name, dest)
+            for rel in ['packages/shared/testkit/balancePopulation.ts','packages/shared/testkit/starterRoster.ts','apps/platform/internal/curation/starter.go']:
+                dest=target/rel
+                dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(REPO/rel,dest)
+            (target/'node_modules').symlink_to(REPO/'node_modules',target_is_directory=True)
+            (target/'content/assets').symlink_to(REPO/'content/assets',target_is_directory=True)
+            shutil.copyfile(REPO/'package.json',target/'package.json')
             script=target/'tools/hero-model-library/inventory.py'
-            subprocess.run([sys.executable,str(script),'--check'],check=True,capture_output=True)
+            checked=subprocess.run([sys.executable,str(script),'--check'],capture_output=True,text=True)
+            self.assertEqual(checked.returncode,0,checked.stdout+checked.stderr)
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'b2-popp','--json'],text=True)
             self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1')
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'小傑','--downloads','--json'],text=True)

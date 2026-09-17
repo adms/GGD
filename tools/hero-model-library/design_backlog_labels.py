@@ -53,4 +53,4 @@ def hero_check_label(check):
         'content-changed-requires-coverage-refresh': '內容已變更，待重新核對',
         'not-audited': '尚未核對設計',
     }.get(status, '設計狀態待核對')
-    return f"{translated}（{check['heroId']}；{check['availability']}）"
+    return f"{translated}（{check['heroId']}；{str(check['availability']).replace('正式機白名單可選', '歷史快照白名單可選（非即時）')}）"

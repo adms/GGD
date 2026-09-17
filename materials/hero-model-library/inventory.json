@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-17T18:32:44+08:00",
-  "inputsSha256": "ed1db2f7bc9862c85fdf119480d7f89140459ccf67ce5ce348fb26e0038835a6",
+  "generatedAt": "2026-09-17T19:44:24+08:00",
+  "inputsSha256": "ccf21560e2e4a7f29587cc1b882f288e85569536def06ccbb2c8a91c9f6b12b4",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -11,6 +11,373 @@
     "example:warwick": "lol-warwick",
     "example:xerath": "lol-xerath",
     "example:yasuo": "lol-yasuo"
+  },
+  "currentProjectRoster": {
+    "definitionCount": 190,
+    "selectableCount": 167,
+    "definitionIds": [
+      "acquired-alice",
+      "acquired-astralym",
+      "acquired-asuna",
+      "acquired-beatrice",
+      "acquired-cattiva",
+      "acquired-dio",
+      "acquired-emilia",
+      "acquired-inuyasha",
+      "acquired-jetragon",
+      "acquired-kita-kita",
+      "acquired-kuroyukihime",
+      "acquired-leafa",
+      "acquired-lord-nightmares",
+      "acquired-mario",
+      "acquired-mewtwo",
+      "acquired-minecraft",
+      "acquired-morgiana",
+      "acquired-naruto",
+      "acquired-pokemon-trainer",
+      "acquired-ram",
+      "acquired-rim",
+      "acquired-ryu",
+      "acquired-saya",
+      "acquired-wargreymon",
+      "acquired-xiaodangjia",
+      "acquired-zero",
+      "b2-aladdin",
+      "b2-albus",
+      "b2-bojji",
+      "b2-boxxo",
+      "b2-elma",
+      "b2-fushi",
+      "b2-goblin",
+      "b2-guts",
+      "b2-haga",
+      "b2-kaede",
+      "b2-kaiji",
+      "b2-keyaru",
+      "b2-kisaragi",
+      "b2-klaus",
+      "b2-kumoko",
+      "b2-luckyman",
+      "b2-makoto",
+      "b2-maomao",
+      "b2-maple",
+      "b2-maple-alt-9769eb88b85b",
+      "b2-matthias",
+      "b2-misery",
+      "b2-naofumi",
+      "b2-ned",
+      "b2-noor",
+      "b2-nube",
+      "b2-orphen",
+      "b2-popp",
+      "b2-rem",
+      "b2-rin",
+      "b2-shadow",
+      "b2-shinchan",
+      "b2-sinbad",
+      "b2-takopi",
+      "b2-touka",
+      "b2-uncle",
+      "b2-yogiri",
+      "b2-zenitsu",
+      "community-review-01-20260907",
+      "community-review-02-20260907",
+      "community-review-03-20260907",
+      "community-review-04-20260907",
+      "community-review-05-20260907",
+      "community-review-06-20260907",
+      "community-review-07-20260907",
+      "community-review-08-20260907",
+      "community-review-09-20260907",
+      "community-review-10-20260907",
+      "community-review-11-20260907",
+      "community-review-12-20260907",
+      "community-review-13-20260907",
+      "community-review-14-20260907",
+      "community-review-15-20260907",
+      "community-review-16-20260907",
+      "community-review-17-20260907",
+      "community-review-18-20260907",
+      "community-review-19-20260907",
+      "community-review-20-20260907",
+      "community-review-21-20260907",
+      "community-review-22-20260907",
+      "community-review-23-20260907",
+      "community-review-24-20260907",
+      "community-review-25-20260907",
+      "community-review-26-20260907",
+      "community-review-27-20260907",
+      "community-review-28-20260907",
+      "community-review-29-20260907",
+      "community-review-30-20260907",
+      "community-review-31-20260907",
+      "community-review-32-20260907",
+      "community-review-33-20260907",
+      "community-review-34-20260907",
+      "community-review-35-20260907",
+      "community-review-36-20260907",
+      "community-review-37-20260907",
+      "godie-e001",
+      "godie-e002",
+      "godie-e007",
+      "godie-e008",
+      "godie-e00l",
+      "godie-e00n",
+      "godie-e00r",
+      "godie-e00s",
+      "godie-e00w",
+      "godie-e00x",
+      "godie-e010",
+      "godie-edem",
+      "godie-efur",
+      "godie-emfr",
+      "godie-emns",
+      "godie-etyr",
+      "godie-ewar",
+      "godie-h00l",
+      "godie-h01n",
+      "godie-h01o",
+      "godie-h01u",
+      "godie-h020",
+      "godie-h02k",
+      "godie-h02r",
+      "godie-h02u",
+      "godie-h02v",
+      "godie-hapm",
+      "godie-hart",
+      "godie-hgam",
+      "godie-hjai",
+      "godie-hpb1",
+      "godie-huth",
+      "godie-hvsh",
+      "godie-hvwd",
+      "godie-n003",
+      "godie-n00b",
+      "godie-n00p",
+      "godie-n01c",
+      "godie-n01g",
+      "godie-nbbc",
+      "godie-nsjs",
+      "godie-o00k",
+      "godie-o00l",
+      "godie-o00x",
+      "godie-o02l",
+      "godie-o02p",
+      "godie-o030",
+      "godie-ofar",
+      "godie-ogld",
+      "godie-ogrh",
+      "godie-orkn",
+      "godie-osam",
+      "godie-u00h",
+      "godie-u00j",
+      "godie-u00k",
+      "godie-u00l",
+      "godie-u00n",
+      "godie-u00o",
+      "godie-u00v",
+      "godie-u010",
+      "godie-u01u",
+      "godie-u034",
+      "godie-ubal",
+      "godie-ucrl",
+      "godie-udea",
+      "godie-udre",
+      "godie-umal",
+      "godie-uvng",
+      "godie-zombiex",
+      "lol-ahri",
+      "lol-ashe",
+      "lol-blitzcrank",
+      "lol-chogath",
+      "lol-fiddlesticks",
+      "lol-garen",
+      "lol-karthus",
+      "lol-leesin",
+      "lol-lux",
+      "lol-malphite",
+      "lol-missfortune",
+      "lol-ornn",
+      "lol-sett",
+      "lol-thresh",
+      "lol-velkoz",
+      "lol-warwick",
+      "lol-xerath",
+      "lol-yasuo",
+      "sela",
+      "thorne"
+    ],
+    "selectableIds": [
+      "acquired-alice",
+      "acquired-astralym",
+      "acquired-asuna",
+      "acquired-beatrice",
+      "acquired-cattiva",
+      "acquired-dio",
+      "acquired-emilia",
+      "acquired-inuyasha",
+      "acquired-jetragon",
+      "acquired-kita-kita",
+      "acquired-kuroyukihime",
+      "acquired-leafa",
+      "acquired-lord-nightmares",
+      "acquired-mario",
+      "acquired-mewtwo",
+      "acquired-minecraft",
+      "acquired-morgiana",
+      "acquired-naruto",
+      "acquired-pokemon-trainer",
+      "acquired-ram",
+      "acquired-rim",
+      "acquired-ryu",
+      "acquired-saya",
+      "acquired-wargreymon",
+      "acquired-xiaodangjia",
+      "acquired-zero",
+      "b2-aladdin",
+      "b2-albus",
+      "b2-bojji",
+      "b2-boxxo",
+      "b2-elma",
+      "b2-fushi",
+      "b2-goblin",
+      "b2-guts",
+      "b2-haga",
+      "b2-kaede",
+      "b2-kaiji",
+      "b2-keyaru",
+      "b2-kisaragi",
+      "b2-klaus",
+      "b2-kumoko",
+      "b2-luckyman",
+      "b2-makoto",
+      "b2-maomao",
+      "b2-maple",
+      "b2-matthias",
+      "b2-misery",
+      "b2-naofumi",
+      "b2-ned",
+      "b2-noor",
+      "b2-nube",
+      "b2-orphen",
+      "b2-popp",
+      "b2-rem",
+      "b2-rin",
+      "b2-shadow",
+      "b2-shinchan",
+      "b2-sinbad",
+      "b2-takopi",
+      "b2-touka",
+      "b2-uncle",
+      "b2-yogiri",
+      "b2-zenitsu",
+      "community-review-01-20260907",
+      "community-review-02-20260907",
+      "community-review-03-20260907",
+      "community-review-04-20260907",
+      "community-review-05-20260907",
+      "community-review-06-20260907",
+      "community-review-07-20260907",
+      "community-review-08-20260907",
+      "community-review-09-20260907",
+      "community-review-10-20260907",
+      "community-review-11-20260907",
+      "community-review-12-20260907",
+      "community-review-13-20260907",
+      "community-review-14-20260907",
+      "community-review-15-20260907",
+      "community-review-16-20260907",
+      "community-review-17-20260907",
+      "community-review-18-20260907",
+      "community-review-19-20260907",
+      "community-review-20-20260907",
+      "community-review-21-20260907",
+      "community-review-22-20260907",
+      "community-review-23-20260907",
+      "community-review-24-20260907",
+      "community-review-25-20260907",
+      "community-review-26-20260907",
+      "community-review-27-20260907",
+      "community-review-28-20260907",
+      "community-review-29-20260907",
+      "community-review-30-20260907",
+      "community-review-31-20260907",
+      "community-review-32-20260907",
+      "community-review-33-20260907",
+      "community-review-34-20260907",
+      "community-review-35-20260907",
+      "community-review-36-20260907",
+      "community-review-37-20260907",
+      "godie-e001",
+      "godie-e002",
+      "godie-e008",
+      "godie-e00r",
+      "godie-e00s",
+      "godie-e00w",
+      "godie-edem",
+      "godie-efur",
+      "godie-emfr",
+      "godie-emns",
+      "godie-etyr",
+      "godie-ewar",
+      "godie-h00l",
+      "godie-h01n",
+      "godie-h01u",
+      "godie-h02k",
+      "godie-h02v",
+      "godie-hapm",
+      "godie-hart",
+      "godie-hgam",
+      "godie-hjai",
+      "godie-hpb1",
+      "godie-huth",
+      "godie-hvsh",
+      "godie-hvwd",
+      "godie-n003",
+      "godie-n00b",
+      "godie-nbbc",
+      "godie-nsjs",
+      "godie-o00k",
+      "godie-o00l",
+      "godie-o02p",
+      "godie-ofar",
+      "godie-ogld",
+      "godie-ogrh",
+      "godie-orkn",
+      "godie-osam",
+      "godie-u00h",
+      "godie-u00j",
+      "godie-u00k",
+      "godie-u00n",
+      "godie-u00v",
+      "godie-ubal",
+      "godie-ucrl",
+      "godie-udea",
+      "godie-udre",
+      "godie-umal",
+      "godie-uvng",
+      "godie-zombiex",
+      "lol-ahri",
+      "lol-ashe",
+      "lol-blitzcrank",
+      "lol-chogath",
+      "lol-fiddlesticks",
+      "lol-garen",
+      "lol-karthus",
+      "lol-leesin",
+      "lol-lux",
+      "lol-malphite",
+      "lol-missfortune",
+      "lol-ornn",
+      "lol-sett",
+      "lol-thresh",
+      "lol-velkoz",
+      "lol-warwick",
+      "lol-xerath",
+      "lol-yasuo"
+    ],
+    "provenance": "apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === \"alternate\"）",
+    "productionVerified": false
   },
   "productionSnapshot": {
     "observedAt": "2026-09-10T14:18:02.985521+00:00",
@@ -24,7 +391,7 @@
       "name": "蟬在叫人壞掉 - 龍宮禮奈",
       "work": "寒蟬鳴泣之時",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.renaryugu2",
         "id": "imported.renaryugu2",
@@ -106,7 +473,7 @@
       "name": "亞瑟王 - Saber",
       "work": "Fate/stay night",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herosaber",
         "id": "registered:imported.herosaber",
@@ -6325,7 +6692,7 @@
       "name": "火霧戰士 - 夏娜",
       "work": "灼眼的夏娜",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heroshana",
         "id": "registered:imported.heroshana",
@@ -12681,7 +13048,7 @@
       "name": "最終泛用人型決戰兵器 - 初號機",
       "work": "新世紀福音戰士（由故事 EVANGELION 辨識）",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.498341",
         "id": "registered:ou99.498341",
@@ -12866,7 +13233,7 @@
       "name": "白木老樹精 - 白木卡迪那",
       "work": "去死團逆襲原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.sela",
         "id": "registered:champ.sela",
@@ -13003,7 +13370,7 @@
       "name": "神鳴流劍士 - 櫻綻剎那",
       "work": "魔法老師",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.mfls",
         "id": "imported.mfls",
@@ -13304,7 +13671,7 @@
       "name": "寫輪眼復仇者 - 宇智波佐助",
       "work": "火影忍者",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herosasuke",
         "id": "registered:imported.herosasuke",
@@ -18441,7 +18808,7 @@
       "name": "揍敵客大家長 - 揍敵客桀諾",
       "work": "偽獵人X獵人",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.sela",
         "id": "registered:champ.sela",
@@ -18576,7 +18943,7 @@
       "name": "魔法老師 - 涅吉。史普林。菲爾德",
       "work": "魔法老師",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.negi",
         "id": "imported.negi",
@@ -18658,7 +19025,7 @@
       "name": "奇樂 - 夜神月",
       "work": "死亡筆記本",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herolight",
         "id": "imported.herolight",
@@ -18791,7 +19158,7 @@
       "name": "治癒系公主 - 木乃香",
       "work": "魔法老師",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herooichi",
         "id": "imported.herooichi",
@@ -18873,7 +19240,7 @@
       "name": "龍之子 - 天地志狼",
       "work": "龍狼傳",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herolingtong",
         "id": "imported.herolingtong",
@@ -18955,7 +19322,7 @@
       "name": "時空勇者 - 林克",
       "work": "薩爾達傳說",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.linkstik",
         "id": "imported.linkstik",
@@ -19635,7 +20002,7 @@
       "name": "開外掛的死神 - 黑崎一護",
       "work": "死神BLEACH",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heroichigo",
         "id": "registered:imported.heroichigo",
@@ -27605,7 +27972,7 @@
       "name": "亂世癿王者 - 呂布奉先",
       "work": "東漢世紀末傳說",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.lubu",
         "id": "registered:imported.lubu",
@@ -37972,7 +38339,7 @@
       "name": "國寶級的畜生 - 熊貓",
       "work": "去死團原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.463344",
         "id": "registered:ou99.463344",
@@ -38273,7 +38640,7 @@
       "name": "看似憂鬱的神獸 - 草泥馬",
       "work": "中國大陸",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.horse",
         "id": "imported.horse",
@@ -38355,7 +38722,7 @@
       "name": "海克力斯 - Berserker",
       "work": "Fate/stay night",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
         "id": "300heroes:41",
@@ -44518,7 +44885,7 @@
       "name": "最終幻想 - 克勞德",
       "work": "太空戰士7",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.cloud",
         "id": "imported.cloud",
@@ -44740,7 +45107,7 @@
       "name": "種子神奇寶貝 - 妙蛙種子",
       "work": "神奇寶貝",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.bulbasaur",
         "id": "imported.bulbasaur",
@@ -44822,7 +45189,7 @@
       "name": "黑魔導士 - 莉娜因巴斯",
       "work": "秀逗魔導士",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.linainvers",
         "id": "registered:imported.linainvers",
@@ -55003,7 +55370,7 @@
       "name": "獸矛傳承使 - 蒼月潮",
       "work": "魔力小馬、潮與虎",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herotoshiiemaeda",
         "id": "imported.herotoshiiemaeda",
@@ -55113,7 +55480,7 @@
       "name": "超級普烏 - 魔人普烏",
       "work": "七龍珠",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herobuu",
         "id": "registered:imported.herobuu",
@@ -56014,7 +56381,7 @@
       "name": "梅杜莎 - Rider",
       "work": "Fate/stay night",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herorider",
         "id": "imported.herorider",
@@ -62133,7 +62500,7 @@
       "name": "除魔巫女 - 桔梗",
       "work": "犬夜叉",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.kikyou",
         "id": "imported.kikyou",
@@ -62296,7 +62663,7 @@
       "name": "黑暗福音 - 依文潔琳",
       "work": "魔法老師",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.long",
         "id": "imported.long",
@@ -62409,7 +62776,7 @@
       "name": "小叮噹 - 哆拉A夢",
       "work": "小叮噹",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.doraemon-cat",
         "id": "registered:imported.doraemon-cat",
@@ -68698,7 +69065,7 @@
       "name": "傳說的龍騎士 - 勇者小呆",
       "work": "神龍之謎",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
         "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
@@ -75289,7 +75656,7 @@
       "name": "妖狐藏馬 - 南野秀一",
       "work": "幽遊白書",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.fox2",
         "id": "imported.fox2",
@@ -75371,7 +75738,7 @@
       "name": "傲嬌電氣老鼠 - 皮卡娘",
       "work": "SATO X PICA",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.pika",
         "id": "imported.pika",
@@ -75453,7 +75820,7 @@
       "name": "獸神官 - 傑洛士",
       "work": "秀逗魔導士",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heroxelloss",
         "id": "imported.heroxelloss",
@@ -79609,7 +79976,7 @@
       "name": "夢幻之星 - 初音",
       "work": "HATSUNE MIKU",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heromiku",
         "id": "imported.heromiku",
@@ -79873,7 +80240,7 @@
       "name": "神奇寶貝兒 - 皮卡丘",
       "work": "神奇寶貝",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heropikachu",
         "id": "imported.heropikachu",
@@ -80184,7 +80551,7 @@
       "name": "美白大法師 - 黑人牙膏",
       "work": "去死去死團的逆襲原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.sela",
         "id": "registered:champ.sela",
@@ -80321,7 +80688,7 @@
       "name": "賽亞人 - 悟空",
       "work": "七龍珠",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.goku",
         "id": "imported.goku",
@@ -84386,7 +84753,7 @@
       "name": "電車癡漢 - 臭作",
       "work": "臭作",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": null,
       "automaticDefault": null,
       "defaultSelectionMode": "automatic",
@@ -84447,7 +84814,7 @@
       "name": "犬妖 - 殺生丸",
       "work": "犬夜叉",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.sesshomaru",
         "id": "registered:imported.sesshomaru",
@@ -84584,7 +84951,7 @@
       "name": "鬼畜紅王 - 鬼畜狂刀KYO",
       "work": "鬼眼狂刀KYO",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herokyo",
         "id": "imported.herokyo",
@@ -84666,7 +85033,7 @@
       "name": "神性的流失 - 賽菲洛斯",
       "work": "最終幻想7",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herosephiroth",
         "id": "imported.herosephiroth",
@@ -84807,7 +85174,7 @@
       "name": "邪惡意念集合體 - 死之王",
       "work": "去死去死團的逆襲原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.sela",
         "id": "registered:champ.sela",
@@ -85026,7 +85393,7 @@
       "name": "草帽小子 - 蒙其.D.魯夫",
       "work": "航海王",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.luffe",
         "id": "imported.luffe",
@@ -95268,7 +95635,7 @@
       "name": "黑手黨老大 - 基廉列克",
       "work": "監獄兔",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.rabbit",
         "id": "imported.rabbit",
@@ -102549,7 +102916,7 @@
       "name": "魔界霸主 - 巴恩大魔王",
       "work": "神龍之謎",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
         "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
@@ -105488,7 +105855,94 @@
         }
       ],
       "paidCandidates": [],
-      "supplementSources": [],
+      "supplementSources": [
+        {
+          "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+          "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+          "heroIds": [
+            "godie-ubal"
+          ],
+          "url": "https://archive.org/details/gacha-archive",
+          "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
+          "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+          "sourceKind": "archived-game-cache",
+          "uploader": "Internet Archive 保存者（原作者待確認）",
+          "format": "Android XAPK + complete game cache ZIP",
+          "platform": "Android archived cache",
+          "accessStatus": "public-archive-downloaded",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "archived-awaiting-asset-identification",
+          "resourceRole": "game-resource-archive",
+          "assetKinds": [
+            "game-container",
+            "audio-container"
+          ],
+          "modelCount": 0,
+          "modelCandidates": [],
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
+          "files": [
+            {
+              "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+              "bytes": 1733218012,
+              "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+              "md5": "59efae4d0b83d086a86f3d7618d05097",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+              "downloadedBytesAtGeneration": 1733218012,
+              "complete": true,
+              "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+              "publishedHashesVerified": true,
+              "actualHashes": {
+                "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+                "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+                "md5": "59efae4d0b83d086a86f3d7618d05097"
+              }
+            },
+            {
+              "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+              "bytes": 365045618,
+              "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+              "md5": "fc563f21e92b4de2f2292413005836b7",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+              "downloadedBytesAtGeneration": 365045618,
+              "complete": true,
+              "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+              "publishedHashesVerified": true,
+              "actualHashes": {
+                "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+                "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+                "md5": "fc563f21e92b4de2f2292413005836b7"
+              }
+            }
+          ],
+          "verification": "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified.",
+          "ownerDecision": {
+            "date": "2026-09-17",
+            "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+            "acquisitionAuthorized": true,
+            "visualIdentityReviewByOwner": true
+          },
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-asset-identification",
+            "selectionVerified": false,
+            "registered": false,
+            "productionDeployed": false
+          },
+          "notAliases": [
+            "Baran",
+            "巴蘭",
+            "バラン"
+          ],
+          "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity.",
+          "preservationEvidence": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json",
+          "archival": {
+            "state": "local-originals-and-extracted-files-preserved-s3-pending",
+            "s3Uri": null,
+            "readbackVerified": false
+          }
+        }
+      ],
       "audioSources": []
     },
     {
@@ -105497,7 +105951,7 @@
       "name": "職業獵人 - 傑 富力士",
       "work": "獵人X獵人",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herobiggon",
         "id": "imported.herobiggon",
@@ -110629,7 +111083,7 @@
       "name": "至尊學長 - 飛鼠先生",
       "work": "去死去死團的逆襲原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.thorne",
         "id": "registered:champ.thorne",
@@ -110766,7 +111220,7 @@
       "name": "三刀流劍士 - 索隆",
       "work": "航海王",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.heromusashimiyamoto",
         "id": "imported.heromusashimiyamoto",
@@ -115887,7 +116341,7 @@
       "name": "北斗神拳掌門人 - 拳四郎",
       "work": "北斗神拳",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.skin.barbarian",
         "id": "registered:champ.skin.barbarian",
@@ -116385,7 +116839,7 @@
       "name": "邪眼師 - 飛影",
       "work": "幽遊白書",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "imported.herohehi",
         "id": "imported.herohehi",
@@ -118379,7 +118833,7 @@
       "name": "聖杯黑泥醬 - 喪標麥可",
       "work": "去死團原創",
       "section": "既有角色／形態",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "champ.godie-zombiex",
         "id": "champ.godie-zombiex",
@@ -118673,7 +119127,7 @@
       "name": "武藤遊戲",
       "work": "遊戲王",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
         "id": "community:community-review-01-20260907",
@@ -120719,7 +121173,7 @@
       "name": "八神庵",
       "work": "THE KING OF FIGHTERS",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.313646-standard-v2",
         "id": "ou99:313646",
@@ -121991,7 +122445,7 @@
       "name": "不知火舞",
       "work": "THE KING OF FIGHTERS",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
         "id": "derivative:mai",
@@ -124455,7 +124909,7 @@
       "name": "空條承太郎",
       "work": "JoJo 的奇妙冒險",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
         "id": "community:community-review-04-20260907",
@@ -126503,7 +126957,7 @@
       "name": "洛克人",
       "work": "Mega Man",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.287871-standard",
         "id": "ou99:287871",
@@ -126739,7 +127193,7 @@
       "name": "卡比",
       "work": "星之卡比",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
         "id": "derivative:kirby",
@@ -127027,7 +127481,7 @@
       "name": "西索",
       "work": "HUNTER×HUNTER",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.497211-standard-v2",
         "id": "ou99:497211",
@@ -131138,7 +131592,7 @@
       "name": "米卡莎",
       "work": "進擊的巨人",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
         "id": "community:community-review-08-20260907",
@@ -131272,7 +131726,7 @@
       "name": "赫蘿",
       "work": "狼與辛香料",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.468771-standard-v2",
         "id": "ou99:468771",
@@ -131617,7 +132071,7 @@
       "name": "魯路修",
       "work": "Code Geass 反叛的魯路修",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
         "id": "community:community-review-10-20260907",
@@ -131753,7 +132207,7 @@
       "name": "利姆路",
       "work": "關於我轉生變成史萊姆這檔事",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.457280-standard-v2",
         "id": "ou99:457280",
@@ -132006,7 +132460,7 @@
       "name": "衛宮士郎",
       "work": "Fate/stay night",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
         "id": "community:community-review-12-20260907",
@@ -132717,7 +133171,7 @@
       "name": "朝田詩乃",
       "work": "刀劍神域",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
         "id": "community:community-review-13-20260907",
@@ -132851,7 +133305,7 @@
       "name": "殺老師",
       "work": "暗殺教室",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.472112-standard-v2",
         "id": "ou99:472112",
@@ -133080,7 +133534,7 @@
       "name": "比利海靈頓",
       "work": "摔角與網路迷因形象。",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.457123-standard-v2",
         "id": "ou99:457123",
@@ -133316,7 +133770,7 @@
       "name": "魔法少女☆伊莉雅",
       "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
         "id": "community:community-review-16-20260907",
@@ -133450,7 +133904,7 @@
       "name": "安茲·烏爾·恭",
       "work": "OVERLORD",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
         "id": "community:community-review-17-20260907",
@@ -133584,7 +134038,7 @@
       "name": "吉爾伽美什",
       "work": "Fate",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
         "id": "community:community-review-18-20260907",
@@ -139720,7 +140174,7 @@
       "name": "桐谷和人",
       "work": "刀劍神域",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
         "id": "community:community-review-19-20260907",
@@ -139854,7 +140308,7 @@
       "name": "御坂美琴",
       "work": "科學超電磁砲",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
         "id": "community:community-review-20-20260907",
@@ -139990,7 +140444,7 @@
       "name": "鹿目圓",
       "work": "魔法少女小圓",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
         "id": "community:community-review-21-20260907",
@@ -140124,7 +140578,7 @@
       "name": "菜月昴",
       "work": "Re:從零開始的異世界生活",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.311294-standard-v2",
         "id": "ou99:311294",
@@ -141487,7 +141941,7 @@
       "name": "坂田銀時",
       "work": "銀魂",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
         "id": "300heroes:137",
@@ -141647,7 +142101,7 @@
       "name": "奇犽",
       "work": "HUNTER×HUNTER",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
         "id": "community:community-review-24-20260907",
@@ -145663,7 +146117,7 @@
       "name": "一拳超人",
       "work": "一拳超人",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
         "id": "community:community-review-25-20260907",
@@ -145797,7 +146251,7 @@
       "name": "名偵探柯南",
       "work": "名偵探柯南",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
         "id": "community:community-review-26-20260907",
@@ -145931,7 +146385,7 @@
       "name": "庫洛魔法使",
       "work": "庫洛魔法使",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
         "id": "community:community-review-27-20260907",
@@ -146059,7 +146513,7 @@
       "name": "艾莉絲·伯雷亞斯·格雷拉特",
       "work": "無職轉生",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
         "id": "community:community-review-28-20260907",
@@ -146193,7 +146647,7 @@
       "name": "芙莉蓮",
       "work": "葬送的芙莉蓮",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
         "id": "community:community-review-29-20260907",
@@ -146329,7 +146783,7 @@
       "name": "尼古貓貓",
       "work": "ヤニねこ／尼古喵喵",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.498214-standard-v2",
         "id": "ou99:498214",
@@ -146509,7 +146963,7 @@
       "name": "SUN樂",
       "work": "香格里拉・開拓異境",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
         "id": "derivative:sunraku",
@@ -146672,7 +147126,7 @@
       "name": "阿薩謝爾",
       "work": "召喚惡魔／よんでますよ、アザゼルさん。",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
         "id": "derivative:azazel",
@@ -146795,6 +147249,62 @@
           }
         },
         {
+          "key": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+          "id": "registered:community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+          "name": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+          "work": "喜羊羊與灰太狼",
+          "tier": "300heroes",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "300heroes",
+          "selectionClass": "manual",
+          "sourceGame": "300英雄",
+          "sourcePlatform": "Windows",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+            "glbPath": "assets/models/community/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb",
+            "sha256": "1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36",
+            "localRuntimeRoot": null,
+            "s3Uri": null,
+            "s3ManifestUri": null,
+            "s3ReadbackVerified": null,
+            "gitPath": "content/assets/models/community/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb",
+            "limitations": [
+              "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+            ]
+          }
+        },
+        {
+          "key": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+          "id": "registered:community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+          "name": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+          "work": "喜羊羊與灰太狼",
+          "tier": "300heroes",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "300heroes",
+          "selectionClass": "manual",
+          "sourceGame": "300英雄",
+          "sourcePlatform": "Windows",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+            "glbPath": "assets/models/community/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb",
+            "sha256": "8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672",
+            "localRuntimeRoot": null,
+            "s3Uri": null,
+            "s3ManifestUri": null,
+            "s3ReadbackVerified": null,
+            "gitPath": "content/assets/models/community/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb",
+            "limitations": [
+              "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+            ]
+          }
+        },
+        {
           "key": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
           "id": "community:community-review-32-20260907",
           "name": "喜羊羊",
@@ -146863,7 +147373,7 @@
       "name": "近衛刀太",
       "work": "UQ HOLDER!",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.470087-standard-v2",
         "id": "ou99:470087",
@@ -147043,7 +147553,7 @@
       "name": "高速婆婆",
       "work": "膽大黨",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
         "id": "runtime:turbo-granny-community-procedural-ready-20260910",
@@ -147376,7 +147886,7 @@
       "name": "炭治郎",
       "work": "鬼滅之刃",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
         "id": "community:community-review-35-20260907",
@@ -147512,7 +148022,7 @@
       "name": "鬼畜王蘭斯",
       "work": "鬼畜王蘭斯／Rance",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.493578-standard-v2",
         "id": "ou99:493578",
@@ -147693,7 +148203,7 @@
       "name": "吉伊卡哇",
       "work": "吉伊卡哇",
       "section": "第一批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.459617-standard",
         "id": "ou99:459617",
@@ -148578,7 +149088,7 @@
       "name": "何布",
       "work": "神龍之謎／DRAGON QUEST 達伊的大冒險",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
         "id": "runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1",
@@ -150982,7 +151492,7 @@
       "name": "蕾姆",
       "work": "Re:從零開始",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
         "id": "300heroes:310",
@@ -151091,7 +151601,7 @@
       "name": "我妻善逸",
       "work": "鬼滅之刃",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
         "id": "300heroes:332",
@@ -151202,7 +151712,7 @@
       "name": "遠坂凜",
       "work": "Fate/stay night",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
         "id": "300heroes:160",
@@ -151732,7 +152242,7 @@
       "name": "異世界舅舅",
       "work": "異世界舅舅",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.454482-standard-v2",
         "id": "ou99:454482",
@@ -151913,7 +152423,7 @@
       "name": "阿箱＋拉蜜絲",
       "work": "轉生成自動販賣機的我今天也在迷宮徘徊",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.491448-standard-v3",
         "id": "ou99:491448",
@@ -152080,7 +152590,7 @@
       "name": "闇影",
       "work": "我想成為影之強者",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.481732-standard-v2",
         "id": "ou99:481732",
@@ -152310,7 +152820,7 @@
       "name": "波吉",
       "work": "國王排名",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
         "id": "derivative:bojji",
@@ -152439,6 +152949,90 @@
           }
         },
         {
+          "key": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+          "id": "registered:community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+          "name": "波吉（王冠繪本純色 v2／獨立完整副本）",
+          "work": "國王排名；來源替身為 300英雄小桐人寵物",
+          "tier": "300heroes",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "300heroes",
+          "selectionClass": "manual",
+          "sourceGame": "300英雄",
+          "sourcePlatform": "Windows",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+            "glbPath": "assets/models/community/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb",
+            "sha256": "0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9",
+            "localRuntimeRoot": null,
+            "s3Uri": null,
+            "s3ManifestUri": null,
+            "s3ReadbackVerified": null,
+            "gitPath": "content/assets/models/community/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb",
+            "limitations": [
+              "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+            ]
+          }
+        },
+        {
+          "key": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+          "id": "registered:community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+          "name": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+          "work": "國王排名；來源替身為 300英雄小桐人寵物",
+          "tier": "300heroes",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "300heroes",
+          "selectionClass": "manual",
+          "sourceGame": "300英雄",
+          "sourcePlatform": "Windows",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+            "glbPath": "assets/models/community/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb",
+            "sha256": "9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39",
+            "localRuntimeRoot": null,
+            "s3Uri": null,
+            "s3ManifestUri": null,
+            "s3ReadbackVerified": null,
+            "gitPath": "content/assets/models/community/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb",
+            "limitations": [
+              "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+            ]
+          }
+        },
+        {
+          "key": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+          "id": "registered:community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+          "name": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+          "work": "國王排名；來源替身為 300英雄小桐人寵物",
+          "tier": "300heroes",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "300heroes",
+          "selectionClass": "manual",
+          "sourceGame": "300英雄",
+          "sourcePlatform": "Windows",
+          "defaultEligible": false,
+          "asset": {
+            "modelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+            "glbPath": "assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+            "sha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03",
+            "localRuntimeRoot": null,
+            "s3Uri": null,
+            "s3ManifestUri": null,
+            "s3ReadbackVerified": null,
+            "gitPath": "content/assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+            "limitations": [
+              "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+            ]
+          }
+        },
+        {
           "key": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
           "id": "pet:tiny-kirito",
           "name": "小桐人寵物",
@@ -152484,7 +153078,7 @@
       "name": "貓貓",
       "work": "藥師少女的獨語",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
         "id": "runtime:maomao-community-procedural-ready-20260910",
@@ -152741,7 +153335,7 @@
       "name": "艾爾瑪",
       "work": "被逐出家門的重騎士以遊戲知識開無雙",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.472038-standard-v2",
         "id": "ou99:472038",
@@ -152922,7 +153516,7 @@
       "name": "阿爾巴斯",
       "work": "廻天のアルバス",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
         "id": "derivative:albus",
@@ -153060,7 +153654,7 @@
       "name": "哥布林殺手",
       "work": "哥布林殺手",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
         "id": "derivative:goblin",
@@ -153352,7 +153946,7 @@
       "name": "梅普露",
       "work": "怕痛的我把防禦力點滿就對了",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
         "id": "300heroes:272",
@@ -153461,7 +154055,7 @@
       "name": "岩谷尚文",
       "work": "盾之勇者成名錄",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
         "id": "runtime:naofumi-native-material-fixed-procedural-v2",
@@ -153731,7 +154325,7 @@
       "name": "深澄真",
       "work": "月光下的異世界之旅",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.478642-standard",
         "id": "ou99:478642",
@@ -153912,7 +154506,7 @@
       "name": "諾爾",
       "work": "我要招架一切",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.453949-standard-v2",
         "id": "ou99:453949",
@@ -154120,7 +154714,7 @@
       "name": "托卡・史考特",
       "work": "勇者死了",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.459257-standard-v2",
         "id": "ou99:459257",
@@ -154301,7 +154895,7 @@
       "name": "羽賀",
       "work": "這個世界漏洞百出",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.495015-standard",
         "id": "ou99:495015",
@@ -154519,7 +155113,7 @@
       "name": "凱茲",
       "work": "烙印勇士",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
         "id": "runtime:guts-community-procedural-ready-20260910",
@@ -154797,7 +155391,7 @@
       "name": "凱亞爾",
       "work": "回復術士的重來人生",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.458777-standard-v3",
         "id": "ou99:458777",
@@ -154960,7 +155554,7 @@
       "name": "楓",
       "work": "異世界転移したのでチートを生かして魔法剣士やることにする",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.474258-standard",
         "id": "ou99:474258",
@@ -155141,7 +155735,7 @@
       "name": "馬提亞斯",
       "work": "失格紋的最強賢者",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.465884-standard",
         "id": "ou99:465884",
@@ -155322,7 +155916,7 @@
       "name": "辛巴達",
       "work": "マギ シンドバッドの冒険",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
         "id": "runtime:tmr-sinbad-baal-procedural-six-state-v1",
@@ -155630,7 +156224,7 @@
       "name": "蜘蛛子",
       "work": "轉生成蜘蛛又怎樣",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
         "id": "pet:spider",
@@ -155747,7 +156341,7 @@
       "name": "高遠夜霧",
       "work": "秒殺外掛太強了，異世界的傢伙們根本就不是對手",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
         "id": "derivative:yogiri",
@@ -155885,7 +156479,7 @@
       "name": "伊藤開司",
       "work": "賭博默示錄",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
         "id": "runtime:kaiji-holya-procedural-six-state-v1",
@@ -156308,7 +156902,7 @@
       "name": "不死",
       "work": "致不滅的你",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.467227-standard",
         "id": "ou99:467227",
@@ -156489,7 +157083,7 @@
       "name": "歐菲",
       "work": "魔術士歐菲",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.496452-standard-v2",
         "id": "ou99:496452",
@@ -156670,7 +157264,7 @@
       "name": "克勞斯",
       "work": "覺醒了自動機能的十五年無成冒險者",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.487487-7yzc0mtk-standard-v2",
         "id": "ou99:487487-7yzc0mtk",
@@ -156885,7 +157479,7 @@
       "name": "章魚嗶",
       "work": "章魚嗶的原罪",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
         "id": "derivative:takopi",
@@ -157000,7 +157594,7 @@
       "name": "幸運超人",
       "work": "幸運超人",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.457594-standard-v2",
         "id": "ou99:457594",
@@ -157181,7 +157775,7 @@
       "name": "米瑟利",
       "work": "來自魔界／アウターゾーン",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
         "id": "derivative:misery",
@@ -157319,7 +157913,7 @@
       "name": "鵺野鳴介",
       "work": "靈異教師神眉",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.487484-standard",
         "id": "ou99:487484",
@@ -157500,7 +158094,7 @@
       "name": "野原新之助",
       "work": "蠟筆小新",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
         "id": "runtime:gta5mod-shinchan-kstamil-procedural-six-state-v1",
@@ -157828,7 +158422,7 @@
       "name": "阿拉丁",
       "work": "魔笛 MAGI",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.473324-standard-v3",
         "id": "ou99:473324",
@@ -157991,7 +158585,7 @@
       "name": "青蛙劍士 Ned",
       "work": "AVARTH／アヴァルト",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "ou99.456917-standard-v2",
         "id": "ou99:456917",
@@ -158173,7 +158767,7 @@
       "name": "如月電車",
       "work": "如月車站題材・GGD 原創",
       "section": "第二批 37 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
         "id": "existing:tram",
@@ -158317,7 +158911,7 @@
       "name": "卡爾瑟斯",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
         "id": "lol:karthus",
@@ -166168,7 +166762,7 @@
       "name": "李星",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
         "id": "lol:leesin",
@@ -167755,7 +168349,7 @@
       "name": "拉克絲",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
         "id": "lol:lux",
@@ -175606,7 +176200,7 @@
       "name": "好運姐",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
         "id": "lol:missfortune",
@@ -183457,7 +184051,7 @@
       "name": "沃維克",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
         "id": "lol:warwick",
@@ -185044,7 +185638,7 @@
       "name": "齊勒斯",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
         "id": "lol:xerath",
@@ -192895,7 +193489,7 @@
       "name": "犽宿",
       "work": "英雄聯盟 League of Legends",
       "section": "LOL 追加 7 名",
-      "status": "正式機白名單可選",
+      "status": "歷史快照白名單可選（非即時）",
       "default": {
         "key": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
         "id": "lol:yasuo",
@@ -200531,61 +201125,6 @@
         "verification": "本輪未取得素材。列印商品需點數／購買，且頁面標示僅限個人使用、禁止數位再散布與改作；沒有取得檔案、沒有下載、沒有登入。"
       },
       {
-        "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
-        "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
-        "heroIds": [
-          "godie-ubal"
-        ],
-        "url": "https://archive.org/details/gacha-archive",
-        "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
-        "sourceWork": "勇者鬥惡龍 達伊的大冒險",
-        "sourceKind": "archived-game-cache",
-        "platform": "Android archived cache",
-        "accessStatus": "public-archive-download-in-progress",
-        "acquisitionStatus": "downloading-not-yet-byte-verified",
-        "readiness": "download-in-progress",
-        "resourceRole": "young-or-kigan-vearn-model-source-lead",
-        "assetKinds": [],
-        "modelCount": 0,
-        "modelCandidates": [],
-        "defaultEligible": false,
-        "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
-        "files": [
-          {
-            "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
-            "bytes": 1733218012,
-            "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
-            "md5": "59efae4d0b83d086a86f3d7618d05097"
-          },
-          {
-            "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
-            "bytes": 365045618,
-            "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
-            "md5": "fc563f21e92b4de2f2292413005836b7"
-          }
-        ],
-        "verification": "Archive metadata and expected file hashes recorded; transfer is incomplete and Kigan King payload identity is unverified.",
-        "ownerDecision": {
-          "date": "2026-09-17",
-          "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
-          "acquisitionAuthorized": true,
-          "visualIdentityReviewByOwner": true
-        },
-        "backendIntegration": {
-          "required": false,
-          "state": "pending-download-and-identity-analysis",
-          "selectionVerified": false,
-          "registered": false,
-          "productionDeployed": false
-        },
-        "notAliases": [
-          "Baran",
-          "巴蘭",
-          "バラン"
-        ],
-        "note": "Archive timestamp is after the final Kigan King chapter launch, but the actual identity and asset kinds remain unverified until the complete files are read and hashed."
-      },
-      {
         "id": "dqtact-kigan-king-vearn",
         "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
         "heroIds": [
@@ -200595,6 +201134,8 @@
         "sourceGame": "Dragon Quest Tact 鬼眼王バーン",
         "sourceWork": "勇者鬥惡龍 達伊的大冒險",
         "sourceKind": "confirmed-game-native-source-lead",
+        "uploader": "來源頁所列作者",
+        "format": "source page only",
         "platform": "game-native-source-lead",
         "accessStatus": "official-source-confirmed-payload-not-acquired",
         "acquisitionStatus": "not-acquired",
@@ -200636,6 +201177,8 @@
         "sourceGame": "Dragon Quest Monsters Joker 3 Professional 鬼眼王バーン",
         "sourceWork": "勇者鬥惡龍 達伊的大冒險",
         "sourceKind": "confirmed-game-native-source-lead",
+        "uploader": "來源頁所列作者",
+        "format": "source page only",
         "platform": "game-native-source-lead",
         "accessStatus": "official-source-confirmed-payload-not-acquired",
         "acquisitionStatus": "not-acquired",
@@ -200678,6 +201221,8 @@
         "sourceGame": "星のドラゴンクエスト 鬼眼王バーン",
         "sourceWork": "勇者鬥惡龍 達伊的大冒險",
         "sourceKind": "confirmed-game-native-source-lead",
+        "uploader": "來源頁所列作者",
+        "format": "source page only",
         "platform": "game-native-source-lead",
         "accessStatus": "official-source-confirmed-payload-not-acquired",
         "acquisitionStatus": "not-acquired",
@@ -265653,6 +266198,92 @@
           "fullGetVerified": true,
           "allMemberSha256Verified": true
         }
+      },
+      {
+        "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+        "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "url": "https://archive.org/details/gacha-archive",
+        "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
+        "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+        "sourceKind": "archived-game-cache",
+        "uploader": "Internet Archive 保存者（原作者待確認）",
+        "format": "Android XAPK + complete game cache ZIP",
+        "platform": "Android archived cache",
+        "accessStatus": "public-archive-downloaded",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "archived-awaiting-asset-identification",
+        "resourceRole": "game-resource-archive",
+        "assetKinds": [
+          "game-container",
+          "audio-container"
+        ],
+        "modelCount": 0,
+        "modelCandidates": [],
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
+        "files": [
+          {
+            "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+            "bytes": 1733218012,
+            "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+            "md5": "59efae4d0b83d086a86f3d7618d05097",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+            "downloadedBytesAtGeneration": 1733218012,
+            "complete": true,
+            "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+            "publishedHashesVerified": true,
+            "actualHashes": {
+              "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+              "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+              "md5": "59efae4d0b83d086a86f3d7618d05097"
+            }
+          },
+          {
+            "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+            "bytes": 365045618,
+            "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+            "md5": "fc563f21e92b4de2f2292413005836b7",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+            "downloadedBytesAtGeneration": 365045618,
+            "complete": true,
+            "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+            "publishedHashesVerified": true,
+            "actualHashes": {
+              "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+              "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+              "md5": "fc563f21e92b4de2f2292413005836b7"
+            }
+          }
+        ],
+        "verification": "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified.",
+        "ownerDecision": {
+          "date": "2026-09-17",
+          "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+          "acquisitionAuthorized": true,
+          "visualIdentityReviewByOwner": true
+        },
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-asset-identification",
+          "selectionVerified": false,
+          "registered": false,
+          "productionDeployed": false
+        },
+        "notAliases": [
+          "Baran",
+          "巴蘭",
+          "バラン"
+        ],
+        "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity.",
+        "preservationEvidence": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json",
+        "archival": {
+          "state": "local-originals-and-extracted-files-preserved-s3-pending",
+          "s3Uri": null,
+          "readbackVerified": false
+        }
       }
     ],
     "ownerPriority": "use-ready-300-first",
@@ -266876,7 +267507,6 @@
           "parallel-vearn-priority-source-audit-20260911",
           "parallel-dai-vearn-local-followup-02-20260911",
           "lead-vearn-crealitycloud-66d70beed164d01a74e934ca",
-          "internet-archive-heros-bonds-final-cache-1.17.0.121",
           "dqtact-kigan-king-vearn",
           "dqmj3p-kigan-king-vearn",
           "hoshidora-kigan-king-vearn"
@@ -266885,14 +267515,16 @@
           "steam-infinity-strash-priority-original-assets-build-local-20240328",
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328",
-          "bowlroll-sabakan359-vearn-mmd-v087"
+          "bowlroll-sabakan359-vearn-mmd-v087",
+          "internet-archive-heros-bonds-final-cache-1.17.0.121"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
           "steam-infinity-strash-priority-original-assets-build-local-20240328",
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328",
-          "bowlroll-sabakan359-vearn-mmd-v087"
+          "bowlroll-sabakan359-vearn-mmd-v087",
+          "internet-archive-heros-bonds-final-cache-1.17.0.121"
         ],
         "retainedWorkflowSources": [
           {
@@ -266944,7 +267576,6 @@
           "parallel-vearn-priority-source-audit-20260911",
           "parallel-dai-vearn-local-followup-02-20260911",
           "lead-vearn-crealitycloud-66d70beed164d01a74e934ca",
-          "internet-archive-heros-bonds-final-cache-1.17.0.121",
           "dqtact-kigan-king-vearn",
           "dqmj3p-kigan-king-vearn",
           "hoshidora-kigan-king-vearn"
@@ -266953,14 +267584,16 @@
           "steam-infinity-strash-priority-original-assets-build-local-20240328",
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328",
-          "bowlroll-sabakan359-vearn-mmd-v087"
+          "bowlroll-sabakan359-vearn-mmd-v087",
+          "internet-archive-heros-bonds-final-cache-1.17.0.121"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
           "steam-infinity-strash-priority-original-assets-build-local-20240328",
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328",
-          "bowlroll-sabakan359-vearn-mmd-v087"
+          "bowlroll-sabakan359-vearn-mmd-v087",
+          "internet-archive-heros-bonds-final-cache-1.17.0.121"
         ],
         "retainedWorkflowSources": [
           {

@@ -1,0 +1,83 @@
+{
+  "schema": "ggd.pr1284-preparation-s3@1",
+  "scope": "Only the listed preparation evidence and full analysis receipts; not all local materials.",
+  "status": "local-frozen-awaiting-explicit-upload-approval",
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/pr1284-preparation-final-v1/b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528.tar.gz",
+  "s3Uri": null,
+  "sha256": "b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528",
+  "bytes": 1815311,
+  "fileCount": 13,
+  "files": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg",
+      "bytes": 185872,
+      "sha256": "a3f8eace697a47e0d4e612a885f95fd5f4a686fbc482226312feccb3e028edb4"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v2/azazel-face-v1-v2-ab.jpg",
+      "bytes": 203069,
+      "sha256": "f19752a65ed8f4802e91f5d1a5c9590413e1b01da38af71ecd54c51281e5a1c2"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/approved11-contact-sheet.jpg",
+      "bytes": 437741,
+      "sha256": "9c6aa4c7dd36ea2f2c7345a25164860c03196b62f5c3e02f435a0f1769e15bf6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-ab.jpg",
+      "bytes": 160610,
+      "sha256": "9dfb38469f174f788699c47ba7b60123de45e9b5b7f0629509bc6f56b510a488"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+      "bytes": 324863,
+      "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/jump-force-gon-audio-v1/files.jsonl.gz",
+      "bytes": 18037,
+      "sha256": "4fea7a44bfd634359eea594094213d1374cfbcd30a851f31e6eac39b8003b4ba"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png",
+      "bytes": 353840,
+      "sha256": "4f98a966d7f9295a40d3e6e19248356aaec63c5ba7c079f3643bb2848f208c3b"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/bojji-crown-v2/bojji-crown-v2-ab.png",
+      "bytes": 278726,
+      "sha256": "86fad766991a9e24e448414eed732dc134da8ad034d001418b45a3dfddf16db7"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/bojji-crown-v2/owner-reference.png",
+      "bytes": 134105,
+      "sha256": "0eb429e4e411f64b1a667665dbf0dfec9ff1eb6f47a285b5c01689aa9060994e"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+      "bytes": 339170,
+      "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+      "bytes": 599291,
+      "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a"
+    },
+    {
+      "path": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+      "bytes": 801068,
+      "sha256": "b31b86c542d22f5f277438c8e2a7902c1d0f9b002d9f78091244bba1997fbd26"
+    },
+    {
+      "path": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "bytes": 469489,
+      "sha256": "14c14f1153b2d546f979b71298c4fd49f5b3426b6a687e2613717f0c12c083e8"
+    }
+  ],
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/pr1284-preparation-final-v1/source.tar.gz",
+  "localPreserved": true,
+  "fullGetVerified": false,
+  "allArchiveMembersSha256Verified": false,
+  "localArchiveMembersSha256Verified": true,
+  "productionDeploymentVerified": false
+}

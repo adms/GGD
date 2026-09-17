@@ -1748,6 +1748,20 @@ def build(git_link_root=ROOT):
             'fullGetAndEveryFileVerified':True,
             'localPreserved':True,
         }
+    # Acquisition and decoder evidence remains queryable even with zero GLBs.
+    for key, relative_path in {
+        'bondsCachePreservation': 'source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json',
+        'pr1284Preparation': 'pr1284-preparation-s3.json',
+        'vearnRelatedSourceInventory': 'source-inventories/vearn-related-3d-v1/inventory.json',
+        'jstarsPs3ToolchainAudit': 'source-inventories/jstars-ps3-toolchain-audit-v1/audit.json',
+        'jstarsPublicRiggedAcquisition': 'source-inventories/jstars-ps3-toolchain-audit-v1/public-rigged-acquisition.json',
+    }.items():
+        path = base / relative_path
+        if path.is_file():
+            result[key] = {'gitPath': path.relative_to(ROOT).as_posix(),
+                           'bytes': path.stat().st_size,
+                           'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                           'productionDeploymentVerified': False}
     return rebase_git_absolute_paths(result,ROOT,git_link_root)
 
 

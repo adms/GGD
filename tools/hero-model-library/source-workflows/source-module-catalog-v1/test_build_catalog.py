@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -29,6 +30,15 @@ class CatalogTest(unittest.TestCase):
                     self.assertIn("stage", row[name])
                     self.assertIn("count", row[name])
                     self.assertIn("note", row[name])
+
+    def test_large_fragments_use_clone_readable_compact_schema(self):
+        root = MOD.repo_root() / "materials/hero-model-library/source-module-catalog-v1"
+        for name in ("300-mba.json", "ssbu.json"):
+            path = root / name
+            stored = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(stored["schema"], "ggd.source-module-catalog-fragment@2")
+            self.assertLess(path.stat().st_size, 256 * 1024)
+            self.assertFalse(stored["fullAudit"]["restoreRequiredForCatalogBuild"])
 
     def test_master_section_keeps_truth_boundaries(self):
         text = MOD.markdown(self.catalog)

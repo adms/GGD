@@ -167,7 +167,7 @@ const heroes = previous.heroes.map((row: any) => {
   }
   return {
     ...row,
-    before: row.after,
+    before: JSON.stringify(row.after) === JSON.stringify(after) ? (row.before ?? row.after) : row.after,
     after,
     ...(reconciliation ? { selectionReconciliation: reconciliation } : {}),
     status: 'merged-readback-verified',

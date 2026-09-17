@@ -17,8 +17,8 @@
       "name": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
       "url": "https://archive.org/details/gacha-archive",
       "kind": "archived-game-cache",
-      "acquisitionStatus": "downloading",
-      "identityStatus": "payload-not-yet-inspected",
+      "acquisitionStatus": "downloaded-hash-verified",
+      "identityStatus": "full-cache-acquired-model-identity-unverified",
       "files": [
         {
           "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
@@ -33,7 +33,7 @@
           "md5": "fc563f21e92b4de2f2292413005836b7"
         }
       ],
-      "note": "Archive timestamp is after the final Kigan King chapter launch, but the actual identity and asset kinds remain unverified until the complete files are read and hashed."
+      "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity."
     },
     {
       "id": "dqtact-kigan-king-vearn",

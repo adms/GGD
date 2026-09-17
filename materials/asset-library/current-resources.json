@@ -17,7 +17,7 @@
       "sha256": "ee6b537894f33346c4e0ea814331d8cef315a6851763ec3c75e37b0a7cf1f741"
     }
   ],
-  "modelSourceCount": 205,
+  "modelSourceCount": 210,
   "models": [
     {
       "id": "300heroes:20",
@@ -6777,6 +6777,46 @@
       }
     },
     {
+      "id": "registered:community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+      "modelKey": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+      "glbPath": "assets/models/community/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb",
+      "sha256": "0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9",
+      "bytes": 868892,
+      "documentSha256": "08762cea96ba2d3edea2a0e561c0fefee06e96786b898bae65d8d5c975bc1167",
+      "sourceCharacter": "波吉（王冠繪本純色 v2／獨立完整副本）",
+      "sourceWork": "國王排名；來源替身為 300英雄小桐人寵物",
+      "sourceAssetId": "derivative:bojji-crown-v2",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_idle",
+        "death": "bat_dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb",
+      "modelDocumentGitPath": "content/models/community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "b2-bojji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.e7ebe443cc4f7eaa8662702817d93a88cd33e6564575ea73"
+        ]
+      }
+    },
+    {
       "id": "registered:community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
       "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
       "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
@@ -6853,6 +6893,46 @@
         "gitPath": "materials/hero-model-library/priority-registration.json",
         "versionModelKeys": [
           "version.body.8ccd5ce36ba95dcfbe12a95f88e973cc09b630b883632578"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+      "modelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+      "glbPath": "assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+      "sha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03",
+      "bytes": 877112,
+      "documentSha256": "8b297474bce2d5c6209193b7b1c744f417dc0428199495d04e7609c2bf1ceca5",
+      "sourceCharacter": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+      "sourceWork": "國王排名；來源替身為 300英雄小桐人寵物",
+      "sourceAssetId": "derivative:bojji-crown-v2-head-material-split",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_idle",
+        "death": "bat_dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+      "modelDocumentGitPath": "content/models/community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "b2-bojji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e"
         ]
       }
     },
@@ -7014,6 +7094,126 @@
         "gitPath": "materials/hero-model-library/priority-registration.json",
         "versionModelKeys": [
           "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+      "modelKey": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+      "glbPath": "assets/models/community/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb",
+      "sha256": "9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39",
+      "bytes": 838308,
+      "documentSha256": "66a0fb66c5d56e0e43ed7fa986dcc23387a11070d0cab00576aa5d187d8e5e2f",
+      "sourceCharacter": "波吉（王冠繪本純色 v2 修正版／獨立完整副本）",
+      "sourceWork": "國王排名；來源替身為 300英雄小桐人寵物",
+      "sourceAssetId": "derivative:bojji-crown-v2-texture-corrected",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "bat_run",
+        "attack": "bat_dance1",
+        "cast": "bat_dance2",
+        "hurt": "bat_idle",
+        "death": "bat_dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb",
+      "modelDocumentGitPath": "content/models/community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "b2-bojji"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.6d14c4f923bb7f4327f74f842862b1fbc5295011dc5869e5"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+      "modelKey": "community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f",
+      "glbPath": "assets/models/community/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb",
+      "sha256": "8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672",
+      "bytes": 642928,
+      "documentSha256": "612ac41b98c9b9fac3ffa7befad40f5f388101cf8d9fd31c5cdb5ed7229fb2b9",
+      "sourceCharacter": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+      "sourceWork": "喜羊羊與灰太狼",
+      "sourceAssetId": "derivative:azazel",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb",
+      "modelDocumentGitPath": "content/models/community.body.c1b48643fe5058e2ad3a42e37569400176d0daa3bf6e274f.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "community-review-32-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.cf9aaba74092778b728b1514679805407f52350d24f2845d"
+        ]
+      }
+    },
+    {
+      "id": "registered:community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+      "modelKey": "community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591",
+      "glbPath": "assets/models/community/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb",
+      "sha256": "1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36",
+      "bytes": 632100,
+      "documentSha256": "cbd2321cb17c85467fb04fae2b675a755dcc2bab39f585cc08ae79e6d8dd5f03",
+      "sourceCharacter": "阿薩謝爾（獨立副本／喜羊羊，參考圖閉眼橘髮與蝙蝠翼 v2）",
+      "sourceWork": "喜羊羊與灰太狼",
+      "sourceAssetId": "derivative:azazel",
+      "sourcePlatform": "Windows",
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "storage": "git",
+      "gitPath": "content/assets/models/community/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb",
+      "modelDocumentGitPath": "content/models/community.body.ca01c7ee31ff522d6066e7c8c66f9216d493b9ba8d291591.json",
+      "identityStatus": "registered-content-model-version",
+      "fullCharacterPackage": false,
+      "validation": "registered-content-version-current-bytes",
+      "limitations": [
+        "已登記為後台獨立模型選項；正式站部署需另行驗證。"
+      ],
+      "automaticEligible": false,
+      "registeredFor": [
+        "community-review-32-20260907"
+      ],
+      "runtimeDropdownRegistered": true,
+      "registrationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-registration.json",
+        "versionModelKeys": [
+          "version.body.effe98edd329922f74c1ed84541cdc743b08fcc0090555e8"
         ]
       }
     },
@@ -8321,20 +8521,20 @@
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "valhalla37ModelOptionAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
-    "sha256": "d7486a33062ba9b9e38d5f9274e3669ce5dbac9bdd368c18c1bafabbac59ff48",
+    "sha256": "b9be39434a38a2a6e55e86f8ed5b0701f5039b581d661a85d01cd509186ea6fd",
     "status": "feature-branch-registered-and-bundle-resolvable; production-glbs-http-404; visual-e2e-unverified",
     "summary": {
       "championDocumentsGitTracked": 37,
       "activeModelDocumentsValid": 37,
       "activeGlbsValidAndGitTracked": 37,
       "activeSixStateClipMapsValid": 37,
-      "acquiredModelVersionOptions": 143,
-      "dropdownContractAcceptedModelVersionOptions": 143,
-      "registeredModelVersions": 143,
-      "localSelectableModelVersions": 143,
-      "uniqueAcquiredSourceModelKeys": 58,
-      "qualifiedCentralTargetRows": 56,
-      "qualifiedCentralTargetRowsRepresented": 56,
+      "acquiredModelVersionOptions": 140,
+      "dropdownContractAcceptedModelVersionOptions": 140,
+      "registeredModelVersions": 140,
+      "localSelectableModelVersions": 140,
+      "uniqueAcquiredSourceModelKeys": 55,
+      "qualifiedCentralTargetRows": 55,
+      "qualifiedCentralTargetRowsRepresented": 55,
       "qualifiedCentralTargetRowsMissingRegistration": 0,
       "approvedDerivativeReceipts": 11,
       "approvedDerivativeAuthorizationExpansion": 0,
@@ -8349,7 +8549,12 @@
       "branchActiveGlbsHttp200OnProductionOrigin": 0,
       "productionVisualE2eVerified": 0
     },
-    "s3PreparationSplitStatus": "superseded-by-newer-git-bytes"
+    "restorePath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+    "gitTracked": false,
+    "storageClass": "s3-legacy-preparation",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+    "s3ArchiveMember": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+    "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json"
   },
   "windowsGameSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
@@ -13423,7 +13628,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "dai-shinteo-v2-sword-handheld-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -13519,7 +13724,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "dai-shinteo-v2-sword-back-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -13669,7 +13874,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13798,7 +14003,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -13932,7 +14137,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14064,7 +14269,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14197,7 +14402,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14329,7 +14534,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14460,7 +14665,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-zero-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14616,7 +14821,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-mario-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -14762,7 +14967,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-mewtwo-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -14908,7 +15113,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ryu-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15091,7 +15296,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-pickel-steve-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15273,7 +15478,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-pickel-alex-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15483,7 +15688,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15693,7 +15898,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -15819,7 +16024,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "zero-lancer-p1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -15945,7 +16150,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "zero-lancer-p2-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16088,7 +16293,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16216,7 +16421,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-mario-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16311,7 +16516,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16435,7 +16640,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-astralym-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16595,7 +16800,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-astralym-decimated-f77cf1ee",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -16748,7 +16953,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-jetragon-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -16904,7 +17109,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-kita-kita-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -17060,7 +17265,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-lord-nightmares-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -17234,7 +17439,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "historical-astralym-decimated-c45f111d",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17358,7 +17563,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -17478,7 +17683,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-kirby-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -17663,7 +17868,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-mario-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17852,7 +18057,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-link-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -17973,7 +18178,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-sonic-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18181,7 +18386,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-chrom-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18389,7 +18594,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ganondorf-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18598,7 +18803,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-lucina-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -18807,7 +19012,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-daisy-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19020,7 +19225,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-peach-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19235,7 +19440,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-toonlink-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19408,7 +19613,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-sonic-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19600,7 +19805,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19791,7 +19996,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -19938,7 +20143,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-ryu-c00-static-decimated-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20093,7 +20298,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20249,7 +20454,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20378,7 +20583,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-sonic-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20508,7 +20713,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-chrom-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20642,7 +20847,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 109420,
-        "sha256": "e0e253093c3971a16efb7c37350763baba9aa734be133702b98abde1d613bc79",
+        "sha256": "f981ac7cc5ea8c1953114173b04bb358b7f74c3fb95058590ec9bc438cdd76e6",
         "recordId": "ssbu-lucina-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -20849,7 +21054,7 @@
   "historicalModelOptionRegistration": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
     "bytes": 7191,
-    "sha256": "f8565cf940c442123936ec289d3032d7b2dcc53d52188207379d20eeda24f64f",
+    "sha256": "22c269bc93b3f0adbea8c106e8a7c5f50238c6275b491bcd5225fee12a490907",
     "registeredHeroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -20888,7 +21093,7 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "f0d6667e0d6f118f1dba5a7e1d027285de1ff35aae985060b3d021fcb3fc5809"
+    "sha256": "6ce129a6f699cc53ffa63861843e538a30f8c5bb7d42d79db4dc57332d35ddc4"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -20903,7 +21108,7 @@
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "026542ce37c66abadd75a25ca2935c8d4a47f413c7731023ed0a7d4aa5fa86b5"
+    "sha256": "f34f122720d4d1e377cfe9dab1cc6a607cf2d856bc692c1132b433e001e97aa9"
   },
   "approvedDerivativeAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/audit.json",
@@ -20928,5 +21133,35 @@
     },
     "fullGetAndEveryFileVerified": true,
     "localPreserved": true
+  },
+  "bondsCachePreservation": {
+    "gitPath": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json",
+    "bytes": 1454,
+    "sha256": "d95398feed2050ae916571feaa0b38bd5f82da0684db88dabfbe02acb3f7bc5b",
+    "productionDeploymentVerified": false
+  },
+  "pr1284Preparation": {
+    "gitPath": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "bytes": 3820,
+    "sha256": "a367cf3dade7ea74ff0674cbf159cd273f9a049aa22721fdd5c684b5491abea6",
+    "productionDeploymentVerified": false
+  },
+  "vearnRelatedSourceInventory": {
+    "gitPath": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/inventory.json",
+    "bytes": 18279,
+    "sha256": "61231336842231d8656ebe57fd3d3986a8306b87b540b159e1ab8fc833ed6161",
+    "productionDeploymentVerified": false
+  },
+  "jstarsPs3ToolchainAudit": {
+    "gitPath": "materials/hero-model-library/source-inventories/jstars-ps3-toolchain-audit-v1/audit.json",
+    "bytes": 20934,
+    "sha256": "448b24cdda6abffecfad1208e4a3d6397f9864e1a3d03b9191cb0cb044c55609",
+    "productionDeploymentVerified": false
+  },
+  "jstarsPublicRiggedAcquisition": {
+    "gitPath": "materials/hero-model-library/source-inventories/jstars-ps3-toolchain-audit-v1/public-rigged-acquisition.json",
+    "bytes": 4819,
+    "sha256": "fc34bae504f9a38aafb663460dfa2b3b5acd0ef599f3bbfaf89700f6fc1ecb55",
+    "productionDeploymentVerified": false
   }
 }

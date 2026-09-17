@@ -12,7 +12,9 @@
 
 **模型、貼圖、mesh、動畫通道、VFX、粒子及音訊的數值門檻只讀 [模型動作特效上架限制.md](模型動作特效上架限制.md)。** 該文件由 `tools/model-budget/generate_policy_doc.ts` 從正式程式常數與設定生成；修改來源後執行 `pnpm modelpolicy:build`，用 `pnpm modelpolicy:check` 防止漂移。本 README 的個別素材量測與歷史案例都不是上架門檻。
 
-**其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
+**其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前增量交付在 `codex/hero-model-library-options-clean` 分支，[PR #1284](https://github.com/adms/GGD/pull/1284)；舊 #1152／#1267 留作歷史追溯。各批是否已合併及部署須查該批收據，不以本分支存在推定 `main` 已有新增設定。
+
+本批準備材料另見 [PR #1284 歸檔清單](../hero-model-library/pr1284-preparation-s3.json)。以 `fullGetVerified` 判定是否已上傳讀回；`plannedS3Uri` 只是目的地。完整解析原件與審查圖保留在本機，未驗證上傳前不移除既有 Git 材料。
 
 **分工固定：來源工作流找檔、下載與交付；本工作流負責轉換驗收、版本合併、中央索引與 Git 分支推送；Main 審查合併及部署。** 已交付素材分批發布，不等待 KOF／其他遊戲整庫搜尋完成。
 

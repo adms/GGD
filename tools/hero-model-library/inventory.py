@@ -2,7 +2,9 @@ import argparse,json,re,hashlib,datetime
 from pathlib import Path
 from source_links import render_sources, plan_sources, acquired_sources, is_model_source
 from default_policy import eligible, selection_class, selection_rank, source_release_rank
+from current_roster import read_current_roster, roster_input_paths
 repo=Path(__file__).resolve().parents[2]
+current_roster=read_current_roster(repo)
 parser=argparse.ArgumentParser(description='Rebuild the hero inventory using Git files only.')
 parser.add_argument('--workspace',type=Path,help='Optionally mirror the generated Markdown into an existing workspace.')
 parser.add_argument('--check',action='store_true',help='Check freshness without writing any files.')
@@ -199,12 +201,12 @@ for id,h in heroes.items():
    reason=f'歷史上限 {historical.group(2)} 已更新為 {channel_limit}；此候選原量測 {historical.group(1)} 通道。舊拒收理由失效，本項尚未重新轉換及驗收，先保留來源。原紀錄见 manifest.json。'
   pending.append(o);pending_rows.append((id,h['name'],o,reason))
  section='主線追加形態' if id.startswith('b2-maple-alt-') else '既有角色／形態' if c else '第一批 37 名' if id.startswith('community-review-') else '第二批 37 名' if id.startswith('b2-') else 'LOL 追加 7 名' if id.startswith('example:') else '歷史對應 4 筆'
- status='正式機白名單可選' if id in white else '原版佔位；不在白名單' if id in ['sela','thorne'] else '變身／替代形態；不在白名單' if c and c.get('transform',{}).get('role')=='alternate' else '目錄有定義；不在白名單' if c else '目錄未上架'
+ status='歷史快照白名單可選（非即時）' if id in white else '原版佔位；不在白名單' if id in ['sela','thorne'] else '變身／替代形態；不在白名單' if c and c.get('transform',{}).get('role')=='alternate' else '目錄有定義；不在白名單' if c else '目錄未上架'
  rows.append(dict(id=id,runtimeHeroId=aliases.get(id,id),name=c['name'] if c else h['name'],work=works[id],section=section,status=status,default=default,automaticDefault=automatic_default,defaultSelectionMode='manual' if manual else 'automatic',current=current,options=options,pending=pending))
 assert len(rows)==len(set(heroes))
 download_plan=plan_sources(read(repo/'materials/hero-model-library/download-sources.json'),{**manifest,'heroes':list(heroes.values())},policy)
 input_paths=[repo/'materials/hero-model-library'/name for name in ['manifest.json','release.json','inventory-context.json','pairing-inputs.json','download-sources.json','derivatives.json','default-policy.json']]
-input_paths += [palworld_index_path,palworld_receipt_path]
+input_paths += [palworld_index_path,palworld_receipt_path,*roster_input_paths(repo)]
 input_paths += list((repo/'content/champions').glob('*.json')) + list((repo/'materials/community-hero-forge/recipes').glob('*.upload-recipe.json'))
 input_paths += [Path(__file__).resolve(),Path(__file__).resolve().with_name('source_links.py'),Path(__file__).resolve().with_name('default_policy.py')]
 input_paths += [repo/'materials/hero-model-library'/name for name in ['workflow-model-options.json','priority-runtime-options.json','current-production.json'] if (repo/'materials/hero-model-library'/name).exists()]
@@ -219,7 +221,7 @@ now=previous.get('time') if previous.get('inputs_sha256')==input_digest else dat
 new_rows=[r for r in rows if r['section'] in ['第一批 37 名','第二批 37 名','LOL 追加 7 名']]
 no_default=[r for r in rows if r['default'] is None]
 placeholders=[r for r in new_rows if (r['default'] or {}).get('kind')=='previous']
-progress=[f'**已納入其他工作流交付，完成本次 81 名的本機模型選項登記。** 全表 {len(rows)} 個角色／形態（含新增 81 名及主線另增形態）。正式站快照白名單 {len(white)} 名，角色文件 {len(prod["champions"])} 筆；本分支新版本尚未部署。模型、動作、特效與語音分別記錄，不以取得來源代替完成。','',
+progress=[f'**目前專案有 {current_roster["definitionCount"]} 份英雄定義、{current_roster["selectableCount"]} 名對戰可選英雄。** 數字由目前 Git 英雄定義與專案 `balancePopulationIds` 自動計算；不以舊營運快照代替現況。已納入本次 81 名的本機模型選項登記，素材表另保留 {len(rows)} 個角色／形態身份。本分支新版本尚未部署；模型、動作、特效與語音分別記錄。','',
 '| 新增 81 名：目前素材庫預設狀態 | 數量 |','|---|---|']
 for kind,label in [('exact','已登記本尊／專用原創模型預設'),('style-proxy','使用者核准加工副本或其他工作流指定相似模型'),('alternate','同角色其他形態模型'),('previous','保留原有模型；不一律等同方塊佔位'),(None,'尚無合格預設模型')]:
  progress.append(f"| {label} | {sum((r['default'] or {}).get('kind')==kind for r in new_rows)} |")
@@ -257,10 +259,11 @@ lines=['# 全角色模型盤點', '',f'更新時間：{now}（Asia/Taipei）。�
 *render_sources(download_plan,policy,palworld_source_hero_overrides,palworld_candidate_overrides),
 '## 盤點基準','',
 f'- 全表 **{len(rows)} 個角色／形態 ID**：既有 71、第一批 37、第二批 37、LOL 追加 7、歷史對應 4、主線追加形態。LOL `example:*` 是規格 ID，`runtimeHeroId` 是出貨 `lol-*`；不重複計數。',
-f'- 正式站白名單 **{len(white)}** 名；角色文件 **{len(prod["champions"])}** 筆。快照 `{observation["observedAt"]}`，內容版本 `{observation["contentVersion"]}`。',
+f'- **目前 Git 基準**：英雄定義 **{current_roster["definitionCount"]}** 份；對戰可選英雄 **{current_roster["selectableCount"]}** 名。來源為 `content/champions` 與 `packages/shared/testkit/balancePopulation.ts`。',
+f'- **歷史營運快照，非目前人數**：當時白名單 {len(white)} 名、角色文件 {len(prod["champions"])} 筆。觀測時間 `{observation["observedAt"]}`，內容版本 `{observation["contentVersion"]}`；保留供舊版本追查，不代表當前部署。',
 f'- 已整合主線 `{observation["sourceMainCommit"]}` 的論壇與 LOL 交付；正式站觀測不宣稱可由內容版本反推 Git commit。舊快照留在 `inventory-context.json`。',
 f'- S3 固定成品版本：`{release["release"]}`；屬既有歷史版本；本次新增成品依 Git `current-resources.json`，不能把舊 S3 收據套用到新檔。',
-'- [模型選項 PR #1152](https://github.com/adms/GGD/pull/1152) 目前仍未合併；素材庫預設不等於正式站目前採用。',
+'- 新增模型選項由 [PR #1284](https://github.com/adms/GGD/pull/1284) 交付；#1152／#1267 留作歷史追溯。素材庫預設不等於正式站目前採用。',
 '- **預設模型**欄依第二守則，已記錄的手動選擇優先；指定 11 組副本列手動指定。其他未核准相似代理只保留候選；既有原模型保留作回退。',
 '- 分支合併保留遠端對 15 名既有英雄的手動原模型選擇；下表優先顯示手動選擇，`automaticDefault` 另保留切回自動模式後的首選。',
 '- 正式機目前模型與本分支手動選擇請用查詢工具讀取；主表顯示本分支手動選擇或素材庫順位預設，均不代表正式站已部署。',
@@ -340,8 +343,8 @@ for r in rows:
    option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'localRuntimeRoot':m.get('localRuntimeRoot'),'s3Uri':s3.get('s3Uri') or (release['release_uri']+location if location else None),'s3ManifestUri':s3.get('manifestUri'),'s3ReadbackVerified':s3.get('readbackVerified'),'gitPath':m.get('gitPath') or 'materials/asset-library/releases/'+release['release']+'/'+location,'limitations':m['limitations']}
   else:option['asset']={'modelKey':option['key'],'location':'existing-project-model','s3Uri':None}
 path=repo/'materials/hero-model-library/全角色模型盤點.md'
-inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'heroForgeIntegrations':{'source':'priority-evidence/palworld-hero-integration/receipt.json','scope':'locally verified Hero Forge packages; not static champion documents or production deployment','integrations':palworld_integrations},'downloadPlan':download_plan}
-validation={'time':now,'inputs_sha256':input_digest,'rows':len(rows),'missing_works':missing_works,'source_options':len(models),'s3_release':release['release'],'live_selectable':len(white),'pending':len(pending_rows),'productionContentVersion':observation['contentVersion'],'sha256':hashlib.sha256(report.encode()).hexdigest()}
+inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'currentProjectRoster':current_roster,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'heroForgeIntegrations':{'source':'priority-evidence/palworld-hero-integration/receipt.json','scope':'locally verified Hero Forge packages; not static champion documents or production deployment','integrations':palworld_integrations},'downloadPlan':download_plan}
+validation={'time':now,'inputs_sha256':input_digest,'rows':len(rows),'missing_works':missing_works,'source_options':len(models),'s3_release':release['release'],'currentProjectDefinitions':current_roster['definitionCount'],'currentProjectSelectable':current_roster['selectableCount'],'historicalSnapshotSelectable':len(white),'pending':len(pending_rows),'productionContentVersion':observation['contentVersion'],'sha256':hashlib.sha256(report.encode()).hexdigest()}
 artifacts={path:report,validation_path:json.dumps(validation,ensure_ascii=False,indent=2)+'\n',path.with_name('inventory.json'):json.dumps(inventory,ensure_ascii=False,indent=2)+'\n'}
 if args.check:
  stale=[str(p.relative_to(repo)) for p,value in artifacts.items() if not p.is_file() or p.read_text()!=value]
