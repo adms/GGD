@@ -244,9 +244,20 @@ w("")
 # ⛔ 下面兩列是**逐支查過的分析**（候選來源、信心），⛔ 不是量出來的 —— 所以要跟量到的名單對得上，對不上就停
 _B_MATERIAL_IDS = {"godie-e00s", "godie-e010", "godie-u034", "godie-ucrl"}
 _B_WIRING_IDS = {"b2-maple-alt-9769eb88b85b"}
+# ⭐ 第四批（GH#1185／#1205）owner 2026-09-17「我要全部上線」⇒ 先上架、語音待補。分組**逐字取自 Codex 2026-09-16 的語音缺口盤點**
+#   （PR #1267 commit 2a5564255；重建入口 `tools/hero-model-library/sync_voice_gap_source_mappings.py`），⛔ 不是我分的。
+_B_BATCH4 = {
+    "LoL 第二批 —— 本機已有 Riot 官方 ja_JP 解碼 WAV（共 6,636 段，已登記進中央索引）⇒ 待逐段聽審＋戰鬥事件綁定":
+        ["lol-ahri", "lol-ashe", "lol-blitzcrank", "lol-chogath", "lol-fiddlesticks", "lol-garen", "lol-malphite", "lol-ornn", "lol-sett", "lol-thresh", "lol-velkoz"],
+    "有原作／原生遊戲來源候選": ["acquired-dio", "acquired-naruto", "acquired-mewtwo", "acquired-mario", "acquired-ryu"],
+    "只有 300／MOD 候選（⛔ 不能標成原作語音）": ["acquired-morgiana", "acquired-rim", "acquired-saya", "acquired-kuroyukihime", "acquired-leafa"],
+    "已有角色音訊候選": ["acquired-alice", "acquired-asuna", "acquired-emilia", "acquired-pokemon-trainer", "acquired-wargreymon"],
+    "目前沒有音訊": ["acquired-kita-kita", "acquired-beatrice", "acquired-ram", "acquired-inuyasha", "acquired-minecraft", "acquired-xiaodangjia", "acquired-zero"],
+}
+_B_BATCH4_IDS = {i for ids in _B_BATCH4.values() for i in ids}
 _measured_voice_gap = {x["id"] for x in voice_gap}
-if not _measured_voice_gap <= (_B_MATERIAL_IDS | _B_WIRING_IDS) or not _B_MATERIAL_IDS <= _measured_voice_gap:
-    print(f"⛔ B 節的手寫分析過期了：量到 {sorted(_measured_voice_gap)}，手寫 {sorted(_B_MATERIAL_IDS | _B_WIRING_IDS)} —— 重查再改這支產生器")
+if not _measured_voice_gap <= (_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS) or not _B_MATERIAL_IDS <= _measured_voice_gap:
+    print(f"⛔ B 節的手寫分析過期了：量到 {sorted(_measured_voice_gap)}，手寫 {sorted(_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS)} —— 重查再改這支產生器")
     raise SystemExit(2)
 w("## B. 🎙 語音 —— ⭐ 真正要找素材的只有 **2 個角色**")
 w("")
@@ -264,6 +275,17 @@ w("|---|---|")
 if "b2-maple-alt-9769eb88b85b" in _measured_voice_gap:
     w("| `b2-maple-alt-9769eb88b85b` 梅普露（變身） | ⭐ **本體 `b2-maple` 已經有語音包** —— 缺的是變身對借用（`contentFormPairs`）的接線 |")
 w("| `sela` / `thorne` | ⛔ **不是上架英雄** —— 內容載入失敗時 `main.tsx` 註冊的骨架 fallback |")
+w("")
+w("### 第四批 33 名 —— 先上架，語音待補（owner 2026-09-17「我要全部上線」）")
+w("")
+w("| 分組（Codex 2026-09-16 盤點） | 英雄 |")
+w("|---|---|")
+for _label, _ids in _B_BATCH4.items():
+    _present = [i for i in _ids if i in _measured_voice_gap]
+    if _present:
+        w(f"| {_label} | " + "、".join(f"`{i}`" for i in _present) + " |")
+w("")
+w("⭐ 金色魔王 `acquired-lord-nightmares`：owner 2026-09-17「金色魔王 一樣用莉娜音效」⇒ 已借用莉娜（`godie-h020`）的原作語音，⛔ 不在缺口裡。")
 w("")
 w("**要找的**：那 2 個角色的**原作日文語音**（⭐ 只收日文；⛔ 中文配音檔要排除，300英雄的 `voice_ch_*` 就是）。")
 w("**交回來**：來源群組 id ＋ 檔案清單 ＋ **你聽過的證據**（哪幾段是本人、哪幾段是旁白/其他角色）。")

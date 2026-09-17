@@ -1,0 +1,16 @@
+{
+  "id": "acquired-morgiana.heel",
+  "schema": "status-effect@1",
+  "name": "赤腳催辦",
+  "description": "摩尔迦娜「赤腳催辦」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-morgiana.heel",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

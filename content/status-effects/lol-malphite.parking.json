@@ -1,0 +1,11 @@
+{
+  "id": "lol-malphite.parking",
+  "schema": "status-effect@1",
+  "name": "此處禁止停車",
+  "description": "墨菲特「此處禁止停車」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-malphite.parking",
+    "buff"
+  ]
+}

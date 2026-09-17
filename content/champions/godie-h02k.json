@@ -7,7 +7,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "坦克",
-  "modelKey": "champ.skin.barbarian",
+  "modelKey": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -844,5 +844,40 @@
     "卡位",
     "近身擾亂"
   ],
-  "pitch": "靠厚實體質卡住戰場，讓敵人不想打你，卻又很難繞過你。"
+  "pitch": "靠厚實體質卡住戰場，讓敵人不想打你，卻又很難繞過你。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0314a5256adb62a38113091f6302fd37cf637bc05f99bce7",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.skin.barbarian",
+      "modelSha256": "f3d85287e7609389abf8c2779401e6c2d1f0e16b4ced785940f8e5120869a357",
+      "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+      "registeredAt": "2026-09-16T08:00:44.949Z",
+      "source": {
+        "kind": "previous",
+        "character": "國寶級的畜生 - 熊貓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.skin.barbarian.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+      "label": "ou99「斗笠帽子功夫熊猫胖猫」（相似造型）",
+      "sourceModelKey": "ou99.463344",
+      "modelSha256": "01d993768f556d9b3c789792fb01b17151c8930f9478cfd76f2aeb4ed9f06843",
+      "binarySha256": "d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958",
+      "registeredAt": "2026-09-16T08:00:44.972Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "熊貓",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-463344-1-1.html"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

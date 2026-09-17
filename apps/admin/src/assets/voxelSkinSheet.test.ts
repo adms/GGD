@@ -53,7 +53,9 @@ describe("buildSheet over the real roster", () => {
     expect(sheet.stats.shippedTextureBytes).toBe(0);
     expect(sheet.stats.atlasBytesPerChampion).toBe(64 * 64 * 4);
     expect(sheet.stats.recipeBytes).toBeGreaterThan(0);
-    expect(sheet.stats.recipeBytes).toBeLessThan(32 * 1024);
+    // ⭐ GH#1281（2026-09-17）：32 KB 是名冊還小的時候量到的絕對值，會跟著上架人數長。
+    //   預算的真正單位是**每一位**（同 `voxelSkin/generate.test.ts` 的 260 B）。
+    expect(sheet.stats.recipeBytes).toBeLessThan(sheet.stats.champions * 260);
   });
 
   it("flags the shared-stand-in population and the hand-authored overrides", () => {

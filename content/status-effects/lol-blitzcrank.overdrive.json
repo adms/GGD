@@ -1,0 +1,11 @@
+{
+  "id": "lol-blitzcrank.overdrive",
+  "schema": "status-effect@1",
+  "name": "過載運轉",
+  "description": "布里姿「過載運轉」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-blitzcrank.overdrive",
+    "buff"
+  ]
+}

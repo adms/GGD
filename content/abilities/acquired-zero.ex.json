@@ -1,0 +1,77 @@
+{
+  "id": "acquired-zero.ex",
+  "name": "更新稍後提醒",
+  "provenance": "editor-json",
+  "description": "取得 120 護盾並回復 40 生命；是戰術整備，不是死亡後復活。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "acquired-zero.reboot",
+      "onExisting": "keepLarger"
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 40,
+        "ratios": []
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": []
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "acquired-zero.reboot",
+          "onExisting": "keepLarger"
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 40,
+            "ratios": []
+          },
+          "applyTo": "self"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-zero.ex.webp",
+  "radiusTier": "極小"
+}

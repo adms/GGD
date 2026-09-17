@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "070bf7b55eac",
+  "hash": "5ab0a3342afb",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -2829,6 +2829,12 @@
       "size": 1169
     },
     {
+      "id": "version.body.0314a5256adb62a38113091f6302fd37cf637bc05f99bce7",
+      "path": "models/version.body.0314a5256adb62a38113091f6302fd37cf637bc05f99bce7.json",
+      "hash": "f3d85287e760",
+      "size": 716
+    },
+    {
       "id": "version.body.04ac799e4dec3187128088349514230154549edad278c191",
       "path": "models/version.body.04ac799e4dec3187128088349514230154549edad278c191.json",
       "hash": "53f1b2dcefa7",
@@ -3825,6 +3831,12 @@
       "size": 535
     },
     {
+      "id": "version.body.55be69fe0b0a5d52e642fed79d2beee8059bd86b0726b85e",
+      "path": "models/version.body.55be69fe0b0a5d52e642fed79d2beee8059bd86b0726b85e.json",
+      "hash": "551632fe1efd",
+      "size": 581
+    },
+    {
       "id": "version.body.56c031e042065020d3698fcef045bd9eda3bfd973fa01670",
       "path": "models/version.body.56c031e042065020d3698fcef045bd9eda3bfd973fa01670.json",
       "hash": "be89aebc4e35",
@@ -3883,6 +3895,12 @@
       "path": "models/version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe.json",
       "hash": "6e7faa13dff0",
       "size": 545
+    },
+    {
+      "id": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+      "path": "models/version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675.json",
+      "hash": "12d54ed3a26c",
+      "size": 548
     },
     {
       "id": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
@@ -4111,6 +4129,12 @@
       "path": "models/version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2.json",
       "hash": "f620019299ac",
       "size": 517
+    },
+    {
+      "id": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+      "path": "models/version.body.6762543e2beb02d969c86576c4f12079362e820376133999.json",
+      "hash": "8dd913525cf3",
+      "size": 537
     },
     {
       "id": "version.body.6789fae462831b1bc3569f6b152a6fcb95059d7f4850466b",
@@ -4645,6 +4669,12 @@
       "path": "models/version.body.9007ef7a0fdf821b51fad194e34bb04119dd244b59efe049.json",
       "hash": "b17410681b77",
       "size": 611
+    },
+    {
+      "id": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+      "path": "models/version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48.json",
+      "hash": "01d993768f55",
+      "size": 539
     },
     {
       "id": "version.body.909b7478ac8e5fee361d3e314ead3f544197d2ea23ccfa8f",

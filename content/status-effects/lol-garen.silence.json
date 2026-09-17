@@ -1,0 +1,14 @@
+{
+  "id": "lol-garen.silence",
+  "schema": "status-effect@1",
+  "name": "致命打擊",
+  "description": "蓋倫「致命打擊」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-garen.silence",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

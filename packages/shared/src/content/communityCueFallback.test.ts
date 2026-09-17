@@ -37,6 +37,15 @@ describe("community cue fallback — 作者沒挑施法特效的社群技能（�
       if (!CAST_SLOTS.has(String(raw["slot"])) || authored || !raw["template"]) continue;
       const pick = communityCueFallbackFor(raw, templates);
       if (!pick) {
+        // ⭐⭐ GH#1281（2026-09-17）—— 規則**刻意**不接的那一種：投射物的提示在「命中時」，
+        //   而施法層表達不了命中時機（`communityCueFallback.ts` 檔頭逐字：「⛔ 不假裝翻過去」）。
+        //   ⭐ 而那一支技能**畫得出東西** —— 它自己的 `vfx-scripts/<id>.json` 有 `vfx` 段落，
+        //   由 `VfxScriptPlayer` 在 `projectileSpawn`／`projectileHit` 那一拍播（出貨的第二條畫圖路）。
+        //   ⇒ 這裡要問的是「規則讀不懂它**而且沒有別人替它畫**」，⛔ 不是「規則有沒有接手」。
+        //   ⚠️ `anim`／`sound`／`floatingText` 不算（不畫粒子）—— 同 `render/vfx/bindings.test.ts`。
+        const segs = (store.all<Record<string, unknown>>("vfx-scripts").find((s) => s["id"] === id)?.["segments"] ??
+          []) as Record<string, unknown>[];
+        if (segs.some((s) => s["kind"] === "vfx" && VfxDefs.tryGet(String(s["vfxId"])))) continue;
         unreadable.push(id);
         continue;
       }

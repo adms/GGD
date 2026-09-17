@@ -248,10 +248,18 @@ describe("champion↔ability mirror (real content)", () => {
 
     const stale: string[] = [];
     let embeddedOnPrimitives = 0;
+    // ⭐⭐ GH#1281（2026-09-17）—— **分母要與分子問同一個母體**。
+    // 迴圈在 `typeof std !== "string"` 就 `continue`（沒有作者特效的槽位根本不進分子），
+    // 而底下的比例卻拿 `pairs.size`（**全部**槽位）當分母 ⇒ 上架一批「施法特效由載入時
+    // 規則補／由自己的 vfx-script 畫、磁碟上沒有 vfxKey」的英雄（第四批 37 名 × 6 格）
+    // 就會把比例壓下去，⛔ 而那與「鏡射有沒有落後」無關（本檔要守的是後者）。
+    // ⇒ 分母改成**真的有 standalone vfxKey 的槽位數**，門檻 85% 不動。
+    let withStandaloneKey = 0;
     for (const [key, { standalone, embedded }] of pairs) {
       const std = standalone.vfxKey;
       const emb = embedded.vfxKey;
       if (typeof std !== "string") continue;
+      withStandaloneKey += 1;
       if (emb !== std) stale.push(`${key}: standalone=${std} embedded=${show(emb)}`);
       if (typeof emb === "string" && emb.startsWith("fx.prim.")) embeddedOnPrimitives += 1;
     }
@@ -272,10 +280,11 @@ describe("champion↔ability mirror (real content)", () => {
     // 表示法。剩下的那一成多是**升級**不是漂移：w3x emitter 的工作把一批技能從
     // 風格化 primitive 換成真的匯入美術（`fx.w3x.*`、`godie-*-p*`），兩份拷貝仍然
     // 一致 —— 而「一致」是上面那條 `stale` 在證明的，不是這一條。
-    const primitiveShare = embeddedOnPrimitives / pairs.size;
+    expect(withStandaloneKey, "⛔ 一格有作者特效的槽位都沒掃到 —— 母體壞了").toBeGreaterThan(0);
+    const primitiveShare = embeddedOnPrimitives / withStandaloneKey;
     expect(
       primitiveShare,
-      `only ${embeddedOnPrimitives}/${pairs.size} embedded slots are on fx.prim.*`,
+      `only ${embeddedOnPrimitives}/${withStandaloneKey}（有 standalone vfxKey 的槽位）embedded slots are on fx.prim.*`,
     ).toBeGreaterThan(0.85);
   });
 });

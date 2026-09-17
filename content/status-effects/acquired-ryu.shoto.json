@@ -1,0 +1,11 @@
+{
+  "id": "acquired-ryu.shoto",
+  "schema": "status-effect@1",
+  "name": "波升基本功",
+  "description": "Ryu「波升基本功」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-ryu.shoto",
+    "buff"
+  ]
+}

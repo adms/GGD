@@ -1,0 +1,15 @@
+{
+  "id": "acquired-emilia.chill",
+  "schema": "status-effect@1",
+  "name": "冰槍請簽收",
+  "description": "愛蜜莉雅「冰槍請簽收」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-emilia.chill",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

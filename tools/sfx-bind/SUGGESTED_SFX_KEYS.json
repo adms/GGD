@@ -27,12 +27,12 @@
     "no-source-audio": "⭐ **原作自己就沒有替它配音效** —— war3map.j 沒綁 gg_snd，base 技能也沒有 effectsound。⇒ 這不是我們欠的帳，要不要配是 #554③ 的 owner 裁決"
   },
   "summary": {
-    "abilities": 907,
+    "abilities": 1129,
     "census": {
       "overlay": 0,
       "sfxKey": 72,
       "element": 98,
-      "generic": 737
+      "generic": 959
     },
     "suggested": 107,
     "applicable": 15,
@@ -40,10 +40,10 @@
       "A-vfx-owned": 15,
       "C-family-generic": 92
     },
-    "noSuggestion": 728,
+    "noSuggestion": 950,
     "byCause": {
       "element-whoosh-already": 96,
-      "no-source-audio": 622,
+      "no-source-audio": 844,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -1835,6 +1835,1566 @@
     }
   ],
   "noSuggestion": [
+    {
+      "ability": "acquired-alice.e",
+      "name": "騎士查勤",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-alice.ex",
+      "name": "今天不准加班受傷",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-alice.passive",
+      "name": "整合騎士查票",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-alice.q",
+      "name": "金木樨停車單",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-alice.r",
+      "name": "花瓣罰單連發",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-alice.w",
+      "name": "騎士擔保",
+      "champion": "acquired-alice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.e",
+      "name": "星間挪位",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.ex",
+      "name": "末日也要蓋章",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.passive",
+      "name": "星蝕欠款",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.q",
+      "name": "逾期星光",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.r",
+      "name": "枯星下班鐘",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-astralym.w",
+      "name": "失重通知",
+      "champion": "acquired-astralym",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.e",
+      "name": "插入隊伍最前面",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.ex",
+      "name": "晚餐預約成功",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.passive",
+      "name": "開飯倒數",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.q",
+      "name": "細劍取餐號",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.r",
+      "name": "星屑飛濺別灑到湯",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-asuna.w",
+      "name": "閃光趕飯",
+      "champion": "acquired-asuna",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.e",
+      "name": "門在這一邊",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.ex",
+      "name": "圖書館請安靜",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.passive",
+      "name": "借書要留押金",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.q",
+      "name": "陰影退件章",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.r",
+      "name": "逾期罰款・陰",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-beatrice.w",
+      "name": "禁書封皮",
+      "champion": "acquired-beatrice",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.e",
+      "name": "紙箱撤離",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.ex",
+      "name": "罐頭優先權",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.passive",
+      "name": "不是我打破的",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.q",
+      "name": "貓拳簽收",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.r",
+      "name": "連續貓貓拳",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-cattiva.w",
+      "name": "你追不到我",
+      "champion": "acquired-cattiva",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.e",
+      "name": "世界・半秒鐘",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.ex",
+      "name": "輪到我的台詞",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.passive",
+      "name": "吸血鬼加班制",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.q",
+      "name": "無馱連打",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.r",
+      "name": "壓路機停車費",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-dio.w",
+      "name": "飛刀考勤",
+      "champion": "acquired-dio",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.e",
+      "name": "冰花開席",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.ex",
+      "name": "熱茶先不要冰",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.passive",
+      "name": "碎霜禮節",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.q",
+      "name": "冰槍請簽收",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.r",
+      "name": "永凍・試用版",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-emilia.w",
+      "name": "精靈雪衣",
+      "champion": "acquired-emilia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.e",
+      "name": "半妖跨欄",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.ex",
+      "name": "爆流破先擋一下",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.passive",
+      "name": "半妖起床氣",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.q",
+      "name": "鐵碎牙拆門",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.r",
+      "name": "鐵碎牙不是開罐器",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-inuyasha.w",
+      "name": "風之傷清走廊",
+      "champion": "acquired-inuyasha",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.e",
+      "name": "貼地起飛",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.ex",
+      "name": "登機口改號",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.passive",
+      "name": "航電預熱",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.q",
+      "name": "龍式點射",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.r",
+      "name": "本航班不供餐",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-jetragon.w",
+      "name": "尾流加班",
+      "champion": "acquired-jetragon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.e",
+      "name": "舞步巡迴",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.ex",
+      "name": "跳累了先喝水",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.passive",
+      "name": "越挨打越想跳",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.q",
+      "name": "別看下半身",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.r",
+      "name": "全員原地學舞",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kita-kita.w",
+      "name": "觀眾席安全距離",
+      "champion": "acquired-kita-kita",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.e",
+      "name": "黑蓮快速登入",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.ex",
+      "name": "撤回上一則位置",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.passive",
+      "name": "延遲斬殺",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.q",
+      "name": "你的連線已中斷",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.r",
+      "name": "死亡穿刺強制登出",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-kuroyukihime.w",
+      "name": "先加速再解釋",
+      "champion": "acquired-kuroyukihime",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.e",
+      "name": "精靈抄近路",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.ex",
+      "name": "風刃催單",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.passive",
+      "name": "順風不用跑腿費",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.q",
+      "name": "精靈補給到府",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.r",
+      "name": "風精靈團購保險",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-leafa.w",
+      "name": "外送區禁止停車",
+      "champion": "acquired-leafa",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.e",
+      "name": "客服轉接",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.ex",
+      "name": "三單一起結案",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.passive",
+      "name": "混沌客服工單",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.q",
+      "name": "金色退件章",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.r",
+      "name": "退回混沌重填",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-lord-nightmares.w",
+      "name": "宇宙暫停受理",
+      "champion": "acquired-lord-nightmares",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.e",
+      "name": "水管工落地章",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.ex",
+      "name": "一枚硬幣套餐",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.passive",
+      "name": "叮！不是薪水",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.q",
+      "name": "火球通管",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.r",
+      "name": "終極火焰報價",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mario.w",
+      "name": "披風請讓路",
+      "champion": "acquired-mario",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.e",
+      "name": "瞬間移動・區內",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.ex",
+      "name": "我究竟為何排隊",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.passive",
+      "name": "念力集中中",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.q",
+      "name": "暗影球・已充電",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.r",
+      "name": "精神強念投訴",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-mewtwo.w",
+      "name": "念力保護殼",
+      "champion": "acquired-mewtwo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.e",
+      "name": "礦車單程票",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.ex",
+      "name": "工作台便當",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.passive",
+      "name": "挖礦不包加班",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.q",
+      "name": "鑽石鎬・租的",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.r",
+      "name": "TNT 結算日",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-minecraft.w",
+      "name": "一面不擋路的牆",
+      "champion": "acquired-minecraft",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.e",
+      "name": "法納利斯跨步",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.ex",
+      "name": "女僕式清場",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.passive",
+      "name": "腳力留一手",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.q",
+      "name": "赤腳催辦",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.r",
+      "name": "炎鎖舞步",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-morgiana.w",
+      "name": "鎖鏈請回來",
+      "champion": "acquired-morgiana",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.e",
+      "name": "忍者插隊術",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.ex",
+      "name": "拉麵要趁熱",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.passive",
+      "name": "打架前先吃麵",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.q",
+      "name": "螺旋丸加麵",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.r",
+      "name": "螺旋手裡麵",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-naruto.w",
+      "name": "影分身代排",
+      "champion": "acquired-naruto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.e",
+      "name": "噴火龍・熱身",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.ex",
+      "name": "包包裡有傷藥",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.passive",
+      "name": "徽章集點卡",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.q",
+      "name": "傑尼龜・水槍",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.r",
+      "name": "三重指令結帳",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-pokemon-trainer.w",
+      "name": "妙蛙草・藤鞭",
+      "champion": "acquired-pokemon-trainer",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.e",
+      "name": "不想走樓梯",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.ex",
+      "name": "今天也辛苦別人",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.passive",
+      "name": "掃除前先開窗",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.q",
+      "name": "風刃催你走",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.r",
+      "name": "風暴大掃除",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ram.w",
+      "name": "毒舌逆風",
+      "champion": "acquired-ram",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.e",
+      "name": "便當在那邊",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.ex",
+      "name": "沒吃飽不准下班",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.passive",
+      "name": "這個快熟了",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.q",
+      "name": "午休咬一口",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.r",
+      "name": "整份都我的",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-rim.w",
+      "name": "加班費先預支",
+      "champion": "acquired-rim",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.e",
+      "name": "龍捲旋風腿",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.ex",
+      "name": "無薪修行",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.passive",
+      "name": "波升基本功",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.q",
+      "name": "波動拳",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.r",
+      "name": "真・升龍加班",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-ryu.w",
+      "name": "升龍拳・有付費",
+      "champion": "acquired-ryu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.e",
+      "name": "看見真實菜單",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.ex",
+      "name": "閉眼比較好吃",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.passive",
+      "name": "吃一口就好",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.q",
+      "name": "不明食材試吃",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.r",
+      "name": "今晚全席開放",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-saya.w",
+      "name": "餐桌黏黏的",
+      "champion": "acquired-saya",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.e",
+      "name": "勇者快遞",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.ex",
+      "name": "恐龍火氣很大",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.passive",
+      "name": "鍋蓋還沒掀",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.q",
+      "name": "龍獸拆箱爪",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.r",
+      "name": "蓋亞能量到付",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-wargreymon.w",
+      "name": "勇氣鍋蓋",
+      "champion": "acquired-wargreymon",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.e",
+      "name": "猛火快炒",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.ex",
+      "name": "鍋蓋全席",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.passive",
+      "name": "試味不用錢",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.q",
+      "name": "料理怎麼又發光",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.r",
+      "name": "麻婆豆腐流水席",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-xiaodangjia.w",
+      "name": "趁熱吃",
+      "champion": "acquired-xiaodangjia",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.e",
+      "name": "衝刺斬",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.ex",
+      "name": "更新稍後提醒",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.passive",
+      "name": "劍砲交班",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.q",
+      "name": "Z-Saber 簽核",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.r",
+      "name": "零式連段",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "acquired-zero.w",
+      "name": "蓄力離線砲",
+      "champion": "acquired-zero",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
     {
       "ability": "b2-aladdin.e",
       "name": "團員到齊才打節拍",
@@ -8628,6 +10188,366 @@
       }
     },
     {
+      "ability": "lol-ahri.e",
+      "name": "傾城",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ahri.ex",
+      "name": "已讀不回",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ahri.passive",
+      "name": "銷魂",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ahri.q",
+      "name": "幻玉",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ahri.r",
+      "name": "飛仙",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ahri.w",
+      "name": "魅火",
+      "champion": "lol-ahri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.e",
+      "name": "鷹擊長空：強制簽收",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.ex",
+      "name": "冷凍保存",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.passive",
+      "name": "冰霜射擊",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.q",
+      "name": "專注射擊",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.r",
+      "name": "魔法水晶箭",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ashe.w",
+      "name": "萬箭齊發",
+      "champion": "lol-ashe",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.e",
+      "name": "充能一擊",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.ex",
+      "name": "七天鑑賞期",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.passive",
+      "name": "法力屏障",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.q",
+      "name": "火箭抓取",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.r",
+      "name": "靜電力場",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-blitzcrank.w",
+      "name": "過載運轉",
+      "champion": "lol-blitzcrank",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.e",
+      "name": "恐懼尖刺",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.ex",
+      "name": "吃太飽走不動",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.passive",
+      "name": "肉食者",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.q",
+      "name": "破裂",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.r",
+      "name": "饗宴",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-chogath.w",
+      "name": "野性尖嘯",
+      "champion": "lol-chogath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.e",
+      "name": "駭懼收割",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.ex",
+      "name": "尖叫外包",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.passive",
+      "name": "無害稻草人",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.q",
+      "name": "恐懼",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.r",
+      "name": "群鴉風暴",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-fiddlesticks.w",
+      "name": "豐收之魘",
+      "champion": "lol-fiddlesticks",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.e",
+      "name": "審判",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.ex",
+      "name": "蒂瑪西亞先休息",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.passive",
+      "name": "堅韌",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.q",
+      "name": "致命打擊",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.r",
+      "name": "蒂瑪西亞制裁",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-garen.w",
+      "name": "勇氣",
+      "champion": "lol-garen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
       "ability": "lol-karthus.e",
       "name": "荒蕪迴音",
       "champion": "lol-karthus",
@@ -8808,6 +10728,66 @@
       }
     },
     {
+      "ability": "lol-malphite.e",
+      "name": "大地震顫",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-malphite.ex",
+      "name": "此處禁止停車",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-malphite.passive",
+      "name": "花崗岩護盾",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-malphite.q",
+      "name": "地震碎片",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-malphite.r",
+      "name": "勢不可擋",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-malphite.w",
+      "name": "震雷之擊",
+      "champion": "lol-malphite",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
       "ability": "lol-missfortune.e",
       "name": "緋帆彈雨",
       "champion": "lol-missfortune",
@@ -8861,6 +10841,246 @@
       "ability": "lol-missfortune.w",
       "name": "揚帆快步",
       "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.e",
+      "name": "熔岩俯衝",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.ex",
+      "name": "終身保固三秒",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.passive",
+      "name": "活火爐",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.q",
+      "name": "火山脈動",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.r",
+      "name": "鑄火者的呼喚",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-ornn.w",
+      "name": "熾焰吹息",
+      "champion": "lol-ornn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.e",
+      "name": "碎顱猛擊",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.ex",
+      "name": "媽媽來電",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.passive",
+      "name": "恆毅之泉",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.q",
+      "name": "懾人猛拳",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.r",
+      "name": "嘆為觀止",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-sett.w",
+      "name": "獸魂轟拳",
+      "champion": "lol-sett",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.e",
+      "name": "懾魂掃蕩",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.ex",
+      "name": "本燈拒載",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.passive",
+      "name": "靈魂饗宴",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.q",
+      "name": "死亡宣告",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.r",
+      "name": "惡靈領域",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-thresh.w",
+      "name": "鬼影燈籠",
+      "champion": "lol-thresh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.e",
+      "name": "反物質瓦解",
+      "champion": "lol-velkoz",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.ex",
+      "name": "論文退回重寫",
+      "champion": "lol-velkoz",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.passive",
+      "name": "結構毀滅",
+      "champion": "lol-velkoz",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.q",
+      "name": "分裂電漿",
+      "champion": "lol-velkoz",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.r",
+      "name": "生化射線",
+      "champion": "lol-velkoz",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-velkoz.w",
+      "name": "虛空裂痕",
+      "champion": "lol-velkoz",
       "todayPlays": "abilityCast",
       "cause": "no-source-audio",
       "evidence": {

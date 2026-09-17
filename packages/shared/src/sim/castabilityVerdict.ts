@@ -113,6 +113,16 @@ export interface ChannelSnapshot {
   gold: number;
   /** 場上活著的召喚物具數（`world.summon.size`）—— `spawnSummon` 是唯一的寫入者。 */
   summons: number;
+  /**
+   * ⭐ 2026-09-17（GH#1281）—— **第八個**看得見的頻道：場上活著的「穿越才生效」邊界陣
+   * （`world.threshold.size`）。⚠️ 它在此之前是量測盲點，而且盲得跟召喚一模一樣：
+   * `spawnThresholds` 既不掛狀態／buff／護盾、也不發任何 {@link EFFECT_EVENTS} 裡的事件 ——
+   * 它寫的是 `world.threshold`（一圈牆 → 誰穿過才結算）。於是瑟雷西 R【惡靈領域】在
+   * 真的 SimWorld 裡**確實生出了那一圈牆**，而普查回報「放出去什麼都沒動」（假 ❌）。
+   * ⛔ 它不可能被回血／移動偽造：唯一的寫入者是 `effects/spawnThresholds.ts` 的 handler。
+   * ⚠️ 讀的是**具數**，⛔ 不是「有沒有這個 kind」。
+   */
+  thresholds: number;
 }
 
 export function snapshotChannels(world: SimWorld): ChannelSnapshot {
@@ -163,6 +173,7 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
     taunts: world.taunt.size,
     gold,
     summons: world.summon.size,
+    thresholds: world.threshold.size,
   };
 }
 
@@ -312,6 +323,8 @@ export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
   // 召喚與 `taunt` / `gold` 同一列、同一個理由：它是 gameplay 頻道（場上多了一具
   // 會走會打的身體），⛔ 不是裝飾，所以排在 `vfx` 上面（GH#1087）。
   { channel: "summon", zh: "召喚", fired: (o) => o.after.summons > o.before.summons },
+  // ⭐ GH#1281：邊界陣（瑟雷西 R 那一族）—— 牆生出來了就是「有東西動了」。
+  { channel: "threshold", zh: "邊界陣", fired: (o) => o.after.thresholds > o.before.thresholds },
   { channel: "dash", zh: "位移", fired: (o) => o.moved },
   // ⭐ GH#1203 —— 「把**別人**搬走／定住」與 `dash` 同一列、同一個理由：
   //   場上真的有一具身體被移動或被鎖住行動，⛔ 那不是裝飾。
@@ -364,6 +377,7 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
     after.taunts > before.taunts ||
     after.gold > before.gold ||
     after.summons > before.summons ||
+    after.thresholds > before.thresholds ||
     moved ||
     victimMoved || // ⭐ GH#1203：被搬走的是別人
     victimLocked; // ⭐ GH#1203：行動鎖（lockOut 不發事件）

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-cattiva.scamper",
+  "schema": "status-effect@1",
+  "name": "不是我打破的",
+  "description": "搗蛋貓「不是我打破的」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-cattiva.scamper",
+    "buff"
+  ]
+}

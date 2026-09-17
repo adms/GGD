@@ -65,9 +65,11 @@ const HAS_ROLLBACK: readonly string[] = [
   "community-review-28-20260907", "community-review-29-20260907", "community-review-30-20260907", "community-review-31-20260907",
   "community-review-32-20260907", "community-review-33-20260907", "community-review-34-20260907", "community-review-35-20260907",
   "community-review-36-20260907", "community-review-37-20260907", "godie-e002", "godie-e008",
-  "godie-e00l", "godie-e00s", "godie-e010", "godie-edem",
+  // ⭐ 2026-09-17（GH#1281）：PR #1280 替初號機（godie-e00r）與熊貓（godie-h02k）換上論壇模型
+  //   ⇒ 原上線模型自動保存成可切回的一列 ⇒ 兩位第一次有了版本歷史，加入名單。
+  "godie-e00l", "godie-e00r", "godie-e00s", "godie-e010", "godie-edem",
   "godie-efur", "godie-h01n", "godie-h01o", "godie-h01u", "godie-h020",
-  "godie-hapm", "godie-hjai", "godie-huth", "godie-hvsh", "godie-n003",
+  "godie-h02k", "godie-hapm", "godie-hjai", "godie-huth", "godie-hvsh", "godie-n003",
   "godie-n00b", "godie-nbbc", "godie-o030", "godie-ogld", "godie-orkn",
   "godie-osam", "godie-u00k", "godie-u00n", "godie-u00o", "godie-umal",
   "godie-u01u", "godie-ubal", "godie-udea", "godie-udre",

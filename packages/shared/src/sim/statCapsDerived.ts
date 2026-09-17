@@ -32,7 +32,7 @@ export interface DerivedCapProvenance {
 export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   anchorLevel: 30,
   multiple: 200,
-  population: 130,
+  population: 167,
   medians: Object.freeze({
   "maxHealth": 2838,
   "maxMana": 1745,

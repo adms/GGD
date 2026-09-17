@@ -90,7 +90,8 @@ const POPP_NATIVE_VFX_APPROVAL_RECEIPT = join(
  * ≥5 支 29。⚠️ 票文寫的是 178/68（技能數 422）—— 差一支，⭐ 這裡用**重量到**的。
  * ⚠️ 2026-09-06 重量：仍是 69 —— 子模組動的是 vfx-script 那一層，⛔ 技能↔特效 key 的引用一格沒變。
  */
-const EXCLUSIVE_VFX_BASELINE = 60;
+// ⭐ 2026-09-17（GH#1281）：60 → 56（棘輪只能往下；第四批 37 名共用既有 fx.prim.* 家族，專屬特效變少）。
+const EXCLUSIVE_VFX_BASELINE = 56;
 /**
  * ⭐ 量到的（2026-09-10，45 支出貨 script × 4 顆子模組）：**0**。
  *

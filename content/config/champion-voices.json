@@ -2,6 +2,136 @@
   "id": "champion-voices",
   "schema": "config.champion-voices@1",
   "champions": {
+    "acquired-alice": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-astralym": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-asuna": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-beatrice": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-cattiva": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-dio": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-emilia": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-inuyasha": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-jetragon": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-kita-kita": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-kuroyukihime": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-leafa": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-lord-nightmares": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-mario": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-mewtwo": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-minecraft": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-morgiana": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-naruto": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-pokemon-trainer": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-ram": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-rim": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-ryu": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-saya": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-wargreymon": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-xiaodangjia": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "acquired-zero": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
     "b2-aladdin": {
       "select": [],
       "source": "none",
@@ -998,6 +1128,36 @@
       "source": "none",
       "soundset": "Abomination"
     },
+    "lol-ahri": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-ashe": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-blitzcrank": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-chogath": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-fiddlesticks": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-garen": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
     "lol-karthus": {
       "select": [],
       "source": "none",
@@ -1013,7 +1173,32 @@
       "source": "none",
       "soundset": null
     },
+    "lol-malphite": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
     "lol-missfortune": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-ornn": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-sett": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-thresh": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "lol-velkoz": {
       "select": [],
       "source": "none",
       "soundset": null

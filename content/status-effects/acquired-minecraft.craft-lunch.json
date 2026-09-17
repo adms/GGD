@@ -1,0 +1,16 @@
+{
+  "id": "acquired-minecraft.craft-lunch",
+  "schema": "status-effect@1",
+  "name": "工作台便當",
+  "description": "Steve／Alex「工作台便當」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-minecraft.craft-lunch",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

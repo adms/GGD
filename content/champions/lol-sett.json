@@ -1,0 +1,858 @@
+{
+  "id": "lol-sett",
+  "name": "賽特",
+  "description": "受擊蓄勢、短手摔投鬥士\n\n概念來源：LoL 賽特\nhttps://www.leagueoflegends.com/zh-tw/champions/sett/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：右拳攻速細分與按實際受傷量連續換算，簡化為交替追加及三層桶；不是反傷。\n• Q：移速不限定朝敵人方向；無普攻重置。\n• W：依施法者面向揮拳，保留中心真傷與兩側物傷；受擊蓄勢仍以三層桶及兩檔護盾/傷害表示，未按實際承傷量連續換算。\n• E：未判斷左右同時有人；不憑空給必定暈眩。\n• R：抓抱期間跟隨施法者，以現有地面位移表達帶行，終點結算範圍傷害；沒有垂直拋物線，傷害不按被抱者額外生命換算。\n• EX：笑點是治療換取停拳，不改 QWER。\n\n採用所選 GGD 模型與特效。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.13085306122448978,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-sett.q",
+      "name": "懾人猛拳",
+      "provenance": "editor-json",
+      "description": "提速並強化接下來兩次普攻。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 4,
+          "statusId": "lol-sett.q",
+          "applyTo": "self",
+          "stackKey": "lol-sett.q",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "resourcePct": {
+                    "subject": "target",
+                    "resource": "health",
+                    "basis": "max",
+                    "perRank": [
+                      0.02,
+                      0.02,
+                      0.02,
+                      0.02
+                    ]
+                  }
+                }
+              ],
+              "maxTriggers": 2,
+              "onConsumed": "detachSource"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ],
+              "statusId": "lol-sett.q",
+              "stackKey": "lol-sett.q",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "resourcePct": {
+                        "subject": "target",
+                        "resource": "health",
+                        "basis": "max",
+                        "perRank": [
+                          0.02,
+                          0.02,
+                          0.02,
+                          0.02
+                        ]
+                      }
+                    }
+                  ],
+                  "maxTriggers": 2,
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-sett.q.webp"
+    },
+    "W": {
+      "id": "lol-sett.w",
+      "name": "獸魂轟拳",
+      "provenance": "editor-json",
+      "description": "朝面向揮拳並取得護盾；中心真傷、兩側物傷，同一敵人只受一種傷害。消耗已有恆毅，三層時提高護盾與傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "lol-sett.grit",
+          "count": 3,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 180,
+                "ratios": [],
+                "perRank": [
+                  0,
+                  135,
+                  270,
+                  405
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "lol-sett.w",
+              "onExisting": "keepLarger"
+            },
+            {
+              "kind": "damageLine",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "中"
+              },
+              "length": 5,
+              "width": 1.2,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "sourceScope": "caster",
+                  "statusId": "lol-sett.w-center",
+                  "duration": 0.1
+                }
+              ]
+            },
+            {
+              "kind": "damageLine",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中"
+              },
+              "length": 5,
+              "width": 2,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "victimCondition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "lol-sett.w-center",
+                  "appliedBy": "self"
+                }
+              }
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "lol-sett.grit",
+              "count": "all",
+              "subject": "self",
+              "appliedBy": "self",
+              "onConsumed": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 80,
+                    "ratios": [],
+                    "perRank": [
+                      0,
+                      60,
+                      120,
+                      180
+                    ]
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "lol-sett.w",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "damageLine",
+                  "damageType": "true",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "length": 5,
+                  "width": 1.2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "sourceScope": "caster",
+                      "statusId": "lol-sett.w-center",
+                      "duration": 0.1
+                    }
+                  ]
+                },
+                {
+                  "kind": "damageLine",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "length": 5,
+                  "width": 2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "victimCondition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "lol-sett.w-center",
+                      "appliedBy": "self"
+                    }
+                  }
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 80,
+                    "ratios": [],
+                    "perRank": [
+                      0,
+                      60,
+                      120,
+                      180
+                    ]
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "lol-sett.w",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "damageLine",
+                  "damageType": "true",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "length": 5,
+                  "width": 1.2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "sourceScope": "caster",
+                      "statusId": "lol-sett.w-center",
+                      "duration": 0.1
+                    }
+                  ]
+                },
+                {
+                  "kind": "damageLine",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "length": 5,
+                  "width": 2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "victimCondition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "lol-sett.w-center",
+                      "appliedBy": "self"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "lol-sett.grit",
+              "appliedBy": "self",
+              "count": 3,
+              "onConsumed": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 180,
+                    "ratios": [],
+                    "perRank": [
+                      0,
+                      135,
+                      270,
+                      405
+                    ]
+                  },
+                  "duration": 3,
+                  "stackKey": "lol-sett.w",
+                  "onExisting": "keepLarger",
+                  "absorbs": "all"
+                },
+                {
+                  "kind": "damageLine",
+                  "amount": {
+                    "damageTier": "中"
+                  },
+                  "length": 5,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "damageType": "true",
+                  "width": 1.2,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "lol-sett.w-center",
+                      "duration": 0.1,
+                      "sourceScope": "caster"
+                    }
+                  ]
+                },
+                {
+                  "kind": "damageLine",
+                  "amount": {
+                    "damageTier": "中"
+                  },
+                  "length": 5,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "damageType": "physical",
+                  "width": 2,
+                  "victimCondition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "lol-sett.w-center",
+                      "appliedBy": "self"
+                    }
+                  }
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "lol-sett.grit",
+                  "appliedBy": "self",
+                  "count": "all",
+                  "onConsumed": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 80,
+                        "ratios": [],
+                        "perRank": [
+                          0,
+                          60,
+                          120,
+                          180
+                        ]
+                      },
+                      "duration": 3,
+                      "stackKey": "lol-sett.w",
+                      "onExisting": "keepLarger",
+                      "absorbs": "all"
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "true",
+                      "width": 1.2,
+                      "onHitTargets": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "lol-sett.w-center",
+                          "duration": 0.1,
+                          "sourceScope": "caster"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "physical",
+                      "width": 2,
+                      "victimCondition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "lol-sett.w-center",
+                          "appliedBy": "self"
+                        }
+                      }
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 80,
+                        "ratios": [],
+                        "perRank": [
+                          0,
+                          60,
+                          120,
+                          180
+                        ]
+                      },
+                      "duration": 3,
+                      "stackKey": "lol-sett.w",
+                      "onExisting": "keepLarger",
+                      "absorbs": "all"
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "true",
+                      "width": 1.2,
+                      "onHitTargets": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "lol-sett.w-center",
+                          "duration": 0.1,
+                          "sourceScope": "caster"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "damageLine",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "length": 5,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "damageType": "physical",
+                      "width": 2,
+                      "victimCondition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "lol-sett.w-center",
+                          "appliedBy": "self"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-sett.w.webp"
+    },
+    "E": {
+      "id": "lol-sett.e",
+      "name": "碎顱猛擊",
+      "provenance": "editor-json",
+      "description": "將身旁敵人拉近並減速，接 Q/W。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小"
+          },
+          "radius": 3,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "pull",
+              "subtractGap": false,
+              "launchHeight": 0
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-sett.e-slow",
+              "duration": 1,
+              "moveSpeedMult": 0.65
+            }
+          ],
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "radius": 2.5,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "knockback",
+                  "distance": 1.5,
+                  "speed": 12,
+                  "from": "pull",
+                  "subtractGap": false,
+                  "launchHeight": 0
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-sett.e-slow",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.65
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-sett.e.webp"
+    },
+    "R": {
+      "id": "lol-sett.r",
+      "name": "嘆為觀止",
+      "provenance": "editor-json",
+      "description": "抱住單一敵人，朝目標方向帶行，移動結束後傷害並緩速周圍敵人。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "carry",
+          "shape": "single",
+          "durationSec": 0.55,
+          "untargetable": {
+            "autoAcquire": true,
+            "mobAggro": true,
+            "manualTarget": true,
+            "abilityAoe": false
+          },
+          "onCarrierDeath": "release"
+        },
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 5.5,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中"
+              },
+              "radius": 3,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "sourceScope": "caster",
+                  "statusId": "lol-sett.r-slow",
+                  "duration": 1.5,
+                  "moveSpeedMult": 0.6
+                }
+              ],
+              "radiusTier": "極小"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.earth.nova-lg",
+              "at": "point"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "carry",
+              "shape": "single",
+              "durationSec": 0.55,
+              "untargetable": {
+                "autoAcquire": true,
+                "mobAggro": true,
+                "manualTarget": true,
+                "abilityAoe": false
+              },
+              "onCarrierDeath": "release"
+            },
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 8,
+              "maxDistance": 4,
+              "onEnd": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "中"
+                  },
+                  "radius": 2.5,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "lol-sett.r-slow",
+                      "duration": 1.5,
+                      "sourceScope": "caster",
+                      "moveSpeedMult": 0.6
+                    }
+                  ]
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.earth.nova-lg",
+                  "at": "point"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-sett.r.webp"
+    }
+  },
+  "exAbility": "lol-sett.ex",
+  "passiveAbility": "lol-sett.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "fist"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-sett.webp"
+}

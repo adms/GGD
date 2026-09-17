@@ -1,0 +1,15 @@
+{
+  "id": "acquired-wargreymon.claw",
+  "schema": "status-effect@1",
+  "name": "龍獸拆箱爪",
+  "description": "戰鬥暴龍獸「龍獸拆箱爪」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-wargreymon.claw",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "acquired-ram.headwind",
+  "schema": "status-effect@1",
+  "name": "毒舌逆風",
+  "description": "拉姆「毒舌逆風」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-ram.headwind",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

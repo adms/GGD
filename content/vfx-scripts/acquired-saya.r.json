@@ -1,0 +1,35 @@
+{
+  "id": "acquired-saya.r",
+  "schema": "vfx-script@1",
+  "abilityId": "acquired-saya.r",
+  "notes": "採用已出貨 GGD 特效與音效。施法提示不代表傷害或資源消耗成功；判定依技能資料。非原作特效與語音還原。",
+  "yields": [
+    "caster.castFx"
+  ],
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "replaces": "caster.action",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "vfxId": "fx.prim.void.pulse",
+      "at": "point",
+      "kind": "vfx",
+      "on": "castEffect",
+      "w3xScale": 0.7,
+      "tint": [
+        170,
+        80,
+        185
+      ]
+    },
+    {
+      "kind": "sound",
+      "on": "castEffect",
+      "soundKey": "hitMagic"
+    }
+  ]
+}

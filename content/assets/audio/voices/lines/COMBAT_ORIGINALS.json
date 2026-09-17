@@ -21150,6 +21150,98 @@
     "listeningReviewComplete": false,
     "excludedFromSpeechInput": true
    }
+  },
+  "acquired-lord-nightmares": {
+   "attack-heavy": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0007-46_voice_attack_2.ogg",
+    "name": "voice_attack_2",
+    "group": "300heroes:46",
+    "sha256": "9bb7561c21de3f2f08380dc0956f5e2e585786659b07b8b54b0dd94ed09c1682",
+    "seconds": 2.31,
+    "assignedBy": "filename",
+    "why": "filename ^voice_attack",
+    "asr": {
+     "lang": "ja",
+     "prob": 0.983,
+     "text": "勝利は私のためにある!"
+    },
+    "importedAt": "2026-09-10T16:42:50.699197+00:00"
+   },
+   "attack-light": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0016-46_voice_attack_1.ogg",
+    "name": "voice_attack_1",
+    "group": "300heroes:46",
+    "sha256": "5753a8467ee7719ea7589b32b7dc52a9aa5e1280ab3d40f90b5b11bf28236a20",
+    "seconds": 1.39,
+    "assignedBy": "filename",
+    "why": "filename ^voice_attack",
+    "asr": {
+     "lang": "ja",
+     "prob": 0.979,
+     "text": "次行こっか!"
+    },
+    "importedAt": "2026-09-10T16:42:50.947101+00:00"
+   },
+   "defeat": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0013-46_voice_death_1.ogg",
+    "name": "voice_death_1",
+    "group": "300heroes:46",
+    "sha256": "28e039eef52db7458780e483be9f3f108aac405c4ff6e480c3b220404071504c",
+    "seconds": 0.9,
+    "assignedBy": "filename",
+    "why": "filename ^voice_death",
+    "asr": {
+     "lang": "ja",
+     "prob": 0.967,
+     "text": "こんなことって"
+    },
+    "importedAt": "2026-09-10T16:42:51.176047+00:00"
+   },
+   "defeat.2": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0010-46_voice_death_2.ogg",
+    "name": "voice_death_2",
+    "group": "300heroes:46",
+    "sha256": "3da3f729e8efe3ea21ea2d793d48dbb875fa5ae1772dbb6e4b0388ac9c959b14",
+    "seconds": 0.97,
+    "assignedBy": "filename",
+    "why": "filename ^voice_death",
+    "asr": {
+     "lang": "en",
+     "prob": 0.539,
+     "text": "AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+    },
+    "importedAt": "2026-09-10T16:42:51.383435+00:00"
+   },
+   "defeat.3": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0008-46_voice_death_3.ogg",
+    "name": "voice_death_3",
+    "group": "300heroes:46",
+    "sha256": "375e20f377f803ff779de7bd1f60fc8b30bb7c1f1e889a350ce31438443e73e3",
+    "seconds": 1.49,
+    "assignedBy": "filename",
+    "why": "filename ^voice_death",
+    "asr": {
+     "lang": "en",
+     "prob": 0.509,
+     "text": "AHHHHHHHHH!"
+    },
+    "importedAt": "2026-09-10T16:42:51.586576+00:00"
+   },
+   "skill-name.r": {
+    "src": "outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0005-46_voice_dazhao_2.ogg",
+    "name": "voice_dazhao_2",
+    "group": "300heroes:46",
+    "sha256": "aa30ad3c09557aad788c660e0d90dd7aa6d853dcba5e39a9e1fe85b81113ccc0",
+    "seconds": 1.79,
+    "assignedBy": "asr",
+    "why": "asr-match 1.05 ≈ 神滅斬",
+    "asr": {
+     "lang": "ja",
+     "prob": 0.719,
+     "text": "ラグナブレード!"
+    },
+    "importedAt": "2026-09-10T16:42:51.799156+00:00"
+   }
   }
  }
 }

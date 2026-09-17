@@ -90,12 +90,19 @@ let RANGED_AGI: ChampionId;
  * 而且訊息裡直接寫出是哪一格空了。
  */
 function pickChampion(attackType: "melee" | "ranged", primary: PrimaryAttr): ChampionId {
-  const hit = Champions.ids()
+  // ⭐⭐ GH#1281（2026-09-17）—— 挑人要**穩定**，⛔ 不是「字母序第一位」。
+  //   第四批 37 名上架之後，melee/STR 的第一位從 `godie-*` 換成 `acquired-alice`（出身「坦克」）
+  //   ⇒ 這幾條道具測試量到的東西跟著換了一具身體（坦克的護甲／魔抗高很多），
+  //   而它們要驗的是**道具的機制**（光環有沒有送到、反擊有沒有發生），⛔ 不是某一具身體的減傷。
+  //   ⇒ 先挑 `godie-*`（這些測試當初量的那個母體），⛔ 沒有才退回字母序 —— 兩層都是**推導**，
+  //   而「這一格空了」仍然照原本的規矩丟例外。
+  const matches = Champions.ids()
     .filter((id) => {
       const c = Champions.tryGet(id);
       return c?.attackType === attackType && c?.attributes?.primary === primary;
     })
-    .sort()[0];
+    .sort();
+  const hit = matches.find((id) => id.startsWith("godie-")) ?? matches[0];
   if (hit === undefined) {
     throw new Error(
       `出貨英雄名單裡沒有任何 ${attackType}/${primary} 的英雄 —— 職業限定閘的這一格` +

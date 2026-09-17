@@ -145,6 +145,8 @@ export interface TelegraphEffectLike {
   readonly length?: number;
   readonly width?: number;
   readonly fromCaster?: boolean;
+  /** `dash.pathWidth` —— 衝刺沿途真的掃到多寬（省略 ⇒ 身體直徑）。GH#1281。 */
+  readonly pathWidth?: number;
 }
 
 export interface TelegraphProjectileLike {
@@ -206,6 +208,34 @@ function firstEffect(
 ): TelegraphEffectLike | undefined {
   for (const e of def.effects) if (pick(e)) return e;
   return undefined;
+}
+
+/**
+ * ⭐⭐ GH#1281（2026-09-17）—— **同一條走廊，藏在一層分支底下**。
+ *
+ * 上面那一支只看**頂層** `effects`。而第四批上架的四支 skillshot 把同一發投射物／
+ * 同一條線放在一個分支裡：`consumeStatus.onConsumed`／`onMissing`（蓄力有沒有滿都射，
+ * 例：Mewtwo Q · Zero W）、`delayed.effects`（連續掃射，例：威寇茲 R）。
+ * ⇒ 頂層找不到 ⇒ 推導回 null ⇒ ⭐ **玩家閃不掉一個沒有被畫出來的東西**（這一支
+ * 存在的理由逐字就是這句）。
+ *
+ * ⛔ 這不是「猜一個差不多的形狀」：走廊的兩個尺寸仍然**只從那一顆投射物／那一條線
+ * 自己**讀，找不到就照樣回 null。⚠️ 深度優先，取**第一顆**，與頂層那一支同一個規矩。
+ */
+function nestedEffects(def: TelegraphAbilityLike): TelegraphEffectLike[] {
+  const out: TelegraphEffectLike[] = [];
+  const BRANCHES = ["onConsumed", "onMissing", "onHit", "onEnd", "onPathHit", "onHitTargets", "effects", "onComplete"] as const;
+  const walk = (list: readonly TelegraphEffectLike[] | undefined, top: boolean): void => {
+    for (const e of list ?? []) {
+      if (!top) out.push(e);
+      for (const key of BRANCHES) {
+        const child = (e as unknown as Record<string, unknown>)[key];
+        if (Array.isArray(child)) walk(child as readonly TelegraphEffectLike[], false);
+      }
+    }
+  };
+  walk(def.effects, true);
+  return out;
 }
 
 /**
@@ -381,7 +411,66 @@ export function deriveTelegraphGeometry(
             };
           }
         }
-        // 三條都推不出來 ⇒ 內容沒有講這一發飛多遠多寬。**大聲失敗**，
+        // ⭐⭐ GH#1281（2026-09-17）—— 第四／第五條：**走廊在一層分支底下**，
+        //   以及 **skillshot 的酬載是一次衝刺**（castType 說「往瞄準方向」，而位移
+        //   本身就是那條走廊）。兩者的尺寸一樣**只從內容自己讀**，⛔ 不猜。
+        const nested = nestedEffects(def);
+        const nestedProj = nested.find((e) => typeof e.projectileId === "string" && e.projectileId.length > 0);
+        const np = nestedProj?.projectileId ? env.projectile(nestedProj.projectileId) : null;
+        if (np) {
+          const reach = np.maxRange * mult;
+          const span = np.hitRadius * 2 * mult;
+          if (reach >= MIN_EXTENT && span >= MIN_EXTENT) {
+            return {
+              kind: "line",
+              length: reach,
+              width: span,
+              anchor: "caster",
+              source: `分支裡的 ${nestedProj!.projectileId!} maxRange ${np.maxRange} × abilityRange ${mult}, hitRadius ${np.hitRadius} ×2 × abilityRange ${mult}`,
+            };
+          }
+        }
+        const nestedLash = nested.find(
+          (e) =>
+            e.kind === "damageLine" &&
+            typeof e.length === "number" &&
+            e.length > 0 &&
+            typeof e.width === "number" &&
+            e.width > 0 &&
+            e.fromCaster !== false,
+        );
+        if (nestedLash && uiCues().telegraphGroundShape === "line") {
+          const reach = clampSpreadRadius(nestedLash.length as number);
+          const span = clampSpreadRadius(nestedLash.width as number);
+          if (reach >= MIN_EXTENT && span >= MIN_EXTENT) {
+            return {
+              kind: "line",
+              length: reach,
+              width: span,
+              anchor: "caster",
+              source: `分支裡的 damageLine length ${reach} × width ${span}（sim 不套 abilityRange）—— 傷害查詢用的那個膠囊`,
+            };
+          }
+        }
+        const dashEff = firstEffect(def, (e) => e.kind === "dash" && typeof e.maxDistance === "number");
+        if (dashEff && typeof dashEff.maxDistance === "number" && dashEff.maxDistance >= MIN_EXTENT) {
+          // ⚠️ `harmless` 的判準與 `case "dash"` 同一條：**沿途或落點會不會傷人**。
+          //   鄂爾 E 沿途逐 tick 結算（`onPathHit`）⇒ ⛔ 不可以畫成中性的「有人要移動」。
+          const hurts = ["onPathHit", "onEnd"].some((key) => {
+            const child = (dashEff as unknown as Record<string, unknown>)[key];
+            return Array.isArray(child) && child.length > 0;
+          });
+          const span = typeof dashEff.pathWidth === "number" && dashEff.pathWidth > 0 ? dashEff.pathWidth : BODY_RADIUS * 2;
+          return {
+            kind: "line",
+            ...(hurts ? {} : { harmless: true as const }),
+            length: dashEff.maxDistance,
+            width: span,
+            anchor: "caster",
+            source: `skillshot 的酬載是衝刺：maxDistance ${dashEff.maxDistance}（sim 不套 abilityRange）、寬 ${span}${hurts ? "，沿途／落點會傷人" : "，純移動"}`,
+          };
+        }
+        // 五條都推不出來 ⇒ 內容沒有講這一發飛多遠多寬。**大聲失敗**，
         // ⛔ 不要拿施法距離當走廊畫（那會讓玩家閃錯地方）。
         return null;
       }

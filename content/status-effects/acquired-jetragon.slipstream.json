@@ -1,0 +1,11 @@
+{
+  "id": "acquired-jetragon.slipstream",
+  "schema": "status-effect@1",
+  "name": "尾流加班",
+  "description": "空渦龍「尾流加班」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-jetragon.slipstream",
+    "buff"
+  ]
+}

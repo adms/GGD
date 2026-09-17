@@ -1,0 +1,115 @@
+{
+  "id": "lol-velkoz.w",
+  "name": "虛空裂痕",
+  "provenance": "editor-json",
+  "description": "直線裂痕先小爆，延遲後在同一條裂痕上再爆；施法者走開或轉身也不會帶走裂痕。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "極小"
+      },
+      "length": 7,
+      "width": 1.5,
+      "aim": "cast",
+      "fromCaster": true,
+      "includeOrigin": true
+    },
+    {
+      "kind": "delayed",
+      "shape": "single",
+      "delaySec": 0.6,
+      "count": 1,
+      "intervalSec": 0.5,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 7,
+          "width": 1.5,
+          "aim": "cast",
+          "fromCaster": true,
+          "includeOrigin": true
+        }
+      ],
+      "stopOnCasterDeath": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          },
+          "length": 7,
+          "width": 1.5,
+          "aim": "cast",
+          "fromCaster": true,
+          "includeOrigin": true
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.6,
+          "count": 1,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 7,
+              "width": 1.5,
+              "aim": "cast",
+              "fromCaster": true,
+              "includeOrigin": true
+            }
+          ],
+          "stopOnCasterDeath": true
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-velkoz.w.webp",
+  "radiusTier": "極小"
+}

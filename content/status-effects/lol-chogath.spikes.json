@@ -1,0 +1,11 @@
+{
+  "id": "lol-chogath.spikes",
+  "schema": "status-effect@1",
+  "name": "恐懼尖刺",
+  "description": "科加斯「恐懼尖刺」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-chogath.spikes",
+    "buff"
+  ]
+}

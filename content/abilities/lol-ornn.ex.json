@@ -1,0 +1,47 @@
+{
+  "id": "lol-ornn.ex",
+  "name": "終身保固三秒",
+  "provenance": "editor-json",
+  "description": "指定一位隊友給予短期大護盾；工匠站定吟唱。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 220
+      },
+      "duration": 3,
+      "absorbs": "all"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+    "params": {
+      "target": "ally",
+      "amount": {
+        "flat": 220
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-ornn.ex.webp"
+}

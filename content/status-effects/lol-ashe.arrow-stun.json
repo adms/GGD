@@ -1,0 +1,18 @@
+{
+  "id": "lol-ashe.arrow-stun",
+  "schema": "status-effect@1",
+  "name": "魔法水晶箭",
+  "description": "艾希「魔法水晶箭」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ashe.arrow-stun",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "debuff"
+  ]
+}

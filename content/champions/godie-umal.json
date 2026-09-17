@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+  "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -324,7 +324,7 @@
       "sourceModelKey": "champ.skin.barbarian",
       "modelSha256": "9fb1cc06f717a04ab2dd4203aca48cf4827e59ec33052de91904ed7c736f4dba",
       "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
-      "registeredAt": "2026-09-15T09:39:17.634Z",
+      "registeredAt": "2026-09-16T14:04:52.701Z",
       "source": {
         "kind": "previous",
         "character": "北斗神拳掌門人 - 拳四郎",
@@ -333,6 +333,24 @@
         "reference": "models/champ.skin.barbarian.json",
         "tier": "original"
       }
+    },
+    {
+      "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+      "label": "ou99 拳四郎（本尊·減面＋逐動作顯示）",
+      "sourceModelKey": "ou99.464696",
+      "modelSha256": "12d54ed3a26c1d8e602828027f0687cb6290e881c434ae3207474d6dd2e22a71",
+      "binarySha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
+      "registeredAt": "2026-09-16T14:04:52.762Z",
+      "source": {
+        "kind": "exact",
+        "character": "拳四郎",
+        "work": "北斗神拳",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-464696-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     },
     {
       "modelKey": "version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b",

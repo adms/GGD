@@ -1,0 +1,16 @@
+<!doctype html>
+<!--
+  🔬 #1265 模型預覽驗收台（dev-only，⛔ 不進出貨 build：vite build 只打包 index.html）。
+  掛**真的** `ModelPanel`（後台「上線模型版本」下拉選單的 `ModelPreview` 用的就是它），逐顆量畫不畫得出來。
+  用法（自動化）：await __calibrate() → await __audit('ou99.287871') → __catalog()
+-->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <title>模型預覽驗收台 #1265</title>
+  </head>
+  <body style="margin:0;background:#111;color:#ddd;font:12px system-ui">
+    <div id="root"></div>
+    <script type="module" src="/src/preview3d/modelAudit.tsx"></script>
+  </body>
+</html>

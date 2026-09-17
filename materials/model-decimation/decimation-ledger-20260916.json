@@ -1,0 +1,201 @@
+{
+ "schema": "ggd-model-decimation-ledger@1",
+ "generatedAt": "2026-09-16",
+ "tickets": [
+  "GH#1278",
+  "GH#1186"
+ ],
+ "owner原話": [
+  "2026-09-10「超過一萬面 減面到 8000以下 並且要通過檢驗 通過以後原始檔一樣保留只是放到S3 只有正式採用才放到git」",
+  "2026-09-16「那很簡單 接上 初號機 熊貓 拳四郎 就結束了」",
+  "2026-09-16「拳四郎 站立 跟 奔跑 多餘白光 要處理吧」"
+ ],
+ "tool": {
+  "逐動作顯示": "python3 tools/w3x-import/restore_geoset_visibility.py --mdx <ou99 原始 zip> --glb <原檔> --out <候選> --rest-clip <clipMap.idle> --require-clips <clipMap 全部動作>",
+  "減面": "npx tsx tools/model-budget/optimize.ts <候選> --role champion --geometry --lock-blend --tris-target 8000 --tex-edge 1024 --apply",
+  "註冊": "node --import tsx tools/model-fix/register-1278-e00r-umal.mts --write"
+ },
+ "note": "⭐ --lock-blend：半透明（BLEND）特效薄片不減面。⛔ 不加時拳四郎「Spell - 1」亮像素 −15.4%（出拳光被削短一截），同一顆其餘姿勢都在 ±0.5% 內 ⇒ 總面數達標 ≠ 薄片沒壞。",
+ "量尺": {
+  "頁面": "apps/editor/model-audit.html（GH#1265 驗收台：真的 ModelPanel／Babylon；__auditPose 停在指定動作的指定秒數再讀像素）",
+  "定義": "亮像素＝RGB 最大值 > 60；非背景像素＝與 clearColor (23,26,33) 任一通道差 > 6",
+  "校準": {
+   "已知沒有": "不存在的 glbPath → load-error、0 像素 ✅",
+   "已知有": "ou99.287871 → 25,227 亮像素 ✅；重模型 ou99.469191 → 5,964 ✅"
+  },
+  "⚠️取景": "原檔 vs 修好版的鏡頭取景不同（白光刃撐大了模型外框，拿掉後鏡頭拉近）⇒ 那一組只看圖；5% 門檻比的是「修好版 vs 修好＋減面版」（同一個外框）",
+  "門檻": "|Δ亮像素| ≤ 5%（adoptionPolicy.json visualLitPixelDeltaPctMax）且肉眼同一個角色、薄片／武器沒壞"
+ },
+ "s3": {
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "prefix": "model-decimation/20260916/originals",
+  "manifest": "_originals.sha256",
+  "status": "uploaded",
+  "count": 2
+ },
+ "models": [
+  {
+   "id": "ou99.464696",
+   "heroId": "godie-umal",
+   "path": "content/assets/models/ou99/ou99_464696.glb",
+   "source": {
+    "archive": "/Users/Takuro/GGD-assets/models/dl2/464696.zip",
+    "archiveSha256": "1f561178d5f124933c3128f2338f0605baac2ccfa395e782162955136df9cecb",
+    "mdxSha256": "f0ab897681ada48c6fda5d244dc3371ed0a20ca616e5a32a938e945f0e88e984"
+   },
+   "逐動作顯示": {
+    "receipt": "materials/model-decimation/geoa-1186/ou99_464696.geoa.receipt.json",
+    "converted": 8,
+    "refused": 1,
+    "blocking": 0,
+    "what": "6 片出拳光（geoset 19–24，各綁自己專用的 5 根骨頭）照原作只在出招時出現；clipMap 的 Stand - 1／Walk／Death 全程隱藏。geoset 9 被拒（骨頭與身體共用），但它只在 EX 與變身版動作隱藏，⛔ 不在 clipMap 裡"
+   },
+   "before": {
+    "tris": 21733,
+    "draws": 4,
+    "bytes": 5118592,
+    "joints": 97,
+    "clips": 62,
+    "channels": 8494
+   },
+   "after": {
+    "tris": 7967,
+    "draws": 4,
+    "bytes": 4119592,
+    "joints": 97,
+    "clips": 62,
+    "channels": 8990
+   },
+   "rigOk": true,
+   "litPixel": {
+    "Stand - 1 @0.5s": {
+     "修好版": 4572,
+     "修好＋減面": 4572,
+     "Δ%": 0.0
+    },
+    "Walk @0.3s": {
+     "修好版": 4718,
+     "修好＋減面": 4718,
+     "Δ%": 0.0
+    },
+    "Attack - 1 @0.8s": {
+     "修好版": 5395,
+     "修好＋減面": 5380,
+     "Δ%": -0.28
+    },
+    "Spell - 1 @0.7s": {
+     "修好版": 7063,
+     "修好＋減面": 7032,
+     "Δ%": -0.44
+    },
+    "Death @0.6s": {
+     "修好版": 5299,
+     "修好＋減面": 5331,
+     "Δ%": 0.6
+    }
+   },
+   "litPixelWithoutLockBlend": {
+    "Spell - 1 @0.7s": {
+     "修好版": 7063,
+     "修好＋減面": 5976,
+     "Δ%": -15.39
+    }
+   },
+   "visual": "原檔：Stand／Walk 身前一道比人高的白光刃 ⇒ 修好版消失；Spell - 1 第 0.7 秒原作本來就有的出拳光，修正前後都在",
+   "intake": "model_intake 乾淨（原檔唯一的問題：三角面 21,733 超過採用門檻）",
+   "originalSha256": "8210480e325b095dd4c85cb104ca2f9feb198752dd68c3c522862d95e167b85f",
+   "adoptedSha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260916/originals/assets/models/ou99/ou99_464696.glb",
+   "s3Status": "uploaded",
+   "frozen": {
+    "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+    "litPixel": {
+     "Stand - 1 @0.5s": 4572,
+     "Walk @0.3s": 4718,
+     "Spell - 1 @0.7s": 7032
+    }
+   },
+   "verdict": "adopted"
+  },
+  {
+   "id": "ou99.498341",
+   "heroId": "godie-e00r",
+   "path": "content/assets/models/ou99/ou99_498341.glb",
+   "source": {
+    "archive": "/Users/Takuro/GGD-assets/models/dl3/498341.zip",
+    "archiveSha256": "21119e60656ccf4a82246cbaec995bd8c94ec1abf8bba99a646bb448a25b07cf",
+    "mdxSha256": "d2ef3f418b3be44863beb9d261efef2fa077314d8b3299833e8ca00b071dfe3c"
+   },
+   "逐動作顯示": {
+    "receipt": "materials/model-decimation/geoa-1186/ou99_498341.geoa.receipt.json",
+    "converted": 2,
+    "refused": 0,
+    "blocking": 0,
+    "what": "兩把 427 頂點的刀：geoset 5（手上）在 death／Dissipate 隱藏；geoset 1（第二把）只在 death／Dissipate 出現"
+   },
+   "before": {
+    "tris": 11222,
+    "draws": 4,
+    "bytes": 1038860,
+    "joints": 46,
+    "clips": 6,
+    "channels": 132
+   },
+   "after": {
+    "tris": 7996,
+    "draws": 4,
+    "bytes": 716744,
+    "joints": 46,
+    "clips": 6,
+    "channels": 144
+   },
+   "rigOk": true,
+   "litPixel": {
+    "Stand @0.5s": {
+     "修好版": 10661,
+     "修好＋減面": 10704,
+     "Δ%": 0.4
+    },
+    "Walk @0.3s": {
+     "修好版": 13592,
+     "修好＋減面": 13517,
+     "Δ%": -0.55
+    },
+    "Attack 1 @0.5s": {
+     "修好版": 9664,
+     "修好＋減面": 9644,
+     "Δ%": -0.21
+    },
+    "death @1.2s": {
+     "修好版": 9987,
+     "修好＋減面": 9972,
+     "Δ%": -0.15
+    }
+   },
+   "visual": "原檔：站立與攻擊時身上兩把刀（金色刀柄那把在腰間）⇒ 修好版只剩手上一把（原檔→修好版 Attack 1 亮像素 10,270→9,664）",
+   "intake": "model_intake 乾淨（原檔唯一的問題：三角面 11,222 超過採用門檻）",
+   "originalSha256": "914f4225e2418b1b038c84a31bf32f706d38bbf1e6ff7609103317132a77937f",
+   "adoptedSha256": "ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd",
+   "s3": "s3://ggd-390630837668-ap-east-2-an/model-decimation/20260916/originals/assets/models/ou99/ou99_498341.glb",
+   "s3Status": "uploaded",
+   "frozen": {
+    "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+    "litPixel": {
+     "Stand @0.5s": 10704,
+     "Attack 1 @0.5s": 9644
+    }
+   },
+   "verdict": "adopted"
+  }
+ ],
+ "熊貓": {
+  "heroId": "godie-h02k",
+  "更正": "d52cb7609 註冊了 ou99.463344，⛔ 但它是 style-proxy（automaticEligible=false）⇒ 自動選用又選回原上線模型（體素替身），modelKey 沒有換",
+  "修法": "與後台下拉選單「選這個版本」同一個動作（activate）⇒ modelKey = version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48（manual）",
+  "frozenLitPixel": {
+   "idle": 9767
+  }
+ }
+}

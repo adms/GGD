@@ -1,0 +1,16 @@
+{
+  "id": "acquired-xiaodangjia.disruption",
+  "schema": "status-effect@1",
+  "name": "料理怎麼又發光",
+  "description": "小當家「料理怎麼又發光」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-xiaodangjia.disruption",
+    "blind",
+    "miss",
+    "accuracy-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

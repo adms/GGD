@@ -1,0 +1,14 @@
+{
+  "id": "acquired-beatrice.library",
+  "schema": "status-effect@1",
+  "name": "圖書館請安靜",
+  "description": "碧翠絲「圖書館請安靜」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-beatrice.library",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

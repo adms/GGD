@@ -1,0 +1,15 @@
+{
+  "id": "acquired-asuna.ticket",
+  "schema": "status-effect@1",
+  "name": "細劍取餐號",
+  "description": "亞絲娜／結城明日奈「細劍取餐號」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-asuna.ticket",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

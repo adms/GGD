@@ -1,0 +1,15 @@
+{
+  "id": "lol-ashe.frost",
+  "schema": "status-effect@1",
+  "name": "冰霜射擊",
+  "description": "艾希「冰霜射擊」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ashe.frost",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

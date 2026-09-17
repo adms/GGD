@@ -1,0 +1,15 @@
+{
+  "id": "lol-thresh.rejected",
+  "schema": "status-effect@1",
+  "name": "本燈拒載",
+  "description": "瑟雷西「本燈拒載」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-thresh.rejected",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -298,6 +298,13 @@ describe("idlePerform — the shipped roster actually performs", () => {
    *   · 列在這裡的不再是單一種類 ⇒ 紅，把它從表上拿掉。
    */
   const ONE_FAMILY_RIGS: Readonly<Record<string, { clips: readonly string[]; why: string }>> = {
+    // ⭐ 2026-09-17（GH#1281／PR #1280）：初號機換上論壇模型 —— 那具骨架的可輪播動作
+    //   只有 `Attack 1` / `Attack 2`（`Stand` 是休息姿勢、`Walk` 會滑步、`death`／`Dissipate` 禁播）
+    //   ⇒ 單一種類是**骨架的事實**，⛔ 不是分類器漏字。換模型或補動作 ⇒ 這一列當場紅，重新判定。
+    "godie-e00r": {
+      clips: ["Stand", "Walk", "Attack 1", "Attack 2", "death", "Dissipate"],
+      why: "論壇模型只有兩段 Attack 可輪播（PR #1280）",
+    },
     "b2-bojji": {
       clips: ["bat_idle", "bat_run", "bat_dance1", "bat_dance2", "bat_dead"],
       why: "骨架只有兩段 dance 可輪播（818566183）",

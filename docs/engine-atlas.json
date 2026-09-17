@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "630 個　最小 1.83 / 中位 3 / 最大 513.5",
+        "value": "982 個　最小 1 / 中位 3 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -414,25 +414,25 @@
       {
         "label": "小",
         "range": "< 3",
-        "count": 47
+        "count": 188
       },
       {
         "label": "中",
-        "range": "3 – 4.5",
-        "count": 336
+        "range": "3 – 3",
+        "count": 0
       },
       {
         "label": "大",
-        "range": "≥ 4.5",
-        "count": 247
+        "range": "≥ 3",
+        "count": 794
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 191,
+    "total": 325,
     "over": [],
-    "note": "191 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "325 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [

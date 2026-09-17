@@ -1,8 +1,8 @@
 {
   "schema": "ggd-community-hero-current-service-release@1",
-  "recordedAt": "2026-09-11T04:15:35.715325+00:00",
+  "recordedAt": "2026-09-11T06:10:36.438637+00:00",
   "scope": "One current loopback Platform service public listing after Editor project, complete ZIP, inspection, submission, admin publication and isolated rollback checks. No production or visual-fidelity claim.",
-  "origin": "http://127.0.0.1:8117",
+  "origin": "http://127.0.0.1:8121",
   "expected": 126,
   "published": 126,
   "missing": [],
@@ -15,14 +15,14 @@
       "rollback": {
         "status": "passed",
         "workId": "community-review-01-20260907",
-        "v1SubmissionId": "hero-4c999d5c72f430d2963f3b4c182063e96aeb657449c1693754d09872831",
-        "v2SubmissionId": "hero-88704cb656ca30085f25812f592e61b2522784ac876125f27e46d8c8636",
-        "restoredSubmissionId": "hero-4c999d5c72f430d2963f3b4c182063e96aeb657449c1693754d09872831",
-        "draftRevision": 2,
-        "publicationRevision": 8,
-        "historyCount": 3,
+        "v1SubmissionId": "hero-ba77bc3ca489ddad478a167a9988c61cabd79cb26d4ebf1a89878d1f48b",
+        "v2SubmissionId": "hero-d986d71a2e3f2a4431a0f5b48fce0f18c90585fc45daff20165e202f903",
+        "restoredSubmissionId": "hero-ba77bc3ca489ddad478a167a9988c61cabd79cb26d4ebf1a89878d1f48b",
+        "draftRevision": 4,
+        "publicationRevision": 16,
+        "historyCount": 6,
         "unaffectedWorkId": "community-review-02-20260907",
-        "unaffectedSubmissionId": "hero-757e3d8efb0535bf3e45dbb4841aa16a91db3e04c1df68426ac7cc97f13"
+        "unaffectedSubmissionId": "hero-afd0ff8fe1e91ef1ffdd7b2f8c232a235d9b144fd4818374a6900024d18"
       }
     },
     "acquired34": {
@@ -31,14 +31,14 @@
       "rollback": {
         "status": "passed",
         "workId": "acquired-jetragon",
-        "v1SubmissionId": "hero-00c79b78ddea44b61d982ce368e75f5d6c978576b0edf23382a04300ca9",
-        "v2SubmissionId": "hero-372e49fffeeb411eaeeccf0b8d82931f69887e8a2e7c5c2a7396d99843c",
-        "restoredSubmissionId": "hero-00c79b78ddea44b61d982ce368e75f5d6c978576b0edf23382a04300ca9",
+        "v1SubmissionId": "hero-54a907c8706626d9682ab5a13629a613a8bc15b6e2d2ae5e839e29fe572",
+        "v2SubmissionId": "hero-22e27a65e5549c746f45063e7921c1ded589c281bb77f6f7b23f96a3339",
+        "restoredSubmissionId": "hero-54a907c8706626d9682ab5a13629a613a8bc15b6e2d2ae5e839e29fe572",
         "draftRevision": 2,
         "publicationRevision": 8,
         "historyCount": 3,
         "unaffectedWorkId": "acquired-alice",
-        "unaffectedSubmissionId": "hero-c9f3ffeb7938c0df2be5603aa8aa1e4f5a314dec47aa8737c0f3f1fb05c"
+        "unaffectedSubmissionId": "hero-1b1a50bf1c88c35d1137f251471d1634801ca5b42814e307b5f858ebd16"
       }
     },
     "lolBatch2": {
@@ -47,14 +47,14 @@
       "rollback": {
         "status": "passed",
         "workId": "lol-sett",
-        "v1SubmissionId": "hero-c96cf2fc29e25dc531e6fe0c6c8ed816c835349dd4df972178464bd8497",
-        "v2SubmissionId": "hero-ff400745959bcc7a0c5cb9cd0b40c263771bce5d73ccd5a31eaf565dbfe",
-        "restoredSubmissionId": "hero-c96cf2fc29e25dc531e6fe0c6c8ed816c835349dd4df972178464bd8497",
-        "draftRevision": 3,
+        "v1SubmissionId": "hero-12eeddbedc1b5fec5953173a6ae195f5a74eccc2c8827d6ff7a0a0c5891",
+        "v2SubmissionId": "hero-1afa50f695ca84768e3a6caf1578e554c9ed30bfd42508d59d42864da61",
+        "restoredSubmissionId": "hero-12eeddbedc1b5fec5953173a6ae195f5a74eccc2c8827d6ff7a0a0c5891",
+        "draftRevision": 2,
         "publicationRevision": 8,
         "historyCount": 3,
         "unaffectedWorkId": "lol-ahri",
-        "unaffectedSubmissionId": "hero-cd153a39cdad4175615408130afc8b9b49ee93d9afb5a9cc2a029fe280f"
+        "unaffectedSubmissionId": "hero-ac05b32986775d5bed7268053a6987b8e0db1245f56ec274449844a28bb"
       }
     }
   },

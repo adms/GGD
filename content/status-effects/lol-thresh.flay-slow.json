@@ -1,0 +1,15 @@
+{
+  "id": "lol-thresh.flay-slow",
+  "schema": "status-effect@1",
+  "name": "懾魂掃蕩",
+  "description": "瑟雷西「懾魂掃蕩」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-thresh.flay-slow",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

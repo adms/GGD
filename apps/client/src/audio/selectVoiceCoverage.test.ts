@@ -27,6 +27,7 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { championVoicesFromDoc } from "./championVoice";
 import { championNamesFromDoc, championQuotesFromDoc } from "./nameVoice";
 import { baseFormIdOf } from "@ggd/shared/content/championForms";
+import { VOICE_GAP_BATCH4 } from "@ggd/shared/content/voiceGapBatch4";
 import {
   EXCLUDED_NAME_CLIPS,
   VOICE_PACK_MANIFEST_PATH,
@@ -120,7 +121,15 @@ describe("select-voice coverage on the PUBLIC tier", () => {
         if (!existsSync(join(CONTENT, clip))) missing.push(`${id}: ${clip}`);
       }
     }
-    expect(silent).toEqual([]);
+    // ⭐⭐ GH#1281（2026-09-17）—— 宣告過的語音缺口（第四批 37 名先上架、語音待補）
+    //   在這一階**什麼都答不出來**，那是真話。名單只住 `@ggd/shared/content/voiceGapBatch4`
+    //   （⛔ 不是四條語音守衛各抄一份），而且是棘輪：做好一位就刪一列。
+    expect(silent.filter((id) => !VOICE_GAP_BATCH4.includes(id))).toEqual([]);
+    // ⭐ 反方向（形態⑫）：名單上的人如果其實已經有聲音了 ⇒ 紅，要求把那一列刪掉。
+    expect(
+      VOICE_GAP_BATCH4.filter((id) => CHAMP_IDS.includes(id) && !silent.includes(id)),
+      "⛔ 這幾位已經有選角語音了，把他們從 VOICE_GAP_BATCH4 刪掉",
+    ).toEqual([]);
     expect(missing).toEqual([]);
     // The composition is asserted, not just the total: a regression that
     // silently promoted the 名言 floor over the name rung would keep 71/71.
@@ -139,7 +148,9 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // 退休名單本來就不該被算進「家裡真的玩得到的那個數字」。
     //
     // 加總單獨驗一次：⛔ 不要讓「有人靜靜地掉出所有階梯」躲在四個數字的算術裡。
-    expect(Object.values(byTier).reduce((a, b) => a + b, 0)).toBe(CHAMP_IDS.length);
+    // ⭐ GH#1281：加總 ＋ 宣告過的缺口 ＝ 母體。⛔ 「有人靜靜地掉出所有階梯」仍然會紅 ——
+    //   因為 silent 上面剛剛被逐位釘在 `VOICE_GAP_BATCH4` 上（兩個方向都驗過）。
+    expect(Object.values(byTier).reduce((a, b) => a + b, 0) + silent.length).toBe(CHAMP_IDS.length);
     // ⭐ 2026-09-10：`name` 6 → **88**（+82）—— 82 名社群／LOL 英雄補上了
     //   `champion-voices.json` 的 key。⭐ 他們**沒有** w3x map quip（他們不是從那張圖來的）
     //   ⇒ `source: "none"` 是**真話**,⛔ 不是佔位 ⇒ 他們落在「只有呼名」這一階。
@@ -238,14 +249,25 @@ describe("the generated voice pack, as shipped today", () => {
     // each with a non-empty synthesized select pool.
     // 51 daemon packs (2026-07-25) + 74 combat-core packs for the new heroes (2026-09-10)
     // + the LOL 7's original-clip packs (2026-09-11, Riot ja_JP WADs).
-    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(132);
+    // ⭐ 2026-09-17（GH#1281）：132 → **136** —— 合併的語音分支帶進 4 個包（帕魯三隻的原作語音
+    //   ＋ 金色魔王借用莉娜的原檔，owner 2026-09-17「金色魔王 一樣用莉娜音效」）。
+    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(136);
     // ⭐ 2026-09-10: one combat-core pack has NO select pool yet, and it is pinned both
     // ways: b2-kisaragi's only lines are Chinese and synthesis speaks Japanese only
     // (owner「我們合成不講中文 只講日文」), so its click falls to the name rung until the
     // owner supplies Japanese text or an original clip. Anyone else missing a pool is a
     // regression; kisaragi gaining one must be removed from here.
     // ⭐ 2026-09-14（PR #1152）：kisaragi 的原作列車廣播進了 select 池 ⇒ 名單清空（⛔ 誰再掉進來就是回歸）。
-    const SELECT_PENDING: string[] = [];
+    // ⭐ 2026-09-17（GH#1281）：合併的語音分支帶進 4 個**純原檔**語音包，而它們的原檔
+    //   裡沒有一句是「選角」那一類（帕魯三隻是遊戲內的情緒音：joy／anger／pain／death；
+    //   金色魔王借的是莉娜的普攻與落敗）⇒ select 池空著是真話，點擊落到下一階。
+    //   ⛔ 這不是豁免：誰補上一句選角語音就要從這裡刪掉，⛔ 誰再掉進來就是回歸。
+    const SELECT_PENDING: string[] = [
+      "acquired-astralym",
+      "acquired-cattiva",
+      "acquired-jetragon",
+      "acquired-lord-nightmares",
+    ];
     const noPool = Object.entries(PACK?.champions ?? {})
       .filter(([, entry]) => (entry.lines["select"]?.length ?? 0) === 0)
       .map(([id]) => id)

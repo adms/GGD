@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_449e93d7ee2a`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**907**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_c146a194de5f`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**1129**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/abilities/*.json` 共 **907** 份，每個英雄每個 slot 一份：天生 PASSIVE 150　·　Q 152　·　W 152　·　E 152　·　R 152　·　EX 149。
+`content/abilities/*.json` 共 **1129** 份，每個英雄每個 slot 一份：天生 PASSIVE 187　·　Q 189　·　W 189　·　E 189　·　R 189　·　EX 186。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **150** 份（116 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
+> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **187** 份（153 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
 >
 > **不要跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
@@ -22,6 +22,162 @@
 | id | 名稱 | slot | 型態 | 編號 | 擁有者 | 開放 | 短效果 |
 |---|---|---|---|---|---|---|---|
 | `godie-zombieking.passive` | 殭屍王 - leap吸血 | PASSIVE | 天生·主動 | — | **（無主）** | — | [天生][主動][指定][無上限施法距離] |
+| `acquired-alice.passive` | 整合騎士查票 | PASSIVE | 天生·被動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 受到傷害時獲得110護盾3秒，內置冷卻10秒。 |
+| `acquired-alice.q` | 金木樨停車單 | Q | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 落點敵人鎖足1.2秒，為花瓣陣列留下目標。 |
+| `acquired-alice.w` | 騎士擔保 | W | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 為指定隊友提供130護盾，持續3秒。 |
+| `acquired-alice.e` | 騎士查勤 | E | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 跳至指定落點造成極小級物理傷害。 |
+| `acquired-alice.r` | 花瓣罰單連發 | R | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 周圍向內依序發出6道射線，每道極小級魔法傷害；在Q鎖足後施放。 |
+| `acquired-alice.ex` | 今天不准加班受傷 | EX | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 自身獲得3秒180護盾，抵擋被集火。 |
+| `acquired-astralym.passive` | 星蝕欠款 | PASSIVE | 天生·被動 | — | `acquired-astralym` 枯星龍 | — | 普攻給目標留下 4 秒星蝕，內置冷卻 2 秒；Q 可消耗自己施加的星蝕。 |
+| `acquired-astralym.q` | 逾期星光 | Q | 主動 | — | `acquired-astralym` 枯星龍 | — | 消耗目標星蝕時造成中級魔法傷害並鎖足 0.7 秒；無標記時只造成小級傷害。 |
+| `acquired-astralym.w` | 失重通知 | W | 主動 | — | `acquired-astralym` 枯星龍 | — | 在落點造成小級範圍傷害，命中者減速 30% 持續 1.5 秒。 |
+| `acquired-astralym.e` | 星間挪位 | E | 主動 | — | `acquired-astralym` 枯星龍 | — | 瞬移到施法距離內的指定地點；不產生傳送門或跨場移動。 |
+| `acquired-astralym.r` | 枯星下班鐘 | R | 主動 | — | `acquired-astralym` 枯星龍 | — | 在落點持續三輪星震，每輪造成小級魔法傷害；走出範圍可避開後續震波。 |
+| `acquired-astralym.ex` | 末日也要蓋章 | EX | 主動 | — | `acquired-astralym` 枯星龍 | — | 自身取得 120 護盾與 2 秒移速增益；用於為下一次普攻標記找角度。 |
+| `acquired-asuna.passive` | 開飯倒數 | PASSIVE | 天生·被動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 技能命中後獲得20%攻速3秒，內置冷卻5秒。 |
+| `acquired-asuna.q` | 細劍取餐號 | Q | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 近戰小級物理傷害并減速25%，持續1.2秒。 |
+| `acquired-asuna.w` | 閃光趕飯 | W | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 獲得3秒極小級移速與90護盾，準備突進。 |
+| `acquired-asuna.e` | 插入隊伍最前面 | E | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 短距離突進指定敵人旁造成小級物理傷害，落點保留距離。 |
+| `acquired-asuna.r` | 星屑飛濺別灑到湯 | R | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 近戰鎖足後四次連刺与收尾，施法者没有無敵。 |
+| `acquired-asuna.ex` | 晚餐預約成功 | EX | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 自行回復110生命，作為貼身戰後補給。 |
+| `acquired-beatrice.passive` | 借書要留押金 | PASSIVE | 天生·被動 | — | `acquired-beatrice` 碧翠絲 | — | 施放 W 後取得一枚 6 秒書籤，供 R 消耗。 |
+| `acquired-beatrice.q` | 陰影退件章 | Q | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 射出虛空彈，命中造成小級魔法傷害。 |
+| `acquired-beatrice.w` | 禁書封皮 | W | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 取得 130 護盾，持續 3 秒；同時透過被動保留一枚書籤。 |
+| `acquired-beatrice.e` | 門在這一邊 | E | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 瞬移至指定近處落點，不留下隊友可通行的門。 |
+| `acquired-beatrice.r` | 逾期罰款・陰 | R | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 消耗書籤時對指定敵人造成大級魔法傷害；無書籤時為中級。兩種情況都沉默目標 0.7 秒。 |
+| `acquired-beatrice.ex` | 圖書館請安靜 | EX | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 近處指定落點小圈造成極小級魔法傷害，命中者沉默 0.6 秒；不會同時暈眩或定身。 |
+| `acquired-cattiva.passive` | 不是我打破的 | PASSIVE | 天生·被動 | — | `acquired-cattiva` 搗蛋貓 | — | 受傷後取得 2 秒極小級移速加成，內置冷卻 4 秒。 |
+| `acquired-cattiva.q` | 貓拳簽收 | Q | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 近身造成小級物理傷害，並減速 20% 持續 1 秒。 |
+| `acquired-cattiva.w` | 你追不到我 | W | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 嘲諷指定敵人 0.7 秒，讓受擊加速有機會觸發；沒有無敵。 |
+| `acquired-cattiva.e` | 紙箱撤離 | E | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 朝指定地點短躍，落地後取得 60 護盾；不留下障礙箱。 |
+| `acquired-cattiva.r` | 連續貓貓拳 | R | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 4 秒內的接下來三次普攻各追加極小級物理傷害；第三次後移除這份增益。 |
+| `acquired-cattiva.ex` | 罐頭優先權 | EX | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 回復自身 100 生命，但吃罐頭時繳械 1 秒；仍可移動與施法。 |
+| `acquired-dio.passive` | 吸血鬼加班制 | PASSIVE | 天生·被動 | — | `acquired-dio` DIO | — | 普攻命中自己 E 留下的停格狀態時回復自身 35 生命，內置冷卻 2 秒。 |
+| `acquired-dio.q` | 無馱連打 | Q | 主動 | — | `acquired-dio` DIO | — | 近距鎖足目標後連打四次並收尾；施法者仍可被攻擊。 |
+| `acquired-dio.w` | 飛刀考勤 | W | 主動 | — | `acquired-dio` DIO | — | 以既有穿透物理彈呈現飛刀，命中造成小級傷害並減速 25% 持續 1 秒。 |
+| `acquired-dio.e` | 世界・半秒鐘 | E | 主動 | — | `acquired-dio` DIO | — | 指定近處敵人暈眩 0.7 秒；這是普通可抵抗的控制，也提供被動回血窗口。 |
+| `acquired-dio.r` | 壓路機停車費 | R | 主動 | — | `acquired-dio` DIO | — | 短暫準備後在落點造成大級物理傷害，命中者鎖足 0.8 秒；不留下壓路機。 |
+| `acquired-dio.ex` | 輪到我的台詞 | EX | 主動 | — | `acquired-dio` DIO | — | 回復自身 100 生命，但台詞期間自身沉默及繳械 0.8 秒，仍可移動。 |
+| `acquired-emilia.passive` | 碎霜禮節 | PASSIVE | 天生·被動 | — | `acquired-emilia` 愛蜜莉雅 | — | 普攻消耗目標身上自己的寒霜，追加極小級魔法傷害並鎖足 0.5 秒；內置冷卻 2 秒。 |
+| `acquired-emilia.q` | 冰槍請簽收 | Q | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 穿透冰彈命中造成小級傷害、減速 25% 持續 1.5 秒，並留下 4 秒寒霜供普攻消耗。 |
+| `acquired-emilia.w` | 精靈雪衣 | W | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 自身取得 120 護盾，持續 3 秒；不召喚可獨立操作的精靈。 |
+| `acquired-emilia.e` | 冰花開席 | E | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 落點造成小級魔法傷害，命中者減速 40% 持續 1 秒。 |
+| `acquired-emilia.r` | 永凍・試用版 | R | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 落點三輪冰震，每輪小級魔法傷害；只有當輪仍在圈內的敵人受擊，並非永久凍結。 |
+| `acquired-emilia.ex` | 熱茶先不要冰 | EX | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 回復自身 100 生命；喝茶期間沉默 0.8 秒，仍能移動與普攻。 |
+| `acquired-inuyasha.passive` | 半妖起床氣 | PASSIVE | 天生·被動 | — | `acquired-inuyasha` 犬夜叉 | — | 生命低於40%時受到傷害，回復60生命；內置冷卻8秒。 |
+| `acquired-inuyasha.q` | 鐵碎牙拆門 | Q | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-inuyasha.w` | 風之傷清走廊 | W | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 向前推出風刃，小級物理傷害，行進段同一敵人只命中一次。 |
+| `acquired-inuyasha.e` | 半妖跨欄 | E | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 跳向落點造成極小級物理傷害。 |
+| `acquired-inuyasha.r` | 鐵碎牙不是開罐器 | R | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 近距離鎖足敵人後三連擊與收尾；施法者沒有無敵。 |
+| `acquired-inuyasha.ex` | 爆流破先擋一下 | EX | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 获得3秒150護盾及極小級移速，用來扛住反擊再換位。 |
+| `acquired-jetragon.passive` | 航電預熱 | PASSIVE | 天生·被動 | — | `acquired-jetragon` 空渦龍 | — | 施放 E 時取得一層 5 秒蓄能；重複取得只刷新，供 R 消耗。 |
+| `acquired-jetragon.q` | 龍式點射 | Q | 主動 | — | `acquired-jetragon` 空渦龍 | — | 射出一發奧術彈，命中造成小級魔法傷害並減速 25% 持續 1 秒。 |
+| `acquired-jetragon.w` | 尾流加班 | W | 主動 | — | `acquired-jetragon` 空渦龍 | — | 獲得 3 秒極小級移速加成；用來選擇 E 的衝刺角度。 |
+| `acquired-jetragon.e` | 貼地起飛 | E | 主動 | — | `acquired-jetragon` 空渦龍 | — | 朝指定方向固定衝刺 4 單位；落點不額外造成傷害。 |
+| `acquired-jetragon.r` | 本航班不供餐 | R | 主動 | — | `acquired-jetragon` 空渦龍 | — | 落點連炸三輪；有航電蓄能時消耗並改為四輪，每輪極小級傷害且重新選取圈內敵人。 |
+| `acquired-jetragon.ex` | 登機口改號 | EX | 主動 | — | `acquired-jetragon` 空渦龍 | — | 取得 130 護盾持續 3 秒，但驗票期間自身繳械 0.8 秒；不阻擋移動或施法。 |
+| `acquired-kita-kita.passive` | 越挨打越想跳 | PASSIVE | 天生·被動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 受到傷害時獲得90護盾，持續3秒，內置冷卻8秒。 |
+| `acquired-kita-kita.q` | 別看下半身 | Q | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 指定區域敵人失手率50%，持續1.2秒。 |
+| `acquired-kita-kita.w` | 觀眾席安全距離 | W | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 給落點附近友軍與自己130護盾，持續3秒。 |
+| `acquired-kita-kita.e` | 舞步巡迴 | E | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 跳向落點造成極小級物理傷害，換位擋在隊友前方。 |
+| `acquired-kita-kita.r` | 全員原地學舞 | R | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 地面區域敵人鎖足1.2秒；先Q遮眼，再留人讓隊友輸出。 |
+| `acquired-kita-kita.ex` | 跳累了先喝水 | EX | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 回復指定隊友120生命；不是對敵傷害。 |
+| `acquired-kuroyukihime.passive` | 延遲斬殺 | PASSIVE | 天生·被動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 普攻低於40%生命目標追加極小級物理傷害，內置冷卻3秒。 |
+| `acquired-kuroyukihime.q` | 你的連線已中斷 | Q | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 小級物理傷害并鎖足0.8秒，保留後續連擊窗口。 |
+| `acquired-kuroyukihime.w` | 先加速再解釋 | W | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 自身3秒20%攻速與極小級移速。 |
+| `acquired-kuroyukihime.e` | 黑蓮快速登入 | E | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 短距離突進敵人旁並造成小級物理傷害。 |
+| `acquired-kuroyukihime.r` | 死亡穿刺強制登出 | R | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 近距離小級物理傷害；目標生命低於40%追加小級傷害。 |
+| `acquired-kuroyukihime.ex` | 撤回上一則位置 | EX | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 短距離瞬步到落點，用於進場後撤離；受地形與邊界限制。 |
+| `acquired-leafa.passive` | 順風不用跑腿費 | PASSIVE | 天生·被動 | — | `acquired-leafa` 莉法 | — | 施放技能後獲得極小級移速2秒，內置冷卻5秒。 |
+| `acquired-leafa.q` | 精靈補給到府 | Q | 主動 | — | `acquired-leafa` 莉法 | — | 為指定隊友回復130生命。 |
+| `acquired-leafa.w` | 外送區禁止停車 | W | 主動 | — | `acquired-leafa` 莉法 | — | 向前短衝并推開命中的敵人，造成極小級魔法傷害。 |
+| `acquired-leafa.e` | 精靈抄近路 | E | 主動 | — | `acquired-leafa` 莉法 | — | 跳到指定落點造成極小級魔法傷害，靠近需要幫助的隊友。 |
+| `acquired-leafa.r` | 風精靈團購保險 | R | 主動 | — | `acquired-leafa` 莉法 | — | 落點友軍與自己獲得130護盾3秒。 |
+| `acquired-leafa.ex` | 風刃催單 | EX | 主動 | — | `acquired-leafa` 莉法 | — | 直線風刃造成小級魔法傷害，給撤退隊友爭取空間。 |
+| `acquired-lord-nightmares.passive` | 混沌客服工單 | PASSIVE | 天生·被動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 每次施法累積1層自身工單，上限3，持續15秒，供EX消耗。 |
+| `acquired-lord-nightmares.q` | 金色退件章 | Q | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 對指定敵人造成小級魔法傷害。 |
+| `acquired-lord-nightmares.w` | 宇宙暫停受理 | W | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 指定區域敵人鎖足1.2秒，準備後續區域技能。 |
+| `acquired-lord-nightmares.e` | 客服轉接 | E | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 短距離瞬步到落點，受既有落點限制；同時累積工單。 |
+| `acquired-lord-nightmares.r` | 退回混沌重填 | R | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 落點留下3秒傷害領域，每秒極小級魔法傷害。 |
+| `acquired-lord-nightmares.ex` | 三單一起結案 | EX | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 消耗至少3層自身工單，對指定敵人造成大級魔法傷害；不足時沒有傷害。 |
+| `acquired-mario.passive` | 叮！不是薪水 | PASSIVE | 天生·被動 | — | `acquired-mario` Mario | — | 施放 E 後取得 6 秒硬幣標記，供 EX 換取較多回復與護盾。 |
+| `acquired-mario.q` | 火球通管 | Q | 主動 | — | `acquired-mario` Mario | — | 射出一發火彈，命中造成小級魔法傷害；不額外保證地面反彈。 |
+| `acquired-mario.w` | 披風請讓路 | W | 主動 | — | `acquired-mario` Mario | — | 推開近處指定敵人 2 單位並繳械 0.6 秒；對方仍能移動和施法。 |
+| `acquired-mario.e` | 水管工落地章 | E | 主動 | — | `acquired-mario` Mario | — | 短躍至落點，落地造成小級物理範圍傷害；沒有踩死判定。 |
+| `acquired-mario.r` | 終極火焰報價 | R | 主動 | — | `acquired-mario` Mario | — | 向面前 6 單位直線噴出大級魔法火焰；命中者減速 30% 持續 1.2 秒。 |
+| `acquired-mario.ex` | 一枚硬幣套餐 | EX | 主動 | — | `acquired-mario` Mario | — | 消耗硬幣時回復 100 生命並取得 80 護盾；無硬幣只回復 40 生命，不生成金幣。 |
+| `acquired-mewtwo.passive` | 念力集中中 | PASSIVE | 天生·被動 | — | `acquired-mewtwo` Mewtwo | — | 施放 W 取得 5 秒專注，下一次 Q 可消耗；無法無限累積。 |
+| `acquired-mewtwo.q` | 暗影球・已充電 | Q | 主動 | — | `acquired-mewtwo` Mewtwo | — | 消耗專注時射出大級魔法傷害球；無專注時為小級，傷害只在投射物命中時結算。 |
+| `acquired-mewtwo.w` | 念力保護殼 | W | 主動 | — | `acquired-mewtwo` Mewtwo | — | 自身取得 100 護盾持續 3 秒，並透過被動為下一發 Q 蓄力。 |
+| `acquired-mewtwo.e` | 瞬間移動・區內 | E | 主動 | — | `acquired-mewtwo` Mewtwo | — | 瞬移至指定近處地點；不帶走其他單位。 |
+| `acquired-mewtwo.r` | 精神強念投訴 | R | 主動 | — | `acquired-mewtwo` Mewtwo | — | 落點造成中級魔法範圍傷害，命中者暈眩 0.8 秒。 |
+| `acquired-mewtwo.ex` | 我究竟為何排隊 | EX | 主動 | — | `acquired-mewtwo` Mewtwo | — | 回復 110 生命，但思考期間自身沉默 1 秒；仍能移動與普攻。 |
+| `acquired-minecraft.passive` | 挖礦不包加班 | PASSIVE | 天生·被動 | — | `acquired-minecraft` Steve／Alex | — | 普攻每 1 秒最多取得一層材料，最多三層，每次取得刷新為 8 秒；供 Q、W、R 消耗。 |
+| `acquired-minecraft.q` | 鑽石鎬・租的 | Q | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗一層材料時造成中級物理傷害；不足時只造成小級傷害。 |
+| `acquired-minecraft.w` | 一面不擋路的牆 | W | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗兩層材料時取得 180 護盾；不足時不扣材料並只取得 70 護盾，均持續 3 秒。 |
+| `acquired-minecraft.e` | 礦車單程票 | E | 主動 | — | `acquired-minecraft` Steve／Alex | — | 朝指定方向固定衝刺 3 單位，結束後才造成極小級物理範圍傷害；不生成載具。 |
+| `acquired-minecraft.r` | TNT 結算日 | R | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗三層材料時在落點延遲 0.8 秒造成大級物理傷害；不足不扣材料，改為小級。爆炸時重解目標，走出圈可避開。 |
+| `acquired-minecraft.ex` | 工作台便當 | EX | 主動 | — | `acquired-minecraft` Steve／Alex | — | 回復自身 110 生命，但用餐時自身鎖足 0.8 秒；仍可普攻及施法，不是眩暈。 |
+| `acquired-morgiana.passive` | 腳力留一手 | PASSIVE | 天生·被動 | — | `acquired-morgiana` 摩尔迦娜 | — | 施放 E 時取得 4 秒踏勢；下一次 Q 可消耗它強化踢擊。 |
+| `acquired-morgiana.q` | 赤腳催辦 | Q | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 普通踢擊造成小級物理傷害；有踏勢時消耗並改為中級傷害，附帶 0.6 秒鎖足。 |
+| `acquired-morgiana.w` | 鎖鏈請回來 | W | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 對指定敵人造成極小級魔法傷害並向自己拉近 2 單位；受場地與位移規則限制。 |
+| `acquired-morgiana.e` | 法納利斯跨步 | E | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 短躍至近處落點，落地對附近敵人造成極小級物理傷害。 |
+| `acquired-morgiana.r` | 炎鎖舞步 | R | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 在落點連續三輪炎震，每輪小級魔法傷害；敵人離開範圍即可躲掉後續。 |
+| `acquired-morgiana.ex` | 女僕式清場 | EX | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 取得 120 護盾並嘲諷身邊 2 單位內的敵人 0.6 秒；沒有傷害免疫。 |
+| `acquired-naruto.passive` | 打架前先吃麵 | PASSIVE | 天生·被動 | — | `acquired-naruto` 漩渦鳴人 | — | 施放技能後回復自身20生命，內置冷卻3秒。 |
+| `acquired-naruto.q` | 螺旋丸加麵 | Q | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 近距離小級魔法傷害並減速25%，持續1.2秒。 |
+| `acquired-naruto.w` | 影分身代排 | W | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 召喚2個同體分身，存在6秒、傷害20%、生命25%，最多2個，本體死亡消失。 |
+| `acquired-naruto.e` | 忍者插隊術 | E | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 快速移向指定敵人，抵達造成極小級物理傷害；落點仍受地形限制。 |
+| `acquired-naruto.r` | 螺旋手裡麵 | R | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 直線行進波造成小級魔法傷害，末端爆破；對手可側向避開。 |
+| `acquired-naruto.ex` | 拉麵要趁熱 | EX | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 獲得3秒極小級移速與20%攻速，接近或退場。 |
+| `acquired-pokemon-trainer.passive` | 徽章集點卡 | PASSIVE | 天生·被動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 施放 Q、W、E 分別取得水、草、火徽記，各持續 6 秒且只保留一層，供 R 分別消耗。 |
+| `acquired-pokemon-trainer.q` | 傑尼龜・水槍 | Q | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 以 GGD 奧術彈呈現水槍，命中造成小級魔法傷害並減速 20% 持續 1 秒。 |
+| `acquired-pokemon-trainer.w` | 妙蛙草・藤鞭 | W | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 直線草刃造成小級魔法傷害，命中者鎖足 0.5 秒。 |
+| `acquired-pokemon-trainer.e` | 噴火龍・熱身 | E | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 朝指定方向固定衝刺 3 單位，結束後對近處造成極小級魔法傷害；不切換模型或飛行。 |
+| `acquired-pokemon-trainer.r` | 三重指令結帳 | R | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 先對指定敵人造成中級魔法傷害，再分別消耗水徽記減速、草徽記鎖足、火徽記追加小級傷害。缺哪一枚就少哪一項。 |
+| `acquired-pokemon-trainer.ex` | 包包裡有傷藥 | EX | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 回復自身 80 生命並取得 2 秒移速增益；不消耗或新增正式背包道具。 |
+| `acquired-ram.passive` | 掃除前先開窗 | PASSIVE | 天生·被動 | — | `acquired-ram` 拉姆 | — | 施放 E 後取得 4 秒風勢，下一次 Q 可消耗。 |
+| `acquired-ram.q` | 風刃催你走 | Q | 主動 | — | `acquired-ram` 拉姆 | — | 先斬出小級魔法風刃；持有風勢時消耗，再補一道極小級風刃。 |
+| `acquired-ram.w` | 毒舌逆風 | W | 主動 | — | `acquired-ram` 拉姆 | — | 指定敵人受到極小級魔法傷害並減速 35% 持續 1.5 秒；沒有強制改變其施法方向。 |
+| `acquired-ram.e` | 不想走樓梯 | E | 主動 | — | `acquired-ram` 拉姆 | — | 朝指定方向固定短衝 2.5 單位；不具穿牆或無敵保證。 |
+| `acquired-ram.r` | 風暴大掃除 | R | 主動 | — | `acquired-ram` 拉姆 | — | 落點造成大級魔法傷害並向施法者拉近命中敵人 2 單位；不是持續吸附龍捲。 |
+| `acquired-ram.ex` | 今天也辛苦別人 | EX | 主動 | — | `acquired-ram` 拉姆 | — | 取得 3 秒移速增益並回復 60 生命；保留自己退場整備的空間。 |
+| `acquired-rim.passive` | 這個快熟了 | PASSIVE | 天生·被動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 普攻生命低於40%的目標追加極小級物理傷害，內置冷卻2秒。 |
+| `acquired-rim.q` | 午休咬一口 | Q | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 近戰小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-rim.w` | 加班費先預支 | W | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 3秒提高20%攻速並回復自身80生命。 |
+| `acquired-rim.e` | 便當在那邊 | E | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 撲向指定落點造成極小級物理傷害。 |
+| `acquired-rim.r` | 整份都我的 | R | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 近距離造成小級物理傷害並回復120生命；目標生命低於40%再追加小級傷害。 |
+| `acquired-rim.ex` | 沒吃飽不准下班 | EX | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 指定區域敌人減速40%，持續1.2秒，方便繼續追餐。 |
+| `acquired-ryu.passive` | 波升基本功 | PASSIVE | 天生·被動 | — | `acquired-ryu` Ryu | — | 施放 Q 後取得 3 秒架勢，W 可消耗增加傷害；不是命中確認或普攻重置。 |
+| `acquired-ryu.q` | 波動拳 | Q | 主動 | — | `acquired-ryu` Ryu | — | 射出氣彈，命中造成小級魔法傷害。 |
+| `acquired-ryu.w` | 升龍拳・有付費 | W | 主動 | — | `acquired-ryu` Ryu | — | 近身造成小級物理傷害；消耗架勢時改為中級。命中敵人再受到短距推移與 0.5 秒鎖足，施法者沒有無敵。 |
+| `acquired-ryu.e` | 龍捲旋風腿 | E | 主動 | — | `acquired-ryu` Ryu | — | 朝指定方向固定衝刺 3 單位，結束後對近處敵人造成小級物理傷害。 |
+| `acquired-ryu.r` | 真・升龍加班 | R | 主動 | — | `acquired-ryu` Ryu | — | 近距鎖足目標並完成五次短連擊與收尾；不具無敵或即死。 |
+| `acquired-ryu.ex` | 無薪修行 | EX | 主動 | — | `acquired-ryu` Ryu | — | 取得 130 護盾，但專注架勢讓自己繳械 0.8 秒；仍可移動和施法。 |
+| `acquired-saya.passive` | 吃一口就好 | PASSIVE | 天生·被動 | — | `acquired-saya` 沙耶 | — | 技能命中後回復自己25生命，內置冷卻3秒。 |
+| `acquired-saya.q` | 不明食材試吃 | Q | 主動 | — | `acquired-saya` 沙耶 | — | 給指定敵人3秒持續魔法傷害，施放時回復自己50生命。 |
+| `acquired-saya.w` | 餐桌黏黏的 | W | 主動 | — | `acquired-saya` 沙耶 | — | 區域敌人減速40%，持續1.2秒。 |
+| `acquired-saya.e` | 看見真實菜單 | E | 主動 | — | `acquired-saya` 沙耶 | — | 小級魔法傷害，並使敵人恐懼0.8秒。 |
+| `acquired-saya.r` | 今晚全席開放 | R | 主動 | — | `acquired-saya` 沙耶 | — | 落點留下3秒領域，每秒極小級魔法傷害；W留客後使用。 |
+| `acquired-saya.ex` | 閉眼比較好吃 | EX | 主動 | — | `acquired-saya` 沙耶 | — | 附近落點敵人失手率45%，持續1.2秒，用來抵擋追擊。 |
+| `acquired-wargreymon.passive` | 鍋蓋還沒掀 | PASSIVE | 天生·被動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。 |
+| `acquired-wargreymon.q` | 龍獸拆箱爪 | Q | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 爪擊造成小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-wargreymon.w` | 勇氣鍋蓋 | W | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 獲得3秒140護盾，準備承受貼身反擊。 |
+| `acquired-wargreymon.e` | 勇者快遞 | E | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 跳至落點造成極小級物理傷害，接近收件人。 |
+| `acquired-wargreymon.r` | 蓋亞能量到付 | R | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 指定區域爆發大級魔法傷害；延長前搖給對手走位空間。 |
+| `acquired-wargreymon.ex` | 恐龍火氣很大 | EX | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 推出逐段火浪，小級魔法傷害，同一敵人行進段只命中一次。 |
+| `acquired-xiaodangjia.passive` | 試味不用錢 | PASSIVE | 天生·被動 | — | `acquired-xiaodangjia` 小當家 | — | 施放技能後回復自己20生命，內置冷卻4秒。 |
+| `acquired-xiaodangjia.q` | 料理怎麼又發光 | Q | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 區域敵人失手率60%，持續1.2秒。 |
+| `acquired-xiaodangjia.w` | 趁熱吃 | W | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 指定隊友回復140生命。 |
+| `acquired-xiaodangjia.e` | 猛火快炒 | E | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 指定落點小級魔法爆破，用來阻擋追近廚房的敵人。 |
+| `acquired-xiaodangjia.r` | 麻婆豆腐流水席 | R | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 留下3秒燙口區域，每秒極小級魔法傷害；先Q降低反擊風險。 |
+| `acquired-xiaodangjia.ex` | 鍋蓋全席 | EX | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 落點友軍與自己獲得130護盾，持續3秒。 |
+| `acquired-zero.passive` | 劍砲交班 | PASSIVE | 天生·被動 | — | `acquired-zero` Zero | — | 施放 Q 時取得 5 秒能源；W 可消耗後射出較強的蓄力彈。 |
+| `acquired-zero.q` | Z-Saber 簽核 | Q | 主動 | — | `acquired-zero` Zero | — | 沿面向斬出短直線，對命中敵人造成小級物理傷害。 |
+| `acquired-zero.w` | 蓄力離線砲 | W | 主動 | — | `acquired-zero` Zero | — | 有能源時消耗並射出中級魔法傷害彈；無能源時射出極小級彈。傷害在投射物命中時結算。 |
+| `acquired-zero.e` | 衝刺斬 | E | 主動 | — | `acquired-zero` Zero | — | 朝指定方向固定衝刺 3 單位，結束後才對身邊造成小級物理傷害。 |
+| `acquired-zero.r` | 零式連段 | R | 主動 | — | `acquired-zero` Zero | — | 近距鎖足後三連斬與收尾；仍受敵方傷害與控制影響。 |
+| `acquired-zero.ex` | 更新稍後提醒 | EX | 主動 | — | `acquired-zero` Zero | — | 取得 120 護盾並回復 40 生命；是戰術整備，不是死亡後復活。 |
 | `b2-aladdin.passive` | 吹錯音先喘口氣 | PASSIVE | 天生·被動 | — | `b2-aladdin` 阿拉丁 | — | 「吹錯音先喘口氣！」 |
 | `b2-aladdin.q` | 烏戈代班先派一位 | Q | 主動 | — | `b2-aladdin` 阿拉丁 | ✅ | 「烏戈代班先派一位！」 |
 | `b2-aladdin.w` | 樂團加演再請一位 | W | 主動 | — | `b2-aladdin` 阿拉丁 | ✅ | 「樂團加演再請一位！」 |
@@ -878,6 +1034,42 @@
 | `godie-zombiex.e` | 100-03 咕咕嘎嘎 | E | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。 |
 | `godie-zombiex.r` | 100-04 百式・哈基米 | R | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。 |
 | `godie-zombiex.ex` | 100-002 此世全部之咖哩・バタンキュー | EX | 強化 | — | `godie-zombiex` 喪標麥可 | ✅ | 倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー。 |
+| `lol-ahri.passive` | 銷魂 | PASSIVE | 天生·被動 | — | `lol-ahri` 阿璃 | — | 擊殺九個小兵/野怪回復；擊殺英雄額外回復。 |
+| `lol-ahri.q` | 幻玉 | Q | 主動 | — | `lol-ahri` 阿璃 | — | 向前擲出法球穿過敵人，射程盡頭掉頭飛回阿璃身上，去程與回程各打一次。 |
+| `lol-ahri.w` | 魅火 | W | 主動 | — | `lol-ahri` 阿璃 | — | 自身短加速，三次打擊周圍敵人。 |
+| `lol-ahri.e` | 傾城 | E | 主動 | — | `lol-ahri` 阿璃 | — | 直線吻彈命中後魅惑：被命中者被迫減速朝阿璃走過去。 |
+| `lol-ahri.r` | 飛仙 | R | 主動 | — | `lol-ahri` 阿璃 | — | 向落點快速短衝，抵達後傷害周圍敵人。 |
+| `lol-ahri.ex` | 已讀不回 | EX | 主動 | — | `lol-ahri` 阿璃 | — | 短瞬移逃離，但兩秒不能普攻。 |
+| `lol-ashe.passive` | 冰霜射擊 | PASSIVE | 天生·被動 | — | `lol-ashe` 艾希 | — | 普攻減速；攻擊已帶自身霜痕的目標追加傷害，並累积最多四層專注。 |
+| `lol-ashe.q` | 專注射擊 | Q | 主動 | — | `lol-ashe` 艾希 | — | 消耗四層專注，四秒加攻速並每次普攻追加小額傷害。 |
+| `lol-ashe.w` | 萬箭齊發 | W | 主動 | — | `lol-ashe` 艾希 | — | 朝面向射出短寬箭幕，傷害並施加霜痕緩速。 |
+| `lol-ashe.e` | 鷹擊長空：強制簽收 | E | 主動 | — | `lol-ashe` 艾希 | — | 指定區域出現送件預警，0.7 秒後使仍在區域內的敵人繳械 0.8 秒，不能普攻但仍可移動與施法。 |
+| `lol-ashe.r` | 魔法水晶箭 | R | 主動 | — | `lol-ashe` 艾希 | — | 發射會碰撞的直線冰箭，主目標暈眩，周圍緩速。 |
+| `lol-ashe.ex` | 冷凍保存 | EX | 主動 | — | `lol-ashe` 艾希 | — | 兩秒護盾保鮮；前0.6秒自己鎖足。 |
+| `lol-blitzcrank.passive` | 法力屏障 | PASSIVE | 天生·被動 | — | `lol-blitzcrank` 布里姿 | — | 低於30%生命受擊時取得魔力比例護盾。 |
+| `lol-blitzcrank.q` | 火箭抓取 | Q | 主動 | — | `lol-blitzcrank` 布里姿 | — | 直線手臂命中第一位敵人，造成傷害並拉回。 |
+| `lol-blitzcrank.w` | 過載運轉 | W | 主動 | — | `lol-blitzcrank` 布里姿 | — | 三秒移速與攻速提升，結束後一秒自緩速。 |
+| `lol-blitzcrank.e` | 充能一擊 | E | 主動 | — | `lol-blitzcrank` 布里姿 | — | 下一次普攻追加物理傷害並擊飛。 |
+| `lol-blitzcrank.r` | 靜電力場 | R | 主動 | — | `lol-blitzcrank` 布里姿 | — | 移除身旁敵人护盾，傷害並短暫沉默。 |
+| `lol-blitzcrank.ex` | 七天鑑賞期 | EX | 主動 | — | `lol-blitzcrank` 布里姿 | — | 把剛才自己 Q 抓到的目標退回去；沒抓過不能退貨。 |
+| `lol-chogath.passive` | 肉食者 | PASSIVE | 天生·被動 | — | `lol-chogath` 科加斯 | — | 擊殺敵方單位回復生命與魔力。 |
+| `lol-chogath.q` | 破裂 | Q | 主動 | — | `lol-chogath` 科加斯 | — | 落點預警後地刺傷害、短擊飛與緩速。 |
+| `lol-chogath.w` | 野性尖嘯 | W | 主動 | — | `lol-chogath` 科加斯 | — | 前方短寬帶造成魔法傷害並沉默。 |
+| `lol-chogath.e` | 恐懼尖刺 | E | 主動 | — | `lol-chogath` 科加斯 | — | 接下來三次普攻向前噴刺，傷害及緩速。 |
+| `lol-chogath.r` | 饗宴 | R | 主動 | — | `lol-chogath` 科加斯 | — | 近距真傷；處決線內吞噬並獲得有上限的最大生命成長。 |
+| `lol-chogath.ex` | 吃太飽走不動 | EX | 主動 | — | `lol-chogath` 科加斯 | — | 大口回復自身生命，但兩秒移速降至六成。 |
+| `lol-fiddlesticks.passive` | 無害稻草人 | PASSIVE | 天生·被動 | — | `lol-fiddlesticks` 稻草人 | — | 回合開始生成一具短命低傷替身。 |
+| `lol-fiddlesticks.q` | 恐懼 | Q | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 指定敵人傷害並恐懼。 |
+| `lol-fiddlesticks.w` | 豐收之魘 | W | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 站定引導 2 秒，周圍敵人每 0.5 秒受傷、每打中一人自身回血；撐滿再收割一次。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑… |
+| `lol-fiddlesticks.e` | 駭懼收割 | E | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 前方窄帶斬擊、減速並短暫沉默。 |
+| `lol-fiddlesticks.r` | 群鴉風暴 | R | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 長起手躍至落點，著地後開啟跟身三秒群鴉傷害。 |
+| `lol-fiddlesticks.ex` | 尖叫外包 | EX | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 召喚三具四秒低血低傷替身，分散對手注意力。 |
+| `lol-garen.passive` | 堅韌 | PASSIVE | 天生·被動 | — | `lol-garen` 蓋倫 | — | 八秒未受傷後每秒回復少量最大生命。 |
+| `lol-garen.q` | 致命打擊 | Q | 主動 | — | `lol-garen` 蓋倫 | — | 清掉身上既有的減速後自己加速，下一次普攻追加傷害並沉默。 |
+| `lol-garen.w` | 勇氣 | W | 主動 | — | `lol-garen` 蓋倫 | — | 短暂護盾抵禦爆發。 |
+| `lol-garen.e` | 審判 | E | 主動 | — | `lol-garen` 蓋倫 | — | 跟隨自身旋轉三秒、週期傷害周圍敵人。 |
+| `lol-garen.r` | 蒂瑪西亞制裁 | R | 主動 | — | `lol-garen` 蓋倫 | — | 近距真實傷害，附加目標已損生命比例傷害。 |
+| `lol-garen.ex` | 蒂瑪西亞先休息 | EX | 主動 | — | `lol-garen` 蓋倫 | — | 大聲喊完口號後原地休息，一秒鎖足換生命回復。 |
 | `lol-karthus.passive` | 未竟尾聲 | PASSIVE | 天生·被動 | — | `lol-karthus` 卡爾瑟斯 | — | 每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。 |
 | `lol-karthus.q` | 暮點 | Q | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 短暫吟唱後，在指定區域引爆小級魔法傷害。 |
 | `lol-karthus.w` | 亡途繫縛 | W | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。 |
@@ -896,12 +1088,42 @@
 | `lol-lux.e` | 流光之域 | E | 主動 | — | `lol-lux` 拉克絲 | ✅ | 在落點留下 3 秒光域，每秒造成極小級魔法傷害。 |
 | `lol-lux.r` | 破曉光路 | R | 主動 | — | `lol-lux` 拉克絲 | ✅ | 向前依序展開四段光束判定；敵人可受到相交段落的傷害。 |
 | `lol-lux.ex` | 引路星芒 | EX | 主動 | — | `lol-lux` 拉克絲 | ✅ | 獲得 3 秒極小級移速加成，並恢復自身少量生命。 |
+| `lol-malphite.passive` | 花崗岩護盾 | PASSIVE | 天生·被動 | — | `lol-malphite` 墨菲特 | — | 六秒未受傷後回充最大生命10%護盾。 |
+| `lol-malphite.q` | 地震碎片 | Q | 主動 | — | `lol-malphite` 墨菲特 | — | 指定敵人受傷減速，自己獲得短加速。 |
+| `lol-malphite.w` | 震雷之擊 | W | 主動 | — | `lol-malphite` 墨菲特 | — | 四秒強化普攻，附帶前方震波。 |
+| `lol-malphite.e` | 大地震顫 | E | 主動 | — | `lol-malphite` 墨菲特 | — | 周圍魔法震擊並降低攻速。 |
+| `lol-malphite.r` | 勢不可擋 | R | 主動 | — | `lol-malphite` 墨菲特 | — | 高速衝到指定落點，著地傷害並擊飛周邊。 |
+| `lol-malphite.ex` | 此處禁止停車 | EX | 主動 | — | `lol-malphite` 墨菲特 | — | 原地三秒提高雙抗，但自己也不能移動。 |
 | `lol-missfortune.passive` | 先聲奪人 | PASSIVE | 天生·被動 | — | `lol-missfortune` 好運姐 | — | 普攻追加極小級物理傷害，內置冷卻 2 秒。 |
 | `lol-missfortune.q` | 回聲雙響 | Q | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。 |
 | `lol-missfortune.w` | 揚帆快步 | W | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 獲得 3 秒極小級移速加成與 20% 攻速加成。 |
 | `lol-missfortune.e` | 緋帆彈雨 | E | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。 |
 | `lol-missfortune.r` | 扇港齊射 | R | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 向指定區域連續投下六發物理彈幕，散布及命中區域均有界。 |
 | `lol-missfortune.ex` | 藏帆備彈 | EX | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 短暫以全傷害護盾掩護換位，持續 3 秒。 |
+| `lol-ornn.passive` | 活火爐 | PASSIVE | 天生·被動 | — | `lol-ornn` 鄂爾 | — | 增加雙抗，普攻可消耗自身施加的焦化追加傷害及短擊退。 |
+| `lol-ornn.q` | 火山脈動 | Q | 主動 | — | `lol-ornn` 鄂爾 | — | 前方裂地造成傷害並緩速，裂地終點升起一根可堵路、可被熔岩俯衝撞碎的暫時柱。 |
+| `lol-ornn.w` | 熾焰吹息 | W | 主動 | — | `lol-ornn` 鄂爾 | — | 向前吐火，命中施加三秒焦化。 |
+| `lol-ornn.e` | 熔岩俯衝 | E | 主動 | — | `lol-ornn` 鄂爾 | — | 向前衝撞傷害沿途敵人；只有撞上柱子或牆被擋停，才震波擊飛周圍敵人並撞碎柱子。 |
+| `lol-ornn.r` | 鑄火者的呼喚 | R | 主動 | — | `lol-ornn` 鄂爾 | — | 長起手後在遠處召出火羊朝自己衝回，沿途緩速並焦化敵人；再次施放往前短衝，撞到火羊就讓牠改朝衝刺方向奔去並擊飛沿途敵人。 |
+| `lol-ornn.ex` | 終身保固三秒 | EX | 主動 | — | `lol-ornn` 鄂爾 | — | 指定一位隊友給予短期大護盾；工匠站定吟唱。 |
+| `lol-sett.passive` | 恆毅之泉 | PASSIVE | 天生·被動 | — | `lol-sett` 賽特 | — | 普通攻擊左右拳交替，右拳追加傷害；低血量時週期回血；承傷累積最多三層供 W 使用。 |
+| `lol-sett.q` | 懾人猛拳 | Q | 主動 | — | `lol-sett` 賽特 | — | 提速並強化接下來兩次普攻。 |
+| `lol-sett.w` | 獸魂轟拳 | W | 主動 | — | `lol-sett` 賽特 | — | 朝面向揮拳並取得護盾；中心真傷、兩側物傷，同一敵人只受一種傷害。消耗已有恆毅，三層時提高護盾與傷害。 |
+| `lol-sett.e` | 碎顱猛擊 | E | 主動 | — | `lol-sett` 賽特 | — | 將身旁敵人拉近並減速，接 Q/W。 |
+| `lol-sett.r` | 嘆為觀止 | R | 主動 | — | `lol-sett` 賽特 | — | 抱住單一敵人，朝目標方向帶行，移動結束後傷害並緩速周圍敵人。 |
+| `lol-sett.ex` | 媽媽來電 | EX | 主動 | — | `lol-sett` 賽特 | — | 回復生命，但接電話時一秒不能普攻。 |
+| `lol-thresh.passive` | 靈魂饗宴 | PASSIVE | 天生·被動 | — | `lol-thresh` 瑟雷西 | — | 擊殺敵人獲得有上限的護甲與魔攻成長。 |
+| `lol-thresh.q` | 死亡宣告 | Q | 主動 | — | `lol-thresh` 瑟雷西 | — | 直線鉤命中後傷害、鎖足並短拉近。 |
+| `lol-thresh.w` | 鬼影燈籠 | W | 主動 | — | `lol-thresh` 瑟雷西 | — | 朝地面丟出燈籠：落點圈內的隊友獲得護盾；隊友自己點燈才飛回瑟雷西身邊。 |
+| `lol-thresh.e` | 懾魂掃蕩 | E | 主動 | — | `lol-thresh` 瑟雷西 | — | 向面向掃鏈，傷害並把命中者沿揮擊方向推移。 |
+| `lol-thresh.r` | 惡靈領域 | R | 主動 | — | `lol-thresh` 瑟雷西 | — | 自身周圍立起五段邊界；敵人穿過任何一段時受傷並重緩速，那一段隨即消失。 |
+| `lol-thresh.ex` | 本燈拒載 | EX | 主動 | — | `lol-thresh` 瑟雷西 | — | 把貼身敵人向外推，給隊友清出上車位置。 |
+| `lol-velkoz.passive` | 結構毀滅 | PASSIVE | 天生·被動 | — | `lol-velkoz` 威寇茲 | — | 技能命中同敵人第三次時消耗兩層舊標記，追加真傷並標記研究完成。 |
+| `lol-velkoz.q` | 分裂電漿 | Q | 主動 | — | `lol-velkoz` 威寇茲 | — | 直線電漿命中造成傷害及緩速；命中或飛行中再按一次，從電漿當下位置左右分裂出兩發子彈。 |
+| `lol-velkoz.w` | 虛空裂痕 | W | 主動 | — | `lol-velkoz` 威寇茲 | — | 直線裂痕先小爆，延遲後在同一條裂痕上再爆；施法者走開或轉身也不會帶走裂痕。 |
+| `lol-velkoz.e` | 反物質瓦解 | E | 主動 | — | `lol-velkoz` 威寇茲 | — | 落點爆破、短击飛並向外小推。 |
+| `lol-velkoz.r` | 生化射線 | R | 主動 | — | `lol-velkoz` 威寇茲 | — | 朝瞄準方向站定引導 2.5 秒，射線判定 5 次，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒、死亡、恐懼… |
+| `lol-velkoz.ex` | 論文退回重寫 | EX | 主動 | — | `lol-velkoz` 威寇茲 | — | 只對自己研究完成的敵人清除研究標记，換回自己魔力並緩速對方。 |
 | `lol-warwick.passive` | 嗅血 | PASSIVE | 天生·被動 | — | `lol-warwick` 沃維克 | — | 普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。 |
 | `lol-warwick.q` | 噬痕 | Q | 主動 | — | `lol-warwick` 沃維克 | ✅ | 對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。 |
 | `lol-warwick.w` | 循血疾行 | W | 主動 | — | `lol-warwick` 沃維克 | ✅ | 主動獲得 3 秒極小級移速加成與 20% 攻速加成。 |

@@ -1,0 +1,11 @@
+{
+  "id": "lol-malphite.thunder",
+  "schema": "status-effect@1",
+  "name": "震雷之擊",
+  "description": "墨菲特「震雷之擊」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-malphite.thunder",
+    "buff"
+  ]
+}

@@ -206,9 +206,16 @@ def census_one(path: str) -> dict:
 
     def root_of(j: int) -> int:
         cur = j
-        while parent.get(cur) in all_joints:
-            cur = parent[cur]
-        return cur
+        while True:
+            up = parent.get(cur)
+            if up in all_joints:
+                cur = up
+            # GH#1186：restore_geoset_visibility.py 插的顯示節點（單位變換）是骨架鏈的一段
+            #   ⇒ 穿過去，⛔ 不當成「另一具骨架根」（否則拳四郎的出拳光被判成 second-skeleton）
+            elif up is not None and str(gltf["nodes"][up].get("name", "")).startswith("geoa-vis:") and parent.get(up) in all_joints:
+                cur = parent[up]
+            else:
+                return cur
 
     joint_root = {j: root_of(j) for j in all_joints}
     driven = {ch["target"]["node"] for a in gltf.get("animations", [])
@@ -396,9 +403,16 @@ def census_airborne(path: str, clips: set[str]) -> list[dict]:
 
     def root_of(j: int) -> int:
         cur = j
-        while parent.get(cur) in all_joints:
-            cur = parent[cur]
-        return cur
+        while True:
+            up = parent.get(cur)
+            if up in all_joints:
+                cur = up
+            # GH#1186：restore_geoset_visibility.py 插的顯示節點（單位變換）是骨架鏈的一段
+            #   ⇒ 穿過去，⛔ 不當成「另一具骨架根」（否則拳四郎的出拳光被判成 second-skeleton）
+            elif up is not None and str(gltf["nodes"][up].get("name", "")).startswith("geoa-vis:") and parent.get(up) in all_joints:
+                cur = parent[up]
+            else:
+                return cur
 
     joint_root = {j: root_of(j) for j in all_joints}
     driven = {ch["target"]["node"] for a in gltf.get("animations", [])

@@ -1,0 +1,77 @@
+{
+ "schema": "ggd-geoset-visibility@1",
+ "ticket": "GH#1186",
+ "method": "STEP scale 動畫掛在插入的顯示節點上（該片專用骨頭子樹的上層），只追加",
+ "mdx": {
+  "source": "/Users/Takuro/GGD-assets/models/dl3/498341.zip",
+  "member": "dao.mdx",
+  "sha256": "d2ef3f418b3be44863beb9d261efef2fa077314d8b3299833e8ca00b071dfe3c"
+ },
+ "sourceGlbSha256": "914f4225e2418b1b038c84a31bf32f706d38bbf1e6ff7609103317132a77937f",
+ "converted": [
+  {
+   "geoset": 1,
+   "hiddenIn": [
+    "Stand",
+    "Walk",
+    "Attack 1",
+    "Attack 2",
+    "Dissipate"
+   ],
+   "primitive": [
+    0,
+    1
+   ],
+   "vertexOffset": 0,
+   "vertices": 427,
+   "triangles": 366,
+   "bones": [
+    "Object69"
+   ],
+   "top": {
+    "node": 1,
+    "name": "Object69"
+   },
+   "visNode": 48,
+   "visibleIn": [
+    "death",
+    "Dissipate"
+   ]
+  },
+  {
+   "geoset": 5,
+   "hiddenIn": [
+    "death",
+    "Dissipate"
+   ],
+   "primitive": [
+    0,
+    1
+   ],
+   "vertexOffset": 10293,
+   "vertices": 427,
+   "triangles": 366,
+   "bones": [
+    "Object02"
+   ],
+   "top": {
+    "node": 28,
+    "name": "Object02"
+   },
+   "visNode": 49,
+   "visibleIn": [
+    "Stand",
+    "Walk",
+    "Attack 1",
+    "Attack 2"
+   ]
+  }
+ ],
+ "refused": [],
+ "absent": [],
+ "unconditional": 4,
+ "blocking": [],
+ "restClip": "Stand",
+ "outputSha256": "38dcab06dd282505d44c0d93cda6197cfddc960d7a988ce31a4e10444a57dcd4",
+ "bytes": 1043172
+}

@@ -119,14 +119,18 @@ function union<K extends keyof Surface>(docs: readonly AbilityDoc[], key: K): Se
 
 describe("鑄技工坊 60 份現有技能驗收清單", () => {
   it("清單固定為 56 個技能主題／60 份實際技能：47 份視覺基線＋13 份新增能力覆蓋", () => {
-    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(60);
-    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(56);
+    // ⭐ 2026-09-17（GH#1281）：60 → 66（capability-coverage 13 → 19）—— 第四批 LoL 11 名
+    //   帶進六個第一次有人採用的詞彙（carry／shieldBreak／spawnInteractable／spawnObstacle／
+    //   spawnThresholds／onRoundStart）⇒ 逐支進驗收清單，⛔ 不是把覆蓋率放寬。
+    //   ⚠️ 視覺基線那 47 份**沒有動**（新詞彙走 schema／授權／Sim 閘，⛔ 不擴張人類看圖的工作量）。
+    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(66);
+    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(62);
     expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union")).toHaveLength(26);
     expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "runtime-coverage")).toHaveLength(21);
-    expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "capability-coverage")).toHaveLength(13);
+    expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "capability-coverage")).toHaveLength(19);
     expect(SKILL_VISUAL_ACCEPTANCE_CANDIDATES).toHaveLength(47);
     expect(SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size).toBe(43);
-    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(60);
+    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(66);
     for (const row of SKILL_ACCEPTANCE_CANDIDATES) expect(row.acceptance.length, row.id).toBeGreaterThan(20);
   });
 

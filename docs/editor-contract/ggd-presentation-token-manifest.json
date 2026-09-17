@@ -11,15 +11,15 @@
     "scaling": "#BF8F00"
   },
   "totals": {
-    "distinct": 274,
-    "uses": 2550,
+    "distinct": 275,
+    "uses": 2551,
     "byGroup": {
       "activation": 17,
       "scaling": 17,
       "cast": 11,
       "condition": 4,
       "event": 12,
-      "effect": 209,
+      "effect": 210,
       "movement": 4
     }
   },
@@ -1065,6 +1065,11 @@
       "group": "effect"
     },
     {
+      "token": "slow",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
       "token": "七寶玉",
       "uses": 1,
       "group": "effect"
@@ -1395,5 +1400,5 @@
       "group": "scaling"
     }
   ],
-  "digest": "36e9319d7754b3b5"
+  "digest": "c7fe7e8ec185d865"
 }

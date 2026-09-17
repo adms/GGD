@@ -1,0 +1,416 @@
+{
+  "id": "lol-garen",
+  "name": "蓋倫",
+  "description": "脫戰續航、沉默旋轉與低血收尾\n\n概念來源：LoL 蓋倫\nhttps://www.leagueoflegends.com/zh-tw/champions/garen/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：敵人/兵種重置差異先統一為受傷；不是戰鬥中固定秒回。\n• Q：施放時先清掉身上既有的減速（dispel.statusKinds:[slow]，只清「純減速」的狀態：同一筆帶暈眩、定身或沉默的留著），再加速並強化下一次普攻；不擴張成全淨化，也不給之後的減速免疫。只看機制不看極性標記（配方自帶的減速多半沒有狀態文件、極性是空的，照 debuff 篩會一個都清不到）。\n• W：重要簡化：暫未接韌性、後段減傷和擊殺永久雙抗。\n• E：damageTier 是整段預算，由模板分攤，不能文案寫每波中級傷害。\n• R：不做必殺保證；護盾/免死仍按現有傷害規則。\n• EX：笑點只在EX的休息交換；不改QER熟悉連招。\n\n採用所選 GGD 模型與特效。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.13085306122448978,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-garen.q",
+      "name": "致命打擊",
+      "provenance": "editor-json",
+      "description": "清掉身上既有的減速後自己加速，下一次普攻追加傷害並沉默。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true
+          },
+          "polarity": "any",
+          "statusKinds": [
+            "slow"
+          ]
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 4,
+          "statusId": "lol-garen.decisive",
+          "applyTo": "self",
+          "stackKey": "lol-garen.decisive",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "sourceScope": "caster",
+                  "statusId": "lol-garen.silence",
+                  "duration": 1,
+                  "silenced": true
+                }
+              ],
+              "maxTriggers": 1,
+              "onConsumed": "detachSource"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dispel",
+              "shape": "single",
+              "pools": {
+                "status": true
+              },
+              "polarity": "any",
+              "statusKinds": [
+                "slow"
+              ]
+            },
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ],
+              "statusId": "lol-garen.decisive",
+              "stackKey": "lol-garen.decisive",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "lol-garen.silence",
+                      "duration": 1,
+                      "sourceScope": "caster",
+                      "silenced": true
+                    }
+                  ],
+                  "maxTriggers": 1,
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-garen.q.webp"
+    },
+    "W": {
+      "id": "lol-garen.w",
+      "name": "勇氣",
+      "provenance": "editor-json",
+      "description": "短暂護盾抵禦爆發。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 140,
+            "perRank": [
+              0,
+              70,
+              140,
+              210
+            ]
+          },
+          "duration": 2,
+          "absorbs": "all"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+        "params": {
+          "target": "self",
+          "amount": {
+            "flat": 140,
+            "perRank": [
+              0,
+              70,
+              140,
+              210
+            ]
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+      },
+      "icon": "assets/icons/abilities/lol-garen.w.webp"
+    },
+    "E": {
+      "id": "lol-garen.e",
+      "name": "審判",
+      "provenance": "editor-json",
+      "description": "跟隨自身旋轉三秒、週期傷害周圍敵人。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "delaySec": 0.5,
+          "count": 6,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.16666666666666666
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "params": {
+          "intervalSec": 0.5,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "damageTier": "中",
+          "damageType": "physical",
+          "castTimeSec": 0.1,
+          "radius": 4.5
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+      },
+      "icon": "assets/icons/abilities/lol-garen.e.webp"
+    },
+    "R": {
+      "id": "lol-garen.r",
+      "name": "蒂瑪西亞制裁",
+      "provenance": "editor-json",
+      "description": "近距真實傷害，附加目標已損生命比例傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "damageTier": "中"
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "missing",
+            "perRank": [
+              0.15,
+              0.15,
+              0.15
+            ]
+          }
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "中"
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "missing",
+                "perRank": [
+                  0.15,
+                  0.15,
+                  0.15
+                ]
+              }
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-garen.r.webp"
+    }
+  },
+  "exAbility": "lol-garen.ex",
+  "passiveAbility": "lol-garen.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "greatsword"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-garen.webp"
+}

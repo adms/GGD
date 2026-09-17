@@ -1,0 +1,11 @@
+{
+  "id": "lol-malphite.slam-as",
+  "schema": "status-effect@1",
+  "name": "大地震顫",
+  "description": "墨菲特「大地震顫」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-malphite.slam-as",
+    "buff"
+  ]
+}

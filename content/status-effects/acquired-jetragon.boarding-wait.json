@@ -1,0 +1,14 @@
+{
+  "id": "acquired-jetragon.boarding-wait",
+  "schema": "status-effect@1",
+  "name": "登機口改號",
+  "description": "空渦龍「登機口改號」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-jetragon.boarding-wait",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

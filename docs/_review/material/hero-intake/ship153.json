@@ -13,25 +13,1892 @@
  },
  "delivery": null,
  "counts": {
-  "heroes": 153,
-  "ready": 128,
-  "blocked": 25,
+  "heroes": 190,
+  "ready": 132,
+  "blocked": 58,
   "modelGaps": 0,
   "iconGaps": 0,
-  "voiceGaps": 25,
+  "voiceGaps": 58,
   "modelPending": 0,
   "iconPending": 0,
-  "voicePending": 7,
+  "voicePending": 11,
   "independentComponentPending": 0,
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "e9a7c9f86357dc00cd818d6119757f1688ccccfe892ce4f5d8585c7c9aec91a0",
+ "digest": "316a155258c7c248d312024784beec6f0154e7b727a1192ebbfd4f2c2e53eb44",
  "digestParts": {
-  "core": "bf3b7136a7a7241845798022bc0123fc51a1d853106deb6e8ee739ae97af1a99",
-  "voiceCandidates": "ef51412ed9f572c870f0eadee965e301fcd9e1cae6149b4ecedd44d8c880e4f9"
+  "core": "b3d971e2b9cccd4113a5c9b0c0fa8b3184e2299e29370da50731c83492c829c6",
+  "voiceCandidates": "31d4ea4a84dc49bfdc9d155fe2491f74edfd78d061e86084f087c9e18ec2a61d"
  },
  "heroes": [
+  {
+   "id": "acquired-alice",
+   "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+    "glbPath": "assets/models/community/724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed.glb",
+    "bytes": 1448448,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-alice.webp",
+    "bytes": 9470,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-alice.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:249",
+      "groupName": "爱丽丝",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 235,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-astralym",
+   "name": "枯星龍",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+    "glbPath": "assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+    "bytes": 3876004,
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Walk",
+     "attack": "FarSkill_Action",
+     "cast": "HaloBeam_Loop",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-astralym.webp",
+    "bytes": 7952,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-astralym.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": true,
+    "sharedFrom": null,
+    "categories": 14,
+    "required": 9,
+    "haveRequired": 8,
+    "missing": [
+     "kill-1"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamevault-palworld-astralym-audio:astralym-cries",
+      "groupName": "枯星龍 Astralym 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "出貨門檻缺 1 格",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "出貨門檻缺 1 格"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-asuna",
+   "name": "亞絲娜／結城明日奈",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+    "glbPath": "assets/models/community/f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604.glb",
+    "bytes": 879364,
+    "clipMap": {
+     "idle": "stand",
+     "run": "walk fast",
+     "attack": "attack 1",
+     "cast": "spell one",
+     "hurt": "stand",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-asuna.webp",
+    "bytes": 8704,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-asuna.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:76",
+      "groupName": "狂暴补师",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 522,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "hive-anime-team-survival:asuna2",
+      "groupName": "地圖音訊檔名／asuna2",
+      "library": "公開來源",
+      "work": "見來源頁",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 2 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 2 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-beatrice",
+   "name": "碧翠絲",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "champ.sela",
+    "glbPath": "assets/models/champions/blocky-mage.glb",
+    "bytes": 52120,
+    "clipMap": {
+     "idle": "idle",
+     "run": "run",
+     "attack": "attack",
+     "cast": "cast",
+     "hurt": "hurt",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-beatrice.webp",
+    "bytes": 8294,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-beatrice.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-cattiva",
+   "name": "搗蛋貓",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+    "glbPath": "assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+    "bytes": 1428876,
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Run",
+     "attack": "NekoPunch_Loop",
+     "cast": "FarSkill_Action",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-cattiva.webp",
+    "bytes": 5288,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-cattiva.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": true,
+    "sharedFrom": null,
+    "categories": 14,
+    "required": 9,
+    "haveRequired": 8,
+    "missing": [
+     "kill-1"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "palworld-cattiva-gamevault:cattiva-cries",
+      "groupName": "搗蛋貓 Cattiva 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "出貨門檻缺 1 格",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "出貨門檻缺 1 格"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-dio",
+   "name": "DIO",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+    "glbPath": "assets/models/community/fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397.glb",
+    "bytes": 566160,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-dio.webp",
+    "bytes": 6806,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-dio.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-dio",
+      "groupName": "DIO",
+      "library": "公開來源",
+      "work": "JUMP FORCE",
+      "language": "unreviewed",
+      "fileCount": 243,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-emilia",
+   "name": "愛蜜莉雅",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+    "glbPath": "assets/models/community/4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea.glb",
+    "bytes": 1023532,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-emilia.webp",
+    "bytes": 7280,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-emilia.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:238",
+      "groupName": "爱蜜莉雅",
+      "library": "300英雄",
+      "work": "Re:從零開始的異世界生活",
+      "language": "unreviewed",
+      "fileCount": 190,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-inuyasha",
+   "name": "犬夜叉",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "ou99.452782",
+    "glbPath": "assets/models/ou99/ou99_452782.glb",
+    "bytes": 1191816,
+    "clipMap": {
+     "idle": "Stand - 1",
+     "run": "Walk",
+     "attack": "Attack - 1",
+     "cast": "Spell One",
+     "hurt": "Stand - 1",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-inuyasha.webp",
+    "bytes": 6740,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-inuyasha.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-jetragon",
+   "name": "空渦龍",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+    "glbPath": "assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+    "bytes": 3221852,
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Run",
+     "attack": "FarSkill_Action",
+     "cast": "JumpBeam_Loop",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-jetragon.webp",
+    "bytes": 5798,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-jetragon.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": true,
+    "sharedFrom": null,
+    "categories": 14,
+    "required": 9,
+    "haveRequired": 8,
+    "missing": [
+     "kill-1"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamevault-palworld-jetragon-cries:jetragon-cries",
+      "groupName": "空渦龍 Jetragon 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "出貨門檻缺 1 格",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "出貨門檻缺 1 格"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-kita-kita",
+   "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+    "glbPath": "assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+    "bytes": 373212,
+    "clipMap": {
+     "idle": "wait",
+     "run": "F-Move",
+     "attack": "attack_01",
+     "cast": "sp01_01",
+     "hurt": "Damage-1",
+     "death": "D-Down"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-kita-kita.webp",
+    "bytes": 6740,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-kita-kita.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-kuroyukihime",
+   "name": "黑雪姬",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+    "glbPath": "assets/models/community/e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497.glb",
+    "bytes": 531668,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-kuroyukihime.webp",
+    "bytes": 5556,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-kuroyukihime.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:164",
+      "groupName": "黑雪姬",
+      "library": "300英雄",
+      "work": "加速世界",
+      "language": "unreviewed",
+      "fileCount": 187,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-leafa",
+   "name": "莉法",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+    "glbPath": "assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb",
+    "bytes": 1156736,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01_a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-leafa.webp",
+    "bytes": 7130,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-leafa.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:260",
+      "groupName": "莉法",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 167,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-lord-nightmares",
+   "name": "金色魔王／惡夢之王",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+    "glbPath": "assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+    "bytes": 695020,
+    "clipMap": {
+     "idle": "wait",
+     "run": "F-Move",
+     "attack": "maryokudan_01",
+     "cast": "sp01_01",
+     "hurt": "Damage-1",
+     "death": "D-Down"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-lord-nightmares.webp",
+    "bytes": 9026,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-lord-nightmares.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": true,
+    "sharedFrom": null,
+    "categories": 4,
+    "required": 9,
+    "haveRequired": 2,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "出貨門檻缺 7 格",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "出貨門檻缺 7 格"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-mario",
+   "name": "Mario",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.linkstik",
+    "glbPath": "assets/models/imported/linkstik.glb",
+    "bytes": 207624,
+    "clipMap": {
+     "idle": "Stand - 1",
+     "run": "Walk",
+     "attack": "Attack - 1",
+     "cast": "Attack - 1",
+     "hurt": "Stand Hit",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-mario.webp",
+    "bytes": 7158,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-mario.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mario",
+      "groupName": "SSBM / Characters_Mario",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 32,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Dr_Mario",
+      "groupName": "SSBM / Characters_Dr_Mario",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 2 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 2 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-mewtwo",
+   "name": "Mewtwo",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.herobuu",
+    "glbPath": "assets/models/imported/herobuu.glb",
+    "bytes": 188804,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack -1",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-mewtwo.webp",
+    "bytes": 5702,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-mewtwo.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-ssbu-japanese:vc_mewtwo",
+      "groupName": "NS 原生音訊／vc_mewtwo",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Ultimate",
+      "language": "unreviewed",
+      "fileCount": 24,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mewtwo",
+      "groupName": "SSBM / Characters_Mewtwo",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 2 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 2 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-minecraft",
+   "name": "Steve／Alex",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "champ.thorne",
+    "glbPath": "assets/models/champions/blocky-knight.glb",
+    "bytes": 52088,
+    "clipMap": {
+     "idle": "idle",
+     "run": "run",
+     "attack": "attack",
+     "cast": "cast",
+     "hurt": "hurt",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-minecraft.webp",
+    "bytes": 5414,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-minecraft.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-morgiana",
+   "name": "摩尔迦娜",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+    "glbPath": "assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb",
+    "bytes": 794628,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-morgiana.webp",
+    "bytes": 6626,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-morgiana.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:62",
+      "groupName": "摩尔迦娜",
+      "library": "300英雄",
+      "work": "MAGI 魔奇少年",
+      "language": "unreviewed",
+      "fileCount": 282,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-naruto",
+   "name": "漩渦鳴人",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+    "glbPath": "assets/models/community/e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78.glb",
+    "bytes": 530504,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_04",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-naruto.webp",
+    "bytes": 7070,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-naruto.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+      "groupName": "Naruto",
+      "library": "公開來源",
+      "work": "JUMP FORCE",
+      "language": "unreviewed",
+      "fileCount": 218,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120",
+      "groupName": "Naruto",
+      "library": "本機遊戲",
+      "work": "JUMP FORCE",
+      "language": "unreviewed",
+      "fileCount": 119,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 2 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 2 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-pokemon-trainer",
+   "name": "Pokémon Trainer",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.heropikachu",
+    "glbPath": "assets/models/imported/heropikachu.glb",
+    "bytes": 81308,
+    "clipMap": {
+     "idle": "Stand - 1",
+     "run": "Walk",
+     "attack": "Attack - 1",
+     "cast": "Spell Throw",
+     "hurt": "Stand - 1",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-pokemon-trainer.webp",
+    "bytes": 4264,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-pokemon-trainer.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-ssbu-japanese:vc_ptrainer",
+      "groupName": "NS 原生音訊／vc_ptrainer",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Ultimate",
+      "language": "unreviewed",
+      "fileCount": 58,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-ram",
+   "name": "拉姆",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.herooichi",
+    "glbPath": "assets/models/imported/herooichi.glb",
+    "bytes": 240152,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-ram.webp",
+    "bytes": 7822,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-ram.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-rim",
+   "name": "莉姆（Rim；粉紅魔龍）",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+    "glbPath": "assets/models/community/0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e.glb",
+    "bytes": 846020,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_a",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-rim.webp",
+    "bytes": 5028,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-rim.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:289",
+      "groupName": "莉姆",
+      "library": "300英雄",
+      "work": "迷宮黑心企業／異世界迷宮黑心企業",
+      "language": "unreviewed",
+      "fileCount": 326,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-ryu",
+   "name": "Ryu",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.herokyo",
+    "glbPath": "assets/models/imported/herokyo.glb",
+    "bytes": 266016,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-ryu.webp",
+    "bytes": 7290,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-ryu.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-ssbu-japanese:vc_ryu",
+      "groupName": "NS 原生音訊／vc_ryu",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Ultimate",
+      "language": "unreviewed",
+      "fileCount": 55,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-saya",
+   "name": "沙耶",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+    "glbPath": "assets/models/community/eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070.glb",
+    "bytes": 824856,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_02",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-saya.webp",
+    "bytes": 7604,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-saya.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:29",
+      "groupName": "沙耶",
+      "library": "300英雄",
+      "work": "沙耶之歌",
+      "language": "unreviewed",
+      "fileCount": 194,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
+      "groupId": "300heroes:162",
+      "groupName": "美树沙耶加",
+      "library": "300英雄",
+      "work": "魔法少女小圓",
+      "language": "unreviewed",
+      "fileCount": 232,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 2 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 2 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-wargreymon",
+   "name": "戰鬥暴龍獸",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+    "glbPath": "assets/models/community/11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4.glb",
+    "bytes": 695132,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-wargreymon.webp",
+    "bytes": 7156,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-wargreymon.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:159",
+      "groupName": "龙教练",
+      "library": "300英雄",
+      "work": "數碼寶貝大冒險",
+      "language": "unreviewed",
+      "fileCount": 214,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-xiaodangjia",
+   "name": "小當家",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "ou99.498407",
+    "glbPath": "assets/models/ou99/ou99_498407.glb",
+    "bytes": 561132,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-xiaodangjia.webp",
+    "bytes": 5656,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-xiaodangjia.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "沒有語音包",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "acquired-zero",
+   "name": "Zero",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "imported.herosephiroth",
+    "glbPath": "assets/models/imported/herosephiroth.glb",
+    "bytes": 275320,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/acquired-zero.webp",
+    "bytes": 8214,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/acquired-zero.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamebanana-zero-lancer-493444:zero-lancer-voice",
+      "groupName": "Diarmuid Ua Duibhne / Zero Lancer",
+      "library": "公開來源",
+      "work": "Fate/unlimited codes",
+      "language": "unreviewed",
+      "fileCount": 13,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
   {
    "id": "b2-aladdin",
    "name": "阿拉丁",
@@ -4533,16 +6400,16 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "w3x.stock.satyrtrickster",
-    "glbPath": "assets/models/imported/satyrtrickster.glb",
-    "bytes": 760652,
+    "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+    "glbPath": "assets/models/ou99/versions/ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd.glb",
+    "bytes": 716744,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",
-     "attack": "Attack",
-     "cast": "Stand Ready",
-     "hurt": "Stand - 2",
-     "death": "Death"
+     "attack": "Attack 1",
+     "cast": "Attack 1",
+     "hurt": "Stand",
+     "death": "death"
     },
     "missingClips": [],
     "gap": "",
@@ -5466,16 +7333,16 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "champ.skin.barbarian",
-    "glbPath": "assets/models/champions/blocky-barbarian.glb",
-    "bytes": 52124,
+    "modelKey": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+    "glbPath": "assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb",
+    "bytes": 1330152,
     "clipMap": {
-     "idle": "idle",
-     "run": "run",
-     "attack": "attack",
-     "cast": "cast",
-     "hurt": "hurt",
-     "death": "death"
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack 1",
+     "cast": "Spell One",
+     "hurt": "Stand",
+     "death": "Death"
     },
     "missingClips": [],
     "gap": "",
@@ -8128,16 +9995,16 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
-    "glbPath": "assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb",
-    "bytes": 52124,
+    "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+    "glbPath": "assets/models/ou99/versions/92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a.glb",
+    "bytes": 4119592,
     "clipMap": {
-     "idle": "idle",
-     "run": "run",
-     "attack": "attack",
-     "cast": "cast",
-     "hurt": "hurt",
-     "death": "death"
+     "idle": "Stand - 1",
+     "run": "Walk",
+     "attack": "Attack - 1",
+     "cast": "Spell - 1",
+     "hurt": "Stand Hit",
+     "death": "Death"
     },
     "missingClips": [],
     "gap": "",
@@ -8303,6 +10170,450 @@
    "blockers": [],
    "warnings": [],
    "ready": true
+  },
+  {
+   "id": "lol-ahri",
+   "name": "阿璃",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+    "glbPath": "assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+    "bytes": 2552760,
+    "clipMap": {
+     "idle": "idle1",
+     "run": "run",
+     "attack": "attack1",
+     "cast": "spell1",
+     "hurt": "idle1",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-ahri.webp",
+    "bytes": 5966,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-ahri.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-ahri-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Ahri / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 1378,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-ashe",
+   "name": "艾希",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+    "glbPath": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+    "bytes": 1279552,
+    "clipMap": {
+     "idle": "ashe_idle1",
+     "run": "ashe_run",
+     "attack": "ashe_attack1",
+     "cast": "ashe_spell1",
+     "hurt": "ashe_idle1",
+     "death": "ashe_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-ashe.webp",
+    "bytes": 7676,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-ashe.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-ashe-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Ashe / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 1160,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-blitzcrank",
+   "name": "布里姿",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+    "glbPath": "assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+    "bytes": 425584,
+    "clipMap": {
+     "idle": "blitzcrank_idle1",
+     "run": "blitzcrank_run",
+     "attack": "blitzcrank_attack1",
+     "cast": "blitzcrank_spell1",
+     "hurt": "blitzcrank_idle1",
+     "death": "blitzcrank_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-blitzcrank.webp",
+    "bytes": 6932,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-blitzcrank.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-blitzcrank-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Blitzcrank / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 263,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-chogath",
+   "name": "科加斯",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+    "glbPath": "assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+    "bytes": 523132,
+    "clipMap": {
+     "idle": "chogath_idle1",
+     "run": "chogath_run",
+     "attack": "chogath_attack1",
+     "cast": "chogath_spell1",
+     "hurt": "chogath_idle1",
+     "death": "chogath_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-chogath.webp",
+    "bytes": 6188,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-chogath.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-chogath-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Chogath / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 191,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-fiddlesticks",
+   "name": "稻草人",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+    "glbPath": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+    "bytes": 3459856,
+    "clipMap": {
+     "idle": "fiddlesticks_idle1",
+     "run": "fiddlesticks_run",
+     "attack": "fiddlesticks_attack1_a",
+     "cast": "fiddlesticks_spell1",
+     "hurt": "fiddlesticks_idle1",
+     "death": "fiddlesticks_death_v2"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-fiddlesticks.webp",
+    "bytes": 4810,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-fiddlesticks.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-fiddlesticks-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / FiddleSticks / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 671,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-garen",
+   "name": "蓋倫",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+    "glbPath": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+    "bytes": 2041452,
+    "clipMap": {
+     "idle": "garen_2013_idle1",
+     "run": "garen_2013_run",
+     "attack": "garen_2013_attack_01",
+     "cast": "garen_2013_spell1",
+     "hurt": "garen_2013_idle1",
+     "death": "garen_2013_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-garen.webp",
+    "bytes": 8118,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-garen.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-garen-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Garen / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 479,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
   },
   {
    "id": "lol-karthus",
@@ -8557,6 +10868,80 @@
    "ready": true
   },
   {
+   "id": "lol-malphite",
+   "name": "墨菲特",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+    "glbPath": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+    "bytes": 414708,
+    "clipMap": {
+     "idle": "malphite_idle1",
+     "run": "malphite_run",
+     "attack": "malphite_attack1",
+     "cast": "malphite_spell1",
+     "hurt": "malphite_idle1",
+     "death": "malphite_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-malphite.webp",
+    "bytes": 6120,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-malphite.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-malphite-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Malphite / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 151,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
    "id": "lol-missfortune",
    "name": "好運姐",
    "inContent": true,
@@ -8646,6 +11031,302 @@
     "出貨門檻缺 2 格"
    ],
    "ready": true
+  },
+  {
+   "id": "lol-ornn",
+   "name": "鄂爾",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+    "glbPath": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+    "bytes": 3759304,
+    "clipMap": {
+     "idle": "ornn_idle1",
+     "run": "ornn_run",
+     "attack": "ornn_attack1",
+     "cast": "ornn_spell1",
+     "hurt": "ornn_idle1",
+     "death": "ornn_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-ornn.webp",
+    "bytes": 6816,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-ornn.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-ornn-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Ornn / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 765,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-sett",
+   "name": "賽特",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+    "glbPath": "assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+    "bytes": 4566192,
+    "clipMap": {
+     "idle": "sett_idle",
+     "run": "sett_run",
+     "attack": "sett_attack1",
+     "cast": "sett_spell1_a",
+     "hurt": "sett_idle",
+     "death": "sett_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-sett.webp",
+    "bytes": 5968,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-sett.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-sett-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Sett / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 662,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-thresh",
+   "name": "瑟雷西",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+    "glbPath": "assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+    "bytes": 4518760,
+    "clipMap": {
+     "idle": "thresh_idle1",
+     "run": "thresh_run",
+     "attack": "thresh_attack1_long",
+     "cast": "thresh_spell1_in",
+     "hurt": "thresh_idle1",
+     "death": "thresh_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-thresh.webp",
+    "bytes": 7884,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-thresh.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-thresh-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Thresh / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 568,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
+  },
+  {
+   "id": "lol-velkoz",
+   "name": "威寇茲",
+   "inContent": true,
+   "deliveryKey": null,
+   "deliveryIdentityIds": [],
+   "model": {
+    "ok": true,
+    "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+    "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+    "bytes": 4523524,
+    "clipMap": {
+     "idle": "velkoz_idle1v2",
+     "run": "velkoz_run",
+     "attack": "velkoz_attack1",
+     "cast": "velkoz_spell1",
+     "hurt": "velkoz_idle1v2",
+     "death": "velkoz_death"
+    },
+    "missingClips": [],
+    "gap": "",
+    "severity": ""
+   },
+   "icon": {
+    "ok": true,
+    "path": "assets/icons/champions/lol-velkoz.webp",
+    "bytes": 3860,
+    "generator": null,
+    "gap": "",
+    "severity": "",
+    "asset": "content/assets/icons/champions/lol-velkoz.webp"
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-velkoz-ja-jp-16-18-8159717",
+      "groupName": "League of Legends / Velkoz / ja_JP / 16.18.8159717",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 348,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     }
+    ],
+    "gap": "沒有語音包；全庫有 1 個候選來源",
+    "severity": "blocker"
+   },
+   "blockers": [
+    "沒有語音包；全庫有 1 個候選來源"
+   ],
+   "warnings": [],
+   "ready": false
   },
   {
    "id": "lol-warwick",

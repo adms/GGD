@@ -1,0 +1,14 @@
+{
+  "id": "lol-chogath.scream",
+  "schema": "status-effect@1",
+  "name": "野性尖嘯",
+  "description": "科加斯「野性尖嘯」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-chogath.scream",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

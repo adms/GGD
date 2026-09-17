@@ -1,0 +1,16 @@
+{
+  "id": "lol-malphite.parking-root",
+  "schema": "status-effect@1",
+  "name": "此處禁止停車",
+  "description": "墨菲特「此處禁止停車」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-malphite.parking-root",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

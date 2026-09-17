@@ -1,0 +1,11 @@
+{
+  "id": "acquired-mario.coin",
+  "schema": "status-effect@1",
+  "name": "叮！不是薪水",
+  "description": "Mario「叮！不是薪水」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-mario.coin",
+    "buff"
+  ]
+}

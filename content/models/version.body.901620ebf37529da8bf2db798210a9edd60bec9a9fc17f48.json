@@ -1,0 +1,21 @@
+{
+  "id": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell One",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "heroBody": true,
+  "bodyVersion": {
+    "sourceModelKey": "ou99.463344",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 90
+}

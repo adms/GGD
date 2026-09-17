@@ -1,0 +1,68 @@
+{
+  "id": "acquired-asuna.e",
+  "name": "插入隊伍最前面",
+  "provenance": "editor-json",
+  "description": "短距離突進指定敵人旁造成小級物理傷害，落點保留距離。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.lightning.slash",
+          "at": "point"
+        },
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+    "params": {
+      "range": 6,
+      "stopShortUnits": 1.8,
+      "damage": {
+        "damageTier": "小",
+        "ratios": []
+      },
+      "damageType": "physical"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-asuna.e.webp"
+}

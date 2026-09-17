@@ -1,0 +1,305 @@
+{
+  "id": "acquired-alice",
+  "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+  "description": "金木樨花瓣像罰單：先把人留下，再讓花瓣包圍；隊友的安全由騎士簽收。\n\n概念來源：刀劍神域 Sword Art Online 愛麗絲·滋貝魯庫（Alice Zuberg）\nhttps://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md\n\n本遊戲改編：\n• 武裝完全支配用既有區域射線，沒有持續追蹤的實體花瓣AI。\n• Q鎖足→R射線；W護隊友，E換位。敵人可走出陣列或先打斷接近。\n\n採用所選 GGD 模型與特效。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "坦克",
+  "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 27.67734693877551,
+    "healthRegen": 0.08196326530612243,
+    "maxMana": 0.9209183673469388,
+    "manaRegen": 0,
+    "ad": 1.8716734693877548,
+    "as": 0,
+    "mr": 5.279591836734694,
+    "armor": 1.5605204081632653,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 29,
+    "agi": 18,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-alice.q",
+      "name": "金木樨停車單",
+      "provenance": "editor-json",
+      "description": "落點敵人鎖足1.2秒，為花瓣陣列留下目標。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6,
+      "radius": 4.5,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "acquired-alice.disruption",
+          "duration": 1.2,
+          "root": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "params": {
+          "radius": 250,
+          "status": {
+            "statusId": "acquired-alice.disruption",
+            "duration": 1.2,
+            "root": true
+          }
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+      },
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/acquired-alice.q.webp"
+    },
+    "W": {
+      "id": "acquired-alice.w",
+      "name": "騎士擔保",
+      "provenance": "editor-json",
+      "description": "為指定隊友提供130護盾，持續3秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 130,
+            "ratios": [],
+            "perRank": [
+              0,
+              65,
+              130,
+              195
+            ]
+          },
+          "duration": 3
+        }
+      ],
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+        "params": {
+          "target": "ally",
+          "amount": {
+            "flat": 130,
+            "ratios": [],
+            "perRank": [
+              0,
+              65,
+              130,
+              195
+            ]
+          },
+          "duration": 3,
+          "radius": 4
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+      },
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/acquired-alice.w.webp"
+    },
+    "E": {
+      "id": "acquired-alice.e",
+      "name": "騎士查勤",
+      "provenance": "editor-json",
+      "description": "跳至指定落點造成極小級物理傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.8,
+          "durationSec": 0.35,
+          "landRadius": 3,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": []
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 200,
+          "durationSec": 0.35,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
+      },
+      "icon": "assets/icons/abilities/acquired-alice.e.webp"
+    },
+    "R": {
+      "id": "acquired-alice.r",
+      "name": "花瓣罰單連發",
+      "provenance": "editor-json",
+      "description": "周圍向內依序發出6道射線，每道極小級魔法傷害；在Q鎖足後施放。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "intervalSec": 0.15,
+          "durationSec": 0.9,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f",
+        "params": {
+          "rayCount": 6,
+          "reach": 300,
+          "aim": "inward",
+          "rayIntervalSec": 0.15,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "magic"
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:df96cb85812262d65ca34099f73ffd259827a553bfda55efc1a81af7ea2bb88a"
+      },
+      "radiusTier": "中",
+      "icon": "assets/icons/abilities/acquired-alice.r.webp"
+    }
+  },
+  "exAbility": "acquired-alice.ex",
+  "passiveAbility": "acquired-alice.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "sword"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-alice.webp"
+}

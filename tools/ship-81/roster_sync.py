@@ -94,6 +94,19 @@ def _load_declared_skeletons() -> dict[str, dict]:
     return {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in rows}
 
 
+def _load_shipped_ahead() -> dict[str, dict]:
+    """⭐ 出貨跑在盤點表前面的那幾名（GH#1281）—— 每一名帶 owner 的原話。
+
+    ⛔ 不是豁免：盤點表是 owner 的檔（repo 外），他把某一名補上去之後，
+    這裡那一列就變成**過期宣告**，`shippedAheadStale` 會紅並要求刪掉它。
+    """
+    if not BASELINE.exists():
+        return {}
+    doc = json.loads(BASELINE.read_text(encoding="utf-8"))
+    rows = (doc.get("shippedAheadOfInventory") or {}).get("rows") or []
+    return {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in rows}
+
+
 def _resolve_aliases(rows: list[dict], shipped: dict[str, dict]) -> tuple[dict, dict, list[dict]]:
     """⭐ **先驗那把鑰匙**（第〇·六守則 / GH#635），⛔ 不是拿 key 直接 join。
 
@@ -202,6 +215,8 @@ def audit(inventory: Path, repo: Path) -> dict:
 
     # ── ③ 反向：出貨有、表上沒有（⭐ 變身態的豁免是**推導**的）──────
     reverse_gap, alternates_exempted = [], []
+    ahead_declared = _load_shipped_ahead()
+    ahead_live: list[str] = []
     for hid in sorted(community):
         # ⭐ 直接同名，或**驗過的別名**指到它 ⇒ 表上有這個人。
         if hid in inv_ids or hid in aliased_ship:
@@ -210,6 +225,16 @@ def audit(inventory: Path, repo: Path) -> dict:
         counterpart = tf.get("counterpartId")
         if tf.get("role") == "alternate" and counterpart in inv_ids:
             alternates_exempted.append({"id": hid, "counterpartId": counterpart})
+            continue
+        # ⭐⭐ GH#1281（2026-09-17）—— **出貨跑在盤點表前面**的那一種，逐名宣告。
+        #
+        # owner 2026-09-17 逐字：「我要全部上線」／2026-09-16「全部英雄上架是預設的 不需要我審查通過」
+        # ⇒ 第四批 37 名今天就在選人畫面上，⭐ 而盤點表是 owner 的檔（repo 外，⛔ 我不可以改）
+        #   ⇒ 「有落差就紅」在這一頭會變成**我這邊做什麼都不會變綠**的閘（失敗形態⑨）。
+        # ⭐ 所以它們進 `shippedAheadOfInventory`：⛔ 不是豁免，是**登記**＋棘輪 ——
+        #   owner 把某一名補進盤點表之後，那一列就變成過期宣告（下面的 stale 會紅）。
+        if hid in ahead_declared:
+            ahead_live.append(hid)
             continue
         reverse_gap.append(hid)
 
@@ -262,6 +287,9 @@ def audit(inventory: Path, repo: Path) -> dict:
         "staleBlockers": stale,
         "forwardGap": forward_gap,
         "reverseGap": reverse_gap,
+        # ⭐ 登記過的「出貨跑在盤點表前面」—— 兩個方向都印：還成立的、以及已經過期的。
+        "shippedAheadOfInventory": sorted(ahead_live),
+        "shippedAheadStale": sorted(i for i in ahead_declared if i not in {*ahead_live}),
         "aliasIssues": alias_issues,
         # ⭐ ④ 骨架佔位這一軸 —— 兩個方向都印出來。
         "skeletonUndeclared": undeclared,

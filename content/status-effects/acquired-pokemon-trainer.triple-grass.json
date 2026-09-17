@@ -1,0 +1,16 @@
+{
+  "id": "acquired-pokemon-trainer.triple-grass",
+  "schema": "status-effect@1",
+  "name": "三重指令結帳",
+  "description": "Pokémon Trainer「三重指令結帳」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-pokemon-trainer.triple-grass",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

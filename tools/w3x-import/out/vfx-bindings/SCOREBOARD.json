@@ -2,38 +2,37 @@
  "schema": "vfx-bindings-scoreboard@1",
  "summary": {
   "universe": {
-   "ggdAbilityDocs": 907,
+   "ggdAbilityDocs": 1129,
    "w3aAbilityRecords": 1538,
    "w3aCustomAbilities": 1359,
    "w3aStockOriginalsTouchedByTheMap": 179,
    "abilitiesInMergedIndex": 1538,
-   "note": "the owner's '662 abilities' = content/abilities/*.json minus _index.json. Verified: 907. The w3a side is larger (1538) because the map also edits stock originals in place and defines runtime-only abilities (orbs, dummy carriers) that no GGD doc represents."
+   "note": "the owner's '662 abilities' = content/abilities/*.json minus _index.json. Verified: 1129. The w3a side is larger (1538) because the map also edits stock originals in place and defines runtime-only abilities (orbs, dummy carriers) that no GGD doc represents."
   },
   "ggdDocCoverage": {
-   "HAND_AUTHORED_NOT_FROM_THE_MAP": 494,
-   "CONFIRMED_ART": 210,
-   "CONFIRMED_NEGATIVE": 99,
-   "CONFIRMED_ART_AND_PARAMS": 78,
-   "CONFIRMED_ART_INFERRED_PARAMS": 18,
+   "HAND_AUTHORED_NOT_FROM_THE_MAP": 716,
+   "CONFIRMED_NEGATIVE": 151,
+   "CONFIRMED_ART": 172,
+   "CONFIRMED_ART_INFERRED_PARAMS": 17,
+   "CONFIRMED_ART_AND_PARAMS": 65,
    "INFERRED_ART": 1,
    "UNRESOLVED_NO_RAWCODE": 7
   },
   "abilityCoverage": {
-   "artConfirmed": 965,
-   "artInferred": 1,
-   "artConfirmedNegative": 572,
+   "artConfirmed": 636,
+   "artInferred": 3,
+   "artConfirmedNegative": 899,
    "artUnresolved": 0,
    "paramsConfirmed": 110,
    "paramsInferred": 20,
    "paramsNone": 1408
   },
   "artProvenance": {
-   "stock-inherited": 788,
    "w3a-override": 741
   },
   "assetStatus": {
-   "MISSING_BLIZZARD_STOCK": 1305,
-   "LIGHTNING_ID": 112,
+   "MISSING_BLIZZARD_STOCK": 595,
+   "LIGHTNING_ID": 34,
    "IN_REPO_MESH_PLUS_EMITTERS": 33,
    "IN_REPO_MESH_ONLY": 41,
    "IN_REPO_EMITTER_IS_THE_ASSET": 38
@@ -56,28 +55,28 @@
     "withNoCarrierFound": 39,
     "attachedModelAssetStatus": {
      "IN_REPO_MESH_PLUS_EMITTERS": 5,
-     "MISSING_BLIZZARD_STOCK": 56,
+     "MISSING_BLIZZARD_STOCK": 55,
      "IN_REPO_MESH_ONLY": 14,
      "IN_REPO_EMITTER_IS_THE_ASSET": 2
     },
-    "withAtLeastOneAttachedModel": 77
+    "withAtLeastOneAttachedModel": 76
    },
    "locust_蝗蟲群": {
-    "abilities": 47,
-    "customToThisMap": 47,
-    "artConfirmed": 44,
-    "assetInRepo": 5,
-    "assetMissingBlizzard": 38,
+    "abilities": 45,
+    "customToThisMap": 45,
+    "artConfirmed": 39,
+    "assetInRepo": 7,
+    "assetMissingBlizzard": 19,
     "withPerInvocationParams": 35,
-    "reachableFromAGgdDoc": 21,
-    "ggdDocsCovered": 30
+    "reachableFromAGgdDoc": 19,
+    "ggdDocsCovered": 27
    },
    "particle_粒子": {
     "abilities": 116,
     "customToThisMap": 114,
-    "artConfirmed": 113,
-    "assetInRepo": 74,
-    "assetMissingBlizzard": 42,
+    "artConfirmed": 110,
+    "assetInRepo": 92,
+    "assetMissingBlizzard": 24,
     "withPerInvocationParams": 38,
     "reachableFromAGgdDoc": 58,
     "ggdDocsCovered": 97

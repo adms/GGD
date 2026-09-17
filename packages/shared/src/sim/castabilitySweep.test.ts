@@ -1459,6 +1459,18 @@ describe("task #128 — in-game castability coverage sweep", () => {
         ).length,
       0,
     );
+    // ⭐ GH#1281（2026-09-17）：比例掉下來的時候要**指名是哪一格** —— ⛔ 不是叫人去翻報告，
+    //   那份報告的母體（首發名單）與這裡的分母（tracked）本來就不一樣。
+    const brokenCells = trackedResults.flatMap((r) =>
+      COLS.filter(
+        (s) =>
+          r.cells[s].verdict !== "NONE" &&
+          r.cells[s].verdict !== "FORM_GATED" &&
+          !r.cells[s].seedDependent &&
+          !["PASS", "PASSIVE"].includes(r.cells[s].verdict),
+      ).map((s) => `${r.id}|${s}: ${r.cells[s].verdict} ${r.cells[s].reason ?? ""}`),
+    );
+    expect(brokenCells, "⛔ 這幾格放不出來（或放出去什麼都沒動）").toEqual([]);
     expect(
       working / cells,
       `working cells (PASS + verified PASSIVE) 是 ${working}/${cells} = ` +

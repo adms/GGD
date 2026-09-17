@@ -1,0 +1,14 @@
+{
+  "id": "acquired-ryu.training",
+  "schema": "status-effect@1",
+  "name": "無薪修行",
+  "description": "Ryu「無薪修行」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-ryu.training",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

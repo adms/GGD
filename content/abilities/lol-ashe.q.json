@@ -1,0 +1,129 @@
+{
+  "id": "lol-ashe.q",
+  "name": "專注射擊",
+  "provenance": "editor-json",
+  "description": "消耗四層專注，四秒加攻速並每次普攻追加小額傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "lol-ashe.focus",
+      "count": 4,
+      "subject": "self",
+      "onConsumed": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.4
+            }
+          ],
+          "duration": 4,
+          "statusId": "lol-ashe.focus-active",
+          "applyTo": "self",
+          "stackKey": "lol-ashe.focus-active",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.ice.pulse-lg",
+          "at": "self"
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "先普攻累積四層專注",
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+    "params": {
+      "statusId": "lol-ashe.focus",
+      "minStacks": 4,
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "missingText": "先普攻累積四層專注",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 4,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.4
+            }
+          ],
+          "statusId": "lol-ashe.focus-active",
+          "stackKey": "lol-ashe.focus-active",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.ice.pulse-lg",
+          "at": "self"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:297c2306b1acc7f739c89fffd6d24c407f4ea6222bfb0da19e47a27a28fd180f"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-ashe.q.webp"
+}

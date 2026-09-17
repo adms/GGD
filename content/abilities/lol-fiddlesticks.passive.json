@@ -1,0 +1,84 @@
+{
+  "id": "lol-fiddlesticks.passive",
+  "name": "無害稻草人",
+  "provenance": "editor-json",
+  "description": "回合開始生成一具短命低傷替身。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onRoundStart",
+            "effects": [
+              {
+                "kind": "summon",
+                "body": "self",
+                "count": 1,
+                "durationSec": 8,
+                "formation": "ring",
+                "spread": 1.5,
+                "maxAlive": 1,
+                "onOwnerDeath": "despawn",
+                "hpMult": 0.15,
+                "damageMult": 0.01
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.void.summon",
+                "at": "self"
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onRoundStart",
+          "effects": [
+            {
+              "kind": "summon",
+              "body": "self",
+              "count": 1,
+              "durationSec": 8,
+              "damageMult": 0.01,
+              "hpMult": 0.15,
+              "formation": "ring",
+              "spread": 1.5,
+              "maxAlive": 1,
+              "onOwnerDeath": "despawn"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.void.summon",
+              "at": "self"
+            }
+          ],
+          "target": "self"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-fiddlesticks.passive.webp"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "acquired-saya.fear",
+  "schema": "status-effect@1",
+  "name": "看見真實菜單",
+  "description": "沙耶「看見真實菜單」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-saya.fear",
+    "fear",
+    "uncontrollable",
+    "ai-override",
+    "flee",
+    "attack-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

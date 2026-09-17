@@ -1,0 +1,11 @@
+{
+  "id": "lol-garen.recent-damage",
+  "schema": "status-effect@1",
+  "name": "堅韌",
+  "description": "蓋倫「堅韌」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-garen.recent-damage",
+    "buff"
+  ]
+}

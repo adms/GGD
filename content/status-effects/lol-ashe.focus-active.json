@@ -1,0 +1,11 @@
+{
+  "id": "lol-ashe.focus-active",
+  "schema": "status-effect@1",
+  "name": "專注射擊",
+  "description": "艾希「專注射擊」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-ashe.focus-active",
+    "buff"
+  ]
+}

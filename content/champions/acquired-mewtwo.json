@@ -1,0 +1,394 @@
+{
+  "id": "acquired-mewtwo",
+  "name": "Mewtwo",
+  "description": "以念力護盾蓄勢、暗影球遠攻與瞬移換位的法師。存在的意義還沒找到，排位配對先找到了。\n\n概念來源：Pokémon／寶可夢 Mewtwo／超夢\nhttps://www.smashbros.com/en_US/fighter/index.html\n\n本遊戲改編：\n• 蓄力以 W 給予的一層專注表示，不讀長按時間；沒有精神控制玩家、複製角色或永久能力提升。\n• 瞬移受本遊戲施法距離限制；R 僅局部短暈，不是全場念力拘束。\n\n採用所選 GGD 模型與特效。 目前使用已核准 GGD 替代模型 imported.herobuu；來源本尊缺六動作，之後以獨立模型版本替換，不覆寫此版。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "imported.herobuu",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-mewtwo.q",
+      "name": "暗影球・已充電",
+      "provenance": "editor-json",
+      "description": "消耗專注時射出大級魔法傷害球；無專注時為小級，傷害只在投射物命中時結算。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-mewtwo.focus",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.void",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "大"
+                  }
+                }
+              ]
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.void",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-mewtwo.focus",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.void",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "大"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.void",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mewtwo.q.webp"
+    },
+    "W": {
+      "id": "acquired-mewtwo.w",
+      "name": "念力保護殼",
+      "provenance": "editor-json",
+      "description": "自身取得 100 護盾持續 3 秒，並透過被動為下一發 Q 蓄力。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 100,
+            "ratios": [],
+            "perRank": [
+              0,
+              50,
+              100,
+              150
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "acquired-mewtwo.mind-shell",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 100,
+                "ratios": [],
+                "perRank": [
+                  0,
+                  50,
+                  100,
+                  150
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "acquired-mewtwo.mind-shell",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mewtwo.w.webp"
+    },
+    "E": {
+      "id": "acquired-mewtwo.e",
+      "name": "瞬間移動・區內",
+      "provenance": "editor-json",
+      "description": "瞬移至指定近處地點；不帶走其他單位。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 4.5,
+      "radius": 3,
+      "rangeTier": "小",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "point"
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mewtwo.e.webp"
+    },
+    "R": {
+      "id": "acquired-mewtwo.r",
+      "name": "精神強念投訴",
+      "provenance": "editor-json",
+      "description": "落點造成中級魔法範圍傷害，命中者暈眩 0.8 秒。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-mewtwo.psystrike",
+          "duration": 0.8,
+          "applyTo": "target",
+          "stun": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-mewtwo.psystrike",
+              "duration": 0.8,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "stun": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mewtwo.r.webp"
+    }
+  },
+  "exAbility": "acquired-mewtwo.ex",
+  "passiveAbility": "acquired-mewtwo.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "magic"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-mewtwo.webp"
+}

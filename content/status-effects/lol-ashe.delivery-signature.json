@@ -1,0 +1,14 @@
+{
+  "id": "lol-ashe.delivery-signature",
+  "schema": "status-effect@1",
+  "name": "鷹擊長空：強制簽收",
+  "description": "艾希「鷹擊長空：強制簽收」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ashe.delivery-signature",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

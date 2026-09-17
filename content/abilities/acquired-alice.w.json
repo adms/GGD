@@ -1,0 +1,65 @@
+{
+  "id": "acquired-alice.w",
+  "name": "騎士擔保",
+  "provenance": "editor-json",
+  "description": "為指定隊友提供130護盾，持續3秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 130,
+        "ratios": [],
+        "perRank": [
+          0,
+          65,
+          130,
+          195
+        ]
+      },
+      "duration": 3
+    }
+  ],
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+    "params": {
+      "target": "ally",
+      "amount": {
+        "flat": 130,
+        "ratios": [],
+        "perRank": [
+          0,
+          65,
+          130,
+          195
+        ]
+      },
+      "duration": 3,
+      "radius": 4
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/acquired-alice.w.webp"
+}

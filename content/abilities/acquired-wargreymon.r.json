@@ -1,0 +1,53 @@
+{
+  "id": "acquired-wargreymon.r",
+  "name": "蓋亞能量到付",
+  "provenance": "editor-json",
+  "description": "指定區域爆發大級魔法傷害；延長前搖給對手走位空間。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 6,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "template": {
+    "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+    "params": {
+      "radius": 350,
+      "damage": {
+        "damageTier": "大",
+        "ratios": []
+      },
+      "damageType": "magic"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-wargreymon.r.webp",
+  "radiusTier": "中"
+}

@@ -62,7 +62,7 @@
         "vfxDocs": 32,
         "reachableVfxDocs": 23,
         "abilities": 0,
-        "champions": 22
+        "champions": 24
       },
       "why": "⭐ **修復後在 additive 下安全**。原本左邊有效加光 208.3 的硬切亮線已由 4px 透明黑邊消除；現在四邊與外框皆為 0。它影響 22 位英雄，因此仍只開放已驗證的 additive。"
     },

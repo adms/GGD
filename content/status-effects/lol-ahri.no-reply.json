@@ -1,0 +1,14 @@
+{
+  "id": "lol-ahri.no-reply",
+  "schema": "status-effect@1",
+  "name": "已讀不回",
+  "description": "阿璃「已讀不回」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ahri.no-reply",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

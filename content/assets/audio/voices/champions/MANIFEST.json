@@ -28,10 +28,10 @@
       "defeat"
     ]
   },
-  "generatedCount": 135,
-  "partialCount": 81,
+  "generatedCount": 136,
+  "partialCount": 82,
   "sharedCount": 20,
-  "championCount": 155,
+  "championCount": 156,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
     {
@@ -308,142 +308,142 @@
       "lines": {
         "hum": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.mp3",
             "text": "Normal",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec"
+            "hash": "092754d7394d37f76dde668583d440a55d4ba5f255a3366337b07fce7904e82e"
           }
         ],
         "victory": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.mp3",
             "text": "Joy",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6"
+            "hash": "c8c816c4256d0d80b880615d34f743d00c7acaed7071e19c2548064e400d3d5d"
           }
         ],
         "attack-light": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "attack-heavy": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "crit": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "skill-name.q": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "skill-name.w": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "skill-name.e": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "skill-name.r": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "skill-name.ex": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
             "text": "Anger",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c"
+            "hash": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22"
           }
         ],
         "retreat": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.mp3",
             "text": "Sorrow",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347"
+            "hash": "dc081a8ad9258a9f720a0fcb1eecc9274b728e4af9bcb0624b8c8d708e284ef4"
           }
         ],
         "hurt": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.mp3",
             "text": "Pain",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d"
+            "hash": "058255819417f9b563b1b93aad299d9b1bbd45f13b87f6364cebac53506ecebe"
           }
         ],
         "hurt-heavy": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.mp3",
             "text": "Pain",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d"
+            "hash": "058255819417f9b563b1b93aad299d9b1bbd45f13b87f6364cebac53506ecebe"
           }
         ],
         "defeat": [
           {
-            "clip": "assets/audio/voices/palworld/cattiva/death-cfb643854222.wav",
+            "clip": "assets/audio/voices/palworld/cattiva/death-cfb643854222.mp3",
             "text": "Death",
             "lang": "zxx",
             "durationSec": 0,
             "speakerSim": null,
-            "hash": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a"
+            "hash": "a1706a89b9c8f91ba9dd2e51221f4e300b90d73e976269e4acd8b10e5dbbd98a"
           }
         ]
       }
@@ -590,6 +590,113 @@
             "durationSec": 0,
             "speakerSim": null,
             "hash": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358"
+          }
+        ]
+      }
+    },
+    "acquired-lord-nightmares": {
+      "engine": "cosyvoice3",
+      "variant": "cv3-0.5b",
+      "tier": "combat-core",
+      "missingCategories": [
+        "quote",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.ex",
+        "victory",
+        "hurt",
+        "hurt-heavy",
+        "stun",
+        "poison",
+        "slow",
+        "blind",
+        "bind",
+        "knockdown",
+        "healed",
+        "confused",
+        "paralyzed",
+        "thanks",
+        "taunt",
+        "curse",
+        "hum",
+        "crit",
+        "block",
+        "dodge",
+        "sprint",
+        "jump",
+        "respond.ok",
+        "respond.no",
+        "puzzled",
+        "love",
+        "thumbs-up",
+        "retreat",
+        "charge",
+        "watch",
+        "free-move",
+        "first-blood",
+        "kill-1",
+        "kill-2",
+        "kill-3",
+        "kill-4",
+        "kill-5",
+        "unstoppable"
+      ],
+      "lines": {
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/attack-heavy.mp3",
+            "text": "（原檔）voice_attack_2",
+            "lang": "und",
+            "durationSec": 2.306032,
+            "speakerSim": null,
+            "hash": "58a17f757361e7c3da6a8409a27157eab13e755718fa207cf2ae6324476f8ccf"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/attack-light.mp3",
+            "text": "（原檔）voice_attack_1",
+            "lang": "und",
+            "durationSec": 1.394649,
+            "speakerSim": null,
+            "hash": "284b875b10e958f39839809258d13a652f008269343d586a53aa8e00746c223f"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.mp3",
+            "text": "（原檔）voice_death_1",
+            "lang": "und",
+            "durationSec": 0.901224,
+            "speakerSim": null,
+            "hash": "c4ac15b662dc4204719472ce80e430432ef3255e260c17b9963ad3eaf986b966"
+          },
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.2.mp3",
+            "text": "（原檔）voice_death_2",
+            "lang": "und",
+            "durationSec": 0.970884,
+            "speakerSim": null,
+            "hash": "f4a97e1709e83cb90bd14f0fe96cd23b67896ed9d5155fa70296289c8d425ab6"
+          },
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/defeat.3.mp3",
+            "text": "（原檔）voice_death_3",
+            "lang": "und",
+            "durationSec": 1.493333,
+            "speakerSim": null,
+            "hash": "aae7deeff1ebf922ccae613c6aa391bb0d83f64a5bf5d85c5cb85488160c231c"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/lines/acquired-lord-nightmares/skill-name.r.mp3",
+            "text": "（原檔）voice_dazhao_2",
+            "lang": "und",
+            "durationSec": 1.79229,
+            "speakerSim": null,
+            "hash": "3896fc078c6067194933afc668b42e2de03f87c3274fa2f16fa55dcae1cc5852"
           }
         ]
       }

@@ -1,0 +1,88 @@
+{
+  "id": "acquired-mario.r",
+  "name": "終極火焰報價",
+  "provenance": "editor-json",
+  "description": "向面前 6 單位直線噴出大級魔法火焰；命中者減速 30% 持續 1.2 秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大"
+      },
+      "length": 6,
+      "width": 1,
+      "aim": "facing",
+      "fromCaster": true,
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-mario.hot",
+          "duration": 1.2,
+          "applyTo": "target",
+          "moveSpeedMult": 0.7
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大"
+          },
+          "length": 6,
+          "width": 1,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-mario.hot",
+              "duration": 1.2,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "moveSpeedMult": 0.7
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-mario.r.webp",
+  "radiusTier": "極小"
+}

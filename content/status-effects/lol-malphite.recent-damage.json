@@ -1,0 +1,11 @@
+{
+  "id": "lol-malphite.recent-damage",
+  "schema": "status-effect@1",
+  "name": "花崗岩護盾",
+  "description": "墨菲特「花崗岩護盾」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-malphite.recent-damage",
+    "buff"
+  ]
+}

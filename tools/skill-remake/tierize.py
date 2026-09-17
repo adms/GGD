@@ -299,6 +299,17 @@ def template_damage_tier(doc):
 #: TS 那兩份在同一個 package，Python 這份跨語言，沒有共用的辦法）。
 CUE_KINDS = ("screenFlash", "screenShake", "floatingText")
 
+#: ⭐⭐ GH#1281（2026-09-17）—— **實體幾何三兄弟**：它們的 `radius` 是一根柱子／一顆道具／
+#: 一圈觸發線的**大小**，⛔ 不是「誰被打到」的命中圈 ⇒ ⛔ 不吃 AoE 五級距。
+#:
+#: ⚠️ 量到的代價（這一條就是被它打出來的）：鄂爾 Q 的 `spawnObstacle.radius = 1`（一根柱）
+#: 被吸到 AoE 最小級距 **極小 = 3** ⇒ 柱子粗三倍、擋停的位置整個前移 ⇒ E 撞柱之後的震波
+#: 打不到原本站在範圍內的人（`communityLolBatch2Mechanics` 鄂爾 E 那一條紅）。
+#: ⭐ 三份 Zod schema 上**本來就沒有** `radiusTier` 這一格 —— 那不是漏，是同一個判斷：
+#: 級距表量的是平衡（決鬥區半徑 24 的 1/8…1/2），實體大小量的是碰撞。
+#: ⛔ 修法不是替它們補上 `radiusTier`（2026-09-16 我做過那件事，而它就是這一條紅的來源）。
+STRUCTURE_KINDS = ("spawnObstacle", "spawnInteractable", "spawnThresholds")
+
 
 def _mentions(node, names):
     """⚠️ **鍵名與 `kind` 值兩種都要看** —— 理由逐字同 `cooldownTiers.ts::mentions`：
@@ -690,7 +701,7 @@ def _assign_geometry_tiers(doc, grids, log):
         # ⭐ GH#838 —— cue 的 `radius` 是觀眾半徑：它**沒有** `radiusTier` 這一格
         #    （`zScreenShake` 是 `.strict()` ⇒ 蓋下去內容當場驗不過），而且級距表
         #    的單位是平衡值、cue 的是 JASS 逐字換算（512wc3u=9.39）。
-        if node.get("kind") in CUE_KINDS:
+        if node.get("kind") in CUE_KINDS or node.get("kind") in STRUCTURE_KINDS:
             return
         r = node.get("radius")
         if node.get("radiusTier") is None and isinstance(r, (int, float)) and r > 0:

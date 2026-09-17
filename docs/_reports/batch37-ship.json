@@ -1,0 +1,1705 @@
+{
+  "schema": "ggd-batch37-report@1",
+  "heroes": 37,
+  "withChampionIcon": 37,
+  "abilityIcons": 222,
+  "abilitySlots": 222,
+  "withPlaceholders": 0,
+  "rows": [
+    {
+      "id": "acquired-alice",
+      "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+      "origin": "坦克",
+      "role": "tank",
+      "icon": "assets/icons/champions/acquired-alice.webp",
+      "abilities": [
+        "acquired-alice.passive",
+        "acquired-alice.q",
+        "acquired-alice.w",
+        "acquired-alice.e",
+        "acquired-alice.r",
+        "acquired-alice.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-alice.q",
+        "acquired-alice.w",
+        "acquired-alice.e",
+        "acquired-alice.r",
+        "acquired-alice.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "武裝完全支配用既有區域射線，沒有持續追蹤的實體花瓣AI。",
+          "Q鎖足→R射線；W護隊友，E換位。敵人可走出陣列或先打斷接近。"
+        ],
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-astralym",
+      "name": "枯星龍",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-astralym.webp",
+      "abilities": [
+        "acquired-astralym.passive",
+        "acquired-astralym.q",
+        "acquired-astralym.w",
+        "acquired-astralym.e",
+        "acquired-astralym.r",
+        "acquired-astralym.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-astralym.q",
+        "acquired-astralym.w",
+        "acquired-astralym.e",
+        "acquired-astralym.r",
+        "acquired-astralym.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "枯星龍",
+        "sourceUrl": "https://www.pocketpair.jp/games/palworld/",
+        "adaptations": [
+          "Astralym 僅作本批素材識別；此處的招式是 GGD 枯星意象改編，不將素材英文標識當作官方招式考據。",
+          "星蝕是自己施加的短效標記；沒有宇宙級抹除、永久地形或全圖引力。",
+          "領域每輪重解目標；位移只到指定近處，不穿越地圖。"
+        ],
+        "sourceWork": "Palworld／幻獸帕魯",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-asuna",
+      "name": "亞絲娜／結城明日奈",
+      "origin": "法刺",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-asuna.webp",
+      "abilities": [
+        "acquired-asuna.passive",
+        "acquired-asuna.q",
+        "acquired-asuna.w",
+        "acquired-asuna.e",
+        "acquired-asuna.r",
+        "acquired-asuna.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-asuna.q",
+        "acquired-asuna.w",
+        "acquired-asuna.e",
+        "acquired-asuna.r",
+        "acquired-asuna.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+        "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+      ],
+      "model": {
+        "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "亞絲娜／結城明日奈",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "星屑飛濺以有限次連擊表現，不加入原作劍技硬直或新連擊資源。",
+          "W加速→E貼身→Q减速→R連段；對手可在貼身前控制或撤離。"
+        ],
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-beatrice",
+      "name": "碧翠絲",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-beatrice.webp",
+      "abilities": [
+        "acquired-beatrice.passive",
+        "acquired-beatrice.q",
+        "acquired-beatrice.w",
+        "acquired-beatrice.e",
+        "acquired-beatrice.r",
+        "acquired-beatrice.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-beatrice.q",
+        "acquired-beatrice.w",
+        "acquired-beatrice.e",
+        "acquired-beatrice.r",
+        "acquired-beatrice.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "champ.sela",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "碧翠絲／Beatrice",
+        "sourceUrl": "https://re-zero-anime.jp/tv/character/",
+        "adaptations": [
+          "禁書庫與門的意象改為短距瞬移；不建立獨立空間、地圖門網或絕對無敵。",
+          "W 施放存一頁書籤，R 消耗增傷；護盾到期不影響仍未到期的書籤。"
+        ],
+        "sourceWork": "Re:從零開始的異世界生活",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-cattiva",
+      "name": "搗蛋貓",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-cattiva.webp",
+      "abilities": [
+        "acquired-cattiva.passive",
+        "acquired-cattiva.q",
+        "acquired-cattiva.w",
+        "acquired-cattiva.e",
+        "acquired-cattiva.r",
+        "acquired-cattiva.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-cattiva.q",
+        "acquired-cattiva.w",
+        "acquired-cattiva.e",
+        "acquired-cattiva.r",
+        "acquired-cattiva.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "搗蛋貓／Cattiva",
+        "sourceUrl": "https://www.pocketpair.jp/games/palworld/",
+        "adaptations": [
+          "搬運與怕生改編成受擊後短暫加速；不改背包容量或基地工作系統。",
+          "挑釁只影響指定敵人；連爪是有限次數的普攻追加，不是永久攻速。"
+        ],
+        "sourceWork": "Palworld／幻獸帕魯",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-dio",
+      "name": "DIO",
+      "origin": "狂戰",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-dio.webp",
+      "abilities": [
+        "acquired-dio.passive",
+        "acquired-dio.q",
+        "acquired-dio.w",
+        "acquired-dio.e",
+        "acquired-dio.r",
+        "acquired-dio.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-dio.q",
+        "acquired-dio.w",
+        "acquired-dio.e",
+        "acquired-dio.r",
+        "acquired-dio.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+      ],
+      "model": {
+        "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "DIO／迪奧·布蘭度（第三部）",
+        "sourceUrl": "https://jojo-animation.com/sc/",
+        "adaptations": [
+          "只以局部、短時暈眩表達停格；不停止全場時間、投射物、冷卻或其他玩家。",
+          "替身連打由本體技能結算，沒有獨立替身 AI；連打期間施法者沒有無敵。",
+          "飛刀使用既有物理投射物，壓路機意象改為落點震擊，不生成車輛或地形。"
+        ],
+        "sourceWork": "JoJo 的奇妙冒險：星塵遠征軍",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-emilia",
+      "name": "愛蜜莉雅",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-emilia.webp",
+      "abilities": [
+        "acquired-emilia.passive",
+        "acquired-emilia.q",
+        "acquired-emilia.w",
+        "acquired-emilia.e",
+        "acquired-emilia.r",
+        "acquired-emilia.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-emilia.q",
+        "acquired-emilia.w",
+        "acquired-emilia.e",
+        "acquired-emilia.r",
+        "acquired-emilia.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "愛蜜莉雅／Emilia",
+        "sourceUrl": "https://re-zero-anime.jp/tv/character/",
+        "adaptations": [
+          "冰與精靈意象以既有魔法傷害、減速和鎖足表達；不生成永久冰牆或獨立帕克 AI。",
+          "寒霜只由本人消耗；普攻碎霜後需重新用 Q 補印，不會永久凍結。"
+        ],
+        "sourceWork": "Re:從零開始的異世界生活",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-inuyasha",
+      "name": "犬夜叉",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-inuyasha.webp",
+      "abilities": [
+        "acquired-inuyasha.passive",
+        "acquired-inuyasha.q",
+        "acquired-inuyasha.w",
+        "acquired-inuyasha.e",
+        "acquired-inuyasha.r",
+        "acquired-inuyasha.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-inuyasha.q",
+        "acquired-inuyasha.w",
+        "acquired-inuyasha.e",
+        "acquired-inuyasha.r",
+        "acquired-inuyasha.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+      ],
+      "model": {
+        "modelKey": "ou99.452782",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "犬夜叉",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "風之傷和爆流破用既有直線/反击傷害組合，不反射任何尚未支援的投射物。",
+          "Q减速→E貼近→R連段；W直線追擊，對手可利用近戰施放距離拉扯。"
+        ],
+        "sourceWork": "犬夜叉",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-jetragon",
+      "name": "空渦龍",
+      "origin": "射手",
+      "role": "marksman",
+      "icon": "assets/icons/champions/acquired-jetragon.webp",
+      "abilities": [
+        "acquired-jetragon.passive",
+        "acquired-jetragon.q",
+        "acquired-jetragon.w",
+        "acquired-jetragon.e",
+        "acquired-jetragon.r",
+        "acquired-jetragon.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-jetragon.q",
+        "acquired-jetragon.w",
+        "acquired-jetragon.e",
+        "acquired-jetragon.r",
+        "acquired-jetragon.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "空渦龍／Jetragon",
+        "sourceUrl": "https://www.pocketpair.jp/games/palworld/",
+        "adaptations": [
+          "保留高速龍與飛彈意象；位移是地面短衝，不提供常駐飛行、乘騎或全圖飛彈。",
+          "E 施放取得一層 5 秒航電蓄能，R 消耗後增加一輪轟擊；每輪重解落點，敵人可走開。",
+          "EX 驗票護盾會讓自己停用普攻 0.8 秒，仍可移動與施法。"
+        ],
+        "sourceWork": "Palworld／幻獸帕魯",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-kita-kita",
+      "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+      "origin": "軟輔",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-kita-kita.webp",
+      "abilities": [
+        "acquired-kita-kita.passive",
+        "acquired-kita-kita.q",
+        "acquired-kita-kita.w",
+        "acquired-kita-kita.e",
+        "acquired-kita-kita.r",
+        "acquired-kita-kita.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-kita-kita.q",
+        "acquired-kita-kita.w",
+        "acquired-kita-kita.e",
+        "acquired-kita-kita.r",
+        "acquired-kita-kita.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "舞蹈複用致盲、鎖足與護盾；不強制玩家鏡頭觀看。",
+          "Q→R限制走位；W護隊友、EX給單人回血，敵人可離開舞台或先控制老伯。"
+        ],
+        "sourceWork": "咕嚕咕嚕魔法陣",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-kuroyukihime",
+      "name": "黑雪姬",
+      "origin": "法刺",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-kuroyukihime.webp",
+      "abilities": [
+        "acquired-kuroyukihime.passive",
+        "acquired-kuroyukihime.q",
+        "acquired-kuroyukihime.w",
+        "acquired-kuroyukihime.e",
+        "acquired-kuroyukihime.r",
+        "acquired-kuroyukihime.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-kuroyukihime.q",
+        "acquired-kuroyukihime.w",
+        "acquired-kuroyukihime.e",
+        "acquired-kuroyukihime.r",
+        "acquired-kuroyukihime.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+      ],
+      "model": {
+        "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "黑雪姬",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "加速以短移與攻速增益表現，不改遊戲時間或網路延遲。",
+          "E進場→Q鎖足→W加速普攻→R收尾；對手守住控制等她落地反擊。"
+        ],
+        "sourceWork": "加速世界",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-leafa",
+      "name": "莉法",
+      "origin": "軟輔",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-leafa.webp",
+      "abilities": [
+        "acquired-leafa.passive",
+        "acquired-leafa.q",
+        "acquired-leafa.w",
+        "acquired-leafa.e",
+        "acquired-leafa.r",
+        "acquired-leafa.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-leafa.q",
+        "acquired-leafa.w",
+        "acquired-leafa.e",
+        "acquired-leafa.r",
+        "acquired-leafa.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+        "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+        "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368"
+      ],
+      "model": {
+        "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "莉法",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "飛行改成有界跳躍，不提供永久越牆；風精靈魔法複用友軍回血、護盾與推移。",
+          "W拉開敵人→Q補隊友；E追上隊伍→R集體護盾，敵人可繞開正面衝刺。"
+        ],
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-lord-nightmares",
+      "name": "金色魔王／惡夢之王",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-lord-nightmares.webp",
+      "abilities": [
+        "acquired-lord-nightmares.passive",
+        "acquired-lord-nightmares.q",
+        "acquired-lord-nightmares.w",
+        "acquired-lord-nightmares.e",
+        "acquired-lord-nightmares.r",
+        "acquired-lord-nightmares.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-lord-nightmares.q",
+        "acquired-lord-nightmares.w",
+        "acquired-lord-nightmares.e",
+        "acquired-lord-nightmares.r",
+        "acquired-lord-nightmares.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e",
+        "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+        "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+      ],
+      "model": {
+        "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "金色魔王／惡夢之王",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "滅世簡化成有限範圍傷害；不刪地圖、不全場秒殺。",
+          "Q/W/E施法累積三層→EX消耗全層爆發；R先留區域壓力，敵人可拉開EX施法距離。"
+        ],
+        "sourceWork": "秀逗魔導士",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-mario",
+      "name": "Mario",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-mario.webp",
+      "abilities": [
+        "acquired-mario.passive",
+        "acquired-mario.q",
+        "acquired-mario.w",
+        "acquired-mario.e",
+        "acquired-mario.r",
+        "acquired-mario.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-mario.q",
+        "acquired-mario.w",
+        "acquired-mario.e",
+        "acquired-mario.r",
+        "acquired-mario.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "imported.linkstik",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Mario／瑪利歐",
+        "sourceUrl": "https://www.smashbros.com/en_US/fighter/index.html",
+        "adaptations": [
+          "硬幣是本英雄的短效連動標記，不更動金幣經濟或額外生命。",
+          "披風只推移與短時繳械，不反射投射物；跳躍不保證越牆，沒有碰觸即死或踩踏即殺。",
+          "R 是向前火焰判定，不生成大型火球角色或改變模型體型。"
+        ],
+        "sourceWork": "Super Mario／超級瑪利歐",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-mewtwo",
+      "name": "Mewtwo",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-mewtwo.webp",
+      "abilities": [
+        "acquired-mewtwo.passive",
+        "acquired-mewtwo.q",
+        "acquired-mewtwo.w",
+        "acquired-mewtwo.e",
+        "acquired-mewtwo.r",
+        "acquired-mewtwo.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-mewtwo.q",
+        "acquired-mewtwo.w",
+        "acquired-mewtwo.e",
+        "acquired-mewtwo.r",
+        "acquired-mewtwo.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "imported.herobuu",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Mewtwo／超夢",
+        "sourceUrl": "https://www.smashbros.com/en_US/fighter/index.html",
+        "adaptations": [
+          "蓄力以 W 給予的一層專注表示，不讀長按時間；沒有精神控制玩家、複製角色或永久能力提升。",
+          "瞬移受本遊戲施法距離限制；R 僅局部短暈，不是全場念力拘束。"
+        ],
+        "sourceWork": "Pokémon／寶可夢",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-minecraft",
+      "name": "Steve／Alex",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-minecraft.webp",
+      "abilities": [
+        "acquired-minecraft.passive",
+        "acquired-minecraft.q",
+        "acquired-minecraft.w",
+        "acquired-minecraft.e",
+        "acquired-minecraft.r",
+        "acquired-minecraft.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-minecraft.q",
+        "acquired-minecraft.w",
+        "acquired-minecraft.e",
+        "acquired-minecraft.r",
+        "acquired-minecraft.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "champ.thorne",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Steve／Alex（同英雄服裝）",
+        "sourceUrl": "https://www.minecraft.net/",
+        "adaptations": [
+          "Steve／Alex 是同一英雄的外觀選擇，不建立第二個英雄或不同能力數值。",
+          "材料最多三層、8 秒到期；不是地圖採礦、物品合成或永久裝備。",
+          "盾牆只是一份護盾，礦車是地面短衝，TNT 是定點延遲傷害；都不新增實體建築或破壞地形。"
+        ],
+        "sourceWork": "Minecraft／當個創世神",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-morgiana",
+      "name": "摩尔迦娜",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-morgiana.webp",
+      "abilities": [
+        "acquired-morgiana.passive",
+        "acquired-morgiana.q",
+        "acquired-morgiana.w",
+        "acquired-morgiana.e",
+        "acquired-morgiana.r",
+        "acquired-morgiana.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-morgiana.q",
+        "acquired-morgiana.w",
+        "acquired-morgiana.e",
+        "acquired-morgiana.r",
+        "acquired-morgiana.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "摩尔迦娜／Morgiana",
+        "sourceUrl": "https://www.aniplex.co.jp/lineup/magi/news/detail/?id=15041",
+        "adaptations": [
+          "強健腳力以短躍及物理連動表達，不提供攀牆系統或原作自由空中作戰。",
+          "鎖鏈用單體拉移表達；火焰是有限落點效果，不另生成眷屬器實體。"
+        ],
+        "sourceWork": "MAGI／魔奇少年",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-naruto",
+      "name": "漩渦鳴人",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-naruto.webp",
+      "abilities": [
+        "acquired-naruto.passive",
+        "acquired-naruto.q",
+        "acquired-naruto.w",
+        "acquired-naruto.e",
+        "acquired-naruto.r",
+        "acquired-naruto.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-naruto.q",
+        "acquired-naruto.w",
+        "acquired-naruto.e",
+        "acquired-naruto.r",
+        "acquired-naruto.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+        "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+        "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "漩渦鳴人",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "影分身複用同體召喚，沒有分身再分身或各自施放完整技能。",
+          "W分身分散火力→E近身→Q螺旋丸→R直線追擊；範圍傷害可清理分身。"
+        ],
+        "sourceWork": "火影忍者 NARUTO",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-pokemon-trainer",
+      "name": "Pokémon Trainer",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-pokemon-trainer.webp",
+      "abilities": [
+        "acquired-pokemon-trainer.passive",
+        "acquired-pokemon-trainer.q",
+        "acquired-pokemon-trainer.w",
+        "acquired-pokemon-trainer.e",
+        "acquired-pokemon-trainer.r",
+        "acquired-pokemon-trainer.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-pokemon-trainer.q",
+        "acquired-pokemon-trainer.w",
+        "acquired-pokemon-trainer.e",
+        "acquired-pokemon-trainer.r",
+        "acquired-pokemon-trainer.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "imported.heropikachu",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Pokémon Trainer／寶可夢訓練家",
+        "sourceUrl": "https://www.smashbros.com/en_US/fighter/index.html",
+        "adaptations": [
+          "以傑尼龜、妙蛙草與噴火龍的招式意象改編；三種指令由同一英雄結算，沒有三隻獨立召喚物或三套血條。",
+          "各指令各留一枚 6 秒徽記；R 分別消耗水、草、火追加減速、鎖足及傷害，不冒稱原作換人系統。"
+        ],
+        "sourceWork": "Pokémon／任天堂明星大亂鬥",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-ram",
+      "name": "拉姆",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-ram.webp",
+      "abilities": [
+        "acquired-ram.passive",
+        "acquired-ram.q",
+        "acquired-ram.w",
+        "acquired-ram.e",
+        "acquired-ram.r",
+        "acquired-ram.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-ram.q",
+        "acquired-ram.w",
+        "acquired-ram.e",
+        "acquired-ram.r",
+        "acquired-ram.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "imported.herooichi",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "拉姆／Ram",
+        "sourceUrl": "https://re-zero-anime.jp/tv/character/",
+        "adaptations": [
+          "以風魔法與毒舌意象改編，不給千里眼全圖揭露、原作完整鬼族能力或長時間飛行。",
+          "風勢是 E 施放取得的 4 秒標記；Q 消耗增加一道直線判定，不是技能重置。"
+        ],
+        "sourceWork": "Re:從零開始的異世界生活",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-rim",
+      "name": "莉姆（Rim；粉紅魔龍）",
+      "origin": "狂戰",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-rim.webp",
+      "abilities": [
+        "acquired-rim.passive",
+        "acquired-rim.q",
+        "acquired-rim.w",
+        "acquired-rim.e",
+        "acquired-rim.r",
+        "acquired-rim.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-rim.q",
+        "acquired-rim.w",
+        "acquired-rim.e",
+        "acquired-rim.r",
+        "acquired-rim.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52"
+      ],
+      "model": {
+        "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "莉姆（Rim；粉紅魔龍）",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "保留粉紅魔龍身分，不套用利姆路；吞食改為近戰傷害與回血，不吞掉玩家。",
+          "E追人→Q留人→低血R收尾；對手在撲擊後拉開，避免讓低血普攻觸發。"
+        ],
+        "sourceWork": "迷宮黑心企業／異世界迷宮黑心企業",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-ryu",
+      "name": "Ryu",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-ryu.webp",
+      "abilities": [
+        "acquired-ryu.passive",
+        "acquired-ryu.q",
+        "acquired-ryu.w",
+        "acquired-ryu.e",
+        "acquired-ryu.r",
+        "acquired-ryu.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-ryu.q",
+        "acquired-ryu.w",
+        "acquired-ryu.e",
+        "acquired-ryu.r",
+        "acquired-ryu.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+      ],
+      "model": {
+        "modelKey": "imported.herokyo",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Ryu／隆",
+        "sourceUrl": "https://www.streetfighter.com/6/character/ryu.html",
+        "adaptations": [
+          "保留波動拳、升龍拳、旋風腿意象，輸入方式沿用 GGD 技能鍵，不要求搓招或原作取消連段。",
+          "升龍拳沒有無敵；旋風腿是固定距離地面衝刺，R 只做有限連擊。"
+        ],
+        "sourceWork": "Street Fighter／快打旋風",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-saya",
+      "name": "沙耶",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/acquired-saya.webp",
+      "abilities": [
+        "acquired-saya.passive",
+        "acquired-saya.q",
+        "acquired-saya.w",
+        "acquired-saya.e",
+        "acquired-saya.r",
+        "acquired-saya.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-saya.q",
+        "acquired-saya.w",
+        "acquired-saya.e",
+        "acquired-saya.r",
+        "acquired-saya.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990"
+      ],
+      "model": {
+        "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "沙耶",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "異常視覺以既有失手與恐懼表現，不改全場畫面。",
+          "W減速留在R領域→Q汲取；對手走出領域或利用施法距離反制。"
+        ],
+        "sourceWork": "沙耶之歌",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-wargreymon",
+      "name": "戰鬥暴龍獸",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-wargreymon.webp",
+      "abilities": [
+        "acquired-wargreymon.passive",
+        "acquired-wargreymon.q",
+        "acquired-wargreymon.w",
+        "acquired-wargreymon.e",
+        "acquired-wargreymon.r",
+        "acquired-wargreymon.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-wargreymon.q",
+        "acquired-wargreymon.w",
+        "acquired-wargreymon.e",
+        "acquired-wargreymon.r",
+        "acquired-wargreymon.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "戰鬥暴龍獸",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "龍獸剋星不新增物種判斷；以近戰爪擊和短效護盾表現。",
+          "E貼身→Q減速→R落點爆破；對手可拉開距離避開R。"
+        ],
+        "sourceWork": "數碼寶貝大冒險",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-xiaodangjia",
+      "name": "小當家",
+      "origin": "軟輔",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-xiaodangjia.webp",
+      "abilities": [
+        "acquired-xiaodangjia.passive",
+        "acquired-xiaodangjia.q",
+        "acquired-xiaodangjia.w",
+        "acquired-xiaodangjia.e",
+        "acquired-xiaodangjia.r",
+        "acquired-xiaodangjia.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-xiaodangjia.q",
+        "acquired-xiaodangjia.w",
+        "acquired-xiaodangjia.e",
+        "acquired-xiaodangjia.r",
+        "acquired-xiaodangjia.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+        "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "ou99.498407",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "小當家",
+        "sourceUrl": "https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/已取得模型待設計英雄.md",
+        "adaptations": [
+          "料理不新增物品或飽食系統；發光用失手狀態，補給用真正友軍回血與護盾。",
+          "Q致盲→R留場；W/EX救隊友，敵人可走出餐桌或先逼退廚師。"
+        ],
+        "sourceWork": "中華一番！",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "acquired-zero",
+      "name": "Zero",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/acquired-zero.webp",
+      "abilities": [
+        "acquired-zero.passive",
+        "acquired-zero.q",
+        "acquired-zero.w",
+        "acquired-zero.e",
+        "acquired-zero.r",
+        "acquired-zero.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "acquired-zero.q",
+        "acquired-zero.w",
+        "acquired-zero.e",
+        "acquired-zero.r",
+        "acquired-zero.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+      ],
+      "model": {
+        "modelKey": "imported.herosephiroth",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "Zero",
+        "sourceUrl": "https://news.capcomusa.com/lets/browse/we-told-you-our-favorite-capcom-weapons-then-you-told-us-yours",
+        "adaptations": [
+          "以 Mega Man X 的 Zero 與 Z-Saber 為概念；不混同後續 Zero 系列的角色版本或提供原作完整武器表。",
+          "蓄力由 Q 施放後的單層能源表示，不需長按或多段蓄力 UI；沒有爬牆或無限空中衝刺。"
+        ],
+        "sourceWork": "Mega Man X／洛克人 X",
+        "from": "packages/shared/src/content/heroForge/communityAcquired.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-ahri",
+      "name": "阿璃",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/lol-ahri.webp",
+      "abilities": [
+        "lol-ahri.passive",
+        "lol-ahri.q",
+        "lol-ahri.w",
+        "lol-ahri.e",
+        "lol-ahri.r",
+        "lol-ahri.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-ahri.q",
+        "lol-ahri.w",
+        "lol-ahri.e",
+        "lol-ahri.r",
+        "lol-ahri.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "阿璃",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ahri/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：計數60秒窗口；英雄取擊殺而非助攻參與。",
+          "Q：同一顆穿透法球（imported.wave.arcane.return）去程穿過每人一次、射程盡頭掉頭追向阿璃當下位置，回程命中另外記錄、再打一次，回到身上消失。去程與回程共用同一串命中效果（原作回程是真實傷害；現有回程彈沒有分段命中效果，這裡兩程都是魔法傷害）。",
+          "W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。",
+          "E：命中後魅惑（charmed）：被命中者被迫朝阿璃走、丟掉自己的指令並減速，到期恢復；不另外拉扯或繳械。不保證打斷所有位移。",
+          "R：首放後 10 秒內可再按兩次，每一段各自重新瞄準落點；三段衝完或窗口到期才進冷卻。原作擊殺參與增加可重施放次數不做。",
+          "EX：單純離場工具，沒有刷新R。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-ashe",
+      "name": "艾希",
+      "origin": "射手",
+      "role": "marksman",
+      "icon": "assets/icons/champions/lol-ashe.webp",
+      "abilities": [
+        "lol-ashe.passive",
+        "lol-ashe.q",
+        "lol-ashe.w",
+        "lol-ashe.e",
+        "lol-ashe.r",
+        "lol-ashe.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-ashe.q",
+        "lol-ashe.w",
+        "lol-ashe.e",
+        "lol-ashe.r",
+        "lol-ashe.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "艾希",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ashe/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。",
+          "Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。",
+          "W：錐形多箭簡化為一次短寬直帶；同敵只計一發。",
+          "R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。",
+          "EX：保鮮箱只提供盾與鎖足，沒有無敵。",
+          "E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-blitzcrank",
+      "name": "布里姿",
+      "origin": "坦克",
+      "role": "tank",
+      "icon": "assets/icons/champions/lol-blitzcrank.webp",
+      "abilities": [
+        "lol-blitzcrank.passive",
+        "lol-blitzcrank.q",
+        "lol-blitzcrank.w",
+        "lol-blitzcrank.e",
+        "lol-blitzcrank.r",
+        "lol-blitzcrank.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-blitzcrank.q",
+        "lol-blitzcrank.w",
+        "lol-blitzcrank.e",
+        "lol-blitzcrank.r",
+        "lol-blitzcrank.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "布里姿",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/blitzcrank/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：按最大魔力而非即時魔力；致死一擊能否先觸發須依現有onDamageTaken時序驗證。",
+          "Q：既有投射物代理手臂；拉回受共通落點/牆規則限制。",
+          "W：保持加速後自緩速代價，無第二段按鍵。",
+          "E：追加GGD傷害級距，不承諾原作雙倍普攻公式。",
+          "R：R學習後普攻延遲電擊暫未接；保留主動破盾沉默。",
+          "EX：只消耗自己的Q收據，不影響別人的抓取狀態。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-chogath",
+      "name": "科加斯",
+      "origin": "坦克",
+      "role": "tank",
+      "icon": "assets/icons/champions/lol-chogath.webp",
+      "abilities": [
+        "lol-chogath.passive",
+        "lol-chogath.q",
+        "lol-chogath.w",
+        "lol-chogath.e",
+        "lol-chogath.r",
+        "lol-chogath.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-chogath.q",
+        "lol-chogath.w",
+        "lol-chogath.e",
+        "lol-chogath.r",
+        "lol-chogath.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "科加斯",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/chogath/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。",
+          "Q：原地擊飛含0.2單位的小推移。",
+          "W：錐形改成短寬直帶，保留方向與沉默用途。",
+          "E：不改用無條件額外普攻被動；確實只有三次額度。",
+          "R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。",
+          "EX：不増大模型、不新增飽食資源。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-fiddlesticks",
+      "name": "稻草人",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/lol-fiddlesticks.webp",
+      "abilities": [
+        "lol-fiddlesticks.passive",
+        "lol-fiddlesticks.q",
+        "lol-fiddlesticks.w",
+        "lol-fiddlesticks.e",
+        "lol-fiddlesticks.r",
+        "lol-fiddlesticks.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-fiddlesticks.q",
+        "lol-fiddlesticks.w",
+        "lol-fiddlesticks.e",
+        "lol-fiddlesticks.r",
+        "lol-fiddlesticks.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "稻草人",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。",
+          "Q：不額外給未被看見時群體恐懼。",
+          "W：持續引導 2 秒（channel）：每 0.5 秒以自身為圓心打一圈（首發在半拍後、共 4 發，引導時長由節拍推導），每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷；擊飛（非擊倒）不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
+          "E：弧形與中央命中改為窄直帶，整條帶吃沉默。",
+          "R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。",
+          "EX：只會既有代理普攻，不是三具複製 QWER 的分身。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-garen",
+      "name": "蓋倫",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-garen.webp",
+      "abilities": [
+        "lol-garen.passive",
+        "lol-garen.q",
+        "lol-garen.w",
+        "lol-garen.e",
+        "lol-garen.r",
+        "lol-garen.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-garen.q",
+        "lol-garen.w",
+        "lol-garen.e",
+        "lol-garen.r",
+        "lol-garen.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "蓋倫",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/garen/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：敵人/兵種重置差異先統一為受傷；不是戰鬥中固定秒回。",
+          "Q：施放時先清掉身上既有的減速（dispel.statusKinds:[slow]，只清「純減速」的狀態：同一筆帶暈眩、定身或沉默的留著），再加速並強化下一次普攻；不擴張成全淨化，也不給之後的減速免疫。只看機制不看極性標記（配方自帶的減速多半沒有狀態文件、極性是空的，照 debuff 篩會一個都清不到）。",
+          "W：重要簡化：暫未接韌性、後段減傷和擊殺永久雙抗。",
+          "E：damageTier 是整段預算，由模板分攤，不能文案寫每波中級傷害。",
+          "R：不做必殺保證；護盾/免死仍按現有傷害規則。",
+          "EX：笑點只在EX的休息交換；不改QER熟悉連招。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-malphite",
+      "name": "墨菲特",
+      "origin": "坦克",
+      "role": "tank",
+      "icon": "assets/icons/champions/lol-malphite.webp",
+      "abilities": [
+        "lol-malphite.passive",
+        "lol-malphite.q",
+        "lol-malphite.w",
+        "lol-malphite.e",
+        "lol-malphite.r",
+        "lol-malphite.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-malphite.q",
+        "lol-malphite.w",
+        "lol-malphite.e",
+        "lol-malphite.r",
+        "lol-malphite.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "墨菲特",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/malphite/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。",
+          "Q：固定加減速，不按目標原速逐量偷取。",
+          "W：首下普攻重置與護盾期間三倍護甲未加入。",
+          "E：本草案先用傷害級距，不另抄護甲換算數字。",
+          "R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。",
+          "EX：不是牆體，不擋路、不改碰撞。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-ornn",
+      "name": "鄂爾",
+      "origin": "坦克",
+      "role": "tank",
+      "icon": "assets/icons/champions/lol-ornn.webp",
+      "abilities": [
+        "lol-ornn.passive",
+        "lol-ornn.q",
+        "lol-ornn.w",
+        "lol-ornn.e",
+        "lol-ornn.r",
+        "lol-ornn.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-ornn.q",
+        "lol-ornn.w",
+        "lol-ornn.e",
+        "lol-ornn.r",
+        "lol-ornn.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082"
+      ],
+      "model": {
+        "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "鄂爾",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/ornn/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。",
+          "Q：裂地（長 6 格）終點在施放當下立刻升起 4 秒暫時柱，柱子位置與裂地長度讀同一個數（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。",
+          "W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。",
+          "E：衝刺走位移五級距「小」（出貨級距表 8.25 格 @16 格/秒，後台可調）。修正前：Codex 原配方 tpl-charge-push 400 wc3u≈7.33 格／0.35 秒≈21 格/秒（上線會被穿牆天花板夾到 16）；第 1 輪寫死 7.33 格 @16。沿途傷害改由衝刺自己逐 tick 結算（dash.onPathHit）：只打身體真的掃過的人，被柱／牆擋停就只算到擋停點，柱子後面的人不挨打（修正前：起衝當下沿整條 7.33 格結算，柱後的人也挨打；後台 displacement-tiers.dashPath.mode 可切回舊結算）。撞柱或牆的震波擊飛走擊退五級距「極小」＋拋高 1（出貨級距表 2 格 @16）。修正前：Codex 原配方推 100 wc3u≈1.83 格、650 wc3u/s≈11.9 格/秒、不拋高；第 1 輪 0.2 格 @12、拋高 1。震波仍會打到已被沿途命中的敵人（原作不重複）。",
+          "R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。後段衝刺走位移五級距「極小」（出貨級距表 5.5 格 @16，與第 1 輪寫死的 5.5 格 @16 同值）；改向擊飛走擊退五級距「極小」＋拋高 1（修正前第 1 輪 1 格 @12；Codex 原配方沒有擊飛）。",
+          "EX：沒有任何裝備升級；保固就是這三秒的盾。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-sett",
+      "name": "賽特",
+      "origin": "鬥士",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-sett.webp",
+      "abilities": [
+        "lol-sett.passive",
+        "lol-sett.q",
+        "lol-sett.w",
+        "lol-sett.e",
+        "lol-sett.r",
+        "lol-sett.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-sett.q",
+        "lol-sett.w",
+        "lol-sett.e",
+        "lol-sett.r",
+        "lol-sett.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "賽特",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/sett/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：右拳攻速細分與按實際受傷量連續換算，簡化為交替追加及三層桶；不是反傷。",
+          "Q：移速不限定朝敵人方向；無普攻重置。",
+          "W：依施法者面向揮拳，保留中心真傷與兩側物傷；受擊蓄勢仍以三層桶及兩檔護盾/傷害表示，未按實際承傷量連續換算。",
+          "E：未判斷左右同時有人；不憑空給必定暈眩。",
+          "R：抓抱期間跟隨施法者，以現有地面位移表達帶行，終點結算範圍傷害；沒有垂直拋物線，傷害不按被抱者額外生命換算。",
+          "EX：笑點是治療換取停拳，不改 QWER。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-thresh",
+      "name": "瑟雷西",
+      "origin": "軟輔",
+      "role": "fighter",
+      "icon": "assets/icons/champions/lol-thresh.webp",
+      "abilities": [
+        "lol-thresh.passive",
+        "lol-thresh.q",
+        "lol-thresh.w",
+        "lol-thresh.e",
+        "lol-thresh.r",
+        "lol-thresh.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-thresh.q",
+        "lol-thresh.w",
+        "lol-thresh.e",
+        "lol-thresh.r",
+        "lol-thresh.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "瑟雷西",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/thresh/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。",
+          "Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。",
+          "W：燈籠丟到地上，落點圈內的隊友獲得護盾；隊友自己點燈（interact 指令，GH#1189）才飛回瑟雷西，施法者不會強制搬人。簡化：護盾給落點圈內的隊友，不是原版「第一個碰到燈籠的隊友」；只能搭乘一人。",
+          "E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。",
+          "R：自身周圍立起五段可穿越的邊界（半徑 3、存活 5 秒）；敵人穿過某一段時受傷並重緩速，那一段隨即消失，放下時站在圈內不挨打。同一人穿過不同段會各吃一次（原作第二道牆起傷害減半且不再緩速）；邊界不擋路。",
+          "EX：不召喚不可通行的燈籠物件。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    },
+    {
+      "id": "lol-velkoz",
+      "name": "威寇茲",
+      "origin": "法師",
+      "role": "mage",
+      "icon": "assets/icons/champions/lol-velkoz.webp",
+      "abilities": [
+        "lol-velkoz.passive",
+        "lol-velkoz.q",
+        "lol-velkoz.w",
+        "lol-velkoz.e",
+        "lol-velkoz.r",
+        "lol-velkoz.ex"
+      ],
+      "abilityIcons": 6,
+      "vfxScripts": [
+        "lol-velkoz.q",
+        "lol-velkoz.w",
+        "lol-velkoz.e",
+        "lol-velkoz.r",
+        "lol-velkoz.ex"
+      ],
+      "abilityTemplates": [
+        "hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c",
+        "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+      ],
+      "model": {
+        "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+        "state": "in-content",
+        "why": "模型文件已在出貨 content/models"
+      },
+      "source": {
+        "inspiration": "威寇茲",
+        "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/velkoz/",
+        "adaptations": [
+          "保留原版 QWER 的招式結構。",
+          "PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。",
+          "Q：主彈（imported.bolt.void.split）命中敵人時，或飛行中 1 秒內再按 Q，從主彈當下位置左右各分出一發子彈（垂直 90 度），子彈不再打主彈打過的人；主彈飛完之後再按不會有任何效果。",
+          "W：兩段裂痕的起點與方向都凍在施放那一刻（damageLine.aim:cast）：施法者轉身或走開，延遲的第二段仍落在原裂痕上。⛔ 未滿足：原作「兩次充能」—— Main 沒有技能彈藥機制（ability.charges），這一槽仍是一般冷卻，要不要做彈藥由 owner 決定。",
+          "E：近遠受害者都同一小推移；沒有額外專用判斷。",
+          "R：持續引導 2.5 秒（channel）朝施放方向射線，每 0.5 秒判定一次、共 5 次（首發在半拍後，引導時長由節拍推導；原作是連續傷害）；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的射線作廢；普通受傷不打斷；擊飛（非擊倒）不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。",
+          "EX：會失去該目標R真傷資格，真有交換代價。"
+        ],
+        "from": "packages/shared/src/content/heroForge/communityLolBatch2.ts"
+      },
+      "placeholders": []
+    }
+  ]
+}

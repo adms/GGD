@@ -1,0 +1,110 @@
+{
+  "id": "lol-velkoz.ex",
+  "name": "論文退回重寫",
+  "provenance": "editor-json",
+  "description": "只對自己研究完成的敵人清除研究標记，換回自己魔力並緩速對方。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "lol-velkoz.researched",
+      "count": "all",
+      "subject": "target",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "restore",
+          "manaPct": 0.15,
+          "applyTo": "self"
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "self"
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "lol-velkoz.review",
+          "duration": 2,
+          "moveSpeedMult": 0.65
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "資料不足，請補實驗",
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "target",
+          "statusId": "lol-velkoz.researched",
+          "appliedBy": "self",
+          "count": "all",
+          "onConsumed": [
+            {
+              "kind": "restore",
+              "manaPct": 0.15,
+              "applyTo": "self"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.arcane.pulse",
+              "at": "self"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-velkoz.review",
+              "duration": 2,
+              "sourceScope": "caster",
+              "moveSpeedMult": 0.65
+            }
+          ],
+          "onMissing": [
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "資料不足，請補實驗",
+              "applyTo": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-velkoz.ex.webp",
+  "radiusTier": "極小"
+}

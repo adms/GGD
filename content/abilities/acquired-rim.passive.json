@@ -1,0 +1,73 @@
+{
+  "id": "acquired-rim.passive",
+  "name": "這個快熟了",
+  "provenance": "editor-json",
+  "description": "普攻生命低於40%的目標追加極小級物理傷害，內置冷卻{{cd}}秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 2,
+            "condition": {
+              "kind": "stat",
+              "subject": "target",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.4
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+    "params": {
+      "event": "onBasicAttack",
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.4
+      },
+      "bonusDamage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical",
+      "internalCooldown": 2
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-rim.passive.webp"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-lord-nightmares.chaos",
+  "schema": "status-effect@1",
+  "name": "混沌客服工單",
+  "description": "金色魔王／惡夢之王「混沌客服工單」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-lord-nightmares.chaos",
+    "debuff"
+  ]
+}

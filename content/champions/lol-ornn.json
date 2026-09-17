@@ -1,0 +1,539 @@
+{
+  "id": "lol-ornn",
+  "name": "鄂爾",
+  "description": "焦化接重擊與直線開戰坦克\n\n概念來源：LoL 鄂爾\nhttps://www.leagueoflegends.com/zh-tw/champions/ornn/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。\n• Q：裂地（長 6 格）終點在施放當下立刻升起 4 秒暫時柱，柱子位置與裂地長度讀同一個數（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。\n• W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。\n• E：衝刺走位移五級距「小」（出貨級距表 8.25 格 @16 格/秒，後台可調）。修正前：Codex 原配方 tpl-charge-push 400 wc3u≈7.33 格／0.35 秒≈21 格/秒（上線會被穿牆天花板夾到 16）；第 1 輪寫死 7.33 格 @16。沿途傷害改由衝刺自己逐 tick 結算（dash.onPathHit）：只打身體真的掃過的人，被柱／牆擋停就只算到擋停點，柱子後面的人不挨打（修正前：起衝當下沿整條 7.33 格結算，柱後的人也挨打；後台 displacement-tiers.dashPath.mode 可切回舊結算）。撞柱或牆的震波擊飛走擊退五級距「極小」＋拋高 1（出貨級距表 2 格 @16）。修正前：Codex 原配方推 100 wc3u≈1.83 格、650 wc3u/s≈11.9 格/秒、不拋高；第 1 輪 0.2 格 @12、拋高 1。震波仍會打到已被沿途命中的敵人（原作不重複）。\n• R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。後段衝刺走位移五級距「極小」（出貨級距表 5.5 格 @16，與第 1 輪寫死的 5.5 格 @16 同值）；改向擊飛走擊退五級距「極小」＋拋高 1（修正前第 1 輪 1 格 @12；Codex 原配方沒有擊飛）。\n• EX：沒有任何裝備升級；保固就是這三秒的盾。\n\n採用所選 GGD 模型與特效。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "坦克",
+  "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 27.67734693877551,
+    "healthRegen": 0.08196326530612243,
+    "maxMana": 0.9209183673469388,
+    "manaRegen": 0,
+    "ad": 1.8716734693877548,
+    "as": 0,
+    "mr": 5.279591836734694,
+    "armor": 1.5605204081632653,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 29,
+    "agi": 18,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-ornn.q",
+      "name": "火山脈動",
+      "provenance": "editor-json",
+      "description": "前方裂地造成傷害並緩速，裂地終點升起一根可堵路、可被熔岩俯衝撞碎的暫時柱。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 6,
+          "width": 1.4,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ornn.q-slow",
+              "duration": 1.5,
+              "moveSpeedMult": 0.7
+            }
+          ]
+        },
+        {
+          "kind": "spawnObstacle",
+          "radius": 1,
+          "durationSec": 4,
+          "at": "self",
+          "offsetForwardU": 6
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 6,
+              "width": 1.4,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ornn.q-slow",
+                  "duration": 1.5,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7
+                }
+              ]
+            },
+            {
+              "kind": "spawnObstacle",
+              "radius": 1,
+              "durationSec": 4,
+              "at": "self",
+              "offsetForwardU": 6
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.q.webp"
+    },
+    "W": {
+      "id": "lol-ornn.w",
+      "name": "熾焰吹息",
+      "provenance": "editor-json",
+      "description": "向前吐火，命中施加三秒焦化。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 4,
+          "width": 2,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ornn.brittle",
+              "duration": 3
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 4,
+              "width": 2,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ornn.brittle",
+                  "duration": 3,
+                  "sourceScope": "caster"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.w.webp"
+    },
+    "E": {
+      "id": "lol-ornn.e",
+      "name": "熔岩俯衝",
+      "provenance": "editor-json",
+      "description": "向前衝撞傷害沿途敵人；只有撞上柱子或牆被擋停，才震波擊飛周圍敵人並撞碎柱子。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 8.25,
+          "distanceTier": "小",
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              },
+              "radius": 3,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "knockback",
+                  "distance": 2,
+                  "speed": 16,
+                  "distanceTier": "極小",
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                }
+              ],
+              "radiusTier": "極小"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.physical.shockwave",
+              "at": "point"
+            }
+          ],
+          "onEndOn": "blocked",
+          "shatter": true,
+          "onPathHit": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ],
+          "pathWidth": 1.4
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "distanceTier": "小",
+              "speed": 16,
+              "maxDistance": 8.25,
+              "pathWidth": 1.4,
+              "onPathHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ],
+              "onEndOn": "blocked",
+              "shatter": true,
+              "onEnd": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "radius": 2.75,
+                  "includeOrigin": true,
+                  "onHitTargets": [
+                    {
+                      "kind": "knockback",
+                      "distanceTier": "極小",
+                      "speed": 16,
+                      "distance": 2,
+                      "from": "caster",
+                      "subtractGap": false,
+                      "launchHeight": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.physical.shockwave",
+                  "at": "point"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.e.webp"
+    },
+    "R": {
+      "id": "lol-ornn.r",
+      "name": "鑄火者的呼喚",
+      "provenance": "editor-json",
+      "description": "長起手後在遠處召出火羊朝自己衝回，沿途緩速並焦化敵人；再次施放往前短衝，撞到火羊就讓牠改朝衝刺方向奔去並擊飛沿途敵人。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.fire",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ornn.r-slow",
+              "duration": 1.5,
+              "moveSpeedMult": 0.6
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-ornn.brittle",
+              "duration": 3
+            }
+          ],
+          "launchFrom": "rangeEnd",
+          "onRedirectHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 16,
+              "distanceTier": "極小",
+              "from": "facing",
+              "subtractGap": false,
+              "launchHeight": 1
+            }
+          ]
+        }
+      ],
+      "recastEffects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 5.5,
+          "distanceTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.wave.fire",
+              "launchFrom": "rangeEnd",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ornn.r-slow",
+                  "duration": 1.5,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.6
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-ornn.brittle",
+                  "duration": 3,
+                  "sourceScope": "caster"
+                }
+              ],
+              "onRedirectHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distanceTier": "極小",
+                  "speed": 16,
+                  "distance": 2,
+                  "from": "facing",
+                  "subtractGap": false,
+                  "launchHeight": 1
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "recast": {
+        "charges": 1,
+        "windowSec": 3
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-ornn.r.webp"
+    }
+  },
+  "exAbility": "lol-ornn.ex",
+  "passiveAbility": "lol-ornn.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "fist"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-ornn.webp"
+}

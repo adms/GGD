@@ -1,0 +1,136 @@
+{
+  "id": "lol-malphite.passive",
+  "name": "花崗岩護盾",
+  "provenance": "editor-json",
+  "description": "六秒未受傷後回充最大生命10%護盾。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "lol-malphite.recent-damage",
+                "duration": 6,
+                "applyTo": "self"
+              }
+            ],
+            "target": "self"
+          },
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 0,
+                  "ratios": [
+                    {
+                      "stat": "maxHealth",
+                      "coeff": 0.1
+                    }
+                  ]
+                },
+                "duration": 7,
+                "absorbs": "all",
+                "stackKey": "lol-malphite.granite",
+                "onExisting": "keepLarger"
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.earth.pulse-sm",
+                "at": "self"
+              }
+            ],
+            "internalCooldown": 1,
+            "condition": {
+              "not": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "lol-malphite.recent-damage",
+                "appliedBy": "self"
+              }
+            },
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-malphite.recent-damage",
+              "duration": 6,
+              "sourceScope": "caster",
+              "applyTo": "self"
+            }
+          ],
+          "target": "self"
+        },
+        {
+          "on": "onInterval",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 0,
+                "ratios": [
+                  {
+                    "stat": "maxHealth",
+                    "coeff": 0.1
+                  }
+                ]
+              },
+              "duration": 7,
+              "stackKey": "lol-malphite.granite",
+              "onExisting": "keepLarger",
+              "absorbs": "all"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.earth.pulse-sm",
+              "at": "self"
+            }
+          ],
+          "target": "self",
+          "internalCooldown": 1,
+          "condition": {
+            "not": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "lol-malphite.recent-damage",
+              "appliedBy": "self"
+            }
+          }
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-malphite.passive.webp"
+}

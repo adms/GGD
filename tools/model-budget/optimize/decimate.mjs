@@ -22,12 +22,16 @@
  */
 import { NodeIO } from "@gltf-transform/core";
 import { ALL_EXTENSIONS } from "@gltf-transform/extensions";
-import { weld, simplify } from "@gltf-transform/functions";
+import { weld, simplify, simplifyPrimitive } from "@gltf-transform/functions";
 import { MeshoptSimplifier } from "meshoptimizer";
 
-const [, , inFile, outFile, targetStr, errStr] = process.argv;
+// GH#1186 `--lock-blend`：半透明（BLEND）的特效薄片**不減面**，削減量由其餘網格承擔。
+// ⚠️ 等比例削的時候，拳四郎出拳那片 204 面的光被削短一截（Spell - 1 亮像素 −15.4%，
+//    而同一顆的站立／走路／攻擊都在 ±0.5% 內）⇒ 「總面數達標」⛔ 不等於「薄片沒壞」。
+const lockBlend = process.argv.includes("--lock-blend");
+const [inFile, outFile, targetStr, errStr] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 if (!inFile || !outFile || !targetStr) {
-  console.error("usage: node decimate.mjs <in.glb> <out.glb> <targetTris> [errorBound]");
+  console.error("usage: node decimate.mjs <in.glb> <out.glb> <targetTris> [errorBound] [--lock-blend]");
   process.exit(2);
 }
 const targetTris = Number(targetStr);
@@ -60,16 +64,34 @@ const countTris = () =>
     );
 
 const before = countTris();
+const locked = new Set(
+  lockBlend
+    ? doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives()).filter((p) => p.getMaterial()?.getAlphaMode() === "BLEND")
+    : [],
+);
+const lockedTris = [...locked].reduce(
+  (a, p) => a + Math.floor((p.getIndices()?.getCount() ?? p.getAttribute("POSITION")?.getCount() ?? 0) / 3),
+  0,
+);
 // fraction of triangles to KEEP; meshopt respects the error bound and may keep
 // more than this — that is desired (shape safety over hitting an exact number).
-const ratio = Math.max(0.02, Math.min(1, targetTris / Math.max(1, before)));
+const ratio = Math.max(0.02, Math.min(1, (targetTris - lockedTris) / Math.max(1, before - lockedTris)));
 
 await MeshoptSimplifier.ready;
-await doc.transform(
-  weld(),
-  simplify({ simplifier: MeshoptSimplifier, ratio, error: errorBound }),
-);
+if (!lockBlend) {
+  await doc.transform(
+    weld(),
+    simplify({ simplifier: MeshoptSimplifier, ratio, error: errorBound }),
+  );
+} else {
+  await doc.transform(weld());
+  for (const mesh of doc.getRoot().listMeshes()) {
+    for (const prim of mesh.listPrimitives()) {
+      if (!locked.has(prim) && prim.getMode() === 4) simplifyPrimitive(prim, { simplifier: MeshoptSimplifier, ratio, error: errorBound });
+    }
+  }
+}
 
 await io.write(outFile, doc);
 const after = countTris();
-console.log(JSON.stringify({ ok: true, before: { tris: before }, after: { tris: after }, ratio, error: errorBound }));
+console.log(JSON.stringify({ ok: true, before: { tris: before }, after: { tris: after }, ratio, error: errorBound, ...(lockBlend ? { lockedTris } : {}) }));

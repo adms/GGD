@@ -1,0 +1,15 @@
+{
+  "id": "lol-ornn.q-slow",
+  "schema": "status-effect@1",
+  "name": "火山脈動",
+  "description": "鄂爾「火山脈動」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ornn.q-slow",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

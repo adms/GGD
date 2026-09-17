@@ -240,7 +240,13 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       liveExemptions++;
     }
     // 不是「豁免名單整份都歸檔了所以上面每一條都空過」
-    expect(liveExemptions).toBeGreaterThan(0);
+    // ⭐⭐ 2026-09-16（PR #1280）前提消失：最後兩位帶地圖 usca 的 w3x 替身（熊貓 h02k、拳四郎 umal）換上 ou99 論壇模型。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    //   ⛔ 空迴圈不算通過 ⇒ 改成把「今天還穿通用身體的是誰」逐位釘住，名單一動就指名道姓：
+    //   喪標麥可（owner 指定）· sela／thorne（開機骨架）· 碧翠絲／Steve（第四批暫代，素材庫還沒有本尊模型）。
+    const STANDINS_TODAY = ["acquired-beatrice", "acquired-minecraft", "godie-zombiex", "sela", "thorne"];
+    if (liveExemptions === 0) expect([...STANDIN_IDS].sort()).toEqual(STANDINS_TODAY);
+    else expect(liveExemptions).toBeGreaterThan(0);
   });
 
   it("回退倍率永遠不會超過地圖要求的大小(除了登記在案的設定例外)", () => {
@@ -265,7 +271,13 @@ describe("#77 stand-in fallback scale — 資料層", () => {
     // 縮到 78 位、替身借用者剩 21 位的當下它就紅了,而縮小正是預期中的事。
     // 它要擋的其實是「上面那個迴圈一位都沒檢查到,所以 `invented` 空得毫無意義」
     // ——那就直接數檢查了幾位,不要去釘一個會被 owner 每週改動的名冊大小。
-    expect(examined, "上面那個迴圈一位都沒檢查到 —— 空陣列不代表通過").toBeGreaterThan(0);
+    // ⭐⭐ 2026-09-16（PR #1280）前提消失：最後兩位帶地圖 usca 的 w3x 替身（熊貓 h02k、拳四郎 umal）換上 ou99 論壇模型。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    //   ⛔ 空迴圈不算通過 ⇒ 改成把「今天還穿通用身體的是誰」逐位釘住，名單一動就指名道姓：
+    //   喪標麥可（owner 指定）· sela／thorne（開機骨架）· 碧翠絲／Steve（第四批暫代，素材庫還沒有本尊模型）。
+    const STANDINS_TODAY = ["acquired-beatrice", "acquired-minecraft", "godie-zombiex", "sela", "thorne"];
+    if (examined === 0) expect([...STANDIN_IDS].sort()).toEqual(STANDINS_TODAY);
+    else expect(examined, "上面那個迴圈一位都沒檢查到 —— 空陣列不代表通過").toBeGreaterThan(0);
   });
 
   it("2× 以上的方塊人只有地圖真的寫成巨人的那一位,名單凍結", () => {

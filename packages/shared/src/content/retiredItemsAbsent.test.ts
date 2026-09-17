@@ -75,7 +75,15 @@ describe("退場的道具不出現在任何現役產物裡（owner 2026-08-18）
       // 「不出現」只做對一半：owner 同一句話要求**可附註 legacy 路徑供考古**。
       // 少了這一行，101 件東西就是靜靜地不見了 —— 那是這條規矩要防的事本身。
       expect(text, `${rel} 沒有指回 content/_legacy/items/ 的那一行`).toContain("content/_legacy/items/");
-      expect(text, `${rel} 沒有指回 docs/legacy-index.md`).toContain("legacy-index.md");
+      expect(
+        text,
+        `${rel} 沒有指回 docs/legacy-index.md` +
+          "\n⚠️⚠️ 改之前先查那一份是誰的：bash scripts/genguard.sh <路徑>" +
+          "\n   · `docs/legacy-index.md` 是 **legacyindex:build** 的產物（`tools/legacy-index/build_index.py`）" +
+          "\n     ⇒ 要動它就改**來源**（誰住在 docs/legacy/）再 `bash scripts/genrun.sh legacyindex:build`。" +
+          "\n   ⛔ 直接改產物會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。" +
+          `\n   ⭐ 這一條要的是 **${rel}**（人在編的那一份）裡有一行指回索引，⛔ 不是叫你改索引本身。`,
+      ).toContain("legacy-index.md");
     }
   });
 });

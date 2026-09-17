@@ -340,7 +340,48 @@
     "summon.spread": [
       "路徑"
     ],
-    "summon.team": []
+    "summon.team": [],
+    "consumeStatus.appliedBy": [],
+    "consumeStatus.onMissing": [],
+    "applyBuff.permanentScope": [
+      "持續"
+    ],
+    "applyBuff.sourceScope": [],
+    "applyStatus.refresh": [],
+    "applyStatus.charmed": [],
+    "dispel.statusKinds": [],
+    "dash.onEndOn": [
+      "路徑"
+    ],
+    "dash.shatter": [
+      "路徑"
+    ],
+    "dash.onPathHit": [
+      "路徑"
+    ],
+    "dash.pathWidth": [
+      "路徑"
+    ],
+    "spawnObstacle.offsetForwardU": [],
+    "spawnProjectile.launchFrom": [
+      "路徑"
+    ],
+    "spawnProjectile.onRedirectHit": [
+      "路徑",
+      "多段"
+    ],
+    "carry.untargetable": [
+      "持續"
+    ],
+    "carry.onCarrierDeath": [],
+    "spawnThresholds.sides": [],
+    "spawnThresholds.onCross": [
+      "持續"
+    ],
+    "spawnInteractable.maxUses": [
+      "持續"
+    ],
+    "spawnInteractable.onAccept": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {
@@ -361,6 +402,16 @@
     ],
     "marks": [
       "持續"
+    ],
+    "recast": [
+      "多段"
+    ],
+    "recastEffects": [
+      "多段"
+    ],
+    "channel": [
+      "持續",
+      "迴圈"
     ]
   },
   "_templateParamsWhy": "⭐ **接上模板的技能，磁碟上的 `effects` 是空的** —— 88 支裡有 86 支逐字如此。展開發生在註冊時（`content/templates/expand.ts`，由 TS 跑），所以只讀 effects 樹會把這 86 支全部算成「沒有形狀」。⇒ 它們的形狀住在 `template.params`，而參數名是模板自己的詞彙（`stepIntervalSec` / `segmentCount` / `pushSpeed`…），⛔ 與 effect 欄位名不共用。這一份就是那套詞彙的分類。⚠️ 覆蓋閘同樣管它：新模板開一格 `windUpSec` 而沒有人分類 ⇒ 紅。",
@@ -761,7 +812,8 @@
     "onCrowdControlReceived": [],
     "onDashOrBlink": [],
     "onHeal": [],
-    "onUltimateCast": []
+    "onUltimateCast": [],
+    "onRoundStart": []
   },
   "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
   "ignored": {
@@ -935,6 +987,13 @@
     "summon.damageMult": "⭐ 召喚體的傷害倍率 —— 一個純量倍率**不帶時序**：它不讓技能變成多段，也不讓它變成迴圈。⭐ 可反駁：哪天倍率隨段數遞增，那就是【多段】。",
     "summon.hpMult": "⭐ 召喚體的生命倍率 —— 同 `summon.damageMult`。",
     "summon.onOwnerDeath": "⭐ 主人死了召喚體怎麼辦（`despawn`／留著）—— 它是**到期條件的一個分支**，⚠️ 而「有沒有到期」那一題已經由 `summon.durationSec` 的【持續】軸回答了 ⇒ ⛔ 再算一次會讓同一支技能在同一條軸上被數兩次。",
-    "recentCast.withinSec": "⭐ 條件式係數（`ratios[].when`）的**回望窗**：「最近 N 秒內放過 EX」（GH#936/#944 的變身增幅）。⛔ 空軸：它不決定技能的形狀 —— 時序/範圍/多段/路徑**一格都不動**。同一支技能不論這一格是 3 還是 60，飛行時間、半徑、段數、路線完全一樣；改變的只是「這一發打出去時**係數是多少**」。⭐ 與 `internalCooldown` 同型：兩者都在回答「什麼時候算數」，⛔ 不是「長什麼樣」。⭐ 可反駁：哪天出現「窗口內外走**不同的**演出、或打到不同範圍」的機制，它就變成一條軸。"
+    "recentCast.withinSec": "⭐ 條件式係數（`ratios[].when`）的**回望窗**：「最近 N 秒內放過 EX」（GH#936/#944 的變身增幅）。⛔ 空軸：它不決定技能的形狀 —— 時序/範圍/多段/路徑**一格都不動**。同一支技能不論這一格是 3 還是 60，飛行時間、半徑、段數、路線完全一樣；改變的只是「這一發打出去時**係數是多少**」。⭐ 與 `internalCooldown` 同型：兩者都在回答「什麼時候算數」，⛔ 不是「長什麼樣」。⭐ 可反駁：哪天出現「窗口內外走**不同的**演出、或打到不同範圍」的機制，它就變成一條軸。",
+    "consumeStatus.appliedBy": "2026-09-17（第四批 37 名上架帶進來的欄位）只篩「誰施加的狀態」可以被消耗（GH#1197 等 LoL 第二批）—— 篩選條件，⛔ 不改時序／範圍／段數／路徑。",
+    "consumeStatus.onMissing": "2026-09-17（第四批 37 名上架帶進來的欄位）目標身上沒有那個狀態時改跑的效果 —— 條件分支的內容，⛔ 本身不是形狀。",
+    "applyStatus.charmed": "2026-09-17（第四批 37 名上架帶進來的欄位）魅惑是狀態種類（被控者朝施法者走），⛔ 技能自己的形狀不變。",
+    "dash.shatter": "2026-09-17（第四批 37 名上架帶進來的欄位）衝撞撞碎柱子（鄂爾 E，GH#1190）—— 路徑上的互動，歸路徑。",
+    "spawnObstacle.offsetForwardU": "2026-09-17（第四批 37 名上架帶進來的欄位）障礙生成點往前偏移 —— 落點位置，⛔ 沒有時序／段數／路徑。",
+    "spawnProjectile.onRedirectHit": "2026-09-17（第四批 37 名上架帶進來的欄位）改向後第二段命中（GH#1187）—— 路徑多一段 ⇒ 路徑＋多段。",
+    "spawnThresholds.sides": "2026-09-17（第四批 37 名上架帶進來的欄位）邊界陣的邊數（瑟雷西 R）—— 幾何，⛔ 不是時間上的段。"
   }
 }

@@ -1,0 +1,76 @@
+{
+  "id": "acquired-asuna.passive",
+  "name": "開飯倒數",
+  "provenance": "editor-json",
+  "description": "技能命中後獲得20%攻速3秒，內置冷卻{{cd}}秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.2
+                  }
+                ],
+                "duration": 3,
+                "applyTo": "self",
+                "stackKey": "acquired-asuna.flash"
+              }
+            ],
+            "internalCooldown": 5
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onAbilityHit",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.2
+                }
+              ],
+              "stackKey": "acquired-asuna.flash"
+            }
+          ],
+          "internalCooldown": 5
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-asuna.passive.webp"
+}

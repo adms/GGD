@@ -1,0 +1,11 @@
+{
+  "id": "acquired-morgiana.step",
+  "schema": "status-effect@1",
+  "name": "腳力留一手",
+  "description": "摩尔迦娜「腳力留一手」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-morgiana.step",
+    "buff"
+  ]
+}

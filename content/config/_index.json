@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "e8bdc48673f6",
+  "hash": "bfd13aae75f1",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -149,8 +149,8 @@
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "051141e3804c",
-      "size": 21057
+      "hash": "57615be9f422",
+      "size": 24699
     },
     {
       "id": "combat-env",
@@ -227,7 +227,7 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "70740be7f3a6",
+      "hash": "0254cf7e6bb4",
       "size": 3344
     },
     {
@@ -275,8 +275,8 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "36d1a6f5af7e",
-      "size": 921
+      "hash": "ee7bb65a2174",
+      "size": 923
     },
     {
       "id": "icon-style",
@@ -533,7 +533,7 @@
     {
       "id": "unsafe-textures",
       "path": "config/unsafe-textures.json",
-      "hash": "d2133597dd85",
+      "hash": "5ef90e8bce82",
       "size": 5852
     },
     {
@@ -563,8 +563,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "c7a38d6f8dca",
-      "size": 29899
+      "hash": "92d35183f76e",
+      "size": 29949
     },
     {
       "id": "vfx-scripts",

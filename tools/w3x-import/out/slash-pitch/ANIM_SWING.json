@@ -213,6 +213,18 @@
    "pitchDeg": 66,
    "attackClipPitchDeg": 67
   },
+  "godie-e00r.w": {
+   "champion": "godie-e00r",
+   "championName": "最終泛用人型決戰兵器 - 初號機",
+   "ability": "59-02 高週波短刀",
+   "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+   "clip": "Attack 1",
+   "blade": "Hand Right Ref←Chest Ref",
+   "sweptDeg": 212.7,
+   "planarity": 0.989,
+   "pitchDeg": 35,
+   "attackClipPitchDeg": 35
+  },
   "godie-e00w.q": {
    "champion": "godie-e00w",
    "championName": "神鳴流劍士 - 櫻綻剎那",
@@ -301,13 +313,13 @@
    "champion": "godie-hapm",
    "championName": "海克力斯 - Berserker",
    "ability": "52-03 無銘斧劍",
-   "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+   "clip": "Spell Slam",
+   "blade": "Weapon←R_hand",
+   "sweptDeg": 140.5,
+   "planarity": 0.991,
+   "pitchDeg": 25,
+   "attackClipPitchDeg": 76
   },
   "godie-hart.q": {
    "champion": "godie-hart",
@@ -529,28 +541,46 @@
    "champion": "godie-umal",
    "championName": "北斗神拳掌門人 - 拳四郎",
    "ability": "25-03 北斗百裂拳",
-   "modelKey": "champ.skin.barbarian",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
+   "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+   "clip": "Spell - 1",
+   "blade": "5555handright←Chest Ref",
+   "sweptDeg": 185.9,
    "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "pitchDeg": 17,
+   "attackClipPitchDeg": 29
   },
   "godie-umal.q": {
    "champion": "godie-umal",
    "championName": "北斗神拳掌門人 - 拳四郎",
    "ability": "25-01 北斗懺悔拳",
-   "modelKey": "champ.skin.barbarian",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
+   "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+   "clip": "Spell - 1",
+   "blade": "5555handright←Chest Ref",
+   "sweptDeg": 185.9,
    "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
+   "pitchDeg": 17,
+   "attackClipPitchDeg": 29
   }
  },
  "unmeasured": {
+  "acquired-asuna.e": {
+   "champion": "acquired-asuna",
+   "ability": "插入隊伍最前面",
+   "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+   "reason": "not-planar",
+   "detail": "平面度 0.32 < 0.7",
+   "castClip": "spell one",
+   "attackFallbackPitchDeg": 35
+  },
+  "acquired-kuroyukihime.e": {
+   "champion": "acquired-kuroyukihime",
+   "ability": "黑蓮快速登入",
+   "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "b2-albus.q": {
    "champion": "b2-albus",
    "ability": "世界紀錄第一刀",
@@ -1045,15 +1075,6 @@
    "detail": "找不到 武器/手 與一個非退化的近端關節",
    "castClip": null,
    "attackFallbackPitchDeg": null
-  },
-  "godie-e00r.w": {
-   "champion": "godie-e00r",
-   "ability": "59-02 高週波短刀",
-   "modelKey": "w3x.stock.satyrtrickster",
-   "reason": "short-sweep",
-   "detail": "掃過 19.8° < 25.0°",
-   "castClip": "Stand Ready",
-   "attackFallbackPitchDeg": 31
   },
   "godie-h02r.q": {
    "champion": "godie-h02r",

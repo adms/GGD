@@ -25,21 +25,21 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 04-02 炸彈陣 w3a 300 → 5.5 落「大」，04-03 龍破斬 w3a 450 → 8.25 落「超大」——
 **剛好高一級**，正是 owner 說的「龍破斬應該高一級」。⇒ 係數不動。
 
-這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 457 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
+這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 587 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
 
 **六個視窗現在全部有表了**（GH#438 點名的四軸 = 幾何三軸 + 傷害/耗魔/冷卻），
 而且每一軸都住在 `content/config/*-tiers.json`（＝後台在改的那一份）：
 
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
-| 施法距離 | `rangeTier` | `range-tiers.json` | 455 (50.2%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 292 (32.2%) | `enabled: true` |
-| 位移 | `distanceTier` | `displacement-tiers.json` | 6 (0.7%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 425 (46.9%) | `enabled: true` |
-| **耗魔** | `manaCostTier` | `mana-tiers.json` | 402 (44.3%) | `enabled: true` |
-| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 739 (81.5%) | `enabled: true` |
+| 施法距離 | `rangeTier` | `range-tiers.json` | 585 (51.8%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 427 (37.8%) | `enabled: true` |
+| 位移 | `distanceTier` | `displacement-tiers.json` | 8 (0.7%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 551 (48.8%) | `enabled: true` |
+| **耗魔** | `manaCostTier` | `mana-tiers.json` | 521 (46.1%) | `enabled: true` |
+| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 924 (81.8%) | `enabled: true` |
 
-<sub>分母 = `content/abilities/` 的 907 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
+<sub>分母 = `content/abilities/` 的 1129 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
 
 ---
 
@@ -158,7 +158,7 @@ AoE      3 / 4.5 / 6 / 8           = 橫木 [1..4]
 
 #### 傷害 `damage-tiers.json`
 
-> 傷害**五級距**（GH#447）—— 四軸裡唯一的**回報**軸。⭐ **這五個數字是 `pnpm anchors:build` 寫的，⛔ 不要手改**（改了 `anchors:check` 會紅）。⛔ **2026-08-20 第二次重錨**：owner 逐字更正 ——「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；② 級距**下限**從 hard limit LV30 反推（那是「一定要滿足」的定義），⛔ 不是「滿足得了的最高那一個」（那條規則會挑到 LV50）。⭐ **2026-09-06 錨點標準更正**：owner 逐字「後來已經改成 **30/50/99 三個標準**了」⇒ **三個錨點都是標準**（LV30 hard limit（一定要滿足） · LV50 soft limit（能滿足比較好） · LV99 極限（不要求）），⛔ LV30 不是唯一標準 —— 2026-08-20「30 級當唯一標準」那句已備註取代（docs/legacy/_superseded-rulings.md §1）。⭐ **2026-08-21 第三次重錨（母體）**：owner 逐字「**錯誤的母體資料**」⇒ 中位數的母體從 `readdirSync(content/champions)`（71 張卡，含 20 個變身態＋2 張 fail-open 骨架佔位）換成 **130 位對戰可選英雄**（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"））。變身態是同一位英雄的第二張卡，放進去就是重複計數。⭐ 推導鏈（三個輸入全部在別處，這裡一個字面值都沒有）：`（純基礎中位 2838 ＋ 初始加成 1200）÷ 20 發` = 201.9 → 進位到 50（「使五格皆整數的最小單位」2 的整數倍）⇒ **250**。⚠️ owner 2026-08-22 逐字：「不能把系統倍率乘進去再反推，這樣我用系統倍率就沒意義了」⇒ 推導鏈的三個輸入全部是**純基礎**資料。② 其餘四格 ＝ 極小 × 單體冷卻比（1 : 2.5 : 5 : 7.5 : 10），**與冷卻表嚴格成正比** —— 那正是 owner Q4「已經有傷害相應的冷卻跟耗魔做限制」的意思。⇒ 五格 **極小 250 / 小 625 / 中 1250 / 大 1875 / 極大 2500**，五格全整數。⭐ 三個錨點的達成率（打死該級中位英雄要幾發極小，門檻 20 發，分母是**純基礎＋加成** 4038 / 5638 / 9558——⛔ 不是引擎最終血量，那是另一個問題）：LV30 16.2 發 ✅ · LV50 22.6 發 ❌ · LV99 38.2 發 ❌。⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。⚠️ 天花板 12552 ＝ LV30 的引擎最終中位血量 —— 一發不可以秒殺 hard limit 那一級的中位英雄；極大 2500 是它的 20%。⭐ 只有**一張**表：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5×），再在傷害軸打一次折就是同一個懲罰收兩次。技能 JSON 在 amount 裡填 damageTier，⛔ 不填 flat/perRank（級距會取代它們）。
+> 傷害**五級距**（GH#447）—— 四軸裡唯一的**回報**軸。⭐ **這五個數字是 `pnpm anchors:build` 寫的，⛔ 不要手改**（改了 `anchors:check` 會紅）。⛔ **2026-08-20 第二次重錨**：owner 逐字更正 ——「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；② 級距**下限**從 hard limit LV30 反推（那是「一定要滿足」的定義），⛔ 不是「滿足得了的最高那一個」（那條規則會挑到 LV50）。⭐ **2026-09-06 錨點標準更正**：owner 逐字「後來已經改成 **30/50/99 三個標準**了」⇒ **三個錨點都是標準**（LV30 hard limit（一定要滿足） · LV50 soft limit（能滿足比較好） · LV99 極限（不要求）），⛔ LV30 不是唯一標準 —— 2026-08-20「30 級當唯一標準」那句已備註取代（docs/legacy/_superseded-rulings.md §1）。⭐ **2026-08-21 第三次重錨（母體）**：owner 逐字「**錯誤的母體資料**」⇒ 中位數的母體從 `readdirSync(content/champions)`（71 張卡，含 20 個變身態＋2 張 fail-open 骨架佔位）換成 **167 位對戰可選英雄**（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"））。變身態是同一位英雄的第二張卡，放進去就是重複計數。⭐ 推導鏈（三個輸入全部在別處，這裡一個字面值都沒有）：`（純基礎中位 2838 ＋ 初始加成 1200）÷ 20 發` = 201.9 → 進位到 50（「使五格皆整數的最小單位」2 的整數倍）⇒ **250**。⚠️ owner 2026-08-22 逐字：「不能把系統倍率乘進去再反推，這樣我用系統倍率就沒意義了」⇒ 推導鏈的三個輸入全部是**純基礎**資料。② 其餘四格 ＝ 極小 × 單體冷卻比（1 : 2.5 : 5 : 7.5 : 10），**與冷卻表嚴格成正比** —— 那正是 owner Q4「已經有傷害相應的冷卻跟耗魔做限制」的意思。⇒ 五格 **極小 250 / 小 625 / 中 1250 / 大 1875 / 極大 2500**，五格全整數。⭐ 三個錨點的達成率（打死該級中位英雄要幾發極小，門檻 20 發，分母是**純基礎＋加成** 4038 / 5638 / 9558——⛔ 不是引擎最終血量，那是另一個問題）：LV30 16.2 發 ✅ · LV50 22.6 發 ❌ · LV99 38.2 發 ❌。⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。⚠️ 天花板 12552 ＝ LV30 的引擎最終中位血量 —— 一發不可以秒殺 hard limit 那一級的中位英雄；極大 2500 是它的 20%。⭐ 只有**一張**表：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5×），再在傷害軸打一次折就是同一個懲罰收兩次。技能 JSON 在 amount 裡填 damageTier，⛔ 不填 flat/perRank（級距會取代它們）。
 
 #### 耗魔 `mana-tiers.json`
 
@@ -189,7 +189,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 |---|---:|---|
 | **JASS**（第 3 層） | 26 | JASS 明確寫了 `AoE <數字>`，用它 |
 | **w3a**（第 5 層） | 137 | JASS 沒寫幾何，退回 w3a 的 `area` / `cast_range` 欄位 |
-| — | 389 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
+| — | 561 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
 
 ⚠️ 「w3a」那一列**不代表已經驗證過** —— 它代表**沒有人去 JASS 確認過**。
 `JASS_BEHAVIOR.json` 的 `geometry` 是稽核欄，只有 35 支寫了明確的 AoE 數字。
@@ -236,13 +236,134 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 
 ---
 
-## 五 · 逐支對照（全部 552 支）
+## 五 · 逐支對照（全部 724 支）
 
 `原作` = 依上面的優先序取到的 WC3 值。`引擎` = 真的跑過 `registerAll()` 之後註冊表裡的數字。
 `→級` = 用出貨級距表就近收之後會落在哪一級（⛔ 尚未寫回技能 JSON）。
 
 | 技能 | id | 層 | 原作 AoE | 引擎 AoE | →級 | 原作距離 | 引擎距離 | →級 |
 |---|---|---|---:|---:|---|---:|---:|---|
+| 騎士查勤 | `acquired-alice.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 金木樨停車單 | `acquired-alice.q` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 花瓣罰單連發 | `acquired-alice.r` | — | — | 6 | 中 | — | 6 | 中 |
+| 騎士擔保 | `acquired-alice.w` | — | — | — | — | — | 6 | 中 |
+| 星間挪位 | `acquired-astralym.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 末日也要蓋章 | `acquired-astralym.ex` | — | — | 3 | 極小 | — | — | — |
+| 逾期星光 | `acquired-astralym.q` | — | — | 3 | 極小 | — | 6 | 中 |
+| 枯星下班鐘 | `acquired-astralym.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 失重通知 | `acquired-astralym.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 插入隊伍最前面 | `acquired-asuna.e` | — | — | — | — | — | 6 | 中 |
+| 細劍取餐號 | `acquired-asuna.q` | — | — | — | — | — | 3 | 極小 |
+| 星屑飛濺別灑到湯 | `acquired-asuna.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 門在這一邊 | `acquired-beatrice.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 圖書館請安靜 | `acquired-beatrice.ex` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 陰影退件章 | `acquired-beatrice.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 逾期罰款・陰 | `acquired-beatrice.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 禁書封皮 | `acquired-beatrice.w` | — | — | 3 | 極小 | — | — | — |
+| 紙箱撤離 | `acquired-cattiva.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 罐頭優先權 | `acquired-cattiva.ex` | — | — | 3 | 極小 | — | — | — |
+| 貓拳簽收 | `acquired-cattiva.q` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 連續貓貓拳 | `acquired-cattiva.r` | — | — | 3 | 極小 | — | — | — |
+| 你追不到我 | `acquired-cattiva.w` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 世界・半秒鐘 | `acquired-dio.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 輪到我的台詞 | `acquired-dio.ex` | — | — | 3 | 極小 | — | — | — |
+| 無馱連打 | `acquired-dio.q` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 壓路機停車費 | `acquired-dio.r` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 飛刀考勤 | `acquired-dio.w` | — | — | 3 | 極小 | — | 8 | 大 |
+| 冰花開席 | `acquired-emilia.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 熱茶先不要冰 | `acquired-emilia.ex` | — | — | 3 | 極小 | — | — | — |
+| 冰槍請簽收 | `acquired-emilia.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 永凍・試用版 | `acquired-emilia.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 精靈雪衣 | `acquired-emilia.w` | — | — | 3 | 極小 | — | — | — |
+| 半妖跨欄 | `acquired-inuyasha.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 鐵碎牙拆門 | `acquired-inuyasha.q` | — | — | — | — | — | 3 | 極小 |
+| 鐵碎牙不是開罐器 | `acquired-inuyasha.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 風之傷清走廊 | `acquired-inuyasha.w` | — | — | — | — | — | 8 | 大 |
+| 貼地起飛 | `acquired-jetragon.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 登機口改號 | `acquired-jetragon.ex` | — | — | 3 | 極小 | — | — | — |
+| 龍式點射 | `acquired-jetragon.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 本航班不供餐 | `acquired-jetragon.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 尾流加班 | `acquired-jetragon.w` | — | — | 3 | 極小 | — | — | — |
+| 舞步巡迴 | `acquired-kita-kita.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 跳累了先喝水 | `acquired-kita-kita.ex` | — | — | — | — | — | 6 | 中 |
+| 別看下半身 | `acquired-kita-kita.q` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 全員原地學舞 | `acquired-kita-kita.r` | — | — | 8 | 大 | — | 6 | 中 |
+| 觀眾席安全距離 | `acquired-kita-kita.w` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 黑蓮快速登入 | `acquired-kuroyukihime.e` | — | — | — | — | — | 6 | 中 |
+| 撤回上一則位置 | `acquired-kuroyukihime.ex` | — | — | — | — | — | 4.5 | 小 |
+| 你的連線已中斷 | `acquired-kuroyukihime.q` | — | — | — | — | — | 3 | 極小 |
+| 死亡穿刺強制登出 | `acquired-kuroyukihime.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 精靈抄近路 | `acquired-leafa.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 風刃催單 | `acquired-leafa.ex` | — | — | — | — | — | 8 | 大 |
+| 精靈補給到府 | `acquired-leafa.q` | — | — | — | — | — | 6 | 中 |
+| 風精靈團購保險 | `acquired-leafa.r` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 外送區禁止停車 | `acquired-leafa.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 客服轉接 | `acquired-lord-nightmares.e` | — | — | — | — | — | 4.5 | 小 |
+| 三單一起結案 | `acquired-lord-nightmares.ex` | — | — | — | — | — | 6 | 中 |
+| 金色退件章 | `acquired-lord-nightmares.q` | — | — | — | — | — | 6 | 中 |
+| 退回混沌重填 | `acquired-lord-nightmares.r` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 宇宙暫停受理 | `acquired-lord-nightmares.w` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 水管工落地章 | `acquired-mario.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 一枚硬幣套餐 | `acquired-mario.ex` | — | — | 3 | 極小 | — | — | — |
+| 火球通管 | `acquired-mario.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 終極火焰報價 | `acquired-mario.r` | — | — | 3 | 極小 | — | — | — |
+| 披風請讓路 | `acquired-mario.w` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 瞬間移動・區內 | `acquired-mewtwo.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 我究竟為何排隊 | `acquired-mewtwo.ex` | — | — | 3 | 極小 | — | — | — |
+| 暗影球・已充電 | `acquired-mewtwo.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 精神強念投訴 | `acquired-mewtwo.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 念力保護殼 | `acquired-mewtwo.w` | — | — | 3 | 極小 | — | — | — |
+| 礦車單程票 | `acquired-minecraft.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 工作台便當 | `acquired-minecraft.ex` | — | — | 3 | 極小 | — | — | — |
+| 鑽石鎬・租的 | `acquired-minecraft.q` | — | — | 3 | 極小 | — | 3 | 極小 |
+| TNT 結算日 | `acquired-minecraft.r` | — | — | 3 | 極小 | — | 6 | 中 |
+| 一面不擋路的牆 | `acquired-minecraft.w` | — | — | 3 | 極小 | — | — | — |
+| 法納利斯跨步 | `acquired-morgiana.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 女僕式清場 | `acquired-morgiana.ex` | — | — | 3 | 極小 | — | — | — |
+| 赤腳催辦 | `acquired-morgiana.q` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 炎鎖舞步 | `acquired-morgiana.r` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 鎖鏈請回來 | `acquired-morgiana.w` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 忍者插隊術 | `acquired-naruto.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 螺旋丸加麵 | `acquired-naruto.q` | — | — | — | — | — | 3 | 極小 |
+| 螺旋手裡麵 | `acquired-naruto.r` | — | — | — | — | — | 8 | 大 |
+| 噴火龍・熱身 | `acquired-pokemon-trainer.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 包包裡有傷藥 | `acquired-pokemon-trainer.ex` | — | — | 3 | 極小 | — | — | — |
+| 傑尼龜・水槍 | `acquired-pokemon-trainer.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 三重指令結帳 | `acquired-pokemon-trainer.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 妙蛙草・藤鞭 | `acquired-pokemon-trainer.w` | — | — | 3 | 極小 | — | — | — |
+| 不想走樓梯 | `acquired-ram.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 今天也辛苦別人 | `acquired-ram.ex` | — | — | 3 | 極小 | — | — | — |
+| 風刃催你走 | `acquired-ram.q` | — | — | 3 | 極小 | — | — | — |
+| 風暴大掃除 | `acquired-ram.r` | — | — | 3 | 極小 | — | 6 | 中 |
+| 毒舌逆風 | `acquired-ram.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 便當在那邊 | `acquired-rim.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 沒吃飽不准下班 | `acquired-rim.ex` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 午休咬一口 | `acquired-rim.q` | — | — | — | — | — | 3 | 極小 |
+| 整份都我的 | `acquired-rim.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 龍捲旋風腿 | `acquired-ryu.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 無薪修行 | `acquired-ryu.ex` | — | — | 3 | 極小 | — | — | — |
+| 波動拳 | `acquired-ryu.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 真・升龍加班 | `acquired-ryu.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 升龍拳・有付費 | `acquired-ryu.w` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 看見真實菜單 | `acquired-saya.e` | — | — | — | — | — | 6 | 中 |
+| 閉眼比較好吃 | `acquired-saya.ex` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 不明食材試吃 | `acquired-saya.q` | — | — | — | — | — | 6 | 中 |
+| 今晚全席開放 | `acquired-saya.r` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 餐桌黏黏的 | `acquired-saya.w` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 勇者快遞 | `acquired-wargreymon.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 恐龍火氣很大 | `acquired-wargreymon.ex` | — | — | — | — | — | 8 | 大 |
+| 龍獸拆箱爪 | `acquired-wargreymon.q` | — | — | — | — | — | 3 | 極小 |
+| 蓋亞能量到付 | `acquired-wargreymon.r` | — | — | 6 | 中 | — | 6 | 中 |
+| 猛火快炒 | `acquired-xiaodangjia.e` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 鍋蓋全席 | `acquired-xiaodangjia.ex` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 料理怎麼又發光 | `acquired-xiaodangjia.q` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 麻婆豆腐流水席 | `acquired-xiaodangjia.r` | — | — | 4.5 | 小 | — | 6 | 中 |
+| 趁熱吃 | `acquired-xiaodangjia.w` | — | — | — | — | — | 6 | 中 |
+| 衝刺斬 | `acquired-zero.e` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 更新稍後提醒 | `acquired-zero.ex` | — | — | 3 | 極小 | — | — | — |
+| Z-Saber 簽核 | `acquired-zero.q` | — | — | 3 | 極小 | — | — | — |
+| 零式連段 | `acquired-zero.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 蓄力離線砲 | `acquired-zero.w` | — | — | 3 | 極小 | — | 8 | 大 |
 | 團員到齊才打節拍 | `b2-aladdin.e` | — | — | 3 | 極小 | — | 6 | 中 |
 | 暖風模式先照顧同學 | `b2-aladdin.ex` | — | — | 3 | 極小 | — | 6 | 中 |
 | 烏戈代班先派一位 | `b2-aladdin.q` | — | — | 3 | 極小 | — | — | — |
@@ -765,6 +886,32 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 100-01 肝泥抹德 | `godie-zombiex.q` | — | — | 3 | 極小 | — | 6 | 中 |
 | 100-04 百式・哈基米 | `godie-zombiex.r` | — | — | 4.5 | 小 | — | — | — |
 | 100-02 黑天覆七重咖哩・硬啦 | `godie-zombiex.w` | — | — | — | — | — | 6 | 中 |
+| 傾城 | `lol-ahri.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 已讀不回 | `lol-ahri.ex` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 幻玉 | `lol-ahri.q` | — | — | 3 | 極小 | — | 6 | 中 |
+| 飛仙 | `lol-ahri.r` | — | — | 3 | 極小 | — | 4.5 | 小 |
+| 魅火 | `lol-ahri.w` | — | — | 3 | 極小 | — | — | — |
+| 鷹擊長空：強制簽收 | `lol-ashe.e` | — | — | 3 | 極小 | — | 8 | 大 |
+| 冷凍保存 | `lol-ashe.ex` | — | — | 3 | 極小 | — | — | — |
+| 魔法水晶箭 | `lol-ashe.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 萬箭齊發 | `lol-ashe.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 充能一擊 | `lol-blitzcrank.e` | — | — | 3 | 極小 | — | — | — |
+| 七天鑑賞期 | `lol-blitzcrank.ex` | — | — | 3 | 極小 | — | 6 | 中 |
+| 火箭抓取 | `lol-blitzcrank.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 靜電力場 | `lol-blitzcrank.r` | — | — | 3 | 極小 | — | — | — |
+| 過載運轉 | `lol-blitzcrank.w` | — | — | 3 | 極小 | — | — | — |
+| 恐懼尖刺 | `lol-chogath.e` | — | — | 3 | 極小 | — | — | — |
+| 吃太飽走不動 | `lol-chogath.ex` | — | — | 3 | 極小 | — | — | — |
+| 破裂 | `lol-chogath.q` | — | — | 3 | 極小 | — | 6 | 中 |
+| 饗宴 | `lol-chogath.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 野性尖嘯 | `lol-chogath.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 駭懼收割 | `lol-fiddlesticks.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 恐懼 | `lol-fiddlesticks.q` | — | — | — | — | — | 6 | 中 |
+| 群鴉風暴 | `lol-fiddlesticks.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 豐收之魘 | `lol-fiddlesticks.w` | — | — | 3 | 極小 | — | — | — |
+| 蒂瑪西亞先休息 | `lol-garen.ex` | — | — | 3 | 極小 | — | — | — |
+| 致命打擊 | `lol-garen.q` | — | — | 3 | 極小 | — | — | — |
+| 蒂瑪西亞制裁 | `lol-garen.r` | — | — | 3 | 極小 | — | 3 | 極小 |
 | 暮點 | `lol-karthus.q` | — | — | 6 | 中 | — | 6 | 中 |
 | 暮鐘終曲 | `lol-karthus.r` | — | — | 6 | 中 | — | 12 | 極大 |
 | 亡途繫縛 | `lol-karthus.w` | — | — | — | — | — | 6 | 中 |
@@ -775,9 +922,34 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 流光之域 | `lol-lux.e` | — | — | 4.5 | 小 | — | 6 | 中 |
 | 稜光束縛 | `lol-lux.q` | — | — | — | — | — | 6 | 中 |
 | 破曉光路 | `lol-lux.r` | — | — | — | — | — | 8 | 大 |
+| 大地震顫 | `lol-malphite.e` | — | — | 3 | 極小 | — | — | — |
+| 此處禁止停車 | `lol-malphite.ex` | — | — | 3 | 極小 | — | — | — |
+| 地震碎片 | `lol-malphite.q` | — | — | 3 | 極小 | — | 6 | 中 |
+| 勢不可擋 | `lol-malphite.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 震雷之擊 | `lol-malphite.w` | — | — | 3 | 極小 | — | — | — |
 | 緋帆彈雨 | `lol-missfortune.e` | — | — | 4.5 | 小 | — | 6 | 中 |
 | 回聲雙響 | `lol-missfortune.q` | — | — | — | — | — | 6 | 中 |
 | 扇港齊射 | `lol-missfortune.r` | — | — | 6 | 中 | — | 8 | 大 |
+| 熔岩俯衝 | `lol-ornn.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 終身保固三秒 | `lol-ornn.ex` | — | — | — | — | — | 6 | 中 |
+| 火山脈動 | `lol-ornn.q` | — | — | 3 | 極小 | — | 6 | 中 |
+| 鑄火者的呼喚 | `lol-ornn.r` | — | — | 3 | 極小 | — | 8 | 大 |
+| 熾焰吹息 | `lol-ornn.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 碎顱猛擊 | `lol-sett.e` | — | — | 3 | 極小 | — | — | — |
+| 媽媽來電 | `lol-sett.ex` | — | — | 3 | 極小 | — | — | — |
+| 懾人猛拳 | `lol-sett.q` | — | — | 3 | 極小 | — | — | — |
+| 嘆為觀止 | `lol-sett.r` | — | — | 3 | 極小 | — | 3 | 極小 |
+| 獸魂轟拳 | `lol-sett.w` | — | — | 3 | 極小 | — | — | — |
+| 懾魂掃蕩 | `lol-thresh.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 本燈拒載 | `lol-thresh.ex` | — | — | 3 | 極小 | — | — | — |
+| 死亡宣告 | `lol-thresh.q` | — | — | 3 | 極小 | — | 8 | 大 |
+| 惡靈領域 | `lol-thresh.r` | — | — | 3 | 極小 | — | — | — |
+| 鬼影燈籠 | `lol-thresh.w` | — | — | 3 | 極小 | — | 6 | 中 |
+| 反物質瓦解 | `lol-velkoz.e` | — | — | 3 | 極小 | — | 6 | 中 |
+| 論文退回重寫 | `lol-velkoz.ex` | — | — | 3 | 極小 | — | 6 | 中 |
+| 分裂電漿 | `lol-velkoz.q` | — | — | — | — | — | 6 | 中 |
+| 生化射線 | `lol-velkoz.r` | — | — | 3 | 極小 | — | 6 | 中 |
+| 虛空裂痕 | `lol-velkoz.w` | — | — | 3 | 極小 | — | 6 | 中 |
 | 驚獵嚎聲 | `lol-warwick.e` | — | — | — | — | — | 3 | 極小 |
 | 噬痕 | `lol-warwick.q` | — | — | — | — | — | 3 | 極小 |
 | 獵衛封喉 | `lol-warwick.r` | — | — | 8 | 大 | — | 3 | 極小 |

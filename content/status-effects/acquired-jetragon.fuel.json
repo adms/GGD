@@ -1,0 +1,11 @@
+{
+  "id": "acquired-jetragon.fuel",
+  "schema": "status-effect@1",
+  "name": "航電預熱",
+  "description": "空渦龍「航電預熱」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-jetragon.fuel",
+    "buff"
+  ]
+}
