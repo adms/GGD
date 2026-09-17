@@ -372,3 +372,14 @@ go on
 ## 08:43 · 9bc6f97d
 
 用 Homebrew 裝 yt-dlp（幾 MB 的開源工具）=> ok
+
+## 13:37 · 2fae43d3
+
+共 14 位・已選 14
+選了就存
+送出給 Claude
+送出失敗：TypeError: db doc(): document paths have an even number of segments (collection/id pairs); "quotegap/export/all" has 3, which addresses a collection - add or drop one segment (data/users/<id> is itself a collection)
+
+## 13:38 · 766bd693
+
+what now?
