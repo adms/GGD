@@ -1,0 +1,65 @@
+{
+  "schema": "ggd.vearn-related-3d-source-reference@1",
+  "asOfDate": "2026-09-17",
+  "ownerInstruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+  "sources": [
+    {
+      "id": "bowlroll-sabakan359-vearn-mmd-v087",
+      "name": "鯖缶359 大魔王バーン MMD ver0.87",
+      "url": "https://bowlroll.net/file/37061",
+      "kind": "community-authored-MMD",
+      "acquisitionStatus": "downloaded-verified",
+      "identityStatus": "owner-visual-review-required",
+      "expectedPayload": "five PMX candidates and textures"
+    },
+    {
+      "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+      "name": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
+      "url": "https://archive.org/details/gacha-archive",
+      "kind": "archived-game-cache",
+      "acquisitionStatus": "downloaded-hash-verified",
+      "identityStatus": "full-cache-acquired-model-identity-unverified",
+      "files": [
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+          "bytes": 1733218012,
+          "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+          "md5": "59efae4d0b83d086a86f3d7618d05097"
+        },
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+          "bytes": 365045618,
+          "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+          "md5": "fc563f21e92b4de2f2292413005836b7"
+        }
+      ],
+      "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity."
+    },
+    {
+      "id": "dqtact-kigan-king-vearn",
+      "name": "Dragon Quest Tact 鬼眼王バーン",
+      "url": "https://cache.sqex-bridge.jp/guest/information/97055",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed"
+    },
+    {
+      "id": "dqmj3p-kigan-king-vearn",
+      "name": "Dragon Quest Monsters Joker 3 Professional 鬼眼王バーン",
+      "url": "https://dragon-quest.jp/dqmj3/monster/ss/%E9%AC%BC%E7%9C%BC%E7%8E%8B%E3%83%90%E3%83%BC%E3%83%B3.php",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed",
+      "note": "Professional plus version 1.2 update data is required."
+    },
+    {
+      "id": "hoshidora-kigan-king-vearn",
+      "name": "星のドラゴンクエスト 鬼眼王バーン",
+      "url": "https://www.dragonquest.jp/hoshidora/sp/dai_collabo/",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed",
+      "note": "Service ended; a complete historical cache is required."
+    }
+  ]
+}

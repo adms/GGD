@@ -1,0 +1,1004 @@
+{
+  "archiveSearch": {
+    "candidateCount": 2,
+    "candidates": [
+      {
+        "bytes": 3978559488,
+        "kind": "owner-archive-candidate",
+        "observedUnder": [
+          "standard-intake"
+        ],
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/extracted/J-Stars Victory Vs+.iso",
+        "sha256": "7323b1c03d17b79a7f208a10d71d4130686685a4b5391e707c21e9c0849f6322"
+      },
+      {
+        "bytes": 19468471,
+        "kind": "public-model-sample",
+        "observedUnder": [
+          "standard-intake"
+        ],
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/original/j-stars_samples.7z",
+        "sha256": "dbbd40c26bce9b5fc0500d877a918bca1654c52d1ebca8c88b9977bc5b2b331c"
+      }
+    ],
+    "ownerArchiveCandidateCount": 1,
+    "ownerArchiveExactNameCount": 0,
+    "ownerArchiveFound": false,
+    "roots": [
+      {
+        "exists": true,
+        "id": "standard-intake",
+        "matchCount": 2,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "downloads",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Downloads",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "desktop",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Desktop",
+        "recursive": true
+      },
+      {
+        "exists": true,
+        "id": "abxvfx-edit",
+        "matchCount": 0,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT",
+        "recursive": false
+      }
+    ]
+  },
+  "blockers": [
+    {
+      "applies": false,
+      "id": "owner-archive-not-found",
+      "reason": "J-Stars Victory Vs+.7z was not found under standard intake, Downloads, Desktop, or ABxVFX_EDIT",
+      "unblocks": "full character-ID and model/motion/VFX/SFX/voice container inventory"
+    },
+    {
+      "applies": true,
+      "id": "owner-disc-cmp-ch0-and-ps3-srd-converter",
+      "reason": "all six owner-disc native groups still require complete $CMP/$CH0 decoding and a validated PS3 SRD converter",
+      "unblocks": "standardized model candidate and visual validation"
+    },
+    {
+      "applies": false,
+      "id": "motion-audio-event-containers-not-observed",
+      "reason": "the public sample has character_model i/m/v groups only; use the owner CPK inventory to prove motion, SFX, and voice containers",
+      "unblocks": "six-state motion mapping and per-event audio review"
+    },
+    {
+      "applies": true,
+      "id": "decoded-audio-owner-review-and-event-binding",
+      "reason": "CV/PV Japanese HCA and WAV candidates are decoded, but numeric cues still need per-file owner listening approval, speaker confirmation and GGD event binding",
+      "unblocks": "checked voice/SFX binder and runtime audio use"
+    }
+  ],
+  "characters": [
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "community-review-23-20260907"
+      ],
+      "identityEvidence": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match gintoki -> 028"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 18944662,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 76,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 18944662,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 18944662,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 57,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 18944662,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/CV_028_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "167a614697b529ab470db928acb1cc3a717450fb5a9f942188313dd8502c0132"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/CV_028_00_ST_JP.awb",
+                "bytes": 3326128,
+                "sha256": "9aabac844f58e779a61a7d9d3b47bc76fdfb3331edd9076fe18477ebc157c069"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 411.648
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/PV_028_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "e4f0a10d6f089eb223a4ea1ee04e1875a87e5ca42b5fb23d469acb434d6af97f"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/PV_028_00_ST_JP.awb",
+                "bytes": 968054,
+                "sha256": "f5f1690b4dbea8c762dfec2f8b5ed4e134a276149c97e6f4688f3dc4bd1df4c8"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 119.68
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Gintoki Sakata",
+      "nameZhTW": "坂田銀時",
+      "nativeId": "028",
+      "priority": 1,
+      "slug": "gintoki"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "b2-nube"
+      ],
+      "identityEvidence": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match nube -> 041"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 19731485,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "e7ca3f5ff53537fd3b6e849425913a13c712c87f65f5c5d3b1843516eb0a35d0"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 82,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 19731485,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "e7ca3f5ff53537fd3b6e849425913a13c712c87f65f5c5d3b1843516eb0a35d0"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 19731485,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "e7ca3f5ff53537fd3b6e849425913a13c712c87f65f5c5d3b1843516eb0a35d0"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 63,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 19731485,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "e7ca3f5ff53537fd3b6e849425913a13c712c87f65f5c5d3b1843516eb0a35d0"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/CV_041_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "1b92b921067b44a9d611a2885abd6699b52fc298b44882aa8efb528d2fe4a2b2"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/CV_041_00_ST_JP.awb",
+                "bytes": 3462372,
+                "sha256": "dd15a57219663f45b0bf03b21dc2fbd93b5c395a8c8e89446c605f3cc630e841"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 428.672
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/PV_041_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "a4f07be7587d6b989f73936726f5a12530a47feb08ed7eb5a95de798f4701dbb"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/PV_041_00_ST_JP.awb",
+                "bytes": 833097,
+                "sha256": "7f2d156e686bb323df8177fa24accede7499b50920adbf2f0dd027614c1e699c"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 102.784
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Meisuke Nueno",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": "041",
+      "priority": 2,
+      "slug": "nube"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "godie-ucrl"
+      ],
+      "identityEvidence": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match gon -> 017"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13978687,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 82,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13978687,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13978687,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 63,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13978687,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/CV_017_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "e8407177f1e3cc544b8ae2b1125da434204435fd46e90734ce67f8337505e3f8"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/CV_017_00_ST_JP.awb",
+                "bytes": 2256346,
+                "sha256": "48d6485913fca0981906226d4f872761a31a09202048226c9cc80a78576a5af9"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 277.803
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/PV_017_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "6b5bfdd7ca559f264a0b05b747f6a59324b30f7a85a70896180c360e7497f38c"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/PV_017_00_ST_JP.awb",
+                "bytes": 704165,
+                "sha256": "e0f9fd47c937ff4b72e928590884b26fc826ccbcd3dd39060ebffea5597e6100"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 86.656
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Gon Freecss",
+      "nameZhTW": "小傑·富力士",
+      "nativeId": "017",
+      "priority": 3,
+      "slug": "gon"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "identityEvidence": [
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.stpk",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.stpk",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.pak",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.stpk",
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match killua -> 018"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13461553,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 82,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13461553,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13461553,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 63,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13461553,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/CV_018_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "630e8a44fe4c944825d8b3f4828ccee40baaba020db7551e2fcb07379cf6df19"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/CV_018_00_ST_JP.awb",
+                "bytes": 1939803,
+                "sha256": "55d04ce726fde95e449e8301ce633443296d0cf284b78f493d86ed2671ff2ecc"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 238.165
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/PV_018_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "52496aa19795e2e2a8186ff94fa5f741b53528fc5bb0dfa09a4dd4c2f919f0cb"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/PV_018_00_ST_JP.awb",
+                "bytes": 599174,
+                "sha256": "ad6dc65c01d289fbba9fd68f7e33f7bfeb92b51fb3948274ac79859e241f2350"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 73.515
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Killua Zoldyck",
+      "nameZhTW": "奇犽·揍敵客",
+      "nativeId": "018",
+      "priority": 4,
+      "slug": "killua"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "b2-luckyman"
+      ],
+      "identityEvidence": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match luckyman -> 037"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 14034490,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "ec6e8b773c4975fc5ad582415ed6de6a07f7d6b3deb6b644c8524efa240cddbc"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 82,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 14034490,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "ec6e8b773c4975fc5ad582415ed6de6a07f7d6b3deb6b644c8524efa240cddbc"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 14034490,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "ec6e8b773c4975fc5ad582415ed6de6a07f7d6b3deb6b644c8524efa240cddbc"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 63,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 14034490,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "ec6e8b773c4975fc5ad582415ed6de6a07f7d6b3deb6b644c8524efa240cddbc"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/CV_037_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "c4a434ec568dc1b3090a0d21e40b7c6d501f3a7c92abaf32add2f0d44a5c6235"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/CV_037_00_ST_JP.awb",
+                "bytes": 2346252,
+                "sha256": "6fa3af93397515b01f5c19403d69a52530fb7db001848a15bb585f70ff6c5b46"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 289.024
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/PV_037_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "279306d87609d29e77dc85d5b2ce351a3583716e997504cf787fec5ed3df5802"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/PV_037_00_ST_JP.awb",
+                "bytes": 894366,
+                "sha256": "df5fed1c496fc0c3c841653b5293da46ae5759ea627e10cbb76fec3eab0ffd50"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 110.464
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Luckyman",
+      "nameZhTW": "幸運超人",
+      "nativeId": "037",
+      "priority": 5,
+      "slug": "luckyman"
+    },
+    {
+      "defaultUseBlocker": "no module set has converted runtime artifacts plus motion/event/audio verification",
+      "defaultUseEligible": false,
+      "ggdHeroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityEvidence": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+        "identity-probe.json unique internal STPK member-name match hiei -> 012"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modules": {
+        "model": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 3,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13928734,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "024c93d32c51d5a454177389000cbc127af14b88a3e4e8663a9b87fe48e33358"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "motion": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 82,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13928734,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "024c93d32c51d5a454177389000cbc127af14b88a3e4e8663a9b87fe48e33358"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "sfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 5,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13928734,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "024c93d32c51d5a454177389000cbc127af14b88a3e4e8663a9b87fe48e33358"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "vfx": {
+          "candidateContainerFound": true,
+          "candidateMemberCount": 63,
+          "evidence": [
+            {
+              "characterMemberEvidence": {
+                "bytes": 13928734,
+                "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+                "sha256": "024c93d32c51d5a454177389000cbc127af14b88a3e4e8663a9b87fe48e33358"
+              },
+              "sourceIndex": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+            }
+          ],
+          "reason": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete",
+          "runtimeReady": false,
+          "status": "native-containers-present-hashed-conversion-blocked"
+        },
+        "voice": {
+          "candidateContainerFound": true,
+          "decodedCandidateFiles": 399,
+          "evidence": [
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/CV_012_00_ST_JP.acb",
+                "bytes": 48736,
+                "sha256": "2eb07aa8639aa76b356f753d497065bc64c37539c289e5eb869c3451ed158269"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/CV_012_00_ST_JP.awb",
+                "bytes": 3436537,
+                "sha256": "c77c634b2c6c88b097bb6002afff15b18afde0b1865afa3097c3dab1a0fffd97"
+              },
+              "bank": "CV",
+              "decodedWavCount": 301,
+              "durationSeconds": 425.472
+            },
+            {
+              "acb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/PV_012_00_ST_JP.acb",
+                "bytes": 16800,
+                "sha256": "b2917e7754441a3820e1689c6c6dc718bfa8ce3f03ae1c1f7906457f4de6bf00"
+              },
+              "awb": {
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/PV_012_00_ST_JP.awb",
+                "bytes": 787685,
+                "sha256": "4a6bffbdcb62ec1c118bd27b4fd31c8bf53ef357711f821beef54bfbce9bb233"
+              },
+              "bank": "PV",
+              "decodedWavCount": 98,
+              "durationSeconds": 97.109
+            }
+          ],
+          "language": "ja",
+          "reason": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review",
+          "runtimeReady": false,
+          "status": "decoded-wav-candidates-owner-event-speaker-review-pending"
+        }
+      },
+      "nameEnglish": "Hiei",
+      "nameZhTW": "飛影",
+      "nativeId": "012",
+      "priority": 6,
+      "slug": "hiei"
+    }
+  ],
+  "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
+    "archiveMember": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+    "bytes": 324863,
+    "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
+    "restoreRequiredForSourceAudit": false,
+    "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e"
+  },
+  "inventoryDate": "2026-09-17",
+  "mode": "read-only-source-audit-and-extraction-preparation",
+  "ownerCpkInventory": {
+    "exists": true,
+    "fullMemberManifest": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+      "bytes": 934318,
+      "format": "deterministic-jsonl-gzip-mtime-0",
+      "memberCount": 19471,
+      "sha256": "3f838b2a4ebec3c7ccce214d4432fe66f34fdbba42be01c061b8d899cb29981e"
+    },
+    "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+    "status": "native-containers-inventoried-conversion-blocked",
+    "summary": {
+      "containersExpected": 7,
+      "containersInventoried": 7,
+      "convertedModels": 0,
+      "membersHashed": 19471,
+      "nativeTokenGroups": 58,
+      "priorityIdentityBlocked": 0,
+      "priorityIdentityConfirmed": 6,
+      "runtimeRegistered": 0
+    }
+  },
+  "priorOwnerArchiveReceipt": {
+    "attemptedLocations": [],
+    "exists": true,
+    "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+    "status": "inventoried-read-only"
+  },
+  "priorityAudioExtraction": {
+    "exists": true,
+    "fullAudioManifest": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-priority-audio-v1/audio-files.jsonl.gz",
+      "bytes": 205142,
+      "rows": 2394,
+      "sha256": "9e232c3e808da2a12989979d4cb61dce0b8fbc15fd9d31d1338d64e1eb13c0b6"
+    },
+    "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json",
+    "status": "priority-six-japanese-audio-decoded-owner-review-pending",
+    "summary": {
+      "decodedWavFiles": 2394,
+      "durationSeconds": 2660.992,
+      "hcaFiles": 2394,
+      "ownerApprovedFiles": 0,
+      "priorityCharacters": 6,
+      "runtimeBindings": 0,
+      "sourceBanks": 12
+    }
+  },
+  "publicSample": {
+    "analysisExists": true,
+    "analysisPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+    "conversionS3Backup": {
+      "archiveBytes": 12142110,
+      "archiveSha256": "1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38",
+      "fileCount": 66,
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/source.tar.gz",
+      "localArchiveExists": true,
+      "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/manifest.json",
+      "manifestExists": true,
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.files.json",
+      "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jstars-stpk-research-v1/6dd6179f26a78a7d498cade884015eff52d22173bce147d6d1056a92d2a0219d/readback.tar.gz",
+      "readbackExists": true,
+      "receiptClaimsVerified": true,
+      "receiptExists": true,
+      "receiptPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/conversion-s3-backup-receipt.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.tar.gz",
+      "schema": "ggd-intake-backup-receipt@1",
+      "status": "receipt-and-local-readback-present"
+    },
+    "scopeFinding": "four-character character_model i/m/v sample only; not a full-game archive",
+    "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+    "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1",
+    "sourceS3Backup": {
+      "archiveBytes": 46346796,
+      "archiveSha256": "4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453",
+      "fileCount": 28,
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/source.tar.gz",
+      "localArchiveExists": true,
+      "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/manifest.json",
+      "manifestExists": true,
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.files.json",
+      "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/zenhax-jstars-pak-stpk-comparison-v1/a2ea7093847a60eb3fc263f3fb81214359ac86239740f06276a287f360e8d3cf/readback.tar.gz",
+      "readbackExists": true,
+      "receiptClaimsVerified": true,
+      "receiptExists": true,
+      "receiptPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/source-s3-backup-receipt.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.tar.gz",
+      "schema": "ggd-intake-backup-receipt@1",
+      "status": "receipt-and-local-readback-present"
+    },
+    "summary": {
+      "blockedCmpPairs": 12,
+      "decodedAudio": 0,
+      "nativeAnimations": 0,
+      "nativeCharacters": 4,
+      "pakStpkPairs": 12,
+      "standardizedModels": 0,
+      "stpkContainersSplit": 12,
+      "vfx": 0
+    }
+  },
+  "rerun": {
+    "ownerArchiveInventory": "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+    "priorityAudioExtraction": "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/audio_extract.py",
+    "sourceAudit": "python3 tools/hero-model-library/source-workflows/jstars-priority-six-v1/source_inventory.py",
+    "sourceAuditCheck": "python3 tools/hero-model-library/source-workflows/jstars-priority-six-v1/source_inventory.py --check"
+  },
+  "safety": {
+    "archiveExtracted": true,
+    "permissionBypassAttempted": false,
+    "s3ReadPerformed": false,
+    "sourceModified": false
+  },
+  "schema": "ggd.jstars-priority-six-source-receipt@1",
+  "scope": {
+    "characters": 6,
+    "defaultUseApproved": false,
+    "game": "J-Stars Victory VS+",
+    "modules": [
+      "model",
+      "motion",
+      "vfx",
+      "sfx",
+      "voice"
+    ],
+    "requestedDefaultUse": true
+  },
+  "status": "owner-archive-inventoried-native-conversion-blocked",
+  "summary": {
+    "characters": 6,
+    "decodedJapaneseAudioFiles": 2394,
+    "defaultUseEligibleCharacters": 0,
+    "moduleCandidateContainersObserved": 30,
+    "nativeIdsConfirmed": 6,
+    "nativeIdsUnproven": 0,
+    "runtimeReadyModules": 0
+  }
+}

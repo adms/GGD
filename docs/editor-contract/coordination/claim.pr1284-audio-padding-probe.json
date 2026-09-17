@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.pr1284-audio-padding-probe",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "72dc6ef7c3b832dc95febc4b2d8708c5a67a8c26",
+  "contractFingerprint": "79109da8fdb79101",
+  "title": "PR #1284 音訊量尺辨識 MP3 padding，維持原截斷門檻與音檔",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "CI run 35219031201 使用 ffmpeg 6.1.1-3ubuntu5，既存 up.mp3 的標頭長度是 1.77633 秒、解码長度是 1.553741 秒；本機 ffmpeg 8.1.2 已扣除 padding。34 個封包合計 1.77633 秒，Skip Samples 1105 加 discard padding 1349，除以 11025 Hz 後是 0.222585 秒。量尺現在僅在 MP3 原始標頭與實際封包總長吻合時，扣除此中繼資料；保留 rawHeaderSeconds 與 paddingEvidence，真截斷仍套原本 max(0.1 秒, 5%) 門檻。PROBE_VERSION 升至 @2 以停用舊快取。",
+      "repro": {
+        "command": "python3 tools/audio-intake/test_audio_intake_padding.py",
+        "expectedExit": 0
+      },
+      "commit": "f8cb67d994fbc18a061f2a26cedd00aac36bebed",
+      "evidence": [
+        "tools/audio-intake/audio_intake.py",
+        "tools/audio-intake/test_audio_intake_padding.py",
+        "packages/shared/src/ops/audioIntake.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "本次不修改音檔、不提高棘輪、不放寬門檻。up.mp3 的 SHA-256 仍是 bc236f99815f9d1d2f211f39933a8fb375b279f1048a0e01e6a696bfcd516a96；測試涵蓋舊版與新版 ffprobe、缺封包、解碼真截斷、無 padding、缺失中繼資料、探測失敗及非 MP3，並實測原音檔位元組不變。",
+      "repro": {
+        "command": "python3 tools/audio-intake/test_audio_intake_padding.py",
+        "expectedExit": 0
+      },
+      "commit": "f8cb67d994fbc18a061f2a26cedd00aac36bebed",
+      "evidence": [
+        "tools/audio-intake/test_audio_intake_padding.py",
+        "content/assets/audio/sfx/up.mp3"
+      ]
+    }
+  ],
+  "asks": [
+    "Main 審查 ffprobe 封包 padding 判準；下一輪 Ubuntu CI 通過才算舊版工具鏈整合驗證。"
+  ]
+}

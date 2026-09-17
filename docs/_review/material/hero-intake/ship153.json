@@ -3,7 +3,7 @@
  "batch": "ship153",
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
- "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons",
+ "invocation": "node tools/hero-intake/run.mjs -- --batch ship153 --all --no-gen-icons",
  "voiceIndex": "materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
@@ -26,9 +26,9 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "5abfcf84edd55b2d5f46189ca0f99a96d47121c91ea86bb91624d4a33355b326",
+ "digest": "e3763a6f9b6da66cc0723a3d329c87af1dd5467761bd0cc68f7572de3da9ee1e",
  "digestParts": {
-  "core": "cdfec270b90e96429cd9f83d08e83a32641dcfff455781290d954ab1e35de890",
+  "core": "ed2caf686110f3ad159bbb69cba51829a6296f36c713ffc14f795daaf6e5e501",
   "voiceCandidates": "31d4ea4a84dc49bfdc9d155fe2491f74edfd78d061e86084f087c9e18ec2a61d"
  },
  "heroes": [
@@ -2005,9 +2005,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
-    "glbPath": "assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
-    "bytes": 829412,
+    "modelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "glbPath": "assets/models/community/versions/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+    "bytes": 832496,
     "clipMap": {
      "idle": "bat_idle",
      "run": "bat_run",
@@ -5675,9 +5675,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
-    "glbPath": "assets/models/community/versions/f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968.glb",
-    "bytes": 459576,
+    "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+    "glbPath": "assets/models/community/versions/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+    "bytes": 466788,
     "clipMap": {
      "idle": "bat_idle",
      "run": "single_run",

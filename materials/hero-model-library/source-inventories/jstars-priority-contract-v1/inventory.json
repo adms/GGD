@@ -1,0 +1,530 @@
+{
+  "archive": {
+    "archiveEntries": 2,
+    "characterTokens": 0,
+    "fileName": "J-Stars Victory Vs+.7z",
+    "path": null,
+    "status": "partial-inventory-with-blockers"
+  },
+  "characters": [
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "community-review-23-20260907"
+      ],
+      "identityStatus": "unverified-native-id",
+      "modules": {
+        "model": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "voice": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        }
+      },
+      "nameEnglish": "Gintoki Sakata",
+      "nameZhTW": "坂田銀時",
+      "nativeId": null,
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan"
+      ],
+      "priority": 1,
+      "registered": false,
+      "slug": "gintoki",
+      "workZhTW": "銀魂"
+    },
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "b2-nube"
+      ],
+      "identityStatus": "unverified-native-id",
+      "modules": {
+        "model": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "voice": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        }
+      },
+      "nameEnglish": "Meisuke Nueno",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": null,
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan"
+      ],
+      "priority": 2,
+      "registered": false,
+      "slug": "nube",
+      "workZhTW": "靈異教師神眉"
+    },
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "identityStatus": "unverified-native-id",
+      "modules": {
+        "model": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "voice": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        }
+      },
+      "nameEnglish": "Gon Freecss",
+      "nameZhTW": "小傑·富力士",
+      "nativeId": null,
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan"
+      ],
+      "priority": 3,
+      "registered": false,
+      "slug": "gon",
+      "workZhTW": "HUNTER×HUNTER"
+    },
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "community-review-24-20260907"
+      ],
+      "identityStatus": "archive-directory-and-internal-member-names-observed-not-visually-confirmed",
+      "modules": {
+        "model": {
+          "containerLocations": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_i.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_m.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.pak",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1/extracted/killua/character_model_018_v.stpk",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_eye.sa",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_mouth.",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_shader.srd",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/battle_character_performance_par",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_culling_PS3",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_face_light_",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_facial_pres",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_near_clip_P",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_silhouette_",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv"
+          ],
+          "containerStatus": "observed-native-pak-stpk-and-split-members",
+          "conversionStatus": "blocked-ps3-srd-to-glb-converter-unverified",
+          "gap": "$CLH/$CH0 decode and PS3 SRD/SRDI/SRDV geometry, rig and texture conversion are not verified",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "owner archive is absent or has no verified character-to-container mapping",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "owner archive is absent or has no verified character-to-container mapping",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/color_effect_018_killua_m.pak"
+          ],
+          "containerStatus": "related-member-observed-not-decoded",
+          "conversionStatus": "not-started",
+          "gap": "effect payload and event identity are unverified",
+          "runtimeStatus": "not-bound"
+        },
+        "voice": {
+          "containerLocations": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_stream_jp_lps_PS3.pak"
+          ],
+          "containerStatus": "related-lps-member-observed-not-audio-confirmed",
+          "conversionStatus": "not-started",
+          "gap": "LPS member is not proof of decodable voice; speaker, language and event require review",
+          "runtimeStatus": "not-bound"
+        }
+      },
+      "nameEnglish": "Killua Zoldyck",
+      "nameZhTW": "奇犽·揍敵客",
+      "nativeId": "018",
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan",
+        "node --import tsx tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/prepare_runtime_candidate.mts --repo . --input /absolute/path/018-killua.glb --selections /absolute/path/018-animation-selections.json --metadata /absolute/path/018-metadata.json --output /absolute/path/jstars-runtime-output/killua --mode plan"
+      ],
+      "priority": 4,
+      "registered": false,
+      "slug": "killua",
+      "workZhTW": "HUNTER×HUNTER"
+    },
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "b2-luckyman"
+      ],
+      "identityStatus": "unverified-native-id",
+      "modules": {
+        "model": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "voice": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        }
+      },
+      "nameEnglish": "Luckyman",
+      "nameZhTW": "幸運超人",
+      "nativeId": null,
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan"
+      ],
+      "priority": 5,
+      "registered": false,
+      "slug": "luckyman",
+      "workZhTW": "幸運超人"
+    },
+    {
+      "availableConverterStages": {
+        "archiveInventory": true,
+        "checkedVfxSfxVoiceBinding": false,
+        "cmpTableAndBoundsInspection": true,
+        "modelOptionRegistration": true,
+        "ps3SrdToSkinnedGlb": false,
+        "runtimeGlbPreparationAndVerification": true,
+        "stpkMemberSplit": true
+      },
+      "conversionComplete": false,
+      "deployVerified": false,
+      "heroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityStatus": "unverified-native-id",
+      "modules": {
+        "model": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "motion": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "sfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "vfx": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        },
+        "voice": {
+          "containerLocations": [],
+          "containerStatus": "not-observed",
+          "conversionStatus": "not-started",
+          "gap": "unknown until owner archive inventory proves this character's native ID",
+          "runtimeStatus": "not-registered"
+        }
+      },
+      "nameEnglish": "Hiei",
+      "nameZhTW": "飛影",
+      "nativeId": null,
+      "nextCommands": [
+        "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\"",
+        "python3 tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py --receipt /absolute/path/jstars-extraction-receipt.json --output /absolute/path/jstars-runtime-output --mode plan"
+      ],
+      "priority": 6,
+      "registered": false,
+      "slug": "hiei",
+      "workZhTW": "幽遊白書"
+    }
+  ],
+  "evidence": {
+    "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+    "ownerArchiveReceipt": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+    "ownerPlan": "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+    "publicSampleAnalysis": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json"
+  },
+  "gaps": [
+    "owner archive receipt is blocked until J-Stars Victory Vs+.7z becomes locally visible",
+    "five of six priority character native IDs are unproven and must not be guessed",
+    "$CLH/$CH0 native decode is incomplete",
+    "no validated PS3 SRD/SRDI/SRDV to skinned GLB converter is present",
+    "no six-state native motion selection receipt exists for any of the six",
+    "no checked VFX, SFX or voice event binder exists for any of the six"
+  ],
+  "nativeContainerContract": {
+    "model": "$CMP PAK -> STPK -> SRD/SRDI/SRDV and related members",
+    "motion": "unknown until owner archive member inventory; do not infer from roster order",
+    "outer": "7z -> PS3 ISO (expected; owner archive not currently visible)",
+    "sfx": "unknown until owner archive member inventory and audio decode",
+    "vfx": "character effect member or dedicated effect container; event mapping must be verified",
+    "voice": "unknown until owner archive member inventory and audio decode; LPS alone is insufficient"
+  },
+  "ownerAdoptionRule": {
+    "decimateOnlyWhenTrianglesAbove": 10000,
+    "decimatedCandidateMustBeAtMost": 8000,
+    "maximumAcceptedTriangles": 8000,
+    "source": "owner current instruction for this asset-library workflow"
+  },
+  "platform": "PlayStation 3",
+  "policyConflict": {
+    "detail": "resolved: owner rule accepts outputTriangles <= 8000; adoptionPolicy.json sets decimatedTargetTrianglesMax=8000 and the runtime preparer accepts <= 8000",
+    "evidence": "tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/prepare_runtime_candidate.mts",
+    "exists": false,
+    "scope": "recorded only; this lane does not modify shared runtime policy files"
+  },
+  "policyInterpretation": {
+    "audioAndVfx": "inventory candidates first; do not bind events without per-file identity and owner review",
+    "geometry": "only sources strictly above 10000 triangles are decimated; owner acceptance requires the resulting candidate to be at most 8000 triangles (configured maximum 8000)",
+    "motion": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "registration": "register an independent non-default option only after identity, model, rig, motion and official verification pass",
+    "texture": "all hero textures must remain at or below the runtime texture edge limit"
+  },
+  "runtimePolicy": {
+    "animationChannelLimit": 500,
+    "animationChannelWarning": 300,
+    "decimateWhenTrianglesAbove": 10000,
+    "decimatedTargetTrianglesMax": 8000,
+    "drawPrimitiveLimit": 6,
+    "drawPrimitiveWarning": 3,
+    "schema": "ggd.jstars-runtime-policy-snapshot@1",
+    "source": {
+      "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+      "runtimeBudget": "packages/shared/src/content/modelUpload/budget.ts"
+    },
+    "textureEdgeLimit": 256,
+    "textureEdgeWarning": 256,
+    "triangleRuntimeLimit": 28000,
+    "triangleRuntimeWarning": 16000
+  },
+  "schema": "ggd.jstars-priority-contract@1",
+  "sourceGame": "J-Stars Victory VS+",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "summary": {
+    "characters": 6,
+    "charactersConverted": 0,
+    "charactersDeployed": 0,
+    "charactersRegistered": 0,
+    "nativeIdsKnown": 1,
+    "nativeIdsVerified": 1
+  },
+  "tools": [
+    {
+      "capability": "read-only 7z and nested ISO inventory plus native-token discovery",
+      "path": "tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py",
+      "status": "available"
+    },
+    {
+      "capability": "$CMP inspection and safe STPK member split",
+      "path": "tools/hero-model-library/source-workflows/jstars-stpk-research-v1/inventory.py",
+      "status": "available-for-public-comparison-sample"
+    },
+    {
+      "capability": "nine-stage conversion and registration orchestration",
+      "path": "tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/pipeline.py",
+      "status": "available-but-blocked-by-upstream-skinned-glb-and-verified-module-receipts"
+    },
+    {
+      "capability": "official decimation, texture normalization, six-state motion map and GLB verification",
+      "path": "tools/hero-model-library/source-workflows/jstars-conversion-runtime-v1/prepare_runtime_candidate.mts",
+      "status": "available-after-ps3-conversion"
+    },
+    {
+      "capability": "non-destructive skin-aware geometry and texture optimization",
+      "path": "tools/model-budget/optimize.ts",
+      "status": "available-after-skinned-glb-exists"
+    }
+  ]
+}

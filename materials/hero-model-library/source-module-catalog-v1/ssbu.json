@@ -1,0 +1,3387 @@
+{
+  "schema": "ggd.source-module-catalog-fragment@2",
+  "sourceFamily": "Nintendo Super Smash Bros. Ultimate",
+  "auditedAt": "2026-09-17",
+  "truthBoundary": [
+    "Worldblender and Ultimate14 are community sources, not verified Nintendo base-game payloads.",
+    "NSandNS2 records are container metadata only because the share was unmounted and zero payload bytes were read.",
+    "Accepted independent components do not imply backend registration or production deployment.",
+    "Decoded audio remains a candidate until listening, identity, event binding, registration, and deployment evidence exists."
+  ],
+  "sourceGroups": [
+    {
+      "sourceId": "gitlab-ssbu-models",
+      "title": "SSBU Worldblender pinned community model snapshot",
+      "platform": "Nintendo Switch / community Blender export",
+      "version": "df76879171b064570b4e49a608c9f98211b33edb",
+      "status": "source-payload-verified-with-independent-components",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "materials/hero-model-library/ssbu-model-library-validation.json"
+      ],
+      "summary": {
+        "manifestFiles": 28681,
+        "manifestBytes": 16148574001,
+        "fighterOrFormIds": 92,
+        "primaryModelCandidates": 698,
+        "acceptedStaticComponents": 14,
+        "registeredOptions": 0,
+        "note": "All 28,681 LFS paths exist and match pinned size/hash evidence. They are community exports; accepted components are independent GLBs, not backend-selectable options."
+      },
+      "candidates": [
+        {
+          "character": "bayonetta",
+          "id": "ssbu-worldblender-bayonetta",
+          "texture": {
+            "count": 378
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 402
+          },
+          "payload": {
+            "count": 402,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "brave",
+          "id": "ssbu-worldblender-brave",
+          "texture": {
+            "count": 277
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 286
+          },
+          "payload": {
+            "count": 286,
+            "noteRef": "n12"
+          }
+        },
+        {
+          "character": "buddy",
+          "id": "ssbu-worldblender-buddy",
+          "texture": {
+            "count": 322
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 347
+          },
+          "payload": {
+            "count": 347,
+            "noteRef": "n13"
+          }
+        },
+        {
+          "character": "captain",
+          "id": "ssbu-worldblender-captain",
+          "texture": {
+            "count": 154
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 164
+          },
+          "payload": {
+            "count": 164,
+            "noteRef": "n14"
+          }
+        },
+        {
+          "character": "chrom",
+          "id": "ssbu-worldblender-chrom",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n16"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n18"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 204
+          },
+          "payload": {
+            "count": 204
+          }
+        },
+        {
+          "character": "cloud",
+          "id": "ssbu-worldblender-cloud",
+          "texture": {
+            "count": 279
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 297
+          },
+          "payload": {
+            "count": 297,
+            "noteRef": "n19"
+          }
+        },
+        {
+          "character": "common",
+          "id": "ssbu-worldblender-common",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n21"
+          },
+          "texture": {
+            "count": 1,
+            "noteRef": "n22"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n23"
+          },
+          "classification": "helper/shared",
+          "container": {
+            "count": 2
+          },
+          "payload": {
+            "count": 2,
+            "noteRef": "n20"
+          }
+        },
+        {
+          "character": "daisy",
+          "id": "ssbu-worldblender-daisy",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n25"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 307,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n26"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 324
+          },
+          "payload": {
+            "count": 324,
+            "noteRef": "n24"
+          }
+        },
+        {
+          "character": "dedede",
+          "id": "ssbu-worldblender-dedede",
+          "texture": {
+            "count": 286
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 302
+          },
+          "payload": {
+            "count": 302,
+            "noteRef": "n27"
+          }
+        },
+        {
+          "character": "demon",
+          "id": "ssbu-worldblender-demon",
+          "texture": {
+            "count": 254
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 263
+          },
+          "payload": {
+            "count": 263,
+            "noteRef": "n28"
+          }
+        },
+        {
+          "character": "diddy",
+          "id": "ssbu-worldblender-diddy",
+          "texture": {
+            "count": 301
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 314
+          },
+          "payload": {
+            "count": 314,
+            "noteRef": "n29"
+          }
+        },
+        {
+          "character": "dolly",
+          "id": "ssbu-worldblender-dolly",
+          "texture": {
+            "count": 408
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 424
+          },
+          "payload": {
+            "count": 424,
+            "noteRef": "n30"
+          }
+        },
+        {
+          "character": "donkey",
+          "id": "ssbu-worldblender-donkey",
+          "texture": {
+            "count": 151
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 161
+          },
+          "payload": {
+            "count": 161,
+            "noteRef": "n31"
+          }
+        },
+        {
+          "character": "duckhunt",
+          "id": "ssbu-worldblender-duckhunt",
+          "texture": {
+            "count": 271
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 293
+          },
+          "payload": {
+            "count": 293,
+            "noteRef": "n32"
+          }
+        },
+        {
+          "character": "edge",
+          "id": "ssbu-worldblender-edge",
+          "texture": {
+            "count": 298
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 306
+          },
+          "payload": {
+            "count": 306,
+            "noteRef": "n33"
+          }
+        },
+        {
+          "character": "eflame",
+          "id": "ssbu-worldblender-eflame",
+          "texture": {
+            "count": 339
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 348
+          },
+          "payload": {
+            "count": 348,
+            "noteRef": "n34"
+          }
+        },
+        {
+          "character": "element",
+          "id": "ssbu-worldblender-element",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n21"
+          },
+          "texture": {
+            "count": 26,
+            "noteRef": "n22"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n23"
+          },
+          "classification": "helper/shared",
+          "container": {
+            "count": 27
+          },
+          "payload": {
+            "count": 27,
+            "noteRef": "n35"
+          }
+        },
+        {
+          "character": "elight",
+          "id": "ssbu-worldblender-elight",
+          "texture": {
+            "count": 315
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 324
+          },
+          "payload": {
+            "count": 324,
+            "noteRef": "n36"
+          }
+        },
+        {
+          "character": "falco",
+          "id": "ssbu-worldblender-falco",
+          "texture": {
+            "count": 245
+          },
+          "classification": "fighter-or-form",
+          "payload": {
+            "noteRef": "n37"
+          }
+        },
+        {
+          "character": "fox",
+          "id": "ssbu-worldblender-fox",
+          "texture": {
+            "count": 269
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 280
+          },
+          "payload": {
+            "count": 280,
+            "noteRef": "n38"
+          }
+        },
+        {
+          "character": "gamewatch",
+          "id": "ssbu-worldblender-gamewatch",
+          "model": {
+            "count": 16
+          },
+          "texture": {
+            "count": 496
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 616
+          },
+          "payload": {
+            "count": 616,
+            "noteRef": "n39"
+          }
+        },
+        {
+          "character": "ganon",
+          "id": "ssbu-worldblender-ganon",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n40"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n41"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 204
+          },
+          "payload": {
+            "count": 204
+          }
+        },
+        {
+          "character": "gaogaen",
+          "id": "ssbu-worldblender-gaogaen",
+          "texture": {
+            "count": 201
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 213
+          },
+          "payload": {
+            "count": 213,
+            "noteRef": "n42"
+          }
+        },
+        {
+          "character": "gekkouga",
+          "id": "ssbu-worldblender-gekkouga",
+          "texture": {
+            "count": 255
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 268
+          },
+          "payload": {
+            "count": 268,
+            "noteRef": "n43"
+          }
+        },
+        {
+          "character": "ike",
+          "id": "ssbu-worldblender-ike",
+          "texture": {
+            "count": 300
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 310
+          },
+          "payload": {
+            "count": 310,
+            "noteRef": "n44"
+          }
+        },
+        {
+          "character": "inkling",
+          "id": "ssbu-worldblender-inkling",
+          "texture": {
+            "count": 456
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 522
+          },
+          "payload": {
+            "count": 522,
+            "noteRef": "n45"
+          }
+        },
+        {
+          "character": "jack",
+          "id": "ssbu-worldblender-jack",
+          "texture": {
+            "count": 355
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 369
+          },
+          "payload": {
+            "count": 369,
+            "noteRef": "n46"
+          }
+        },
+        {
+          "character": "kamui",
+          "id": "ssbu-worldblender-kamui",
+          "texture": {
+            "count": 408
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 440
+          },
+          "payload": {
+            "count": 440,
+            "noteRef": "n47"
+          }
+        },
+        {
+          "character": "ken",
+          "id": "ssbu-worldblender-ken",
+          "texture": {
+            "count": 168
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 176
+          },
+          "payload": {
+            "count": 176,
+            "noteRef": "n48"
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-worldblender-kirby",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n50"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 2388,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n51"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 2571
+          },
+          "payload": {
+            "count": 2571,
+            "noteRef": "n49"
+          }
+        },
+        {
+          "character": "koopa",
+          "id": "ssbu-worldblender-koopa",
+          "texture": {
+            "count": 121
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 130
+          },
+          "payload": {
+            "count": 130,
+            "noteRef": "n52"
+          }
+        },
+        {
+          "character": "koopag",
+          "id": "ssbu-worldblender-koopag",
+          "model": {
+            "count": 1
+          },
+          "texture": {
+            "count": 9
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 10
+          },
+          "payload": {
+            "count": 10,
+            "noteRef": "n53"
+          }
+        },
+        {
+          "character": "koopajr",
+          "id": "ssbu-worldblender-koopajr",
+          "model": {
+            "count": 1
+          },
+          "texture": {
+            "count": 486
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 529
+          },
+          "payload": {
+            "count": 529,
+            "noteRef": "n54"
+          }
+        },
+        {
+          "character": "krool",
+          "id": "ssbu-worldblender-krool",
+          "texture": {
+            "count": 367
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 380
+          },
+          "payload": {
+            "count": 380,
+            "noteRef": "n55"
+          }
+        },
+        {
+          "character": "link",
+          "id": "ssbu-worldblender-link",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n57"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 241,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n58"
+          },
+          "classification": "fighter-or-form",
+          "payload": {
+            "noteRef": "n56"
+          }
+        },
+        {
+          "character": "littlemac",
+          "id": "ssbu-worldblender-littlemac",
+          "texture": {
+            "count": 231
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 245
+          },
+          "payload": {
+            "count": 245,
+            "noteRef": "n59"
+          }
+        },
+        {
+          "character": "lucario",
+          "id": "ssbu-worldblender-lucario",
+          "texture": {
+            "count": 103
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 112
+          },
+          "payload": {
+            "count": 112,
+            "noteRef": "n60"
+          }
+        },
+        {
+          "character": "lucas",
+          "id": "ssbu-worldblender-lucas",
+          "texture": {
+            "count": 227
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 241
+          },
+          "payload": {
+            "count": 241,
+            "noteRef": "n61"
+          }
+        },
+        {
+          "character": "lucina",
+          "id": "ssbu-worldblender-lucina",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n63"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 243,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n64"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 252
+          },
+          "payload": {
+            "count": 252,
+            "noteRef": "n62"
+          }
+        },
+        {
+          "character": "luigi",
+          "id": "ssbu-worldblender-luigi",
+          "texture": {
+            "count": 177
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 188
+          },
+          "payload": {
+            "count": 188,
+            "noteRef": "n65"
+          }
+        },
+        {
+          "character": "mario",
+          "id": "ssbu-worldblender-mario",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n67"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 179,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n68"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 192
+          },
+          "payload": {
+            "count": 192,
+            "noteRef": "n66"
+          }
+        },
+        {
+          "character": "mariod",
+          "id": "ssbu-worldblender-mariod",
+          "texture": {
+            "count": 252
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 264
+          },
+          "payload": {
+            "count": 264,
+            "noteRef": "n69"
+          }
+        },
+        {
+          "character": "marth",
+          "id": "ssbu-worldblender-marth",
+          "texture": {
+            "count": 266
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 275
+          },
+          "payload": {
+            "count": 275,
+            "noteRef": "n70"
+          }
+        },
+        {
+          "character": "master",
+          "id": "ssbu-worldblender-master",
+          "texture": {
+            "count": 353
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 371
+          },
+          "payload": {
+            "count": 371,
+            "noteRef": "n71"
+          }
+        },
+        {
+          "character": "metaknight",
+          "id": "ssbu-worldblender-metaknight",
+          "texture": {
+            "count": 232
+          },
+          "classification": "fighter-or-form",
+          "payload": {
+            "noteRef": "n72"
+          }
+        },
+        {
+          "character": "mewtwo",
+          "id": "ssbu-worldblender-mewtwo",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n74"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 127,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n75"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 136
+          },
+          "payload": {
+            "count": 136,
+            "noteRef": "n73"
+          }
+        },
+        {
+          "character": "miifighter",
+          "id": "ssbu-worldblender-miifighter",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n21"
+          },
+          "texture": {
+            "count": 3,
+            "noteRef": "n22"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n23"
+          },
+          "classification": "fighter-form-without-body-in-snapshot",
+          "container": {
+            "count": 4
+          },
+          "payload": {
+            "count": 4,
+            "noteRef": "n76"
+          }
+        },
+        {
+          "character": "miigunner",
+          "id": "ssbu-worldblender-miigunner",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n21"
+          },
+          "texture": {
+            "count": 19,
+            "noteRef": "n22"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n23"
+          },
+          "classification": "fighter-form-without-body-in-snapshot",
+          "container": {
+            "count": 24
+          },
+          "payload": {
+            "count": 24,
+            "noteRef": "n77"
+          }
+        },
+        {
+          "character": "miiswordsman",
+          "id": "ssbu-worldblender-miiswordsman",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n21"
+          },
+          "texture": {
+            "count": 3,
+            "noteRef": "n22"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n23"
+          },
+          "classification": "fighter-form-without-body-in-snapshot",
+          "container": {
+            "count": 4
+          },
+          "payload": {
+            "count": 4,
+            "noteRef": "n76"
+          }
+        },
+        {
+          "character": "murabito",
+          "id": "ssbu-worldblender-murabito",
+          "texture": {
+            "count": 688
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 718
+          },
+          "payload": {
+            "count": 718,
+            "noteRef": "n78"
+          }
+        },
+        {
+          "character": "nana",
+          "id": "ssbu-worldblender-nana",
+          "model": {
+            "count": 4
+          },
+          "texture": {
+            "count": 152
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 160
+          },
+          "payload": {
+            "count": 160,
+            "noteRef": "n79"
+          }
+        },
+        {
+          "character": "ness",
+          "id": "ssbu-worldblender-ness",
+          "texture": {
+            "count": 238
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 250
+          },
+          "payload": {
+            "count": 250,
+            "noteRef": "n80"
+          }
+        },
+        {
+          "character": "packun",
+          "id": "ssbu-worldblender-packun",
+          "texture": {
+            "count": 141
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 152
+          },
+          "payload": {
+            "count": 152,
+            "noteRef": "n81"
+          }
+        },
+        {
+          "character": "pacman",
+          "id": "ssbu-worldblender-pacman",
+          "texture": {
+            "count": 183
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 196
+          },
+          "payload": {
+            "count": 196,
+            "noteRef": "n82"
+          }
+        },
+        {
+          "character": "palutena",
+          "id": "ssbu-worldblender-palutena",
+          "texture": {
+            "count": 271
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 281
+          },
+          "payload": {
+            "count": 281,
+            "noteRef": "n83"
+          }
+        },
+        {
+          "character": "peach",
+          "id": "ssbu-worldblender-peach",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n85"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 523,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n86"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 540
+          },
+          "payload": {
+            "count": 540,
+            "noteRef": "n84"
+          }
+        },
+        {
+          "character": "pfushigisou",
+          "id": "ssbu-worldblender-pfushigisou",
+          "texture": {
+            "count": 211
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 220
+          },
+          "payload": {
+            "count": 220,
+            "noteRef": "n87"
+          }
+        },
+        {
+          "character": "pichu",
+          "id": "ssbu-worldblender-pichu",
+          "texture": {
+            "count": 171
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 180
+          },
+          "payload": {
+            "count": 180,
+            "noteRef": "n88"
+          }
+        },
+        {
+          "character": "pickel",
+          "id": "ssbu-worldblender-pickel",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n90"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 287,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n91"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 318
+          },
+          "payload": {
+            "count": 318,
+            "noteRef": "n89"
+          }
+        },
+        {
+          "character": "pikachu",
+          "id": "ssbu-worldblender-pikachu",
+          "texture": {
+            "count": 189
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 198
+          },
+          "payload": {
+            "count": 198,
+            "noteRef": "n92"
+          }
+        },
+        {
+          "character": "pikmin",
+          "id": "ssbu-worldblender-pikmin",
+          "texture": {
+            "count": 318
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 335
+          },
+          "payload": {
+            "count": 335,
+            "noteRef": "n93"
+          }
+        },
+        {
+          "character": "pit",
+          "id": "ssbu-worldblender-pit",
+          "texture": {
+            "count": 343
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 354
+          },
+          "payload": {
+            "count": 354,
+            "noteRef": "n94"
+          }
+        },
+        {
+          "character": "pitb",
+          "id": "ssbu-worldblender-pitb",
+          "texture": {
+            "count": 404
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 413
+          },
+          "payload": {
+            "count": 413,
+            "noteRef": "n95"
+          }
+        },
+        {
+          "character": "plizardon",
+          "id": "ssbu-worldblender-plizardon",
+          "texture": {
+            "count": 139
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 148
+          },
+          "payload": {
+            "count": 148,
+            "noteRef": "n96"
+          }
+        },
+        {
+          "character": "popo",
+          "id": "ssbu-worldblender-popo",
+          "model": {
+            "count": 4
+          },
+          "texture": {
+            "count": 167
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 180
+          },
+          "payload": {
+            "count": 180,
+            "noteRef": "n97"
+          }
+        },
+        {
+          "character": "ptrainer",
+          "id": "ssbu-worldblender-ptrainer",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n99"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 143,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n100"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 152
+          },
+          "payload": {
+            "count": 152,
+            "noteRef": "n98"
+          }
+        },
+        {
+          "character": "purin",
+          "id": "ssbu-worldblender-purin",
+          "texture": {
+            "count": 331
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 340
+          },
+          "payload": {
+            "count": 340,
+            "noteRef": "n101"
+          }
+        },
+        {
+          "character": "pzenigame",
+          "id": "ssbu-worldblender-pzenigame",
+          "texture": {
+            "count": 136
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 144
+          },
+          "payload": {
+            "count": 144,
+            "noteRef": "n102"
+          }
+        },
+        {
+          "character": "reflet",
+          "id": "ssbu-worldblender-reflet",
+          "texture": {
+            "count": 284
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 294
+          },
+          "payload": {
+            "count": 294,
+            "noteRef": "n103"
+          }
+        },
+        {
+          "character": "richter",
+          "id": "ssbu-worldblender-richter",
+          "texture": {
+            "count": 287
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 301
+          },
+          "payload": {
+            "count": 301,
+            "noteRef": "n104"
+          }
+        },
+        {
+          "character": "ridley",
+          "id": "ssbu-worldblender-ridley",
+          "texture": {
+            "count": 84
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 93
+          },
+          "payload": {
+            "count": 93,
+            "noteRef": "n105"
+          }
+        },
+        {
+          "character": "robot",
+          "id": "ssbu-worldblender-robot",
+          "texture": {
+            "count": 376
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 400
+          },
+          "payload": {
+            "count": 400,
+            "noteRef": "n106"
+          }
+        },
+        {
+          "character": "rockman",
+          "id": "ssbu-worldblender-rockman",
+          "texture": {
+            "count": 325
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 367
+          },
+          "payload": {
+            "count": 367,
+            "noteRef": "n107"
+          }
+        },
+        {
+          "character": "rosetta",
+          "id": "ssbu-worldblender-rosetta",
+          "texture": {
+            "count": 284
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 297
+          },
+          "payload": {
+            "count": 297,
+            "noteRef": "n108"
+          }
+        },
+        {
+          "character": "roy",
+          "id": "ssbu-worldblender-roy",
+          "texture": {
+            "count": 243
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 252
+          },
+          "payload": {
+            "count": 252,
+            "noteRef": "n62"
+          }
+        },
+        {
+          "character": "ryu",
+          "id": "ssbu-worldblender-ryu",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n109"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 171,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n110"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 180
+          },
+          "payload": {
+            "count": 180,
+            "noteRef": "n88"
+          }
+        },
+        {
+          "character": "samus",
+          "id": "ssbu-worldblender-samus",
+          "texture": {
+            "count": 292
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 313
+          },
+          "payload": {
+            "count": 313,
+            "noteRef": "n111"
+          }
+        },
+        {
+          "character": "samusd",
+          "id": "ssbu-worldblender-samusd",
+          "texture": {
+            "count": 192
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 212
+          },
+          "payload": {
+            "count": 212,
+            "noteRef": "n112"
+          }
+        },
+        {
+          "character": "sheik",
+          "id": "ssbu-worldblender-sheik",
+          "texture": {
+            "count": 193
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 204
+          },
+          "payload": {
+            "count": 204,
+            "noteRef": "n113"
+          }
+        },
+        {
+          "character": "shizue",
+          "id": "ssbu-worldblender-shizue",
+          "texture": {
+            "count": 466
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 492
+          },
+          "payload": {
+            "count": 492,
+            "noteRef": "n114"
+          }
+        },
+        {
+          "character": "shulk",
+          "id": "ssbu-worldblender-shulk",
+          "texture": {
+            "count": 262
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 273
+          },
+          "payload": {
+            "count": 273,
+            "noteRef": "n115"
+          }
+        },
+        {
+          "character": "simon",
+          "id": "ssbu-worldblender-simon",
+          "texture": {
+            "count": 294
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 309
+          },
+          "payload": {
+            "count": 309,
+            "noteRef": "n116"
+          }
+        },
+        {
+          "character": "snake",
+          "id": "ssbu-worldblender-snake",
+          "texture": {
+            "count": 262
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 282
+          },
+          "payload": {
+            "count": 282,
+            "noteRef": "n117"
+          }
+        },
+        {
+          "character": "sonic",
+          "id": "ssbu-worldblender-sonic",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n119"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 349,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n120"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 360
+          },
+          "payload": {
+            "count": 360,
+            "noteRef": "n118"
+          }
+        },
+        {
+          "character": "szerosuit",
+          "id": "ssbu-worldblender-szerosuit",
+          "texture": {
+            "count": 275
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 288
+          },
+          "payload": {
+            "count": 288,
+            "noteRef": "n121"
+          }
+        },
+        {
+          "character": "tantan",
+          "id": "ssbu-worldblender-tantan",
+          "texture": {
+            "count": 539
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 567
+          },
+          "payload": {
+            "count": 567,
+            "noteRef": "n122"
+          }
+        },
+        {
+          "character": "toonlink",
+          "id": "ssbu-worldblender-toonlink",
+          "model": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n124"
+          },
+          "texture": {
+            "stage": "accepted-component",
+            "count": 391,
+            "noteRef": "n17"
+          },
+          "skeleton": {
+            "stage": "accepted-component",
+            "count": 1,
+            "noteRef": "n125"
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 409
+          },
+          "payload": {
+            "count": 409,
+            "noteRef": "n123"
+          }
+        },
+        {
+          "character": "trail",
+          "id": "ssbu-worldblender-trail",
+          "texture": {
+            "count": 245
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 255
+          },
+          "payload": {
+            "count": 255,
+            "noteRef": "n126"
+          }
+        },
+        {
+          "character": "wario",
+          "id": "ssbu-worldblender-wario",
+          "texture": {
+            "count": 191
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 202
+          },
+          "payload": {
+            "count": 202,
+            "noteRef": "n127"
+          }
+        },
+        {
+          "character": "wiifit",
+          "id": "ssbu-worldblender-wiifit",
+          "texture": {
+            "count": 176
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 188
+          },
+          "payload": {
+            "count": 188,
+            "noteRef": "n128"
+          }
+        },
+        {
+          "character": "wolf",
+          "id": "ssbu-worldblender-wolf",
+          "texture": {
+            "count": 257
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 268
+          },
+          "payload": {
+            "count": 268,
+            "noteRef": "n129"
+          }
+        },
+        {
+          "character": "yoshi",
+          "id": "ssbu-worldblender-yoshi",
+          "texture": {
+            "count": 173
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 197
+          },
+          "payload": {
+            "count": 197,
+            "noteRef": "n130"
+          }
+        },
+        {
+          "character": "younglink",
+          "id": "ssbu-worldblender-younglink",
+          "texture": {
+            "count": 240
+          },
+          "classification": "fighter-or-form",
+          "payload": {
+            "noteRef": "n131"
+          }
+        },
+        {
+          "character": "zelda",
+          "id": "ssbu-worldblender-zelda",
+          "texture": {
+            "count": 200
+          },
+          "classification": "fighter-or-form",
+          "container": {
+            "count": 210
+          },
+          "payload": {
+            "count": 210,
+            "noteRef": "n132"
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Worldblender Git LFS snapshot paths and byte sizes were locally verified; this is a community export, not an original-game container.",
+        "n2": "24 Blend and 378 PNG payloads are present for this native ID.",
+        "n3": "Primary body/avatar Blend candidates exist; conversion and acceptance remain separate.",
+        "n4": "PNG texture payloads exist in the pinned community snapshot.",
+        "n5": "Inventory status: embedded-in-blend-uninspected; no accepted skeleton count is claimed.",
+        "n6": "本份 Worldblender 盤點沒有建立可驗收動作候選。",
+        "n7": "本份 Worldblender 盤點沒有建立角色 VFX 候選。",
+        "n8": "本份 Worldblender 盤點沒有建立角色 SFX 候選。",
+        "n9": "本份 Worldblender 盤點沒有建立角色語音候選。",
+        "n10": "尚未登記為後台可選模組。",
+        "n11": "沒有正式站部署證據。",
+        "n12": "9 Blend and 277 PNG payloads are present for this native ID.",
+        "n13": "25 Blend and 322 PNG payloads are present for this native ID.",
+        "n14": "10 Blend and 154 PNG payloads are present for this native ID.",
+        "n15": "9 Blend and 195 PNG payloads are present for this native ID.",
+        "n16": "Accepted independent component ssbu-chrom-c00-static-skinned-v1 at content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb; 7890 triangles, 123 joints. It is not runtime-selectable.",
+        "n17": "Textures are embedded/referenced by the accepted standardized component; count is the source PNG count for this native ID.",
+        "n18": "Validated skinned component with 123 joints.",
+        "n19": "18 Blend and 279 PNG payloads are present for this native ID.",
+        "n20": "1 Blend and 1 PNG payloads are present for this native ID.",
+        "n21": "No primary body/avatar candidate was identified for this helper/shared ID.",
+        "n22": "Texture payloads may be shared/helper resources and do not establish a character model.",
+        "n23": "no-body-candidate",
+        "n24": "17 Blend and 307 PNG payloads are present for this native ID.",
+        "n25": "Accepted independent component ssbu-daisy-c00-static-skinned-v1 at content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb; 7890 triangles, 136 joints. It is not runtime-selectable.",
+        "n26": "Validated skinned component with 136 joints.",
+        "n27": "16 Blend and 286 PNG payloads are present for this native ID.",
+        "n28": "9 Blend and 254 PNG payloads are present for this native ID.",
+        "n29": "13 Blend and 301 PNG payloads are present for this native ID.",
+        "n30": "16 Blend and 408 PNG payloads are present for this native ID.",
+        "n31": "10 Blend and 151 PNG payloads are present for this native ID.",
+        "n32": "20 Blend and 271 PNG payloads are present for this native ID.",
+        "n33": "8 Blend and 298 PNG payloads are present for this native ID.",
+        "n34": "9 Blend and 339 PNG payloads are present for this native ID.",
+        "n35": "1 Blend and 26 PNG payloads are present for this native ID.",
+        "n36": "9 Blend and 315 PNG payloads are present for this native ID.",
+        "n37": "11 Blend and 245 PNG payloads are present for this native ID.",
+        "n38": "11 Blend and 269 PNG payloads are present for this native ID.",
+        "n39": "120 Blend and 496 PNG payloads are present for this native ID.",
+        "n40": "Accepted independent component ssbu-ganondorf-c00-static-skinned-v1 at content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb; 7890 triangles, 90 joints. It is not runtime-selectable.",
+        "n41": "Validated skinned component with 90 joints.",
+        "n42": "12 Blend and 201 PNG payloads are present for this native ID.",
+        "n43": "13 Blend and 255 PNG payloads are present for this native ID.",
+        "n44": "10 Blend and 300 PNG payloads are present for this native ID.",
+        "n45": "66 Blend and 456 PNG payloads are present for this native ID.",
+        "n46": "14 Blend and 355 PNG payloads are present for this native ID.",
+        "n47": "32 Blend and 408 PNG payloads are present for this native ID.",
+        "n48": "8 Blend and 168 PNG payloads are present for this native ID.",
+        "n49": "183 Blend and 2388 PNG payloads are present for this native ID.",
+        "n50": "Accepted independent component ssbu-kirby-c00-static-skinned-v1 at content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb; 5500 triangles, 51 joints. It is not runtime-selectable.",
+        "n51": "Validated skinned component with 51 joints.",
+        "n52": "9 Blend and 121 PNG payloads are present for this native ID.",
+        "n53": "1 Blend and 9 PNG payloads are present for this native ID.",
+        "n54": "43 Blend and 486 PNG payloads are present for this native ID.",
+        "n55": "13 Blend and 367 PNG payloads are present for this native ID.",
+        "n56": "15 Blend and 241 PNG payloads are present for this native ID.",
+        "n57": "Accepted independent component ssbu-link-c00-static-skinned-v1 at content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb; 7897 triangles, 145 joints. It is not runtime-selectable.",
+        "n58": "Validated skinned component with 145 joints.",
+        "n59": "14 Blend and 231 PNG payloads are present for this native ID.",
+        "n60": "9 Blend and 103 PNG payloads are present for this native ID.",
+        "n61": "14 Blend and 227 PNG payloads are present for this native ID.",
+        "n62": "9 Blend and 243 PNG payloads are present for this native ID.",
+        "n63": "Accepted independent component ssbu-lucina-c00-static-skinned-v1 at content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb; 7927 triangles, 156 joints. It is not runtime-selectable.",
+        "n64": "Validated skinned component with 156 joints.",
+        "n65": "11 Blend and 177 PNG payloads are present for this native ID.",
+        "n66": "13 Blend and 179 PNG payloads are present for this native ID.",
+        "n67": "Accepted independent component ssbu-mario-c00-static-skinned-v2 at content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb; 7189 triangles, 98 joints. It is not runtime-selectable.",
+        "n68": "Validated skinned component with 98 joints.",
+        "n69": "12 Blend and 252 PNG payloads are present for this native ID.",
+        "n70": "9 Blend and 266 PNG payloads are present for this native ID.",
+        "n71": "18 Blend and 353 PNG payloads are present for this native ID.",
+        "n72": "24 Blend and 232 PNG payloads are present for this native ID.",
+        "n73": "9 Blend and 127 PNG payloads are present for this native ID.",
+        "n74": "Accepted independent component ssbu-mewtwo-c00-static-skinned-v1 at content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb; 6972 triangles, 75 joints. It is not runtime-selectable.",
+        "n75": "Validated skinned component with 75 joints.",
+        "n76": "1 Blend and 3 PNG payloads are present for this native ID.",
+        "n77": "5 Blend and 19 PNG payloads are present for this native ID.",
+        "n78": "30 Blend and 688 PNG payloads are present for this native ID.",
+        "n79": "8 Blend and 152 PNG payloads are present for this native ID.",
+        "n80": "12 Blend and 238 PNG payloads are present for this native ID.",
+        "n81": "11 Blend and 141 PNG payloads are present for this native ID.",
+        "n82": "13 Blend and 183 PNG payloads are present for this native ID.",
+        "n83": "10 Blend and 271 PNG payloads are present for this native ID.",
+        "n84": "17 Blend and 523 PNG payloads are present for this native ID.",
+        "n85": "Accepted independent component ssbu-peach-c00-static-skinned-v1 at content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb; 7888 triangles, 134 joints. It is not runtime-selectable.",
+        "n86": "Validated skinned component with 134 joints.",
+        "n87": "9 Blend and 211 PNG payloads are present for this native ID.",
+        "n88": "9 Blend and 171 PNG payloads are present for this native ID.",
+        "n89": "31 Blend and 287 PNG payloads are present for this native ID.",
+        "n90": "Accepted independent component ssbu-pickel-alex-c01-static-skinned-v1 at content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb; 828 triangles, 31 joints. It is not runtime-selectable.",
+        "n91": "Validated skinned component with 31 joints.",
+        "n92": "9 Blend and 189 PNG payloads are present for this native ID.",
+        "n93": "17 Blend and 318 PNG payloads are present for this native ID.",
+        "n94": "11 Blend and 343 PNG payloads are present for this native ID.",
+        "n95": "9 Blend and 404 PNG payloads are present for this native ID.",
+        "n96": "9 Blend and 139 PNG payloads are present for this native ID.",
+        "n97": "13 Blend and 167 PNG payloads are present for this native ID.",
+        "n98": "9 Blend and 143 PNG payloads are present for this native ID.",
+        "n99": "Accepted independent component ssbu-ptrainer-female-c01-formal-decimated-v1 at content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb; 7892 triangles, 72 joints. It is not runtime-selectable.",
+        "n100": "Validated skinned component with 72 joints.",
+        "n101": "9 Blend and 331 PNG payloads are present for this native ID.",
+        "n102": "8 Blend and 136 PNG payloads are present for this native ID.",
+        "n103": "10 Blend and 284 PNG payloads are present for this native ID.",
+        "n104": "14 Blend and 287 PNG payloads are present for this native ID.",
+        "n105": "9 Blend and 84 PNG payloads are present for this native ID.",
+        "n106": "24 Blend and 376 PNG payloads are present for this native ID.",
+        "n107": "42 Blend and 325 PNG payloads are present for this native ID.",
+        "n108": "13 Blend and 284 PNG payloads are present for this native ID.",
+        "n109": "Accepted independent component ssbu-ryu-c00-static-decimated-v1 at content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb; 7979 triangles, 154 joints. It is not runtime-selectable.",
+        "n110": "Validated skinned component with 154 joints.",
+        "n111": "21 Blend and 292 PNG payloads are present for this native ID.",
+        "n112": "20 Blend and 192 PNG payloads are present for this native ID.",
+        "n113": "11 Blend and 193 PNG payloads are present for this native ID.",
+        "n114": "26 Blend and 466 PNG payloads are present for this native ID.",
+        "n115": "11 Blend and 262 PNG payloads are present for this native ID.",
+        "n116": "15 Blend and 294 PNG payloads are present for this native ID.",
+        "n117": "20 Blend and 262 PNG payloads are present for this native ID.",
+        "n118": "11 Blend and 349 PNG payloads are present for this native ID.",
+        "n119": "Accepted independent component ssbu-sonic-c00-static-skinned-v2 at content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb; 7900 triangles, 115 joints. It is not runtime-selectable.",
+        "n120": "Validated skinned component with 115 joints.",
+        "n121": "13 Blend and 275 PNG payloads are present for this native ID.",
+        "n122": "28 Blend and 539 PNG payloads are present for this native ID.",
+        "n123": "18 Blend and 391 PNG payloads are present for this native ID.",
+        "n124": "Accepted independent component ssbu-toonlink-c00-static-skinned-v1 at content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb; 7894 triangles, 96 joints. It is not runtime-selectable.",
+        "n125": "Validated skinned component with 96 joints.",
+        "n126": "10 Blend and 245 PNG payloads are present for this native ID.",
+        "n127": "11 Blend and 191 PNG payloads are present for this native ID.",
+        "n128": "12 Blend and 176 PNG payloads are present for this native ID.",
+        "n129": "11 Blend and 257 PNG payloads are present for this native ID.",
+        "n130": "24 Blend and 173 PNG payloads are present for this native ID.",
+        "n131": "16 Blend and 240 PNG payloads are present for this native ID.",
+        "n132": "10 Blend and 200 PNG payloads are present for this native ID."
+      },
+      "moduleDefaults": {
+        "container": {
+          "stage": "manifest-verified",
+          "count": 256,
+          "noteRef": "n1"
+        },
+        "payload": {
+          "stage": "source-payload-verified",
+          "count": 256,
+          "noteRef": "n15"
+        },
+        "model": {
+          "stage": "source-payload",
+          "count": 8,
+          "noteRef": "n3"
+        },
+        "texture": {
+          "stage": "source-payload",
+          "count": 195,
+          "noteRef": "n4"
+        },
+        "skeleton": {
+          "stage": "source-payload-uninspected",
+          "count": null,
+          "noteRef": "n5"
+        },
+        "motion": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n6"
+        },
+        "vfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n7"
+        },
+        "sfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n8"
+        },
+        "voice": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n9"
+        },
+        "registration": {
+          "stage": "not-registered",
+          "count": 0,
+          "noteRef": "n10"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n11"
+        }
+      },
+      "candidateDefaults": {
+        "work": "Super Smash Bros. Ultimate",
+        "evidence": [
+          "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+          "materials/hero-model-library/ssbu-model-library-validation.json"
+        ]
+      }
+    },
+    {
+      "sourceId": "parallel-ns-ultimate14",
+      "title": "Ultimate14 1.0 community-mod motion, effect, and audio payloads",
+      "platform": "Nintendo Switch / community mod",
+      "version": "1.0",
+      "status": "payload-parsed-partially-converted-not-registered",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+        "../GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json"
+      ],
+      "summary": {
+        "motionFighterIds": 16,
+        "motionAliases": 435,
+        "uniqueTransformPayloads": 175,
+        "acceptedMotionComponents": 4,
+        "effectFiles": 3,
+        "audioBankAliases": 56,
+        "decodedWavFiles": 19,
+        "registeredOptions": 0,
+        "note": "Ultimate14 is a community mod, not a full SSBU roster or verified base-game extraction. Audio is decoded but remains unclassified and unmapped."
+      },
+      "candidates": [
+        {
+          "character": "chrom",
+          "id": "ssbu-ultimate14-chrom",
+          "motion": {
+            "stage": "accepted-component",
+            "count": 9,
+            "noteRef": "n6"
+          },
+          "payload": {
+            "count": 9
+          }
+        },
+        {
+          "character": "daisy",
+          "id": "ssbu-ultimate14-daisy",
+          "motion": {
+            "noteRef": "n11"
+          },
+          "payload": {
+            "count": 13
+          }
+        },
+        {
+          "character": "ganon",
+          "id": "ssbu-ultimate14-ganon",
+          "motion": {
+            "count": 10,
+            "noteRef": "n12"
+          },
+          "payload": {
+            "count": 10
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-ultimate14-kirby",
+          "motion": {
+            "count": 2,
+            "noteRef": "n13"
+          },
+          "payload": {
+            "count": 25
+          }
+        },
+        {
+          "character": "link",
+          "id": "ssbu-ultimate14-link",
+          "motion": {
+            "count": 19,
+            "noteRef": "n14"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 2,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 93
+          }
+        },
+        {
+          "character": "lucas",
+          "id": "ssbu-ultimate14-lucas",
+          "motion": {
+            "count": 7,
+            "noteRef": "n17"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 5,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 15
+          }
+        },
+        {
+          "character": "lucina",
+          "id": "ssbu-ultimate14-lucina",
+          "motion": {
+            "stage": "accepted-component",
+            "noteRef": "n18"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 4,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 113
+          }
+        },
+        {
+          "character": "luigi",
+          "id": "ssbu-ultimate14-luigi",
+          "motion": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n19"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 1,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 8
+          }
+        },
+        {
+          "character": "mario",
+          "id": "ssbu-ultimate14-mario",
+          "motion": {
+            "stage": "accepted-component",
+            "count": 5,
+            "noteRef": "n20"
+          },
+          "payload": {
+            "count": 64
+          }
+        },
+        {
+          "character": "peach",
+          "id": "ssbu-ultimate14-peach",
+          "motion": {
+            "count": 1,
+            "noteRef": "n21"
+          },
+          "payload": {
+            "count": 1
+          }
+        },
+        {
+          "character": "pitb",
+          "id": "ssbu-ultimate14-pitb",
+          "motion": {
+            "count": 14,
+            "noteRef": "n22"
+          },
+          "payload": {
+            "count": 14
+          }
+        },
+        {
+          "character": "richter",
+          "id": "ssbu-ultimate14-richter",
+          "motion": {
+            "count": 2,
+            "noteRef": "n23"
+          },
+          "payload": {
+            "count": 5
+          }
+        },
+        {
+          "character": "samusd",
+          "id": "ssbu-ultimate14-samusd",
+          "motion": {
+            "count": 21,
+            "noteRef": "n24"
+          },
+          "vfx": {
+            "stage": "source-payload-unconverted",
+            "count": 2,
+            "noteRef": "n25"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 2,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 70
+          }
+        },
+        {
+          "character": "shizue",
+          "id": "ssbu-ultimate14-shizue",
+          "motion": {
+            "count": 4,
+            "noteRef": "n26"
+          },
+          "payload": {
+            "count": 4
+          }
+        },
+        {
+          "character": "simon",
+          "id": "ssbu-ultimate14-simon",
+          "motion": {
+            "count": 4,
+            "noteRef": "n27"
+          },
+          "payload": {
+            "count": 20
+          }
+        },
+        {
+          "character": "sonic",
+          "id": "ssbu-ultimate14-sonic",
+          "motion": {
+            "stage": "accepted-component",
+            "count": 10,
+            "noteRef": "n28"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 1,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 18
+          }
+        },
+        {
+          "character": "toonlink",
+          "id": "ssbu-ultimate14-toonlink",
+          "motion": {
+            "count": 3,
+            "noteRef": "n29"
+          },
+          "vfx": {
+            "stage": "source-payload-unconverted",
+            "count": 1,
+            "noteRef": "n25"
+          },
+          "sfx": {
+            "stage": "decoded-local-unclassified",
+            "count": 4,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "stage": null,
+            "count": null,
+            "noteRef": "n16"
+          },
+          "payload": {
+            "count": 12
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Ultimate14 1.0 community-mod archive and extracted files are locally preserved and hash indexed.",
+        "n2": "Count combines native motion aliases, effect files, and audio bank aliases for this source-native ID; it is not a count of unique ready modules.",
+        "n3": "Ultimate14 does not deliver a character body model for this catalog lane.",
+        "n4": "角色模型貼圖未由此來源建立候選；VFX 用 NUTEXB 另計。",
+        "n5": "動作與目標骨架相容性需要獨立驗收。",
+        "n6": "Accepted independent motion component ssbu-chrom-c00-ultimate14-motion-v1 at content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb; skeleton playback was accepted for that component only, and it is not runtime-selectable.",
+        "n7": "No Ultimate14 effect file was indexed for this native ID.",
+        "n8": "No Ultimate14 audio bank was indexed for this native ID.",
+        "n9": "尚未登記為後台可選模組。",
+        "n10": "沒有正式站部署證據。",
+        "n11": "13 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n12": "10 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n13": "25 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n14": "85 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n15": "PCM WAV decode passed, but se_ is only a source label; listening, event binding, and character mapping remain unverified.",
+        "n16": "confirmedVoiceCount is null; do not promote these se_-labelled streams to voice candidates without listening review.",
+        "n17": "7 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n18": "Accepted independent motion component ssbu-lucina-c00-ultimate14-motion-v1 at content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb; skeleton playback was accepted for that component only, and it is not runtime-selectable.",
+        "n19": "No NUANMB motion payload was indexed for this native ID.",
+        "n20": "Accepted independent motion component ssbu-mario-c00-ultimate14-motion-v1 at content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb; skeleton playback was accepted for that component only, and it is not runtime-selectable.",
+        "n21": "1 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n22": "14 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n23": "5 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n24": "60 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n25": "Native NUTEXB trail/effect texture payloads exist; no GGD VFX conversion, visual acceptance, registration, or deployment is claimed.",
+        "n26": "4 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n27": "20 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed.",
+        "n28": "Accepted independent motion component ssbu-sonic-c00-ultimate14-motion-v1 at content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb; skeleton playback was accepted for that component only, and it is not runtime-selectable.",
+        "n29": "3 NUANMB aliases are present; count reports unique body-motion payloads. No target-skeleton playback acceptance is claimed."
+      },
+      "moduleDefaults": {
+        "container": {
+          "stage": "archive-and-extraction-verified",
+          "count": 1,
+          "noteRef": "n1"
+        },
+        "payload": {
+          "stage": "source-payload-parsed",
+          "noteRef": "n2"
+        },
+        "model": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "texture": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n4"
+        },
+        "skeleton": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n5"
+        },
+        "motion": {
+          "stage": "source-payload-parsed",
+          "count": 13
+        },
+        "vfx": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n7"
+        },
+        "sfx": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n8"
+        },
+        "voice": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n8"
+        },
+        "registration": {
+          "stage": "not-registered",
+          "count": 0,
+          "noteRef": "n9"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n10"
+        }
+      },
+      "candidateDefaults": {
+        "work": "Super Smash Bros. Ultimate",
+        "evidence": [
+          "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+          "../GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json"
+        ]
+      }
+    },
+    {
+      "sourceId": "parallel-voice-ssbu-japanese",
+      "title": "SSBU All Japanese Voices reserve",
+      "platform": "Nintendo Switch / community audio package",
+      "version": null,
+      "status": "decoded-local-pending-listening-and-character-mapping",
+      "evidencePaths": [
+        "materials/hero-model-library/ssbu-japanese-audio-validation.json",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/native-audio-groups.json",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/nus3audio-decoding.json"
+      ],
+      "summary": {
+        "nativeBankAliases": 350,
+        "nativeNameGroups": 68,
+        "decodedInputGroups": 65,
+        "uniqueDecodedBanks": 76,
+        "decodedWavFiles": 2512,
+        "uniqueDecodedWavHashes": 2184,
+        "confirmedVoiceCount": null,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "The author declares Japanese game-rip audio, but GGD evidence has not verified speaker/language/event mappings per clip. Decoded files are candidates only."
+      },
+      "candidates": [
+        {
+          "character": "bayonetta",
+          "id": "ssbu-japanese-vc_bayonetta",
+          "voice": {
+            "count": 110
+          },
+          "payload": {
+            "count": 110,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "brave",
+          "id": "ssbu-japanese-vc_brave",
+          "voice": {
+            "count": 320
+          },
+          "container": {
+            "count": 9
+          },
+          "payload": {
+            "count": 320,
+            "noteRef": "n8"
+          }
+        },
+        {
+          "character": "chrom",
+          "id": "ssbu-japanese-vc_chrom",
+          "voice": {
+            "count": 44
+          },
+          "payload": {
+            "count": 44
+          }
+        },
+        {
+          "character": "eflame",
+          "id": "ssbu-japanese-vc_eflame",
+          "voice": {
+            "count": 153
+          },
+          "payload": {
+            "count": 153
+          }
+        },
+        {
+          "character": "element",
+          "id": "ssbu-japanese-vc_element",
+          "voice": {
+            "stage": "source-payload-alias-only",
+            "count": 0,
+            "noteRef": "n10"
+          },
+          "payload": {
+            "count": 0
+          }
+        },
+        {
+          "character": "elight",
+          "id": "ssbu-japanese-vc_elight",
+          "voice": {
+            "stage": "source-payload-alias-only",
+            "count": 0,
+            "noteRef": "n10"
+          },
+          "payload": {
+            "count": 0
+          }
+        },
+        {
+          "character": "falco",
+          "id": "ssbu-japanese-vc_falco",
+          "voice": {
+            "count": 39
+          },
+          "payload": {
+            "count": 39
+          }
+        },
+        {
+          "character": "fox",
+          "id": "ssbu-japanese-vc_fox",
+          "voice": {
+            "count": 35
+          },
+          "payload": {
+            "count": 35
+          }
+        },
+        {
+          "character": "gaogaen",
+          "id": "ssbu-japanese-vc_gaogaen",
+          "voice": {
+            "count": 48
+          },
+          "payload": {
+            "count": 48
+          }
+        },
+        {
+          "character": "gekkouga",
+          "id": "ssbu-japanese-vc_gekkouga",
+          "voice": {
+            "count": 38
+          },
+          "payload": {
+            "count": 38
+          }
+        },
+        {
+          "character": "ike",
+          "id": "ssbu-japanese-vc_ike",
+          "voice": {
+            "count": 72
+          },
+          "payload": {
+            "count": 72,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "jack",
+          "id": "ssbu-japanese-vc_jack",
+          "voice": {
+            "count": 70
+          },
+          "payload": {
+            "count": 70
+          }
+        },
+        {
+          "character": "jack_result",
+          "id": "ssbu-japanese-vc_jack_result",
+          "voice": {
+            "count": 25
+          },
+          "container": {
+            "count": 9
+          },
+          "payload": {
+            "count": 25
+          }
+        },
+        {
+          "character": "kamui",
+          "id": "ssbu-japanese-vc_kamui",
+          "voice": {
+            "count": 80
+          },
+          "payload": {
+            "count": 80,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "ken",
+          "id": "ssbu-japanese-vc_ken",
+          "voice": {
+            "count": 64
+          },
+          "payload": {
+            "count": 64
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_brave",
+          "voice": {
+            "count": 13
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 13
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_chrom",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_cloud",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_eflame",
+          "voice": {
+            "count": 8
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 8
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_elight",
+          "voice": {
+            "stage": "source-payload-alias-only",
+            "count": 0,
+            "noteRef": "n10"
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 0
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_gaogaen",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_ike",
+          "voice": {
+            "count": 2
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 2
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_kamui",
+          "voice": {
+            "count": 2
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 2
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_ken",
+          "voice": {
+            "count": 2
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 2
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_lucario",
+          "voice": {
+            "count": 3
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 3
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_lucina",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_marth",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_master",
+          "voice": {
+            "count": 5
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 5
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_palutena",
+          "voice": {
+            "count": 3
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 3
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_pfushigisou",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_pit",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_pitb",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_purin",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_pzenigame",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_reflet",
+          "voice": {
+            "count": 4
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 4
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_richter",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_roy",
+          "voice": {
+            "count": 3
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 3
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_ryu",
+          "voice": {
+            "count": 4
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 4
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_shulk",
+          "voice": {
+            "count": 5
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 5
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_simon",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_sonic",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_trail",
+          "voice": {
+            "count": 3
+          },
+          "container": {
+            "count": 1
+          },
+          "payload": {
+            "count": 3
+          }
+        },
+        {
+          "character": "kirby",
+          "id": "ssbu-japanese-vc_kirby_copy_wiifit",
+          "container": {
+            "count": 1
+          }
+        },
+        {
+          "character": "littlemac",
+          "id": "ssbu-japanese-vc_littlemac",
+          "voice": {
+            "count": 115
+          },
+          "payload": {
+            "count": 115,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "lucario",
+          "id": "ssbu-japanese-vc_lucario",
+          "voice": {
+            "count": 42
+          },
+          "payload": {
+            "count": 42
+          }
+        },
+        {
+          "character": "lucina",
+          "id": "ssbu-japanese-vc_lucina",
+          "voice": {
+            "count": 36
+          },
+          "payload": {
+            "count": 36
+          }
+        },
+        {
+          "character": "marth",
+          "id": "ssbu-japanese-vc_marth",
+          "voice": {
+            "count": 34
+          },
+          "payload": {
+            "count": 34
+          }
+        },
+        {
+          "character": "master",
+          "id": "ssbu-japanese-vc_master",
+          "voice": {
+            "count": 110
+          },
+          "payload": {
+            "count": 110,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "metaknight",
+          "id": "ssbu-japanese-vc_metaknight",
+          "voice": {
+            "count": 36
+          },
+          "payload": {
+            "count": 36
+          }
+        },
+        {
+          "character": "mewtwo",
+          "id": "ssbu-japanese-vc_mewtwo",
+          "voice": {
+            "count": 24
+          },
+          "payload": {
+            "count": 24
+          }
+        },
+        {
+          "character": "palutena",
+          "id": "ssbu-japanese-vc_palutena",
+          "voice": {
+            "count": 44
+          },
+          "payload": {
+            "count": 44
+          }
+        },
+        {
+          "character": "pfushigisou",
+          "id": "ssbu-japanese-vc_pfushigisou",
+          "voice": {
+            "count": 36
+          },
+          "payload": {
+            "count": 36
+          }
+        },
+        {
+          "character": "pit",
+          "id": "ssbu-japanese-vc_pit",
+          "voice": {
+            "count": 42
+          },
+          "payload": {
+            "count": 42
+          }
+        },
+        {
+          "character": "pitb",
+          "id": "ssbu-japanese-vc_pitb",
+          "voice": {
+            "count": 40
+          },
+          "payload": {
+            "count": 40
+          }
+        },
+        {
+          "character": "ptrainer",
+          "id": "ssbu-japanese-vc_ptrainer",
+          "voice": {
+            "count": 58
+          },
+          "payload": {
+            "count": 58,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "purin",
+          "id": "ssbu-japanese-vc_purin",
+          "voice": {
+            "count": 33
+          },
+          "payload": {
+            "count": 33
+          }
+        },
+        {
+          "character": "pzenigame",
+          "id": "ssbu-japanese-vc_pzenigame",
+          "voice": {
+            "count": 29
+          },
+          "payload": {
+            "count": 29
+          }
+        },
+        {
+          "character": "reflet",
+          "id": "ssbu-japanese-vc_reflet",
+          "voice": {
+            "count": 112
+          },
+          "payload": {
+            "count": 112,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "richter",
+          "id": "ssbu-japanese-vc_richter",
+          "voice": {
+            "count": 39
+          },
+          "payload": {
+            "count": 39
+          }
+        },
+        {
+          "character": "roy",
+          "id": "ssbu-japanese-vc_roy",
+          "voice": {
+            "count": 36
+          },
+          "payload": {
+            "count": 36
+          }
+        },
+        {
+          "character": "ryu",
+          "id": "ssbu-japanese-vc_ryu",
+          "voice": {
+            "count": 55
+          },
+          "payload": {
+            "count": 55
+          }
+        },
+        {
+          "character": "shulk",
+          "id": "ssbu-japanese-vc_shulk",
+          "voice": {
+            "count": 60
+          },
+          "payload": {
+            "count": 60
+          }
+        },
+        {
+          "character": "simon",
+          "id": "ssbu-japanese-vc_simon",
+          "voice": {
+            "count": 39
+          },
+          "payload": {
+            "count": 39
+          }
+        },
+        {
+          "character": "snake",
+          "id": "ssbu-japanese-vc_snake",
+          "voice": {
+            "count": 48
+          },
+          "payload": {
+            "count": 48
+          }
+        },
+        {
+          "character": "sonic",
+          "id": "ssbu-japanese-vc_sonic",
+          "voice": {
+            "count": 32
+          },
+          "payload": {
+            "count": 32
+          }
+        },
+        {
+          "character": "trail",
+          "id": "ssbu-japanese-vc_trail",
+          "voice": {
+            "count": 47
+          },
+          "payload": {
+            "count": 47
+          }
+        },
+        {
+          "character": "wiifit",
+          "id": "ssbu-japanese-vc_wiifit",
+          "voice": {
+            "count": 160
+          },
+          "payload": {
+            "count": 160,
+            "noteRef": "n2"
+          }
+        },
+        {
+          "character": "wolf",
+          "id": "ssbu-japanese-vc_wolf",
+          "voice": {
+            "count": 36
+          },
+          "payload": {
+            "count": 36
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Count is the native bank alias count for this source-name group; aliases may share byte-identical canonical banks.",
+        "n2": "2 unique canonical NUS3Audio bank payload(s) feed the local WAV decode count.",
+        "n3": "Audio-only source.",
+        "n4": "The vc_ source label suggests voice but per-clip classification has not established an SFX subset.",
+        "n5": "WAV payloads are decoded and hash/PCM checked. Character key is filename-derived; speaker, language, transcript, and event bindings are not reviewed, so confirmedVoiceCount remains null.",
+        "n6": "尚未登記為後台可選模組。",
+        "n7": "沒有正式站部署證據。",
+        "n8": "4 unique canonical NUS3Audio bank payload(s) feed the local WAV decode count.",
+        "n9": "1 unique canonical NUS3Audio bank payload(s) feed the local WAV decode count.",
+        "n10": "This native-name group shares byte-identical canonical payloads with another group and has no separate decoded input directory; no distinct voice performance is claimed."
+      },
+      "moduleDefaults": {
+        "container": {
+          "stage": "archive-verified",
+          "count": 8,
+          "noteRef": "n1"
+        },
+        "payload": {
+          "stage": "decoded-local",
+          "count": 1,
+          "noteRef": "n9"
+        },
+        "model": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "texture": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "skeleton": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "motion": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "vfx": {
+          "stage": "not-present",
+          "count": 0,
+          "noteRef": "n3"
+        },
+        "sfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n4"
+        },
+        "voice": {
+          "stage": "decoded-local-unreviewed",
+          "count": 1,
+          "noteRef": "n5"
+        },
+        "registration": {
+          "stage": "not-registered",
+          "count": 0,
+          "noteRef": "n6"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n7"
+        }
+      },
+      "candidateDefaults": {
+        "work": "Super Smash Bros. Ultimate",
+        "evidence": [
+          "materials/hero-model-library/ssbu-japanese-audio-validation.json",
+          "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/native-audio-groups.json",
+          "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/nus3audio-decoding.json"
+        ]
+      }
+    },
+    {
+      "sourceId": "parallel-ns-alucard-ssbu",
+      "title": "Alucard SSM community mod",
+      "platform": "Nintendo Switch / Super Smash Bros. Ultimate community mod",
+      "version": "2.7 source release lineage",
+      "status": "payload-and-audio-decoded-not-converted-or-registered",
+      "evidencePaths": [
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted-files.jsonl",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/native-format-validation.json",
+        "../GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02/audioFileIndex.json",
+        "materials/hero-model-library/voice-index.json"
+      ],
+      "summary": {
+        "extractedFiles": 340,
+        "headerChecks": 147,
+        "headerErrors": 0,
+        "modelMeshes": 6,
+        "motions": 112,
+        "effectFiles": 8,
+        "decodedSfxLabelledWavs": 92,
+        "decodedVoiceLikeLabelledWavs": 41,
+        "silentPlaceholdersExcluded": 2,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "All module identities are source-path/filename based. No model, animation, VFX, audio event, backend option, or deployment acceptance is implied."
+      },
+      "candidates": [
+        {
+          "character": "alucard-ssm-on-richter-c120",
+          "id": "ssbu-mod-alucard-ssm",
+          "work": "Super Smash Bros. Ultimate",
+          "model": {
+            "stage": "source-payload-unconverted",
+            "count": 6,
+            "noteRef": "n3"
+          },
+          "texture": {
+            "stage": "source-payload-unconverted",
+            "count": 73,
+            "noteRef": "n4"
+          },
+          "skeleton": {
+            "stage": "source-payload-unconverted",
+            "count": 6,
+            "noteRef": "n5"
+          },
+          "motion": {
+            "stage": "source-payload-header-validated",
+            "count": 112,
+            "noteRef": "n6"
+          },
+          "vfx": {
+            "stage": "source-payload-unconverted",
+            "count": 8,
+            "noteRef": "n7"
+          },
+          "sfx": {
+            "stage": "decoded-local-unreviewed",
+            "count": 92,
+            "noteRef": "n8"
+          },
+          "voice": {
+            "stage": "decoded-local-unreviewed",
+            "count": 41,
+            "noteRef": "n9"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "noteRef": "n10"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "noteRef": "n11"
+          },
+          "evidence": [
+            "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted-files.jsonl",
+            "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/native-format-validation.json",
+            "../GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02/audioFileIndex.json",
+            "materials/hero-model-library/voice-index.json"
+          ],
+          "container": {
+            "stage": "archive-and-extraction-verified",
+            "count": 1,
+            "noteRef": "n1"
+          },
+          "payload": {
+            "stage": "source-payload-header-validated",
+            "count": 340,
+            "noteRef": "n2"
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Alucard.SSM community-mod archive is preserved and its extracted file list is hash indexed.",
+        "n2": "340 extracted records are indexed; 147 selected native-format headers passed with zero header errors.",
+        "n3": "Six NUMSHB mesh payloads cover body/props/stage assets; no GGD model conversion or visual acceptance is claimed.",
+        "n4": "73 NUTEXB texture payloads are present; no standardized texture acceptance is claimed.",
+        "n5": "Six NUSKTB skeleton payloads are present; no GGD skeleton compatibility acceptance is claimed.",
+        "n6": "112 NUANMB paths are present and covered by the native header audit; target-skeleton playback and six-state mapping are unverified.",
+        "n7": "Eight EFF payloads plus related textures are present; no GGD VFX conversion or visual acceptance is claimed.",
+        "n8": "92 non-silent se_-labelled WAV candidates are decoded; source labels do not replace listening or event-binding review.",
+        "n9": "39 vc_-labelled, one cheer-labelled, and one narration-labelled WAV candidate are decoded; speaker/language/event mapping is unverified and confirmedVoiceCount remains null.",
+        "n10": "尚未登記為後台可選模組。",
+        "n11": "沒有正式站部署證據。"
+      }
+    },
+    {
+      "sourceId": "parallel-ns-bowser-big-blast",
+      "title": "Bowser's Big Blast community motion mod",
+      "platform": "Nintendo Switch / Super Smash Bros. Ultimate community mod",
+      "version": null,
+      "status": "motion-payload-header-validated-not-converted",
+      "evidencePaths": [
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/extracted-files.jsonl",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/native-format-validation.json"
+      ],
+      "summary": {
+        "extractedFiles": 68,
+        "motionPathsAcrossRevisions": 38,
+        "headerErrors": 0,
+        "acceptedMotionComponents": 0,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "This is a source motion candidate only. Costume and revision aliases have not been deduplicated into accepted GGD actions."
+      },
+      "candidates": [
+        {
+          "character": "koopa (Bowser)",
+          "id": "ssbu-mod-bowsers-big-blast",
+          "work": "Super Smash Bros. Ultimate",
+          "model": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n3"
+          },
+          "texture": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n4"
+          },
+          "skeleton": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n5"
+          },
+          "motion": {
+            "stage": "source-payload-header-validated",
+            "count": 38,
+            "noteRef": "n6"
+          },
+          "vfx": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n7"
+          },
+          "sfx": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n8"
+          },
+          "voice": {
+            "stage": "not-present",
+            "count": 0,
+            "noteRef": "n8"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "noteRef": "n9"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "noteRef": "n10"
+          },
+          "evidence": [
+            "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/extracted-files.jsonl",
+            "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/native-format-validation.json"
+          ],
+          "container": {
+            "stage": "archives-and-extraction-verified",
+            "count": 2,
+            "noteRef": "n1"
+          },
+          "payload": {
+            "stage": "source-payload-header-validated",
+            "count": 68,
+            "noteRef": "n2"
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Two preserved source revisions contribute byte-indexed extracted records.",
+        "n2": "68 extracted records are indexed; 38 NUANMB headers passed with zero errors across the two revisions.",
+        "n3": "No model payload is present in this motion-only mod delivery.",
+        "n4": "No texture payload is present in this motion-only mod delivery.",
+        "n5": "No skeleton payload is present in this motion-only mod delivery.",
+        "n6": "38 NUANMB paths are preserved across two revisions; this path count includes revision/costume aliases and is not a unique accepted animation count.",
+        "n7": "No VFX payload was indexed in this delivery.",
+        "n8": "No audio bank was indexed in this delivery.",
+        "n9": "尚未登記為後台可選模組。",
+        "n10": "沒有正式站部署證據。"
+      }
+    },
+    {
+      "sourceId": "windows-game-library-20260912:ssbu-nsandns2",
+      "title": "NSandNS2 SSBU NSP/ZIP container records",
+      "platform": "Nintendo Switch / Windows library metadata",
+      "version": null,
+      "status": "container-metadata-only-share-unmounted",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "../GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260915-v1/ultimate14-files-reverified.json"
+      ],
+      "summary": {
+        "containerRecords": 3,
+        "payloadBytesRead": 0,
+        "memberRecords": 0,
+        "convertedCandidates": 0,
+        "acceptedCandidates": 0,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "The Windows share is not mounted in this run. Only metadata was available: payload bytes read 0, header/member inventory 0, title/update/DLC composition unverified, extracted 0 and converted 0."
+      },
+      "candidates": [
+        {
+          "character": "全角色（容器未檢查）",
+          "id": "ssbu-nsandns2-container-1",
+          "container": {
+            "noteRef": "n1"
+          },
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super Smash Bros Ultimate[01006A800016E000][US][v0].nsp",
+          "sourceTitle": "Super Smash Bros Ultimate[01006A800016E000][US][v0]"
+        },
+        {
+          "character": "全角色（容器未檢查）",
+          "id": "ssbu-nsandns2-container-2",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200.zip",
+          "sourceTitle": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200"
+        },
+        {
+          "character": "全角色（容器未檢查）",
+          "id": "ssbu-nsandns2-container-3",
+          "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500.zip",
+          "sourceTitle": "Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500"
+        }
+      ],
+      "notes": {
+        "n1": "Windows path and reported byte size (14638743603) are recorded; content hash and member table are unavailable.",
+        "n2": "The Windows share was not mounted; payload bytes read, headers inspected, and members inventoried are all zero.",
+        "n3": "Container contents are unread; this module type cannot be counted or classified yet.",
+        "n4": "尚未登記為後台可選模組。",
+        "n5": "沒有正式站部署證據。",
+        "n6": "Windows path and reported byte size (38366835) are recorded; content hash and member table are unavailable."
+      },
+      "moduleDefaults": {
+        "container": {
+          "stage": "container-metadata-only",
+          "count": 1,
+          "noteRef": "n6"
+        },
+        "payload": {
+          "stage": "not-read",
+          "count": 0,
+          "noteRef": "n2"
+        },
+        "model": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "texture": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "skeleton": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "motion": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "vfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "sfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "voice": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "registration": {
+          "stage": "not-registered",
+          "count": 0,
+          "noteRef": "n4"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n5"
+        }
+      },
+      "candidateDefaults": {
+        "work": "Super Smash Bros. Ultimate",
+        "evidence": [
+          "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+          "../GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260915-v1/ultimate14-files-reverified.json"
+        ]
+      }
+    }
+  ],
+  "expandedSchema": "ggd.source-module-catalog-fragment@1",
+  "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
+    "bytes": 469489,
+    "sha256": "14c14f1153b2d546f979b71298c4fd49f5b3426b6a687e2613717f0c12c083e8",
+    "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+    "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "archiveMember": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
+    "restoreRequiredForCatalogBuild": false
+  }
+}

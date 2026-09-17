@@ -1,0 +1,476 @@
+{
+  "blocker": {
+    "action": "decode mixed $CMP $CLH chunks",
+    "nextStep": "implement and validate the $CH0 entropy stage against exact decoded-size and STPK table checks before SRD conversion",
+    "reason": "the retained public cmp_scz.bms path does not implement the observed $CH0 stage completely",
+    "resource": "$CH0 entropy stage"
+  },
+  "fullProbeManifest": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/cmp-files.jsonl.gz",
+    "bytes": 2303600,
+    "rows": 1212,
+    "sha256": "5c58b64b0a79b4cc6c7b9973aef148c3ae495e4189165e4e52795ba588ce2933"
+  },
+  "minimumUnsupportedChunk": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/minimal-unsupported-clh-ch0.bin",
+    "bytes": 131,
+    "mode": "$CLH",
+    "nestedMode": "$CH0",
+    "offset": 2528719,
+    "sha256": "989d8a7e349750cf029f0f89066044824cd8e4ef50724fcf850b40b3dd226803",
+    "sourceRelativePath": "037/partition_op_character_ps3.cpk/character/model/character_model_037_v.pak"
+  },
+  "quickBmsRepresentativeProbe": {
+    "attempted": true,
+    "command": [
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-complete-mirror/prebuilt-macos-0.12.0/quickbms",
+      "-Y",
+      "-o",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-009-20260911-v1/reference-tools/cmp_scz.bms",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_character_ps3.cpk/character/model/character_model_018_m.pak",
+      "<temporary-output>"
+    ],
+    "completeNativeDecode": false,
+    "declaredDecodedBytes": 534592,
+    "outputs": [
+      {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/quickbms-partial/character_model_018_m.stp",
+        "bytes": 322198,
+        "fileName": "character_model_018_m.stp",
+        "magicHex": "5354504b",
+        "sha256": "deea9b8a0035e60b8a89304b76359b7972bdcace46c59895c1b669a30478b13c"
+      }
+    ],
+    "quickBms": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-complete-mirror/prebuilt-macos-0.12.0/quickbms",
+      "sha256": "b0de6d55029bd00cd7cbb7ef1ad2509352c5bcd5c2ffa65d7dafbe9666997694"
+    },
+    "returnCode": 0,
+    "script": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-009-20260911-v1/reference-tools/cmp_scz.bms",
+      "sha256": "587f8af589765fb1823a700a6c248a72256171556d66fa30ea853bd13841ea23"
+    },
+    "source": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_character_ps3.cpk/character/model/character_model_018_m.pak",
+      "bytes": 224048,
+      "sha256": "d74ee55d8bef76d7f689948c16397cea0d3651dfbcd09c9da0479b5caf15ce5c"
+    },
+    "stderr": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/quickbms.stderr.normalized.txt",
+      "bytes": 930,
+      "sha256": "501b5cfd3eb1cbfce53868f6f7a6d6000d293f09076e681a113536d452474f72"
+    },
+    "stdout": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cmp-probe/quickbms.stdout.normalized.txt",
+      "bytes": 48,
+      "sha256": "3a4bdfd8a1f4f433ec61a4bdae080e3a532399dd4163d79a993ab552ae7bc747"
+    },
+    "terminatedBySignal": null
+  },
+  "schema": "ggd.jstars-owner-cmp-probe@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "splitRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members",
+  "status": "cmp-probed-complete-native-decode-blocked",
+  "summary": {
+    "cl0Chunks": 31042,
+    "clhChunks": 18021,
+    "cmpFiles": 1212,
+    "completeNativeDecodes": 0,
+    "filesRequiringCh0": 1088,
+    "nativeTokens": 56
+  },
+  "tokenSummaries": [
+    {
+      "ch0Files": 25,
+      "cl0Chunks": 1152,
+      "clhChunks": 424,
+      "cmpFiles": 25,
+      "nativeToken": "000"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 566,
+      "clhChunks": 291,
+      "cmpFiles": 25,
+      "nativeToken": "001"
+    },
+    {
+      "ch0Files": 16,
+      "cl0Chunks": 590,
+      "clhChunks": 266,
+      "cmpFiles": 25,
+      "nativeToken": "002"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 407,
+      "clhChunks": 186,
+      "cmpFiles": 25,
+      "nativeToken": "003"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 849,
+      "clhChunks": 381,
+      "cmpFiles": 23,
+      "nativeToken": "004"
+    },
+    {
+      "ch0Files": 25,
+      "cl0Chunks": 1172,
+      "clhChunks": 386,
+      "cmpFiles": 25,
+      "nativeToken": "005"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 521,
+      "clhChunks": 371,
+      "cmpFiles": 23,
+      "nativeToken": "006"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 746,
+      "clhChunks": 369,
+      "cmpFiles": 25,
+      "nativeToken": "007"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 687,
+      "clhChunks": 298,
+      "cmpFiles": 25,
+      "nativeToken": "008"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 522,
+      "clhChunks": 253,
+      "cmpFiles": 25,
+      "nativeToken": "009"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 647,
+      "clhChunks": 347,
+      "cmpFiles": 25,
+      "nativeToken": "010"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 357,
+      "clhChunks": 251,
+      "cmpFiles": 24,
+      "nativeToken": "011"
+    },
+    {
+      "ch0Files": 18,
+      "cl0Chunks": 419,
+      "clhChunks": 315,
+      "cmpFiles": 24,
+      "nativeToken": "012"
+    },
+    {
+      "ch0Files": 25,
+      "cl0Chunks": 463,
+      "clhChunks": 205,
+      "cmpFiles": 25,
+      "nativeToken": "013"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 705,
+      "clhChunks": 456,
+      "cmpFiles": 25,
+      "nativeToken": "014"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 726,
+      "clhChunks": 400,
+      "cmpFiles": 25,
+      "nativeToken": "015"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 606,
+      "clhChunks": 364,
+      "cmpFiles": 25,
+      "nativeToken": "016"
+    },
+    {
+      "ch0Files": 25,
+      "cl0Chunks": 679,
+      "clhChunks": 439,
+      "cmpFiles": 25,
+      "nativeToken": "017"
+    },
+    {
+      "ch0Files": 24,
+      "cl0Chunks": 709,
+      "clhChunks": 571,
+      "cmpFiles": 24,
+      "nativeToken": "018"
+    },
+    {
+      "ch0Files": 18,
+      "cl0Chunks": 387,
+      "clhChunks": 180,
+      "cmpFiles": 22,
+      "nativeToken": "019"
+    },
+    {
+      "ch0Files": 18,
+      "cl0Chunks": 148,
+      "clhChunks": 188,
+      "cmpFiles": 22,
+      "nativeToken": "020"
+    },
+    {
+      "ch0Files": 18,
+      "cl0Chunks": 131,
+      "clhChunks": 168,
+      "cmpFiles": 22,
+      "nativeToken": "021"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 451,
+      "clhChunks": 126,
+      "cmpFiles": 25,
+      "nativeToken": "022"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 545,
+      "clhChunks": 216,
+      "cmpFiles": 25,
+      "nativeToken": "023"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 759,
+      "clhChunks": 599,
+      "cmpFiles": 24,
+      "nativeToken": "024"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 476,
+      "clhChunks": 281,
+      "cmpFiles": 25,
+      "nativeToken": "025"
+    },
+    {
+      "ch0Files": 18,
+      "cl0Chunks": 438,
+      "clhChunks": 315,
+      "cmpFiles": 24,
+      "nativeToken": "026"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 898,
+      "clhChunks": 427,
+      "cmpFiles": 24,
+      "nativeToken": "027"
+    },
+    {
+      "ch0Files": 19,
+      "cl0Chunks": 1046,
+      "clhChunks": 451,
+      "cmpFiles": 25,
+      "nativeToken": "028"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 429,
+      "clhChunks": 272,
+      "cmpFiles": 25,
+      "nativeToken": "029"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 569,
+      "clhChunks": 446,
+      "cmpFiles": 23,
+      "nativeToken": "030"
+    },
+    {
+      "ch0Files": 24,
+      "cl0Chunks": 842,
+      "clhChunks": 303,
+      "cmpFiles": 24,
+      "nativeToken": "031"
+    },
+    {
+      "ch0Files": 24,
+      "cl0Chunks": 1014,
+      "clhChunks": 456,
+      "cmpFiles": 24,
+      "nativeToken": "032"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 471,
+      "clhChunks": 320,
+      "cmpFiles": 24,
+      "nativeToken": "033"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 608,
+      "clhChunks": 326,
+      "cmpFiles": 25,
+      "nativeToken": "034"
+    },
+    {
+      "ch0Files": 21,
+      "cl0Chunks": 628,
+      "clhChunks": 417,
+      "cmpFiles": 23,
+      "nativeToken": "035"
+    },
+    {
+      "ch0Files": 24,
+      "cl0Chunks": 710,
+      "clhChunks": 312,
+      "cmpFiles": 24,
+      "nativeToken": "036"
+    },
+    {
+      "ch0Files": 22,
+      "cl0Chunks": 839,
+      "clhChunks": 599,
+      "cmpFiles": 24,
+      "nativeToken": "037"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 627,
+      "clhChunks": 435,
+      "cmpFiles": 23,
+      "nativeToken": "038"
+    },
+    {
+      "ch0Files": 20,
+      "cl0Chunks": 522,
+      "clhChunks": 292,
+      "cmpFiles": 25,
+      "nativeToken": "039"
+    },
+    {
+      "ch0Files": 24,
+      "cl0Chunks": 671,
+      "clhChunks": 441,
+      "cmpFiles": 24,
+      "nativeToken": "040"
+    },
+    {
+      "ch0Files": 23,
+      "cl0Chunks": 1183,
+      "clhChunks": 392,
+      "cmpFiles": 23,
+      "nativeToken": "041"
+    },
+    {
+      "ch0Files": 13,
+      "cl0Chunks": 264,
+      "clhChunks": 274,
+      "cmpFiles": 14,
+      "nativeToken": "200"
+    },
+    {
+      "ch0Files": 12,
+      "cl0Chunks": 265,
+      "clhChunks": 207,
+      "cmpFiles": 14,
+      "nativeToken": "201"
+    },
+    {
+      "ch0Files": 13,
+      "cl0Chunks": 390,
+      "clhChunks": 215,
+      "cmpFiles": 14,
+      "nativeToken": "202"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 324,
+      "clhChunks": 291,
+      "cmpFiles": 14,
+      "nativeToken": "203"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 262,
+      "clhChunks": 426,
+      "cmpFiles": 14,
+      "nativeToken": "204"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 210,
+      "clhChunks": 111,
+      "cmpFiles": 14,
+      "nativeToken": "205"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 347,
+      "clhChunks": 348,
+      "cmpFiles": 14,
+      "nativeToken": "206"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 394,
+      "clhChunks": 345,
+      "cmpFiles": 14,
+      "nativeToken": "207"
+    },
+    {
+      "ch0Files": 9,
+      "cl0Chunks": 85,
+      "clhChunks": 65,
+      "cmpFiles": 13,
+      "nativeToken": "208"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 292,
+      "clhChunks": 308,
+      "cmpFiles": 14,
+      "nativeToken": "209"
+    },
+    {
+      "ch0Files": 13,
+      "cl0Chunks": 335,
+      "clhChunks": 203,
+      "cmpFiles": 14,
+      "nativeToken": "210"
+    },
+    {
+      "ch0Files": 14,
+      "cl0Chunks": 346,
+      "clhChunks": 212,
+      "cmpFiles": 14,
+      "nativeToken": "211"
+    },
+    {
+      "ch0Files": 13,
+      "cl0Chunks": 308,
+      "clhChunks": 279,
+      "cmpFiles": 14,
+      "nativeToken": "212"
+    },
+    {
+      "ch0Files": 13,
+      "cl0Chunks": 305,
+      "clhChunks": 202,
+      "cmpFiles": 14,
+      "nativeToken": "213"
+    }
+  ]
+}

@@ -48,7 +48,7 @@
   content/ 以外的路徑（匯入前的候選檔）沒有引用關係可查 ⇒ 一律照 `--kind`（預設 voice）檢查／轉換。
 離開碼：0 合格 · 1 不合格／棘輪變了 · 2 跑不起來（⛔ 不是「沒問題」）· 3 轉檔失敗 · 4 S3 失敗
 """
-import argparse, datetime, hashlib, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse
+import argparse, datetime, hashlib, json, math, os, re, shutil, subprocess, sys, tempfile, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -66,7 +66,7 @@ MAX_DRIFT_SECONDS = 0.06
 MP3_KBPS = (8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320)
 SILENT_DB = -999.0  # volumedetect 的 -inf（JSON 存不了 -inf）
 BUCKET, PROFILE, REGION, S3_PREFIX = "ggd-390630837668-ap-east-2-an", "vibe-coding", "ap-east-2", "audio-intake"
-PROBE_VERSION = "audio-intake-probe@1"
+PROBE_VERSION = "audio-intake-probe@2"
 CACHE_PATH = os.environ.get("GGD_AUDIO_INTAKE_CACHE") or os.path.join(
     os.path.expanduser("~"), ".cache", "ggd-audio-intake", "measure.json")
 
@@ -193,6 +193,45 @@ def _float(v):
         return 0.0
 
 
+def mp3_padding_evidence(header_seconds: float, sample_rate: int, packets: list):
+    """Older ffprobe includes encoder delay/padding in MP3 duration; newer versions may not.
+
+    Only adjust when the header describes all packets actually present. A longer
+    header can mean missing packets, so padding must not hide that truncation.
+    Packet durations are decimal seconds rounded by ffprobe; allow only their
+    accumulated rounding error or one sample, not the truncation tolerance.
+    """
+    if sample_rate <= 0 or not packets:
+        return None
+    seconds, skip, discard = 0.0, 0, 0
+    for packet in packets:
+        duration = _float(packet.get("duration_time"))
+        if not math.isfinite(duration) or duration <= 0:
+            return None
+        seconds += duration
+        for side in packet.get("side_data_list", []):
+            if side.get("side_data_type") != "Skip Samples":
+                continue
+            try:
+                head = int(side.get("skip_samples", 0))
+                tail = int(side.get("discard_padding", 0))
+            except (TypeError, ValueError):
+                return None
+            if head < 0 or tail < 0:
+                return None
+            skip += head
+            discard += tail
+    rounding = max(1 / sample_rate, len(packets) * 0.000001)
+    if not skip + discard or abs(header_seconds - seconds) > rounding:
+        return None
+    expected = seconds - (skip + discard) / sample_rate
+    if expected <= 0:
+        return None
+    return {"packetCount": len(packets), "rawPacketSeconds": seconds,
+            "skipSamples": skip, "discardPaddingSamples": discard,
+            "sampleRate": sample_rate, "expectedSeconds": expected}
+
+
 def measure(path: str) -> dict:
     """ffprobe（容器／編碼／取樣率／聲道／位元率／標頭長度）＋ 真的解碼一次（峰值、解出來的長度、錯誤訊息）。"""
     m = {"decodes": False, "container": None, "codec": None, "sampleRate": 0, "channels": 0, "bitrate": 0,
@@ -223,6 +262,22 @@ def measure(path: str) -> dict:
     m["seconds"] = round(int(samples[-1]) / per_second, 4)   # ⭐ 解出來的長度（⛔ 不是標頭說的）
     m["peakDb"] = SILENT_DB if "inf" in peaks[-1] else float(peaks[-1])
     m["decodes"] = True
+    head, got = m["headerSeconds"], m["seconds"]
+    if (m["container"] == "mp3" and m["codec"] == "mp3" and head
+            and abs(head - got) > max(TRUNCATION_TOLERANCE[0], TRUNCATION_TOLERANCE[1] * head)):
+        # Keep the original measurement even when the optional packet probe fails.
+        m["rawHeaderSeconds"] = head
+        packets = _run(["ffprobe", "-v", "error", "-select_streams", "a:0", "-show_packets",
+                        "-show_entries", "packet=duration_time:packet_side_data=side_data_type,skip_samples,discard_padding",
+                        "-of", "json", path])
+        try:
+            evidence = (mp3_padding_evidence(head, m["sampleRate"], json.loads(packets.stdout).get("packets", []))
+                        if packets.returncode == 0 else None)
+        except (ValueError, TypeError, AttributeError):
+            evidence = None
+        if evidence is not None:
+            m["paddingEvidence"] = evidence
+            m["headerSeconds"] = evidence["expectedSeconds"]
     return m
 
 

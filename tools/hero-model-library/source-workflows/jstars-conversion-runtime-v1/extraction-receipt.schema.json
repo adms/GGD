@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ggd.jstars-extraction-receipt@1",
+  "type": "object",
+  "required": ["schema", "sourceId", "sourceGame", "platform", "extractionRoot", "archive", "characters"],
+  "properties": {
+    "schema": { "const": "ggd.jstars-extraction-receipt@1" },
+    "sourceId": { "type": "string", "minLength": 1 },
+    "sourceGame": { "const": "J-Stars Victory VS+" },
+    "platform": { "type": "string", "minLength": 1 },
+    "extractionRoot": { "type": "string", "minLength": 1 },
+    "archive": { "$ref": "#/$defs/file" },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nativeCharacterId", "identityVerified", "label", "character", "work", "artifacts"],
+        "properties": {
+          "nativeCharacterId": { "type": "string", "minLength": 1 },
+          "identityVerified": { "type": "boolean" },
+          "heroId": { "type": ["string", "null"] },
+          "label": { "type": "string", "minLength": 1 },
+          "character": { "type": "string", "minLength": 1 },
+          "work": { "type": "string", "minLength": 1 },
+          "animationSelections": {
+            "type": "object",
+            "required": ["idle", "run", "attack", "cast", "hurt", "death"],
+            "properties": {
+              "idle": { "type": "integer", "minimum": 0 },
+              "run": { "type": "integer", "minimum": 0 },
+              "attack": { "type": "integer", "minimum": 0 },
+              "cast": { "type": "integer", "minimum": 0 },
+              "hurt": { "type": "integer", "minimum": 0 },
+              "death": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "artifacts": {
+            "type": "object",
+            "properties": {
+              "runtimeGlb": { "$ref": "#/$defs/file" },
+              "modelSources": { "$ref": "#/$defs/files" },
+              "textures": { "$ref": "#/$defs/files" },
+              "skeletons": { "$ref": "#/$defs/files" },
+              "motions": { "$ref": "#/$defs/files" },
+              "vfx": { "$ref": "#/$defs/files" },
+              "sfx": { "$ref": "#/$defs/files" },
+              "voice": { "$ref": "#/$defs/files" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "file": {
+      "type": "object",
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "assetKind": { "type": "string" },
+        "language": { "type": "string" },
+        "speaker": { "type": "string" },
+        "event": { "type": "string" },
+        "reviewDecision": { "enum": ["pending", "approve", "reject"] },
+        "runtimeBindingAuthorized": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "files": { "type": "array", "items": { "$ref": "#/$defs/file" } }
+  }
+}

@@ -2771,6 +2771,137 @@
         "sourceEntryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/public-source-entries.json"
       },
       "verification": "本輪未取得素材。列印商品需點數／購買，且頁面標示僅限個人使用、禁止數位再散布與改作；沒有取得檔案、沒有下載、沒有登入。"
+    },
+    {
+      "id": "dqtact-kigan-king-vearn",
+      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://cache.sqex-bridge.jp/guest/information/97055",
+      "sourceGame": "Dragon Quest Tact 鬼眼王バーン",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+      "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
+      "platform": "game-native-source-lead",
+      "accessStatus": "official-source-confirmed-payload-not-acquired",
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "young-or-kigan-vearn-model-source-lead",
+      "assetKinds": [],
+      "modelCount": 0,
+      "modelCandidates": [],
+      "defaultEligible": false,
+      "localPath": null,
+      "files": [],
+      "verification": "Official source establishes a Kigan King 3D appearance; no model payload has been acquired or converted.",
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "visualIdentityReviewByOwner": true
+      },
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "selectionVerified": false,
+        "registered": false,
+        "productionDeployed": false
+      },
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ]
+    },
+    {
+      "id": "dqmj3p-kigan-king-vearn",
+      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://dragon-quest.jp/dqmj3/monster/ss/%E9%AC%BC%E7%9C%BC%E7%8E%8B%E3%83%90%E3%83%BC%E3%83%B3.php",
+      "sourceGame": "Dragon Quest Monsters Joker 3 Professional 鬼眼王バーン",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+      "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
+      "platform": "game-native-source-lead",
+      "accessStatus": "official-source-confirmed-payload-not-acquired",
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "young-or-kigan-vearn-model-source-lead",
+      "assetKinds": [],
+      "modelCount": 0,
+      "modelCandidates": [],
+      "defaultEligible": false,
+      "localPath": null,
+      "files": [],
+      "verification": "Official source establishes a Kigan King 3D appearance; no model payload has been acquired or converted.",
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "visualIdentityReviewByOwner": true
+      },
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "selectionVerified": false,
+        "registered": false,
+        "productionDeployed": false
+      },
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ],
+      "note": "Professional plus version 1.2 update data is required."
+    },
+    {
+      "id": "hoshidora-kigan-king-vearn",
+      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://www.dragonquest.jp/hoshidora/sp/dai_collabo/",
+      "sourceGame": "星のドラゴンクエスト 鬼眼王バーン",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+      "sourceKind": "confirmed-game-native-source-lead",
+      "uploader": "來源頁所列作者",
+      "format": "source page only",
+      "platform": "game-native-source-lead",
+      "accessStatus": "official-source-confirmed-payload-not-acquired",
+      "acquisitionStatus": "not-acquired",
+      "readiness": "source-lead-only",
+      "resourceRole": "young-or-kigan-vearn-model-source-lead",
+      "assetKinds": [],
+      "modelCount": 0,
+      "modelCandidates": [],
+      "defaultEligible": false,
+      "localPath": null,
+      "files": [],
+      "verification": "Official source establishes a Kigan King 3D appearance; no model payload has been acquired or converted.",
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "visualIdentityReviewByOwner": true
+      },
+      "backendIntegration": {
+        "required": false,
+        "state": "not-acquired",
+        "selectionVerified": false,
+        "registered": false,
+        "productionDeployed": false
+      },
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ],
+      "note": "Service ended; a complete historical cache is required."
     }
   ],
   "purchasePolicy": {
@@ -61444,10 +61575,10 @@
       "publishedAt": "2014-05-05",
       "accessStatus": "public-download-key-accepted-through-normal-site-flow",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "acquired-reserve-license-blocked-from-shared-runtime",
+      "readiness": "static-review-converted-existing-elderly-vearn-source",
       "resourceRole": "community-model-reserve",
       "format": "ZIP containing PMX, BMP, TGA and SPH",
-      "verification": "Original ZIP SHA-256 and byte count verified; traversal-safe extraction produced 18 files including five PMX models. The package contains elderly Vearn variants, staff and Kaiser Phoenix helper only. Author terms block shared runtime conversion and redistribution.",
+      "verification": "Original ZIP SHA-256 and byte count verified; traversal-safe extraction produced 18 files including five PMX payloads. All five were converted to independent static textured GLBs, passed Khronos with zero errors, and produced 15 Babylon WebGL review views. Owner identity decisions remain pending.",
       "localPath": "GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087",
       "files": [
         {
@@ -61468,36 +61599,101 @@
         {
           "name": "カイザーフェニックス素体.pmx",
           "format": "PMX",
-          "conversionStatus": "not-started-license-blocked"
+          "conversionStatus": "static-review-converted",
+          "reviewGlb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/カイザーフェニックス素体/candidate.glb",
+            "bytes": 351692,
+            "sha256": "368f4386e07609ca5a4f2c473ebf6a351f86a1d428028438b70823629192f839"
+          },
+          "triangleCount": 3320,
+          "boneCountInSource": 30,
+          "identityStatus": "confirmed-kaiser-phoenix-skill-helper",
+          "isNewYoungOrKiganCandidate": false,
+          "nativeMotionCount": 0,
+          "runtimeRegistered": false
         },
         {
           "name": "光魔の杖.pmx",
           "format": "PMX",
-          "conversionStatus": "not-started-license-blocked"
+          "conversionStatus": "static-review-converted",
+          "reviewGlb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/光魔の杖/candidate.glb",
+            "bytes": 2619260,
+            "sha256": "df565618c1a7b6c6607d4d633106738c03bbd602632bb6e0fa932f076c93c190"
+          },
+          "triangleCount": 17204,
+          "boneCountInSource": 5,
+          "identityStatus": "confirmed-vearn-staff-prop",
+          "isNewYoungOrKiganCandidate": false,
+          "nativeMotionCount": 0,
+          "runtimeRegistered": false
         },
         {
           "name": "大魔王バーン.pmx",
           "format": "PMX",
-          "conversionStatus": "not-started-license-blocked"
+          "conversionStatus": "static-review-converted",
+          "reviewGlb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン/candidate.glb",
+            "bytes": 3601968,
+            "sha256": "896c80093121c2b68943648cdcb2872fa4c46d822f042173f7cf6de32db948c3"
+          },
+          "triangleCount": 31876,
+          "boneCountInSource": 362,
+          "identityStatus": "confirmed-elderly-pre-transformation-vearn",
+          "isNewYoungOrKiganCandidate": false,
+          "nativeMotionCount": 0,
+          "runtimeRegistered": false
         },
         {
           "name": "大魔王バーン杖装備.pmx",
           "format": "PMX",
-          "conversionStatus": "not-started-license-blocked"
+          "conversionStatus": "static-review-converted",
+          "reviewGlb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン杖装備/candidate.glb",
+            "bytes": 6191344,
+            "sha256": "b91e585a42758ede7a0105b8ebe65a23d512f2b25300727a0dcd3be9a4ca5581"
+          },
+          "triangleCount": 48200,
+          "boneCountInSource": 366,
+          "identityStatus": "confirmed-elderly-pre-transformation-vearn-with-staff",
+          "isNewYoungOrKiganCandidate": false,
+          "nativeMotionCount": 0,
+          "runtimeRegistered": false
         },
         {
           "name": "影バーン.pmx",
           "format": "PMX",
-          "conversionStatus": "not-started-license-blocked"
+          "conversionStatus": "static-review-converted",
+          "reviewGlb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/影バーン/candidate.glb",
+            "bytes": 1983104,
+            "sha256": "081abc9a4b3a7ab4b2cf00e92d90e6d2487f835c7758670c7abd08314a4a7a14"
+          },
+          "triangleCount": 31876,
+          "boneCountInSource": 362,
+          "identityStatus": "confirmed-elderly-pre-transformation-shadow-variant",
+          "isNewYoungOrKiganCandidate": false,
+          "nativeMotionCount": 0,
+          "runtimeRegistered": false
         }
       ],
       "identity": {
         "form": "elderly-pre-transformation",
         "postTransformationYoungTrueBodyIncluded": false,
-        "nativeInfinityStrashAsset": false
+        "nativeInfinityStrashAsset": false,
+        "ownerVisualReviewRequiredPerCandidate": false,
+        "ownerConfirmedExistingElderlyForm": true
       },
       "reuseTerms": "Author readme prohibits commercial use and redistribution, including modified data. Shared Git/runtime integration requires a separate author grant. A secondary Sketchfab uploader's CC label is not treated as overriding the upstream terms.",
       "publicRedistributionRightsVerified": false,
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "privateConversionAndVisualReviewAuthorized": true,
+        "identityDecisionsPending": 0,
+        "followUp": "Do not request another review of these elderly-form candidates; only present new young true-body or Kigan King candidates."
+      },
       "defaultEligible": false,
       "purchaseDecision": "free-public-author-distribution-no-purchase",
       "discoveryChannel": "author-public-community-distribution",
@@ -61509,7 +61705,7 @@
       },
       "backendIntegration": {
         "required": true,
-        "state": "blocked-pending-author-redistribution-and-commercial-use-grant",
+        "state": "reserve-only-existing-elderly-form-no-new-target",
         "heroIds": [
           "godie-ubal"
         ],
@@ -61521,13 +61717,21 @@
       "gaps": [
         "No young true-body/post-transformation Vearn model.",
         "No native motion, game VFX, sound effect or voice files.",
-        "No permission for commercial use or redistribution in the shared GGD runtime."
+        "Owner confirmed these are the already-reviewed elderly/pre-transformation form and related props, not the young true body or Kigan King target.",
+        "Upstream readme terms are retained in provenance; shared runtime publication has not been performed."
       ],
       "evidence": {
         "acquisitionPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/acquisition.json",
         "acquisitionSha256": "d115163320a9a57a384e1a248e94365de83b969b9ae22a9053db017a006bfb31",
         "extractionManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extraction-files.json",
-        "extractionManifestSha256": "ea805bf66bacda3d75b7d5055b3d0f9e6b9c593baa8eed0b79c41f147b0b01e0"
+        "extractionManifestSha256": "ea805bf66bacda3d75b7d5055b3d0f9e6b9c593baa8eed0b79c41f147b0b01e0",
+        "conversionManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/conversion-manifest.json",
+        "conversionManifestSha256": "080990a42c68bfe00f00e5c7ede7a2f94930df672ebc746fd2b4a26e624827df",
+        "khronosValidationPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/khronos-validation.json",
+        "khronosValidationSha256": "3332bd0240a93ed34735fa99aabcfd3f31a86848443db3ef1b9d9b588395faaf",
+        "reviewPagePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/index.html",
+        "reviewPageSha256": "27137d519694706cb92d5033299ee808863b25fe27b283de7471ef0946a867b6",
+        "webglScreenshotCount": 15
       },
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/bowlroll-sabakan359-vearn-mmd-v087/2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1.tar.gz",
@@ -67641,6 +67845,92 @@
         "readbackVerified": true,
         "fullGetVerified": true,
         "allMemberSha256Verified": true
+      }
+    },
+    {
+      "id": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+      "target": "巴恩大魔王：年輕真身／鬼眼王 3D 來源",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://archive.org/details/gacha-archive",
+      "sourceGame": "Dragon Quest The Adventure of Dai - A Hero's Bonds final cache 1.17.0.121",
+      "sourceWork": "勇者鬥惡龍 達伊的大冒險",
+      "sourceKind": "archived-game-cache",
+      "uploader": "Internet Archive 保存者（原作者待確認）",
+      "format": "Android XAPK + complete game cache ZIP",
+      "platform": "Android archived cache",
+      "accessStatus": "public-archive-downloaded",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "archived-awaiting-asset-identification",
+      "resourceRole": "game-resource-archive",
+      "assetKinds": [
+        "game-container",
+        "audio-container"
+      ],
+      "modelCount": 0,
+      "modelCandidates": [],
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
+      "files": [
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+          "bytes": 1733218012,
+          "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+          "md5": "59efae4d0b83d086a86f3d7618d05097",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+          "downloadedBytesAtGeneration": 1733218012,
+          "complete": true,
+          "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+          "publishedHashesVerified": true,
+          "actualHashes": {
+            "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+            "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+            "md5": "59efae4d0b83d086a86f3d7618d05097"
+          }
+        },
+        {
+          "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+          "bytes": 365045618,
+          "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+          "md5": "fc563f21e92b4de2f2292413005836b7",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+          "downloadedBytesAtGeneration": 365045618,
+          "complete": true,
+          "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+          "publishedHashesVerified": true,
+          "actualHashes": {
+            "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+            "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+            "md5": "fc563f21e92b4de2f2292413005836b7"
+          }
+        }
+      ],
+      "verification": "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified.",
+      "ownerDecision": {
+        "date": "2026-09-17",
+        "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+        "acquisitionAuthorized": true,
+        "visualIdentityReviewByOwner": true
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-asset-identification",
+        "selectionVerified": false,
+        "registered": false,
+        "productionDeployed": false
+      },
+      "notAliases": [
+        "Baran",
+        "巴蘭",
+        "バラン"
+      ],
+      "note": "Both original archives are retained locally and match published byte counts, SHA-1 and MD5. Download completion does not establish a ghost-eye Vearn model identity.",
+      "preservationEvidence": "materials/hero-model-library/source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json",
+      "archival": {
+        "state": "local-originals-and-extracted-files-preserved-s3-pending",
+        "s3Uri": null,
+        "readbackVerified": false
       }
     }
   ],

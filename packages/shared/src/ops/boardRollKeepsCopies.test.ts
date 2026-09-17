@@ -28,14 +28,19 @@ describe("GH#1256 board-roll.sh 用時間區隔留底", () => {
     for (const d of ["docs/_release", "docs/_daily"]) mkdirSync(join(tmp, d), { recursive: true });
     const board = join(tmp, `docs/_release/戰情版-${today}.md`);
     const ledger = join(tmp, `docs/_daily/${iso}.md`);
-    writeFileSync(board, "# 戰情版\n");
+    const original = "# 戰情版\n## 一週窗總量（舊）\n\n| | |\n|---|---:|\n| owner 訊息 | **0 則** |\n\n**逐日分佈**：舊\n"
+      + "=======\n| owner 訊息 | **260 則** |\n| 引用到的不同票號 | **60 張** |\n| ⏸ 未對票 | **2 則** |\n\n"
+      + "**逐日分佈**：舊分支\n>>>>>>> origin/feat/owner-0915-models-voices\n\n保留這段說明\n";
+    writeFileSync(board, original);
     writeFileSync(ledger, "| 時間 | 話 | 票 |\n|---|---|---|\n| 10:30 | 第一則 | #1256 |\n");
     const roll = (...a: string[]) => sh("bash", ["scripts/board-roll.sh", ...a], tmp);
     const temps = () => readdirSync(join(tmp, "docs/_release")).filter((n) => n.startsWith("戰情版_temp_"));
     const read = (n: string) => readFileSync(join(tmp, "docs/_release", n), "utf8");
 
     expect(roll().status).toBe(0);
-    expect(temps().map(read), "① 改寫了戰情版卻沒有留底，或留的不是改寫前那一份").toEqual(["# 戰情版\n"]);
+    expect(temps().map(read), "① 改寫了戰情版卻沒有留底，或留的不是改寫前那一份").toEqual([original]);
+    expect(readFileSync(board, "utf8")).not.toMatch(/^=======$|^>>>>>>> |\*\*260 則\*\*/m);
+    expect(readFileSync(board, "utf8")).toContain("保留這段說明");
 
     expect(roll().status).toBe(0);
     expect(temps(), "② 內容沒變也多留了一份").toHaveLength(1);

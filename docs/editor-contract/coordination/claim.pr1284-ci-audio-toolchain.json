@@ -1,0 +1,28 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.pr1284-ci-audio-toolchain",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "72dc6ef7c3b832dc95febc4b2d8708c5a67a8c26",
+  "contractFingerprint": "79109da8fdb79101",
+  "title": "PR #1284 CI 補足音訊驗收所需 ffmpeg/ffprobe",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "audioIntake.test.ts 會呼叫 ffmpeg/ffprobe，unit job 原只安裝 webp。CI job 105176646098 以 spawnSync ffmpeg ENOENT 失敗；本批將 ffmpeg 加入原有 apt 安裝步驟，維持測試與音訊上限。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/ops/audioIntake.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "78ab89dc7a48c6f5ed57fa655d3a2aee7ff6f92c",
+      "evidence": [
+        ".github/workflows/ci.yml",
+        "packages/shared/src/ops/audioIntake.test.ts"
+      ]
+    }
+  ],
+  "asks": [
+    "Main 審查 CI 環境依賴變更；遠端新一輪 unit 綠燈才算 GitHub runner 已驗證。"
+  ]
+}

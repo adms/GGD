@@ -1,0 +1,43 @@
+{
+  "schema": "ggd.public-source-reference@1",
+  "sourceId": "dqdai-souls-jp-apk-1.17.0-138",
+  "work": {
+    "zhTw": "勇者鬥惡龍 達伊的大冒險 燃魂羈絆",
+    "ja": "ドラゴンクエスト ダイの大冒険 -魂の絆-"
+  },
+  "platform": "Android arm64-v8a",
+  "packageName": "com.square_enix.android_googleplay.dqdaitamakizu",
+  "versionName": "1.17.0",
+  "versionCode": 138,
+  "publishedAt": "2023-03-02",
+  "sourcePage": "https://www.apkmirror.com/apk/square-enix-co-ltd/%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88-%E3%83%80%E3%82%A4%E3%81%AE%E5%A4%A7%E5%86%92%E9%99%BA%E3%80%80-%E9%AD%82%E3%81%AE%E7%B5%86/%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88-%E3%83%80%E3%82%A4%E3%81%AE%E5%A4%A7%E5%86%92%E9%99%BA%E3%80%80-%E9%AD%82%E3%81%AE%E7%B5%86-1-17-0-release/%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88-%E3%83%80%E3%82%A4%E3%81%AE%E5%A4%A7%E5%86%92%E9%99%BA%E3%80%80-%E9%AD%82%E3%81%AE%E7%B5%86-1-17-0-android-apk-download/",
+  "expectedFile": {
+    "bytes": 373048106,
+    "sha256": "2f41820782a048cee4c162f80d8a26c5979df352687a60f285c34a3db5832e8d",
+    "sha1": "913eaae1e4bf1a358e84cb00ac3a13a4efd350bc",
+    "md5": "86d9255082dd222b629640b3be798f37",
+    "certificateSha256": "8575d97a796e08f9fe8887c3d83ab78c5275ba4a691494ed47f566abdac5e495"
+  },
+  "acquisition": {
+    "sourceConfirmed": true,
+    "payloadAcquired": false,
+    "payloadInventoried": false,
+    "status": "blocked-short-lived-download-url",
+    "note": "APKMirror exposes a short-lived binary URL. The stable source page and expected hashes are preserved; no APK bytes are committed or claimed acquired."
+  },
+  "remotePayloadRisk": {
+    "bulkDownloadRequiredAfterInstall": true,
+    "apkMayBeBootstrapOnly": true,
+    "finalChapterReleasedAt": "2023-03-28",
+    "note": "The final chapter and Kigan King Vearn appeared after this APK publication date. A service-end Android/data cache may be required even after the APK is acquired."
+  },
+  "targetForms": [
+    "大魔王バーン",
+    "真・大魔王バーン",
+    "鬼眼王バーン"
+  ],
+  "identityExclusions": [
+    "ミストバーン",
+    "バラン"
+  ]
+}

@@ -133,10 +133,15 @@ def apply_s3_preparation_split(value, manifest):
         git_path=node.get('gitPath')
         split=by_path.get(git_path)
         if split:
-            if node.get('sha256') not in (None,split['sha256']):
-                raise ValueError('S3 split SHA mismatch: '+git_path)
-            if node.get('bytes') not in (None,split['bytes']):
-                raise ValueError('S3 split byte count mismatch: '+git_path)
+            digest_matches=node.get('sha256') in (None,split['sha256'])
+            bytes_match=node.get('bytes') in (None,split['bytes'])
+            if not digest_matches or not bytes_match:
+                # The fixed path may have newer Git bytes after the immutable
+                # #1252 preparation archive was created.  Keep the live Git
+                # record and do not imply that the old S3 member backs it up.
+                node['s3PreparationSplitStatus']='superseded-by-newer-git-bytes'
+                for item in list(node.values()):visit(item)
+                return
             node['restorePath']=node['gitPath']
             node['gitTracked']=False
             node.pop('gitAbsolutePath',None)
@@ -1061,10 +1066,13 @@ def build(git_link_root=ROOT):
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
+    registered_versions={}
     for p in (ROOT/'content/champions').glob('*.json'):
         if p.name.startswith('_'):continue
         c=read(p)
-        for v in c.get('modelVersions',[]):registered.setdefault(v['sourceModelKey'],[]).append(c['id'])
+        for v in c.get('modelVersions',[]):
+            registered.setdefault(v['sourceModelKey'],[]).append(c['id'])
+            registered_versions.setdefault(v['sourceModelKey'],[]).append((c['id'],v))
     for name in ['manifest.json','workflow-model-options.json','priority-runtime-options.json']:
         path=base/name;data=read(path)
         sources.append(dict(gitPath=str(path.relative_to(ROOT)),sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
@@ -1074,9 +1082,59 @@ def build(git_link_root=ROOT):
             if m['modelKey'] in reviewByKey:item['pendingGeometryReview']=reviewByKey[m['modelKey']]
             item['gitPath']='content/'+m['glbPath']
             item['modelDocumentGitPath']='content/models/'+m['modelKey']+'.json'
-            for rel,digest in [(item['gitPath'],m['sha256']),(item['modelDocumentGitPath'],m['documentSha256'])]:
-                if hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()!=digest:raise ValueError('Changed resource: '+rel)
+            actual_glb=hashlib.sha256((ROOT/item['gitPath']).read_bytes()).hexdigest()
+            actual_document=hashlib.sha256((ROOT/item['modelDocumentGitPath']).read_bytes()).hexdigest()
+            if actual_glb!=m['sha256'] or actual_document!=m['documentSha256']:
+                registrations=registered_versions.get(m['modelKey'],[])
+                pinned=any(v.get('binarySha256')==actual_glb for _,v in registrations)
+                document=read(ROOT/item['modelDocumentGitPath'])
+                if not pinned or document.get('id')!=m['modelKey'] or document.get('glbPath')!=m['glbPath']:
+                    raise ValueError('Changed resource: '+item['gitPath'])
+                item.update(sha256=actual_glb,bytes=(ROOT/item['gitPath']).stat().st_size,
+                            documentSha256=actual_document,
+                            manifestDriftReconciledByRegisteredVersion=True)
             models[m['id']]=item
+    # A successful backend registration may introduce a source model after the
+    # older handoff catalogs were frozen.  Keep those independently registered
+    # source bodies in the fixed current index instead of waiting for an
+    # unrelated historical catalog rebuild.
+    known_keys={item['modelKey'] for item in models.values()}
+    for model_key,registrations in sorted(registered_versions.items()):
+        if model_key in known_keys:continue
+        document_path=ROOT/'content/models'/f'{model_key}.json'
+        if not document_path.is_file():continue
+        document=read(document_path);glb_path=ROOT/'content'/document.get('glbPath','')
+        if document.get('id')!=model_key or not glb_path.is_file():continue
+        glb_sha=hashlib.sha256(glb_path.read_bytes()).hexdigest()
+        matching=[(hero_id,version) for hero_id,version in registrations
+                  if version.get('binarySha256')==glb_sha]
+        if not matching:continue
+        hero_ids=sorted({hero_id for hero_id,_ in matching});version=matching[0][1]
+        source=version.get('source',{})
+        item={
+            'id':'registered:'+model_key,'modelKey':model_key,
+            'glbPath':document['glbPath'],'sha256':glb_sha,'bytes':glb_path.stat().st_size,
+            'documentSha256':hashlib.sha256(document_path.read_bytes()).hexdigest(),
+            'sourceCharacter':source.get('character',model_key),
+            'sourceWork':source.get('work','來源作品待核'),
+            'sourceAssetId':source.get('reference','content modelVersion registration'),
+            'sourcePlatform':source.get('sourcePlatform'),
+            'clipMap':document.get('clipMap',{}),'storage':'git',
+            'gitPath':str(glb_path.relative_to(ROOT)),
+            'modelDocumentGitPath':str(document_path.relative_to(ROOT)),
+            'identityStatus':'registered-content-model-version',
+            'fullCharacterPackage':False,
+            'validation':'registered-content-version-current-bytes',
+            'limitations':['已登記為後台獨立模型選項；正式站部署需另行驗證。'],
+            'automaticEligible':version.get('automaticEligible') is not False,
+            'registeredFor':hero_ids,'runtimeDropdownRegistered':True,
+            'registrationEvidence':{
+                'gitPath':'materials/hero-model-library/priority-registration.json',
+                'versionModelKeys':sorted({v['modelKey'] for _,v in matching}),
+            },
+        }
+        if model_key in reviewByKey:item['pendingGeometryReview']=reviewByKey[model_key]
+        models[item['id']]=item;known_keys.add(model_key)
     result=dict(schema='ggd-current-resource-index@1',immutableRelease='materials/asset-library/git-release.json',
         modelInventory='materials/hero-model-library/inventory.json',postRegistrationReview='materials/hero-model-library/post-registration-review.json',sourceManifests=sources,
         modelSourceCount=len(models),models=list(models.values()),
@@ -1690,6 +1748,20 @@ def build(git_link_root=ROOT):
             'fullGetAndEveryFileVerified':True,
             'localPreserved':True,
         }
+    # Acquisition and decoder evidence remains queryable even with zero GLBs.
+    for key, relative_path in {
+        'bondsCachePreservation': 'source-inventories/vearn-related-3d-v1/bonds-cache-preservation.json',
+        'pr1284Preparation': 'pr1284-preparation-s3.json',
+        'vearnRelatedSourceInventory': 'source-inventories/vearn-related-3d-v1/inventory.json',
+        'jstarsPs3ToolchainAudit': 'source-inventories/jstars-ps3-toolchain-audit-v1/audit.json',
+        'jstarsPublicRiggedAcquisition': 'source-inventories/jstars-ps3-toolchain-audit-v1/public-rigged-acquisition.json',
+    }.items():
+        path = base / relative_path
+        if path.is_file():
+            result[key] = {'gitPath': path.relative_to(ROOT).as_posix(),
+                           'bytes': path.stat().st_size,
+                           'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                           'productionDeploymentVerified': False}
     return rebase_git_absolute_paths(result,ROOT,git_link_root)
 
 

@@ -36,7 +36,7 @@
 | [turbo-granny-compaction-validation.json](turbo-granny-compaction-validation.json) | 招財貓合併版的 GGD 格式與網格／貼圖預算檢查；尚缺動作與後台切換驗收 |
 | [goku-audio-validation.json](goku-audio-validation.json) | 悟空 69 個浮點 WAV 母檔的解碼、取樣數、峰值與獨立 FFmpeg 驗證；尚缺事件／技能對應與聽審 |
 
-既有不可變版本含 97 筆來源選項、90 個不同模型與 60 個 GGD 作者化 VFX 元件。本次其他工作流交付另見 `workflow-model-options.json`，新增轉換成品見 `priority-runtime-options.json`；全部在盤點合併查詢，未覆寫舊版本。正式站已觀測到 130 名白名單英雄；本分支新模型選項仍待 Main 合併與部署。
+既有不可變版本含 97 筆來源選項、90 個不同模型與 60 個 GGD 作者化 VFX 元件。本次其他工作流交付另見 `workflow-model-options.json`，新增轉換成品見 `priority-runtime-options.json`；全部在盤點合併查詢，未覆寫舊版本。現行英雄定義與可選人數由 [全角色模型盤點](全角色模型盤點.md) 及 [已取得模型待設計英雄](已取得模型待設計英雄.md) 每次產生時重新計算，不在本說明另存容易過期的數字。`current-production.json` 是 9/10 歷史營運快照，不代表目前人數；本分支新模型選項仍待 Main 合併與部署。
 
 預設依盤點第二守則；原著模型指原作遊戲直接擷取，300／MBA 維持第 6／7 位。成品一律進 Git，半成品／原始來源進 S3，本機全保留；既有版本先核對，避免重買。其他工作流經使用者授權付費取得的素材，一律與免費來源保留整合，預設順位不得刪減候選；尚未取得或轉換的來源不冒充已上架。銀時、蜘蛛子、海克力斯及各來源未完成步驟的細節統一放在盤點。
 

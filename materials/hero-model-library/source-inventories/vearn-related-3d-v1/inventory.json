@@ -1,0 +1,313 @@
+{
+  "schema": "ggd.vearn-related-3d-inventory@1",
+  "asOfDate": "2026-09-17",
+  "ownerInstruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
+  "statusSemantics": "discovered, downloading, acquired, converted, visually identified, registered and deployed are separate states",
+  "bowlroll": {
+    "sourceId": "bowlroll-sabakan359-vearn-mmd-v087",
+    "archive": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/original/vearn-mmd-v087.zip",
+      "bytes": 8370775,
+      "sha256": "5948beb33e350ce50da0294e2ce387b6c533cd3e783b2b1759662f00dc0ed0a3"
+    },
+    "candidateCount": 5,
+    "reviewGlbCount": 5,
+    "webglScreenshotCount": 15,
+    "khronosZeroErrorCount": 5,
+    "reviewPage": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/index.html",
+    "ownerReviewDisposition": "already-reviewed-elderly-form-do-not-request-repeat-review",
+    "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/contact-sheet.png",
+    "candidates": [
+      {
+        "candidateId": "bowlroll-sabakan359-vearn-mmd-v087:カイザーフェニックス素体",
+        "displayName": "カイザーフェニックス素体.pmx",
+        "sourcePmx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extracted/大魔王バーン/カイザーフェニックス素体.pmx",
+          "bytes": 212478,
+          "sha256": "d54c1a370d51a58f6baa3668f491dce5d0ffcf8a688aac5011a54b47659b7abe"
+        },
+        "reviewGlb": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/カイザーフェニックス素体/candidate.glb",
+          "bytes": 351692,
+          "sha256": "368f4386e07609ca5a4f2c473ebf6a351f86a1d428028438b70823629192f839"
+        },
+        "triangles": 3320,
+        "sourceBones": 30,
+        "webglViews": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/カイザーフェニックス素体/webgl-review-v2/back.png",
+            "bytes": 69389,
+            "sha256": "93ebfa7dff0ff28b3f558c4bac4eafc9f7cef19d55613b43b06b8e115c9fa177"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/カイザーフェニックス素体/webgl-review-v2/front.png",
+            "bytes": 63201,
+            "sha256": "8455d9f975ae630532d074e3516c283c72bb45fee4ba0ccada75690e9eff8846"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/カイザーフェニックス素体/webgl-review-v2/isometric.png",
+            "bytes": 84036,
+            "sha256": "18783b336fe7f7bc9770da36abe45726bb350600642daabd769aa237a18365d8"
+          }
+        ],
+        "identityStatus": "confirmed-kaiser-phoenix-skill-helper",
+        "isNewYoungOrKiganCandidate": false,
+        "motionStatus": "no-native-motion-acquired",
+        "runtimeStatus": "not-registered"
+      },
+      {
+        "candidateId": "bowlroll-sabakan359-vearn-mmd-v087:光魔の杖",
+        "displayName": "光魔の杖.pmx",
+        "sourcePmx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extracted/大魔王バーン/光魔の杖.pmx",
+          "bytes": 571620,
+          "sha256": "cc7b4f0096891b238936cadc1561b3ebef8595f9e578bbf4ac4b82fd849927e8"
+        },
+        "reviewGlb": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/光魔の杖/candidate.glb",
+          "bytes": 2619260,
+          "sha256": "df565618c1a7b6c6607d4d633106738c03bbd602632bb6e0fa932f076c93c190"
+        },
+        "triangles": 17204,
+        "sourceBones": 5,
+        "webglViews": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/光魔の杖/webgl-review-v2/back.png",
+            "bytes": 50583,
+            "sha256": "9ade98d5d1ca08379af9614965487d1dd078d4410f8e656f477b7cafd0c640ed"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/光魔の杖/webgl-review-v2/front.png",
+            "bytes": 50970,
+            "sha256": "b7a484d3ed7e01742e9cd329d2673fb0abae02604126d17538a0fb4150f82a31"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/光魔の杖/webgl-review-v2/isometric.png",
+            "bytes": 47774,
+            "sha256": "af7aed27b91b577dbe84a9623476ac1aa3a4c1520bcbab154a26303767b5d75b"
+          }
+        ],
+        "identityStatus": "confirmed-vearn-staff-prop",
+        "isNewYoungOrKiganCandidate": false,
+        "motionStatus": "no-native-motion-acquired",
+        "runtimeStatus": "not-registered"
+      },
+      {
+        "candidateId": "bowlroll-sabakan359-vearn-mmd-v087:大魔王バーン",
+        "displayName": "大魔王バーン.pmx",
+        "sourcePmx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extracted/大魔王バーン/大魔王バーン.pmx",
+          "bytes": 1848925,
+          "sha256": "6aef18693e8d32f9107b0efd806ddbb374f318670ffcae5d0b8c3c5e8061e335"
+        },
+        "reviewGlb": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン/candidate.glb",
+          "bytes": 3601968,
+          "sha256": "896c80093121c2b68943648cdcb2872fa4c46d822f042173f7cf6de32db948c3"
+        },
+        "triangles": 31876,
+        "sourceBones": 362,
+        "webglViews": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン/webgl-review-v2/back.png",
+            "bytes": 354584,
+            "sha256": "e0c4dbb86c33f439cf466204e4041e9ef7b77fcd3a097ec336c2eeda9e214fae"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン/webgl-review-v2/front.png",
+            "bytes": 358751,
+            "sha256": "826812946aee149633c110fa6f269391907008367b21eda5995d5dc76e4574f2"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン/webgl-review-v2/isometric.png",
+            "bytes": 307884,
+            "sha256": "2cede4c95bc312f4d075fbfc33c4975645c7898a9070f53f3d3b728d9de697bd"
+          }
+        ],
+        "identityStatus": "confirmed-elderly-pre-transformation-vearn",
+        "isNewYoungOrKiganCandidate": false,
+        "motionStatus": "no-native-motion-acquired",
+        "runtimeStatus": "not-registered"
+      },
+      {
+        "candidateId": "bowlroll-sabakan359-vearn-mmd-v087:大魔王バーン杖装備",
+        "displayName": "大魔王バーン杖装備.pmx",
+        "sourcePmx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extracted/大魔王バーン/大魔王バーン杖装備.pmx",
+          "bytes": 2396284,
+          "sha256": "6826bbb8b6d9cc1fd0ea5165ed05dd6dbbffa6fa98a71a9e9abc835e5cb06890"
+        },
+        "reviewGlb": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン杖装備/candidate.glb",
+          "bytes": 6191344,
+          "sha256": "b91e585a42758ede7a0105b8ebe65a23d512f2b25300727a0dcd3be9a4ca5581"
+        },
+        "triangles": 48200,
+        "sourceBones": 366,
+        "webglViews": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン杖装備/webgl-review-v2/back.png",
+            "bytes": 357959,
+            "sha256": "3da2c7173c9b515cef2a0a2ea58f82ae872a6dac0a23d52be3503781b0ffbd7e"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン杖装備/webgl-review-v2/front.png",
+            "bytes": 360082,
+            "sha256": "2079b925c1743013188d38ee7250e6a73ce70b748332b2f1ce2247a843058d3d"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/大魔王バーン杖装備/webgl-review-v2/isometric.png",
+            "bytes": 315487,
+            "sha256": "5919c2009b05dc13f26c8dee8d162b4678c0291ea9987e16a7560085cc595659"
+          }
+        ],
+        "identityStatus": "confirmed-elderly-pre-transformation-vearn-with-staff",
+        "isNewYoungOrKiganCandidate": false,
+        "motionStatus": "no-native-motion-acquired",
+        "runtimeStatus": "not-registered"
+      },
+      {
+        "candidateId": "bowlroll-sabakan359-vearn-mmd-v087:影バーン",
+        "displayName": "影バーン.pmx",
+        "sourcePmx": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extracted/大魔王バーン/影バーン.pmx",
+          "bytes": 2083418,
+          "sha256": "359a46fcbe3e688a015b6922f78b673878b9b592c1dd47456c0f512ff2f830ba"
+        },
+        "reviewGlb": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/影バーン/candidate.glb",
+          "bytes": 1983104,
+          "sha256": "081abc9a4b3a7ab4b2cf00e92d90e6d2487f835c7758670c7abd08314a4a7a14"
+        },
+        "triangles": 31876,
+        "sourceBones": 362,
+        "webglViews": [
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/影バーン/webgl-review-v2/back.png",
+            "bytes": 84438,
+            "sha256": "62940c67302634f8f4e91f6608fbe53f073ed9fd7e280df9f0981729494a9bd7"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/影バーン/webgl-review-v2/front.png",
+            "bytes": 80612,
+            "sha256": "ed97e692069f3726c5bcd5e8f37c795be0c8090b5d63f5fe40db3c5e7f46e2b7"
+          },
+          {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bowlroll-vearn-mmd-v087-owner-review-v1/static/影バーン/webgl-review-v2/isometric.png",
+            "bytes": 84152,
+            "sha256": "a0ed56c80c3be7c72be6dfedf927743c2ca734ecc147ff45e3d3e08d5e41f69e"
+          }
+        ],
+        "identityStatus": "confirmed-elderly-pre-transformation-shadow-variant",
+        "isNewYoungOrKiganCandidate": false,
+        "motionStatus": "no-native-motion-acquired",
+        "runtimeStatus": "not-registered"
+      }
+    ],
+    "nativeMotionCount": 0,
+    "runtimeRegisteredCount": 0,
+    "productionDeployedCount": 0
+  },
+  "herosBonds": {
+    "sourceId": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+    "url": "https://archive.org/details/gacha-archive",
+    "status": "downloaded-hash-verified-awaiting-asset-identification",
+    "files": [
+      {
+        "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+        "bytes": 1733218012,
+        "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+        "md5": "59efae4d0b83d086a86f3d7618d05097",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+        "downloadedBytesAtGeneration": 1733218012,
+        "complete": true,
+        "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+        "publishedHashesVerified": true,
+        "actualHashes": {
+          "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+          "sha1": "fe5332a5bff3ace2ac67d615dee933f268bf89f0",
+          "md5": "59efae4d0b83d086a86f3d7618d05097"
+        }
+      },
+      {
+        "name": "com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+        "bytes": 365045618,
+        "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+        "md5": "fc563f21e92b4de2f2292413005836b7",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.xapk",
+        "downloadedBytesAtGeneration": 365045618,
+        "complete": true,
+        "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+        "publishedHashesVerified": true,
+        "actualHashes": {
+          "sha256": "46931c9e169ca7fa6bd27732ff41dce009a5710deb014562129b5236888edf04",
+          "sha1": "e3f83592d2a345657880bae7138f7f59b79bd432",
+          "md5": "fc563f21e92b4de2f2292413005836b7"
+        }
+      }
+    ],
+    "preservation": {
+      "schema": "ggd.bonds-cache-preservation@1",
+      "sourceId": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+      "archive": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+        "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+        "bytes": 1733218012
+      },
+      "extractedRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1",
+      "fileCount": 17284,
+      "fileBytes": 1761831022,
+      "containerKindsByMagic": {
+        "AFS2": 89,
+        "unclassified": 17195
+      },
+      "fileIndex": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1-files.jsonl.gz",
+        "sha256": "88fd676022f7bdaaaa392ac9492568a8cae00b7933d43bc330695264412706c8",
+        "bytes": 1447260
+      },
+      "identityVerified": false,
+      "modelConverted": false,
+      "s3BackupVerified": false,
+      "limitations": [
+        "Container signatures are discovery evidence only; no ghost-eye Vearn mesh identity is established.",
+        "Downloaded app/cache code was not executed. S3 backup remains pending."
+      ]
+    },
+    "kiganKingPayloadIdentified": false,
+    "modelConverted": false
+  },
+  "gameNativeLeads": [
+    {
+      "id": "dqtact-kigan-king-vearn",
+      "name": "Dragon Quest Tact 鬼眼王バーン",
+      "url": "https://cache.sqex-bridge.jp/guest/information/97055",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed"
+    },
+    {
+      "id": "dqmj3p-kigan-king-vearn",
+      "name": "Dragon Quest Monsters Joker 3 Professional 鬼眼王バーン",
+      "url": "https://dragon-quest.jp/dqmj3/monster/ss/%E9%AC%BC%E7%9C%BC%E7%8E%8B%E3%83%90%E3%83%BC%E3%83%B3.php",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed",
+      "note": "Professional plus version 1.2 update data is required."
+    },
+    {
+      "id": "hoshidora-kigan-king-vearn",
+      "name": "星のドラゴンクエスト 鬼眼王バーン",
+      "url": "https://www.dragonquest.jp/hoshidora/sp/dai_collabo/",
+      "kind": "confirmed-game-native-source-lead",
+      "acquisitionStatus": "payload-not-acquired",
+      "identityStatus": "official-character-confirmed",
+      "note": "Service ended; a complete historical cache is required."
+    }
+  ],
+  "restrictions": [
+    "No candidate is identified as Kigan King solely from a filename or archive date.",
+    "The five static GLBs do not contain native animation and are not runtime registrations.",
+    "The archived game cache is not marked acquired until every expected byte and published hash is verified."
+  ]
+}

@@ -3,7 +3,7 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "5aaf01d855e12a6851421434f09cae5efd9e517f75ded039aa051471794a1f7a"
+      "sha256": "f34f122720d4d1e377cfe9dab1cc6a607cf2d856bc692c1132b433e001e97aa9"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -23,11 +23,11 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
-      "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+      "sha256": "7bef3d00ef9742a53012b0bf91445425b14166427d77dba2675654777369ae79"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
-      "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
+      "sha256": "d8e9dd16b6ffdbe9cd18f48a8f8a50ebb755a5635472a2e8e0fdde08e0b429fe"
     }
   ],
   "characterCount": 3,
@@ -3930,7 +3930,7 @@
       "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-jetragon"
@@ -4113,7 +4113,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
       "ggdHeroImplemented": true,
       "registrationEvidence": {
         "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -4169,7 +4169,7 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
       "characterIdentity": "community:palworld-astralym",
       "characterName": "枯星龍",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
       "ggdHeroImplemented": false,
       "runtimeDropdownRegistered": false
     },
@@ -4254,7 +4254,7 @@
       "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "ggdHeroImplemented": true,
       "relatedHeroIds": [
         "acquired-cattiva"

@@ -1,0 +1,639 @@
+{
+  "characters": [
+    {
+      "heroId": "community-review-23-20260907",
+      "jstarsDefaultApplied": false,
+      "jstarsNativeId": "028",
+      "jstarsPriorityStatus": "blocked-owner-archive-or-converter",
+      "jstarsRuntimeRegistered": false,
+      "modules": {
+        "model": {
+          "evidence": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/versions/02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d.glb",
+            "bytes": 840524,
+            "character": "坂田銀時",
+            "currentBudget": {
+              "errors": [],
+              "warnings": []
+            },
+            "id": "gintoki-current-300-exact",
+            "isJStarsAsset": false,
+            "khronos": {
+              "messages": [],
+              "numErrors": 0,
+              "numHints": 0,
+              "numInfos": 0,
+              "numWarnings": 0,
+              "truncated": false
+            },
+            "metrics": {
+              "clipCount": 5,
+              "clipNames": [
+                "single_idle",
+                "single_run",
+                "single_attack_attcom_1",
+                "single_skill_05",
+                "dead"
+              ],
+              "drawPrimitives": 2,
+              "joints": [
+                75
+              ],
+              "skinCount": 1,
+              "textureCount": 2,
+              "triangles": 4358
+            },
+            "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a.json",
+            "registeredAsExistingOption": true,
+            "sha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+            "sourceClass": "300heroes",
+            "sourceGame": "300英雄",
+            "stateMap": {
+              "attack": "single_attack_attcom_1",
+              "cast": "single_skill_05",
+              "death": "dead",
+              "hurt": "single_idle",
+              "idle": "single_idle",
+              "run": "single_run"
+            }
+          },
+          "source": "300英雄",
+          "status": "existing-registered-fallback"
+        },
+        "motion": {
+          "clipCount": 5,
+          "clipNames": [
+            "single_idle",
+            "single_run",
+            "single_attack_attcom_1",
+            "single_skill_05",
+            "dead"
+          ],
+          "stateMap": {
+            "attack": "single_attack_attcom_1",
+            "cast": "single_skill_05",
+            "death": "dead",
+            "hurt": "single_idle",
+            "idle": "single_idle",
+            "run": "single_run"
+          },
+          "status": "existing-native-fallback"
+        },
+        "sfx": {
+          "status": "jstars-source-not-observed"
+        },
+        "skeleton": {
+          "jointCounts": [
+            75
+          ],
+          "status": "existing-validated-fallback"
+        },
+        "vfx": {
+          "status": "jstars-source-not-observed"
+        },
+        "voice": {
+          "status": "jstars-source-not-observed"
+        }
+      },
+      "nameEnglish": "Gintoki Sakata",
+      "nameZhTW": "坂田銀時",
+      "productionDeploymentVerified": false,
+      "slug": "gintoki"
+    },
+    {
+      "heroId": "godie-ucrl",
+      "jstarsDefaultApplied": false,
+      "jstarsNativeId": "017",
+      "jstarsPriorityStatus": "blocked-owner-archive-or-converter",
+      "jstarsRuntimeRegistered": false,
+      "jumpForceNativeId": "chr0300",
+      "modules": {
+        "model": {
+          "evidence": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jumpforce-gon-thunderstore-v1/optimized-256/body.glb",
+            "bytes": 466424,
+            "character": "小傑·富力士",
+            "currentBudget": {
+              "errors": [],
+              "warnings": [
+                "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+              ]
+            },
+            "id": "gon-thunderstore-static",
+            "isJStarsAsset": false,
+            "khronos": {
+              "messages": [
+                {
+                  "code": "IMAGE_FEATURES_UNSUPPORTED",
+                  "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                  "pointer": "/images/2",
+                  "severity": 1
+                },
+                {
+                  "code": "IMAGE_FEATURES_UNSUPPORTED",
+                  "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                  "pointer": "/images/3",
+                  "severity": 1
+                }
+              ],
+              "numErrors": 0,
+              "numHints": 0,
+              "numInfos": 0,
+              "numWarnings": 2,
+              "truncated": false
+            },
+            "metrics": {
+              "clipCount": 0,
+              "clipNames": [],
+              "drawPrimitives": 5,
+              "joints": [
+                56
+              ],
+              "skinCount": 1,
+              "textureCount": 5,
+              "triangles": 2245
+            },
+            "modelDocument": null,
+            "registeredAsExistingOption": false,
+            "sha256": "1f6677d6695fe1ecda694b3728d004d2c80e9587beb04ced7d154a54dc106b74",
+            "sourceClass": "community-mod",
+            "sourceGame": "community mod",
+            "stateMap": null
+          },
+          "source": "Thunderstore community mod",
+          "status": "community-static-fallback-converted-unregistered"
+        },
+        "motion": {
+          "reason": "fallback GLB has zero clips and no J-Stars motion container is observed",
+          "status": "missing"
+        },
+        "sfx": {
+          "status": "no-character-sfx-in-decoded-package"
+        },
+        "skeleton": {
+          "jointCounts": [
+            56
+          ],
+          "status": "community-fallback-validated"
+        },
+        "vfx": {
+          "candidate": {
+            "samplePaths": [
+              "JUMP_FORCE/Content/Effects/avater/0300/Materials/MI_eff_chr0300_00_nml_pulse_000.uasset",
+              "JUMP_FORCE/Content/Effects/avater/0300/Materials/MI_eff_chr0300_00_sub_aura_000.uasset"
+            ],
+            "selectedUassetPathCount": 22,
+            "stage": "path-indexed-not-extracted"
+          },
+          "status": "jump-force-path-indexed-not-extracted"
+        },
+        "voice": {
+          "audio": {
+            "counts": {
+              "decodedEventVoiceWav": 25,
+              "packageOgg": 225,
+              "voice-candidate": 225
+            },
+            "decodedEventVoiceFileIndex": {
+              "bytes": 6579860,
+              "files": 25,
+              "sha256": "b7f685adc0f8cdce3e0f6b363524b6e38184f5bd85055acfcaf58b51af622e51"
+            },
+            "decodedEventVoiceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130300_chr0300_EvnVoice",
+            "nativeCharacterId": "chr0300",
+            "ownerApproved": false,
+            "packageFileIndex": {
+              "bytes": 6765994,
+              "files": 225,
+              "sha256": "cb8dd5d9617be77f36a5d2ece04b68af57819510d83ea21930f5728554ca16a2"
+            },
+            "packageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted",
+            "runtimeBound": false,
+            "sourceGame": "JUMP FORCE",
+            "stage": "decoded-and-hashed-pending-per-file-listening-review"
+          },
+          "status": "jump-force-decoded-pending-owner-review"
+        }
+      },
+      "nameEnglish": "Gon Freecss",
+      "nameZhTW": "小傑·富力士",
+      "productionDeploymentVerified": false,
+      "slug": "gon"
+    },
+    {
+      "heroId": "community-review-24-20260907",
+      "jstarsDefaultApplied": false,
+      "jstarsNativeId": "018",
+      "jstarsPriorityStatus": "blocked-owner-archive-or-converter",
+      "jstarsRuntimeRegistered": false,
+      "jumpForceNativeId": "chr0310",
+      "modules": {
+        "model": {
+          "evidence": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/versions/0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2.glb",
+            "bytes": 557816,
+            "character": "奇犽·揍敵客",
+            "currentBudget": {
+              "errors": [],
+              "warnings": []
+            },
+            "id": "killua-current-300-exact",
+            "isJStarsAsset": false,
+            "khronos": {
+              "messages": [],
+              "numErrors": 0,
+              "numHints": 0,
+              "numInfos": 0,
+              "numWarnings": 0,
+              "truncated": false
+            },
+            "metrics": {
+              "clipCount": 5,
+              "clipNames": [
+                "bat_idle",
+                "single_run",
+                "single_attack_attcom_1",
+                "single_skill_01",
+                "dead"
+              ],
+              "drawPrimitives": 2,
+              "joints": [
+                40
+              ],
+              "skinCount": 1,
+              "textureCount": 1,
+              "triangles": 5293
+            },
+            "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f.json",
+            "registeredAsExistingOption": true,
+            "sha256": "0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2",
+            "sourceClass": "300heroes",
+            "sourceGame": "300英雄",
+            "stateMap": {
+              "attack": "single_attack_attcom_1",
+              "cast": "single_skill_01",
+              "death": "dead",
+              "hurt": "bat_idle",
+              "idle": "bat_idle",
+              "run": "single_run"
+            }
+          },
+          "source": "J-Stars sample plus 300英雄 fallback",
+          "status": "jstars-source-extracted-conversion-blocked; existing-300-fallback-registered"
+        },
+        "motion": {
+          "clipCount": 5,
+          "clipNames": [
+            "bat_idle",
+            "single_run",
+            "single_attack_attcom_1",
+            "single_skill_01",
+            "dead"
+          ],
+          "stateMap": {
+            "attack": "single_attack_attcom_1",
+            "cast": "single_skill_01",
+            "death": "dead",
+            "hurt": "bat_idle",
+            "idle": "bat_idle",
+            "run": "single_run"
+          },
+          "status": "existing-native-fallback"
+        },
+        "sfx": {
+          "audio": {
+            "counts": {
+              "decodedEventVoiceWav": 18,
+              "packageOgg": 226,
+              "sfx": 6,
+              "voice-candidate": 220
+            },
+            "decodedEventVoiceFileIndex": {
+              "bytes": 5419748,
+              "files": 18,
+              "sha256": "4619453fcabde0d4c93490a24f31f0573f5862c42ed9f36a860a780fe39caa00"
+            },
+            "decodedEventVoiceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130310_chr0310_EvnVoice",
+            "nativeCharacterId": "chr0310",
+            "ownerApproved": false,
+            "packageFileIndex": {
+              "bytes": 6092923,
+              "files": 226,
+              "sha256": "90ba3cf9d90031362d162656026239152fa0efaa97cf69a8a4d36fa1eb58422c"
+            },
+            "packageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Killua/extracted",
+            "runtimeBound": false,
+            "sourceGame": "JUMP FORCE",
+            "stage": "decoded-and-hashed-pending-per-file-listening-review"
+          },
+          "status": "jump-force-decoded-pending-owner-review"
+        },
+        "skeleton": {
+          "jointCounts": [
+            40
+          ],
+          "status": "existing-300-fallback-validated; jstars-skin-conversion-blocked"
+        },
+        "vfx": {
+          "candidate": {
+            "samplePaths": [
+              "JUMP_FORCE/Content/Effects/equipment/0310/Materials/MI_eff_chr0310_00_nml_pulse_000.uasset",
+              "JUMP_FORCE/Content/Effects/equipment/0310/Materials/MI_eff_chr0310_00_nml_pulse_001.uasset"
+            ],
+            "selectedUassetPathCount": 15,
+            "stage": "path-indexed-not-extracted"
+          },
+          "status": "jstars-embedded-member-and-jump-force-path-indexed-unvalidated"
+        },
+        "voice": {
+          "audio": {
+            "counts": {
+              "decodedEventVoiceWav": 18,
+              "packageOgg": 226,
+              "sfx": 6,
+              "voice-candidate": 220
+            },
+            "decodedEventVoiceFileIndex": {
+              "bytes": 5419748,
+              "files": 18,
+              "sha256": "4619453fcabde0d4c93490a24f31f0573f5862c42ed9f36a860a780fe39caa00"
+            },
+            "decodedEventVoiceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130310_chr0310_EvnVoice",
+            "nativeCharacterId": "chr0310",
+            "ownerApproved": false,
+            "packageFileIndex": {
+              "bytes": 6092923,
+              "files": 226,
+              "sha256": "90ba3cf9d90031362d162656026239152fa0efaa97cf69a8a4d36fa1eb58422c"
+            },
+            "packageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Killua/extracted",
+            "runtimeBound": false,
+            "sourceGame": "JUMP FORCE",
+            "stage": "decoded-and-hashed-pending-per-file-listening-review"
+          },
+          "status": "jump-force-decoded-pending-owner-review"
+        }
+      },
+      "nameEnglish": "Killua Zoldyck",
+      "nameZhTW": "奇犽·揍敵客",
+      "productionDeploymentVerified": false,
+      "slug": "killua"
+    }
+  ],
+  "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
+    "archiveMember": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+    "bytes": 599291,
+    "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
+    "restoreRequiredForInventoryBuild": false,
+    "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a"
+  },
+  "policies": {
+    "audio": "Numbered SFX and voice files remain listening-review candidates until the owner approves the speaker and event.",
+    "identity": "A J-Stars identity requires an observed internal member/container name or owner visual confirmation; roster order is not an identity proof.",
+    "model": "Models above 10000 triangles require decimation to at most 8000 triangles before current-policy adoption.",
+    "stages": [
+      "source-observed",
+      "extracted",
+      "converted",
+      "validated",
+      "registered",
+      "deployed"
+    ]
+  },
+  "rerun": [
+    "node --import tsx tools/hero-model-library/source-workflows/jstars-priority-gintoki-gon-killua-v1/validate_models.mts",
+    "python3 tools/hero-model-library/source-workflows/jstars-priority-gintoki-gon-killua-v1/build_inventory.py",
+    "python3 -m unittest tools/hero-model-library/source-workflows/jstars-priority-gintoki-gon-killua-v1/test_inventory.py"
+  ],
+  "schema": "ggd.jstars-priority-three-inventory@1",
+  "source": {
+    "exactOwnerArchiveCandidates": [
+      {
+        "absolutePath": "/Users/Takuro/J-Stars Victory Vs+.7z",
+        "bytes": 2979984140,
+        "path": "/Users/Takuro/J-Stars Victory Vs+.7z",
+        "sha256": "72f18422f88f84d007b4e51d8fa18d8cc83a7480e0969adb82cdf23862ca9636"
+      }
+    ],
+    "jstarsKillua018": {
+      "blockers": [
+        "$CH0 decoding is not validated for the compressed PAK source",
+        "PS3 SRD/SRDI/SRDV geometry, texture and skin conversion is not validated",
+        "owner-disc motion/VFX/SFX/voice containers are hashed but not decoded, event-mapped or owner-reviewed"
+      ],
+      "conversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua",
+      "fileTypeCounts": {
+        ".pak": 2,
+        ".sa": 1,
+        ".srd": 2,
+        ".srdi": 1,
+        ".srdv": 1,
+        "no-extension": 7
+      },
+      "files": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+          "bytes": 1342172,
+          "path": "i/018_killua_01p_PS3.srdi",
+          "sha256": "47f2970809edd99e5faf964d30e01b02fee8ccf5f498ada064871820e474a805"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+          "bytes": 67024,
+          "path": "m/018_killua_01p_PS3.srd",
+          "sha256": "7e27a19ff389d81ef0bbb8bd89473bae88455b78ae73598a68f9349f43edc5ce"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_eye.sa",
+          "bytes": 6000,
+          "path": "m/018_killua_01p_PS3_facial_eye.sa",
+          "sha256": "ba02e6c22d2a70c8c81722aedc615b070f01c72a7d115dba9f324325250e7851"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_facial_mouth.",
+          "bytes": 12816,
+          "path": "m/018_killua_01p_PS3_facial_mouth.",
+          "sha256": "750d981bf1612aafbb4239e1d4c106b913d4eb770e0c76f583feaf8dfaed26e5"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3_shader.srd",
+          "bytes": 406496,
+          "path": "m/018_killua_01p_PS3_shader.srd",
+          "sha256": "6b22e273ba9ff24dd8791305e4063b5eee235933bd87b5407be722c8bbcf29f0"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_stream_jp_lps_PS3.pak",
+          "bytes": 26560,
+          "path": "m/018_killua_stream_jp_lps_PS3.pak",
+          "sha256": "d596c6ccd598460dbc18b8a605f69e2df8dc7601b702824b175752afdb51a6b8"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/battle_character_performance_par",
+          "bytes": 108,
+          "path": "m/battle_character_performance_par",
+          "sha256": "ae01ac7c373b00d84d961e3823ab1baab64387a8c1ddb9d4ec48e74c94c15a5c"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_culling_PS3",
+          "bytes": 328,
+          "path": "m/character_018_killua_culling_PS3",
+          "sha256": "d419dfdcd71acb60c6df6d1c37ee1f2b909f470307ee83fc9b63b3bb266840ad"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_face_light_",
+          "bytes": 1576,
+          "path": "m/character_018_killua_face_light_",
+          "sha256": "616be62e70139195fe57a1b91666dbbb1ab2fcd1bb312a19e8964b42118076eb"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_facial_pres",
+          "bytes": 2896,
+          "path": "m/character_018_killua_facial_pres",
+          "sha256": "83b72e0db08d888e1b93fa7d26c5f53420c148fb420196974ddaa51385f50510"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_near_clip_P",
+          "bytes": 328,
+          "path": "m/character_018_killua_near_clip_P",
+          "sha256": "d419dfdcd71acb60c6df6d1c37ee1f2b909f470307ee83fc9b63b3bb266840ad"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/character_018_killua_silhouette_",
+          "bytes": 64,
+          "path": "m/character_018_killua_silhouette_",
+          "sha256": "0cfac03832baab81f8a7e820caaf4c45e0ea222bb362e22062694c7fca3171b6"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/color_effect_018_killua_m.pak",
+          "bytes": 6688,
+          "path": "m/color_effect_018_killua_m.pak",
+          "sha256": "e0405a1802c0aaff5dd665ea50637cbd98cb1bf21f2495c4e0309832de0209c7"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv",
+          "bytes": 4687088,
+          "path": "v/018_killua_01p_PS3.srdv",
+          "sha256": "cfd1e6d9972a4b709de2e9d5ed217c790b13ec0d83fbe0ffd8fa70ec6e8ae179"
+        }
+      ],
+      "identityStatus": "archive-directory-and-internal-member-names-observed-not-visually-confirmed",
+      "nativeCharacterId": "018",
+      "ownerDiscCpkEvidence": {
+        "fullMemberManifest": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+          "bytes": 934318,
+          "format": "deterministic-jsonl-gzip-mtime-0",
+          "memberCount": 19471,
+          "sha256": "3f838b2a4ebec3c7ccce214d4432fe66f34fdbba42be01c061b8d899cb29981e"
+        },
+        "memberCount": 89,
+        "memberEvidence": {
+          "bytes": 13461553,
+          "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+          "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+        },
+        "moduleCounts": {
+          "model": 3,
+          "motion": 82,
+          "sfx": 5,
+          "skeleton": 3,
+          "texture": 3,
+          "vfx": 63,
+          "voice": 5
+        },
+        "receipt": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+      },
+      "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+      "stage": {
+        "converted": false,
+        "deployed": false,
+        "extracted": true,
+        "registered": false,
+        "sourceObserved": true,
+        "validated": false
+      }
+    },
+    "ownerArchiveStatus": "owner-archive-found",
+    "ownerDiscPriorityCharacters": {
+      "gintoki": {
+        "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+        "identityStatus": "confirmed-unique-internal-stpk-member-name",
+        "memberCount": 83,
+        "memberEvidence": {
+          "bytes": 18944662,
+          "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+          "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+        },
+        "moduleCounts": {
+          "model": 3,
+          "motion": 76,
+          "sfx": 5,
+          "skeleton": 3,
+          "texture": 3,
+          "vfx": 57,
+          "voice": 5
+        },
+        "nativeId": "028",
+        "runtimeReady": false
+      },
+      "gon": {
+        "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+        "identityStatus": "confirmed-unique-internal-stpk-member-name",
+        "memberCount": 89,
+        "memberEvidence": {
+          "bytes": 13978687,
+          "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+          "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+        },
+        "moduleCounts": {
+          "model": 3,
+          "motion": 82,
+          "sfx": 5,
+          "skeleton": 3,
+          "texture": 3,
+          "vfx": 63,
+          "voice": 5
+        },
+        "nativeId": "017",
+        "runtimeReady": false
+      },
+      "killua": {
+        "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+        "identityStatus": "confirmed-unique-internal-stpk-member-name",
+        "memberCount": 89,
+        "memberEvidence": {
+          "bytes": 13461553,
+          "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+          "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+        },
+        "moduleCounts": {
+          "model": 3,
+          "motion": 82,
+          "sfx": 5,
+          "skeleton": 3,
+          "texture": 3,
+          "vfx": 63,
+          "voice": 5
+        },
+        "nativeId": "018",
+        "runtimeReady": false
+      }
+    },
+    "previousReceiptStatus": "inventoried-read-only",
+    "sourceGame": "J-Stars Victory VS+"
+  },
+  "summary": {
+    "existingRegisteredFallbacks": 2,
+    "jstarsConverted": 0,
+    "jstarsDefaultsApplied": 0,
+    "jstarsRuntimeRegistered": 0,
+    "jumpForceAudioFiles": 494,
+    "priorityCharacters": 3,
+    "productionDeploymentsVerified": 0,
+    "validatedFallbackModels": 3
+  },
+  "workflowId": "jstars-priority-gintoki-gon-killua-v1"
+}

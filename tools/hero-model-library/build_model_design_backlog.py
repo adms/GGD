@@ -9,6 +9,8 @@ from design_backlog_labels import labels_for, hero_check_label
 from design_backlog_resources import resource_view, resource_cell, source_overview, audio_reserve_section
 from fateubw_backlog_overlay import apply_fateubw_overlay
 from mba_pilot_backlog_overlay import apply_mba_pilot_overlay
+from jstars_owner_backlog_overlay import apply_jstars_owner_overlay
+from current_roster import read_current_roster, roster_input_paths
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'materials/hero-model-library'
@@ -19,6 +21,54 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def norm(value):return re.sub(r'[^\w]','',unicodedata.normalize('NFKC',str(value)).lower())
 def text(value):return str(value).replace('|','／').replace('\n',' ')
 def encoded(value):return (json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode()
+
+def apply_infinity_strash_current_overlay(data):
+    """Replace the frozen pre-extraction summary with tracked current results."""
+    result=dict(data);result['resourceCoverage']=dict(result.get('resourceCoverage',{}))
+    families=[dict(row) for row in result['resourceCoverage'].get('sourceFamilies',[])]
+    index=next((i for i,row in enumerate(families) if '無限神速斬' in str(row.get('nameZh',''))),None)
+    if index is None:raise ValueError('中央待設計索引缺少無限神速斬來源列')
+    champion_docs=[];model_versions=[]
+    for path in sorted((ROOT/'content/champions').glob('*.json')):
+        if path.name.startswith('_'):continue
+        row=read(path)
+        matched=[version for version in row.get('modelVersions',[])
+                 if '無限神速斬' in str(version.get('source',{}))
+                 or 'Infinity Strash' in str(version.get('source',{}))]
+        if matched:champion_docs.append(path);model_versions.extend(matched)
+    if len(model_versions)!=11:raise ValueError(f'無限神速斬 Git 模型選項應為 11，實際 {len(model_versions)}')
+    links=[
+        ('小呆／巴恩音訊與特效索引','materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json'),
+        ('小呆特效元件收據','materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/receipt.json'),
+        ('何布特效／音訊整合收據','materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json'),
+        ('巴恩前後形態稽核','materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json'),
+    ]
+    for _,rel in links:
+        path=ROOT/rel
+        if not path.is_file():raise ValueError('無限神速斬證據缺檔：'+rel)
+    families[index]={
+        **families[index],
+        'nameZh':'無限神速斬 勇者鬥惡龍 達伊的大冒險（Steam Windows 2024-03-28）',
+        'model':('Git 已登記 11 個原作模型版本：小呆／達伊 4 個（PN010/02、PN010/05 及新舊版），'
+                 '何布／波普 5 個（含 PN020 三種武器），老年變身前巴恩 EN801 2 個。'
+                 '年輕／變身後巴恩完整身體仍為 0；MystVearn 與巴蘭分開。'),
+        'motion':('11 個 Git 模型版本均已建立 GGD 六狀態對應；達伊、何布與老巴恩保留原生動作。'
+                  '部分 hurt/death 共用 down／death，獨立死亡動作缺口仍保留。'),
+        'vfx':('小呆 26 個符合政策的支援元件與 6 個合成候選已通過 owner 視覺審查，技能綁定仍待完成；'
+               '何布 12 個重建特效已審查，7 個 Q/W/R 關係已寫入分支執行設定，5 個保留候選。'),
+        'sfx':('小呆 PN010 與老巴恩 EN801 共 485 個精確身分解碼音訊候選；'
+               '何布 311 個已建檔音訊、36 筆關係已審查並轉為 35 個遊戲 MP3，正式技能事件綁定仍有關卡。'),
+        'voice':'日文與英文語音候選已解碼並依 PN010／PN020／EN801 分開；未逐段通過聽審者仍保留待確認。',
+        'links':[[label,rel] for label,rel in links],
+    }
+    result['resourceCoverage']['sourceFamilies']=families
+    seen={row.get('path') for row in result.setdefault('inputs',[])}
+    for path in champion_docs:
+        rel=path.relative_to(ROOT).as_posix()
+        if rel not in seen:result['inputs'].append({'path':rel,'sha256':sha(path)});seen.add(rel)
+    for _,rel in links:
+        if rel not in seen:result['inputs'].append({'path':rel,'sha256':sha(ROOT/rel)});seen.add(rel)
+    return result
 
 def candidate_role(candidate):
     role=str(candidate.get('resourceRole',''))
@@ -195,7 +245,29 @@ def build(*, refresh_local_audits=False):
         base=read(portable)
         if base.get('schema')!='ggd-acquired-model-design-backlog@1':
             raise ValueError('Portable backlog base schema drifted; refresh it with reviewed local audits.')
-    return apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT)
+    result=apply_infinity_strash_current_overlay(apply_jstars_owner_overlay(
+        apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT), ROOT)
+    )
+    # Portable source audits may be historical; current project counts never are.
+    result['currentProjectRoster']=read_current_roster(ROOT)
+    result['heroesInProject']=result['currentProjectRoster']['definitionCount']
+    pins={entry['path']:entry for entry in result.get('inputs',[])}
+    for path in [*roster_input_paths(ROOT), *sorted((ROOT/'content/champions').glob('*.json'))]:
+        rel=path.relative_to(ROOT).as_posix()
+        pins[rel]={'path':rel,'sha256':sha(path)}
+    result['inputs']=[pins[key] for key in sorted(pins)]
+    family_names=[str(row.get('nameZh','')) for row in result.get('resourceCoverage',{}).get('sourceFamilies',[])]
+    required={
+        '300英雄':lambda value:'300英雄' in value,
+        'KOF／拳皇3D':lambda value:'KOF' in value or '拳皇' in value,
+        '任天堂大亂鬥':lambda value:'大亂鬥' in value,
+        '無限神速斬':lambda value:'無限神速斬' in value,
+        'JUMP FORCE':lambda value:'JUMP FORCE' in value,
+        'J-STARS':lambda value:'J-STARS' in value,
+    }
+    missing=[label for label,matches in required.items() if not any(matches(value) for value in family_names)]
+    if missing:raise ValueError('中央待設計索引缺少已取得來源：'+ '、'.join(missing))
+    return result
 
 def friendly_stage(value):
     value=str(value or 'unknown')
@@ -218,9 +290,9 @@ def render(data):
         '固定共編入口：`materials/hero-model-library/'+TITLE+'.md`。完整候選、來源及判定證據見同名 JSON；完整模型盤點見 [全角色模型盤點.md](全角色模型盤點.md)。','',
         '**用途：列出已取得模型、尚待建立英雄設計或實作的候選。人物與作品名稱以中文優先，括號保留原文供查找。** 模型是否已轉換、英雄是否有技能、是否上架分開記錄；不把已有英雄重新標成未設計。未知身份與缺少本機檔案另列，不混入確定待設計。','',
         f"本次逐庫來源身份記錄：尚未建立英雄 **{n['not-defined']}** 筆；已有定義但需補查／實作 **{n['definitions-incomplete']}** 筆；身份待確認 **{n['identity-review']}** 筆。另有 {n['designed']} 筆已對應有機制資料的英雄、{n['source-unavailable']} 筆無可核對本機模型，不列入可用待辦。跨庫同角色及形態未經核准合併前，這些數字不是去重後的新英雄總數。",'',
-        f"目前專案有 {data['heroesInProject']} 份靜態英雄定義，另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入本索引的設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；上架狀態只採盤點內既有快照，並非即時正式站檢查。",'',
+        f"目前專案有 **{data['heroesInProject']} 份靜態英雄定義、{data['currentProjectRoster']['selectableCount']} 名對戰可選英雄**；每次產生時從 `content/champions` 與專案 `balancePopulationIds` 即時計算。另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；下表營運上架狀態仍來自既有歷史快照，並非即時正式站檢查。",'',
         '## 維護方式','',
-        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. Git 追蹤收據的一般重建執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`。只有在三個本機大型快取都已更新與核對時，才以 `--refresh-local-audits` 刷新非 Fate 基底。Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
+        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. Git 追蹤收據的一般重建執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`。只有在三個本機大型快取都已更新與核對時，才以 `--refresh-local-audits` 刷新非 Fate 基底。Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 原始、半成品、轉換檔及轉換程式須另做 S3 備份；是否完成以各來源上傳及讀回收據為準，待備份者不可宣稱完成。Git 保留成品、程式與索引的共編版本，本機全保留。','']
     lines+=source_overview(data['resourceCoverage'])
     labels=[('not-defined','尚未建立對應英雄'),('definitions-incomplete','已有定義，需補查或實作'),('identity-review','來源身份／英雄對應待確認'),('designed','已有英雄設計：全部來源版本仍保留')]
     for status,label in labels:

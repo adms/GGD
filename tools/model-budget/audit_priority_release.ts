@@ -120,7 +120,7 @@ function main(): void {
       `| ${record.name} | ${record.metrics.triangles} | ${record.metrics.meshes} | ${record.metrics.maxTextureEdge}px | ${record.metrics.channelsPerFrame} | ${record.motionBinding.stateCount} 態／${record.motionBinding.uniqueClipCount} 個不同 clip／${record.motionBinding.kind} | ${record.currentPolicyReady ? "通過，待 Main 合併部署" : "進行中"} | ${record.blockingAxes.join("、") || "—"} |`,
     ),
     "",
-    "正式採用面數規則：來源超過 10,000 面時，必須另產生不超過 8,000 面的候選並重新完成視覺與骨架驗收。貼圖、mesh、動畫通道等值由程式載入現行 budget，不在本頁另寫一份門檻。",
+    `正式採用面數規則：來源超過 ${HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove.toLocaleString("en-US")} 面時，必須另產生不超過 ${HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax.toLocaleString("en-US")} 面的候選並重新完成視覺與骨架驗收。貼圖、mesh、動畫通道等值由程式載入現行 budget，不在本頁另寫一份門檻。`,
     "",
   ].join("\n");
 

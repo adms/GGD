@@ -1,0 +1,117 @@
+{
+  "schema": "ggd.bojji-crown-v2-registration-receipt@1",
+  "heroId": "b2-bojji",
+  "ownerDecision": "retain the gold-crown v1 automatic default; register the head-material-split flat-colour v2 for manual review only and retain older v2 candidates as ineligible history",
+  "input": {
+    "candidate": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v2/candidate.glb",
+      "bytes": 877112,
+      "sha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03"
+    },
+    "validation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v2/validation.json",
+      "bytes": 2641,
+      "sha256": "516007ac0758b5146ceeb358392ed8a3c2a22380bf2ab73f3faeed8148f739bb"
+    },
+    "buildReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v2/build-receipt.json",
+      "bytes": 2328,
+      "sha256": "1d2ef4a2b79e9b717cbc49ea62dabf696c284547eeb1de5f196f2991dcc61ebc"
+    },
+    "visualEvidence": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v2/visual-evidence.json",
+      "bytes": 4244,
+      "sha256": "4f9cfb7b1fd9d28b805669b02c3f27d4ed61e22f89cc1edccd7cfeba78cd0f9d"
+    }
+  },
+  "sourceModel": {
+    "modelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+    "modelDocument": {
+      "gitPath": "content/models/community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31.json",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31.json",
+      "bytes": 439,
+      "sha256": "8b297474bce2d5c6209193b7b1c744f417dc0428199495d04e7609c2bf1ceca5"
+    },
+    "glb": {
+      "gitPath": "content/assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb",
+      "bytes": 877112,
+      "sha256": "bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03"
+    }
+  },
+  "registeredVersion": {
+    "modelKey": "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e",
+    "sourceModelKey": "community.body.3abf4ba876929cc6bd2a18f67af6083daf9b801c79f18d31",
+    "label": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+    "automaticEligible": false,
+    "registeredAt": "2026-09-17T11:36:28.925Z",
+    "source": {
+      "kind": "style-proxy",
+      "character": "波吉（王冠繪本純色 v2 頭部材質分離版／獨立完整副本）",
+      "work": "國王排名；來源替身為 300英雄小桐人寵物",
+      "library": "300heroes",
+      "reference": "derivative:bojji-crown-v2-head-material-split",
+      "tier": "300heroes",
+      "selectionClass": "manual",
+      "sourceGame": "300英雄",
+      "sourcePlatform": "Windows"
+    },
+    "modelDocument": {
+      "gitPath": "content/models/version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e.json",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e.json",
+      "bytes": 589,
+      "sha256": "967a84420cb1b340d1776259e76b28230f63ad723a49d334448d55121fca6be5"
+    }
+  },
+  "supersededVersions": [
+    {
+      "modelKey": "version.body.e7ebe443cc4f7eaa8662702817d93a88cd33e6564575ea73",
+      "sourceModelKey": "community.body.08b881a7bbfb0fbad406c2d0e8cfe0a264babab384e1cfb7",
+      "sourceReference": "derivative:bojji-crown-v2",
+      "automaticEligible": false,
+      "supersededBy": "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e"
+    },
+    {
+      "modelKey": "version.body.6d14c4f923bb7f4327f74f842862b1fbc5295011dc5869e5",
+      "sourceModelKey": "community.body.bfef37ec79be08bd44ff8fadc865372dc1b7b5977168b53e",
+      "sourceReference": "derivative:bojji-crown-v2-texture-corrected",
+      "automaticEligible": false,
+      "supersededBy": "version.body.5093418385f084902cceb3fc3dc92cdddba5294737d07e8e"
+    }
+  ],
+  "preservation": {
+    "previousDefaultModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "previousDefaultRetained": true,
+    "allPriorVersionModelKeysRetained": true,
+    "registeredReferenceCount": 1,
+    "versionCountAfter": 9
+  },
+  "selection": {
+    "mode": "automatic",
+    "activeModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "v2CandidateSelected": false,
+    "v1DefaultRetained": true,
+    "runtimeSelectable": true
+  },
+  "validation": {
+    "triangles": 7229,
+    "ownerMaximumTriangles": 8000,
+    "drawPrimitives": 4,
+    "maxTextureEdge": 256,
+    "maxChannelsPerClip": 66,
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": [],
+    "nodesSkinAnimationsAndCrownExact": true
+  },
+  "status": {
+    "promotedToGit": true,
+    "registered": true,
+    "runtimeSelectable": true,
+    "automaticEligible": false,
+    "currentAutomaticSelected": false,
+    "ownerVisualReviewPending": true,
+    "supersededV2AutomaticEligible": false,
+    "productionDeployed": false
+  }
+}

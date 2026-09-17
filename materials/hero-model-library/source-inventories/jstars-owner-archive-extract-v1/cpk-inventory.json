@@ -1,0 +1,1587 @@
+{
+  "blockers": [
+    {
+      "action": "decode J-Stars $CMP",
+      "reason": "existing validated decoder does not support mixed $CLH/$CH0 chunks",
+      "resource": "$CH0 entropy stage"
+    },
+    {
+      "action": "convert PS3 model",
+      "reason": "no validated local converter for console geometry layout and PS3 texture swizzle",
+      "resource": "SRD/SRDI/SRDV"
+    }
+  ],
+  "containerRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3",
+  "containers": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_battle_ps3.cpk",
+      "bytes": 89771504,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_battle_ps3.cpk",
+      "memberCount": 276,
+      "moduleHintCounts": {
+        "motion": 276,
+        "vfx": 276
+      },
+      "nativeTokenCounts": {},
+      "sha256": "f8034016b8705bec118ebc916adeb6eaa1d2179a62a4adb7df1fcdbf16d9968f",
+      "storedMemberBytes": 89381824
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_character_ps3.cpk",
+      "bytes": 705762768,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_character_ps3.cpk",
+      "memberCount": 4516,
+      "moduleHintCounts": {
+        "model": 336,
+        "motion": 4180,
+        "sfx": 56,
+        "skeleton": 336,
+        "texture": 336,
+        "vfx": 3242,
+        "voice": 56
+      },
+      "nativeTokenCounts": {
+        "000": 79,
+        "001": 85,
+        "002": 85,
+        "003": 85,
+        "004": 83,
+        "005": 83,
+        "006": 85,
+        "007": 79,
+        "008": 85,
+        "009": 85,
+        "010": 85,
+        "011": 85,
+        "012": 85,
+        "013": 79,
+        "014": 85,
+        "015": 79,
+        "016": 85,
+        "017": 85,
+        "018": 85,
+        "019": 22,
+        "020": 22,
+        "021": 22,
+        "022": 85,
+        "023": 85,
+        "024": 85,
+        "025": 85,
+        "026": 85,
+        "027": 85,
+        "028": 79,
+        "029": 85,
+        "030": 85,
+        "031": 85,
+        "032": 85,
+        "033": 85,
+        "034": 85,
+        "035": 85,
+        "036": 85,
+        "037": 85,
+        "038": 85,
+        "039": 85,
+        "040": 85,
+        "041": 85,
+        "200": 76,
+        "201": 76,
+        "202": 76,
+        "203": 76,
+        "204": 76,
+        "205": 76,
+        "206": 76,
+        "207": 76,
+        "208": 13,
+        "209": 76,
+        "210": 76,
+        "211": 76,
+        "212": 76,
+        "213": 76
+      },
+      "sha256": "4eafa33267070f2e02ffbd59da234d0542f7aa4c45ce02f7ed2e9d23efbbf15b",
+      "storedMemberBytes": 703892432
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_game_ps3.cpk",
+      "bytes": 11499960,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_game_ps3.cpk",
+      "memberCount": 25,
+      "moduleHintCounts": {},
+      "nativeTokenCounts": {},
+      "sha256": "488c47fd95a86d500dfca3d73c5615bcb3b540557cfe68a6c27d3870f9d5179e",
+      "storedMemberBytes": 11462896
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_map_ps3.cpk",
+      "bytes": 701705192,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_map_ps3.cpk",
+      "memberCount": 241,
+      "moduleHintCounts": {},
+      "nativeTokenCounts": {},
+      "sha256": "6d05ae2e023e79ee493bea66105a156dd2220a34bb6f63996b9479cb5819eb1a",
+      "storedMemberBytes": 701357472
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_patch_ps3.cpk",
+      "bytes": 8320,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_patch_ps3.cpk",
+      "memberCount": 1,
+      "moduleHintCounts": {},
+      "nativeTokenCounts": {},
+      "sha256": "d337a830e26a4dc0acf68a9683a6fc599ba24e9c23f4f7322f1265aef2eb353e",
+      "storedMemberBytes": 64
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_progress_ps3.cpk",
+      "bytes": 752591160,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_progress_ps3.cpk",
+      "memberCount": 14166,
+      "moduleHintCounts": {},
+      "nativeTokenCounts": {},
+      "sha256": "56bf4cc0ae13ea87269544c2ffd26b11d6bf3ce3b85abdb8154364906183f998",
+      "storedMemberBytes": 732661104
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/containers/PS3_GAME/USRDIR/data/PS3/partition_op_sound_ps3.cpk",
+      "bytes": 399969288,
+      "cpkRevision": 13,
+      "cpkToolVersion": "CPKMC2.47.02, DLL3.17.00",
+      "cpkVersion": 7,
+      "fileName": "partition_op_sound_ps3.cpk",
+      "memberCount": 246,
+      "moduleHintCounts": {
+        "sfx": 246,
+        "voice": 246
+      },
+      "nativeTokenCounts": {
+        "000": 4,
+        "001": 4,
+        "002": 4,
+        "003": 4,
+        "004": 6,
+        "005": 4,
+        "006": 4,
+        "007": 6,
+        "008": 4,
+        "009": 4,
+        "010": 4,
+        "011": 4,
+        "012": 4,
+        "013": 4,
+        "014": 4,
+        "015": 6,
+        "016": 4,
+        "017": 4,
+        "018": 4,
+        "022": 4,
+        "023": 4,
+        "024": 4,
+        "025": 4,
+        "026": 4,
+        "027": 6,
+        "028": 4,
+        "029": 4,
+        "030": 4,
+        "031": 6,
+        "032": 4,
+        "033": 4,
+        "034": 4,
+        "035": 8,
+        "036": 8,
+        "037": 4,
+        "038": 8,
+        "039": 4,
+        "040": 4,
+        "041": 4,
+        "200": 4,
+        "201": 4,
+        "202": 4,
+        "203": 4,
+        "204": 4,
+        "205": 4,
+        "206": 4,
+        "207": 4,
+        "209": 4,
+        "210": 12,
+        "211": 4,
+        "212": 4,
+        "213": 4,
+        "700": 2,
+        "701": 2
+      },
+      "sha256": "aae21718b9c2d44f0019d59cb89e628d88902b68e905e5b6b5590e2979592d8c",
+      "storedMemberBytes": 399703759
+    }
+  ],
+  "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
+    "archiveMember": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+    "bytes": 339170,
+    "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
+    "restoreRequiredForInventoryBuild": false,
+    "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3"
+  },
+  "fullMemberManifest": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+    "bytes": 934318,
+    "format": "deterministic-jsonl-gzip-mtime-0",
+    "memberCount": 19471,
+    "sha256": "3f838b2a4ebec3c7ccce214d4432fe66f34fdbba42be01c061b8d899cb29981e"
+  },
+  "identityProbe": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json",
+    "exists": true,
+    "sha256": "c7f698c5ad43a30216fc7c589b972b081c053feea444a2d15a67206db01eb51a"
+  },
+  "nativeCharacterGroups": [
+    {
+      "memberCount": 83,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 5
+      },
+      "nativeToken": "000",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/000/manifest.json",
+        "bytes": 53963,
+        "memberCount": 83,
+        "payloadBytes": 15449485,
+        "sha256": "23471b1277f8c7fd0a8d8a92362ec222b45e59b4c734146c9b37939af9037441"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "001",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/001/manifest.json",
+        "bytes": 57953,
+        "memberCount": 89,
+        "payloadBytes": 14453376,
+        "sha256": "3564906143ccf00ed8b4a5e775b3e6a618a019032fa8d3107f186ef28a75ab77"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "002",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/002/manifest.json",
+        "bytes": 57952,
+        "memberCount": 89,
+        "payloadBytes": 14960936,
+        "sha256": "1212a68df7a5b5b110eef25fd050ee731b5217a15116ee87583f6a5d5e812a06"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "003",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/003/manifest.json",
+        "bytes": 57956,
+        "memberCount": 89,
+        "payloadBytes": 17116519,
+        "sha256": "7c041a4caeaffe5b7e6c5f806f7d8fe94e78f43b0606b3464a39323dd8126ecd"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 80,
+        "sfx": 7,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 61,
+        "voice": 7
+      },
+      "nativeToken": "004",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/004/manifest.json",
+        "bytes": 57704,
+        "memberCount": 89,
+        "payloadBytes": 15897060,
+        "sha256": "193295fbef21a37dadfc1ddf6f6f2541773e14b91b7947218228707b0bbf34e0"
+      }
+    },
+    {
+      "memberCount": 87,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 80,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 61,
+        "voice": 5
+      },
+      "nativeToken": "005",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/005/manifest.json",
+        "bytes": 56625,
+        "memberCount": 87,
+        "payloadBytes": 15109829,
+        "sha256": "0d76aaa3e26a7231ce1bea97b281e4b056d1a264db61e3d5edb9cfcc912a1e9e"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "006",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/006/manifest.json",
+        "bytes": 57928,
+        "memberCount": 89,
+        "payloadBytes": 15480808,
+        "sha256": "0d940a8216317dc2ebb6d38efcd83e9339fd313db7389711e8f3fa3eab35106b"
+      }
+    },
+    {
+      "memberCount": 85,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 7,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 7
+      },
+      "nativeToken": "007",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/007/manifest.json",
+        "bytes": 55063,
+        "memberCount": 85,
+        "payloadBytes": 17405368,
+        "sha256": "540b54521aa29ccb43e0ea20f4f3dcfb16c398ed0e860a54b3855db59686216e"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "008",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/008/manifest.json",
+        "bytes": 57948,
+        "memberCount": 89,
+        "payloadBytes": 17205735,
+        "sha256": "83f512af986076f10922b0585f4e7c5f64bbffc690c22882761051686e75445c"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "009",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/009/manifest.json",
+        "bytes": 57947,
+        "memberCount": 89,
+        "payloadBytes": 16277155,
+        "sha256": "2c2abda53f597e37ea0d36b1e4bce96bd28e9f368bb620062c50ddca3dfaf21a"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "010",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/010/manifest.json",
+        "bytes": 57953,
+        "memberCount": 89,
+        "payloadBytes": 14927475,
+        "sha256": "a8387ba9772042a3c09c9ed03464d5da449eb5f67511aeb3b1613b616f3479b8"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "011",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/011/manifest.json",
+        "bytes": 57942,
+        "memberCount": 89,
+        "payloadBytes": 16235990,
+        "sha256": "1c6440078b80746e923bcbc8512c21ad21e035d54f822c399f45b15bb0895986"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "012",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/manifest.json",
+        "bytes": 57940,
+        "memberCount": 89,
+        "payloadBytes": 13928734,
+        "sha256": "90916c542054e777597d489ae191b74ebbb44a88cc199f44a1ddea62aad11708"
+      }
+    },
+    {
+      "memberCount": 83,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 5
+      },
+      "nativeToken": "013",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/013/manifest.json",
+        "bytes": 53965,
+        "memberCount": 83,
+        "payloadBytes": 16345090,
+        "sha256": "ecb60c221acadd033351798ec817983414f7b51254f2b7f5e56ee1412da3d78f"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "014",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/014/manifest.json",
+        "bytes": 57954,
+        "memberCount": 89,
+        "payloadBytes": 17653793,
+        "sha256": "f7db048e33a970dbd94fe608789107b0e3e8223bfa22ba0a14d46809ec4216dc"
+      }
+    },
+    {
+      "memberCount": 85,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 7,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 7
+      },
+      "nativeToken": "015",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/015/manifest.json",
+        "bytes": 55069,
+        "memberCount": 85,
+        "payloadBytes": 18222908,
+        "sha256": "61989834f1278fad7824a1f07f03521329e5fd0741e5757eeda4f44154a565fa"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "016",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/016/manifest.json",
+        "bytes": 57953,
+        "memberCount": 89,
+        "payloadBytes": 15838507,
+        "sha256": "bc7229db0ac37e4f12f43f863395c73e84093404c66ef667718c8d01d5b49fd4"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "017",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/manifest.json",
+        "bytes": 57953,
+        "memberCount": 89,
+        "payloadBytes": 13978687,
+        "sha256": "13ee9572d9aa6648ac469ceb414e4a12ee2f00e2b53afe071318ab0427c1ce68"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "018",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/manifest.json",
+        "bytes": 57940,
+        "memberCount": 89,
+        "payloadBytes": 13461553,
+        "sha256": "a303d4b1e7e57d4b331203dc95b1379b2d7faef9985c9ac8ddf58ccd01db2277"
+      }
+    },
+    {
+      "memberCount": 22,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 19,
+        "sfx": 1,
+        "skeleton": 3,
+        "texture": 3,
+        "voice": 1
+      },
+      "nativeToken": "019",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/019/manifest.json",
+        "bytes": 13787,
+        "memberCount": 22,
+        "payloadBytes": 4624368,
+        "sha256": "e8eb399268a8df8dcfb4d362828d40dff21c042717488d61dbfd7fd1846b89fb"
+      }
+    },
+    {
+      "memberCount": 22,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 19,
+        "sfx": 1,
+        "skeleton": 3,
+        "texture": 3,
+        "voice": 1
+      },
+      "nativeToken": "020",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/020/manifest.json",
+        "bytes": 13785,
+        "memberCount": 22,
+        "payloadBytes": 1162704,
+        "sha256": "200ed7c754049a733606acc376d8f21f63fd9aec8c08532a31f16d9f0af8840f"
+      }
+    },
+    {
+      "memberCount": 22,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 19,
+        "sfx": 1,
+        "skeleton": 3,
+        "texture": 3,
+        "voice": 1
+      },
+      "nativeToken": "021",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/021/manifest.json",
+        "bytes": 13783,
+        "memberCount": 22,
+        "payloadBytes": 996896,
+        "sha256": "689893f7221be28012513013197980ed79c676cd99e94b508ff519ae411b826e"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "022",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/022/manifest.json",
+        "bytes": 57952,
+        "memberCount": 89,
+        "payloadBytes": 14481643,
+        "sha256": "cbecd6397b49d49e81902f6f784c27c56a1cddf43c1cde21ee5cc88a98564f3e"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "023",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/023/manifest.json",
+        "bytes": 57952,
+        "memberCount": 89,
+        "payloadBytes": 15682770,
+        "sha256": "aa13d0a08f2d9623acbb2c1d79e5ad50aef2b0ade009f17a7cfbc26542b01f87"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "024",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/024/manifest.json",
+        "bytes": 57941,
+        "memberCount": 89,
+        "payloadBytes": 15702619,
+        "sha256": "cf6fed40c905bec117a5e951cb384a0dd26c61c2d122176a63403c01793b4025"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "025",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/025/manifest.json",
+        "bytes": 57954,
+        "memberCount": 89,
+        "payloadBytes": 16069071,
+        "sha256": "685320f7cc24a92ead6b0602baac123ec11fa7d42cfccb976efa3871b6904b72"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "026",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/026/manifest.json",
+        "bytes": 57944,
+        "memberCount": 89,
+        "payloadBytes": 19358534,
+        "sha256": "08efe385023279b0b0cccb2241ead17f270df267d594ab9747ac70b496c120d8"
+      }
+    },
+    {
+      "memberCount": 91,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 7,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 7
+      },
+      "nativeToken": "027",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/027/manifest.json",
+        "bytes": 59047,
+        "memberCount": 91,
+        "payloadBytes": 17793941,
+        "sha256": "1552e65365027e7fef7b1d1d9618b32890a4009911147c0cf65dbc6eff7d3336"
+      }
+    },
+    {
+      "memberCount": 83,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 5
+      },
+      "nativeToken": "028",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/manifest.json",
+        "bytes": 53966,
+        "memberCount": 83,
+        "payloadBytes": 18944662,
+        "sha256": "32a00ec866b1ef9aae524df419b3900f6f6d243a403e5245b1d438b1679376a7"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "029",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/029/manifest.json",
+        "bytes": 57954,
+        "memberCount": 89,
+        "payloadBytes": 14415683,
+        "sha256": "a28abc1ef021d83639a87290d39aedf598cb0603fbd2114290368ed5a8e33f07"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "030",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/030/manifest.json",
+        "bytes": 57927,
+        "memberCount": 89,
+        "payloadBytes": 14002623,
+        "sha256": "90c3773145a39ca952a15624d969cbf28415a9b3a400141aa98fc4645b249f48"
+      }
+    },
+    {
+      "memberCount": 91,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 7,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 7
+      },
+      "nativeToken": "031",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/031/manifest.json",
+        "bytes": 59041,
+        "memberCount": 91,
+        "payloadBytes": 16797658,
+        "sha256": "3225db75d26b9df4132a36b921ae4d4c14a16979c0480fa761e93c04364f26fc"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "032",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/032/manifest.json",
+        "bytes": 57934,
+        "memberCount": 89,
+        "payloadBytes": 15184392,
+        "sha256": "fb895cae91ab960083d4dfda139a78e97784952d70711cac36bc64d390974979"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "033",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/033/manifest.json",
+        "bytes": 57942,
+        "memberCount": 89,
+        "payloadBytes": 14249394,
+        "sha256": "bb8ab318e57d91b429b3d60cc7dd548950b616bf69a2304841beda0149d45aa4"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "034",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/034/manifest.json",
+        "bytes": 57955,
+        "memberCount": 89,
+        "payloadBytes": 16414856,
+        "sha256": "e13565540fd57e13f693999947b06179df5094c881fc4242793ae30285f20231"
+      }
+    },
+    {
+      "memberCount": 93,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 9,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 9
+      },
+      "nativeToken": "035",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/035/manifest.json",
+        "bytes": 60139,
+        "memberCount": 93,
+        "payloadBytes": 19302526,
+        "sha256": "904a9e4aed71b9160454fb3041e7b0d23cfcdbada959899a6c725977a96bb5fd"
+      }
+    },
+    {
+      "memberCount": 93,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 9,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 9
+      },
+      "nativeToken": "036",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/036/manifest.json",
+        "bytes": 60151,
+        "memberCount": 93,
+        "payloadBytes": 15689362,
+        "sha256": "2d8a7ea915ba3c917a757adad96986da3b2bde09e78e7c040e8284d695d9359c"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "037",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/manifest.json",
+        "bytes": 57940,
+        "memberCount": 89,
+        "payloadBytes": 14034490,
+        "sha256": "dd4bdf2e985c39457c291e1b8f6b2b9db84e68425bc9e6be0a2441070d788b7c"
+      }
+    },
+    {
+      "memberCount": 93,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 9,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 9
+      },
+      "nativeToken": "038",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/038/manifest.json",
+        "bytes": 60136,
+        "memberCount": 93,
+        "payloadBytes": 16407536,
+        "sha256": "beb4d11632d95153e5039598de1bd20581f4acc3fef37c70d317c161aee51f74"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "039",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/039/manifest.json",
+        "bytes": 57954,
+        "memberCount": 89,
+        "payloadBytes": 15828342,
+        "sha256": "189abf8578c548ec0d455b025f48efbdfd920065ca68ac46aa1c082df3647490"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "040",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/040/manifest.json",
+        "bytes": 57942,
+        "memberCount": 89,
+        "payloadBytes": 16466364,
+        "sha256": "89c47a5005be5b06f6c9a39598dab416362f871911fdb34b2408f67a93e03b23"
+      }
+    },
+    {
+      "memberCount": 89,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "041",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/manifest.json",
+        "bytes": 57930,
+        "memberCount": 89,
+        "payloadBytes": 19731485,
+        "sha256": "fca961c3e1e87f608ecc7936bc4ecbec6e0d88e971670dbcf4668696c0298e18"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "200",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/200/manifest.json",
+        "bytes": 52519,
+        "memberCount": 80,
+        "payloadBytes": 6889899,
+        "sha256": "891fcabf95ddf6efdad91fb7a35af1fce557777778cf00800b981bc7bd913e91"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "201",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/201/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 6202373,
+        "sha256": "020ab6c744e9895a3e4b9ceed5ef265f9930182a47993021197aa45d28da83c6"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "202",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/202/manifest.json",
+        "bytes": 52521,
+        "memberCount": 80,
+        "payloadBytes": 8109852,
+        "sha256": "ef4fb68db3c2aace73042058bedfba38e716f017901260f16b4f54fcd9d9a3ec"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "203",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/203/manifest.json",
+        "bytes": 52516,
+        "memberCount": 80,
+        "payloadBytes": 6421515,
+        "sha256": "e562020715b4fa1db48095cfd9fd01abecbfa9bb229dd2feb7f3260ce673f730"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "204",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/204/manifest.json",
+        "bytes": 52519,
+        "memberCount": 80,
+        "payloadBytes": 6865424,
+        "sha256": "a5dd0b78275146883c92d1f7140c066046cf29df83159b352d41f02278bd7aab"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "205",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/205/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 6838847,
+        "sha256": "5b5e71cdc784c0422028e4745d3af36fc457ae186b2fd010c69382ea04ce2ca7"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "206",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/206/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 8635479,
+        "sha256": "c18da59dba4ba97ccdafd39cb58c5e2cdaace639fdb85e533dac6b5f95b4f1f4"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "207",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/207/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 7874311,
+        "sha256": "4445562113bcc2a8421b8b2a690209825db943f12722a76e60b46b1d5e6f248d"
+      }
+    },
+    {
+      "memberCount": 13,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 10,
+        "sfx": 1,
+        "skeleton": 3,
+        "texture": 3,
+        "voice": 1
+      },
+      "nativeToken": "208",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/208/manifest.json",
+        "bytes": 8386,
+        "memberCount": 13,
+        "payloadBytes": 495472,
+        "sha256": "1a2ec0b31ac7b226835118ac2ddf57d0f77203ec5f2c61b0ab794c73ad2301e1"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "209",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/209/manifest.json",
+        "bytes": 52517,
+        "memberCount": 80,
+        "payloadBytes": 6236899,
+        "sha256": "4b04ae3b687bbb63c0cf413bdb7bc1df0c7782dfd6f88b592dc1ff61357200f4"
+      }
+    },
+    {
+      "memberCount": 88,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 13,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 13
+      },
+      "nativeToken": "210",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/210/manifest.json",
+        "bytes": 56938,
+        "memberCount": 88,
+        "payloadBytes": 11633591,
+        "sha256": "ad0f3ad3440d2002dbfc9ff2c9906d07782c014574f8674473132883dd89c226"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "211",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/211/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 7284804,
+        "sha256": "7dcd00c5a6fbd70d0a74804bf2c605855e32f496ce6c061a492d1e9bb6cb7c2d"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "212",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/212/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 7606264,
+        "sha256": "a476ea1e5364f4b94c233252729e5d905aa53cede511b672080150cb1f815576"
+      }
+    },
+    {
+      "memberCount": 80,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 73,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nativeToken": "213",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/213/manifest.json",
+        "bytes": 52520,
+        "memberCount": 80,
+        "payloadBytes": 5648222,
+        "sha256": "f16dff50d0fc408593f2cfc6e83e4ece39f7d96d5a9cff998f1d7870d3262ba1"
+      }
+    },
+    {
+      "memberCount": 2,
+      "moduleCounts": {
+        "sfx": 2,
+        "voice": 2
+      },
+      "nativeToken": "700",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/700/manifest.json",
+        "bytes": 1282,
+        "memberCount": 2,
+        "payloadBytes": 680840,
+        "sha256": "de994206e657da1f530c245387fad9b3daaa45cc1fb611c53bbbb0ba932195f9"
+      }
+    },
+    {
+      "memberCount": 2,
+      "moduleCounts": {
+        "sfx": 2,
+        "voice": 2
+      },
+      "nativeToken": "701",
+      "splitManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/701/manifest.json",
+        "bytes": 1282,
+        "memberCount": 2,
+        "payloadBytes": 681896,
+        "sha256": "b617b5e60d0e512f463f339dac4156b06906ad8e01f44dafabd7c9d8aee607c4"
+      }
+    }
+  ],
+  "nativeTokenSplitRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members",
+  "priorityCharacters": [
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "community-review-23-20260907"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match gintoki -> 028",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 83,
+      "memberEvidence": {
+        "bytes": 18944662,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "c50dc37204c8d2da233bf9b524b320524ccc8fcc481a477c0cffbd12657ae005"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 76,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 57,
+        "voice": 5
+      },
+      "nameZhTW": "坂田銀時",
+      "nativeId": "028",
+      "runtimeReady": false,
+      "slug": "gintoki"
+    },
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "b2-nube"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match nube -> 041",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 89,
+      "memberEvidence": {
+        "bytes": 19731485,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "e7ca3f5ff53537fd3b6e849425913a13c712c87f65f5c5d3b1843516eb0a35d0"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": "041",
+      "runtimeReady": false,
+      "slug": "nube"
+    },
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match gon -> 017",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 89,
+      "memberEvidence": {
+        "bytes": 13978687,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "88aa6484b9f0dfe7e8731970a6fed341a32ad6708c3a2195cbf96f1a16f541b8"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "小傑·富力士",
+      "nativeId": "017",
+      "runtimeReady": false,
+      "slug": "gon"
+    },
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "community-review-24-20260907"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match killua -> 018",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 89,
+      "memberEvidence": {
+        "bytes": 13461553,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "3ce87d660a7894596355db5ae99dfd8c8426b69bbc4477174606eb932dc918f8"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "奇犚·揍敵客",
+      "nativeId": "018",
+      "runtimeReady": false,
+      "slug": "killua"
+    },
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "b2-luckyman"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match luckyman -> 037",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 89,
+      "memberEvidence": {
+        "bytes": 14034490,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "ec6e8b773c4975fc5ad582415ed6de6a07f7d6b3deb6b644c8524efa240cddbc"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "幸運超人",
+      "nativeId": "037",
+      "runtimeReady": false,
+      "slug": "luckyman"
+    },
+    {
+      "conversionStatus": "native-containers-hashed-conversion-blocked-by-cmp-ch0-and-ps3-srd",
+      "heroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityEvidence": "identity-probe.json unique internal STPK member-name match hiei -> 012",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "memberCount": 89,
+      "memberEvidence": {
+        "bytes": 13928734,
+        "fullManifest": "GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",
+        "sha256": "024c93d32c51d5a454177389000cbc127af14b88a3e4e8663a9b87fe48e33358"
+      },
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "飛影",
+      "nativeId": "012",
+      "runtimeReady": false,
+      "slug": "hiei"
+    }
+  ],
+  "safety": {
+    "memberPayloadsMaterialized": true,
+    "sourceContainersModified": false
+  },
+  "schema": "ggd.jstars-owner-cpk-inventory@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "status": "native-containers-inventoried-conversion-blocked",
+  "summary": {
+    "containersExpected": 7,
+    "containersInventoried": 7,
+    "convertedModels": 0,
+    "membersHashed": 19471,
+    "nativeTokenGroups": 58,
+    "priorityIdentityBlocked": 0,
+    "priorityIdentityConfirmed": 6,
+    "runtimeRegistered": 0
+  }
+}

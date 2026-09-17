@@ -1,0 +1,28 @@
+{
+  "schema": "ggd.bonds-cache-preservation@1",
+  "sourceId": "internet-archive-heros-bonds-final-cache-1.17.0.121",
+  "archive": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original/com.square_enix.android_googleplay.dqdaihb-1.17.0.121.zip",
+    "sha256": "0b66d970b997a0216e09e2d6f3ba4fe0ed31f8a8cb94bef21e9e0ab2091c3644",
+    "bytes": 1733218012
+  },
+  "extractedRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1",
+  "fileCount": 17284,
+  "fileBytes": 1761831022,
+  "containerKindsByMagic": {
+    "AFS2": 89,
+    "unclassified": 17195
+  },
+  "fileIndex": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1-files.jsonl.gz",
+    "sha256": "88fd676022f7bdaaaa392ac9492568a8cae00b7933d43bc330695264412706c8",
+    "bytes": 1447260
+  },
+  "identityVerified": false,
+  "modelConverted": false,
+  "s3BackupVerified": false,
+  "limitations": [
+    "Container signatures are discovery evidence only; no ghost-eye Vearn mesh identity is established.",
+    "Downloaded app/cache code was not executed. S3 backup remains pending."
+  ]
+}

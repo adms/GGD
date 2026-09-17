@@ -184,7 +184,12 @@ stats = (
 
 src = open(target, encoding="utf-8").read()
 new = re.sub(r"^# 🎫 對話開票（.*?）$", head, src, count=1, flags=re.M)
-new = re.sub(r"^## 一週窗總量（.*?\n\n\|.*?\n\n\*\*逐日分佈\*\*：.*?$",
+# The generated stats may carry an old orphan merge tail after their first
+# distribution line. Replace that exact duplicate-table shape as part of the
+# canonical block; leave all following prose and historical snapshots intact.
+new = re.sub(r"^## 一週窗總量（.*?\n\n\|.*?\n\n\*\*逐日分佈\*\*：[^\n]*"
+             r"(?:\n={7}\n\| owner 訊息 \|[^\n]*\n\| 引用到的不同票號 \|[^\n]*"
+             r"\n\| ⏸ 未對票 \|[^\n]*\n\n\*\*逐日分佈\*\*：[^\n]*\n>{7} [^\n]+)?$",
              stats, new, count=1, flags=re.M | re.S)
 
 # ── ⭐ 逐訊息全紀錄（owner 2026-08-26 要求「全記錄在裡面」）─────────────────

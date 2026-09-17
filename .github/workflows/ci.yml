@@ -90,8 +90,8 @@ jobs:
       #   ⛔ 不是為了讓它跳過 —— 「環境不對就跳過」的閘等於沒有閘
       #   （`composeLogCap.test.ts` 逐字寫過同一個理由）。
       #   ⭐ 出貨映像那一半由 GH#967 保證（`docker/content-api.Dockerfile` 的 runtime stage）。
-      - name: Icon toolchain (cwebp)
-        run: sudo apt-get update && sudo apt-get install -y webp && cwebp -version
+      - name: Media toolchain (cwebp, ffmpeg, ffprobe)
+        run: sudo apt-get update && sudo apt-get install -y webp ffmpeg && cwebp -version && ffmpeg -version && ffprobe -version
       # ⭐⭐ GH#979 —— Pillow。**同一個判準**（就在上面那三行）：
       #   `w3xFilterModeContract.test.ts` 在沒有 Pillow 的機器上會 `it.skip`，
       #   ⛔ 而「環境不對就跳過」的閘等於沒有閘。⇒ 裝它，讓那條**真的跑**。

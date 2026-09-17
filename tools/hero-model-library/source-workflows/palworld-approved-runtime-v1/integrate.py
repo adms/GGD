@@ -18,8 +18,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import shutil
 import struct
+import subprocess
+import tempfile
 from pathlib import Path
 
 
@@ -34,6 +35,7 @@ RECEIPT = OUTPUT / "receipt.json"
 RUNTIME_BINDINGS = OUTPUT / "runtime-bindings.json"
 MOTION_TS = ROOT / "apps/client/src/render/generated/palworldApprovedMotion.generated.ts"
 RUNTIME_AUDIO = ROOT / "content/assets/audio/voices/palworld"
+S3_SPLIT = ROOT / "materials/asset-library/pr1152-s3-split.json"
 
 
 # These are adapters from the exact owner-approved abstract event labels to the
@@ -93,6 +95,42 @@ def media_extension(path: Path) -> str:
     raise ValueError(f"unsupported approved audio container: {path}")
 
 
+def runtime_audio_payload(source: Path, extension: str) -> tuple[str, bytes]:
+    """Return the checked runtime format without changing the preserved source.
+
+    Runtime audio is MP3-only.  The Cattiva sources are WAV, so reproduce the
+    same 128 kbps / 44.1 kHz conversion used by the content audio gate while
+    keeping the original WAV as preparation evidence in the S3 split.
+    """
+    if extension == ".mp3":
+        return extension, source.read_bytes()
+    if extension != ".wav":
+        raise ValueError(f"unsupported runtime audio conversion: {source}")
+    with tempfile.TemporaryDirectory(prefix="ggd-palworld-audio-") as temp_dir:
+        output = Path(temp_dir) / "runtime.mp3"
+        subprocess.run([
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-i", str(source), "-codec:a", "libmp3lame", "-b:a", "128k",
+            "-ar", "44100", str(output),
+        ], check=True)
+        return ".mp3", output.read_bytes()
+
+
+def product_is_current(target: Path, payload: bytes) -> bool:
+    if target.is_file():
+        return target.read_bytes() == payload
+    if not S3_SPLIT.is_file():
+        return False
+    relative = target.relative_to(ROOT).as_posix()
+    split = read_json(S3_SPLIT)
+    entry = next((row for row in split.get("files", []) if row["repoPath"] == relative), None)
+    return bool(
+        entry
+        and entry["bytes"] == len(payload)
+        and entry["sha256"] == hashlib.sha256(payload).hexdigest()
+    )
+
+
 def motion_typescript(overlays: list[dict]) -> str:
     rows = ",\n".join(
         f'  {json.dumps(row["abilityId"])}: {json.dumps(row["semanticState"])}'
@@ -116,7 +154,7 @@ export function resolvePalworldApprovedSkillMotion(
 '''
 
 
-def expected_products() -> tuple[dict, dict, dict, list[tuple[Path, Path]], str]:
+def expected_products() -> tuple[dict, dict, dict, list[tuple[Path, bytes]], str]:
     review = read_json(REVIEW)
     owner = read_json(OWNER)
     portal_queue = read_json(PORTAL_QUEUE)
@@ -145,7 +183,7 @@ def expected_products() -> tuple[dict, dict, dict, list[tuple[Path, Path]], str]
     option_source = OPTIONS.read_text(encoding="utf-8")
     audio_rows = []
     motion_rows = []
-    copies: list[tuple[Path, Path]] = []
+    copies: list[tuple[Path, bytes]] = []
     generic_binding_count = 0
     skill_overlay_count = 0
 
@@ -157,14 +195,16 @@ def expected_products() -> tuple[dict, dict, dict, list[tuple[Path, Path]], str]
         if not original.is_file() or original.stat().st_size != source["file"]["bytes"] or sha256(original) != source["file"]["sha256"]:
             raise ValueError(f"approved cry source changed: {source['candidateId']}")
         extension = media_extension(original)
+        original_payload = original.read_bytes()
         target = OUTPUT / "audio" / source["characterId"] / (
             f"{source['sourceLabel'].lower()}-{source['file']['sha256'][:12]}{extension}"
         )
-        copies.append((original, target))
+        copies.append((target, original_payload))
+        runtime_extension, runtime_payload = runtime_audio_payload(original, extension)
         runtime_target = RUNTIME_AUDIO / source["characterId"] / (
-            f"{source['sourceLabel'].lower()}-{source['file']['sha256'][:12]}{extension}"
+            f"{source['sourceLabel'].lower()}-{source['file']['sha256'][:12]}{runtime_extension}"
         )
-        copies.append((original, runtime_target))
+        copies.append((runtime_target, runtime_payload))
         approved_binding = decision["approvedBindings"]
         if len(approved_binding) != 1 or approved_binding[0] not in RUNTIME_CATEGORIES:
             raise ValueError(f"unsupported approved cry event: {source['candidateId']}")
@@ -189,9 +229,9 @@ def expected_products() -> tuple[dict, dict, dict, list[tuple[Path, Path]], str]
             },
             "runtimeProduct": {
                 "gitPath": runtime_target.relative_to(ROOT).as_posix(),
-                "bytes": original.stat().st_size,
-                "sha256": sha256(original),
-                "container": extension[1:],
+                "bytes": len(runtime_payload),
+                "sha256": hashlib.sha256(runtime_payload).hexdigest(),
+                "container": runtime_extension[1:],
             },
             "runtimeBindingCreated": True,
             "runtimeSelectable": True,
@@ -356,16 +396,16 @@ def main() -> None:
         MOTION_TS: motion_ts,
     }
     if args.check:
-        for source, target in copies:
-            if not target.is_file() or target.read_bytes() != source.read_bytes():
+        for target, payload in copies:
+            if not product_is_current(target, payload):
                 raise ValueError(f"approved Git audio product missing or changed: {target}")
         for path, value in products.items():
             if path.read_text(encoding="utf-8") != value:
                 raise ValueError(f"stale generated Palworld integration product: {path}")
     else:
-        for source, target in copies:
+        for target, payload in copies:
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, target)
+            target.write_bytes(payload)
         OUTPUT.mkdir(parents=True, exist_ok=True)
         for path, value in products.items():
             path.parent.mkdir(parents=True, exist_ok=True)

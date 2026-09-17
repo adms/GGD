@@ -1,0 +1,341 @@
+{
+  "blockers": [
+    {
+      "action": "bind J-Stars audio events",
+      "reason": "cue names are numeric; every file still needs owner listening approval and event assignment",
+      "resource": "CV/PV cue rows"
+    },
+    {
+      "action": "confirm speaker and SFX/voice role",
+      "reason": "Japanese path is proven, but bank and native-token identity alone do not prove every clip speaker or gameplay role",
+      "resource": "CV/PV banks"
+    },
+    {
+      "action": "decode battle sound container",
+      "reason": "$CMP/$CH0 remains blocked; decoded CV/PV banks do not claim coverage of that separate source",
+      "resource": "battle_character_sound_<id>_jp_m.pak"
+    }
+  ],
+  "characters": [
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/CV_028_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "167a614697b529ab470db928acb1cc3a717450fb5a9f942188313dd8502c0132"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/CV_028_00_ST_JP.awb",
+            "bytes": 3326128,
+            "sha256": "9aabac844f58e779a61a7d9d3b47bc76fdfb3331edd9076fe18477ebc157c069"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 411.648,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/PV_028_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "e4f0a10d6f089eb223a4ea1ee04e1875a87e5ca42b5fb23d469acb434d6af97f"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_sound_ps3.cpk/sound/JP/PV_028_00_ST_JP.awb",
+            "bytes": 968054,
+            "sha256": "f5f1690b4dbea8c762dfec2f8b5ed4e134a276149c97e6f4688f3dc4bd1df4c8"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 119.68,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "community-review-23-20260907"
+      ],
+      "language": "ja",
+      "nameZhTW": "坂田銀時",
+      "nativeId": "028",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "gintoki"
+    },
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/CV_041_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "1b92b921067b44a9d611a2885abd6699b52fc298b44882aa8efb528d2fe4a2b2"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/CV_041_00_ST_JP.awb",
+            "bytes": 3462372,
+            "sha256": "dd15a57219663f45b0bf03b21dc2fbd93b5c395a8c8e89446c605f3cc630e841"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 428.672,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/PV_041_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "a4f07be7587d6b989f73936726f5a12530a47feb08ed7eb5a95de798f4701dbb"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_sound_ps3.cpk/sound/JP/PV_041_00_ST_JP.awb",
+            "bytes": 833097,
+            "sha256": "7f2d156e686bb323df8177fa24accede7499b50920adbf2f0dd027614c1e699c"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 102.784,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "b2-nube"
+      ],
+      "language": "ja",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": "041",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "nube"
+    },
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/CV_017_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "e8407177f1e3cc544b8ae2b1125da434204435fd46e90734ce67f8337505e3f8"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/CV_017_00_ST_JP.awb",
+            "bytes": 2256346,
+            "sha256": "48d6485913fca0981906226d4f872761a31a09202048226c9cc80a78576a5af9"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 277.803,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/PV_017_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "6b5bfdd7ca559f264a0b05b747f6a59324b30f7a85a70896180c360e7497f38c"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_sound_ps3.cpk/sound/JP/PV_017_00_ST_JP.awb",
+            "bytes": 704165,
+            "sha256": "e0f9fd47c937ff4b72e928590884b26fc826ccbcd3dd39060ebffea5597e6100"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 86.656,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "godie-ucrl"
+      ],
+      "language": "ja",
+      "nameZhTW": "小傑",
+      "nativeId": "017",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "gon"
+    },
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/CV_018_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "630e8a44fe4c944825d8b3f4828ccee40baaba020db7551e2fcb07379cf6df19"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/CV_018_00_ST_JP.awb",
+            "bytes": 1939803,
+            "sha256": "55d04ce726fde95e449e8301ce633443296d0cf284b78f493d86ed2671ff2ecc"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 238.165,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/PV_018_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "52496aa19795e2e2a8186ff94fa5f741b53528fc5bb0dfa09a4dd4c2f919f0cb"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_sound_ps3.cpk/sound/JP/PV_018_00_ST_JP.awb",
+            "bytes": 599174,
+            "sha256": "ad6dc65c01d289fbba9fd68f7e33f7bfeb92b51fb3948274ac79859e241f2350"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 73.515,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "language": "ja",
+      "nameZhTW": "奇犽",
+      "nativeId": "018",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "killua"
+    },
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/CV_037_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "c4a434ec568dc1b3090a0d21e40b7c6d501f3a7c92abaf32add2f0d44a5c6235"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/CV_037_00_ST_JP.awb",
+            "bytes": 2346252,
+            "sha256": "6fa3af93397515b01f5c19403d69a52530fb7db001848a15bb585f70ff6c5b46"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 289.024,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/PV_037_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "279306d87609d29e77dc85d5b2ce351a3583716e997504cf787fec5ed3df5802"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_sound_ps3.cpk/sound/JP/PV_037_00_ST_JP.awb",
+            "bytes": 894366,
+            "sha256": "df5fed1c496fc0c3c841653b5293da46ae5759ea627e10cbb76fec3eab0ffd50"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 110.464,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "b2-luckyman"
+      ],
+      "language": "ja",
+      "nameZhTW": "幸運超人",
+      "nativeId": "037",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "luckyman"
+    },
+    {
+      "banks": [
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/CV_012_00_ST_JP.acb",
+            "bytes": 48736,
+            "sha256": "2eb07aa8639aa76b356f753d497065bc64c37539c289e5eb869c3451ed158269"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/CV_012_00_ST_JP.awb",
+            "bytes": 3436537,
+            "sha256": "c77c634b2c6c88b097bb6002afff15b18afde0b1865afa3097c3dab1a0fffd97"
+          },
+          "bank": "CV",
+          "cueNameCount": 301,
+          "decodedWavCount": 301,
+          "durationSeconds": 425.472,
+          "hcaCount": 301,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        },
+        {
+          "acb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/PV_012_00_ST_JP.acb",
+            "bytes": 16800,
+            "sha256": "b2917e7754441a3820e1689c6c6dc718bfa8ce3f03ae1c1f7906457f4de6bf00"
+          },
+          "awb": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_sound_ps3.cpk/sound/JP/PV_012_00_ST_JP.awb",
+            "bytes": 787685,
+            "sha256": "4a6bffbdcb62ec1c118bd27b4fd31c8bf53ef357711f821beef54bfbce9bb233"
+          },
+          "bank": "PV",
+          "cueNameCount": 98,
+          "decodedWavCount": 98,
+          "durationSeconds": 97.109,
+          "hcaCount": 98,
+          "role": "character-audio-candidate-event-and-speaker-pending-review"
+        }
+      ],
+      "decodedAudioFiles": 399,
+      "ggdHeroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "language": "ja",
+      "nameZhTW": "飛影",
+      "nativeId": "012",
+      "runtimeBindingStatus": "blocked-owner-event-and-speaker-review-required",
+      "slug": "hiei"
+    }
+  ],
+  "decoder": {
+    "path": "/usr/local/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+    "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "fullAudioManifest": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-priority-audio-v1/audio-files.jsonl.gz",
+    "bytes": 205142,
+    "rows": 2394,
+    "sha256": "9e232c3e808da2a12989979d4cb61dce0b8fbc15fd9d31d1338d64e1eb13c0b6"
+  },
+  "outputRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-priority-audio-v1",
+  "productionDeploymentVerified": false,
+  "schema": "ggd.jstars-priority-audio-extraction@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "splitRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members",
+  "status": "priority-six-japanese-audio-decoded-owner-review-pending",
+  "summary": {
+    "decodedWavFiles": 2394,
+    "durationSeconds": 2660.992,
+    "hcaFiles": 2394,
+    "ownerApprovedFiles": 0,
+    "priorityCharacters": 6,
+    "runtimeBindings": 0,
+    "sourceBanks": 12
+  }
+}

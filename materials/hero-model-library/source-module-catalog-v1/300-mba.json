@@ -1,0 +1,6792 @@
+{
+  "schema": "ggd.source-module-catalog-fragment@2",
+  "sourceGroups": [
+    {
+      "sourceId": "300heroes-official-client-20260902",
+      "title": "300英雄官方用戶端",
+      "platform": "Windows PC",
+      "version": "v202609021",
+      "status": "extracted-indexed-candidate-library; no source-file registration or deployment",
+      "evidencePaths": [
+        "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+        "../outputs/game-asset-library-20260907/asset-library-summary.json",
+        "../outputs/asset-library-registry-20260907/catalog.sqlite",
+        "../outputs/asset-library-registry-20260907/characters.json"
+      ],
+      "summary": {
+        "candidateCharacters": 270,
+        "nativeFiles": 111198,
+        "modelIndexRecords": 34378,
+        "textureFiles": 47543,
+        "motionIndexRecords": 49859,
+        "nativeVfxPathRecords": 58922,
+        "playableAudioFilesUnclassified": 70395,
+        "undecodedAudioFiles": 4,
+        "convertedCharacterCandidateFiles": 0,
+        "ggdAcceptedSourceFiles": 0,
+        "registeredSourceFiles": 0,
+        "deployedSourceFiles": 0,
+        "boundary": "Audio counts are not split into SFX/voice; model records include static previews; VFX path records are mostly unlinked reserve."
+      },
+      "candidates": [
+        {
+          "character": "博丽灵梦",
+          "id": "300heroes:100",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 120
+          },
+          "sfx": {
+            "sourcePoolCount": 325,
+            "noteRef": "n6"
+          },
+          "voice": {
+            "sourcePoolCount": 325,
+            "noteRef": "n6"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "黑岩射手",
+          "id": "300heroes:101",
+          "work": "BLACK★ROCK SHOOTER 黑岩射手",
+          "model": {
+            "count": 35
+          },
+          "motion": {
+            "count": 329
+          },
+          "sfx": {
+            "sourcePoolCount": 476,
+            "noteRef": "n9"
+          },
+          "voice": {
+            "sourcePoolCount": 476,
+            "noteRef": "n9"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "黑衣剑士",
+          "id": "300heroes:102",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 100
+          },
+          "motion": {
+            "count": 582
+          },
+          "sfx": {
+            "sourcePoolCount": 1821,
+            "noteRef": "n10"
+          },
+          "voice": {
+            "sourcePoolCount": 1821,
+            "noteRef": "n10"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-19-20260907"
+            ]
+          }
+        },
+        {
+          "character": "吉尔伽美什",
+          "id": "300heroes:104",
+          "work": "Fate/stay night",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "sourcePoolCount": 204,
+            "noteRef": "n11"
+          },
+          "voice": {
+            "sourcePoolCount": 204,
+            "noteRef": "n11"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-18-20260907"
+            ]
+          }
+        },
+        {
+          "character": "秋山澪",
+          "id": "300heroes:105",
+          "work": "K-ON！輕音部",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 210
+          },
+          "sfx": {
+            "sourcePoolCount": 425,
+            "noteRef": "n12"
+          },
+          "voice": {
+            "sourcePoolCount": 425,
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "笠笠笠",
+          "id": "300heroes:107",
+          "work": "進擊的巨人",
+          "model": {
+            "count": 60
+          },
+          "motion": {
+            "count": 353
+          },
+          "sfx": {
+            "sourcePoolCount": 457,
+            "noteRef": "n13"
+          },
+          "voice": {
+            "sourcePoolCount": 457,
+            "noteRef": "n13"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-08-20260907"
+            ]
+          }
+        },
+        {
+          "character": "楪祈",
+          "id": "300heroes:108",
+          "work": "Guilty Crown 罪惡王冠",
+          "model": {
+            "count": 30
+          },
+          "motion": {
+            "count": 214
+          },
+          "sfx": {
+            "sourcePoolCount": 215,
+            "noteRef": "n14"
+          },
+          "voice": {
+            "sourcePoolCount": 215,
+            "noteRef": "n14"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "夏娜",
+          "id": "300heroes:109",
+          "work": "灼眼的夏娜",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 279
+          },
+          "sfx": {
+            "sourcePoolCount": 305,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "sourcePoolCount": 305,
+            "noteRef": "n15"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-e008"
+            ]
+          }
+        },
+        {
+          "character": "格雷",
+          "id": "300heroes:110",
+          "work": "FAIRY TAIL 魔導少年／妖精的尾巴",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 123
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "小悟空",
+          "id": "300heroes:112",
+          "work": "七龍珠／Dragon Ball 系列",
+          "model": {
+            "count": 21
+          },
+          "motion": {
+            "count": 196
+          },
+          "sfx": {
+            "sourcePoolCount": 299,
+            "noteRef": "n17"
+          },
+          "voice": {
+            "sourcePoolCount": 299,
+            "noteRef": "n17"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-o00x",
+              "godie-ogrh"
+            ]
+          }
+        },
+        {
+          "character": "片翼天使",
+          "id": "300heroes:113",
+          "work": "Final Fantasy VII／最終幻想 VII",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 249
+          },
+          "sfx": {
+            "sourcePoolCount": 197,
+            "noteRef": "n18"
+          },
+          "voice": {
+            "sourcePoolCount": 197,
+            "noteRef": "n18"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-u00j"
+            ]
+          }
+        },
+        {
+          "character": "贵公子",
+          "id": "300heroes:115",
+          "work": "犬夜叉",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 210
+          },
+          "sfx": {
+            "sourcePoolCount": 218,
+            "noteRef": "n19"
+          },
+          "voice": {
+            "sourcePoolCount": 218,
+            "noteRef": "n19"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-osam"
+            ]
+          }
+        },
+        {
+          "character": "桂木桂马",
+          "id": "300heroes:117",
+          "work": "只有神知道的世界",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 182
+          },
+          "sfx": {
+            "sourcePoolCount": 280,
+            "noteRef": "n20"
+          },
+          "voice": {
+            "sourcePoolCount": 280,
+            "noteRef": "n20"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "黑",
+          "id": "300heroes:118",
+          "work": "DARKER THAN BLACK－黑之契約者",
+          "model": {
+            "count": 36
+          },
+          "motion": {
+            "count": 303
+          },
+          "sfx": {
+            "sourcePoolCount": 305,
+            "noteRef": "n15"
+          },
+          "voice": {
+            "sourcePoolCount": 305,
+            "noteRef": "n15"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "李小狼",
+          "id": "300heroes:119",
+          "work": "TSUBASA 翼／翼年代記",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 116
+          },
+          "sfx": {
+            "sourcePoolCount": 104,
+            "noteRef": "n21"
+          },
+          "voice": {
+            "sourcePoolCount": 104,
+            "noteRef": "n21"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "姬丝秀忒",
+          "id": "300heroes:120",
+          "work": "物語系列",
+          "model": {
+            "count": 27
+          },
+          "motion": {
+            "count": 283
+          },
+          "sfx": {
+            "sourcePoolCount": 510,
+            "noteRef": "n22"
+          },
+          "voice": {
+            "sourcePoolCount": 510,
+            "noteRef": "n22"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "绯村剑心",
+          "id": "300heroes:121",
+          "work": "神劍闖江湖／浪客劍心",
+          "model": {
+            "count": 42
+          },
+          "motion": {
+            "count": 417
+          },
+          "sfx": {
+            "sourcePoolCount": 678,
+            "noteRef": "n23"
+          },
+          "voice": {
+            "sourcePoolCount": 678,
+            "noteRef": "n23"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "强袭自由",
+          "id": "300heroes:122",
+          "work": "機動戰士鋼彈 SEED DESTINY",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 180
+          },
+          "sfx": {
+            "sourcePoolCount": 344,
+            "noteRef": "n24"
+          },
+          "voice": {
+            "sourcePoolCount": 344,
+            "noteRef": "n24"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "真田幸村",
+          "id": "300heroes:126",
+          "work": "百花繚亂 SAMURAI GIRLS",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 93
+          },
+          "sfx": {
+            "sourcePoolCount": 127,
+            "noteRef": "n25"
+          },
+          "voice": {
+            "sourcePoolCount": 127,
+            "noteRef": "n25"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "喜羊羊",
+          "id": "300heroes:128",
+          "work": "喜羊羊與灰太狼",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 60
+          },
+          "sfx": {
+            "sourcePoolCount": 103,
+            "noteRef": "n26"
+          },
+          "voice": {
+            "sourcePoolCount": 103,
+            "noteRef": "n26"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "天道佩恩",
+          "id": "300heroes:13",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 160
+          },
+          "sfx": {
+            "sourcePoolCount": 229,
+            "noteRef": "n27"
+          },
+          "voice": {
+            "sourcePoolCount": 229,
+            "noteRef": "n27"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梦魇",
+          "id": "300heroes:134",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 58
+          },
+          "motion": {
+            "count": 219
+          },
+          "sfx": {
+            "sourcePoolCount": 378,
+            "noteRef": "n28"
+          },
+          "voice": {
+            "sourcePoolCount": 378,
+            "noteRef": "n28"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "十六夜咲夜",
+          "id": "300heroes:135",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 136
+          },
+          "sfx": {
+            "sourcePoolCount": 318,
+            "noteRef": "n29"
+          },
+          "voice": {
+            "sourcePoolCount": 318,
+            "noteRef": "n29"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-e00u"
+            ]
+          }
+        },
+        {
+          "character": "夜夜",
+          "id": "300heroes:136",
+          "work": "機巧少女不會受傷",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 195
+          },
+          "sfx": {
+            "sourcePoolCount": 205,
+            "noteRef": "n30"
+          },
+          "voice": {
+            "sourcePoolCount": 205,
+            "noteRef": "n30"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "坂田银时",
+          "id": "300heroes:137",
+          "work": "銀魂",
+          "model": {
+            "count": 38
+          },
+          "motion": {
+            "count": 182
+          },
+          "sfx": {
+            "sourcePoolCount": 207,
+            "noteRef": "n31"
+          },
+          "voice": {
+            "sourcePoolCount": 207,
+            "noteRef": "n31"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-23-20260907"
+            ]
+          }
+        },
+        {
+          "character": "伊卡洛斯",
+          "id": "300heroes:138",
+          "work": "天降之物",
+          "model": {
+            "count": 31
+          },
+          "motion": {
+            "count": 241
+          },
+          "sfx": {
+            "sourcePoolCount": 387,
+            "noteRef": "n32"
+          },
+          "voice": {
+            "sourcePoolCount": 387,
+            "noteRef": "n32"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "万年小学生",
+          "id": "300heroes:139",
+          "work": "名偵探柯南",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 25
+          },
+          "sfx": {
+            "sourcePoolCount": 30,
+            "noteRef": "n33"
+          },
+          "voice": {
+            "sourcePoolCount": 30,
+            "noteRef": "n33"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-26-20260907"
+            ]
+          }
+        },
+        {
+          "character": "小鸟游六花",
+          "id": "300heroes:140",
+          "work": "中二病也想談戀愛！",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 189
+          },
+          "sfx": {
+            "sourcePoolCount": 206,
+            "noteRef": "n34"
+          },
+          "voice": {
+            "sourcePoolCount": 206,
+            "noteRef": "n34"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "公主",
+          "id": "300heroes:142",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 32
+          },
+          "motion": {
+            "count": 297
+          },
+          "sfx": {
+            "sourcePoolCount": 374,
+            "noteRef": "n35"
+          },
+          "voice": {
+            "sourcePoolCount": 374,
+            "noteRef": "n35"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "晓美焰",
+          "id": "300heroes:143",
+          "work": "魔法少女小圓",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 256
+          },
+          "sfx": {
+            "sourcePoolCount": 366,
+            "noteRef": "n36"
+          },
+          "voice": {
+            "sourcePoolCount": 366,
+            "noteRef": "n36"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "金色之暗",
+          "id": "300heroes:144",
+          "work": "出包王女 To LOVE-Ru",
+          "model": {
+            "count": 29
+          },
+          "motion": {
+            "count": 320
+          },
+          "sfx": {
+            "sourcePoolCount": 349,
+            "noteRef": "n37"
+          },
+          "voice": {
+            "sourcePoolCount": 349,
+            "noteRef": "n37"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "纏流子",
+          "id": "300heroes:145",
+          "work": "KILL la KILL／斬服少女",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 174
+          },
+          "sfx": {
+            "sourcePoolCount": 97,
+            "noteRef": "n38"
+          },
+          "voice": {
+            "sourcePoolCount": 97,
+            "noteRef": "n38"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "涅普顿",
+          "id": "300heroes:146",
+          "work": "超次元戰記 戰機少女／Neptunia 系列",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 243
+          },
+          "sfx": {
+            "sourcePoolCount": 465,
+            "noteRef": "n39"
+          },
+          "voice": {
+            "sourcePoolCount": 465,
+            "noteRef": "n39"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "白井黑子",
+          "id": "300heroes:147",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 124
+          },
+          "sfx": {
+            "sourcePoolCount": 116,
+            "noteRef": "n40"
+          },
+          "voice": {
+            "sourcePoolCount": 116,
+            "noteRef": "n40"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "樱满集",
+          "id": "300heroes:148",
+          "work": "Guilty Crown 罪惡王冠",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 120
+          },
+          "sfx": {
+            "sourcePoolCount": 128,
+            "noteRef": "n41"
+          },
+          "voice": {
+            "sourcePoolCount": 128,
+            "noteRef": "n41"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梦梦",
+          "id": "300heroes:149",
+          "work": "出包王女 To LOVE-Ru",
+          "model": {
+            "count": 35
+          },
+          "motion": {
+            "count": 256
+          },
+          "sfx": {
+            "sourcePoolCount": 509,
+            "noteRef": "n42"
+          },
+          "voice": {
+            "sourcePoolCount": 509,
+            "noteRef": "n42"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "鹿目圆香",
+          "id": "300heroes:150",
+          "work": "魔法少女小圓",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 149
+          },
+          "sfx": {
+            "sourcePoolCount": 237,
+            "noteRef": "n43"
+          },
+          "voice": {
+            "sourcePoolCount": 237,
+            "noteRef": "n43"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-21-20260907"
+            ]
+          }
+        },
+        {
+          "character": "八云紫",
+          "id": "300heroes:151",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 36
+          },
+          "sfx": {
+            "sourcePoolCount": 88,
+            "noteRef": "n44"
+          },
+          "voice": {
+            "sourcePoolCount": 88,
+            "noteRef": "n44"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "奈亚子",
+          "id": "300heroes:152",
+          "work": "襲來！美少女邪神／潛行吧！奈亞子",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 105
+          },
+          "sfx": {
+            "sourcePoolCount": 235,
+            "noteRef": "n45"
+          },
+          "voice": {
+            "sourcePoolCount": 235,
+            "noteRef": "n45"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "白岩射手",
+          "id": "300heroes:153",
+          "work": "BLACK★ROCK SHOOTER THE GAME",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 147
+          },
+          "sfx": {
+            "sourcePoolCount": 164,
+            "noteRef": "n46"
+          },
+          "voice": {
+            "sourcePoolCount": 164,
+            "noteRef": "n46"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "立华奏",
+          "id": "300heroes:154",
+          "work": "Angel Beats!",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 178
+          },
+          "sfx": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "voice": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "两仪式",
+          "id": "300heroes:155",
+          "work": "空之境界",
+          "model": {
+            "count": 38
+          },
+          "motion": {
+            "count": 301
+          },
+          "sfx": {
+            "sourcePoolCount": 575,
+            "noteRef": "n48"
+          },
+          "voice": {
+            "sourcePoolCount": 575,
+            "noteRef": "n48"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "卫宫",
+          "id": "300heroes:156",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 82
+          },
+          "motion": {
+            "count": 559
+          },
+          "sfx": {
+            "sourcePoolCount": 1276,
+            "noteRef": "n49"
+          },
+          "voice": {
+            "sourcePoolCount": 1276,
+            "noteRef": "n49"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-12-20260907"
+            ]
+          }
+        },
+        {
+          "character": "五更琉璃",
+          "id": "300heroes:157",
+          "work": "我的妹妹哪有這麼可愛！",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 219
+          },
+          "sfx": {
+            "sourcePoolCount": 505,
+            "noteRef": "n50"
+          },
+          "voice": {
+            "sourcePoolCount": 505,
+            "noteRef": "n50"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "喔",
+          "id": "300heroes:158",
+          "work": "艦隊 Collection／艦隊收藏",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 172
+          },
+          "sfx": {
+            "sourcePoolCount": 279,
+            "noteRef": "n51"
+          },
+          "voice": {
+            "sourcePoolCount": 279,
+            "noteRef": "n51"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "龙教练",
+          "id": "300heroes:159",
+          "work": "數碼寶貝大冒險",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 163
+          },
+          "sfx": {
+            "sourcePoolCount": 214,
+            "noteRef": "n52"
+          },
+          "voice": {
+            "sourcePoolCount": 214,
+            "noteRef": "n52"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "远坂凛",
+          "id": "300heroes:160",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 230
+          },
+          "sfx": {
+            "sourcePoolCount": 263,
+            "noteRef": "n53"
+          },
+          "voice": {
+            "sourcePoolCount": 263,
+            "noteRef": "n53"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-rin"
+            ]
+          }
+        },
+        {
+          "character": "奇犽",
+          "id": "300heroes:161",
+          "work": "HUNTER×HUNTER 獵人",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 130
+          },
+          "sfx": {
+            "sourcePoolCount": 271,
+            "noteRef": "n54"
+          },
+          "voice": {
+            "sourcePoolCount": 271,
+            "noteRef": "n54"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-24-20260907"
+            ]
+          }
+        },
+        {
+          "character": "美树沙耶加",
+          "id": "300heroes:162",
+          "work": "魔法少女小圓",
+          "model": {
+            "count": 13
+          },
+          "motion": {
+            "count": 91
+          },
+          "sfx": {
+            "sourcePoolCount": 232,
+            "noteRef": "n55"
+          },
+          "voice": {
+            "sourcePoolCount": 232,
+            "noteRef": "n55"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "空条承太郎",
+          "id": "300heroes:163",
+          "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 153
+          },
+          "sfx": {
+            "sourcePoolCount": 279,
+            "noteRef": "n51"
+          },
+          "voice": {
+            "sourcePoolCount": 279,
+            "noteRef": "n51"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-04-20260907"
+            ]
+          }
+        },
+        {
+          "character": "黑雪姬",
+          "id": "300heroes:164",
+          "work": "加速世界",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 155
+          },
+          "sfx": {
+            "sourcePoolCount": 187,
+            "noteRef": "n56"
+          },
+          "voice": {
+            "sourcePoolCount": 187,
+            "noteRef": "n56"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "高町奈叶",
+          "id": "300heroes:165",
+          "work": "魔法少女奈葉",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 157
+          },
+          "sfx": {
+            "sourcePoolCount": 251,
+            "noteRef": "n57"
+          },
+          "voice": {
+            "sourcePoolCount": 251,
+            "noteRef": "n57"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-o01z",
+              "godie-o02v"
+            ]
+          }
+        },
+        {
+          "character": "佐仓杏子",
+          "id": "300heroes:166",
+          "work": "魔法少女小圓",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 98
+          },
+          "sfx": {
+            "sourcePoolCount": 143,
+            "noteRef": "n58"
+          },
+          "voice": {
+            "sourcePoolCount": 143,
+            "noteRef": "n58"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "冰之狙击手",
+          "id": "300heroes:167",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 248
+          },
+          "sfx": {
+            "sourcePoolCount": 521,
+            "noteRef": "n59"
+          },
+          "voice": {
+            "sourcePoolCount": 521,
+            "noteRef": "n59"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-13-20260907"
+            ]
+          }
+        },
+        {
+          "character": "伊莉雅",
+          "id": "300heroes:168",
+          "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
+          "model": {
+            "count": 82
+          },
+          "motion": {
+            "count": 339
+          },
+          "sfx": {
+            "sourcePoolCount": 556,
+            "noteRef": "n60"
+          },
+          "voice": {
+            "sourcePoolCount": 556,
+            "noteRef": "n60"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-16-20260907"
+            ]
+          }
+        },
+        {
+          "character": "菲特",
+          "id": "300heroes:169",
+          "work": "魔法少女奈葉",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 228
+          },
+          "sfx": {
+            "sourcePoolCount": 269,
+            "noteRef": "n61"
+          },
+          "voice": {
+            "sourcePoolCount": 269,
+            "noteRef": "n61"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-ntin"
+            ]
+          }
+        },
+        {
+          "character": "平和岛静雄",
+          "id": "300heroes:17",
+          "work": "無頭騎士異聞錄 DuRaRaRa!!",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 85
+          },
+          "sfx": {
+            "sourcePoolCount": 132,
+            "noteRef": "n62"
+          },
+          "voice": {
+            "sourcePoolCount": 132,
+            "noteRef": "n62"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "炎魔",
+          "id": "300heroes:170",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 127
+          },
+          "sfx": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "voice": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "独眼之王",
+          "id": "300heroes:171",
+          "work": "東京喰種／東京食屍鬼",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 202
+          },
+          "sfx": {
+            "sourcePoolCount": 594,
+            "noteRef": "n64"
+          },
+          "voice": {
+            "sourcePoolCount": 594,
+            "noteRef": "n64"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "隐居者",
+          "id": "300heroes:172",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 187
+          },
+          "sfx": {
+            "sourcePoolCount": 312,
+            "noteRef": "n65"
+          },
+          "voice": {
+            "sourcePoolCount": 312,
+            "noteRef": "n65"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "天使",
+          "id": "300heroes:174",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 32
+          },
+          "motion": {
+            "count": 167
+          },
+          "sfx": {
+            "sourcePoolCount": 369,
+            "noteRef": "n66"
+          },
+          "voice": {
+            "sourcePoolCount": 369,
+            "noteRef": "n66"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "唐僧",
+          "id": "300heroes:18",
+          "work": "西遊記",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 20
+          },
+          "sfx": {
+            "sourcePoolCount": 19,
+            "noteRef": "n67"
+          },
+          "voice": {
+            "sourcePoolCount": 19,
+            "noteRef": "n67"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "尼禄",
+          "id": "300heroes:180",
+          "work": "Fate/EXTRA 系列",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 291
+          },
+          "sfx": {
+            "sourcePoolCount": 179,
+            "noteRef": "n68"
+          },
+          "voice": {
+            "sourcePoolCount": 179,
+            "noteRef": "n68"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "巴麻美",
+          "id": "300heroes:181",
+          "work": "魔法少女小圓",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 194
+          },
+          "sfx": {
+            "sourcePoolCount": 495,
+            "noteRef": "n69"
+          },
+          "voice": {
+            "sourcePoolCount": 495,
+            "noteRef": "n69"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "大傻",
+          "id": "300heroes:183",
+          "work": "艦隊 Collection／艦隊收藏",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 109
+          },
+          "sfx": {
+            "sourcePoolCount": 107,
+            "noteRef": "n70"
+          },
+          "voice": {
+            "sourcePoolCount": 107,
+            "noteRef": "n70"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "亚里亚",
+          "id": "300heroes:184",
+          "work": "緋彈的亞莉亞",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 164
+          },
+          "sfx": {
+            "sourcePoolCount": 166,
+            "noteRef": "n71"
+          },
+          "voice": {
+            "sourcePoolCount": 166,
+            "noteRef": "n71"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "诺瓦露",
+          "id": "300heroes:185",
+          "work": "超次元戰記 戰機少女／Neptunia 系列",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 170
+          },
+          "sfx": {
+            "sourcePoolCount": 273,
+            "noteRef": "n72"
+          },
+          "voice": {
+            "sourcePoolCount": 273,
+            "noteRef": "n72"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "克子",
+          "id": "300heroes:186",
+          "work": "襲來！美少女邪神／潛行吧！奈亞子",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 98
+          },
+          "sfx": {
+            "sourcePoolCount": 73,
+            "noteRef": "n73"
+          },
+          "voice": {
+            "sourcePoolCount": 73,
+            "noteRef": "n73"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "混蛋罗（隐藏）",
+          "id": "300heroes:187",
+          "work": "魂斗羅 Contra",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 18
+          },
+          "sfx": {
+            "sourcePoolCount": 31,
+            "noteRef": "n74"
+          },
+          "voice": {
+            "sourcePoolCount": 31,
+            "noteRef": "n74"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "魂魄妖梦",
+          "id": "300heroes:188",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 162
+          },
+          "sfx": {
+            "sourcePoolCount": 284,
+            "noteRef": "n75"
+          },
+          "voice": {
+            "sourcePoolCount": 284,
+            "noteRef": "n75"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "歌姬",
+          "id": "300heroes:189",
+          "work": "約會大作戰 DATE A LIVE",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 201
+          },
+          "sfx": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "voice": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蒂塔",
+          "id": "300heroes:190",
+          "work": "300英雄原創",
+          "model": {
+            "count": 27
+          },
+          "motion": {
+            "count": 157
+          },
+          "sfx": {
+            "sourcePoolCount": 269,
+            "noteRef": "n61"
+          },
+          "voice": {
+            "sourcePoolCount": 269,
+            "noteRef": "n61"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "一方通行",
+          "id": "300heroes:191",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 222
+          },
+          "sfx": {
+            "sourcePoolCount": 354,
+            "noteRef": "n77"
+          },
+          "voice": {
+            "sourcePoolCount": 354,
+            "noteRef": "n77"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "牧濑红莉栖",
+          "id": "300heroes:192",
+          "work": "STEINS;GATE 命運石之門",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 206
+          },
+          "sfx": {
+            "sourcePoolCount": 309,
+            "noteRef": "n78"
+          },
+          "voice": {
+            "sourcePoolCount": 309,
+            "noteRef": "n78"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "伊莎",
+          "id": "300heroes:193",
+          "work": "300英雄原創",
+          "model": {
+            "count": 46
+          },
+          "motion": {
+            "count": 358
+          },
+          "sfx": {
+            "sourcePoolCount": 695,
+            "noteRef": "n79"
+          },
+          "voice": {
+            "sourcePoolCount": 695,
+            "noteRef": "n79"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "栗山未来",
+          "id": "300heroes:194",
+          "work": "境界的彼方",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 157
+          },
+          "sfx": {
+            "sourcePoolCount": 191,
+            "noteRef": "n80"
+          },
+          "voice": {
+            "sourcePoolCount": 191,
+            "noteRef": "n80"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梦原望",
+          "id": "300heroes:195",
+          "work": "Yes! 光之美少女5／GoGo!",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 120
+          },
+          "sfx": {
+            "sourcePoolCount": 211,
+            "noteRef": "n81"
+          },
+          "voice": {
+            "sourcePoolCount": 211,
+            "noteRef": "n81"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "柏崎星奈",
+          "id": "300heroes:196",
+          "work": "我的朋友很少",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 244
+          },
+          "sfx": {
+            "sourcePoolCount": 243,
+            "noteRef": "n82"
+          },
+          "voice": {
+            "sourcePoolCount": 243,
+            "noteRef": "n82"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "缇米",
+          "id": "300heroes:197",
+          "work": "300英雄原創",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 113
+          },
+          "sfx": {
+            "sourcePoolCount": 206,
+            "noteRef": "n34"
+          },
+          "voice": {
+            "sourcePoolCount": 206,
+            "noteRef": "n34"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "伊斯坎达尔",
+          "id": "300heroes:198",
+          "work": "Fate/Zero",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 114
+          },
+          "sfx": {
+            "sourcePoolCount": 158,
+            "noteRef": "n83"
+          },
+          "voice": {
+            "sourcePoolCount": 158,
+            "noteRef": "n83"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "优克莉伍德",
+          "id": "300heroes:199",
+          "work": "這樣算是殭屍嗎？",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 159
+          },
+          "sfx": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "voice": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "阿尔冯斯",
+          "id": "300heroes:20",
+          "work": "鋼之鍊金術師",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 98
+          },
+          "sfx": {
+            "sourcePoolCount": 105,
+            "noteRef": "n84"
+          },
+          "voice": {
+            "sourcePoolCount": 105,
+            "noteRef": "n84"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "洛克李",
+          "id": "300heroes:200",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 94
+          },
+          "sfx": {
+            "sourcePoolCount": 167,
+            "noteRef": "n85"
+          },
+          "voice": {
+            "sourcePoolCount": 167,
+            "noteRef": "n85"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "水银灯",
+          "id": "300heroes:201",
+          "work": "薔薇少女 Rozen Maiden",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 133
+          },
+          "sfx": {
+            "sourcePoolCount": 346,
+            "noteRef": "n86"
+          },
+          "voice": {
+            "sourcePoolCount": 346,
+            "noteRef": "n86"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "周防尊",
+          "id": "300heroes:202",
+          "work": "K",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 117
+          },
+          "sfx": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "voice": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "爱德华",
+          "id": "300heroes:203",
+          "work": "鋼之鍊金術師",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 69
+          },
+          "sfx": {
+            "sourcePoolCount": 185,
+            "noteRef": "n87"
+          },
+          "voice": {
+            "sourcePoolCount": 185,
+            "noteRef": "n87"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "法老王",
+          "id": "300heroes:204",
+          "work": "遊戲王／遊戲王 怪獸之決鬥",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 52
+          },
+          "sfx": {
+            "sourcePoolCount": 93,
+            "noteRef": "n88"
+          },
+          "voice": {
+            "sourcePoolCount": 93,
+            "noteRef": "n88"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-01-20260907"
+            ]
+          }
+        },
+        {
+          "character": "无名",
+          "id": "300heroes:205",
+          "work": "甲鐵城的卡巴內里",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 140
+          },
+          "sfx": {
+            "sourcePoolCount": 86,
+            "noteRef": "n89"
+          },
+          "voice": {
+            "sourcePoolCount": 86,
+            "noteRef": "n89"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "月刊重巡",
+          "id": "300heroes:206",
+          "work": "艦隊 Collection／艦隊收藏",
+          "motion": {
+            "count": 77
+          },
+          "sfx": {
+            "sourcePoolCount": 92,
+            "noteRef": "n90"
+          },
+          "voice": {
+            "sourcePoolCount": 92,
+            "noteRef": "n90"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蕾米莉亚",
+          "id": "300heroes:207",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 153
+          },
+          "sfx": {
+            "sourcePoolCount": 209,
+            "noteRef": "n91"
+          },
+          "voice": {
+            "sourcePoolCount": 209,
+            "noteRef": "n91"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "八神疾风",
+          "id": "300heroes:208",
+          "work": "魔法少女奈葉",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 221
+          },
+          "sfx": {
+            "sourcePoolCount": 271,
+            "noteRef": "n54"
+          },
+          "voice": {
+            "sourcePoolCount": 271,
+            "noteRef": "n54"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "司波达也",
+          "id": "300heroes:209",
+          "work": "魔法科高中的劣等生",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 155
+          },
+          "sfx": {
+            "sourcePoolCount": 319,
+            "noteRef": "n92"
+          },
+          "voice": {
+            "sourcePoolCount": 319,
+            "noteRef": "n92"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "赵云",
+          "id": "300heroes:210",
+          "work": "戀姬†無雙 系列",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 247
+          },
+          "sfx": {
+            "sourcePoolCount": 247,
+            "noteRef": "n93"
+          },
+          "voice": {
+            "sourcePoolCount": 247,
+            "noteRef": "n93"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "艾露莎",
+          "id": "300heroes:211",
+          "work": "FAIRY TAIL 魔導少年／妖精的尾巴",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 225
+          },
+          "sfx": {
+            "sourcePoolCount": 425,
+            "noteRef": "n12"
+          },
+          "voice": {
+            "sourcePoolCount": 425,
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "赤瞳",
+          "id": "300heroes:212",
+          "work": "斬！赤紅之瞳",
+          "model": {
+            "count": 40
+          },
+          "motion": {
+            "count": 347
+          },
+          "sfx": {
+            "sourcePoolCount": 952,
+            "noteRef": "n94"
+          },
+          "voice": {
+            "sourcePoolCount": 952,
+            "noteRef": "n94"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "鲁路修",
+          "id": "300heroes:213",
+          "work": "Code Geass 反叛的魯路修",
+          "model": {
+            "count": 30
+          },
+          "motion": {
+            "count": 173
+          },
+          "sfx": {
+            "sourcePoolCount": 710,
+            "noteRef": "n95"
+          },
+          "voice": {
+            "sourcePoolCount": 710,
+            "noteRef": "n95"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-10-20260907"
+            ]
+          }
+        },
+        {
+          "character": "香风智乃",
+          "id": "300heroes:214",
+          "work": "請問您今天要來點兔子嗎？",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 207
+          },
+          "sfx": {
+            "sourcePoolCount": 456,
+            "noteRef": "n96"
+          },
+          "voice": {
+            "sourcePoolCount": 456,
+            "noteRef": "n96"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "白",
+          "id": "300heroes:215",
+          "work": "NO GAME NO LIFE 遊戲人生",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 177
+          },
+          "sfx": {
+            "sourcePoolCount": 400,
+            "noteRef": "n97"
+          },
+          "voice": {
+            "sourcePoolCount": 400,
+            "noteRef": "n97"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "空",
+          "id": "300heroes:216",
+          "work": "NO GAME NO LIFE 遊戲人生",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 67
+          },
+          "sfx": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "voice": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "阿斯托尔福",
+          "id": "300heroes:217",
+          "work": "Fate/Apocrypha",
+          "model": {
+            "count": 32
+          },
+          "motion": {
+            "count": 285
+          },
+          "sfx": {
+            "sourcePoolCount": 338,
+            "noteRef": "n99"
+          },
+          "voice": {
+            "sourcePoolCount": 338,
+            "noteRef": "n99"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "雾雨魔理沙",
+          "id": "300heroes:218",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 137
+          },
+          "sfx": {
+            "sourcePoolCount": 300,
+            "noteRef": "n100"
+          },
+          "voice": {
+            "sourcePoolCount": 300,
+            "noteRef": "n100"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "贞德",
+          "id": "300heroes:219",
+          "work": "Fate/Apocrypha",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 6
+          },
+          "sfx": {
+            "stage": null,
+            "sourcePoolCount": null,
+            "noteRef": "n101"
+          },
+          "voice": {
+            "stage": null,
+            "sourcePoolCount": null,
+            "noteRef": "n101"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "贞德",
+          "id": "300heroes:220",
+          "work": "Fate/Apocrypha",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 194
+          },
+          "sfx": {
+            "sourcePoolCount": 327,
+            "noteRef": "n102"
+          },
+          "voice": {
+            "sourcePoolCount": 327,
+            "noteRef": "n102"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "黑贞德",
+          "id": "300heroes:221",
+          "work": "Fate/Grand Order",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 178
+          },
+          "sfx": {
+            "sourcePoolCount": 315,
+            "noteRef": "n103"
+          },
+          "voice": {
+            "sourcePoolCount": 315,
+            "noteRef": "n103"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "玉藻前",
+          "id": "300heroes:222",
+          "work": "Fate/EXTRA 系列",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 199
+          },
+          "sfx": {
+            "sourcePoolCount": 258,
+            "noteRef": "n104"
+          },
+          "voice": {
+            "sourcePoolCount": 258,
+            "noteRef": "n104"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "三千院凪",
+          "id": "300heroes:223",
+          "work": "旋風管家！",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 84
+          },
+          "sfx": {
+            "sourcePoolCount": 136,
+            "noteRef": "n105"
+          },
+          "voice": {
+            "sourcePoolCount": 136,
+            "noteRef": "n105"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "君莫笑",
+          "id": "300heroes:224",
+          "work": "全職高手",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 57
+          },
+          "sfx": {
+            "sourcePoolCount": 93,
+            "noteRef": "n88"
+          },
+          "voice": {
+            "sourcePoolCount": 93,
+            "noteRef": "n88"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "夜雨声烦",
+          "id": "300heroes:225",
+          "work": "全職高手",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 21
+          },
+          "sfx": {
+            "sourcePoolCount": 42,
+            "noteRef": "n106"
+          },
+          "voice": {
+            "sourcePoolCount": 42,
+            "noteRef": "n106"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "库·丘林",
+          "id": "300heroes:226",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 137
+          },
+          "sfx": {
+            "sourcePoolCount": 301,
+            "noteRef": "n107"
+          },
+          "voice": {
+            "sourcePoolCount": 301,
+            "noteRef": "n107"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "小一",
+          "id": "300heroes:227",
+          "work": "BLEACH 死神",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 222
+          },
+          "sfx": {
+            "sourcePoolCount": 649,
+            "noteRef": "n108"
+          },
+          "voice": {
+            "sourcePoolCount": 649,
+            "noteRef": "n108"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-h01n",
+              "godie-h01o"
+            ]
+          }
+        },
+        {
+          "character": "塞巴斯蒂安",
+          "id": "300heroes:228",
+          "work": "黑執事",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 56
+          },
+          "sfx": {
+            "sourcePoolCount": 169,
+            "noteRef": "n109"
+          },
+          "voice": {
+            "sourcePoolCount": 169,
+            "noteRef": "n109"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "安兹乌尔恭",
+          "id": "300heroes:229",
+          "work": "OVERLORD",
+          "model": {
+            "count": 44
+          },
+          "motion": {
+            "count": 150
+          },
+          "sfx": {
+            "sourcePoolCount": 278,
+            "noteRef": "n110"
+          },
+          "voice": {
+            "sourcePoolCount": 278,
+            "noteRef": "n110"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-17-20260907"
+            ]
+          }
+        },
+        {
+          "character": "齐天小剩",
+          "id": "300heroes:23",
+          "work": "300英雄：西遊記題材改編",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 60
+          },
+          "sfx": {
+            "sourcePoolCount": 69,
+            "noteRef": "n111"
+          },
+          "voice": {
+            "sourcePoolCount": 69,
+            "noteRef": "n111"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "芙兰朵露",
+          "id": "300heroes:230",
+          "motion": {
+            "count": 67
+          },
+          "sfx": {
+            "sourcePoolCount": 187,
+            "noteRef": "n56"
+          },
+          "voice": {
+            "sourcePoolCount": 187,
+            "noteRef": "n56"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "阿库娅",
+          "id": "300heroes:231",
+          "work": "為美好的世界獻上祝福！",
+          "model": {
+            "count": 23
+          },
+          "motion": {
+            "count": 190
+          },
+          "sfx": {
+            "sourcePoolCount": 531,
+            "noteRef": "n112"
+          },
+          "voice": {
+            "sourcePoolCount": 531,
+            "noteRef": "n112"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "阿尔泰尔",
+          "id": "300heroes:232",
+          "work": "Re:CREATORS",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 128
+          },
+          "sfx": {
+            "sourcePoolCount": 193,
+            "noteRef": "n113"
+          },
+          "voice": {
+            "sourcePoolCount": 193,
+            "noteRef": "n113"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "珂朵莉",
+          "id": "300heroes:233",
+          "work": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 184
+          },
+          "sfx": {
+            "sourcePoolCount": 451,
+            "noteRef": "n114"
+          },
+          "voice": {
+            "sourcePoolCount": 451,
+            "noteRef": "n114"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "康娜",
+          "id": "300heroes:234",
+          "work": "小林家的龍女僕",
+          "model": {
+            "count": 78
+          },
+          "motion": {
+            "count": 632
+          },
+          "sfx": {
+            "sourcePoolCount": 970,
+            "noteRef": "n115"
+          },
+          "voice": {
+            "sourcePoolCount": 970,
+            "noteRef": "n115"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "神裂火织",
+          "id": "300heroes:235",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 29
+          },
+          "motion": {
+            "count": 228
+          },
+          "sfx": {
+            "sourcePoolCount": 552,
+            "noteRef": "n116"
+          },
+          "voice": {
+            "sourcePoolCount": 552,
+            "noteRef": "n116"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "佩姬",
+          "id": "300heroes:236",
+          "work": "300英雄原創",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 140
+          },
+          "sfx": {
+            "sourcePoolCount": 373,
+            "noteRef": "n117"
+          },
+          "voice": {
+            "sourcePoolCount": 373,
+            "noteRef": "n117"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "雅儿贝德",
+          "id": "300heroes:237",
+          "work": "OVERLORD",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 163
+          },
+          "sfx": {
+            "sourcePoolCount": 298,
+            "noteRef": "n118"
+          },
+          "voice": {
+            "sourcePoolCount": 298,
+            "noteRef": "n118"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "爱蜜莉雅",
+          "id": "300heroes:238",
+          "work": "Re:從零開始的異世界生活",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 289
+          },
+          "sfx": {
+            "sourcePoolCount": 190,
+            "noteRef": "n119"
+          },
+          "voice": {
+            "sourcePoolCount": 190,
+            "noteRef": "n119"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "夜斗",
+          "id": "300heroes:239",
+          "work": "流浪神差／野良神",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 304
+          },
+          "sfx": {
+            "sourcePoolCount": 370,
+            "noteRef": "n120"
+          },
+          "voice": {
+            "sourcePoolCount": 370,
+            "noteRef": "n120"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "西行寺幽幽子",
+          "id": "300heroes:240",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 54
+          },
+          "sfx": {
+            "sourcePoolCount": 65,
+            "noteRef": "n121"
+          },
+          "voice": {
+            "sourcePoolCount": 65,
+            "noteRef": "n121"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "我妻由乃",
+          "id": "300heroes:241",
+          "work": "未來日記",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 160
+          },
+          "sfx": {
+            "sourcePoolCount": 200,
+            "noteRef": "n122"
+          },
+          "voice": {
+            "sourcePoolCount": 200,
+            "noteRef": "n122"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "潘多拉",
+          "id": "300heroes:242",
+          "work": "300英雄原創",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 90
+          },
+          "sfx": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "voice": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "常昊灵",
+          "id": "300heroes:243",
+          "work": "畫江湖之不良人",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 18
+          },
+          "sfx": {
+            "sourcePoolCount": 47,
+            "noteRef": "n123"
+          },
+          "voice": {
+            "sourcePoolCount": 47,
+            "noteRef": "n123"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "常宣灵",
+          "id": "300heroes:244",
+          "work": "畫江湖之不良人",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 20
+          },
+          "sfx": {
+            "sourcePoolCount": 40,
+            "noteRef": "n124"
+          },
+          "voice": {
+            "sourcePoolCount": 40,
+            "noteRef": "n124"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "曹焱兵",
+          "id": "300heroes:245",
+          "work": "鎮魂街",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 50
+          },
+          "sfx": {
+            "sourcePoolCount": 60,
+            "noteRef": "n125"
+          },
+          "voice": {
+            "sourcePoolCount": 60,
+            "noteRef": "n125"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "少司命",
+          "id": "300heroes:246",
+          "work": "秦時明月",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 20
+          },
+          "sfx": {
+            "sourcePoolCount": 25,
+            "noteRef": "n126"
+          },
+          "voice": {
+            "sourcePoolCount": 25,
+            "noteRef": "n126"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "迪斯卓尔",
+          "id": "300heroes:247",
+          "work": "300英雄原創",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 138
+          },
+          "sfx": {
+            "sourcePoolCount": 226,
+            "noteRef": "n127"
+          },
+          "voice": {
+            "sourcePoolCount": 226,
+            "noteRef": "n127"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "琉璃",
+          "id": "300heroes:248",
+          "work": "雛蜂",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 31
+          },
+          "sfx": {
+            "sourcePoolCount": 46,
+            "noteRef": "n128"
+          },
+          "voice": {
+            "sourcePoolCount": 46,
+            "noteRef": "n128"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "爱丽丝",
+          "id": "300heroes:249",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 166
+          },
+          "sfx": {
+            "sourcePoolCount": 235,
+            "noteRef": "n45"
+          },
+          "voice": {
+            "sourcePoolCount": 235,
+            "noteRef": "n45"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "伍六七",
+          "id": "300heroes:250",
+          "work": "伍六七／刺客伍六七",
+          "motion": {
+            "count": 48
+          },
+          "sfx": {
+            "sourcePoolCount": 45,
+            "noteRef": "n129"
+          },
+          "voice": {
+            "sourcePoolCount": 45,
+            "noteRef": "n129"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蕾西亚",
+          "id": "300heroes:251",
+          "work": "BEATLESS 沒有心跳的少女",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 108
+          },
+          "sfx": {
+            "sourcePoolCount": 90,
+            "noteRef": "n130"
+          },
+          "voice": {
+            "sourcePoolCount": 90,
+            "noteRef": "n130"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "美杜莎",
+          "id": "300heroes:253",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 64
+          },
+          "sfx": {
+            "sourcePoolCount": 120,
+            "noteRef": "n131"
+          },
+          "voice": {
+            "sourcePoolCount": 120,
+            "noteRef": "n131"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-hvsh"
+            ]
+          }
+        },
+        {
+          "character": "间桐樱",
+          "id": "300heroes:254",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 27
+          },
+          "motion": {
+            "count": 152
+          },
+          "sfx": {
+            "sourcePoolCount": 250,
+            "noteRef": "n132"
+          },
+          "voice": {
+            "sourcePoolCount": 250,
+            "noteRef": "n132"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "乔鲁诺·乔巴纳",
+          "id": "300heroes:255",
+          "work": "JoJo 的奇妙冒險 第五部：黃金之風",
+          "motion": {
+            "count": 40
+          },
+          "sfx": {
+            "sourcePoolCount": 57,
+            "noteRef": "n133"
+          },
+          "voice": {
+            "sourcePoolCount": 57,
+            "noteRef": "n133"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "埼玉",
+          "id": "300heroes:256",
+          "work": "一拳超人 ONE-PUNCH MAN",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 143
+          },
+          "sfx": {
+            "sourcePoolCount": 258,
+            "noteRef": "n104"
+          },
+          "voice": {
+            "sourcePoolCount": 258,
+            "noteRef": "n104"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-25-20260907"
+            ]
+          }
+        },
+        {
+          "character": "妮姆芙",
+          "id": "300heroes:257",
+          "work": "天降之物",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 118
+          },
+          "sfx": {
+            "sourcePoolCount": 159,
+            "noteRef": "n134"
+          },
+          "voice": {
+            "sourcePoolCount": 159,
+            "noteRef": "n134"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "波风水门",
+          "id": "300heroes:258",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 73
+          },
+          "sfx": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "voice": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "伍六七",
+          "id": "300heroes:259",
+          "work": "伍六七／刺客伍六七",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 24
+          },
+          "sfx": {
+            "sourcePoolCount": 34,
+            "noteRef": "n136"
+          },
+          "voice": {
+            "sourcePoolCount": 34,
+            "noteRef": "n136"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "莉法",
+          "id": "300heroes:260",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 167
+          },
+          "sfx": {
+            "sourcePoolCount": 167,
+            "noteRef": "n85"
+          },
+          "voice": {
+            "sourcePoolCount": 167,
+            "noteRef": "n85"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "爱丽丝·玛格特罗依德",
+          "id": "300heroes:262",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 96
+          },
+          "sfx": {
+            "sourcePoolCount": 134,
+            "noteRef": "n137"
+          },
+          "voice": {
+            "sourcePoolCount": 134,
+            "noteRef": "n137"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "真红",
+          "id": "300heroes:263",
+          "work": "薔薇少女 Rozen Maiden",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 146
+          },
+          "sfx": {
+            "sourcePoolCount": 292,
+            "noteRef": "n138"
+          },
+          "voice": {
+            "sourcePoolCount": 292,
+            "noteRef": "n138"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "美游",
+          "id": "300heroes:264",
+          "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 181
+          },
+          "sfx": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "voice": {
+            "sourcePoolCount": 157,
+            "noteRef": "n63"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "格蕾",
+          "id": "300heroes:265",
+          "work": "艾梅洛閣下II世事件簿",
+          "motion": {
+            "count": 92
+          },
+          "sfx": {
+            "sourcePoolCount": 108,
+            "noteRef": "n139"
+          },
+          "voice": {
+            "sourcePoolCount": 108,
+            "noteRef": "n139"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "冯宝宝",
+          "id": "300heroes:266",
+          "work": "一人之下",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 40
+          },
+          "sfx": {
+            "sourcePoolCount": 67,
+            "noteRef": "n140"
+          },
+          "voice": {
+            "sourcePoolCount": 67,
+            "noteRef": "n140"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "灶门炭治郎",
+          "id": "300heroes:267",
+          "work": "鬼滅之刃",
+          "model": {
+            "count": 40
+          },
+          "motion": {
+            "count": 662
+          },
+          "sfx": {
+            "sourcePoolCount": 1685,
+            "noteRef": "n141"
+          },
+          "voice": {
+            "sourcePoolCount": 1685,
+            "noteRef": "n141"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-35-20260907"
+            ]
+          }
+        },
+        {
+          "character": "射命丸文",
+          "id": "300heroes:268",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 64
+          },
+          "sfx": {
+            "sourcePoolCount": 88,
+            "noteRef": "n44"
+          },
+          "voice": {
+            "sourcePoolCount": 88,
+            "noteRef": "n44"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "尤吉欧",
+          "id": "300heroes:269",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 139
+          },
+          "sfx": {
+            "sourcePoolCount": 247,
+            "noteRef": "n93"
+          },
+          "voice": {
+            "sourcePoolCount": 247,
+            "noteRef": "n93"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "迪奥·布兰度",
+          "id": "300heroes:270",
+          "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+          "model": {
+            "count": 26
+          },
+          "motion": {
+            "count": 222
+          },
+          "sfx": {
+            "sourcePoolCount": 474,
+            "noteRef": "n142"
+          },
+          "voice": {
+            "sourcePoolCount": 474,
+            "noteRef": "n142"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "环彩羽",
+          "id": "300heroes:271",
+          "work": "魔法紀錄 魔法少女小圓外傳",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 91
+          },
+          "sfx": {
+            "sourcePoolCount": 132,
+            "noteRef": "n62"
+          },
+          "voice": {
+            "sourcePoolCount": 132,
+            "noteRef": "n62"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梅普露",
+          "id": "300heroes:272",
+          "work": "怕痛的我，把防禦力點滿就對了",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 88
+          },
+          "sfx": {
+            "sourcePoolCount": 107,
+            "noteRef": "n70"
+          },
+          "voice": {
+            "sourcePoolCount": 107,
+            "noteRef": "n70"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-maple"
+            ]
+          }
+        },
+        {
+          "character": "机械神梅普露",
+          "id": "300heroes:273",
+          "work": "怕痛的我，把防禦力點滿就對了",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 42
+          },
+          "sfx": {
+            "sourcePoolCount": 78,
+            "noteRef": "n143"
+          },
+          "voice": {
+            "sourcePoolCount": 78,
+            "noteRef": "n143"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-maple"
+            ]
+          }
+        },
+        {
+          "character": "蝴蝶忍",
+          "id": "300heroes:274",
+          "work": "鬼滅之刃",
+          "motion": {
+            "count": 63
+          },
+          "sfx": {
+            "sourcePoolCount": 129,
+            "noteRef": "n144"
+          },
+          "voice": {
+            "sourcePoolCount": 129,
+            "noteRef": "n144"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蓬莱山辉夜",
+          "id": "300heroes:275",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 61
+          },
+          "sfx": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "voice": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梅普露",
+          "id": "300heroes:276",
+          "work": "怕痛的我，把防禦力點滿就對了",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "stage": null,
+            "sourcePoolCount": null,
+            "noteRef": "n101"
+          },
+          "voice": {
+            "stage": null,
+            "sourcePoolCount": null,
+            "noteRef": "n101"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-maple"
+            ]
+          }
+        },
+        {
+          "character": "C.C.",
+          "id": "300heroes:278",
+          "work": "Code Geass 反叛的魯路修",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 81
+          },
+          "sfx": {
+            "sourcePoolCount": 151,
+            "noteRef": "n146"
+          },
+          "voice": {
+            "sourcePoolCount": 151,
+            "noteRef": "n146"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "涂山红红",
+          "id": "300heroes:279",
+          "work": "狐妖小紅娘",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 39
+          },
+          "sfx": {
+            "sourcePoolCount": 50,
+            "noteRef": "n147"
+          },
+          "voice": {
+            "sourcePoolCount": 50,
+            "noteRef": "n147"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "王也",
+          "id": "300heroes:280",
+          "work": "一人之下",
+          "motion": {
+            "count": 43
+          },
+          "sfx": {
+            "sourcePoolCount": 59,
+            "noteRef": "n148"
+          },
+          "voice": {
+            "sourcePoolCount": 59,
+            "noteRef": "n148"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "藤原妹红",
+          "id": "300heroes:281",
+          "motion": {
+            "count": 79
+          },
+          "sfx": {
+            "sourcePoolCount": 142,
+            "noteRef": "n149"
+          },
+          "voice": {
+            "sourcePoolCount": 142,
+            "noteRef": "n149"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "和真&惠惠",
+          "id": "300heroes:282",
+          "work": "為美好的世界獻上祝福！",
+          "model": {
+            "count": 40
+          },
+          "motion": {
+            "count": 313
+          },
+          "sfx": {
+            "sourcePoolCount": 326,
+            "noteRef": "n150"
+          },
+          "voice": {
+            "sourcePoolCount": 326,
+            "noteRef": "n150"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "帕秋莉·诺蕾姬",
+          "id": "300heroes:283",
+          "motion": {
+            "count": 135
+          },
+          "sfx": {
+            "sourcePoolCount": 285,
+            "noteRef": "n151"
+          },
+          "voice": {
+            "sourcePoolCount": 285,
+            "noteRef": "n151"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "托尔",
+          "id": "300heroes:284",
+          "work": "小林家的龍女僕",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 172
+          },
+          "sfx": {
+            "sourcePoolCount": 128,
+            "noteRef": "n41"
+          },
+          "voice": {
+            "sourcePoolCount": 128,
+            "noteRef": "n41"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "吉良吉影",
+          "id": "300heroes:285",
+          "work": "JoJo 的奇妙冒險 第四部：不滅鑽石",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 26
+          },
+          "sfx": {
+            "sourcePoolCount": 43,
+            "noteRef": "n152"
+          },
+          "voice": {
+            "sourcePoolCount": 43,
+            "noteRef": "n152"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "食蜂操祈",
+          "id": "300heroes:286",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 127
+          },
+          "sfx": {
+            "sourcePoolCount": 203,
+            "noteRef": "n153"
+          },
+          "voice": {
+            "sourcePoolCount": 203,
+            "noteRef": "n153"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "赛贝丝",
+          "id": "300heroes:287",
+          "work": "300英雄原創",
+          "motion": {
+            "count": 63
+          },
+          "sfx": {
+            "sourcePoolCount": 190,
+            "noteRef": "n119"
+          },
+          "voice": {
+            "sourcePoolCount": 190,
+            "noteRef": "n119"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "闻人翊悬",
+          "id": "300heroes:288",
+          "work": "霧山五行",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 65
+          },
+          "sfx": {
+            "sourcePoolCount": 186,
+            "noteRef": "n154"
+          },
+          "voice": {
+            "sourcePoolCount": 186,
+            "noteRef": "n154"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "莉姆",
+          "id": "300heroes:289",
+          "work": "迷宮黑心企業／異世界迷宮黑心企業",
+          "model": {
+            "count": 13
+          },
+          "motion": {
+            "count": 136
+          },
+          "sfx": {
+            "sourcePoolCount": 326,
+            "noteRef": "n150"
+          },
+          "voice": {
+            "sourcePoolCount": 326,
+            "noteRef": "n150"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "沙耶",
+          "id": "300heroes:29",
+          "work": "沙耶之歌",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 99
+          },
+          "sfx": {
+            "sourcePoolCount": 194,
+            "noteRef": "n155"
+          },
+          "voice": {
+            "sourcePoolCount": 194,
+            "noteRef": "n155"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "申屠子夜",
+          "id": "300heroes:290",
+          "work": "霧山五行",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 20
+          },
+          "sfx": {
+            "sourcePoolCount": 46,
+            "noteRef": "n128"
+          },
+          "voice": {
+            "sourcePoolCount": 46,
+            "noteRef": "n128"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "结城友奈",
+          "id": "300heroes:291",
+          "work": "結城友奈是勇者",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "sourcePoolCount": 291,
+            "noteRef": "n156"
+          },
+          "voice": {
+            "sourcePoolCount": 291,
+            "noteRef": "n156"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "木之本樱",
+          "id": "300heroes:292",
+          "work": "庫洛魔法使／魔卡少女櫻",
+          "motion": {
+            "count": 149
+          },
+          "sfx": {
+            "sourcePoolCount": 69,
+            "noteRef": "n111"
+          },
+          "voice": {
+            "sourcePoolCount": 69,
+            "noteRef": "n111"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-27-20260907"
+            ]
+          }
+        },
+        {
+          "character": "红美铃",
+          "id": "300heroes:293",
+          "model": {
+            "count": 7
+          },
+          "motion": {
+            "count": 79
+          },
+          "sfx": {
+            "sourcePoolCount": 136,
+            "noteRef": "n105"
+          },
+          "voice": {
+            "sourcePoolCount": 136,
+            "noteRef": "n105"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "逢坂大河",
+          "id": "300heroes:294",
+          "work": "TIGER×DRAGON！／龍與虎",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 160
+          },
+          "sfx": {
+            "sourcePoolCount": 175,
+            "noteRef": "n157"
+          },
+          "voice": {
+            "sourcePoolCount": 175,
+            "noteRef": "n157"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "古明地觉&古明地恋",
+          "id": "300heroes:295",
+          "model": {
+            "count": 32
+          },
+          "motion": {
+            "count": 118
+          },
+          "sfx": {
+            "sourcePoolCount": 220,
+            "noteRef": "n158"
+          },
+          "voice": {
+            "sourcePoolCount": 220,
+            "noteRef": "n158"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "夏提雅",
+          "id": "300heroes:296",
+          "work": "OVERLORD",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 91
+          },
+          "sfx": {
+            "sourcePoolCount": 181,
+            "noteRef": "n159"
+          },
+          "voice": {
+            "sourcePoolCount": 181,
+            "noteRef": "n159"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "哈桑",
+          "id": "300heroes:30",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 122
+          },
+          "sfx": {
+            "sourcePoolCount": 228,
+            "noteRef": "n160"
+          },
+          "voice": {
+            "sourcePoolCount": 228,
+            "noteRef": "n160"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "凯菈",
+          "id": "300heroes:300",
+          "work": "300英雄原創",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 235
+          },
+          "sfx": {
+            "sourcePoolCount": 189,
+            "noteRef": "n161"
+          },
+          "voice": {
+            "sourcePoolCount": 189,
+            "noteRef": "n161"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "北方酱",
+          "id": "300heroes:301",
+          "work": "艦隊 Collection／艦隊收藏",
+          "model": {
+            "count": 11
+          },
+          "motion": {
+            "count": 111
+          },
+          "sfx": {
+            "sourcePoolCount": 123,
+            "noteRef": "n162"
+          },
+          "voice": {
+            "sourcePoolCount": 123,
+            "noteRef": "n162"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "风鸣翼",
+          "id": "300heroes:302",
+          "work": "戰姬絕唱 SYMPHOGEAR",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 190
+          },
+          "sfx": {
+            "sourcePoolCount": 211,
+            "noteRef": "n81"
+          },
+          "voice": {
+            "sourcePoolCount": 211,
+            "noteRef": "n81"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "菈菈",
+          "id": "300heroes:303",
+          "work": "出包王女 To LOVE-Ru",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 165
+          },
+          "sfx": {
+            "sourcePoolCount": 223,
+            "noteRef": "n163"
+          },
+          "voice": {
+            "sourcePoolCount": 223,
+            "noteRef": "n163"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "茵蒂克丝",
+          "id": "300heroes:304",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 77
+          },
+          "sfx": {
+            "sourcePoolCount": 106,
+            "noteRef": "n164"
+          },
+          "voice": {
+            "sourcePoolCount": 106,
+            "noteRef": "n164"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "温蒂",
+          "id": "300heroes:305",
+          "work": "FAIRY TAIL 魔導少年／妖精的尾巴",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 144
+          },
+          "sfx": {
+            "sourcePoolCount": 219,
+            "noteRef": "n165"
+          },
+          "voice": {
+            "sourcePoolCount": 219,
+            "noteRef": "n165"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "电次",
+          "id": "300heroes:306",
+          "work": "鏈鋸人",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 139
+          },
+          "sfx": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "voice": {
+            "sourcePoolCount": 221,
+            "noteRef": "n76"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "空条徐伦",
+          "id": "300heroes:307",
+          "work": "JoJo 的奇妙冒險 第六部：石之海",
+          "motion": {
+            "count": 55
+          },
+          "sfx": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "voice": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "木更",
+          "id": "300heroes:308",
+          "work": "Engage Kiss 契約之吻",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 178
+          },
+          "sfx": {
+            "sourcePoolCount": 312,
+            "noteRef": "n65"
+          },
+          "voice": {
+            "sourcePoolCount": 312,
+            "noteRef": "n65"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "天天",
+          "id": "300heroes:31",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 100
+          },
+          "sfx": {
+            "sourcePoolCount": 144,
+            "noteRef": "n166"
+          },
+          "voice": {
+            "sourcePoolCount": 144,
+            "noteRef": "n166"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蕾姆",
+          "id": "300heroes:310",
+          "work": "Re:從零開始的異世界生活",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 227
+          },
+          "sfx": {
+            "sourcePoolCount": 189,
+            "noteRef": "n161"
+          },
+          "voice": {
+            "sourcePoolCount": 189,
+            "noteRef": "n161"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-rem"
+            ]
+          }
+        },
+        {
+          "character": "琪露诺",
+          "id": "300heroes:311",
+          "motion": {
+            "count": 93
+          },
+          "sfx": {
+            "sourcePoolCount": 131,
+            "noteRef": "n167"
+          },
+          "voice": {
+            "sourcePoolCount": 131,
+            "noteRef": "n167"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "石神千空",
+          "id": "300heroes:312",
+          "work": "Dr.STONE 新石紀",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 68
+          },
+          "sfx": {
+            "sourcePoolCount": 79,
+            "noteRef": "n168"
+          },
+          "voice": {
+            "sourcePoolCount": 79,
+            "noteRef": "n168"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "苍星石",
+          "id": "300heroes:313",
+          "work": "薔薇少女 Rozen Maiden",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 46
+          },
+          "sfx": {
+            "sourcePoolCount": 53,
+            "noteRef": "n169"
+          },
+          "voice": {
+            "sourcePoolCount": 53,
+            "noteRef": "n169"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "芙蕾雅",
+          "id": "300heroes:314",
+          "work": "300英雄原創",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 86
+          },
+          "sfx": {
+            "sourcePoolCount": 114,
+            "noteRef": "n170"
+          },
+          "voice": {
+            "sourcePoolCount": 114,
+            "noteRef": "n170"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "亚连·沃克",
+          "id": "300heroes:315",
+          "work": "D.Gray-man 驅魔少年",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 134
+          },
+          "sfx": {
+            "sourcePoolCount": 119,
+            "noteRef": "n171"
+          },
+          "voice": {
+            "sourcePoolCount": 119,
+            "noteRef": "n171"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "东风谷早苗",
+          "id": "300heroes:316",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 63
+          },
+          "sfx": {
+            "sourcePoolCount": 135,
+            "noteRef": "n172"
+          },
+          "voice": {
+            "sourcePoolCount": 135,
+            "noteRef": "n172"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "吕树",
+          "id": "300heroes:317",
+          "work": "大王饒命",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 96
+          },
+          "sfx": {
+            "sourcePoolCount": 163,
+            "noteRef": "n173"
+          },
+          "voice": {
+            "sourcePoolCount": 163,
+            "noteRef": "n173"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "吕小鱼",
+          "id": "300heroes:318",
+          "work": "大王饒命",
+          "motion": {
+            "count": 42
+          },
+          "sfx": {
+            "sourcePoolCount": 207,
+            "noteRef": "n31"
+          },
+          "voice": {
+            "sourcePoolCount": 207,
+            "noteRef": "n31"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "坂本",
+          "id": "300heroes:319",
+          "work": "在下坂本，有何貴幹？",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 57
+          },
+          "sfx": {
+            "sourcePoolCount": 141,
+            "noteRef": "n174"
+          },
+          "voice": {
+            "sourcePoolCount": 141,
+            "noteRef": "n174"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "本多二代",
+          "id": "300heroes:32",
+          "work": "境界線上的地平線",
+          "model": {
+            "count": 19
+          },
+          "motion": {
+            "count": 174
+          },
+          "sfx": {
+            "sourcePoolCount": 217,
+            "noteRef": "n175"
+          },
+          "voice": {
+            "sourcePoolCount": 217,
+            "noteRef": "n175"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "阿希娅",
+          "id": "300heroes:320",
+          "work": "300英雄原創",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 67
+          },
+          "sfx": {
+            "sourcePoolCount": 119,
+            "noteRef": "n171"
+          },
+          "voice": {
+            "sourcePoolCount": 119,
+            "noteRef": "n171"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "比那名居天子",
+          "id": "300heroes:321",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 55
+          },
+          "sfx": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "voice": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蓝染惣右介",
+          "id": "300heroes:322",
+          "work": "BLEACH 死神",
+          "motion": {
+            "count": 75
+          },
+          "sfx": {
+            "sourcePoolCount": 215,
+            "noteRef": "n14"
+          },
+          "voice": {
+            "sourcePoolCount": 215,
+            "noteRef": "n14"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "奴良陆生",
+          "id": "300heroes:323",
+          "work": "妖怪少爺／滑頭鬼之孫",
+          "motion": {
+            "count": 58
+          },
+          "sfx": {
+            "sourcePoolCount": 219,
+            "noteRef": "n165"
+          },
+          "voice": {
+            "sourcePoolCount": 219,
+            "noteRef": "n165"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "刑天",
+          "id": "300heroes:327",
+          "work": "鎧甲勇士刑天",
+          "motion": {
+            "count": 108
+          },
+          "sfx": {
+            "sourcePoolCount": 267,
+            "noteRef": "n176"
+          },
+          "voice": {
+            "sourcePoolCount": 267,
+            "noteRef": "n176"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "法尼·瓦伦泰",
+          "id": "300heroes:328",
+          "work": "JoJo 的奇妙冒險 第七部：飆馬野郎 STEEL BALL RUN",
+          "motion": {
+            "count": 72
+          },
+          "sfx": {
+            "sourcePoolCount": 350,
+            "noteRef": "n177"
+          },
+          "voice": {
+            "sourcePoolCount": 350,
+            "noteRef": "n177"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "故障缇米",
+          "id": "300heroes:329",
+          "work": "300英雄原創",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 30
+          },
+          "sfx": {
+            "sourcePoolCount": 71,
+            "noteRef": "n178"
+          },
+          "voice": {
+            "sourcePoolCount": 71,
+            "noteRef": "n178"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "凸守早苗",
+          "id": "300heroes:33",
+          "work": "中二病也想談戀愛！",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 145
+          },
+          "sfx": {
+            "sourcePoolCount": 236,
+            "noteRef": "n179"
+          },
+          "voice": {
+            "sourcePoolCount": 236,
+            "noteRef": "n179"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "我妻善逸",
+          "id": "300heroes:332",
+          "work": "鬼滅之刃",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 27
+          },
+          "sfx": {
+            "sourcePoolCount": 101,
+            "noteRef": "n180"
+          },
+          "voice": {
+            "sourcePoolCount": 101,
+            "noteRef": "n180"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "b2-zenitsu"
+            ]
+          }
+        },
+        {
+          "character": "芙莉莲",
+          "id": "300heroes:333",
+          "work": "葬送的芙莉蓮",
+          "model": {
+            "count": 5
+          },
+          "motion": {
+            "count": 43
+          },
+          "sfx": {
+            "sourcePoolCount": 117,
+            "noteRef": "n181"
+          },
+          "voice": {
+            "sourcePoolCount": 117,
+            "noteRef": "n181"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-29-20260907"
+            ]
+          }
+        },
+        {
+          "character": "闰土",
+          "id": "300heroes:334",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 1
+          },
+          "motion": {
+            "count": 28
+          },
+          "sfx": {
+            "sourcePoolCount": 66,
+            "noteRef": "n182"
+          },
+          "voice": {
+            "sourcePoolCount": 66,
+            "noteRef": "n182"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梅林",
+          "id": "300heroes:335",
+          "work": "Fate/Grand Order",
+          "motion": {
+            "count": 39
+          },
+          "sfx": {
+            "sourcePoolCount": 95,
+            "noteRef": "n183"
+          },
+          "voice": {
+            "sourcePoolCount": 95,
+            "noteRef": "n183"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "艾莉丝",
+          "id": "300heroes:336",
+          "work": "無職轉生～到了異世界就拿出真本事～",
+          "model": {
+            "count": 5
+          },
+          "motion": {
+            "count": 95
+          },
+          "sfx": {
+            "sourcePoolCount": 104,
+            "noteRef": "n21"
+          },
+          "voice": {
+            "sourcePoolCount": 104,
+            "noteRef": "n21"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-28-20260907"
+            ]
+          }
+        },
+        {
+          "character": "雪菜",
+          "id": "300heroes:34",
+          "work": "噬血狂襲",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 259
+          },
+          "sfx": {
+            "sourcePoolCount": 429,
+            "noteRef": "n184"
+          },
+          "voice": {
+            "sourcePoolCount": 429,
+            "noteRef": "n184"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "圣大人",
+          "id": "300heroes:35",
+          "work": "犬夜叉",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 212
+          },
+          "sfx": {
+            "sourcePoolCount": 341,
+            "noteRef": "n185"
+          },
+          "voice": {
+            "sourcePoolCount": 341,
+            "noteRef": "n185"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-hvwd"
+            ]
+          }
+        },
+        {
+          "character": "富樫勇太",
+          "id": "300heroes:36",
+          "work": "中二病也想談戀愛！",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 49
+          },
+          "sfx": {
+            "sourcePoolCount": 64,
+            "noteRef": "n186"
+          },
+          "voice": {
+            "sourcePoolCount": 64,
+            "noteRef": "n186"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "司波深雪",
+          "id": "300heroes:37",
+          "work": "魔法科高中的劣等生",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 168
+          },
+          "sfx": {
+            "sourcePoolCount": 229,
+            "noteRef": "n27"
+          },
+          "voice": {
+            "sourcePoolCount": 229,
+            "noteRef": "n27"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "风音日和",
+          "id": "300heroes:38",
+          "work": "天降之物",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 178
+          },
+          "sfx": {
+            "sourcePoolCount": 290,
+            "noteRef": "n187"
+          },
+          "voice": {
+            "sourcePoolCount": 290,
+            "noteRef": "n187"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "土间埋",
+          "id": "300heroes:39",
+          "work": "干物妹！小埋",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 176
+          },
+          "sfx": {
+            "sourcePoolCount": 291,
+            "noteRef": "n156"
+          },
+          "voice": {
+            "sourcePoolCount": 291,
+            "noteRef": "n156"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "战场原黑仪",
+          "id": "300heroes:40",
+          "work": "物語系列",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 199
+          },
+          "sfx": {
+            "sourcePoolCount": 289,
+            "noteRef": "n188"
+          },
+          "voice": {
+            "sourcePoolCount": 289,
+            "noteRef": "n188"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "赫拉克勒斯",
+          "id": "300heroes:41",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 24
+          },
+          "motion": {
+            "count": 177
+          },
+          "sfx": {
+            "sourcePoolCount": 369,
+            "noteRef": "n66"
+          },
+          "voice": {
+            "sourcePoolCount": 369,
+            "noteRef": "n66"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-hapm"
+            ]
+          }
+        },
+        {
+          "character": "缇娜",
+          "id": "300heroes:42",
+          "work": "黑色子彈／漆黑的子彈",
+          "model": {
+            "count": 28
+          },
+          "motion": {
+            "count": 279
+          },
+          "sfx": {
+            "sourcePoolCount": 394,
+            "noteRef": "n189"
+          },
+          "voice": {
+            "sourcePoolCount": 394,
+            "noteRef": "n189"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "弗兰肯斯坦",
+          "id": "300heroes:43",
+          "work": "Fate/Apocrypha",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 111
+          },
+          "sfx": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "voice": {
+            "sourcePoolCount": 152,
+            "noteRef": "n47"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "跳跃临时工",
+          "id": "300heroes:44",
+          "work": "300英雄原創",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "sourcePoolCount": 16,
+            "noteRef": "n190"
+          },
+          "voice": {
+            "sourcePoolCount": 16,
+            "noteRef": "n190"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "浅间·智",
+          "id": "300heroes:45",
+          "work": "境界線上的地平線",
+          "model": {
+            "count": 17
+          },
+          "motion": {
+            "count": 131
+          },
+          "sfx": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "voice": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "莉娜·因巴斯",
+          "id": "300heroes:46",
+          "work": "秀逗魔導士 Slayers",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 166
+          },
+          "sfx": {
+            "sourcePoolCount": 232,
+            "noteRef": "n55"
+          },
+          "voice": {
+            "sourcePoolCount": 232,
+            "noteRef": "n55"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-h020",
+              "godie-hjai"
+            ]
+          }
+        },
+        {
+          "character": "七宫智音",
+          "id": "300heroes:47",
+          "work": "中二病也想談戀愛！",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 121
+          },
+          "sfx": {
+            "sourcePoolCount": 196,
+            "noteRef": "n191"
+          },
+          "voice": {
+            "sourcePoolCount": 196,
+            "noteRef": "n191"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "草帽小子",
+          "id": "300heroes:48",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "sourcePoolCount": 348,
+            "noteRef": "n192"
+          },
+          "voice": {
+            "sourcePoolCount": 348,
+            "noteRef": "n192"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-u00n",
+              "godie-u00o"
+            ]
+          }
+        },
+        {
+          "character": "黑羽快斗",
+          "id": "300heroes:50",
+          "work": "神偷怪盜／魔術快斗；名偵探柯南",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 167
+          },
+          "sfx": {
+            "sourcePoolCount": 278,
+            "noteRef": "n110"
+          },
+          "voice": {
+            "sourcePoolCount": 278,
+            "noteRef": "n110"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "匹诺曹",
+          "id": "300heroes:51",
+          "work": "ONE PIECE 航海王",
+          "motion": {
+            "count": 54
+          },
+          "sfx": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "voice": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "我受罗",
+          "id": "300heroes:52",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 104
+          },
+          "sfx": {
+            "sourcePoolCount": 124,
+            "noteRef": "n193"
+          },
+          "voice": {
+            "sourcePoolCount": 124,
+            "noteRef": "n193"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "亚瑟王",
+          "id": "300heroes:53",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 76
+          },
+          "motion": {
+            "count": 455
+          },
+          "sfx": {
+            "sourcePoolCount": 584,
+            "noteRef": "n194"
+          },
+          "voice": {
+            "sourcePoolCount": 584,
+            "noteRef": "n194"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-e002",
+              "godie-e00l"
+            ]
+          }
+        },
+        {
+          "character": "神乐",
+          "id": "300heroes:54",
+          "work": "銀魂",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 123
+          },
+          "sfx": {
+            "sourcePoolCount": 270,
+            "noteRef": "n195"
+          },
+          "voice": {
+            "sourcePoolCount": 270,
+            "noteRef": "n195"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "雅典娜",
+          "id": "300heroes:55",
+          "work": "聖鬥士星矢",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 83
+          },
+          "sfx": {
+            "sourcePoolCount": 170,
+            "noteRef": "n196"
+          },
+          "voice": {
+            "sourcePoolCount": 170,
+            "noteRef": "n196"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "巴依老爷",
+          "id": "300heroes:56",
+          "work": "阿凡提故事題材（300英雄改編）",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 143
+          },
+          "sfx": {
+            "sourcePoolCount": 252,
+            "noteRef": "n197"
+          },
+          "voice": {
+            "sourcePoolCount": 252,
+            "noteRef": "n197"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "乔帮主",
+          "id": "300heroes:57",
+          "work": "ONE PIECE 航海王",
+          "motion": {
+            "count": 72
+          },
+          "sfx": {
+            "sourcePoolCount": 66,
+            "noteRef": "n182"
+          },
+          "voice": {
+            "sourcePoolCount": 66,
+            "noteRef": "n182"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "神目黑刀",
+          "id": "300heroes:58",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "count": 7
+          },
+          "motion": {
+            "count": 71
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "库奇",
+          "id": "300heroes:59",
+          "work": "300英雄原創",
+          "model": {
+            "count": 2
+          },
+          "motion": {
+            "count": 20
+          },
+          "sfx": {
+            "sourcePoolCount": 20,
+            "noteRef": "n198"
+          },
+          "voice": {
+            "sourcePoolCount": 20,
+            "noteRef": "n198"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "立花响",
+          "id": "300heroes:60",
+          "work": "戰姬絕唱 SYMPHOGEAR",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 96
+          },
+          "sfx": {
+            "sourcePoolCount": 161,
+            "noteRef": "n199"
+          },
+          "voice": {
+            "sourcePoolCount": 161,
+            "noteRef": "n199"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "貂蝉",
+          "id": "300heroes:61",
+          "work": "三國演義題材（300英雄改編）",
+          "motion": {
+            "count": 67
+          },
+          "sfx": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "voice": {
+            "sourcePoolCount": 96,
+            "noteRef": "n135"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "摩尔迦娜",
+          "id": "300heroes:62",
+          "work": "MAGI 魔奇少年",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 165
+          },
+          "sfx": {
+            "sourcePoolCount": 282,
+            "noteRef": "n200"
+          },
+          "voice": {
+            "sourcePoolCount": 282,
+            "noteRef": "n200"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "梅比斯",
+          "id": "300heroes:63",
+          "work": "FAIRY TAIL 魔導少年／妖精的尾巴",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 118
+          },
+          "sfx": {
+            "sourcePoolCount": 195,
+            "noteRef": "n201"
+          },
+          "voice": {
+            "sourcePoolCount": 195,
+            "noteRef": "n201"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "白鬼院凛凛蝶",
+          "id": "300heroes:64",
+          "work": "妖狐×僕SS",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 143
+          },
+          "sfx": {
+            "sourcePoolCount": 227,
+            "noteRef": "n202"
+          },
+          "voice": {
+            "sourcePoolCount": 227,
+            "noteRef": "n202"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蛇叔",
+          "id": "300heroes:65",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 39
+          },
+          "sfx": {
+            "sourcePoolCount": 42,
+            "noteRef": "n106"
+          },
+          "voice": {
+            "sourcePoolCount": 42,
+            "noteRef": "n106"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "蛇血舞姬",
+          "id": "300heroes:66",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 66
+          },
+          "sfx": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "voice": {
+            "sourcePoolCount": 84,
+            "noteRef": "n145"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "火拳·S",
+          "id": "300heroes:67",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "count": 17
+          },
+          "motion": {
+            "count": 122
+          },
+          "sfx": {
+            "sourcePoolCount": 161,
+            "noteRef": "n199"
+          },
+          "voice": {
+            "sourcePoolCount": 161,
+            "noteRef": "n199"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "左二少",
+          "id": "300heroes:69",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 40
+          },
+          "motion": {
+            "count": 237
+          },
+          "sfx": {
+            "sourcePoolCount": 657,
+            "noteRef": "n203"
+          },
+          "voice": {
+            "sourcePoolCount": 657,
+            "noteRef": "n203"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-edem"
+            ]
+          }
+        },
+        {
+          "character": "青丘国主",
+          "id": "300heroes:70",
+          "work": "火影忍者 NARUTO",
+          "model": {
+            "count": 46
+          },
+          "motion": {
+            "count": 157
+          },
+          "sfx": {
+            "sourcePoolCount": 287,
+            "noteRef": "n204"
+          },
+          "voice": {
+            "sourcePoolCount": 287,
+            "noteRef": "n204"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "胡子船长",
+          "id": "300heroes:71",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 104
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "卡殿下",
+          "id": "300heroes:72",
+          "work": "火影忍者 NARUTO",
+          "motion": {
+            "count": 77
+          },
+          "sfx": {
+            "sourcePoolCount": 78,
+            "noteRef": "n143"
+          },
+          "voice": {
+            "sourcePoolCount": 78,
+            "noteRef": "n143"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "纳兹",
+          "id": "300heroes:75",
+          "work": "FAIRY TAIL 魔導少年／妖精的尾巴",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 118
+          },
+          "sfx": {
+            "sourcePoolCount": 166,
+            "noteRef": "n71"
+          },
+          "voice": {
+            "sourcePoolCount": 166,
+            "noteRef": "n71"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "狂暴补师",
+          "id": "300heroes:76",
+          "work": "刀劍神域 Sword Art Online",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 283
+          },
+          "sfx": {
+            "sourcePoolCount": 522,
+            "noteRef": "n205"
+          },
+          "voice": {
+            "sourcePoolCount": 522,
+            "noteRef": "n205"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "盗贼娃",
+          "id": "300heroes:78",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "model": {
+            "count": 4
+          },
+          "motion": {
+            "count": 47
+          },
+          "sfx": {
+            "sourcePoolCount": 40,
+            "noteRef": "n124"
+          },
+          "voice": {
+            "sourcePoolCount": 40,
+            "noteRef": "n124"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "法师娃",
+          "id": "300heroes:79",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 57
+          },
+          "sfx": {
+            "sourcePoolCount": 89,
+            "noteRef": "n206"
+          },
+          "voice": {
+            "sourcePoolCount": 89,
+            "noteRef": "n206"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "术士娃",
+          "id": "300heroes:80",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 91
+          },
+          "sfx": {
+            "sourcePoolCount": 123,
+            "noteRef": "n162"
+          },
+          "voice": {
+            "sourcePoolCount": 123,
+            "noteRef": "n162"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "骑士娃",
+          "id": "300heroes:81",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 48
+          },
+          "sfx": {
+            "sourcePoolCount": 56,
+            "noteRef": "n207"
+          },
+          "voice": {
+            "sourcePoolCount": 56,
+            "noteRef": "n207"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "牧师娃",
+          "id": "300heroes:82",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "motion": {
+            "count": 79
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "猎人娃",
+          "id": "300heroes:83",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "motion": {
+            "count": 60
+          },
+          "sfx": {
+            "sourcePoolCount": 111,
+            "noteRef": "n208"
+          },
+          "voice": {
+            "sourcePoolCount": 111,
+            "noteRef": "n208"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "战士娃",
+          "id": "300heroes:84",
+          "work": "葫蘆兄弟／葫蘆娃",
+          "model": {
+            "stage": null,
+            "count": null
+          },
+          "motion": {
+            "stage": null
+          },
+          "sfx": {
+            "sourcePoolCount": 135,
+            "noteRef": "n172"
+          },
+          "voice": {
+            "sourcePoolCount": 135,
+            "noteRef": "n172"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "佐罗",
+          "id": "300heroes:85",
+          "work": "ONE PIECE 航海王",
+          "model": {
+            "count": 22
+          },
+          "motion": {
+            "count": 168
+          },
+          "sfx": {
+            "sourcePoolCount": 226,
+            "noteRef": "n127"
+          },
+          "voice": {
+            "sourcePoolCount": 226,
+            "noteRef": "n127"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-u01u",
+              "godie-udre"
+            ]
+          }
+        },
+        {
+          "character": "死神",
+          "id": "300heroes:86",
+          "work": "300英雄原創",
+          "motion": {
+            "count": 86
+          },
+          "sfx": {
+            "sourcePoolCount": 156,
+            "noteRef": "n209"
+          },
+          "voice": {
+            "sourcePoolCount": 156,
+            "noteRef": "n209"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "幻刺·L·莉莉",
+          "id": "300heroes:87",
+          "work": "300英雄原創",
+          "model": {
+            "count": 14
+          },
+          "motion": {
+            "count": 128
+          },
+          "sfx": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "voice": {
+            "sourcePoolCount": 140,
+            "noteRef": "n98"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "舰队统帅",
+          "id": "300heroes:88",
+          "work": "300英雄原創",
+          "motion": {
+            "count": 63
+          },
+          "sfx": {
+            "sourcePoolCount": 68,
+            "noteRef": "n210"
+          },
+          "voice": {
+            "sourcePoolCount": 68,
+            "noteRef": "n210"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "幻刺·D·露西",
+          "id": "300heroes:89",
+          "work": "300英雄原創",
+          "model": {
+            "count": 12
+          },
+          "motion": {
+            "count": 110
+          },
+          "sfx": {
+            "sourcePoolCount": 92,
+            "noteRef": "n90"
+          },
+          "voice": {
+            "sourcePoolCount": 92,
+            "noteRef": "n90"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "美狄亚",
+          "id": "300heroes:90",
+          "work": "Fate/stay night",
+          "model": {
+            "count": 18
+          },
+          "motion": {
+            "count": 131
+          },
+          "sfx": {
+            "sourcePoolCount": 240,
+            "noteRef": "n211"
+          },
+          "voice": {
+            "sourcePoolCount": 240,
+            "noteRef": "n211"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "天草四郎时贞",
+          "id": "300heroes:91",
+          "work": "Fate/Apocrypha",
+          "model": {
+            "count": 20
+          },
+          "motion": {
+            "count": 201
+          },
+          "sfx": {
+            "sourcePoolCount": 131,
+            "noteRef": "n167"
+          },
+          "voice": {
+            "sourcePoolCount": 131,
+            "noteRef": "n167"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "无头骑士",
+          "id": "300heroes:92",
+          "work": "無頭騎士異聞錄 DuRaRaRa!!",
+          "model": {
+            "count": 6
+          },
+          "motion": {
+            "count": 51
+          },
+          "sfx": {
+            "sourcePoolCount": 80,
+            "noteRef": "n212"
+          },
+          "voice": {
+            "sourcePoolCount": 80,
+            "noteRef": "n212"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "达克尼斯",
+          "id": "300heroes:93",
+          "work": "為美好的世界獻上祝福！",
+          "model": {
+            "count": 16
+          },
+          "motion": {
+            "count": 151
+          },
+          "sfx": {
+            "sourcePoolCount": 233,
+            "noteRef": "n213"
+          },
+          "voice": {
+            "sourcePoolCount": 233,
+            "noteRef": "n213"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "四方川菖蒲",
+          "id": "300heroes:94",
+          "work": "甲鐵城的卡巴內里",
+          "model": {
+            "count": 10
+          },
+          "motion": {
+            "count": 74
+          },
+          "sfx": {
+            "sourcePoolCount": 87,
+            "noteRef": "n214"
+          },
+          "voice": {
+            "sourcePoolCount": 87,
+            "noteRef": "n214"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "御坂美琴",
+          "id": "300heroes:96",
+          "work": "魔法禁書目錄／科學超電磁砲",
+          "model": {
+            "count": 34
+          },
+          "motion": {
+            "count": 276
+          },
+          "sfx": {
+            "sourcePoolCount": 496,
+            "noteRef": "n215"
+          },
+          "voice": {
+            "sourcePoolCount": 496,
+            "noteRef": "n215"
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-20-20260907"
+            ]
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Linked model index records include native JUMPX/EG3D and static OBJ previews; OBJ does not prove rig or animation readiness.",
+        "n2": "47,543 native texture files exist at library scope, but this evidence set has no authoritative per-character texture count.",
+        "n3": "Native model/animation containers may carry rig data, but no per-character skeleton parse or retarget acceptance is established here.",
+        "n4": "Character-linked native animation index records; semantic six-state mapping and playback acceptance are not established.",
+        "n5": "Only character-linked VFX records are counted here; the large native VFX reserve is primarily unlinked and is reported at source-group level.",
+        "n6": "325 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n7": "Identity links to GGD heroes do not mean the source module is registered or selectable.",
+        "n8": "No production deployment is evidenced for this source module.",
+        "n9": "476 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n10": "1821 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n11": "204 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n12": "425 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n13": "457 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n14": "215 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n15": "305 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n16": "121 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n17": "299 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n18": "197 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n19": "218 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n20": "280 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n21": "104 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n22": "510 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n23": "678 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n24": "344 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n25": "127 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n26": "103 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n27": "229 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n28": "378 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n29": "318 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n30": "205 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n31": "207 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n32": "387 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n33": "30 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n34": "206 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n35": "374 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n36": "366 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n37": "349 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n38": "97 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n39": "465 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n40": "116 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n41": "128 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n42": "509 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n43": "237 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n44": "88 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n45": "235 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n46": "164 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n47": "152 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n48": "575 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n49": "1276 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n50": "505 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n51": "279 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n52": "214 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n53": "263 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n54": "271 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n55": "232 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n56": "187 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n57": "251 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n58": "143 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n59": "521 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n60": "556 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n61": "269 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n62": "132 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n63": "157 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n64": "594 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n65": "312 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n66": "369 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n67": "19 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n68": "179 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n69": "495 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n70": "107 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n71": "166 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n72": "273 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n73": "73 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n74": "31 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n75": "284 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n76": "221 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n77": "354 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n78": "309 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n79": "695 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n80": "191 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n81": "211 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n82": "243 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n83": "158 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n84": "105 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n85": "167 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n86": "346 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n87": "185 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n88": "93 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n89": "86 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n90": "92 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n91": "209 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n92": "319 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n93": "247 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n94": "952 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n95": "710 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n96": "456 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n97": "400 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n98": "140 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n99": "338 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n100": "300 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n101": "No character-linked playable audio pool is established for this candidate.",
+        "n102": "327 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n103": "315 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n104": "258 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n105": "136 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n106": "42 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n107": "301 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n108": "649 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n109": "169 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n110": "278 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n111": "69 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n112": "531 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n113": "193 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n114": "451 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n115": "970 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n116": "552 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n117": "373 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n118": "298 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n119": "190 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n120": "370 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n121": "65 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n122": "200 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n123": "47 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n124": "40 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n125": "60 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n126": "25 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n127": "226 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n128": "46 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n129": "45 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n130": "90 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n131": "120 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n132": "250 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n133": "57 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n134": "159 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n135": "96 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n136": "34 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n137": "134 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n138": "292 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n139": "108 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n140": "67 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n141": "1685 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n142": "474 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n143": "78 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n144": "129 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n145": "84 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n146": "151 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n147": "50 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n148": "59 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n149": "142 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n150": "326 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n151": "285 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n152": "43 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n153": "203 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n154": "186 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n155": "194 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n156": "291 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n157": "175 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n158": "220 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n159": "181 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n160": "228 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n161": "189 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n162": "123 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n163": "223 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n164": "106 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n165": "219 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n166": "144 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n167": "131 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n168": "79 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n169": "53 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n170": "114 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n171": "119 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n172": "135 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n173": "163 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n174": "141 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n175": "217 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n176": "267 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n177": "350 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n178": "71 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n179": "236 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n180": "101 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n181": "117 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n182": "66 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n183": "95 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n184": "429 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n185": "341 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n186": "64 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n187": "290 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n188": "289 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n189": "394 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n190": "16 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n191": "196 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n192": "348 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n193": "124 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n194": "584 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n195": "270 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n196": "170 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n197": "252 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n198": "20 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n199": "161 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n200": "282 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n201": "195 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n202": "227 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n203": "657 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n204": "287 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n205": "522 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n206": "89 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n207": "56 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n208": "111 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n209": "156 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n210": "68 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n211": "240 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n212": "80 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n213": "233 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n214": "87 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice.",
+        "n215": "496 playable audio records are linked by numeric-prefix candidate logic; the registry does not classify the pool into SFX versus voice."
+      },
+      "moduleDefaults": {
+        "model": {
+          "stage": "extracted-native-and-static-preview-indexed",
+          "count": 8,
+          "noteRef": "n1"
+        },
+        "texture": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n2"
+        },
+        "skeleton": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "motion": {
+          "stage": "extracted-native-indexed",
+          "count": null,
+          "noteRef": "n4"
+        },
+        "vfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n5"
+        },
+        "sfx": {
+          "stage": "playable-audio-pool-unclassified",
+          "count": null,
+          "noteRef": "n16",
+          "sourcePoolCount": 121
+        },
+        "voice": {
+          "stage": "playable-audio-pool-unclassified",
+          "count": null,
+          "noteRef": "n16",
+          "sourcePoolCount": 121
+        },
+        "registration": {
+          "stage": "not-registered-as-source-file",
+          "count": 0,
+          "noteRef": "n7"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n8"
+        }
+      },
+      "candidateDefaults": {
+        "work": "東方 Project",
+        "evidence": [
+          "../outputs/asset-library-registry-20260907/catalog.sqlite",
+          "../outputs/asset-library-registry-20260907/characters.json",
+          "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json"
+        ]
+      }
+    },
+    {
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "title": "Magical Battle Arena Complete Form",
+      "platform": "Windows PC",
+      "version": "Complete Form 1.60+",
+      "status": "1.60-plus-extracted-and-converted-candidate-library; 1.70 absent; registration and deployment pending",
+      "evidencePaths": [
+        "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+        "../outputs/game-asset-library-20260907/asset-library-summary.json",
+        "../outputs/game-asset-library-20260907/evidence/mba-output-validation.json",
+        "../outputs/asset-library-registry-20260907/catalog.sqlite",
+        "../outputs/asset-library-registry-20260907/characters.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json"
+      ],
+      "summary": {
+        "candidateCharacters": 21,
+        "rawFiles": 2385,
+        "modelIndexRecords": 447,
+        "nativeModelFiles": 224,
+        "glbCandidateFiles": 223,
+        "textureFiles": 808,
+        "motionIndexRecords": 1614,
+        "nativeVfxRecords": 423,
+        "playableAudioFilesUnclassified": 640,
+        "convertedCharacterCandidateFiles": 20,
+        "staticVisualValidatedSixClipComponents": 8,
+        "structurallyValidatedSixStateCandidates": 3,
+        "ggdAcceptedSourceFiles": 0,
+        "registeredSourceFiles": 0,
+        "deployedSourceFiles": 0,
+        "versionBoundary": "Magic Knight Rayearth content introduced in 1.70 is not included in this 1.60 extraction.",
+        "boundary": "VFX and audio are library-level reserves without authoritative per-character mapping; audio is not split into SFX/voice."
+      },
+      "candidates": [
+        {
+          "character": "高町奈葉（少女版）",
+          "id": "mba:Chara01",
+          "motion": {
+            "count": 87
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-o01z",
+              "godie-o02v"
+            ]
+          }
+        },
+        {
+          "character": "露露·傑拉德",
+          "id": "mba:Chara01_O",
+          "work": "原創",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json"
+          ]
+        },
+        {
+          "character": "莉娜·因巴斯",
+          "id": "mba:Chara02",
+          "work": "秀逗魔導士",
+          "motion": {
+            "count": 78
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-h020",
+              "godie-hjai"
+            ]
+          }
+        },
+        {
+          "character": "諾威爾·迪亞斯塔西斯",
+          "id": "mba:Chara02_O",
+          "work": "原創",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json"
+          ]
+        },
+        {
+          "character": "木之本櫻",
+          "id": "mba:Chara03",
+          "work": "庫洛魔法使",
+          "motion": {
+            "count": 83
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "community-review-27-20260907"
+            ]
+          }
+        },
+        {
+          "character": "菲特·泰斯塔羅莎（少女版）",
+          "id": "mba:Chara04_01",
+          "motion": {
+            "count": 74
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-ntin"
+            ]
+          }
+        },
+        {
+          "character": "菲特·泰斯塔羅莎（少女版）",
+          "id": "mba:Chara04_02",
+          "motion": {
+            "count": 74
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-ntin"
+            ]
+          }
+        },
+        {
+          "character": "星空綺羅羅",
+          "id": "mba:Chara05",
+          "work": "原創",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json"
+          ]
+        },
+        {
+          "character": "星空紗羅羅",
+          "id": "mba:Chara06",
+          "work": "原創",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json"
+          ]
+        },
+        {
+          "character": "柯柯麗",
+          "id": "mba:Chara07_01",
+          "work": "咕嚕咕嚕魔法陣",
+          "model": {
+            "stage": "extracted-native-indexed",
+            "count": 1
+          },
+          "texture": {
+            "stage": null
+          },
+          "motion": {
+            "stage": null,
+            "count": null
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "柯柯麗",
+          "id": "mba:Chara07_02",
+          "work": "咕嚕咕嚕魔法陣",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json"
+          ]
+        },
+        {
+          "character": "白蛇娜卡",
+          "id": "mba:Chara08",
+          "work": "秀逗魔導士",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json"
+          ]
+        },
+        {
+          "character": "Gadget Drone I 型",
+          "id": "mba:Chara09",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json"
+          ]
+        },
+        {
+          "character": "八神疾風",
+          "id": "mba:Chara10",
+          "model": {
+            "stage": "standardized-six-state-candidate-structurally-validated",
+            "count": 1,
+            "noteRef": "n13"
+          },
+          "texture": {
+            "stage": "standardized-component-structurally-validated",
+            "count": 1,
+            "noteRef": "n14"
+          },
+          "skeleton": {
+            "stage": "standardized-component-structurally-validated",
+            "count": 1,
+            "noteRef": "n15"
+          },
+          "motion": {
+            "stage": "six-state-candidate-structurally-validated",
+            "noteRef": "n16"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json"
+          ]
+        },
+        {
+          "character": "薇塔",
+          "id": "mba:Chara11",
+          "model": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n9"
+          },
+          "texture": {
+            "stage": "converted-static-visual-validated-component",
+            "count": 1,
+            "noteRef": "n10"
+          },
+          "skeleton": {
+            "stage": "converted-structurally-validated-component",
+            "count": 1,
+            "noteRef": "n11"
+          },
+          "motion": {
+            "stage": "six-native-clips-semantic-review-pending",
+            "noteRef": "n12"
+          },
+          "registration": {
+            "mappedHeroIds": []
+          },
+          "evidence": [
+            "../outputs/asset-library-registry-20260907/catalog.sqlite",
+            "../outputs/asset-library-registry-20260907/characters.json",
+            "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json",
+            "materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json"
+          ]
+        },
+        {
+          "character": "高町奈葉（StrikerS 成年版）",
+          "id": "mba:Chara12_01",
+          "motion": {
+            "count": 92
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-o01z",
+              "godie-o02v"
+            ]
+          }
+        },
+        {
+          "character": "高町奈葉（StrikerS 成年版）",
+          "id": "mba:Chara12_02",
+          "motion": {
+            "count": 60
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-o01z",
+              "godie-o02v"
+            ]
+          }
+        },
+        {
+          "character": "金色魔王／惡夢之王",
+          "id": "mba:Chara13",
+          "work": "秀逗魔導士",
+          "motion": {
+            "count": 69
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+          "id": "mba:Chara14",
+          "work": "咕嚕咕嚕魔法陣",
+          "motion": {
+            "count": 74
+          },
+          "registration": {
+            "mappedHeroIds": []
+          }
+        },
+        {
+          "character": "菲特（StrikerS 成年版）",
+          "id": "mba:Chara15_01",
+          "motion": {
+            "count": 84
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-ntin"
+            ]
+          }
+        },
+        {
+          "character": "菲特（StrikerS 成年版）",
+          "id": "mba:Chara15_02",
+          "motion": {
+            "count": 88
+          },
+          "registration": {
+            "mappedHeroIds": [
+              "godie-ntin"
+            ]
+          }
+        }
+      ],
+      "notes": {
+        "n1": "Linked records may include the native X source and a GLB candidate; conversion does not imply GGD acceptance.",
+        "n2": "MBA conversion reported no missing GLB textures, but the registry has no authoritative per-character texture count.",
+        "n3": "GLB motion indexing indicates an animated payload, but no per-character skeleton validation count is claimed without a dedicated receipt.",
+        "n4": "Animation clips indexed from the character GLB; six-state semantics and continuous playback remain separate review gates.",
+        "n5": "MBA has 423 native VFX/shader records at library scope, with no authoritative per-character mapping in the registry.",
+        "n6": "MBA has 640 playable library audio files, but the registry has no character-to-audio links and no reliable SFX/voice split.",
+        "n7": "Identity links to GGD heroes do not mean the source module is registered or selectable.",
+        "n8": "No production deployment is evidenced for this source module.",
+        "n9": "Policy, budget, deterministic build, and static front/isometric/back review passed; this is not a complete hero model admission.",
+        "n10": "The component receipt records one 256px texture and accepted static front/isometric/back review; shader parity remains pending.",
+        "n11": "The component receipt records one skin with no budget error; runtime retargeting is not established.",
+        "n12": "Six native clips are retained, while gameplay playback, semantics, and the D-Down death surrogate remain pending.",
+        "n13": "Deterministic standardized body GLB passed structural validation; owner visual acceptance and hero definition remain pending.",
+        "n14": "The standardized GLB receipt validates one embedded 256px texture for this component.",
+        "n15": "The standardized GLB receipt validates one skin; retargeting to a GGD hero remains pending.",
+        "n16": "Native idle/run/attack/cast/hurt/death proposal is structurally valid; semantic and visual playback approval remain pending."
+      },
+      "moduleDefaults": {
+        "model": {
+          "stage": "converted-glb-candidate-indexed",
+          "count": 2,
+          "noteRef": "n1"
+        },
+        "texture": {
+          "stage": "embedded-in-glb-candidate",
+          "count": null,
+          "noteRef": "n2"
+        },
+        "skeleton": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n3"
+        },
+        "motion": {
+          "stage": "converted-glb-clips-indexed",
+          "count": 6,
+          "noteRef": "n4"
+        },
+        "vfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n5"
+        },
+        "sfx": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n6"
+        },
+        "voice": {
+          "stage": null,
+          "count": null,
+          "noteRef": "n6"
+        },
+        "registration": {
+          "stage": "not-registered-as-source-file",
+          "count": 0,
+          "noteRef": "n7"
+        },
+        "deployment": {
+          "stage": "not-deployed",
+          "count": 0,
+          "noteRef": "n8"
+        }
+      },
+      "candidateDefaults": {
+        "work": "魔法少女奈葉",
+        "evidence": [
+          "../outputs/asset-library-registry-20260907/catalog.sqlite",
+          "../outputs/asset-library-registry-20260907/characters.json",
+          "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json"
+        ]
+      }
+    }
+  ],
+  "expandedSchema": "ggd.source-module-catalog-fragment@1",
+  "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
+    "bytes": 801068,
+    "sha256": "b31b86c542d22f5f277438c8e2a7902c1d0f9b002d9f78091244bba1997fbd26",
+    "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+    "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
+    "archiveMember": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
+    "restoreRequiredForCatalogBuild": false
+  }
+}
