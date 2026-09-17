@@ -1,0 +1,11 @@
+{
+  "id": "acquired-astralym.eclipse",
+  "schema": "status-effect@1",
+  "name": "星蝕欠款",
+  "description": "枯星龍「星蝕欠款」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-astralym.eclipse",
+    "debuff"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "acquired-dio.time-stop",
+  "schema": "status-effect@1",
+  "name": "吸血鬼加班制",
+  "description": "DIO「吸血鬼加班制」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-dio.time-stop",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "debuff"
+  ]
+}

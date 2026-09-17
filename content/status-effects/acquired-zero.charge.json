@@ -1,0 +1,11 @@
+{
+  "id": "acquired-zero.charge",
+  "schema": "status-effect@1",
+  "name": "劍砲交班",
+  "description": "Zero「劍砲交班」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-zero.charge",
+    "buff"
+  ]
+}

@@ -1,13 +1,13 @@
 {
-  "contentVersion": "cv_db1c02b74e9c",
+  "contentVersion": "cv_82a0675ef339",
   "collections": {
     "champions": {
-      "hash": "39d51e153d24",
+      "hash": "a8edded1978b",
       "count": 190,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "8ab2147efced",
+      "hash": "f4d6f0613f76",
       "count": 1129,
       "path": "abilities/_index.json"
     },
@@ -27,8 +27,8 @@
       "path": "projectiles/_index.json"
     },
     "status-effects": {
-      "hash": "7219076b5f8e",
-      "count": 51,
+      "hash": "bbdfdeffb982",
+      "count": 167,
       "path": "status-effects/_index.json"
     },
     "loot-tables": {

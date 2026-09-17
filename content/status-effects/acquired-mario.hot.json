@@ -1,0 +1,15 @@
+{
+  "id": "acquired-mario.hot",
+  "schema": "status-effect@1",
+  "name": "終極火焰報價",
+  "description": "Mario「終極火焰報價」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-mario.hot",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

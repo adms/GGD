@@ -1,0 +1,15 @@
+{
+  "id": "lol-thresh.box",
+  "schema": "status-effect@1",
+  "name": "惡靈領域",
+  "description": "瑟雷西「惡靈領域」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-thresh.box",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

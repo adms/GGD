@@ -35,14 +35,13 @@
     "armor": 0.374704081632653,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 25,
     "agi": 23,
     "int": 12,
-    "strGrowth": 2.36,
-    "agiGrowth": 2.17,
-    "intGrowth": 1.18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -187,7 +186,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -261,7 +260,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -328,7 +327,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.5,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -365,7 +364,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/acquired-dio.webp"
 }

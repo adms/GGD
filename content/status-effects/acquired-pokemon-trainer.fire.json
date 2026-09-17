@@ -1,0 +1,11 @@
+{
+  "id": "acquired-pokemon-trainer.fire",
+  "schema": "status-effect@1",
+  "name": "徽章集點卡",
+  "description": "Pokémon Trainer「徽章集點卡」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-pokemon-trainer.fire",
+    "buff"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "acquired-dio.speech",
+  "schema": "status-effect@1",
+  "name": "輪到我的台詞",
+  "description": "DIO「輪到我的台詞」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-dio.speech",
+    "silence",
+    "cast-denied",
+    "cc",
+    "disarm",
+    "attack-denied",
+    "debuff"
+  ]
+}

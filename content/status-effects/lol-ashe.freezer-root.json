@@ -1,0 +1,16 @@
+{
+  "id": "lol-ashe.freezer-root",
+  "schema": "status-effect@1",
+  "name": "冷凍保存",
+  "description": "艾希「冷凍保存」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ashe.freezer-root",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

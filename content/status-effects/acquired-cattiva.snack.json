@@ -1,0 +1,14 @@
+{
+  "id": "acquired-cattiva.snack",
+  "schema": "status-effect@1",
+  "name": "罐頭優先權",
+  "description": "搗蛋貓「罐頭優先權」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-cattiva.snack",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

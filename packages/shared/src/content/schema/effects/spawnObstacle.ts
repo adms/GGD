@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EFFECT_COMMON_SHAPE, zAoeTier } from "./_shared";
+import { EFFECT_COMMON_SHAPE } from "./_shared";
 
 /**
  * 【暫時障礙】（GH#1190 鄂爾 Q）—— 技能生出來的**真碰撞**圓柱：走路推不過、衝刺撞得到（`dash.onEndOn:"blocked"`）、
@@ -12,8 +12,6 @@ export const zSpawnObstacle = z
     ...EFFECT_COMMON_SHAPE,
     /** 圓柱半徑（格） */
     radius: z.number().positive().max(10),
-    /** ⭐ 五級距（第〇·四守則）：`radiusTier` 填了就由 `resolveRadiusTier()` 在載入時翻成 `radius`；兩個都有 ⇒ 級別贏。⛔ 沒有這一格的話 `apply_tiers.py` 收級距會被 schema 擋下（GH#1185 量到）。 */
-    radiusTier: zAoeTier.optional(),
     /** 存活秒數；到期消失 */
     durationSec: z.number().positive().max(120),
     /**

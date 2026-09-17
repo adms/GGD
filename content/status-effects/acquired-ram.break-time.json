@@ -1,0 +1,11 @@
+{
+  "id": "acquired-ram.break-time",
+  "schema": "status-effect@1",
+  "name": "今天也辛苦別人",
+  "description": "拉姆「今天也辛苦別人」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-ram.break-time",
+    "buff"
+  ]
+}

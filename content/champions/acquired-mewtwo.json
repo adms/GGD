@@ -35,14 +35,13 @@
     "armor": 0.45735714285714285,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -119,7 +118,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -218,7 +217,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -285,7 +284,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -349,7 +348,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -386,7 +385,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/acquired-mewtwo.webp"
 }

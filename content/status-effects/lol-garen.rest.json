@@ -1,0 +1,16 @@
+{
+  "id": "lol-garen.rest",
+  "schema": "status-effect@1",
+  "name": "蒂瑪西亞先休息",
+  "description": "蓋倫「蒂瑪西亞先休息」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-garen.rest",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

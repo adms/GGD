@@ -1,7 +1,7 @@
 {
   "id": "lol-chogath",
   "name": "科加斯",
-  "description": "設計草案，尚未完成上架驗收。擊殺補給、前排控制與低血吞噬\n\n概念來源：LoL 科加斯\nhttps://www.leagueoflegends.com/zh-tw/champions/chogath/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。\n• Q：原地擊飛含0.2單位的小推移。\n• W：錐形改成短寬直帶，保留方向與沉默用途。\n• E：不改用無條件額外普攻被動；確實只有三次額度。\n• R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。\n• EX：不増大模型、不新增飽食資源。\n\n採用所選 GGD 模型與特效。",
+  "description": "擊殺補給、前排控制與低血吞噬\n\n概念來源：LoL 科加斯\nhttps://www.leagueoflegends.com/zh-tw/champions/chogath/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：回復用固定GGD數值，不隨LoL等級原公式。\n• Q：原地擊飛含0.2單位的小推移。\n• W：錐形改成短寬直帶，保留方向與沉默用途。\n• E：不改用無條件額外普攻被動；確實只有三次額度。\n• R：20%處決線替代原作固定傷害致死判斷；onDevour在排致死傷時觸發，免死者可存活而仍給成長。最多六層+240生命，無體型成長。\n• EX：不増大模型、不新增飽食資源。\n\n採用所選 GGD 模型與特效。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
@@ -35,14 +35,13 @@
     "armor": 1.5605204081632653,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 29,
     "agi": 18,
     "int": 13,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.67,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -122,7 +121,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -229,7 +228,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -334,7 +333,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -476,7 +475,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -557,7 +556,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "claw"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-chogath.webp"
 }

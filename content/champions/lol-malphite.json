@@ -1,7 +1,7 @@
 {
   "id": "lol-malphite",
   "name": "墨菲特",
-  "description": "設計草案，尚未完成上架驗收。岩盾換血、減攻速與落點擊飛坦克\n\n概念來源：LoL 墨菲特\nhttps://www.leagueoflegends.com/zh-tw/champions/malphite/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。\n• Q：固定加減速，不按目標原速逐量偷取。\n• W：首下普攻重置與護盾期間三倍護甲未加入。\n• E：本草案先用傷害級距，不另抄護甲換算數字。\n• R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。\n• EX：不是牆體，不擋路、不改碰撞。\n\n採用所選 GGD 模型與特效。",
+  "description": "岩盾換血、減攻速與落點擊飛坦克\n\n概念來源：LoL 墨菲特\nhttps://www.leagueoflegends.com/zh-tw/champions/malphite/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。\n• Q：固定加減速，不按目標原速逐量偷取。\n• W：首下普攻重置與護盾期間三倍護甲未加入。\n• E：本草案先用傷害級距，不另抄護甲換算數字。\n• R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。\n• EX：不是牆體，不擋路、不改碰撞。\n\n採用所選 GGD 模型與特效。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
@@ -35,14 +35,13 @@
     "armor": 1.5605204081632653,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 29,
     "agi": 18,
     "int": 13,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.67,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -110,7 +109,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -218,7 +217,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -326,7 +325,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -428,7 +427,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -479,7 +478,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-malphite.webp"
 }

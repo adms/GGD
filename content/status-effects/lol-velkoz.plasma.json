@@ -1,0 +1,15 @@
+{
+  "id": "lol-velkoz.plasma",
+  "schema": "status-effect@1",
+  "name": "分裂電漿",
+  "description": "威寇茲「分裂電漿」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-velkoz.plasma",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "lol-garen.decisive",
+  "schema": "status-effect@1",
+  "name": "致命打擊",
+  "description": "蓋倫「致命打擊」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-garen.decisive",
+    "buff"
+  ]
+}

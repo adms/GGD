@@ -35,14 +35,13 @@
     "armor": 0.06742857142857146,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 12,
     "agi": 25,
     "int": 23,
-    "strGrowth": 1.18,
-    "agiGrowth": 2.36,
-    "intGrowth": 2.17,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -336,7 +335,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "sword"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/acquired-kuroyukihime.webp"
 }

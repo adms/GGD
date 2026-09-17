@@ -1,7 +1,7 @@
 {
   "id": "lol-ornn",
   "name": "鄂爾",
-  "description": "設計草案，尚未完成上架驗收。焦化接重擊與直線開戰坦克\n\n概念來源：LoL 鄂爾\nhttps://www.leagueoflegends.com/zh-tw/champions/ornn/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。\n• Q：裂地（長 6 格）終點在施放當下立刻升起 4 秒暫時柱，柱子位置與裂地長度讀同一個數（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。\n• W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。\n• E：衝刺走位移五級距「小」（出貨級距表 8.25 格 @16 格/秒，後台可調）。修正前：Codex 原配方 tpl-charge-push 400 wc3u≈7.33 格／0.35 秒≈21 格/秒（上線會被穿牆天花板夾到 16）；第 1 輪寫死 7.33 格 @16。沿途傷害改由衝刺自己逐 tick 結算（dash.onPathHit）：只打身體真的掃過的人，被柱／牆擋停就只算到擋停點，柱子後面的人不挨打（修正前：起衝當下沿整條 7.33 格結算，柱後的人也挨打；後台 displacement-tiers.dashPath.mode 可切回舊結算）。撞柱或牆的震波擊飛走擊退五級距「極小」＋拋高 1（出貨級距表 2 格 @16）。修正前：Codex 原配方推 100 wc3u≈1.83 格、650 wc3u/s≈11.9 格/秒、不拋高；第 1 輪 0.2 格 @12、拋高 1。震波仍會打到已被沿途命中的敵人（原作不重複）。\n• R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。後段衝刺走位移五級距「極小」（出貨級距表 5.5 格 @16，與第 1 輪寫死的 5.5 格 @16 同值）；改向擊飛走擊退五級距「極小」＋拋高 1（修正前第 1 輪 1 格 @12；Codex 原配方沒有擊飛）。\n• EX：沒有任何裝備升級；保固就是這三秒的盾。\n\n採用所選 GGD 模型與特效。",
+  "description": "焦化接重擊與直線開戰坦克\n\n概念來源：LoL 鄂爾\nhttps://www.leagueoflegends.com/zh-tw/champions/ornn/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：重大簡化：不支援原地商店與傑作装備；只保留防禦工匠與焦化辨識。\n• Q：裂地（長 6 格）終點在施放當下立刻升起 4 秒暫時柱，柱子位置與裂地長度讀同一個數（原作裂痕抵達後才冒出，撞地形會提早停；這裡裂地不被地形截斷）。\n• W：多段前進吐息簡化為一次寬短線；不加不存在的不可阻擋。\n• E：衝刺走位移五級距「小」（出貨級距表 8.25 格 @16 格/秒，後台可調）。修正前：Codex 原配方 tpl-charge-push 400 wc3u≈7.33 格／0.35 秒≈21 格/秒（上線會被穿牆天花板夾到 16）；第 1 輪寫死 7.33 格 @16。沿途傷害改由衝刺自己逐 tick 結算（dash.onPathHit）：只打身體真的掃過的人，被柱／牆擋停就只算到擋停點，柱子後面的人不挨打（修正前：起衝當下沿整條 7.33 格結算，柱後的人也挨打；後台 displacement-tiers.dashPath.mode 可切回舊結算）。撞柱或牆的震波擊飛走擊退五級距「極小」＋拋高 1（出貨級距表 2 格 @16）。修正前：Codex 原配方推 100 wc3u≈1.83 格、650 wc3u/s≈11.9 格/秒、不拋高；第 1 輪 0.2 格 @12、拋高 1。震波仍會打到已被沿途命中的敵人（原作不重複）。\n• R：首段在瞄準方向射程盡頭（出了決鬥區就拉回邊界內）召出火羊朝鄂爾衝回，飛到鄂爾施放時站的地方為止；3 秒內再按 R 往這一按的方向短衝，衝刺中身體撞到同一隻羊才改朝衝刺方向飛並改為擊飛（沒撞到不擊飛；沒按就先被羊碰到或羊飛完 ⇒ 後段作廢）。羊的體型與速度不因改向變大變快；改向條件的後台開關 displacement-tiers.projectileRedirect.mode。後段衝刺走位移五級距「極小」（出貨級距表 5.5 格 @16，與第 1 輪寫死的 5.5 格 @16 同值）；改向擊飛走擊退五級距「極小」＋拋高 1（修正前第 1 輪 1 格 @12；Codex 原配方沒有擊飛）。\n• EX：沒有任何裝備升級；保固就是這三秒的盾。\n\n採用所選 GGD 模型與特效。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
@@ -35,14 +35,13 @@
     "armor": 1.5605204081632653,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 29,
     "agi": 18,
     "int": 13,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.67,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -97,11 +96,10 @@
         },
         {
           "kind": "spawnObstacle",
-          "radius": 3,
+          "radius": 1,
           "durationSec": 4,
           "at": "self",
-          "offsetForwardU": 6,
-          "radiusTier": "極小"
+          "offsetForwardU": 6
         }
       ],
       "castTimeSec": 0.1,
@@ -110,7 +108,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -204,7 +202,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.5,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -317,7 +315,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -461,7 +459,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 1,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -532,7 +530,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-ornn.webp"
 }

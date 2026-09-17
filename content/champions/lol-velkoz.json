@@ -1,7 +1,7 @@
 {
   "id": "lol-velkoz",
   "name": "威寇茲",
-  "description": "設計草案，尚未完成上架驗收。三次命中拆解與直線追打砲台\n\n概念來源：LoL 威寇茲\nhttps://www.leagueoflegends.com/zh-tw/champions/velkoz/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。\n• Q：主彈（imported.bolt.void.split）命中敵人時，或飛行中 1 秒內再按 Q，從主彈當下位置左右各分出一發子彈（垂直 90 度），子彈不再打主彈打過的人；主彈飛完之後再按不會有任何效果。\n• W：兩段裂痕的起點與方向都凍在施放那一刻（damageLine.aim:cast）：施法者轉身或走開，延遲的第二段仍落在原裂痕上。⛔ 未滿足：原作「兩次充能」—— Main 沒有技能彈藥機制（ability.charges），這一槽仍是一般冷卻，要不要做彈藥由 owner 決定。\n• E：近遠受害者都同一小推移；沒有額外專用判斷。\n• R：持續引導 2.5 秒（channel）朝施放方向射線，每 0.5 秒判定一次、共 5 次（首發在半拍後，引導時長由節拍推導；原作是連續傷害）；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的射線作廢；普通受傷不打斷；擊飛（非擊倒）不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• EX：會失去該目標R真傷資格，真有交換代價。\n\n採用所選 GGD 模型與特效。",
+  "description": "三次命中拆解與直線追打砲台\n\n概念來源：LoL 威寇茲\nhttps://www.leagueoflegends.com/zh-tw/champions/velkoz/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：標記按施法者分離；每0.1秒最多觸發一次，全域節流非每敵獨立；衍生傷害不可遞迴疊自己。\n• Q：主彈（imported.bolt.void.split）命中敵人時，或飛行中 1 秒內再按 Q，從主彈當下位置左右各分出一發子彈（垂直 90 度），子彈不再打主彈打過的人；主彈飛完之後再按不會有任何效果。\n• W：兩段裂痕的起點與方向都凍在施放那一刻（damageLine.aim:cast）：施法者轉身或走開，延遲的第二段仍落在原裂痕上。⛔ 未滿足：原作「兩次充能」—— Main 沒有技能彈藥機制（ability.charges），這一槽仍是一般冷卻，要不要做彈藥由 owner 決定。\n• E：近遠受害者都同一小推移；沒有額外專用判斷。\n• R：持續引導 2.5 秒（channel）朝施放方向射線，每 0.5 秒判定一次、共 5 次（首發在半拍後，引導時長由節拍推導；原作是連續傷害）；引導中同一格再按（滑鼠／觸控）或推搖桿瞄準會立即轉向，下一波就照新方向打（沒有轉速上限）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的射線作廢；普通受傷不打斷；擊飛（非擊倒）不打斷。走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• EX：會失去該目標R真傷資格，真有交換代價。\n\n採用所選 GGD 模型與特效。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
@@ -35,14 +35,13 @@
     "armor": 0.45735714285714285,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -103,7 +102,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "status": {
             "statusId": "lol-velkoz.plasma",
             "duration": 1.5,
@@ -187,7 +186,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -301,7 +300,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -426,7 +425,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.3,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -499,7 +498,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-velkoz.webp"
 }

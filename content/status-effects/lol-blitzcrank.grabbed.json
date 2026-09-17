@@ -1,0 +1,11 @@
+{
+  "id": "lol-blitzcrank.grabbed",
+  "schema": "status-effect@1",
+  "name": "火箭抓取",
+  "description": "布里姿「火箭抓取」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-blitzcrank.grabbed",
+    "debuff"
+  ]
+}

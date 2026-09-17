@@ -41,7 +41,8 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", 
  * ⭐ 2026-09-12 完成值：**907 / 907**。
  * 這裡從遷移棘輪升級成完成閘：任何一支退回自由秒數都必須失敗。
  */
-const COMPLETED_COUNT = 907;
+// ⭐ 2026-09-17（GH#1281）：第四批 37 名上架 ⇒ 907 → 1129（新英雄的 222 格全部帶著 castTimeTier 進來）。
+const COMPLETED_COUNT = 1129;
 
 let tiered = 0;
 let total = 0;

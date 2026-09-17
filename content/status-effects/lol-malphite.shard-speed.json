@@ -1,0 +1,11 @@
+{
+  "id": "lol-malphite.shard-speed",
+  "schema": "status-effect@1",
+  "name": "地震碎片",
+  "description": "墨菲特「地震碎片」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-malphite.shard-speed",
+    "buff"
+  ]
+}

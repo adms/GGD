@@ -1,0 +1,11 @@
+{
+  "id": "lol-sett.w-center",
+  "schema": "status-effect@1",
+  "name": "獸魂轟拳",
+  "description": "賽特「獸魂轟拳」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-sett.w-center",
+    "debuff"
+  ]
+}

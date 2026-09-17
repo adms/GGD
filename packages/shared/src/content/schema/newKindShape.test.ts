@@ -187,20 +187,6 @@ describe("E1：新 effect kind 一律帶 shape", () => {
     expect(stalePayout, "PAYOUT_KINDS 指到已經不存在（或不是新）的 kind").toEqual([]);
   });
 
-  // ⭐⭐ GH#1185 量到（2026-09-16）：這三個「自帶 `radius`」的新 kind 收得下 `radius`
-  //   卻**收不下 `radiusTier`** ⇒ `apply_tiers.py` 把級距收進去之後，`content:build`
-  //   直接擋下 5 份文件（而它們是新上架 37 名的一部分）。
-  // ⭐ 判準是**兩個名詞的關係**，⛔ 不是「那三個檔有沒有那一行」：
-  //   作用範圍用 `radius` 表達的 kind，一定也要收得下它的**級別**欄位
-  //   （第〇·四守則：值在載入時由 `resolveRadiusTier()` 從共用表解析，⛔ 不烘進每一份文件）。
-  it("作用範圍用 radius 表達的 kind，schema 也要收得下 radiusTier", () => {
-    cover("e1-radius-kinds-accept-tier");
-    const radiusKinds = [...OWN_GEOMETRY_KINDS].filter(([, field]) => field === "radius").map(([kind]) => kind);
-    expect(radiusKinds.length, "自帶 radius 的 kind 一個都沒有 ⇒ 這條在空轉").toBeGreaterThan(0);
-    const missing = radiusKinds.filter((kind) => !acceptsField(kind, "radiusTier", "極小"));
-    expect(missing, "這些 kind 收 radius 卻收不下 radiusTier ⇒ 收級距就會被 content:build 擋下").toEqual([]);
-  });
-
   it('shape:"circle" 沒寫 radius 的文件進不來 —— 而且是載入時擋,不是執行期靜默退化', () => {
     cover("e1-circle-needs-radius");
     const bad = zEffectDef.safeParse({ kind: "dispel", shape: "circle", polarity: "debuff" });

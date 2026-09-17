@@ -1,0 +1,15 @@
+{
+  "id": "acquired-astralym.gravity",
+  "schema": "status-effect@1",
+  "name": "失重通知",
+  "description": "枯星龍「失重通知」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-astralym.gravity",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

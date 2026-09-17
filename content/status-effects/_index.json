@@ -1,12 +1,390 @@
 {
   "collection": "status-effects",
-  "hash": "7219076b5f8e",
+  "hash": "bbdfdeffb982",
   "entries": [
     {
       "id": "aban-x-mark",
       "path": "status-effects/aban-x-mark.json",
       "hash": "9ffa8231251a",
       "size": 526
+    },
+    {
+      "id": "acquired-alice.disruption",
+      "path": "status-effects/acquired-alice.disruption.json",
+      "hash": "5a9adfb55121",
+      "size": 368
+    },
+    {
+      "id": "acquired-astralym.eclipse",
+      "path": "status-effects/acquired-astralym.eclipse.json",
+      "hash": "52463b4f14e0",
+      "size": 250
+    },
+    {
+      "id": "acquired-astralym.gravity",
+      "path": "status-effects/acquired-astralym.gravity.json",
+      "hash": "8b1788fbf52e",
+      "size": 310
+    },
+    {
+      "id": "acquired-astralym.stamp-run",
+      "path": "status-effects/acquired-astralym.stamp-run.json",
+      "hash": "9964a5128206",
+      "size": 262
+    },
+    {
+      "id": "acquired-astralym.star-bind",
+      "path": "status-effects/acquired-astralym.star-bind.json",
+      "hash": "a067b6dba96e",
+      "size": 328
+    },
+    {
+      "id": "acquired-asuna.ticket",
+      "path": "status-effects/acquired-asuna.ticket.json",
+      "hash": "ef502d5c3bb7",
+      "size": 326
+    },
+    {
+      "id": "acquired-beatrice.bookmark",
+      "path": "status-effects/acquired-beatrice.bookmark.json",
+      "hash": "e215ef00534f",
+      "size": 260
+    },
+    {
+      "id": "acquired-beatrice.hush",
+      "path": "status-effects/acquired-beatrice.hush.json",
+      "hash": "3d86af108632",
+      "size": 300
+    },
+    {
+      "id": "acquired-beatrice.library",
+      "path": "status-effects/acquired-beatrice.library.json",
+      "hash": "8360d89e9be3",
+      "size": 306
+    },
+    {
+      "id": "acquired-cattiva.frenzy",
+      "path": "status-effects/acquired-cattiva.frenzy.json",
+      "hash": "9ff5d674f1d9",
+      "size": 248
+    },
+    {
+      "id": "acquired-cattiva.paw",
+      "path": "status-effects/acquired-cattiva.paw.json",
+      "hash": "59eb0b1a988b",
+      "size": 300
+    },
+    {
+      "id": "acquired-cattiva.scamper",
+      "path": "status-effects/acquired-cattiva.scamper.json",
+      "hash": "21ea4606089a",
+      "size": 256
+    },
+    {
+      "id": "acquired-cattiva.snack",
+      "path": "status-effects/acquired-cattiva.snack.json",
+      "hash": "91387bc60ff9",
+      "size": 295
+    },
+    {
+      "id": "acquired-dio.knife",
+      "path": "status-effects/acquired-dio.knife.json",
+      "hash": "64f8b1db834b",
+      "size": 290
+    },
+    {
+      "id": "acquired-dio.roller",
+      "path": "status-effects/acquired-dio.roller.json",
+      "hash": "7a051a6f1774",
+      "size": 318
+    },
+    {
+      "id": "acquired-dio.speech",
+      "path": "status-effects/acquired-dio.speech.json",
+      "hash": "85573a705f72",
+      "size": 323
+    },
+    {
+      "id": "acquired-dio.time-stop",
+      "path": "status-effects/acquired-dio.time-stop.json",
+      "hash": "a4f854cbc108",
+      "size": 361
+    },
+    {
+      "id": "acquired-emilia.chill",
+      "path": "status-effects/acquired-emilia.chill.json",
+      "hash": "dfa129818b5d",
+      "size": 311
+    },
+    {
+      "id": "acquired-emilia.freeze",
+      "path": "status-effects/acquired-emilia.freeze.json",
+      "hash": "bcf64640a3ba",
+      "size": 321
+    },
+    {
+      "id": "acquired-emilia.frost",
+      "path": "status-effects/acquired-emilia.frost.json",
+      "hash": "1962e52e12cb",
+      "size": 245
+    },
+    {
+      "id": "acquired-emilia.ice-flower",
+      "path": "status-effects/acquired-emilia.ice-flower.json",
+      "hash": "9932688887fd",
+      "size": 315
+    },
+    {
+      "id": "acquired-emilia.tea",
+      "path": "status-effects/acquired-emilia.tea.json",
+      "hash": "422706099e9a",
+      "size": 297
+    },
+    {
+      "id": "acquired-inuyasha.fang",
+      "path": "status-effects/acquired-inuyasha.fang.json",
+      "hash": "f080f97aa50e",
+      "size": 310
+    },
+    {
+      "id": "acquired-jetragon.boarding-wait",
+      "path": "status-effects/acquired-jetragon.boarding-wait.json",
+      "hash": "77c6bba4b57e",
+      "size": 313
+    },
+    {
+      "id": "acquired-jetragon.drag",
+      "path": "status-effects/acquired-jetragon.drag.json",
+      "hash": "f66c2cdd413d",
+      "size": 304
+    },
+    {
+      "id": "acquired-jetragon.fuel",
+      "path": "status-effects/acquired-jetragon.fuel.json",
+      "hash": "a16e02b97ddc",
+      "size": 240
+    },
+    {
+      "id": "acquired-jetragon.slipstream",
+      "path": "status-effects/acquired-jetragon.slipstream.json",
+      "hash": "d8926f5ef244",
+      "size": 252
+    },
+    {
+      "id": "acquired-kita-kita.disruption",
+      "path": "status-effects/acquired-kita-kita.disruption.json",
+      "hash": "1d5895631637",
+      "size": 440
+    },
+    {
+      "id": "acquired-kuroyukihime.disconnect",
+      "path": "status-effects/acquired-kuroyukihime.disconnect.json",
+      "hash": "c29052cc47b5",
+      "size": 356
+    },
+    {
+      "id": "acquired-lord-nightmares.chaos",
+      "path": "status-effects/acquired-lord-nightmares.chaos.json",
+      "hash": "e378177acb63",
+      "size": 290
+    },
+    {
+      "id": "acquired-lord-nightmares.disruption",
+      "path": "status-effects/acquired-lord-nightmares.disruption.json",
+      "hash": "9c72626b26cc",
+      "size": 374
+    },
+    {
+      "id": "acquired-mario.cape",
+      "path": "status-effects/acquired-mario.cape.json",
+      "hash": "cbb0920f9b8c",
+      "size": 285
+    },
+    {
+      "id": "acquired-mario.coin",
+      "path": "status-effects/acquired-mario.coin.json",
+      "hash": "a896574f4d12",
+      "size": 242
+    },
+    {
+      "id": "acquired-mario.hot",
+      "path": "status-effects/acquired-mario.hot.json",
+      "hash": "436ce1ae73e5",
+      "size": 304
+    },
+    {
+      "id": "acquired-mewtwo.focus",
+      "path": "status-effects/acquired-mewtwo.focus.json",
+      "hash": "d95d187697cf",
+      "size": 241
+    },
+    {
+      "id": "acquired-mewtwo.identity",
+      "path": "status-effects/acquired-mewtwo.identity.json",
+      "hash": "43749fa780e4",
+      "size": 307
+    },
+    {
+      "id": "acquired-mewtwo.psystrike",
+      "path": "status-effects/acquired-mewtwo.psystrike.json",
+      "hash": "94c467b2234a",
+      "size": 370
+    },
+    {
+      "id": "acquired-minecraft.craft-lunch",
+      "path": "status-effects/acquired-minecraft.craft-lunch.json",
+      "hash": "267d8b56f121",
+      "size": 343
+    },
+    {
+      "id": "acquired-minecraft.material",
+      "path": "status-effects/acquired-minecraft.material.json",
+      "hash": "1ab2d5dce7e5",
+      "size": 265
+    },
+    {
+      "id": "acquired-morgiana.heel",
+      "path": "status-effects/acquired-morgiana.heel.json",
+      "hash": "28b8e38e6ed0",
+      "size": 321
+    },
+    {
+      "id": "acquired-morgiana.step",
+      "path": "status-effects/acquired-morgiana.step.json",
+      "hash": "ba6c50ec9bb1",
+      "size": 249
+    },
+    {
+      "id": "acquired-naruto.rasengan",
+      "path": "status-effects/acquired-naruto.rasengan.json",
+      "hash": "ed8089ca56a9",
+      "size": 317
+    },
+    {
+      "id": "acquired-pokemon-trainer.bag",
+      "path": "status-effects/acquired-pokemon-trainer.bag.json",
+      "hash": "da9b3f4b0f0f",
+      "size": 271
+    },
+    {
+      "id": "acquired-pokemon-trainer.fire",
+      "path": "status-effects/acquired-pokemon-trainer.fire.json",
+      "hash": "32ba5d2e1664",
+      "size": 267
+    },
+    {
+      "id": "acquired-pokemon-trainer.grass",
+      "path": "status-effects/acquired-pokemon-trainer.grass.json",
+      "hash": "2dcb3170302a",
+      "size": 269
+    },
+    {
+      "id": "acquired-pokemon-trainer.splash",
+      "path": "status-effects/acquired-pokemon-trainer.splash.json",
+      "hash": "9997e62a388c",
+      "size": 341
+    },
+    {
+      "id": "acquired-pokemon-trainer.triple-grass",
+      "path": "status-effects/acquired-pokemon-trainer.triple-grass.json",
+      "hash": "c185756a3280",
+      "size": 367
+    },
+    {
+      "id": "acquired-pokemon-trainer.triple-water",
+      "path": "status-effects/acquired-pokemon-trainer.triple-water.json",
+      "hash": "70a8241337c4",
+      "size": 353
+    },
+    {
+      "id": "acquired-pokemon-trainer.vine",
+      "path": "status-effects/acquired-pokemon-trainer.vine.json",
+      "hash": "bc96949a3114",
+      "size": 351
+    },
+    {
+      "id": "acquired-pokemon-trainer.water",
+      "path": "status-effects/acquired-pokemon-trainer.water.json",
+      "hash": "1e0dcc1466b4",
+      "size": 269
+    },
+    {
+      "id": "acquired-ram.break-time",
+      "path": "status-effects/acquired-ram.break-time.json",
+      "hash": "77a98a1c84a4",
+      "size": 257
+    },
+    {
+      "id": "acquired-ram.headwind",
+      "path": "status-effects/acquired-ram.headwind.json",
+      "hash": "41e75a59e35c",
+      "size": 299
+    },
+    {
+      "id": "acquired-ram.wind",
+      "path": "status-effects/acquired-ram.wind.json",
+      "hash": "6040ba7c7ff3",
+      "size": 239
+    },
+    {
+      "id": "acquired-rim.bite",
+      "path": "status-effects/acquired-rim.bite.json",
+      "hash": "e2f1f56b85dd",
+      "size": 321
+    },
+    {
+      "id": "acquired-rim.disruption",
+      "path": "status-effects/acquired-rim.disruption.json",
+      "hash": "481e895e9471",
+      "size": 345
+    },
+    {
+      "id": "acquired-ryu.shoto",
+      "path": "status-effects/acquired-ryu.shoto.json",
+      "hash": "93346630ce5c",
+      "size": 232
+    },
+    {
+      "id": "acquired-ryu.training",
+      "path": "status-effects/acquired-ryu.training.json",
+      "hash": "1aea66ecda4e",
+      "size": 281
+    },
+    {
+      "id": "acquired-ryu.uppercut",
+      "path": "status-effects/acquired-ryu.uppercut.json",
+      "hash": "9acf1d74b827",
+      "size": 328
+    },
+    {
+      "id": "acquired-saya.disruption",
+      "path": "status-effects/acquired-saya.disruption.json",
+      "hash": "f232a5384bd3",
+      "size": 357
+    },
+    {
+      "id": "acquired-saya.fear",
+      "path": "status-effects/acquired-saya.fear.json",
+      "hash": "e2650826d167",
+      "size": 356
+    },
+    {
+      "id": "acquired-wargreymon.claw",
+      "path": "status-effects/acquired-wargreymon.claw.json",
+      "hash": "274f8207ddc3",
+      "size": 320
+    },
+    {
+      "id": "acquired-xiaodangjia.disruption",
+      "path": "status-effects/acquired-xiaodangjia.disruption.json",
+      "hash": "be4a72dabde0",
+      "size": 351
+    },
+    {
+      "id": "acquired-zero.charge",
+      "path": "status-effects/acquired-zero.charge.json",
+      "hash": "87bd2f9afba5",
+      "size": 231
     },
     {
       "id": "alcohol-enema",
@@ -139,6 +517,324 @@
       "path": "status-effects/lock-combo.json",
       "hash": "17f6c67af7b1",
       "size": 262
+    },
+    {
+      "id": "lol-ahri.charm",
+      "path": "status-effects/lol-ahri.charm.json",
+      "hash": "ce44be872c09",
+      "size": 307
+    },
+    {
+      "id": "lol-ahri.essence",
+      "path": "status-effects/lol-ahri.essence.json",
+      "hash": "6f085ad02045",
+      "size": 213
+    },
+    {
+      "id": "lol-ahri.foxfire-speed",
+      "path": "status-effects/lol-ahri.foxfire-speed.json",
+      "hash": "7ce6fc8111b1",
+      "size": 225
+    },
+    {
+      "id": "lol-ahri.no-reply",
+      "path": "status-effects/lol-ahri.no-reply.json",
+      "hash": "65255e96c124",
+      "size": 276
+    },
+    {
+      "id": "lol-ashe.arrow-slow",
+      "path": "status-effects/lol-ashe.arrow-slow.json",
+      "hash": "f832332f649c",
+      "size": 301
+    },
+    {
+      "id": "lol-ashe.arrow-stun",
+      "path": "status-effects/lol-ashe.arrow-stun.json",
+      "hash": "139abbb82f77",
+      "size": 352
+    },
+    {
+      "id": "lol-ashe.delivery-signature",
+      "path": "status-effects/lol-ashe.delivery-signature.json",
+      "hash": "74f6de54d389",
+      "size": 326
+    },
+    {
+      "id": "lol-ashe.focus",
+      "path": "status-effects/lol-ashe.focus.json",
+      "hash": "3816496f1952",
+      "size": 221
+    },
+    {
+      "id": "lol-ashe.focus-active",
+      "path": "status-effects/lol-ashe.focus-active.json",
+      "hash": "85dc19e3388f",
+      "size": 235
+    },
+    {
+      "id": "lol-ashe.freezer-root",
+      "path": "status-effects/lol-ashe.freezer-root.json",
+      "hash": "b9b52e956a62",
+      "size": 313
+    },
+    {
+      "id": "lol-ashe.frost",
+      "path": "status-effects/lol-ashe.frost.json",
+      "hash": "cf91257c3392",
+      "size": 285
+    },
+    {
+      "id": "lol-blitzcrank.fist",
+      "path": "status-effects/lol-blitzcrank.fist.json",
+      "hash": "a77c0d92172c",
+      "size": 234
+    },
+    {
+      "id": "lol-blitzcrank.grabbed",
+      "path": "status-effects/lol-blitzcrank.grabbed.json",
+      "hash": "71e313e774c7",
+      "size": 244
+    },
+    {
+      "id": "lol-blitzcrank.overdrive",
+      "path": "status-effects/lol-blitzcrank.overdrive.json",
+      "hash": "ca60155e55db",
+      "size": 244
+    },
+    {
+      "id": "lol-blitzcrank.overheat",
+      "path": "status-effects/lol-blitzcrank.overheat.json",
+      "hash": "46e8edaa0d40",
+      "size": 306
+    },
+    {
+      "id": "lol-blitzcrank.static-silence",
+      "path": "status-effects/lol-blitzcrank.static-silence.json",
+      "hash": "b38173e14368",
+      "size": 302
+    },
+    {
+      "id": "lol-chogath.full",
+      "path": "status-effects/lol-chogath.full.json",
+      "hash": "938453654cd1",
+      "size": 304
+    },
+    {
+      "id": "lol-chogath.rupture-slow",
+      "path": "status-effects/lol-chogath.rupture-slow.json",
+      "hash": "ed589c45ecc5",
+      "size": 296
+    },
+    {
+      "id": "lol-chogath.scream",
+      "path": "status-effects/lol-chogath.scream.json",
+      "hash": "f79b9ec7ef7d",
+      "size": 280
+    },
+    {
+      "id": "lol-chogath.spike-slow",
+      "path": "status-effects/lol-chogath.spike-slow.json",
+      "hash": "a2a93a7d205e",
+      "size": 304
+    },
+    {
+      "id": "lol-chogath.spikes",
+      "path": "status-effects/lol-chogath.spikes.json",
+      "hash": "ef7de105e1c5",
+      "size": 232
+    },
+    {
+      "id": "lol-fiddlesticks.fear",
+      "path": "status-effects/lol-fiddlesticks.fear.json",
+      "hash": "b7c27f0049b1",
+      "size": 341
+    },
+    {
+      "id": "lol-fiddlesticks.reap",
+      "path": "status-effects/lol-fiddlesticks.reap.json",
+      "hash": "43d2e0cda296",
+      "size": 336
+    },
+    {
+      "id": "lol-garen.decisive",
+      "path": "status-effects/lol-garen.decisive.json",
+      "hash": "0f003ffe0660",
+      "size": 229
+    },
+    {
+      "id": "lol-garen.recent-damage",
+      "path": "status-effects/lol-garen.recent-damage.json",
+      "hash": "899cb891366a",
+      "size": 227
+    },
+    {
+      "id": "lol-garen.rest",
+      "path": "status-effects/lol-garen.rest.json",
+      "hash": "b1159ab23ba4",
+      "size": 317
+    },
+    {
+      "id": "lol-garen.silence",
+      "path": "status-effects/lol-garen.silence.json",
+      "hash": "d328d623dbfa",
+      "size": 275
+    },
+    {
+      "id": "lol-malphite.parking",
+      "path": "status-effects/lol-malphite.parking.json",
+      "hash": "41c761453a5d",
+      "size": 248
+    },
+    {
+      "id": "lol-malphite.parking-root",
+      "path": "status-effects/lol-malphite.parking-root.json",
+      "hash": "3dd9442741d2",
+      "size": 336
+    },
+    {
+      "id": "lol-malphite.recent-damage",
+      "path": "status-effects/lol-malphite.recent-damage.json",
+      "hash": "4c2a7b82891d",
+      "size": 254
+    },
+    {
+      "id": "lol-malphite.shard-slow",
+      "path": "status-effects/lol-malphite.shard-slow.json",
+      "hash": "531be9c00b95",
+      "size": 306
+    },
+    {
+      "id": "lol-malphite.shard-speed",
+      "path": "status-effects/lol-malphite.shard-speed.json",
+      "hash": "234d8644082d",
+      "size": 244
+    },
+    {
+      "id": "lol-malphite.slam-as",
+      "path": "status-effects/lol-malphite.slam-as.json",
+      "hash": "38e39921c272",
+      "size": 236
+    },
+    {
+      "id": "lol-malphite.thunder",
+      "path": "status-effects/lol-malphite.thunder.json",
+      "hash": "287d43d31575",
+      "size": 236
+    },
+    {
+      "id": "lol-ornn.brittle",
+      "path": "status-effects/lol-ornn.brittle.json",
+      "hash": "bf66c1d3089b",
+      "size": 223
+    },
+    {
+      "id": "lol-ornn.forge-stats",
+      "path": "status-effects/lol-ornn.forge-stats.json",
+      "hash": "da477f75d950",
+      "size": 227
+    },
+    {
+      "id": "lol-ornn.q-slow",
+      "path": "status-effects/lol-ornn.q-slow.json",
+      "hash": "318b3a640ea9",
+      "size": 287
+    },
+    {
+      "id": "lol-ornn.r-slow",
+      "path": "status-effects/lol-ornn.r-slow.json",
+      "hash": "27c65ccddee4",
+      "size": 299
+    },
+    {
+      "id": "lol-sett.e-slow",
+      "path": "status-effects/lol-sett.e-slow.json",
+      "hash": "8cd67a0db858",
+      "size": 287
+    },
+    {
+      "id": "lol-sett.grit",
+      "path": "status-effects/lol-sett.grit.json",
+      "hash": "73eea12ee127",
+      "size": 219
+    },
+    {
+      "id": "lol-sett.phone",
+      "path": "status-effects/lol-sett.phone.json",
+      "hash": "8522d7be4344",
+      "size": 270
+    },
+    {
+      "id": "lol-sett.q",
+      "path": "status-effects/lol-sett.q.json",
+      "hash": "681a831c5f63",
+      "size": 213
+    },
+    {
+      "id": "lol-sett.r-slow",
+      "path": "status-effects/lol-sett.r-slow.json",
+      "hash": "1dea88db8a6f",
+      "size": 287
+    },
+    {
+      "id": "lol-sett.right",
+      "path": "status-effects/lol-sett.right.json",
+      "hash": "800dc24f5c5a",
+      "size": 221
+    },
+    {
+      "id": "lol-sett.w-center",
+      "path": "status-effects/lol-sett.w-center.json",
+      "hash": "7788f80abb3d",
+      "size": 231
+    },
+    {
+      "id": "lol-thresh.box",
+      "path": "status-effects/lol-thresh.box.json",
+      "hash": "8d664c8f4fbf",
+      "size": 288
+    },
+    {
+      "id": "lol-thresh.flay-slow",
+      "path": "status-effects/lol-thresh.flay-slow.json",
+      "hash": "fae04cb85917",
+      "size": 300
+    },
+    {
+      "id": "lol-thresh.hook",
+      "path": "status-effects/lol-thresh.hook.json",
+      "hash": "264c3020e263",
+      "size": 304
+    },
+    {
+      "id": "lol-thresh.rejected",
+      "path": "status-effects/lol-thresh.rejected.json",
+      "hash": "68d7b40130c0",
+      "size": 298
+    },
+    {
+      "id": "lol-velkoz.deconstruction",
+      "path": "status-effects/lol-velkoz.deconstruction.json",
+      "hash": "5dd74662837a",
+      "size": 250
+    },
+    {
+      "id": "lol-velkoz.plasma",
+      "path": "status-effects/lol-velkoz.plasma.json",
+      "hash": "260ac08bdef6",
+      "size": 294
+    },
+    {
+      "id": "lol-velkoz.researched",
+      "path": "status-effects/lol-velkoz.researched.json",
+      "hash": "1fd8193a0efb",
+      "size": 242
+    },
+    {
+      "id": "lol-velkoz.review",
+      "path": "status-effects/lol-velkoz.review.json",
+      "hash": "fa7c0a5c7283",
+      "size": 306
     },
     {
       "id": "magic-break",

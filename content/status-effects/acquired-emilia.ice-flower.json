@@ -1,0 +1,15 @@
+{
+  "id": "acquired-emilia.ice-flower",
+  "schema": "status-effect@1",
+  "name": "冰花開席",
+  "description": "愛蜜莉雅「冰花開席」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-emilia.ice-flower",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "id": "lol-sett",
   "name": "賽特",
-  "description": "設計草案，尚未完成上架驗收。受擊蓄勢、短手摔投鬥士\n\n概念來源：LoL 賽特\nhttps://www.leagueoflegends.com/zh-tw/champions/sett/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：右拳攻速細分與按實際受傷量連續換算，簡化為交替追加及三層桶；不是反傷。\n• Q：移速不限定朝敵人方向；無普攻重置。\n• W：依施法者面向揮拳，保留中心真傷與兩側物傷；受擊蓄勢仍以三層桶及兩檔護盾/傷害表示，未按實際承傷量連續換算。\n• E：未判斷左右同時有人；不憑空給必定暈眩。\n• R：抓抱期間跟隨施法者，以現有地面位移表達帶行，終點結算範圍傷害；沒有垂直拋物線，傷害不按被抱者額外生命換算。\n• EX：笑點是治療換取停拳，不改 QWER。\n\n採用所選 GGD 模型與特效。",
+  "description": "受擊蓄勢、短手摔投鬥士\n\n概念來源：LoL 賽特\nhttps://www.leagueoflegends.com/zh-tw/champions/sett/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：右拳攻速細分與按實際受傷量連續換算，簡化為交替追加及三層桶；不是反傷。\n• Q：移速不限定朝敵人方向；無普攻重置。\n• W：依施法者面向揮拳，保留中心真傷與兩側物傷；受擊蓄勢仍以三層桶及兩檔護盾/傷害表示，未按實際承傷量連續換算。\n• E：未判斷左右同時有人；不憑空給必定暈眩。\n• R：抓抱期間跟隨施法者，以現有地面位移表達帶行，終點結算範圍傷害；沒有垂直拋物線，傷害不按被抱者額外生命換算。\n• EX：笑點是治療換取停拳，不改 QWER。\n\n採用所選 GGD 模型與特效。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
@@ -35,14 +35,13 @@
     "armor": 0.4578979591836735,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -122,7 +121,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -404,7 +403,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.6,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -671,7 +670,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -748,7 +747,7 @@
         },
         {
           "kind": "dash",
-          "mode": "toPoint",
+          "mode": "forward",
           "speed": 8,
           "maxDistance": 5.5,
           "onEnd": [
@@ -785,7 +784,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "targeted",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -803,7 +802,7 @@
             },
             {
               "kind": "dash",
-              "mode": "toPoint",
+              "mode": "forward",
               "speed": 8,
               "maxDistance": 4,
               "onEnd": [
@@ -850,7 +849,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-sett.webp"
 }

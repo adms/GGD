@@ -43,7 +43,7 @@
     },
     {
       "kind": "spawnInteractable",
-      "radius": 3,
+      "radius": 2.5,
       "durationSec": 6,
       "maxUses": 1,
       "onAccept": [
@@ -53,8 +53,7 @@
           "to": "caster",
           "applyTo": "target"
         }
-      ],
-      "radiusTier": "極小"
+      ]
     }
   ],
   "castTimeSec": 0.1,
@@ -63,7 +62,7 @@
     "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
     "params": {
       "castType": "ground",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.2,
       "radius": 2.5,
       "side": "allies",
       "effects": [

@@ -38,13 +38,24 @@ describe("上架名單逐群宣告 ↔ 權威文件 ↔ starterChampions ↔ 退
 
   it("⭐ 單一名先上架：宣告 none ⇒ 紅且修法指向 partial；宣告 partial ⇒ 綠", () => {
     const bs = world.declaration.batches;
-    const b = bs.find((x) => x.starter === "none" && (world.batchDoc.get(x.section)?.length ?? 0) > 1)!;
+    // ⭐⭐ GH#1281（2026-09-17）—— 夾具原本去**出貨宣告**裡找一個 `starter:"none"` 的群。
+    //   第四批 37 名上架之後（owner 2026-09-16「全部英雄上架是預設的」）出貨宣告裡
+    //   ⛔ 一個 `none` 都沒有了 ⇒ `find` 回 undefined ⇒ 這一條當場 TypeError。
+    //   ⭐ 而它要驗的是**規則**（宣告 none 卻有人上架 ⇒ 紅、改 partial ⇒ 綠），
+    //   ⛔ 不是「出貨資料裡剛好有這種群」—— 所以夾具自己造一個，⛔ 不再依賴出貨狀態。
+    const base = bs.find((x) => (world.batchDoc.get(x.section)?.length ?? 0) > 1)!;
+    const b = { ...base, starter: "none" as const };
+    const withNone = bs.map((x) => (x === base ? b : x));
     const one = world.batchDoc.get(b.section)![0]!;
-    const w = { ...world, starter: [...world.starter, one] };
+    const w = {
+      ...world,
+      starter: [...world.starter, one],
+      declaration: { ...world.declaration, batches: withNone },
+    };
     const none = checkRosterDeclaration(w).find((f) => f.pair === "逐群宣告 ↔ starterChampions");
     expect(none?.detail).toContain(one);
     expect(none?.fix).toContain('"partial"');
-    const partial = bs.map((x) => (x === b ? { ...x, starter: "partial" as const } : x));
+    const partial = withNone.map((x) => (x === b ? { ...x, starter: "partial" as const } : x));
     expect(report({ ...w, declaration: { ...w.declaration, batches: partial } })).toEqual([]);
   });
 

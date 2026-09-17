@@ -1,7 +1,7 @@
 {
   "id": "lol-fiddlesticks",
   "name": "稻草人",
-  "description": "設計草案，尚未完成上架驗收。恐懼接近、近身汲取與進場風暴\n\n概念來源：LoL 稻草人\nhttps://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。\n• Q：不額外給未被看見時群體恐懼。\n• W：持續引導 2 秒（channel）：每 0.5 秒以自身為圓心打一圈（首發在半拍後、共 4 發，引導時長由節拍推導），每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷；擊飛（非擊倒）不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• E：弧形與中央命中改為窄直帶，整條帶吃沉默。\n• R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。\n• EX：只會既有代理普攻，不是三具複製 QWER 的分身。\n\n採用所選 GGD 模型與特效。",
+  "description": "恐懼接近、近身汲取與進場風暴\n\n概念來源：LoL 稻草人\nhttps://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：重大簡化：不是飾品、守衛、放置假身或未被看見判定；替身仍有既有自動攻擊。\n• Q：不額外給未被看見時群體恐懼。\n• W：持續引導 2 秒（channel）：每 0.5 秒以自身為圓心打一圈（首發在半拍後、共 4 發，引導時長由節拍推導），每打中一人回固定血量（沒打到人不回血）；撐滿才收割一次（小級距傷害、不回血，不是依損失生命的斬殺）。移動／攻擊指令、暈眩、沉默、擊倒、死亡、恐懼／魅惑／暴走／混亂（方向盤被拿走）會打斷，打斷後排好的波次作廢、不收割；普通受傷不打斷；擊飛（非擊倒）不打斷。回血是固定量而非依傷害比例；走開打斷的後台開關 cast-time.channelCancelOnMoveOrder。\n• E：弧形與中央命中改為窄直帶，整條帶吃沉默。\n• R：使用極大級前搖，死亡、暈眩或擊倒可在釋放前中斷；落地後啟動跟身群鴉，沒有草叢未視認額外恐懼。\n• EX：只會既有代理普攻，不是三具複製 QWER 的分身。\n\n採用所選 GGD 模型與特效。",
   "role": "mage",
   "attackType": "melee",
   "archetype": "mage",
@@ -35,14 +35,13 @@
     "armor": 0.45735714285714285,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -96,7 +95,7 @@
             "damageTier": "極小"
           },
           "damageType": "magic",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "status": {
             "statusId": "lol-fiddlesticks.fear",
             "duration": 1,
@@ -230,7 +229,8 @@
             "amount": {
               "damageTier": "小"
             },
-            "radius": 3
+            "radius": 3,
+            "radiusTier": "極小"
           }
         ]
       },
@@ -293,7 +293,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -442,7 +442,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "greatsword"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-fiddlesticks.webp"
 }

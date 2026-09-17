@@ -2,7 +2,7 @@
   "id": "lol-sett.passive",
   "name": "恆毅之泉",
   "provenance": "editor-json",
-  "description": "左右拳交替；低血量時週期回血；承傷累積最多三層供 W 使用。",
+  "description": "普通攻擊左右拳交替，右拳追加傷害；低血量時週期回血；承傷累積最多三層供 W 使用。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -212,5 +212,6 @@
     "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
   },
   "schema": "ability@1",
+  "castTimeSec": 0,
   "icon": "assets/icons/abilities/lol-sett.passive.webp"
 }

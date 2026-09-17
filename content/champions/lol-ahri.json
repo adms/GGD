@@ -1,7 +1,7 @@
 {
   "id": "lol-ahri",
   "name": "阿璃",
-  "description": "設計草案，尚未完成上架驗收。方向法球、魅惑接輸出與短衝換位\n\n概念來源：LoL 阿璃\nhttps://www.leagueoflegends.com/zh-tw/champions/ahri/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：計數60秒窗口；英雄取擊殺而非助攻參與。\n• Q：同一顆穿透法球（imported.wave.arcane.return）去程穿過每人一次、射程盡頭掉頭追向阿璃當下位置，回程命中另外記錄、再打一次，回到身上消失。去程與回程共用同一串命中效果（原作回程是真實傷害；現有回程彈沒有分段命中效果，這裡兩程都是魔法傷害）。\n• W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。\n• E：命中後魅惑（charmed）：被命中者被迫朝阿璃走、丟掉自己的指令並減速，到期恢復；不另外拉扯或繳械。不保證打斷所有位移。\n• R：首放後 10 秒內可再按兩次，每一段各自重新瞄準落點；三段衝完或窗口到期才進冷卻。原作擊殺參與增加可重施放次數不做。\n• EX：單純離場工具，沒有刷新R。\n\n採用所選 GGD 模型與特效。",
+  "description": "方向法球、魅惑接輸出與短衝換位\n\n概念來源：LoL 阿璃\nhttps://www.leagueoflegends.com/zh-tw/champions/ahri/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：計數60秒窗口；英雄取擊殺而非助攻參與。\n• Q：同一顆穿透法球（imported.wave.arcane.return）去程穿過每人一次、射程盡頭掉頭追向阿璃當下位置，回程命中另外記錄、再打一次，回到身上消失。去程與回程共用同一串命中效果（原作回程是真實傷害；現有回程彈沒有分段命中效果，這裡兩程都是魔法傷害）。\n• W：每波重新選一人，沒有三顆獨立導引飛彈；仍保留近身自動攻擊用途。\n• E：命中後魅惑（charmed）：被命中者被迫朝阿璃走、丟掉自己的指令並減速，到期恢復；不另外拉扯或繳械。不保證打斷所有位移。\n• R：首放後 10 秒內可再按兩次，每一段各自重新瞄準落點；三段衝完或窗口到期才進冷卻。原作擊殺參與增加可重施放次數不做。\n• EX：單純離場工具，沒有刷新R。\n\n採用所選 GGD 模型與特效。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
@@ -35,14 +35,13 @@
     "armor": 0.45735714285714285,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -94,7 +93,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -190,7 +189,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -294,7 +293,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -381,7 +380,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -429,7 +428,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-ahri.webp"
 }

@@ -1,0 +1,14 @@
+{
+  "id": "acquired-beatrice.hush",
+  "schema": "status-effect@1",
+  "name": "逾期罰款・陰",
+  "description": "碧翠絲「逾期罰款・陰」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-beatrice.hush",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

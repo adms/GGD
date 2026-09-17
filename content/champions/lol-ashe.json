@@ -1,7 +1,7 @@
 {
   "id": "lol-ashe",
   "name": "艾希",
-  "description": "設計草案，尚未完成上架驗收。普攻黏人、四層專注與遠距先手\n\n概念來源：LoL 艾希\nhttps://www.leagueoflegends.com/zh-tw/champions/ashe/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。\n• Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。\n• W：錐形多箭簡化為一次短寬直帶；同敵只計一發。\n• R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。\n• EX：保鮮箱只提供盾與鎖足，沒有無敵。\n• E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。\n\n採用所選 GGD 模型與特效。",
+  "description": "普攻黏人、四層專注與遠距先手\n\n概念來源：LoL 艾希\nhttps://www.leagueoflegends.com/zh-tw/champions/ashe/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：暴擊轉為更強緩速未重寫共通暴擊規則。\n• Q：強化一發仍是一次普攻，沒有五箭重新觸發on-hit。\n• W：錐形多箭簡化為一次短寬直帶；同敵只計一發。\n• R：用既有非穿透 imported.bolt 代理冰箭；固定1.2秒暈眩，非全圖，也未只碰英雄。\n• EX：保鮮箱只提供盾與鎖足，沒有無敵。\n• E：本地圖全圖可見，依 Owner 指示改為飛鷹送件的延遲區域繳械；不提供額外視野，不造成傷害。\n\n採用所選 GGD 模型與特效。",
   "role": "marksman",
   "attackType": "ranged",
   "archetype": "marksman",
@@ -35,14 +35,13 @@
     "armor": 0,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 29,
     "int": 18,
-    "strGrowth": 1.25,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -131,7 +130,7 @@
           "statusId": "lol-ashe.focus",
           "minStacks": 4,
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0,
           "missingText": "先普攻累積四層專注",
           "effects": [
             {
@@ -230,7 +229,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -426,7 +425,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.5,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -486,7 +485,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "bow"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-ashe.webp"
 }

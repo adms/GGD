@@ -1,0 +1,16 @@
+{
+  "id": "acquired-alice.disruption",
+  "schema": "status-effect@1",
+  "name": "金木樨停車單",
+  "description": "愛麗絲·滋貝魯庫（Alice Zuberg）「金木樨停車單」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-alice.disruption",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

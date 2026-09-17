@@ -1,7 +1,7 @@
 {
   "id": "lol-blitzcrank",
   "name": "布里姿",
-  "description": "設計草案，尚未完成上架驗收。拉人、過熱衝刺與打斷連招\n\n概念來源：LoL 布里姿\nhttps://www.leagueoflegends.com/zh-tw/champions/blitzcrank/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：按最大魔力而非即時魔力；致死一擊能否先觸發須依現有onDamageTaken時序驗證。\n• Q：既有投射物代理手臂；拉回受共通落點/牆規則限制。\n• W：保持加速後自緩速代價，無第二段按鍵。\n• E：追加GGD傷害級距，不承諾原作雙倍普攻公式。\n• R：R學習後普攻延遲電擊暫未接；保留主動破盾沉默。\n• EX：只消耗自己的Q收據，不影響別人的抓取狀態。\n\n採用所選 GGD 模型與特效。",
+  "description": "拉人、過熱衝刺與打斷連招\n\n概念來源：LoL 布里姿\nhttps://www.leagueoflegends.com/zh-tw/champions/blitzcrank/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：按最大魔力而非即時魔力；致死一擊能否先觸發須依現有onDamageTaken時序驗證。\n• Q：既有投射物代理手臂；拉回受共通落點/牆規則限制。\n• W：保持加速後自緩速代價，無第二段按鍵。\n• E：追加GGD傷害級距，不承諾原作雙倍普攻公式。\n• R：R學習後普攻延遲電擊暫未接；保留主動破盾沉默。\n• EX：只消耗自己的Q收據，不影響別人的抓取狀態。\n\n採用所選 GGD 模型與特效。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
@@ -35,14 +35,13 @@
     "armor": 1.5605204081632653,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 29,
     "agi": 18,
     "int": 13,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.67,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -108,7 +107,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -217,7 +216,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -333,7 +332,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -435,7 +434,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -481,7 +480,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-blitzcrank.webp"
 }

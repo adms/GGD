@@ -1,0 +1,15 @@
+{
+  "id": "acquired-dio.knife",
+  "schema": "status-effect@1",
+  "name": "飛刀考勤",
+  "description": "DIO「飛刀考勤」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-dio.knife",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "id": "lol-thresh",
   "name": "瑟雷西",
-  "description": "設計草案，尚未完成上架驗收。鉤鎖控距、燈籠救援與區域封鎖\n\n概念來源：LoL 瑟雷西\nhttps://www.leagueoflegends.com/zh-tw/champions/thresh/\n\n本遊戲改編：\n• 保留原版 QWER；以下候選只供編譯與設計比對，尚未完成的關鍵機制待 Main 接入。\n• PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。\n• Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。\n• W：燈籠丟到地上，落點圈內的隊友獲得護盾；隊友自己點燈（interact 指令，GH#1189）才飛回瑟雷西，施法者不會強制搬人。簡化：護盾給落點圈內的隊友，不是原版「第一個碰到燈籠的隊友」；只能搭乘一人。\n• E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。\n• R：自身周圍立起五段可穿越的邊界（半徑 3、存活 5 秒）；敵人穿過某一段時受傷並重緩速，那一段隨即消失，放下時站在圈內不挨打。同一人穿過不同段會各吃一次（原作第二道牆起傷害減半且不再緩速）；邊界不擋路。\n• EX：不召喚不可通行的燈籠物件。\n\n採用所選 GGD 模型與特效。",
+  "description": "鉤鎖控距、燈籠救援與區域封鎖\n\n概念來源：LoL 瑟雷西\nhttps://www.leagueoflegends.com/zh-tw/champions/thresh/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。\n• Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。\n• W：燈籠丟到地上，落點圈內的隊友獲得護盾；隊友自己點燈（interact 指令，GH#1189）才飛回瑟雷西，施法者不會強制搬人。簡化：護盾給落點圈內的隊友，不是原版「第一個碰到燈籠的隊友」；只能搭乘一人。\n• E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。\n• R：自身周圍立起五段可穿越的邊界（半徑 3、存活 5 秒）；敵人穿過某一段時受傷並重緩速，那一段隨即消失，放下時站在圈內不挨打。同一人穿過不同段會各吃一次（原作第二道牆起傷害減半且不再緩速）；邊界不擋路。\n• EX：不召喚不可通行的燈籠物件。\n\n採用所選 GGD 模型與特效。",
   "role": "fighter",
   "attackType": "ranged",
   "archetype": "fighter",
@@ -35,14 +35,13 @@
     "armor": 0.4212959183673469,
     "ap": 0
   },
-  "msGrowthTier": "極小",
   "attributes": {
     "str": 21,
     "agi": 20,
     "int": 19,
-    "strGrowth": 1.99,
-    "agiGrowth": 1.89,
-    "intGrowth": 1.83,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -118,7 +117,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -209,7 +208,7 @@
         },
         {
           "kind": "spawnInteractable",
-          "radius": 3,
+          "radius": 2.5,
           "durationSec": 6,
           "maxUses": 1,
           "onAccept": [
@@ -219,8 +218,7 @@
               "to": "caster",
               "applyTo": "target"
             }
-          ],
-          "radiusTier": "極小"
+          ]
         }
       ],
       "castTimeSec": 0.1,
@@ -229,7 +227,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "ground",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "allies",
           "effects": [
@@ -335,7 +333,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -420,8 +418,7 @@
               "duration": 2,
               "moveSpeedMult": 0.3
             }
-          ],
-          "radiusTier": "極小"
+          ]
         }
       ],
       "castTimeSec": 0.1,
@@ -430,7 +427,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "self",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.2,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -474,7 +471,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "thrown"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-thresh.webp"
 }

@@ -1,0 +1,15 @@
+{
+  "id": "acquired-inuyasha.fang",
+  "schema": "status-effect@1",
+  "name": "鐵碎牙拆門",
+  "description": "犬夜叉「鐵碎牙拆門」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-inuyasha.fang",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -126,12 +126,19 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   //
   // ⭐ 空掉的那兩格**留著**而不是刪掉：一個空陣列說「這顆替身今天沒有人借」，
   //   ⛔ 而刪掉會讓「又有人搬回來」變成靜默（這一條原本就寫在 rogue 那一格上）。
-  "champ.sela": ["sela"],
-  "champ.thorne": ["thorne"],
+  // ⭐ 2026-09-17（GH#1281）：第四批 37 名裡有**兩位沒有本尊模型**，照 owner
+  //   2026-09-16「全部英雄上架是預設的」先上架、暫時穿方塊人身體 ——
+  //   碧翠絲（`acquired-beatrice`）→ `champ.sela`、Steve／Alex（`acquired-minecraft`）→ `champ.thorne`。
+  //   ⚠️ 它們的理由逐列寫在 `tools/roster-guard/roster-sync.baseline.json` 的 skeletonPlaceholders，
+  //   模型一到位就從這兩格劃掉（⛔ 不是把這份普查放寬）。
+  "champ.sela": ["acquired-beatrice", "sela"],
+  "champ.thorne": ["acquired-minecraft", "thorne"],
   // blocky-barbarian.glb —— `godie-h02k` 仍直接借用這顆共享 rig。
   // `godie-umal` 已改指版本模型文件；該文件的 glb 仍是生成替身，所以在下面的
   // 非 rig／間接替身名單逐位列出，避免把 modelKey 關係與實際 glb 身分混在一起。
-  "champ.skin.barbarian": ["godie-h02k"],
+  // ⭐ 2026-09-17（GH#1281／PR #1280）：熊貓（`godie-h02k`）換上論壇模型 ⇒ 這顆 rig 也空了。
+  //   ⚠️ 空陣列**留著**（同上面兩格的理由）：刪掉會讓「又有人搬回來」變成靜默。
+  "champ.skin.barbarian": [],
   "champ.skin.rogue": [],
 };
 
@@ -167,7 +174,8 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     // 替身徽章／身分排序／對外 resolved-appearance 讀的是 `standInBody`（看 glb 住在哪）。
     // ⛔ 兩個分母在此之前沒有任何一條對起來 ⇒ `godie-zombiex`（blocky-undead.glb，不是 rig）兩邊各說各話。
     // ⭐ 非 rig 的替身逐位列名：換成本人模型的那一位從這裡劃掉；多出一位 ⇒ 紅並指名。
-    const NON_RIG_STAND_INS = ["godie-umal", "godie-zombiex"];
+    // ⭐ 2026-09-17（GH#1281／PR #1280）：`godie-umal` 換上論壇模型 ⇒ 從這張名單劃掉。
+    const NON_RIG_STAND_INS = ["godie-zombiex"];
     const models = readShippedModelDocs(CONTENT);
     const derived = ROSTER.filter((c) => isStandInModel(c.modelKey, models.get(c.modelKey ?? "") ?? null)).map((c) => c.id);
     const rigTenants = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);

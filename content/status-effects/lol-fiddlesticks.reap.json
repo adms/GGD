@@ -1,0 +1,17 @@
+{
+  "id": "lol-fiddlesticks.reap",
+  "schema": "status-effect@1",
+  "name": "駭懼收割",
+  "description": "稻草人「駭懼收割」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-fiddlesticks.reap",
+    "silence",
+    "cast-denied",
+    "cc",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "debuff"
+  ]
+}

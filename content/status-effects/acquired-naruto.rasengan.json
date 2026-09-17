@@ -1,0 +1,15 @@
+{
+  "id": "acquired-naruto.rasengan",
+  "schema": "status-effect@1",
+  "name": "螺旋丸加麵",
+  "description": "漩渦鳴人「螺旋丸加麵」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-naruto.rasengan",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

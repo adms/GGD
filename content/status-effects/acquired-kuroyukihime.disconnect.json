@@ -1,0 +1,16 @@
+{
+  "id": "acquired-kuroyukihime.disconnect",
+  "schema": "status-effect@1",
+  "name": "你的連線已中斷",
+  "description": "黑雪姬「你的連線已中斷」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-kuroyukihime.disconnect",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

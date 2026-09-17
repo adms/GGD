@@ -1,0 +1,11 @@
+{
+  "id": "lol-sett.grit",
+  "schema": "status-effect@1",
+  "name": "恆毅之泉",
+  "description": "賽特「恆毅之泉」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-sett.grit",
+    "buff"
+  ]
+}

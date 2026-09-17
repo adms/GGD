@@ -1,0 +1,11 @@
+{
+  "id": "lol-ahri.foxfire-speed",
+  "schema": "status-effect@1",
+  "name": "魅火",
+  "description": "阿璃「魅火」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-ahri.foxfire-speed",
+    "buff"
+  ]
+}

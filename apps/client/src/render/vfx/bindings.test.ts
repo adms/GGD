@@ -184,6 +184,21 @@ function abilityArtProblem(abilityId: string): string | null {
     const kind = s["kind"];
     return typeof kind === "string" ? kind : "call";
   });
+  // ⭐⭐ GH#1281（2026-09-17）—— **這把尺對第二條出貨畫圖路失明**。
+  //
+  // 在此之前這裡一律回「only its vfx-script draws for it」⇒ 紅。⚠️ 而那句話自己說出了
+  // 反例：`vfx-scripts/<id>.json` 的 `vfx` 段落**是出貨的畫圖路**（`VfxScriptPlayer.ts:344`
+  // 的 `case "projectileHit"`／`projectileSpawn`，接在 MSG.EVENT fanout 上）——
+  // ⇒ 一支投射物技能的粒子畫在**投射物生成／命中**那一拍，⛔ 不在 `abilityCast` 那一拍。
+  //
+  // ⭐ 判準沒有放寬：問的仍然是「這一格施放出去，玩家看不看得到粒子」——
+  //    只是現在**兩條路都問**，而且那份 `vfx` 指到的特效要通過同一組「畫得出東西」檢查
+  //    （空的／不會噴／瞬間死／零尺寸 ⇒ 照樣紅）。
+  // ⚠️ `anim`／`floatingText`／`sound` **不算**（它們不畫粒子）—— 那正是原本那句話要保住的事實。
+  const drawnBySegment = (script.segments ?? []).some(
+    (s) => s["kind"] === "vfx" && typeof s["vfxId"] === "string" && !vfxKeyProblem(s["vfxId"] as string),
+  );
+  if (drawnBySegment) return null;
   return `has no vfxKey — only its vfx-script draws for it (segments: ${kinds.join(", ")})`;
 }
 

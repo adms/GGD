@@ -1,0 +1,16 @@
+{
+  "id": "acquired-ryu.uppercut",
+  "schema": "status-effect@1",
+  "name": "升龍拳・有付費",
+  "description": "Ryu「升龍拳・有付費」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-ryu.uppercut",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

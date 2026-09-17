@@ -29,6 +29,7 @@ import { SELA, THORNE } from "../sim/content/skeleton";
 import { DEFAULT_STAT_NORMALIZATION } from "./statNormalization";
 import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import type { LoadResult } from "./loader";
+import type { ChampionId } from "../ids";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -107,7 +108,15 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     //                     —— 「食材」目前只是這個 statusId 的名字,模型還是原本那一具
     //                     (換模型要一格 ENTITY_FLAG,而 BIT BUDGET 只剩一格,見
     //                      protocol/schema.ts;推導寫在該道具的 authoringNote)
-    expect(StatusEffects.ids().sort()).toEqual([
+    // ⭐⭐ GH#1281（2026-09-17）—— 這張**逐字釘死**的名單管的是**共用**狀態
+    //   （【暈眩】【緩速】那一族，id 沒有點號）：少一份仍然當場紅，⛔ 沒有放寬。
+    // ⭐ 英雄**專屬**狀態（`<英雄 id>.<名字>`，第四批 37 名帶進 116 份，由
+    //   `tools/ship-81/batch37.py::status_docs` 從技能實際怎麼用它推導）逐份列進來
+    //   沒有任何人受益 —— 它們的守衛是**關係**，寫在下面那一段：
+    //   前綴一定要是出貨英雄（孤兒會紅）、而且數量不可以歸零（推導掉了會紅）。
+    const statusIds = StatusEffects.ids().sort();
+    const heroScopedStatuses = statusIds.filter((id) => id.includes("."));
+    expect(statusIds.filter((id) => !id.includes("."))).toEqual([
       // ── 2026-08-08 技能重製：90 支文案點名、但先前沒有身分文件的狀態 ──────
       // ⭐ 它們的 `tags` 是**類別條件**（`condition.status` 的 tag 分支）的查詢基礎。
       // ⛔ 2026-08-08 owner 否決了初版的「同類共用一個 tag」（破防兩支共用 `shred`、
@@ -238,6 +247,11 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "united-states-of-smash",
       "witch-form",
     ]);
+    expect(heroScopedStatuses.length, "英雄專屬狀態一份都沒有 —— 產生器掉了（量尺自證）").toBeGreaterThan(0);
+    expect(
+      heroScopedStatuses.filter((id) => !Champions.tryGet(id.split(".")[0] as ChampionId)),
+      "⛔ 這幾份英雄專屬狀態的前綴不是出貨英雄（孤兒文件）",
+    ).toEqual([]);
   });
 
   /**

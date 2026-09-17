@@ -1,0 +1,11 @@
+{
+  "id": "lol-ornn.brittle",
+  "schema": "status-effect@1",
+  "name": "活火爐",
+  "description": "鄂爾「活火爐」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ornn.brittle",
+    "debuff"
+  ]
+}

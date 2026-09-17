@@ -1,0 +1,16 @@
+{
+  "id": "acquired-dio.roller",
+  "schema": "status-effect@1",
+  "name": "壓路機停車費",
+  "description": "DIO「壓路機停車費」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-dio.roller",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}
