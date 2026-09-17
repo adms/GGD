@@ -133,6 +133,11 @@ const VOICE_GAP: readonly string[] = [
   // ⭐ 2026-09-14（PR #1152 合併準備）: b2-kisaragi LEFT this list — the train's ORIGINAL clips
   // landed (3c85197b8: 「ドアが閉まります」 announcement as select/taunt, JR departure melody as
   // victory), which is the "or an original clip" exit the note above named. It is audible now.
+  // ⭐ 2026-09-17: b2-bojji JOINED this list ON PURPOSE —— owner 逐字「波吉 不會講話 應該全部都沒語音才對」。
+  // 《國王排名》的波吉是聾啞，全劇靠比手畫腳與卡克代言 ⇒ 他的 12 段合成語音整包下架（留底
+  // docs/legacy/_overwrites/bojji-voice-removed_temp_20260917/），COMBAT_CASTING.json 也把他移進 excluded。
+  // ⛔ 這不是回歸：它是裁決。要復原就是把那個資料夾放回去並從這裡刪掉這一行。
+  "b2-bojji",
 ];
 
 /**

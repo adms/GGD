@@ -50,6 +50,8 @@ const originals = read(join(LINES, "COMBAT_ORIGINALS.json"), { champions: {} }).
 const select = read(join(ROOT, "content/assets/audio/voices/quotes/quotes.json"), { quotes: {}, unsourced: [] });
 const unsourced = Object.fromEntries((select.unsourced ?? []).map((u) => [u.id, u.why ?? ""]));
 const index = read(join(ROOT, "materials/hero-model-library/voice-index.json"), { groups: [] }).groups ?? [];
+// ⭐ owner 明講「這位不給語音」的（COMBAT_CASTING.json.excluded）⛔ 不算缺口 —— 那是裁決，不是漏做
+const castingExcluded = read(join(LINES, "COMBAT_CASTING.json"), { excluded: {} }).excluded ?? {};
 const manifest = read(join(ROOT, "content/assets/audio/voices/champions/MANIFEST.json"), { champions: {} });
 const voiced = manifest.champions ?? {};
 /** 同一個角色、語音包卻掛在另一個（沒上架的）id 上 —— 招牌名字相同就算 */
@@ -91,6 +93,7 @@ for (const id of roster) {
   const twin = viaForm ? { id: packId, name: nameOf(packId) } : null;
   rows.push({
     id, name, hasVoicePack, viaForm, packId, twin,
+    ownerExcluded: castingExcluded[id] ?? null,
     battle: battle ?? (packQuote ? { source: viaForm ? `變身共用 ${packId}` : "語音包", text: "（原檔）" } : null),
     defaultSlot, packSlots: packLines.length,
     takes: Math.max(orig.length, shipped ? 1 : 0),
@@ -100,11 +103,12 @@ for (const id of roster) {
   });
 }
 
-const missBattle = rows.filter((r) => !r.battle);
-const noPack = rows.filter((r) => !r.hasVoicePack);          // 整包語音都沒有（⛔ 不只是名言）
+const missBattle = rows.filter((r) => !r.battle && !r.ownerExcluded);
+const noPack = rows.filter((r) => !r.hasVoicePack && !r.ownerExcluded);          // 整包語音都沒有（⛔ 不只是名言）
 const noPackTwin = noPack.filter((r) => r.twin);              // 同角色的包掛在別的 id
 const noPackAlone = noPack.filter((r) => !r.twin);
 const missSelect = rows.filter((r) => !r.select);
+const ownerSilent = rows.filter((r) => r.ownerExcluded);
 const ratchet = read(RATCHET, { battleMissing: missBattle.length, selectMissing: missSelect.length });
 
 const cell = (s) => String(s ?? "").replace(/\|/g, "／").replace(/\n/g, " ").slice(0, 60);
@@ -119,6 +123,12 @@ const doc = [
   `出貨名單 **${roster.length}** 位：戰鬥名言有 **${roster.length - missBattle.length}** 位（⛔ 缺 **${missBattle.length}**）· 選角名言有 **${roster.length - missSelect.length}** 位（⛔ 缺 **${missSelect.length}**）。`,
   "",
   `⛔⛔ 其中 **${noPack.length}** 位在遊戲裡**一格語音都沒有**（${noPackTwin.length} 位的包掛在同角色的另一個 id 上）—— 見下面第一節。`,
+  "",
+  `### owner 明講不給語音的（${ownerSilent.length} 位，⛔ 不算缺口）`,
+  "",
+  "| 英雄 | id | owner 的理由 |",
+  "|---|---|---|",
+  ...ownerSilent.map((r) => `| ${cell(r.name)} | \`${r.id}\` | ${cell(r.ownerExcluded)} |`),
   "",
   "| 英雄 | id | 戰鬥名言 | 來源 | 段數 | 選角名言 |",
   "|---|---|---|---|---:|---|",

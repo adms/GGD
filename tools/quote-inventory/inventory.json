@@ -2,7 +2,7 @@
  "schema": "ggd.champion-quote-inventory@1",
  "generator": "tools/quote-inventory/gen.mjs",
  "roster": 130,
- "battleMissing": 14,
+ "battleMissing": 13,
  "selectMissing": 59,
  "noVoicePack": 2,
  "noVoicePackWithTwin": 0,
@@ -14,6 +14,7 @@
    "viaForm": false,
    "packId": "godie-e001",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "かな？かな？……嘘だッ！！"
@@ -35,6 +36,7 @@
    "viaForm": false,
    "packId": "godie-e002",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）VOICE_1935"
@@ -56,6 +58,7 @@
    "viaForm": false,
    "packId": "godie-e008",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "うるさいうるさいうるさい！"
@@ -77,6 +80,7 @@
    "viaForm": false,
    "packId": "godie-e00r",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "ウオオオオオオオッ！！"
@@ -98,6 +102,7 @@
    "viaForm": false,
    "packId": null,
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": null,
    "packSlots": 0,
@@ -116,6 +121,7 @@
    "viaForm": false,
    "packId": "godie-e00w",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "お嬢様は、この刹那が必ずお守りします！"
@@ -137,6 +143,7 @@
    "viaForm": false,
    "packId": "godie-edem",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -158,6 +165,7 @@
    "viaForm": false,
    "packId": "godie-efur",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "殺しは仕事…感情でやるほど、耄碌しとらんよ。"
@@ -179,6 +187,7 @@
    "viaForm": false,
    "packId": "godie-emfr",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "ラステル・マ・スキル・マギステル！"
@@ -200,6 +209,7 @@
    "viaForm": false,
    "packId": "godie-emns",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "僕は…新世界の神となる。"
@@ -221,6 +231,7 @@
    "viaForm": false,
    "packId": "godie-etyr",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "せっちゃん、だーい好きやで〜！"
@@ -245,6 +256,7 @@
     "id": "godie-e007",
     "name": "龍之子 - 天地志狼"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-e007",
     "text": "（原檔）"
@@ -266,6 +278,7 @@
    "viaForm": false,
    "packId": "godie-h00l",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "ハイヤーッ！"
@@ -287,6 +300,7 @@
    "viaForm": false,
    "packId": "godie-h01n",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -308,6 +322,7 @@
    "viaForm": false,
    "packId": "godie-h01u",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "天下無双の我が武、とくと見るがいい！"
@@ -329,6 +344,7 @@
    "viaForm": false,
    "packId": "godie-h02k",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "昼寝と笹はオラの命。邪魔するヤツは頭突きだゾ"
@@ -353,6 +369,7 @@
     "id": "godie-h02u",
     "name": "看似憂鬱的神獸 - 草泥馬"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-h02u",
     "text": "（原檔）"
@@ -374,6 +391,7 @@
    "viaForm": false,
    "packId": "godie-hapm",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -395,6 +413,7 @@
    "viaForm": false,
    "packId": "godie-hart",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "興味ないね"
@@ -419,6 +438,7 @@
     "id": "godie-h02r",
     "name": "種子神奇寶貝 - 妙蛙花"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-h02r",
     "text": "（原檔）"
@@ -443,6 +463,7 @@
     "id": "godie-h020",
     "name": "黑魔導士 - 莉娜因巴斯"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-h020",
     "text": "（原檔）"
@@ -486,6 +507,7 @@
    "viaForm": false,
    "packId": "godie-hpb1",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "食えるもんなら、食ってみやがれ！"
@@ -507,6 +529,7 @@
    "viaForm": false,
    "packId": "godie-huth",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）chr1030_ActVoice#202"
@@ -528,6 +551,7 @@
    "viaForm": false,
    "packId": "godie-hvsh",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -549,6 +573,7 @@
    "viaForm": false,
    "packId": "godie-hvwd",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -570,6 +595,7 @@
    "viaForm": false,
    "packId": "godie-n003",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "くくく…私こそ闇の福音、真祖の吸血鬼よ"
@@ -591,6 +617,7 @@
    "viaForm": false,
    "packId": "godie-n00b",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "ぼく、ドラえもん!"
@@ -615,6 +642,7 @@
     "id": "godie-n01c",
     "name": "傳說的龍騎士 - 勇者小呆"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-n01c",
     "text": "（原檔）"
@@ -703,6 +731,7 @@
     "id": "godie-n00p",
     "name": "妖狐藏馬 - 南野秀一"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-n00p",
     "text": "（原檔）"
@@ -724,6 +753,7 @@
    "viaForm": false,
    "packId": "godie-o00k",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）pikachu16.dsp"
@@ -745,6 +775,7 @@
    "viaForm": false,
    "packId": "godie-o00l",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "それは、秘密です♪"
@@ -766,6 +797,7 @@
    "viaForm": false,
    "packId": "godie-o02p",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）miku4"
@@ -787,6 +819,7 @@
    "viaForm": false,
    "packId": "godie-ofar",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）pikachu16.dsp"
@@ -808,6 +841,7 @@
    "viaForm": false,
    "packId": "godie-ogld",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "汚れは残さない。…あなたも、です。"
@@ -832,6 +866,7 @@
     "id": "godie-o00x",
     "name": "超級賽亞人 - 悟空"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-o00x",
     "text": "（原檔）"
@@ -868,6 +903,7 @@
    "viaForm": false,
    "packId": "godie-orkn",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "ヒッヒッヒ…ええ子じゃのう。先生に任せなさい。"
@@ -889,6 +925,7 @@
    "viaForm": false,
    "packId": "godie-osam",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "この殺生丸に、斬れぬものなど無い。"
@@ -910,6 +947,7 @@
    "viaForm": false,
    "packId": "godie-u00h",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "オレの鬼眼を見たな…なら、死んでもらうぜ。"
@@ -931,6 +969,7 @@
    "viaForm": false,
    "packId": "godie-u00j",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "私は…思い出には、ならないさ。"
@@ -952,6 +991,7 @@
    "viaForm": false,
    "packId": "godie-u00k",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "生は過ち、死こそが救いである。"
@@ -973,6 +1013,7 @@
    "viaForm": false,
    "packId": "godie-u00n",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -994,6 +1035,7 @@
    "viaForm": false,
    "packId": "godie-u00v",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "……フンッ。……ヴォアアアッ!!"
@@ -1015,6 +1057,7 @@
    "viaForm": false,
    "packId": "godie-ubal",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "知らなかったのか…?大魔王からは、逃げられない…!"
@@ -1036,6 +1079,7 @@
    "viaForm": false,
    "packId": null,
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": null,
    "packSlots": 0,
@@ -1054,6 +1098,7 @@
    "viaForm": false,
    "packId": "godie-udea",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "上、上、下、下、左、右、左、右、B、A…チートコード入力完了ぉ！"
@@ -1078,6 +1123,7 @@
     "id": "godie-u01u",
     "name": "三刀流劍士 - 索隆"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-u01u",
     "text": "（原檔）"
@@ -1110,6 +1156,7 @@
     "id": "godie-u00l",
     "name": "北斗之鼠 - 拳四郎"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-u00l",
     "text": "（原檔）"
@@ -1142,6 +1189,7 @@
     "id": "godie-u010",
     "name": "邪眼師 - 飛影"
    },
+   "ownerExcluded": null,
    "battle": {
     "source": "變身共用 godie-u010",
     "text": "（原檔）"
@@ -1163,6 +1211,7 @@
    "viaForm": false,
    "packId": "godie-zombiex",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "合成",
     "text": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー"
@@ -1184,6 +1233,7 @@
    "viaForm": false,
    "packId": "community-review-01-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ずっと俺のターン！"
@@ -1205,6 +1255,7 @@
    "viaForm": false,
    "packId": "community-review-02-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）1003448717"
@@ -1226,6 +1277,7 @@
    "viaForm": false,
    "packId": "community-review-03-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ごめんあそばせ！"
@@ -1247,6 +1299,7 @@
    "viaForm": false,
    "packId": "community-review-04-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "オラオラオラオラ！"
@@ -1268,6 +1321,7 @@
    "viaForm": false,
    "packId": "community-review-05-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ティウンティウン"
@@ -1289,6 +1343,7 @@
    "viaForm": false,
    "packId": "community-review-06-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice/kirby20.dsp"
@@ -1310,6 +1365,7 @@
    "viaForm": false,
    "packId": "community-review-07-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "今すぐキミを壊したい…♥"
@@ -1328,6 +1384,7 @@
    "viaForm": false,
    "packId": "community-review-08-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "マフラーを巻いてくれてありがとう"
@@ -1349,6 +1406,7 @@
    "viaForm": false,
    "packId": "community-review-09-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ぬしと旅がしたい"
@@ -1367,6 +1425,7 @@
    "viaForm": false,
    "packId": "community-review-10-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ルルーシュ・ヴィ・ブリタニアが命じる。貴様たちは死ね！"
@@ -1388,6 +1447,7 @@
    "viaForm": false,
    "packId": "community-review-11-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）505624353"
@@ -1406,6 +1466,7 @@
    "viaForm": false,
    "packId": "community-review-12-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "体は剣で出来ている"
@@ -1427,6 +1488,7 @@
    "viaForm": false,
    "packId": "community-review-13-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）voice_joke_1"
@@ -1445,6 +1507,7 @@
    "viaForm": false,
    "packId": "community-review-14-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "第二の刃持たざる者に暗殺者の資格なし！"
@@ -1463,6 +1526,7 @@
    "viaForm": false,
    "packId": "community-review-15-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "仕方ないね"
@@ -1481,6 +1545,7 @@
    "viaForm": false,
    "packId": "community-review-16-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "このバカステッキ～！"
@@ -1499,6 +1564,7 @@
    "viaForm": false,
    "packId": "community-review-17-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "我が名を知るが良い。我こそがアインズ・ウール・ゴウン"
@@ -1520,6 +1586,7 @@
    "viaForm": false,
    "packId": "community-review-18-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "君臨するとはこういう事よ！"
@@ -1541,6 +1608,7 @@
    "viaForm": false,
    "packId": "community-review-19-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ビーター、いい呼び名だ"
@@ -1562,6 +1630,7 @@
    "viaForm": false,
    "packId": "community-review-20-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "超電磁砲！"
@@ -1583,6 +1652,7 @@
    "viaForm": false,
    "packId": "community-review-21-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "全ての魔女を生まれる前に消し去りたい"
@@ -1601,6 +1671,7 @@
    "viaForm": false,
    "packId": "community-review-22-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺はエミリアたんの一の騎士！ナツキ・スバルだ！"
@@ -1622,6 +1693,7 @@
    "viaForm": false,
    "packId": "community-review-23-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "天然パーマに悪い奴はいない"
@@ -1640,6 +1712,7 @@
    "viaForm": false,
    "packId": "community-review-24-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ゴン、お前は光だ"
@@ -1658,6 +1731,7 @@
    "viaForm": false,
    "packId": "community-review-25-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "20文字以内で簡潔にまとめて出直してこい！"
@@ -1679,6 +1753,7 @@
    "viaForm": false,
    "packId": "community-review-26-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "バーロー"
@@ -1700,6 +1775,7 @@
    "viaForm": false,
    "packId": "community-review-27-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "はにゃ～ん"
@@ -1718,6 +1794,7 @@
    "viaForm": false,
    "packId": "community-review-28-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "生意気よ、私を誰だと思ってるの？"
@@ -1739,6 +1816,7 @@
    "viaForm": false,
    "packId": "community-review-29-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "暗いよー！怖いよー！"
@@ -1760,6 +1838,7 @@
    "viaForm": false,
    "packId": "community-review-30-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -1775,6 +1854,7 @@
    "viaForm": false,
    "packId": "community-review-31-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "こっちはもっと理不尽なクソゲーをクリアし続けてるんだ"
@@ -1793,6 +1873,7 @@
    "viaForm": false,
    "packId": "community-review-32-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "わしにはプライベートすら無いんかい！"
@@ -1814,6 +1895,7 @@
    "viaForm": false,
    "packId": "community-review-33-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "だから進むぜ、その先に！"
@@ -1832,6 +1914,7 @@
    "viaForm": false,
    "packId": "community-review-34-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "てめえはホントにグッバイ野郎だぜ！"
@@ -1850,6 +1933,7 @@
    "viaForm": false,
    "packId": "community-review-35-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "心はどこまでも強くなれる！"
@@ -1871,6 +1955,7 @@
    "viaForm": false,
    "packId": "community-review-36-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "世の中には優先順位というものがあるのだ"
@@ -1892,6 +1977,7 @@
    "viaForm": false,
    "packId": "community-review-37-20260907",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "イヤ！イヤッ、ヤダーッ！"
@@ -1910,6 +1996,7 @@
    "viaForm": false,
    "packId": "b2-aladdin",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -1925,6 +2012,7 @@
    "viaForm": false,
    "packId": "b2-albus",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "魔王討伐の旅を繰り返している"
@@ -1939,13 +2027,14 @@
   {
    "id": "b2-bojji",
    "name": "波吉",
-   "hasVoicePack": true,
+   "hasVoicePack": false,
    "viaForm": false,
-   "packId": "b2-bojji",
+   "packId": null,
    "twin": null,
+   "ownerExcluded": "owner 2026-09-17：「波吉 不會講話 應該全部都沒語音才對」—— 原作《國王排名》的波吉是聾啞，靠比手畫腳與卡克代言 ⇒ ⛔ 不合成、⛔ 不借聲，整包語音下架。",
    "battle": null,
-   "defaultSlot": "victory",
-   "packSlots": 12,
+   "defaultSlot": null,
+   "packSlots": 0,
    "takes": 0,
    "select": null,
    "unsourcedWhy": "batch2-37 intake（`materials/community-hero-forge/asset-library-sources/GGD-Asset-Library/intake/batch2-37/characters/<id>.json`）只給 work / canonical_name / identity_sources（官方角色頁）——⭐ 那是**身分**,⛔ 不是台詞;而這位英雄在 `content/champions/<id>.json` 裡的技能**沒有名字**（逐字叫 \"E\" / \"Q\" / \"R\" / \"W\"）,EX 是 GGD 的惡搞名 ⇒ ⭐ 本機沒有任何一份出處帶著他的原作台詞或原作招式名。",
@@ -1958,6 +2047,7 @@
    "viaForm": false,
    "packId": "b2-boxxo",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ざんねん"
@@ -1976,6 +2066,7 @@
    "viaForm": false,
    "packId": "b2-elma",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -1991,6 +2082,7 @@
    "viaForm": false,
    "packId": "b2-fushi",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2006,6 +2098,7 @@
    "viaForm": false,
    "packId": "b2-goblin",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺は世界を救わない。ゴブリンを殺すだけだ"
@@ -2024,6 +2117,7 @@
    "viaForm": false,
    "packId": "b2-guts",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "神に会えたら言っとけ！放っとけってな！"
@@ -2042,6 +2136,7 @@
    "viaForm": false,
    "packId": "b2-haga",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "僕の仕事はゲーム内のバグをチェックするデバッガーなんです"
@@ -2060,6 +2155,7 @@
    "viaForm": false,
    "packId": "b2-kaede",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2075,6 +2171,7 @@
    "viaForm": false,
    "packId": "b2-kaiji",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ありがてえっ…！"
@@ -2093,6 +2190,7 @@
    "viaForm": false,
    "packId": "b2-keyaru",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "この世界そのものを回復する"
@@ -2111,6 +2209,7 @@
    "viaForm": false,
    "packId": "b2-kisaragi",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2129,6 +2228,7 @@
    "viaForm": false,
    "packId": "b2-klaus",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "自動資源採取"
@@ -2147,6 +2247,7 @@
    "viaForm": false,
    "packId": "b2-kumoko",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "生まれてすぐ死亡とかシャレにならん"
@@ -2165,6 +2266,7 @@
    "viaForm": false,
    "packId": "b2-luckyman",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2180,6 +2282,7 @@
    "viaForm": false,
    "packId": "b2-makoto",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2195,6 +2298,7 @@
    "viaForm": false,
    "packId": "b2-maomao",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "好んで毒を食らうのは私ぐらいか"
@@ -2213,6 +2317,7 @@
    "viaForm": false,
    "packId": "b2-maple",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "痛いのは嫌だから攻撃とか受けたくないし…"
@@ -2231,6 +2336,7 @@
    "viaForm": false,
    "packId": "b2-matthias",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "連携プレイが得意なやつらには連携プレイだ！"
@@ -2249,6 +2355,7 @@
    "viaForm": false,
    "packId": "b2-misery",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2264,6 +2371,7 @@
    "viaForm": false,
    "packId": "b2-naofumi",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "アイアンメイデン！"
@@ -2282,6 +2390,7 @@
    "viaForm": false,
    "packId": "b2-ned",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2297,6 +2406,7 @@
    "viaForm": false,
    "packId": "b2-noor",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺には、才能がなかった…"
@@ -2315,6 +2425,7 @@
    "viaForm": false,
    "packId": "b2-nube",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "宇宙天地 與我力量 降伏群魔 迎来曙光"
@@ -2333,6 +2444,7 @@
    "viaForm": false,
    "packId": "b2-orphen",
    "twin": null,
+   "ownerExcluded": null,
    "battle": null,
    "defaultSlot": "victory",
    "packSlots": 12,
@@ -2348,6 +2460,7 @@
    "viaForm": false,
    "packId": "b2-popp",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "一瞬…だけど…閃光のように！"
@@ -2366,6 +2479,7 @@
    "viaForm": false,
    "packId": "b2-rem",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "レムはスバル君を信じています"
@@ -2384,6 +2498,7 @@
    "viaForm": false,
    "packId": "b2-rin",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "うっかり遠坂"
@@ -2402,6 +2517,7 @@
    "viaForm": false,
    "packId": "b2-shadow",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "原作語音",
     "text": "（原檔）fencer_select_01"
@@ -2420,6 +2536,7 @@
    "viaForm": false,
    "packId": "b2-shinchan",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "ねぇねぇお姉さん！"
@@ -2438,6 +2555,7 @@
    "viaForm": false,
    "packId": "b2-sinbad",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺は、人間だよ！人だからこそ夢を追う！"
@@ -2456,6 +2574,7 @@
    "viaForm": false,
    "packId": "b2-takopi",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "今日もがんばるっピ！"
@@ -2474,6 +2593,7 @@
    "viaForm": false,
    "packId": "b2-touka",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "理想的なふとももの形をした大根があったらニーソを履かせてやるのが男ってもんだろ"
@@ -2492,6 +2612,7 @@
    "viaForm": false,
    "packId": "b2-uncle",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "異世界グランバハマルに17年いたが、ようやく帰ってきたぞ"
@@ -2510,6 +2631,7 @@
    "viaForm": false,
    "packId": "b2-yogiri",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "俺の能力が一つとは言ってないだろ"
@@ -2528,6 +2650,7 @@
    "viaForm": false,
    "packId": "b2-zenitsu",
    "twin": null,
+   "ownerExcluded": null,
    "battle": {
     "source": "owner 名單",
     "text": "雷の呼吸 壱ノ型 霹靂一閃！"
@@ -2546,6 +2669,7 @@
    "viaForm": false,
    "packId": "lol-karthus",
    "twin": null,
+   "ownerExcluded": "owner 2026-09-10：「LOL7個角色應該有自己語音檔 可以排除」——⚠️ 那份檔在哪裡尚未確認（名言 lane 查證 Data Dragon 不出語音行）",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）bd0bbe/00078-1154709670"
@@ -2564,6 +2688,7 @@
    "viaForm": false,
    "packId": "lol-leesin",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）f046bc/00195-1875226779"
@@ -2582,6 +2707,7 @@
    "viaForm": false,
    "packId": "lol-lux",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）a08e1d/00287-708962889"
@@ -2600,6 +2726,7 @@
    "viaForm": false,
    "packId": "lol-missfortune",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）dfe023/00243-1755056024"
@@ -2618,6 +2745,7 @@
    "viaForm": false,
    "packId": "lol-warwick",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）b49dee/00144-1947782139"
@@ -2636,6 +2764,7 @@
    "viaForm": false,
    "packId": "lol-xerath",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）51d146/00013-375078456"
@@ -2654,6 +2783,7 @@
    "viaForm": false,
    "packId": "lol-yasuo",
    "twin": null,
+   "ownerExcluded": "同上",
    "battle": {
     "source": "原作語音",
     "text": "（原檔）63fc90/00018-152596570"
