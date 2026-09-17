@@ -449,3 +449,121 @@ commit + push , 給我一鍵複製給 main 來合併處理
 ## 16:15 · 396826f0
 
 為何會出現
+
+## 16:39 · 3b8730ef
+
+先commit
+
+4. 我犯的錯
+一開始我在 `/Users/Takuro/GGD` 上建帳本。那棵樹停在舊分支，落後 main 789 個 commit，結果重建了一份跟 main 重複的帳本，還產生了一份舊的 `戰情版-20260917.md`。
+
+* 這些檔都沒進版控，但受產物保護，我刪不掉。
+* 現在那棵樹根目錄的 `GGD戰情版.md` 指向那份舊的，不要看那份，也不要 commit 它們。
+* 以 /private/tmp/ggd-integ-nc/GGD戰情版.md 為準。
+* 要清掉那幾份的話，需要你在啟動環境設 `GGD_GENGUARD_OFF=1`，或讓我帶你清。
+* 這個教訓我已經記進記憶：跑帳本、戰情版、檢查之前，先確認哪棵樹是 main。
+
+
+=> 請你詳細解釋
+
+## 16:44 · 733a410e
+
+我大概知道了 請你給我建議 可以保全住所有資料 又可以回歸到 main 來繼續工作 把錯誤的分支 archive 不再使用 一切安全不要掉資料為準
+
+## 16:53 · d295ba4f
+
+你講的我完全不懂怎麼做 也不知道怎麼確認
+
+## 16:55 · 368c62b8
+
+我先給你其他 session 交接內容如下
+
+
+
+Codex 交接更新：
+
+1. PR #1228 已同步最新 main、解決衝突並改成 Ready。
+最新 head：7d4669f53
+本機 hero-intake 153 位檢查、git diff --check、skills:check、editor:accept:release、coord:check 與 community release receipts 已通過。
+新 CI 正在執行：
+https://github.com/adms/GGD/pull/1228
+2. 舊 Draft PR #1144 已由乾淨的 S3 還原契約 PR #1279 取代。
+最新 head：8d11690a2
+僅保留 8 個必要的 manifest、restore、verify 與測試檔；hero-intake 153 位檢查及 git diff --check 已通過。
+新 CI 正在執行：
+https://github.com/adms/GGD/pull/1279
+3. PR #1267 最新 head：3e1ad1379
+已用官方產生器修復 docs:readme:check，pnpm docs:readme:check 與 git diff --check 通過，新 CI 已觸發：
+https://github.com/adms/GGD/pull/1267
+4. Owner 已明確允許 Main 對固定 S3 收據進行唯讀下載、還原、解包與 SHA-256 驗證；授權範圍與 AWS 限制已記在：
+https://github.com/adms/GGD/pull/1267#issuecomment-5679839513
+5. #1135、#1153、#1144 已確認被後續 main 實作或 #1279 取代並關閉，不需要再同步舊架構。
+6. #1267 尚有兩個獨立事項：
+- 何布 7 個已核准原作特效使 VFX subtype ratchet 由 60 增至 67；現行共用 VFX 契約沒有 texture 參數，請 Main 決定增加正式自訂貼圖機制或接受有證據的 ratchet 更新。
+- 新增 20 份 Git hygiene 材料已整理進 314 檔 consolidated staging，但尚未取得 S3 寫入授權，因此未上傳、未解除 Git 追蹤。
+
+請等待 #1228、#1279、#1267 新 CI 完成後重新審查；合併仍由 Main 決定。
+
+
+PR #1267 的 S3 hygiene closure 已完成。
+
+- 最新 head：9a0e850d4
+- PR 已同步最新 main，無衝突、MERGEABLE、非 Draft
+- 314 檔已上傳到固定 S3 prefix
+- 完整 GET、解包、成員集合與 314 份逐檔 SHA-256 全部通過
+- 33 份 preparation 材料已移出 Git，本機原件全部保留
+- Git hygiene：107 檔／81.9 MiB，6 passed、1 skipped
+- VFX ratchet：基準線仍為 60；7 顆 Popp 原作特效只依 owner 固定核准收據辨識，8/8 passed
+- 專項合計：14 passed、1 skipped
+- 最新 CI：https://github.com/adms/GGD/actions/runs/35067619060
+- 完整收據：https://github.com/adms/GGD/pull/1267#issuecomment-5693539745
+
+CI 綠後即可進行 Main 審查與合併。
+
+交接：feat/owner-0915-models-voices（HEAD 28b657076，已推 origin，工作樹乾淨）
+請合進 main 並依主線節奏上架。分支已含 origin/main 93e8435af（帳本衝突取聯集、戰情板重生成，⛔ 沒用 --ours／--theirs）。
+
+一、這批做了什麼（owner 2026-09-17 逐位裁決，逐字理由都寫在檔案與 commit 裡）
+1. 名言別名機制 QUOTE_ALIAS.json ＋ index-lines：沒有名言的英雄用自己的勝利宣言（沒有就嘲諷），
+⛔ 不複製檔案，只在清單裡多指一次並標 aliasOf。一位可多筆。
+2. 9 位 batch2 英雄的名言＝自己的勝利宣言（owner「其他都可以用勝利宣言」）。
+3. 如月電車：名言＋勝利改用 owner 指定的 YouTube 短片切段（4.5–9.5 秒／13.5–19 秒）；
+被取代的 JR 發車旋律已上 S3 並讀回比對 SHA-256。
+4. 波吉：不會說話 ⇒ casting 加 nonVerbal，喊招也改成擬聲（COMBAT_GRUNTS 的 child-boy 補 skill-name.*），
+本機 CosyVoice3 重合成 5 段；他先前那 5 段喊招是**中文句子**（違反「合成只講日文」）。
+5. 米瑟利：先前參考音借的是黑崎一護的**男聲**（voiceClass unknown）⇒ owner 聽過 6 位候選後選帕露蒂娜；
+參考音重做、整包 11 段重合成。
+6. 傑富力士：JUMP FORCE 的 Gon 250 段原檔（本機既有轉檔）以聽寫內容＋時長對上 19 格，其餘用他自己的聲音合成；
+補 SKILL_READINGS 兩筆讀音。⛔ 沒有解任何 pak。
+7. 白木卡迪那：借 Berserker 的參考音合成整包；他沒有台詞來源（⛔ 不編台詞）⇒ 嘲諷／勝利／名言用自己的擊殺呻吟。
+8. 角色名言總表 docs/角色名言總表.md ＋ 產生器 ＋ 缺口棘輪；語音／音效入庫檢查 tools/audio-intake；
+出貨音訊格式（128k／44.1kHz／單聲道）收成唯一住處 audioAssetPolicy.ts；.gitignore 擋掉後台上傳的參考音資料夾。
+
+二、量到的結果
+出貨 130 位：戰鬥名言缺口 24 → **0**；VOICE_GAP（完全沒聲音的名單）清空。
+選角畫面那套名言仍缺 59 位（那是另一套 TTS 系統，名單寫死在 build-champ-quotes.mjs，未處理）。
+
+三、驗證
+combatVoiceCoverage 9/9、quoteAlias 2/2、championQuoteInventory 2/2、audioIntake 2/2、audioPolicySingleHome 3/3 全綠。
+突變驗過三條（aliasOf 拿掉、engine.py 塞回 44100、總表改一列 id）。
+⚠️ pnpm typecheck 在該工作副本回非零，11 個全是 TS2688「找不到 node 型別定義」＝ node_modules 連結不全，⛔ 與本批改動無關，請在主線自己跑一次。
+⚠️ 合成共 20 段用本機 CosyVoice3 跑；build-combat-lines 有幾次用 GGD_QUARANTINE_OFF=1 單獨跑（先寫出待合成狀態再叫合成），最後一次都是完整的 pnpm combat:build ＋ pnpm assets:manifest。
+
+四、未做／待 owner
+- 傑富力士的**模型、動作、音效**：語音已整包上架，但這三類本機只找到他的舊 Warcraft 模型（herobiggon）。owner 說已轉換完成，等他給路徑。
+- 09-15 那批原作語音套用（哥布林借聲、莉娜剪句、撤下中文與「不是小呆」的已上線原作）仍在計畫裡：
+docs/_reports/1252_voice-originals-plan_temp_20260915-2020.md
+- 選角名言 59 位的缺口。
+- 工作資料（審核決定、聽寫結果、對應產生器）在 S3：
+s3://ggd-390630837668-ap-east-2-an/voice-review-0915/review0915-state-20260915.tgz
+s3://ggd-390630837668-ap-east-2-an/voice-review-0915/quotegap-state-20260917.tgz
+
+還是看不到 docs/_reports/全角色上線名單與資源檢核表_20260917.md
+
+## 17:25 · bcd6a776
+
+#1270 那一批：在 GGD 上重跑出貨檢查，通過後才把那 7 個版本推上 GitHub。
+你轉貼的交接：#1228、#1279、#1267 在等 GitHub 上的自動測試跑完；語音分支 feat/owner-0915-models-voices 等著合進 main。
+舊版本裡 main 沒有的內容：有 67 個檔，最大的是自動留底紀錄表多出的 3,037 行。需要的話，我出一份對照表讓你挑要不要撿回 main。
+
+=> 全做

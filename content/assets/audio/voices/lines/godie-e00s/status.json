@@ -1,0 +1,298 @@
+{
+ "championId": "godie-e00s",
+ "reference": {
+  "sha256": "b885f6d8eefb1bd1fbb086cf75521f89c038ba61ac97521aec9aab3129a5dbcb",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-hapm.wav",
+  "sourceKind": "donor",
+  "donor": "godie-hapm",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "donor casting (COMBAT_CASTING.json, voiceClass=male-low) — drop godie-e00s.wav into approved/processed/ to switch to the hero's own take",
+  "addedAt": 1789627243226,
+  "path": "/private/tmp/claude-503/-Users-Takuro-GGD/c133e100-ea24-4b88-ae49-6cc26e06cb2e/scratchpad/merge-codex/voice-reference-pipeline/approved/processed/godie-hapm.wav"
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.q": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789627440764,
+     "error": null
+    }
+   ],
+   "text": "伸卡球！",
+   "lang": "ja",
+   "kana": "シンカー ボール",
+   "textSource": "derived",
+   "origin": "ability-name:godie-e00s.q",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "e783d11beb75ad6892d7e1818d0cdfa497e0ddd3643d30df98ca6096b64ce59c",
+    "maxDb": -5.1,
+    "at": 1789627440765
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1789627403786,
+     "error": null
+    }
+   ],
+   "text": "大怒石！",
+   "lang": "ja",
+   "kana": "ダイドセキ",
+   "textSource": "derived",
+   "origin": "ability-name:godie-e00s.w",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "ff7f447260e109d26e1b33e6895a4130c2aa2a2d460c1272f4d6f76b44eb8b93",
+    "maxDb": -4.6,
+    "at": 1789627403787
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789627403890,
+     "error": null
+    }
+   ],
+   "text": "木束縛之術！",
+   "lang": "ja",
+   "kana": "モクソクバク ノ ジュツ",
+   "textSource": "derived",
+   "origin": "ability-name:godie-e00s.e",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "375879bf1de84e19cb97e8c56ec8a9829504103ad42c9bb31050e3c418e973f8",
+    "maxDb": -3.2,
+    "at": 1789627403890
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1789627440869,
+     "error": null
+    }
+   ],
+   "text": "千年練成！",
+   "lang": "ja",
+   "kana": "センネン レンセイ",
+   "textSource": "derived",
+   "origin": "ability-name:godie-e00s.r",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "7aed91f90ec54c44359af3d5f620acd6edd6ad592f3fe5107770f71b7885800e",
+    "maxDb": -3.1,
+    "at": 1789627440869
+   },
+   "lastError": null
+  },
+  "skill-name.ex": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1789627403994,
+     "error": null
+    }
+   ],
+   "text": "樹海降臨！",
+   "lang": "ja",
+   "kana": "ジュカイ コウリン",
+   "textSource": "derived",
+   "origin": "ability-name:godie-e00s.ex",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "686a48c7c8c5fb009e7d47c989f7d4e50ed4341a74244034c0cda9f28d078d00",
+    "maxDb": -1.9,
+    "at": 1789627403994
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789627404095,
+     "error": null
+    }
+   ],
+   "text": "ぐ……っ……",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "650e1104b339c63fc2eb28c8d41f2dc0d094c25595e1dee5042524ea1b9e02d3",
+    "maxDb": -1.9,
+    "at": 1789627404096
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789627404198,
+     "error": null
+    }
+   ],
+   "text": "うっ！",
+   "lang": "ja",
+   "kana": "ウッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "b314da9f66594cdd1ec4247f42e83ae04a22d5f2fec89d15385f81f102c3ee34",
+    "maxDb": -2.4,
+    "at": 1789627404198
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1789627404300,
+     "error": null
+    }
+   ],
+   "text": "ぐああっ……！",
+   "lang": "ja",
+   "kana": "グアアッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "1c06791cf988cb234c427ff4237a5b8bab4b8497e9cb1478c86a8034701b6eac",
+    "maxDb": -2,
+    "at": 1789627404300
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1789627404408,
+     "error": null
+    }
+   ],
+   "text": "はぁっ！",
+   "lang": "ja",
+   "kana": "ハァッ",
+   "textSource": "derived",
+   "origin": "grunt:default",
+   "state": "generated",
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc",
+    "maxDb": -2,
+    "at": 1789627404409
+   },
+   "lastError": null
+  }
+ }
+}

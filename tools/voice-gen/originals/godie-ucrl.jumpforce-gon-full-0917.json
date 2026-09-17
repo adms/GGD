@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-original-voice-direct-map@1",
+  "hero": "godie-ucrl",
+  "note": "owner 2026-09-17「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ JUMP FORCE 的 Gon（chr0300）250 段原作語音，照**本機聽寫內容＋時長**對格（⛔ 不憑檔名，檔名只有編號）。對不上的格留給合成（參考音用他自己的聲音）。",
+  "map": {
+    "skill-name.r": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#17.ogg",
+      "file": "chr0300_ActVoice#17.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；R 傑桑變化＝ジャジャン拳｜聽寫「どうだった?俺のジャジャン剣!」｜2.59 秒"
+    },
+    "skill-name.w": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#100.ogg",
+      "file": "chr0300_ActVoice#100.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；W 山形修煉-變：ジャジャン拳「チー／パー」｜聽寫「パー!」｜1.49 秒"
+    },
+    "skill-name.ex": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#115.ogg",
+      "file": "chr0300_ActVoice#115.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；EX：全力一擊｜聽寫「よし!行くぞ!」｜1.66 秒"
+    },
+    "victory": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#15.ogg",
+      "file": "chr0300_ActVoice#15.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；勝利｜聽寫「やったー!みんなありがとう!」｜2.52 秒"
+    },
+    "taunt": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#55.ogg",
+      "file": "chr0300_ActVoice#55.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；嘲諷／挑釁｜聽寫「まだまだ!」｜1.13 秒"
+    },
+    "kill-1": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#200.ogg",
+      "file": "chr0300_ActVoice#200.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擊殺｜聽寫「やったね!」｜1.00 秒"
+    },
+    "respond.ok": {
+      "src": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/decoded/130300_chr0300_EvnVoice/130300_chr0300_EvnVoice#0025.wav",
+      "file": "130300_chr0300_EvnVoice#0025.wav",
+      "group": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+      "why": "owner 2026-09-17 整包引入；回應（好）｜聽寫「うん、そうだね」｜1.50 秒"
+    },
+    "love": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#8.ogg",
+      "file": "chr0300_ActVoice#8.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；喜歡／稱讚｜聽寫「すごいすごい!」｜1.82 秒"
+    },
+    "puzzled": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#4.ogg",
+      "file": "chr0300_ActVoice#4.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；疑惑｜聽寫「戦ってみなきゃわかんないでしょ」｜2.50 秒"
+    },
+    "charge": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#14.ogg",
+      "file": "chr0300_ActVoice#14.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；衝鋒｜聽寫「よし!行くぞ!」｜1.69 秒"
+    },
+    "retreat": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#81.ogg",
+      "file": "chr0300_ActVoice#81.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；撤退｜聽寫「まずい!」｜0.83 秒"
+    },
+    "hurt": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#79.ogg",
+      "file": "chr0300_ActVoice#79.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜0.66 秒｜聽寫幾乎沒有字（「はっ!」）"
+    },
+    "hurt-heavy": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#111.ogg",
+      "file": "chr0300_ActVoice#111.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜1.50 秒｜聽寫幾乎沒有字（「集中して」）"
+    },
+    "defeat": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#93.ogg",
+      "file": "chr0300_ActVoice#93.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜2.45 秒｜聽寫幾乎沒有字（「最小悪!」）"
+    },
+    "crit": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#174.ogg",
+      "file": "chr0300_ActVoice#174.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜1.04 秒｜聽寫幾乎沒有字（「やるなぁ」）"
+    },
+    "attack-light": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#63.ogg",
+      "file": "chr0300_ActVoice#63.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜0.66 秒｜聽寫幾乎沒有字（「だっ!」）"
+    },
+    "attack-heavy": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#71.ogg",
+      "file": "chr0300_ActVoice#71.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜1.08 秒｜聽寫幾乎沒有字（「ちょー!」）"
+    },
+    "jump": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#137.ogg",
+      "file": "chr0300_ActVoice#137.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜0.75 秒｜聽寫幾乎沒有字（「ううっ!」）"
+    },
+    "knockdown": {
+      "src": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Gon/extracted/JForce_Gon/chr0300_ActVoice/chr0300_ActVoice#182.ogg",
+      "file": "chr0300_ActVoice#182.ogg",
+      "group": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "why": "owner 2026-09-17 整包引入；擬聲｜1.57 秒｜聽寫幾乎沒有字（「ふわぁ!」）"
+    }
+  }
+}

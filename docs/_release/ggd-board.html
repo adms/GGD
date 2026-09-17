@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-17 16:15 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-17 17:25 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.46.0 · 資料截至 2026-09-17 16:15 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 16:15 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>487</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.46.0 · 資料截至 2026-09-17 17:25 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 17:25 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>490</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1848,6 +1848,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>16:02</td><td>沒關係 請你把之前舊的對話記錄備份 並且整理 對話開票 並整合到 戰情版{timestamp}.md</td><td>— 維運指示（備份被 /clear 的舊對話、補齊逐則對票、輪替戰情版），⛔ 本身不開票</td></tr>
 <tr><td>16:08</td><td>也請你把做到一半的部分記錄在票裡面，避免重複做</td><td>#1270 #1201 #1273（/clear 前做到一半的進度已寫進票）</td></tr>
 <tr><td>16:15</td><td>為何會出現</td><td>— 提問（關閉 session 時 App 跳出切回 main 的暫存對話框），⛔ 不是需求</td></tr>
+<tr><td>16:39</td><td>先commit 4. 我犯的錯 一開始我在 <code>/Users/Takuro/GGD</code> 上建帳本。那棵樹停在舊分支，落後 main 789 個 commit，結果重建了一份跟 main 重複的帳本，還產生了一份舊的 <code>戰情版-20260917.md</code>。 * 這些檔都沒進版控，但受產物保護，我刪不掉。 * 現在那棵樹根目錄的 <code>GGD戰情版.md</code> 指向那份舊的，不要看那份，也不要 commit 它們。 * 以 /private/tmp/ggd-integ-nc/GGD戰情版.md 為準。 * 要清掉那幾份的話，需要你在啟動環境設 <code>GGD_GENGUARD_OFF=1</code>，或讓我帶你清。 * 這個教…</td><td>— 維運指示（commit 9/17 帳本 7fba6877b，並要求解釋誤在舊分支建帳本的經過），⛔ 不開票</td></tr>
+<tr><td>16:44</td><td>我大概知道了 請你給我建議 可以保全住所有資料 又可以回歸到 main 來繼續工作 把錯誤的分支 archive 不再使用 一切安全不要掉資料為準</td><td>— 維運指示（保全資料、切回 main、封存舊分支；已完成，備份 ~/GGD-backups/branch-archive-20260917-1656），⛔ 不開票</td></tr>
+<tr><td>16:53</td><td>你講的我完全不懂怎麼做 也不知道怎麼確認</td><td>— 更正（要白話、要看得懂的確認方式；改成中文確認頁＋確認腳本），⛔ 不是新需求</td></tr>
+<tr><td>16:55</td><td>我先給你其他 session 交接內容如下 Codex 交接更新： 1. PR #1228 已同步最新 main、解決衝突並改成 Ready。 最新 head：7d4669f53 本機 hero-intake 153 位檢查、git diff --check、skills:check、editor:accept:release、coord:check 與 community release receipts 已通過。 新 CI 正在執行： https://github.com/adms/GGD/pull/1228 2. 舊 Draft PR #1144 已由乾淨的 S3 還原契約 PR #12…</td><td>#1228 #1144 #1279 #1267 #1135 #1153</td></tr>
+<tr><td>17:25</td><td>#1270 那一批：在 GGD 上重跑出貨檢查，通過後才把那 7 個版本推上 GitHub。 你轉貼的交接：#1228、#1279、#1267 在等 GitHub 上的自動測試跑完；語音分支 feat/owner-0915-models-voices 等著合進 main。 舊版本裡 main 沒有的內容：有 67 個檔，最大的是自動留底紀錄表多出的 3,037 行。需要的話，我出一份對照表讓你挑要不要撿回 main。 =&gt; 全做</td><td>#1270 #1228 #1279 #1267</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

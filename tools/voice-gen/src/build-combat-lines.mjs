@@ -273,7 +273,8 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
     }
     if (pool.length === 0 && !originalsOnly && !skippedOwnerLine) {
       let line = null;
-      if (cat.startsWith("skill-name.")) {
+      // ⭐ owner 2026-09-17「波吉 語音應該都是小孩 嗯嗯阿阿 的聲音」：不會說話的角色連喊招也只發氣音
+      if (cat.startsWith("skill-name.") && !cast.nonVerbal) {
         const s = skillLine(id, cat.slice("skill-name.".length));
         if (s.error) { fail(`${id}（${name}）：${s.error}`); continue; }
         line = s;
