@@ -61,9 +61,9 @@
         "str": 29,
         "agi": 18,
         "int": 13,
-        "strGrowth": 2.78,
-        "agiGrowth": 1.67,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -80,16 +80,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 1.811,
+        "armor": 1.5605,
         "mr": 5.2796,
-        "maxHealth": 91.6173,
-        "maxMana": 19.6709,
-        "ad": 2.9837,
-        "ap": 5,
-        "as": 0.0117,
+        "maxHealth": 27.6773,
+        "maxMana": 0.9209,
+        "ad": 1.8717,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1932,
-        "manaRegen": 0.2625
+        "healthRegen": 0.082,
+        "manaRegen": 0
       }
     },
     {
@@ -108,9 +108,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -127,16 +127,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -155,9 +155,9 @@
         "str": 12,
         "agi": 25,
         "int": 23,
-        "strGrowth": 1.18,
-        "agiGrowth": 2.36,
-        "intGrowth": 2.17
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 10,
@@ -174,16 +174,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.4214,
+        "armor": 0.0674,
         "mr": 1.3199,
-        "maxHealth": 33.2408,
-        "maxMana": 33.402,
-        "ad": 1.7673,
-        "ap": 8.68,
-        "as": 0.0165,
+        "maxHealth": 6.1008,
+        "maxMana": 0.852,
+        "ad": 1.2953,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1228,
-        "manaRegen": 0.4557
+        "healthRegen": 0.0756,
+        "manaRegen": 0
       }
     },
     {
@@ -202,9 +202,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -221,16 +221,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -249,9 +249,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -268,16 +268,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -296,9 +296,9 @@
         "str": 25,
         "agi": 23,
         "int": 12,
-        "strGrowth": 2.36,
-        "agiGrowth": 2.17,
-        "intGrowth": 1.18
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 10,
@@ -315,16 +315,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7002,
+        "armor": 0.3747,
         "mr": 2.1118,
-        "maxHealth": 55.1363,
-        "maxMana": 19.824,
-        "ad": 4.9286,
-        "ap": 4.72,
-        "as": 0.0215,
+        "maxHealth": 0.8563,
+        "maxMana": 2.124,
+        "ad": 3.9846,
+        "ap": 0,
+        "as": 0.0062,
         "range": 0,
-        "healthRegen": 0.3238,
-        "manaRegen": 0.2478
+        "healthRegen": 0.2294,
+        "manaRegen": 0
       }
     },
     {
@@ -343,9 +343,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -362,16 +362,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -390,9 +390,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -409,16 +409,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -437,9 +437,9 @@
         "str": 13,
         "agi": 29,
         "int": 18,
-        "strGrowth": 1.25,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.67
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -456,16 +456,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.417,
+        "armor": 0,
         "mr": 1.3199,
-        "maxHealth": 57.9527,
-        "maxMana": 44.3418,
-        "ad": 8.1918,
-        "ap": 6.68,
-        "as": 0.0195,
+        "maxHealth": 29.2027,
+        "maxMana": 19.2918,
+        "ad": 7.6918,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1223,
-        "manaRegen": 0.3507
+        "healthRegen": 0.0723,
+        "manaRegen": 0
       }
     },
     {
@@ -484,9 +484,9 @@
         "str": 21,
         "agi": 20,
         "int": 19,
-        "strGrowth": 1.99,
-        "agiGrowth": 1.89,
-        "intGrowth": 1.83
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -503,16 +503,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7048,
+        "armor": 0.4213,
         "mr": 2.1118,
-        "maxHealth": 56.0751,
-        "maxMana": 34.0143,
-        "ad": 3.0163,
-        "ap": 7.32,
-        "as": 0.0132,
+        "maxHealth": 10.3051,
+        "maxMana": 6.5643,
+        "ad": 2.2203,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1964,
-        "manaRegen": 0.3843
+        "healthRegen": 0.1168,
+        "manaRegen": 0
       }
     },
     {
@@ -531,9 +531,9 @@
         "str": 12,
         "agi": 25,
         "int": 23,
-        "strGrowth": 1.18,
-        "agiGrowth": 2.36,
-        "intGrowth": 2.17
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 10,
@@ -550,16 +550,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.4214,
+        "armor": 0.0674,
         "mr": 1.3199,
-        "maxHealth": 33.2408,
-        "maxMana": 33.402,
-        "ad": 1.7673,
-        "ap": 8.68,
-        "as": 0.0165,
+        "maxHealth": 6.1008,
+        "maxMana": 0.852,
+        "ad": 1.2953,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1228,
-        "manaRegen": 0.4557
+        "healthRegen": 0.0756,
+        "manaRegen": 0
       }
     },
     {
@@ -578,9 +578,9 @@
         "str": 21,
         "agi": 20,
         "int": 19,
-        "strGrowth": 1.99,
-        "agiGrowth": 1.89,
-        "intGrowth": 1.83
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -597,16 +597,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7048,
+        "armor": 0.4213,
         "mr": 2.1118,
-        "maxHealth": 56.0751,
-        "maxMana": 34.0143,
-        "ad": 3.0163,
-        "ap": 7.32,
-        "as": 0.0132,
+        "maxHealth": 10.3051,
+        "maxMana": 6.5643,
+        "ad": 2.2203,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1964,
-        "manaRegen": 0.3843
+        "healthRegen": 0.1168,
+        "manaRegen": 0
       }
     },
     {
@@ -625,9 +625,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -644,16 +644,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -672,9 +672,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -691,16 +691,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -719,9 +719,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -738,16 +738,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -766,9 +766,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -785,16 +785,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -813,9 +813,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -832,16 +832,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -860,9 +860,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -879,16 +879,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -907,9 +907,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -926,16 +926,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -954,9 +954,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -973,16 +973,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -1001,9 +1001,9 @@
         "str": 25,
         "agi": 23,
         "int": 12,
-        "strGrowth": 2.36,
-        "agiGrowth": 2.17,
-        "intGrowth": 1.18
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 10,
@@ -1020,16 +1020,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7002,
+        "armor": 0.3747,
         "mr": 2.1118,
-        "maxHealth": 55.1363,
-        "maxMana": 19.824,
-        "ad": 4.9286,
-        "ap": 4.72,
-        "as": 0.0215,
+        "maxHealth": 0.8563,
+        "maxMana": 2.124,
+        "ad": 3.9846,
+        "ap": 0,
+        "as": 0.0062,
         "range": 0,
-        "healthRegen": 0.3238,
-        "manaRegen": 0.2478
+        "healthRegen": 0.2294,
+        "manaRegen": 0
       }
     },
     {
@@ -1048,9 +1048,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -1067,16 +1067,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -1095,9 +1095,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -1114,16 +1114,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -1142,9 +1142,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -1161,16 +1161,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -1189,9 +1189,9 @@
         "str": 21,
         "agi": 20,
         "int": 19,
-        "strGrowth": 1.99,
-        "agiGrowth": 1.89,
-        "intGrowth": 1.83
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -1208,16 +1208,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7048,
+        "armor": 0.4213,
         "mr": 2.1118,
-        "maxHealth": 56.0751,
-        "maxMana": 34.0143,
-        "ad": 3.0163,
-        "ap": 7.32,
-        "as": 0.0132,
+        "maxHealth": 10.3051,
+        "maxMana": 6.5643,
+        "ad": 2.2203,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1964,
-        "manaRegen": 0.3843
+        "healthRegen": 0.1168,
+        "manaRegen": 0
       }
     },
     {
@@ -1236,9 +1236,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -1255,16 +1255,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -7064,9 +7064,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7083,16 +7083,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -7111,9 +7111,9 @@
         "str": 13,
         "agi": 29,
         "int": 18,
-        "strGrowth": 1.25,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.67
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7130,16 +7130,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.417,
+        "armor": 0,
         "mr": 1.3199,
-        "maxHealth": 57.9527,
-        "maxMana": 44.3418,
-        "ad": 8.1918,
-        "ap": 6.68,
-        "as": 0.0195,
+        "maxHealth": 29.2027,
+        "maxMana": 19.2918,
+        "ad": 7.6918,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1223,
-        "manaRegen": 0.3507
+        "healthRegen": 0.0723,
+        "manaRegen": 0
       }
     },
     {
@@ -7158,9 +7158,9 @@
         "str": 29,
         "agi": 18,
         "int": 13,
-        "strGrowth": 2.78,
-        "agiGrowth": 1.67,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -7177,16 +7177,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 1.811,
+        "armor": 1.5605,
         "mr": 5.2796,
-        "maxHealth": 91.6173,
-        "maxMana": 19.6709,
-        "ad": 2.9837,
-        "ap": 5,
-        "as": 0.0117,
+        "maxHealth": 27.6773,
+        "maxMana": 0.9209,
+        "ad": 1.8717,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1932,
-        "manaRegen": 0.2625
+        "healthRegen": 0.082,
+        "manaRegen": 0
       }
     },
     {
@@ -7205,9 +7205,9 @@
         "str": 29,
         "agi": 18,
         "int": 13,
-        "strGrowth": 2.78,
-        "agiGrowth": 1.67,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -7224,16 +7224,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 1.811,
+        "armor": 1.5605,
         "mr": 5.2796,
-        "maxHealth": 91.6173,
-        "maxMana": 19.6709,
-        "ad": 2.9837,
-        "ap": 5,
-        "as": 0.0117,
+        "maxHealth": 27.6773,
+        "maxMana": 0.9209,
+        "ad": 1.8717,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1932,
-        "manaRegen": 0.2625
+        "healthRegen": 0.082,
+        "manaRegen": 0
       }
     },
     {
@@ -7252,9 +7252,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7271,16 +7271,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {
@@ -7299,9 +7299,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7318,16 +7318,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -7487,9 +7487,9 @@
         "str": 29,
         "agi": 18,
         "int": 13,
-        "strGrowth": 2.78,
-        "agiGrowth": 1.67,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -7506,16 +7506,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 1.811,
+        "armor": 1.5605,
         "mr": 5.2796,
-        "maxHealth": 91.6173,
-        "maxMana": 19.6709,
-        "ad": 2.9837,
-        "ap": 5,
-        "as": 0.0117,
+        "maxHealth": 27.6773,
+        "maxMana": 0.9209,
+        "ad": 1.8717,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1932,
-        "manaRegen": 0.2625
+        "healthRegen": 0.082,
+        "manaRegen": 0
       }
     },
     {
@@ -7581,9 +7581,9 @@
         "str": 29,
         "agi": 18,
         "int": 13,
-        "strGrowth": 2.78,
-        "agiGrowth": 1.67,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -7600,16 +7600,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 1.811,
+        "armor": 1.5605,
         "mr": 5.2796,
-        "maxHealth": 91.6173,
-        "maxMana": 19.6709,
-        "ad": 2.9837,
-        "ap": 5,
-        "as": 0.0117,
+        "maxHealth": 27.6773,
+        "maxMana": 0.9209,
+        "ad": 1.8717,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1932,
-        "manaRegen": 0.2625
+        "healthRegen": 0.082,
+        "manaRegen": 0
       }
     },
     {
@@ -7628,9 +7628,9 @@
         "str": 18,
         "agi": 29,
         "int": 13,
-        "strGrowth": 1.67,
-        "agiGrowth": 2.78,
-        "intGrowth": 1.25
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7647,16 +7647,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.8749,
+        "armor": 0.4579,
         "mr": 2.6398,
-        "maxHealth": 73.4102,
-        "maxMana": 45.1071,
-        "ad": 4.9571,
-        "ap": 5,
-        "as": 0.0195,
+        "maxHealth": 35.0002,
+        "maxMana": 26.3571,
+        "ad": 4.2891,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1977,
-        "manaRegen": 0.2625
+        "healthRegen": 0.1309,
+        "manaRegen": 0
       }
     },
     {
@@ -7675,9 +7675,9 @@
         "str": 21,
         "agi": 20,
         "int": 19,
-        "strGrowth": 1.99,
-        "agiGrowth": 1.89,
-        "intGrowth": 1.83
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 6,
@@ -7694,16 +7694,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7048,
+        "armor": 0.4213,
         "mr": 2.1118,
-        "maxHealth": 56.0751,
-        "maxMana": 34.0143,
-        "ad": 3.0163,
-        "ap": 7.32,
-        "as": 0.0132,
+        "maxHealth": 10.3051,
+        "maxMana": 6.5643,
+        "ad": 2.2203,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1964,
-        "manaRegen": 0.3843
+        "healthRegen": 0.1168,
+        "manaRegen": 0
       }
     },
     {
@@ -7722,9 +7722,9 @@
         "str": 13,
         "agi": 18,
         "int": 29,
-        "strGrowth": 1.25,
-        "agiGrowth": 1.67,
-        "intGrowth": 2.78
+        "strGrowth": 0,
+        "agiGrowth": 0,
+        "intGrowth": 0
       },
       "initial": {
         "ms": 8,
@@ -7741,16 +7741,16 @@
       },
       "perLevel": {
         "ms": 0,
-        "armor": 0.7079,
+        "armor": 0.4574,
         "mr": 2.1118,
-        "maxHealth": 74.5837,
-        "maxMana": 42.6582,
-        "ad": 3.049,
-        "ap": 11.12,
-        "as": 0.0117,
+        "maxHealth": 45.8337,
+        "maxMana": 0.9582,
+        "ad": 2.549,
+        "ap": 0,
+        "as": 0,
         "range": 0,
-        "healthRegen": 0.1567,
-        "manaRegen": 0.5838
+        "healthRegen": 0.1067,
+        "manaRegen": 0
       }
     },
     {

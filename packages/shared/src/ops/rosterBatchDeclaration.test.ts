@@ -46,10 +46,13 @@ describe("上架名單逐群宣告 ↔ 權威文件 ↔ starterChampions ↔ 退
     const base = bs.find((x) => (world.batchDoc.get(x.section)?.length ?? 0) > 1)!;
     const b = { ...base, starter: "none" as const };
     const withNone = bs.map((x) => (x === base ? b : x));
-    const one = world.batchDoc.get(b.section)![0]!;
+    // ⭐ 夾具的語意是「**這一群只有一名先上架**」⇒ 其餘成員要從 starter 拿掉，
+    //   ⛔ 否則規則答的是另一格（「整批都在 starterChampions」）——那是對的答案、錯的題目。
+    const members = world.batchDoc.get(b.section)!;
+    const one = members[0]!;
     const w = {
       ...world,
-      starter: [...world.starter, one],
+      starter: [...world.starter.filter((id) => !members.includes(id)), one],
       declaration: { ...world.declaration, batches: withNone },
     };
     const none = checkRosterDeclaration(w).find((f) => f.pair === "逐群宣告 ↔ starterChampions");

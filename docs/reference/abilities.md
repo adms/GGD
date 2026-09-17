@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_db1c02b74e9c`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_87198f40fa73`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**1129**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/abilities/*.json` 共 **1129** 份，每個英雄每個 slot 一份：天生 PASSIVE 187　·　Q 189　·　W 189　·　E 189　·　R 189　·　EX 186。
@@ -1106,7 +1106,7 @@
 | `lol-ornn.e` | 熔岩俯衝 | E | 主動 | — | `lol-ornn` 鄂爾 | — | 向前衝撞傷害沿途敵人；只有撞上柱子或牆被擋停，才震波擊飛周圍敵人並撞碎柱子。 |
 | `lol-ornn.r` | 鑄火者的呼喚 | R | 主動 | — | `lol-ornn` 鄂爾 | — | 長起手後在遠處召出火羊朝自己衝回，沿途緩速並焦化敵人；再次施放往前短衝，撞到火羊就讓牠改朝衝刺方向奔去並擊飛沿途敵人。 |
 | `lol-ornn.ex` | 終身保固三秒 | EX | 主動 | — | `lol-ornn` 鄂爾 | — | 指定一位隊友給予短期大護盾；工匠站定吟唱。 |
-| `lol-sett.passive` | 恆毅之泉 | PASSIVE | 天生·被動 | — | `lol-sett` 賽特 | — | 左右拳交替；低血量時週期回血；承傷累積最多三層供 W 使用。 |
+| `lol-sett.passive` | 恆毅之泉 | PASSIVE | 天生·被動 | — | `lol-sett` 賽特 | — | 普通攻擊左右拳交替，右拳追加傷害；低血量時週期回血；承傷累積最多三層供 W 使用。 |
 | `lol-sett.q` | 懾人猛拳 | Q | 主動 | — | `lol-sett` 賽特 | — | 提速並強化接下來兩次普攻。 |
 | `lol-sett.w` | 獸魂轟拳 | W | 主動 | — | `lol-sett` 賽特 | — | 朝面向揮拳並取得護盾；中心真傷、兩側物傷，同一敵人只受一種傷害。消耗已有恆毅，三層時提高護盾與傷害。 |
 | `lol-sett.e` | 碎顱猛擊 | E | 主動 | — | `lol-sett` 賽特 | — | 將身旁敵人拉近並減速，接 Q/W。 |

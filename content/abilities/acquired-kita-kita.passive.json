@@ -2,7 +2,7 @@
   "id": "acquired-kita-kita.passive",
   "name": "越挨打越想跳",
   "provenance": "editor-json",
-  "description": "受到傷害時獲得90護盾，持續3秒，內置冷卻{{cd}}秒。",
+  "description": "受到傷害時獲得90護盾，持續3秒，內置冷卻8秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

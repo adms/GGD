@@ -2,7 +2,7 @@
   "id": "acquired-saya.passive",
   "name": "吃一口就好",
   "provenance": "editor-json",
-  "description": "技能命中後回復自己25生命，內置冷卻{{cd}}秒。",
+  "description": "技能命中後回復自己25生命，內置冷卻3秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

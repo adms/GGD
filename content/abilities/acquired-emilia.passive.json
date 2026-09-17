@@ -2,7 +2,7 @@
   "id": "acquired-emilia.passive",
   "name": "碎霜禮節",
   "provenance": "editor-json",
-  "description": "普攻消耗目標身上自己的寒霜，追加極小級魔法傷害並鎖足 0.5 秒；內置冷卻 {{cd}} 秒。",
+  "description": "普攻消耗目標身上自己的寒霜，追加極小級魔法傷害並鎖足 0.5 秒；內置冷卻 2 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

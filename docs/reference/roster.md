@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_db1c02b74e9c`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_87198f40fa73`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**190**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/champions/*.json` 共 **190** 名英雄，其中 **130** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
@@ -205,17 +205,17 @@
 | `godie-u010` | 飛影 | 邪眼師 | fighter | 近戰 | — | 在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪… | `godie-u010.passive` `godie-u010.q` `godie-u010.w` `godie-u010.e` `godie-u010.r` `godie-u010.ex` |
 | `godie-u01u` | 索隆 | 三刀流劍士 | fighter | 近戰 | — | 夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入… | `godie-u01u.passive` `godie-u01u.q` `godie-u01u.w` `godie-u01u.e` `godie-u01u.r` `godie-u01u.ex` |
 | `godie-u034` | 傑 富力士 | 職業獵人 | fighter | 近戰 | — | 出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲… | `godie-u034.passive` `godie-u034.q` `godie-u034.w` `godie-u034.e` `godie-u034.r` `godie-u034.ex` |
-| `lol-ahri` | 阿璃 | — | mage | 遠程 | — | 設計草案，尚未完成上架驗收。方向法球、魅惑接輸出與短衝換位 | `lol-ahri.passive` `lol-ahri.q` `lol-ahri.w` `lol-ahri.e` `lol-ahri.r` `lol-ahri.ex` |
-| `lol-ashe` | 艾希 | — | marksman | 遠程 | — | 設計草案，尚未完成上架驗收。普攻黏人、四層專注與遠距先手 | `lol-ashe.passive` `lol-ashe.q` `lol-ashe.w` `lol-ashe.e` `lol-ashe.r` `lol-ashe.ex` |
-| `lol-blitzcrank` | 布里姿 | — | tank | 近戰 | — | 設計草案，尚未完成上架驗收。拉人、過熱衝刺與打斷連招 | `lol-blitzcrank.passive` `lol-blitzcrank.q` `lol-blitzcrank.w` `lol-blitzcrank.e` `lol-blitzcrank.r` `lol-blitzcrank.ex` |
-| `lol-chogath` | 科加斯 | — | tank | 近戰 | — | 設計草案，尚未完成上架驗收。擊殺補給、前排控制與低血吞噬 | `lol-chogath.passive` `lol-chogath.q` `lol-chogath.w` `lol-chogath.e` `lol-chogath.r` `lol-chogath.ex` |
-| `lol-fiddlesticks` | 稻草人 | — | mage | 近戰 | — | 設計草案，尚未完成上架驗收。恐懼接近、近身汲取與進場風暴 | `lol-fiddlesticks.passive` `lol-fiddlesticks.q` `lol-fiddlesticks.w` `lol-fiddlesticks.e` `lol-fiddlesticks.r` `lol-fiddlesticks.ex` |
-| `lol-garen` | 蓋倫 | — | fighter | 近戰 | — | 設計草案，尚未完成上架驗收。脫戰續航、沉默旋轉與低血收尾 | `lol-garen.passive` `lol-garen.q` `lol-garen.w` `lol-garen.e` `lol-garen.r` `lol-garen.ex` |
-| `lol-malphite` | 墨菲特 | — | tank | 近戰 | — | 設計草案，尚未完成上架驗收。岩盾換血、減攻速與落點擊飛坦克 | `lol-malphite.passive` `lol-malphite.q` `lol-malphite.w` `lol-malphite.e` `lol-malphite.r` `lol-malphite.ex` |
-| `lol-ornn` | 鄂爾 | — | tank | 近戰 | — | 設計草案，尚未完成上架驗收。焦化接重擊與直線開戰坦克 | `lol-ornn.passive` `lol-ornn.q` `lol-ornn.w` `lol-ornn.e` `lol-ornn.r` `lol-ornn.ex` |
-| `lol-sett` | 賽特 | — | fighter | 近戰 | — | 設計草案，尚未完成上架驗收。受擊蓄勢、短手摔投鬥士 | `lol-sett.passive` `lol-sett.q` `lol-sett.w` `lol-sett.e` `lol-sett.r` `lol-sett.ex` |
-| `lol-thresh` | 瑟雷西 | — | fighter | 遠程 | — | 設計草案，尚未完成上架驗收。鉤鎖控距、燈籠救援與區域封鎖 | `lol-thresh.passive` `lol-thresh.q` `lol-thresh.w` `lol-thresh.e` `lol-thresh.r` `lol-thresh.ex` |
-| `lol-velkoz` | 威寇茲 | — | mage | 遠程 | — | 設計草案，尚未完成上架驗收。三次命中拆解與直線追打砲台 | `lol-velkoz.passive` `lol-velkoz.q` `lol-velkoz.w` `lol-velkoz.e` `lol-velkoz.r` `lol-velkoz.ex` |
+| `lol-ahri` | 阿璃 | — | mage | 遠程 | — | 方向法球、魅惑接輸出與短衝換位 | `lol-ahri.passive` `lol-ahri.q` `lol-ahri.w` `lol-ahri.e` `lol-ahri.r` `lol-ahri.ex` |
+| `lol-ashe` | 艾希 | — | marksman | 遠程 | — | 普攻黏人、四層專注與遠距先手 | `lol-ashe.passive` `lol-ashe.q` `lol-ashe.w` `lol-ashe.e` `lol-ashe.r` `lol-ashe.ex` |
+| `lol-blitzcrank` | 布里姿 | — | tank | 近戰 | — | 拉人、過熱衝刺與打斷連招 | `lol-blitzcrank.passive` `lol-blitzcrank.q` `lol-blitzcrank.w` `lol-blitzcrank.e` `lol-blitzcrank.r` `lol-blitzcrank.ex` |
+| `lol-chogath` | 科加斯 | — | tank | 近戰 | — | 擊殺補給、前排控制與低血吞噬 | `lol-chogath.passive` `lol-chogath.q` `lol-chogath.w` `lol-chogath.e` `lol-chogath.r` `lol-chogath.ex` |
+| `lol-fiddlesticks` | 稻草人 | — | mage | 近戰 | — | 恐懼接近、近身汲取與進場風暴 | `lol-fiddlesticks.passive` `lol-fiddlesticks.q` `lol-fiddlesticks.w` `lol-fiddlesticks.e` `lol-fiddlesticks.r` `lol-fiddlesticks.ex` |
+| `lol-garen` | 蓋倫 | — | fighter | 近戰 | — | 脫戰續航、沉默旋轉與低血收尾 | `lol-garen.passive` `lol-garen.q` `lol-garen.w` `lol-garen.e` `lol-garen.r` `lol-garen.ex` |
+| `lol-malphite` | 墨菲特 | — | tank | 近戰 | — | 岩盾換血、減攻速與落點擊飛坦克 | `lol-malphite.passive` `lol-malphite.q` `lol-malphite.w` `lol-malphite.e` `lol-malphite.r` `lol-malphite.ex` |
+| `lol-ornn` | 鄂爾 | — | tank | 近戰 | — | 焦化接重擊與直線開戰坦克 | `lol-ornn.passive` `lol-ornn.q` `lol-ornn.w` `lol-ornn.e` `lol-ornn.r` `lol-ornn.ex` |
+| `lol-sett` | 賽特 | — | fighter | 近戰 | — | 受擊蓄勢、短手摔投鬥士 | `lol-sett.passive` `lol-sett.q` `lol-sett.w` `lol-sett.e` `lol-sett.r` `lol-sett.ex` |
+| `lol-thresh` | 瑟雷西 | — | fighter | 遠程 | — | 鉤鎖控距、燈籠救援與區域封鎖 | `lol-thresh.passive` `lol-thresh.q` `lol-thresh.w` `lol-thresh.e` `lol-thresh.r` `lol-thresh.ex` |
+| `lol-velkoz` | 威寇茲 | — | mage | 遠程 | — | 三次命中拆解與直線追打砲台 | `lol-velkoz.passive` `lol-velkoz.q` `lol-velkoz.w` `lol-velkoz.e` `lol-velkoz.r` `lol-velkoz.ex` |
 | `sela` | Sela, the Ember Sage | — | mage | 遠程 | — | — | `sela.q` `sela.w` `sela.e` `sela.r` |
 | `thorne` | Thorne, the Bramble Knight | — | bruiser | 近戰 | — | — | `thorne.q` `thorne.w` `thorne.e` `thorne.r` |
 

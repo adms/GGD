@@ -3749,19 +3749,6 @@
         {
           "name": "radius",
           "type": "number"
-        },
-        {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
         }
       ],
       "adminForm": true,
@@ -4000,19 +3987,6 @@
           "type": "number"
         },
         {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
-        },
-        {
           "name": "shatterable",
           "type": "boolean",
           "optional": true
@@ -4080,19 +4054,6 @@
         {
           "name": "radius",
           "type": "number"
-        },
-        {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
         },
         {
           "name": "sides",

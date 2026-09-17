@@ -2,7 +2,7 @@
   "id": "acquired-cattiva.passive",
   "name": "不是我打破的",
   "provenance": "editor-json",
-  "description": "受傷後取得 2 秒極小級移速加成，內置冷卻 {{cd}} 秒。",
+  "description": "受傷後取得 2 秒極小級移速加成，內置冷卻 4 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

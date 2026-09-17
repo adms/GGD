@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5552e9054fcb",
+  "hash": "bfd13aae75f1",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -149,8 +149,8 @@
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "051141e3804c",
-      "size": 21057
+      "hash": "57615be9f422",
+      "size": 24699
     },
     {
       "id": "combat-env",
@@ -275,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "5e2fcc4e4be1",
+      "hash": "ee7bb65a2174",
       "size": 923
     },
     {
@@ -533,7 +533,7 @@
     {
       "id": "unsafe-textures",
       "path": "config/unsafe-textures.json",
-      "hash": "d2133597dd85",
+      "hash": "5ef90e8bce82",
       "size": 5852
     },
     {

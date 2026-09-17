@@ -2,7 +2,7 @@
   "id": "acquired-wargreymon.passive",
   "name": "鍋蓋還沒掀",
   "provenance": "editor-json",
-  "description": "受到傷害後獲得120護盾，持續3秒，內置冷卻{{cd}}秒。",
+  "description": "受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

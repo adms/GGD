@@ -75,11 +75,11 @@ capability 指紋：`96994f3b`
 | `screenShake` | 8 | 0 | 0 | ✅ | ✅ | 17 |
 | `shield` | 6 | 0 | 0 | ✅ | ✅ | 110 |
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 1 |
-| `spawnInteractable` | 7 | 1 | 0 | ✅ | ✅ | 1 |
+| `spawnInteractable` | 6 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
-| `spawnObstacle` | 7 | 1 | 0 | ✅ | ✅ | 1 |
+| `spawnObstacle` | 6 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnProjectile` | 5 | 0 | 0 | ✅ | ✅ | 17 |
-| `spawnThresholds` | 6 | 1 | 0 | ✅ | ✅ | 1 |
+| `spawnThresholds` | 5 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 84 |
 | `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 4 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 6 |

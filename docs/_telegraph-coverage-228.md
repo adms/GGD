@@ -8,22 +8,22 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 580 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 55 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 763 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 57 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 144 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 181 | permanent WC3 passive, never cast, nothing to warn about |
 
-**635 / 635 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**820 / 820 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 223 | self marker at the caster's feet |
-| `targeted` | 213 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `ground` | 152 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
-| `—` | 144 | not cast |
-| `skillshot` | 46 | line — the projectile's corridor; step sideways |
+| `self` | 278 | self marker at the caster's feet |
+| `targeted` | 257 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `ground` | 209 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
+| `—` | 181 | not cast |
+| `skillshot` | 75 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
 
 ## Per-ability matrix
@@ -809,3 +809,225 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 犽宿 `lol-yasuo` | E | 踏風進擊 | `ground` | circle r=2.20u | ✅ OK | radius 2.75 × abilityRange 0.8 |
 | 犽宿 `lol-yasuo` | R | 天際斷章 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 犽宿 `lol-yasuo` | EX | 旋風縛步 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | PASSIVE | 整合騎士查票 | `—` | — | 🟣 PASSIVE | never cast |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | Q | 金木樨停車單 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | W | 騎士擔保 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | E | 騎士查勤 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | R | 花瓣罰單連發 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 愛麗絲·滋貝魯庫（Alice Zuberg） `acquired-alice` | EX | 今天不准加班受傷 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 枯星龍 `acquired-astralym` | PASSIVE | 星蝕欠款 | `—` | — | 🟣 PASSIVE | never cast |
+| 枯星龍 `acquired-astralym` | Q | 逾期星光 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 枯星龍 `acquired-astralym` | W | 失重通知 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 枯星龍 `acquired-astralym` | E | 星間挪位 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 枯星龍 `acquired-astralym` | R | 枯星下班鐘 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 枯星龍 `acquired-astralym` | EX | 末日也要蓋章 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亞絲娜／結城明日奈 `acquired-asuna` | PASSIVE | 開飯倒數 | `—` | — | 🟣 PASSIVE | never cast |
+| 亞絲娜／結城明日奈 `acquired-asuna` | Q | 細劍取餐號 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 亞絲娜／結城明日奈 `acquired-asuna` | W | 閃光趕飯 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亞絲娜／結城明日奈 `acquired-asuna` | E | 插入隊伍最前面 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 亞絲娜／結城明日奈 `acquired-asuna` | R | 星屑飛濺別灑到湯 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 亞絲娜／結城明日奈 `acquired-asuna` | EX | 晚餐預約成功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 碧翠絲 `acquired-beatrice` | PASSIVE | 借書要留押金 | `—` | — | 🟣 PASSIVE | never cast |
+| 碧翠絲 `acquired-beatrice` | Q | 陰影退件章 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.void maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 碧翠絲 `acquired-beatrice` | W | 禁書封皮 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 碧翠絲 `acquired-beatrice` | E | 門在這一邊 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 碧翠絲 `acquired-beatrice` | R | 逾期罰款・陰 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 碧翠絲 `acquired-beatrice` | EX | 圖書館請安靜 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 搗蛋貓 `acquired-cattiva` | PASSIVE | 不是我打破的 | `—` | — | 🟣 PASSIVE | never cast |
+| 搗蛋貓 `acquired-cattiva` | Q | 貓拳簽收 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 搗蛋貓 `acquired-cattiva` | W | 你追不到我 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 搗蛋貓 `acquired-cattiva` | E | 紙箱撤離 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 搗蛋貓 `acquired-cattiva` | R | 連續貓貓拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 搗蛋貓 `acquired-cattiva` | EX | 罐頭優先權 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| DIO `acquired-dio` | PASSIVE | 吸血鬼加班制 | `—` | — | 🟣 PASSIVE | never cast |
+| DIO `acquired-dio` | Q | 無馱連打 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| DIO `acquired-dio` | W | 飛刀考勤 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
+| DIO `acquired-dio` | E | 世界・半秒鐘 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| DIO `acquired-dio` | R | 壓路機停車費 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| DIO `acquired-dio` | EX | 輪到我的台詞 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 愛蜜莉雅 `acquired-emilia` | PASSIVE | 碎霜禮節 | `—` | — | 🟣 PASSIVE | never cast |
+| 愛蜜莉雅 `acquired-emilia` | Q | 冰槍請簽收 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ice maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
+| 愛蜜莉雅 `acquired-emilia` | W | 精靈雪衣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 愛蜜莉雅 `acquired-emilia` | E | 冰花開席 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 愛蜜莉雅 `acquired-emilia` | R | 永凍・試用版 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 愛蜜莉雅 `acquired-emilia` | EX | 熱茶先不要冰 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 犬夜叉 `acquired-inuyasha` | PASSIVE | 半妖起床氣 | `—` | — | 🟣 PASSIVE | never cast |
+| 犬夜叉 `acquired-inuyasha` | Q | 鐵碎牙拆門 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 犬夜叉 `acquired-inuyasha` | W | 風之傷清走廊 | `skillshot` | line 8.80×4.40u | ✅ OK | delayed.advance 10×1.1（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 犬夜叉 `acquired-inuyasha` | E | 半妖跨欄 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 犬夜叉 `acquired-inuyasha` | R | 鐵碎牙不是開罐器 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 犬夜叉 `acquired-inuyasha` | EX | 爆流破先擋一下 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 空渦龍 `acquired-jetragon` | PASSIVE | 航電預熱 | `—` | — | 🟣 PASSIVE | never cast |
+| 空渦龍 `acquired-jetragon` | Q | 龍式點射 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.arcane maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 空渦龍 `acquired-jetragon` | W | 尾流加班 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 空渦龍 `acquired-jetragon` | E | 貼地起飛 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 空渦龍 `acquired-jetragon` | R | 本航班不供餐 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 空渦龍 `acquired-jetragon` | EX | 登機口改號 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | PASSIVE | 越挨打越想跳 | `—` | — | 🟣 PASSIVE | never cast |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | Q | 別看下半身 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | W | 觀眾席安全距離 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | E | 舞步巡迴 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | R | 全員原地學舞 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
+| 吉他吉他老伯（阿德巴古·艾魯多魯） `acquired-kita-kita` | EX | 跳累了先喝水 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑雪姬 `acquired-kuroyukihime` | PASSIVE | 延遲斬殺 | `—` | — | 🟣 PASSIVE | never cast |
+| 黑雪姬 `acquired-kuroyukihime` | Q | 你的連線已中斷 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑雪姬 `acquired-kuroyukihime` | W | 先加速再解釋 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 黑雪姬 `acquired-kuroyukihime` | E | 黑蓮快速登入 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑雪姬 `acquired-kuroyukihime` | R | 死亡穿刺強制登出 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑雪姬 `acquired-kuroyukihime` | EX | 撤回上一則位置 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 莉法 `acquired-leafa` | PASSIVE | 順風不用跑腿費 | `—` | — | 🟣 PASSIVE | never cast |
+| 莉法 `acquired-leafa` | Q | 精靈補給到府 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 莉法 `acquired-leafa` | W | 外送區禁止停車 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 莉法 `acquired-leafa` | E | 精靈抄近路 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 莉法 `acquired-leafa` | R | 風精靈團購保險 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 莉法 `acquired-leafa` | EX | 風刃催單 | `skillshot` | line 8.80×4.40u | ✅ OK | delayed.advance 10×1.1（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | PASSIVE | 混沌客服工單 | `—` | — | 🟣 PASSIVE | never cast |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | Q | 金色退件章 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | W | 宇宙暫停受理 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | E | 客服轉接 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | R | 退回混沌重填 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 金色魔王／惡夢之王 `acquired-lord-nightmares` | EX | 三單一起結案 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Mario `acquired-mario` | PASSIVE | 叮！不是薪水 | `—` | — | 🟣 PASSIVE | never cast |
+| Mario `acquired-mario` | Q | 火球通管 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| Mario `acquired-mario` | W | 披風請讓路 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Mario `acquired-mario` | E | 水管工落地章 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Mario `acquired-mario` | R | 終極火焰報價 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Mario `acquired-mario` | EX | 一枚硬幣套餐 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Mewtwo `acquired-mewtwo` | PASSIVE | 念力集中中 | `—` | — | 🟣 PASSIVE | never cast |
+| Mewtwo `acquired-mewtwo` | Q | 暗影球・已充電 | `skillshot` | line 9.60×0.80u | ✅ OK | 分支裡的 imported.bolt.void maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| Mewtwo `acquired-mewtwo` | W | 念力保護殼 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Mewtwo `acquired-mewtwo` | E | 瞬間移動・區內 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Mewtwo `acquired-mewtwo` | R | 精神強念投訴 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Mewtwo `acquired-mewtwo` | EX | 我究竟為何排隊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Steve／Alex `acquired-minecraft` | PASSIVE | 挖礦不包加班 | `—` | — | 🟣 PASSIVE | never cast |
+| Steve／Alex `acquired-minecraft` | Q | 鑽石鎬・租的 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Steve／Alex `acquired-minecraft` | W | 一面不擋路的牆 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Steve／Alex `acquired-minecraft` | E | 礦車單程票 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Steve／Alex `acquired-minecraft` | R | TNT 結算日 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Steve／Alex `acquired-minecraft` | EX | 工作台便當 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 摩尔迦娜 `acquired-morgiana` | PASSIVE | 腳力留一手 | `—` | — | 🟣 PASSIVE | never cast |
+| 摩尔迦娜 `acquired-morgiana` | Q | 赤腳催辦 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 摩尔迦娜 `acquired-morgiana` | W | 鎖鏈請回來 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 摩尔迦娜 `acquired-morgiana` | E | 法納利斯跨步 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 摩尔迦娜 `acquired-morgiana` | R | 炎鎖舞步 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 摩尔迦娜 `acquired-morgiana` | EX | 女僕式清場 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 漩渦鳴人 `acquired-naruto` | PASSIVE | 打架前先吃麵 | `—` | — | 🟣 PASSIVE | never cast |
+| 漩渦鳴人 `acquired-naruto` | Q | 螺旋丸加麵 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 漩渦鳴人 `acquired-naruto` | W | 影分身代排 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 漩渦鳴人 `acquired-naruto` | E | 忍者插隊術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 漩渦鳴人 `acquired-naruto` | R | 螺旋手裡麵 | `skillshot` | line 8.80×4.40u | ✅ OK | delayed.advance 10×1.1（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 漩渦鳴人 `acquired-naruto` | EX | 拉麵要趁熱 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Pokémon Trainer `acquired-pokemon-trainer` | PASSIVE | 徽章集點卡 | `—` | — | 🟣 PASSIVE | never cast |
+| Pokémon Trainer `acquired-pokemon-trainer` | Q | 傑尼龜・水槍 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.arcane maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| Pokémon Trainer `acquired-pokemon-trainer` | W | 妙蛙草・藤鞭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Pokémon Trainer `acquired-pokemon-trainer` | E | 噴火龍・熱身 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Pokémon Trainer `acquired-pokemon-trainer` | R | 三重指令結帳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Pokémon Trainer `acquired-pokemon-trainer` | EX | 包包裡有傷藥 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 拉姆 `acquired-ram` | PASSIVE | 掃除前先開窗 | `—` | — | 🟣 PASSIVE | never cast |
+| 拉姆 `acquired-ram` | Q | 風刃催你走 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 拉姆 `acquired-ram` | W | 毒舌逆風 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 拉姆 `acquired-ram` | E | 不想走樓梯 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 拉姆 `acquired-ram` | R | 風暴大掃除 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 拉姆 `acquired-ram` | EX | 今天也辛苦別人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | PASSIVE | 這個快熟了 | `—` | — | 🟣 PASSIVE | never cast |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | Q | 午休咬一口 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | W | 加班費先預支 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | E | 便當在那邊 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | R | 整份都我的 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 莉姆（Rim；粉紅魔龍） `acquired-rim` | EX | 沒吃飽不准下班 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| Ryu `acquired-ryu` | PASSIVE | 波升基本功 | `—` | — | 🟣 PASSIVE | never cast |
+| Ryu `acquired-ryu` | Q | 波動拳 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.ki maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| Ryu `acquired-ryu` | W | 升龍拳・有付費 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Ryu `acquired-ryu` | E | 龍捲旋風腿 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Ryu `acquired-ryu` | R | 真・升龍加班 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Ryu `acquired-ryu` | EX | 無薪修行 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 沙耶 `acquired-saya` | PASSIVE | 吃一口就好 | `—` | — | 🟣 PASSIVE | never cast |
+| 沙耶 `acquired-saya` | Q | 不明食材試吃 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 沙耶 `acquired-saya` | W | 餐桌黏黏的 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 沙耶 `acquired-saya` | E | 看見真實菜單 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 沙耶 `acquired-saya` | R | 今晚全席開放 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 沙耶 `acquired-saya` | EX | 閉眼比較好吃 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 戰鬥暴龍獸 `acquired-wargreymon` | PASSIVE | 鍋蓋還沒掀 | `—` | — | 🟣 PASSIVE | never cast |
+| 戰鬥暴龍獸 `acquired-wargreymon` | Q | 龍獸拆箱爪 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 戰鬥暴龍獸 `acquired-wargreymon` | W | 勇氣鍋蓋 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 戰鬥暴龍獸 `acquired-wargreymon` | E | 勇者快遞 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 戰鬥暴龍獸 `acquired-wargreymon` | R | 蓋亞能量到付 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 戰鬥暴龍獸 `acquired-wargreymon` | EX | 恐龍火氣很大 | `skillshot` | line 8.80×4.40u | ✅ OK | delayed.advance 10×1.1（起始 0）× abilityRange 0.8, radius 2.75 ×2 × abilityRange 0.8 |
+| 小當家 `acquired-xiaodangjia` | PASSIVE | 試味不用錢 | `—` | — | 🟣 PASSIVE | never cast |
+| 小當家 `acquired-xiaodangjia` | Q | 料理怎麼又發光 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 小當家 `acquired-xiaodangjia` | W | 趁熱吃 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 小當家 `acquired-xiaodangjia` | E | 猛火快炒 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 小當家 `acquired-xiaodangjia` | R | 麻婆豆腐流水席 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 小當家 `acquired-xiaodangjia` | EX | 鍋蓋全席 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| Zero `acquired-zero` | PASSIVE | 劍砲交班 | `—` | — | 🟣 PASSIVE | never cast |
+| Zero `acquired-zero` | Q | Z-Saber 簽核 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| Zero `acquired-zero` | W | 蓄力離線砲 | `skillshot` | line 9.60×0.80u | ✅ OK | 分支裡的 imported.bolt.arcane maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| Zero `acquired-zero` | E | 衝刺斬 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| Zero `acquired-zero` | R | 零式連段 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| Zero `acquired-zero` | EX | 更新稍後提醒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿璃 `lol-ahri` | PASSIVE | 銷魂 | `—` | — | 🟣 PASSIVE | never cast |
+| 阿璃 `lol-ahri` | Q | 幻玉 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.arcane.return maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
+| 阿璃 `lol-ahri` | W | 魅火 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 阿璃 `lol-ahri` | E | 傾城 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 阿璃 `lol-ahri` | R | 飛仙 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 阿璃 `lol-ahri` | EX | 已讀不回 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 艾希 `lol-ashe` | PASSIVE | 冰霜射擊 | `—` | — | 🟣 PASSIVE | never cast |
+| 艾希 `lol-ashe` | Q | 專注射擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 艾希 `lol-ashe` | W | 萬箭齊發 | `skillshot` | line 7.00×3.00u | ✅ OK | damageLine length 7 × width 3 (sim applies no abilityRange) — the capsule the damage query tests |
+| 艾希 `lol-ashe` | E | 鷹擊長空：強制簽收 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 艾希 `lol-ashe` | R | 魔法水晶箭 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 艾希 `lol-ashe` | EX | 冷凍保存 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 布里姿 `lol-blitzcrank` | PASSIVE | 法力屏障 | `—` | — | 🟣 PASSIVE | never cast |
+| 布里姿 `lol-blitzcrank` | Q | 火箭抓取 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 布里姿 `lol-blitzcrank` | W | 過載運轉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 布里姿 `lol-blitzcrank` | E | 充能一擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 布里姿 `lol-blitzcrank` | R | 靜電力場 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 布里姿 `lol-blitzcrank` | EX | 七天鑑賞期 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 科加斯 `lol-chogath` | PASSIVE | 肉食者 | `—` | — | 🟣 PASSIVE | never cast |
+| 科加斯 `lol-chogath` | Q | 破裂 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 科加斯 `lol-chogath` | W | 野性尖嘯 | `skillshot` | line 4.00×3.00u | ✅ OK | damageLine length 4 × width 3 (sim applies no abilityRange) — the capsule the damage query tests |
+| 科加斯 `lol-chogath` | E | 恐懼尖刺 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 科加斯 `lol-chogath` | R | 饗宴 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 科加斯 `lol-chogath` | EX | 吃太飽走不動 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 稻草人 `lol-fiddlesticks` | PASSIVE | 無害稻草人 | `—` | — | 🟣 PASSIVE | never cast |
+| 稻草人 `lol-fiddlesticks` | Q | 恐懼 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 稻草人 `lol-fiddlesticks` | W | 豐收之魘 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 稻草人 `lol-fiddlesticks` | E | 駭懼收割 | `skillshot` | line 5.00×1.50u | ✅ OK | damageLine length 5 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 稻草人 `lol-fiddlesticks` | R | 群鴉風暴 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 稻草人 `lol-fiddlesticks` | EX | 尖叫外包 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蓋倫 `lol-garen` | PASSIVE | 堅韌 | `—` | — | 🟣 PASSIVE | never cast |
+| 蓋倫 `lol-garen` | Q | 致命打擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蓋倫 `lol-garen` | W | 勇氣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蓋倫 `lol-garen` | E | 審判 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蓋倫 `lol-garen` | R | 蒂瑪西亞制裁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 蓋倫 `lol-garen` | EX | 蒂瑪西亞先休息 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 墨菲特 `lol-malphite` | PASSIVE | 花崗岩護盾 | `—` | — | 🟣 PASSIVE | never cast |
+| 墨菲特 `lol-malphite` | Q | 地震碎片 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 墨菲特 `lol-malphite` | W | 震雷之擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 墨菲特 `lol-malphite` | E | 大地震顫 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 墨菲特 `lol-malphite` | R | 勢不可擋 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 墨菲特 `lol-malphite` | EX | 此處禁止停車 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鄂爾 `lol-ornn` | PASSIVE | 活火爐 | `—` | — | 🟣 PASSIVE | never cast |
+| 鄂爾 `lol-ornn` | Q | 火山脈動 | `skillshot` | line 6.00×1.40u | ✅ OK | damageLine length 6 × width 1.4 (sim applies no abilityRange) — the capsule the damage query tests |
+| 鄂爾 `lol-ornn` | W | 熾焰吹息 | `skillshot` | line 4.00×2.00u | ✅ OK | damageLine length 4 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
+| 鄂爾 `lol-ornn` | E | 熔岩俯衝 | `skillshot` | line 8.25×1.40u | ✅ OK | skillshot 的酬載是衝刺：maxDistance 8.25（sim 不套 abilityRange）、寬 1.4，沿途／落點會傷人 |
+| 鄂爾 `lol-ornn` | R | 鑄火者的呼喚 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.fire maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
+| 鄂爾 `lol-ornn` | EX | 終身保固三秒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 賽特 `lol-sett` | PASSIVE | 恆毅之泉 | `—` | — | 🟣 PASSIVE | never cast |
+| 賽特 `lol-sett` | Q | 懾人猛拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 賽特 `lol-sett` | W | 獸魂轟拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 賽特 `lol-sett` | E | 碎顱猛擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 賽特 `lol-sett` | R | 嘆為觀止 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 賽特 `lol-sett` | EX | 媽媽來電 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 瑟雷西 `lol-thresh` | PASSIVE | 靈魂饗宴 | `—` | — | 🟣 PASSIVE | never cast |
+| 瑟雷西 `lol-thresh` | Q | 死亡宣告 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 瑟雷西 `lol-thresh` | W | 鬼影燈籠 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 瑟雷西 `lol-thresh` | E | 懾魂掃蕩 | `skillshot` | line 4.00×2.50u | ✅ OK | damageLine length 4 × width 2.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 瑟雷西 `lol-thresh` | R | 惡靈領域 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 瑟雷西 `lol-thresh` | EX | 本燈拒載 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 威寇茲 `lol-velkoz` | PASSIVE | 結構毀滅 | `—` | — | 🟣 PASSIVE | never cast |
+| 威寇茲 `lol-velkoz` | Q | 分裂電漿 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.void.split maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
+| 威寇茲 `lol-velkoz` | W | 虛空裂痕 | `skillshot` | line 7.00×1.50u | ✅ OK | damageLine length 7 × width 1.5 (sim applies no abilityRange) — the capsule the damage query tests |
+| 威寇茲 `lol-velkoz` | E | 反物質瓦解 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 威寇茲 `lol-velkoz` | R | 生化射線 | `skillshot` | line 9.00×1.30u | ✅ OK | 分支裡的 damageLine length 9 × width 1.3（sim 不套 abilityRange）—— 傷害查詢用的那個膠囊 |
+| 威寇茲 `lol-velkoz` | EX | 論文退回重寫 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

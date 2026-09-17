@@ -2,7 +2,7 @@
   "id": "acquired-astralym.passive",
   "name": "星蝕欠款",
   "provenance": "editor-json",
-  "description": "普攻給目標留下 4 秒星蝕，內置冷卻 {{cd}} 秒；Q 可消耗自己施加的星蝕。",
+  "description": "普攻給目標留下 4 秒星蝕，內置冷卻 2 秒；Q 可消耗自己施加的星蝕。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

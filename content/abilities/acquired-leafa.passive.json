@@ -2,7 +2,7 @@
   "id": "acquired-leafa.passive",
   "name": "順風不用跑腿費",
   "provenance": "editor-json",
-  "description": "施放技能後獲得極小級移速2秒，內置冷卻{{cd}}秒。",
+  "description": "施放技能後獲得極小級移速2秒，內置冷卻5秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

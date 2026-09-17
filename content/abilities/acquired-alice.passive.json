@@ -2,7 +2,7 @@
   "id": "acquired-alice.passive",
   "name": "整合騎士查票",
   "provenance": "editor-json",
-  "description": "受到傷害時獲得110護盾3秒，內置冷卻{{cd}}秒。",
+  "description": "受到傷害時獲得110護盾3秒，內置冷卻10秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

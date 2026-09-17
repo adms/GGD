@@ -3777,19 +3777,6 @@
         {
           "name": "radius",
           "type": "number"
-        },
-        {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
         }
       ],
       "adminForm": true,
@@ -3800,7 +3787,7 @@
       "surface": "ability.effects[].kind=spawnInteractable",
       "renderable": true,
       "reason": null,
-      "controlCount": 9,
+      "controlCount": 8,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -4046,19 +4033,6 @@
           "type": "number"
         },
         {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
-        },
-        {
           "name": "shatterable",
           "type": "boolean",
           "optional": true
@@ -4072,7 +4046,7 @@
       "surface": "ability.effects[].kind=spawnObstacle",
       "renderable": true,
       "reason": null,
-      "controlCount": 10,
+      "controlCount": 9,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -4146,19 +4120,6 @@
           "type": "number"
         },
         {
-          "name": "radiusTier",
-          "type": "enum",
-          "values": [
-            "極小",
-            "小",
-            "中",
-            "大",
-            "極大"
-          ],
-          "tier": true,
-          "optional": true
-        },
-        {
           "name": "sides",
           "type": "union"
         }
@@ -4171,7 +4132,7 @@
       "surface": "ability.effects[].kind=spawnThresholds",
       "renderable": true,
       "reason": null,
-      "controlCount": 6,
+      "controlCount": 5,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,

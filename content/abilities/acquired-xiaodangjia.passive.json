@@ -2,7 +2,7 @@
   "id": "acquired-xiaodangjia.passive",
   "name": "試味不用錢",
   "provenance": "editor-json",
-  "description": "施放技能後回復自己20生命，內置冷卻{{cd}}秒。",
+  "description": "施放技能後回復自己20生命，內置冷卻4秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

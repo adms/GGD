@@ -2,7 +2,7 @@
   "id": "acquired-kuroyukihime.passive",
   "name": "延遲斬殺",
   "provenance": "editor-json",
-  "description": "普攻低於40%生命目標追加極小級物理傷害，內置冷卻{{cd}}秒。",
+  "description": "普攻低於40%生命目標追加極小級物理傷害，內置冷卻3秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

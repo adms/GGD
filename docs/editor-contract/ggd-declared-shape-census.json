@@ -6,7 +6,7 @@
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
     "cooldownArrayAlongsideTier": 924,
-    "basicAttackHookNotOnCard": 1
+    "basicAttackHookNotOnCard": 0
   },
   "passiveWithCastTime": [
     {
@@ -196,10 +196,5 @@
       "acquired-astralym.q"
     ]
   },
-  "basicAttackHookNotOnCard": [
-    {
-      "id": "lol-sett.passive",
-      "name": "恆毅之泉"
-    }
-  ]
+  "basicAttackHookNotOnCard": []
 }

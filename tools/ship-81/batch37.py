@@ -95,7 +95,7 @@ def status_docs(abilities: list[dict], champion: dict) -> list[dict]:
     · 名稱＝施加它的技能名（⛔ 不發明新名字）
     · 極性：帶控制／緩速／失手 ⇒ debuff（施加在自己身上也是代價）；加速 ⇒ buff；
       純標記 ⇒ 看施加對象（自己 buff、目標 debuff）
-    · 標籤：自己的 id ＋ 出貨詞彙裡對應機制的類別（`content/status-effects/stun.json` 那一族）
+    · 標籤：**逐字等同 id** 的專屬 tag（`statusTagOpenness` 的第 1 條）＋ 出貨詞彙裡對應機制的類別
     """
     uses: dict[str, list[dict]] = {}
     named: dict[str, str] = {}
@@ -117,26 +117,61 @@ def status_docs(abilities: list[dict], champion: dict) -> list[dict]:
     for a in abilities:
         walk(a, a)
     docs = []
+    # ⭐⭐ 同一個 statusId 在**別的技能**上帶了機制，而這一格只有名字 ⇒ 補齊。
+    #   ⛔ 「只掛得上名字」的 applyStatus 比沒有效果更糟：狀態列會畫圖示、HUD 會倒數，
+    #   而 `sim/effects/applyStatus.ts` 讀的那幾格一個都沒填 ⇒ 對方完全自由（主動誤導決策）。
+    #   ⭐ 補什麼**不是我發明的**：取同一個 id 在這位英雄身上其他節點填過的那幾格
+    #   （與 `gen.py::backfill_status_mechanics` 同一條規矩，只是母體換成這一批自己）。
+    SKIP = {"kind", "statusId", "applyTo", "duration", "stacks", "onExisting", "stackKey", "sourceScope", "refresh", "condition"}
+    for sid, nodes in uses.items():
+        filled = {}
+        for n in nodes:
+            for k, v in n.items():
+                if k not in SKIP:
+                    filled.setdefault(k, v)
+        if not filled:
+            continue
+        for n in nodes:
+            if not any(k not in SKIP for k in n):
+                n.update(filled)
     for sid in sorted(uses):
         tags: list[str] = [sid]
         debuff = buff = False
-        for n in uses[sid]:
-            for key, cat in _CC_TAGS:
-                if n.get(key):
-                    debuff = True
-                    tags += cat
-            ms = n.get("moveSpeedMult")
-            if isinstance(ms, (int, float)) and ms < 1:
-                debuff = True
-                tags += ["slow", "move-speed-down", "soft-cc", "cc"]
-            elif isinstance(ms, (int, float)) and ms > 1:
-                buff = True
-                tags += ["haste", "move-speed-up"]
-            if n.get("missChance"):
-                debuff = True
-                tags += ["blind", "miss", "accuracy-down", "soft-cc", "cc"]
+        # ⭐⭐ 類別 tag 只標「**每一次**都會發生」的那幾樣（交集），⛔ 不是所有用法的聯集。
+        #   ⚠️ 量到的（2026-09-17）：同一個 id 在不同技能上做不同的事 —— 吉他吉他老伯的
+        #   `disruption` 在 Q 是致盲、在 R 是定身。聯集會讓狀態文件宣稱「它會定身**也會**致盲」，
+        #   而 `noOpModifierClaims` 正是從 tag 推導「這個節點該填哪一格」⇒ 兩邊互相判對方少填。
+        #   ⭐ 而機制**住在 effect 節點上**（那份 schema 的檔頭逐字說的），狀態文件只負責身分：
+        #   ⇒ 身分只寫「每次都成立」的部分，⛔ 不替某一支技能的特例背書。
+        def has(node: dict, key: str) -> bool:
+            if key == "slow":
+                v = node.get("moveSpeedMult")
+                return isinstance(v, (int, float)) and v < 1
+            if key == "haste":
+                v = node.get("moveSpeedMult")
+                return isinstance(v, (int, float)) and v > 1
+            if key == "blind":
+                return bool(node.get("missChance"))
+            return bool(node.get(key))
+
+        nodes = uses[sid]
+        always = {k for k in ("stun", "root", "silenced", "disarmed", "feared", "charmed", "slow", "haste", "blind")
+                  if nodes and all(has(n, k) for n in nodes)}
+        ever = {k for k in ("stun", "root", "silenced", "disarmed", "feared", "charmed", "slow", "haste", "blind")
+                if any(has(n, k) for n in nodes)}
+        for key, cat in _CC_TAGS:
+            if key in always:
+                tags += cat
+        if "slow" in always:
+            tags += ["slow", "move-speed-down", "soft-cc", "cc"]
+        if "haste" in always:
+            tags += ["haste", "move-speed-up"]
+        if "blind" in always:
+            tags += ["blind", "miss", "accuracy-down", "soft-cc", "cc"]
+        debuff = bool(ever - {"haste"})
+        buff = "haste" in ever
         if not debuff and not buff:
-            debuff = any(n.get("applyTo", "target") == "target" for n in uses[sid])
+            debuff = any(n.get("applyTo", "target") == "target" for n in nodes)
         polarity = "debuff" if debuff else "buff"
         tags.append(polarity)
         docs.append({
